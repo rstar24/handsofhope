@@ -1,0 +1,19 @@
+server:
+  port: 9088
+
+spring:
+  application:
+    name: UCEP-SERVER
+  datasource:
+    url: jdbc:mysql://localhost:3306/twn?allowPublicKeyRetrieval=true&useSSL=false
+    username: root
+    password: GigaTorb123
+  jpa:
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+jwt:
+  secret: gigatorb
+
