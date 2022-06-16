@@ -1,8 +1,10 @@
+import { ThemeProvider } from "@mui/material/styles";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { store } from "./app/store";
+import theme from "./lib/theme";
 import Home from "./pages/Home";
 import App from "./pages/App";
 import reportWebVitals from "./reportWebVitals";
@@ -18,12 +20,14 @@ const root = createRoot(container);
 root.render(
   <StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/home" element={<Home />} />
-        </Routes>
-      </BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<App />} />
+            <Route path="/home" element={<Home />} />
+          </Routes>
+        </BrowserRouter>
+      </ThemeProvider>
     </Provider>
   </StrictMode>
 );
