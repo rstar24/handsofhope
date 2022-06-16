@@ -1,8 +1,10 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { store } from "./app/store";
-import App from "./App";
+import Home from "./pages/Home";
+import App from "./pages/App";
 import reportWebVitals from "./reportWebVitals";
 import "./index.css";
 
@@ -12,7 +14,12 @@ const root = createRoot(container);
 root.render(
   <StrictMode>
     <Provider store={store}>
-      <App />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App />} />
+          <Route path="/home" element={<Home />} />
+        </Routes>
+      </BrowserRouter>
     </Provider>
   </StrictMode>
 );
