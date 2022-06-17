@@ -1,3 +1,4 @@
+import { Layout } from "../components/layout/Layout";
 import type { ReactElement } from "react";
 
 /**
@@ -5,7 +6,7 @@ import type { ReactElement } from "react";
  * @returns Home component skeleton.
  */
 const Home = (): ReactElement => {
-  return <div>Home</div>;
+  return <Layout>Home</Layout>;
 };
 
 export default Home;
