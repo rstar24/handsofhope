@@ -5,8 +5,10 @@ import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { store } from "./app/store";
 import theme from "./lib/theme";
-import Home from "./pages/Home";
 import App from "./pages/App";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import NotFound404 from "./pages/NotFound404";
 import reportWebVitals from "./reportWebVitals";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
@@ -23,8 +25,10 @@ root.render(
       <ThemeProvider theme={theme}>
         <BrowserRouter>
           <Routes>
+            <Route path="*" element={<NotFound404 />} />
             <Route path="/" element={<App />} />
             <Route path="/home" element={<Home />} />
+            <Route path="/login" element={<Login />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
