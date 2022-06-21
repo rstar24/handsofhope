@@ -2,10 +2,9 @@ import { ThemeProvider } from "@mui/material/styles";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { store } from "./app/store";
 import theme from "./lib/theme";
-import App from "./pages/App";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import NotFound404 from "./pages/NotFound404";
@@ -15,6 +14,7 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import "./index.css";
+import CYFM from "./pages/CYFM";
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);
@@ -26,9 +26,10 @@ root.render(
         <BrowserRouter>
           <Routes>
             <Route path="*" element={<NotFound404 />} />
-            <Route path="/" element={<App />} />
+            <Route path="/" element={<Navigate to="/login" />} />
             <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/cyfm" element={<CYFM />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
