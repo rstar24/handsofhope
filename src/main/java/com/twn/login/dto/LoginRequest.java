@@ -1,4 +1,4 @@
-package com.twn.login.model;
+package com.twn.login.dto;
 
 import lombok.*;
 

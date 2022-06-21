@@ -1,9 +1,9 @@
 package com.twn.login.api;
 
 import com.twn.login.entity.BlacklistedTokens;
-import com.twn.login.model.LoginRequest;
-import com.twn.login.model.LoginResponse;
-import com.twn.login.model.LogoutRequest;
+import com.twn.login.dto.LoginRequest;
+import com.twn.login.dto.LoginResponse;
+import com.twn.login.dto.LogoutRequest;
 import com.twn.login.service.BlacklistedTokensService;
 import com.twn.login.service.CustomUserDetailsService;
 import com.twn.login.util.JWTUtil;
