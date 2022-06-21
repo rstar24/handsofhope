@@ -14,6 +14,7 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import "./index.css";
+import CYFM from "./pages/CYFM";
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);
@@ -28,6 +29,7 @@ root.render(
             <Route path="/" element={<Navigate to="/login" />} />
             <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/cyfm" element={<CYFM />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
