@@ -25,7 +25,7 @@ import java.util.Optional;
  */
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/v1/login")
+@RequestMapping("/v1/login")
 public class LoginController {
 
     @Autowired
@@ -60,7 +60,7 @@ public class LoginController {
         return new LoginResponse(token);
     }
 
-    @PostMapping("/signout")
+    /*@PostMapping("/signout")
     public ResponseEntity<?> logout(@RequestBody LogoutRequest logoutRequest) throws Exception{
         BlacklistedTokens blacklistedTokens = new BlacklistedTokens();
         blacklistedTokens.setBlacklistedDate(LocalDate.now());
@@ -72,10 +72,5 @@ public class LoginController {
             blacklistedTokensService.createBlacklistedTokens(blacklistedTokens);
         }
         return ResponseEntity.ok(HttpStatus.OK);
-    }
-
-    @GetMapping("/home")
-    public String home(){
-        return "Welcome, This is user page.";
-    }
+    }*/
 }

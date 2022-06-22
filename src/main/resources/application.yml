@@ -17,3 +17,14 @@ spring:
 jwt:
   secret: gigatorb
 
+codetablevalues:
+  gender:
+    MALE:
+      "en" : "Male"
+      "fr" : "Masculin"
+    FEMALE:
+      "en": "Female"
+      "fr": "Féminin"
+    LGQTB:
+      "en": "LGQTB"
+      "fr": "LGQTB"
