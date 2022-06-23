@@ -48,4 +48,6 @@ public class Address implements Serializable {
     private LocalDate endDate;
     @Getter @Setter @Column(name = "lastwritten")
     private LocalDateTime lastwritten;
+    @Getter @Setter @Column(name = "isprimary")
+    private boolean isPrimary;
 }

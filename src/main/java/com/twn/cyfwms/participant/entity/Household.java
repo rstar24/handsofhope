@@ -40,5 +40,4 @@ public class Household implements Serializable {
     private LocalDate endDate;
     @Getter @Setter @Column(name = "lastwritten")
     private LocalDateTime lastwritten;
-
 }
