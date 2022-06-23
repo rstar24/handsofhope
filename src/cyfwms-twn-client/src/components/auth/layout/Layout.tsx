@@ -24,3 +24,5 @@ export const Layout = (props: ReactChildren): ReactElement => {
     </Box>
   );
 };
+
+export default Layout;
