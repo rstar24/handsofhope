@@ -5,7 +5,9 @@ import { Provider } from "react-redux";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { store } from "./app/store";
 import theme from "./lib/theme";
-import CYFMSearch from "./pages/CYFMSearch";
+import CYFMS from "./pages/cyfms/CYFMS";
+import CYFMSSearch from "./pages/cyfms/CYFMSSearch";
+import CYFMSRegister from "./pages/cyfms/CYFMSRegister";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import NotFound404 from "./pages/NotFound404";
@@ -26,10 +28,14 @@ root.render(
         <BrowserRouter>
           <Routes>
             <Route path="*" element={<NotFound404 />} />
-            <Route path="/" element={<Navigate to="/login" />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/cyfm_search" element={<CYFMSearch />} />
+            <Route path="/" element={<Navigate to="login" />} />
+            <Route path="home" element={<Home />} />
+            <Route path="login" element={<Login />} />
+            <Route path="cyfms">
+              <Route path="" element={<CYFMS />} />
+              <Route path="search" element={<CYFMSSearch />} />
+              <Route path="register" element={<CYFMSRegister />} />
+            </Route>
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
