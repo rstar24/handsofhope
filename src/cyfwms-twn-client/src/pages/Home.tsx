@@ -19,7 +19,7 @@ interface IconType {
 const icons: IconType[] = [
   {
     value: "Child, Youth, and Family Members",
-    route: "/cyfm",
+    route: "/cyfm_search",
     src: "/img/heartInCircle.svg",
   },
   {

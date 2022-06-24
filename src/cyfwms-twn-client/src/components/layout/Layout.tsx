@@ -13,8 +13,8 @@ export const Layout = (props: ReactChildren): ReactElement => {
     <Box
       sx={{
         border: "5px solid black",
-        mx: { xs: "", md: "5rem" },
-        my: { xs: "", md: "1rem" },
+        mx: { xs: 0, md: "5rem" },
+        my: { xs: 0, md: "1rem" },
       }}
     >
       <Header />
