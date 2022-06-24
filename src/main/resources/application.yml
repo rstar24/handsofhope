@@ -7,7 +7,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/twn?allowPublicKeyRetrieval=true&useSSL=false
     username: root
-    password: GigaTorb123
+    password: password
   jpa:
     hibernate:
       ddl-auto: none
