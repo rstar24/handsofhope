@@ -6,6 +6,12 @@ import type { ReactElement, ReactNode } from "react";
 /**
  * The Layout functional component.
  * Will be visible just to logged-in/authorized user.
+ * @example
+ * ```tsx
+ * <Layout>...</Layout>
+ * // OR
+ * <Layout />
+ * ```
  * @returns Layout component skeleton.
  */
 export const Layout = (props: {

@@ -1,5 +1,7 @@
 import Layout from "../../components/auth/layout/Layout";
 import CYFMSHeader from "../../components/cyfms/CYFMSHeader";
+import CYFMSSideNav from "../../components/cyfms/CYFMSSideNav";
+import React from "react";
 import type { ReactElement } from "react";
 
 /**
@@ -10,7 +12,7 @@ const CYFMSRegister = (): ReactElement => {
   return (
     <Layout>
       <CYFMSHeader />
-      Register
+      <CYFMSSideNav />
     </Layout>
   );
 };

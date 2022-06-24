@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Layout } from "../components/auth/layout/Layout";
+import React from "react";
 import type { ReactElement, ReactNode } from "react";
 
 interface IconType {

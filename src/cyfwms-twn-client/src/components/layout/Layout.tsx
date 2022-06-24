@@ -5,6 +5,12 @@ import type { ReactElement, ReactNode } from "react";
 
 /**
  * The Layout functional component.
+ * @example
+ * ```tsx
+ * <Layout>...</Layout>
+ * // OR
+ * <Layout />
+ * ```
  * @returns Layout component skeleton.
  */
 export const Layout = (props: {
@@ -24,3 +30,5 @@ export const Layout = (props: {
     </Box>
   );
 };
+
+export default Layout;

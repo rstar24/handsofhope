@@ -6,11 +6,11 @@ import { ThemeProvider } from "@mui/material/styles";
 import { Provider } from "react-redux";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { store } from "./app/store";
-import theme from "./lib/theme";
+import theme from "./library/theme";
 import CYFMS from "./pages/cyfms/CYFMS";
 import CYFMSSearch from "./pages/cyfms/CYFMSSearch";
 import CYFMSRegister from "./pages/cyfms/CYFMSRegister";
-import Other from "./pages/cyfms/Other";
+import CYFMSOther from "./pages/cyfms/CYFMSOther";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import NotFound404 from "./pages/NotFound404";
@@ -32,7 +32,7 @@ const CYFSWMSApp = (): ReactElement => {
                 <Route path="" element={<CYFMS />} />
                 <Route path="search" element={<CYFMSSearch />} />
                 <Route path="register" element={<CYFMSRegister />} />
-                <Route path="other" element={<Other />} />
+                <Route path="other" element={<CYFMSOther />} />
               </Route>
             </Routes>
           </BrowserRouter>
