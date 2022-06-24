@@ -50,4 +50,6 @@ public class Address implements Serializable {
     private LocalDateTime lastwritten;
     @Getter @Setter @Column(name = "isprimary")
     private boolean isPrimary;
+    @Getter @Setter @Column(name = "participantid")
+    private Long participantId;
 }
