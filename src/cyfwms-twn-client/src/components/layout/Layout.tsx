@@ -1,4 +1,5 @@
-import React from 'react';
+import React from "react";
+import ReactDOM from "react-dom";
 import { Box } from "@mui/material";
 import Footer from "./Footer";
 import Header from "./Header";
@@ -9,7 +10,8 @@ import type { ReactElement } from "react";
  * The Layout functional component.
  * @returns Layout component skeleton.
  */
-export const Layout = (props: ReactChildren): ReactElement => {
+const Layout = (props: ReactChildren): ReactElement => {
+  console.log(props.children)
   return (
     <Box
       sx={{
@@ -24,3 +26,5 @@ export const Layout = (props: ReactChildren): ReactElement => {
     </Box>
   );
 };
+
+export default Layout;

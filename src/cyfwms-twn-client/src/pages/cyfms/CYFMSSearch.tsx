@@ -34,7 +34,7 @@ const CYFMSSearch = (props: ReactChildren): ReactElement => {
     setPersonName(value);
   };
   return (
-    <Layout>
+    <>
       <CYFMSHeader />
       <Grid
         container
@@ -250,7 +250,7 @@ const CYFMSSearch = (props: ReactChildren): ReactElement => {
           </form>
         </Grid>
       </Grid>
-    </Layout>
+    </>
   );
 };
 

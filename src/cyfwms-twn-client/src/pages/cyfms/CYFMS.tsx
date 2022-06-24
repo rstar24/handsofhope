@@ -11,7 +11,7 @@ import type { ReactElement } from "react";
  */
 const CYFMS = (): ReactElement => {
   return (
-    <Layout>
+    <>
       <CYFMSHeader />
       <Box
         sx={{
@@ -53,7 +53,7 @@ const CYFMS = (): ReactElement => {
           </Button>
         </Box>
       </Box>
-    </Layout>
+    </>
   );
 };
 
