@@ -13,7 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
-public class Users implements Serializable {
+public class  Users implements Serializable {
     @Id @Getter @Setter
     @Column(name = "usersid", updatable = false, nullable = false)
     @SequenceGenerator(

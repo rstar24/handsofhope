@@ -1,23 +1,18 @@
 package com.twn.login.api;
 
-import com.twn.login.entity.BlacklistedTokens;
+
 import com.twn.login.dto.LoginRequest;
 import com.twn.login.dto.LoginResponse;
-import com.twn.login.dto.LogoutRequest;
 import com.twn.login.service.BlacklistedTokensService;
 import com.twn.login.service.CustomUserDetailsService;
 import com.twn.login.util.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
-import java.util.Optional;
 
 /**
  * DOCUMENTATION :::
@@ -59,6 +54,24 @@ public class LoginController {
 
         return new LoginResponse(token);
     }
+
+
+    //Only Admin can access this
+    @GetMapping("/admin-home")
+    @PreAuthorize("hasAuthority ('admin')")
+       public String adminPing(){
+
+        return "This is admin home";
+    }
+
+    //Only CaseWorker can access this
+    @GetMapping("/cw-home")
+    @PreAuthorize("hasAuthority ('caseworker')")
+    public String caseWorkerHome(){
+
+        return "This is CW home";
+    }
+
 
     /*@PostMapping("/signout")
     public ResponseEntity<?> logout(@RequestBody LogoutRequest logoutRequest) throws Exception{
