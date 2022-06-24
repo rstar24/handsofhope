@@ -1,4 +1,5 @@
 import React from 'react';
+import { ReactDOM } from 'react';
 import {
   Box,
   Card,
@@ -8,8 +9,11 @@ import {
   Typography,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-import { Layout } from "../components/auth/layout/Layout";
+import Layout from "../components/auth/layout/Layout";
 import type { ReactElement, ReactNode } from "react";
+import Header from '../components/layout/Header';
+import Footer from '../components/layout/Footer';
+import { useSelector } from 'react-redux';
 
 interface IconType {
   value: string;
@@ -20,7 +24,7 @@ interface IconType {
 const icons: IconType[] = [
   {
     value: "Child, Youth, and Family Members",
-    route: "/cyfm_search",
+    route: "/cyfms",
     src: "/img/heartInCircle.svg",
   },
   {
@@ -82,8 +86,10 @@ const RenderIcons = (icons: IconType[]): ReactNode[] => {
  * @returns Home component skeleton.
  */
 const Home = (): ReactElement => {
+
+  /*const loginData = useSelector()*/
   return (
-    <Layout>
+    <>
       <Box
         sx={{
           display: "flex",
@@ -103,7 +109,7 @@ const Home = (): ReactElement => {
           {RenderIcons(icons)}
         </Box>
       </Box>
-    </Layout>
+    </>
   );
 };
 
