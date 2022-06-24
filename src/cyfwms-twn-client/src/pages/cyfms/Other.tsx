@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import { Layout } from "../../components/auth/layout/Layout";
-import CYFMSHeader from "./CYFMSHeader";
+import CYFMSHeader from "../../components/cyfms/CYFMSHeader";
 import { Button, Grid, InputLabel, Link, Typography } from "@mui/material";
 import theme from "../../lib/theme";
 

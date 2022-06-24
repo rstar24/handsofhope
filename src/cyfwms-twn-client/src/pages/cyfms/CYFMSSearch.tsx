@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import Layout from "../../components/auth/layout/Layout";
-import CYFMSHeader from "./CYFMSHeader";
+import CYFMSHeader from "../../components/cyfms/CYFMSHeader";
 import type { ReactElement } from "react";
 
 /**
