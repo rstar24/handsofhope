@@ -8,6 +8,7 @@ import theme from "./lib/theme";
 import CYFMS from "./pages/cyfms/CYFMS";
 import CYFMSSearch from "./pages/cyfms/CYFMSSearch";
 import CYFMSRegister from "./pages/cyfms/CYFMSRegister";
+import Other from "./pages/cyfms/Other";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import NotFound404 from "./pages/NotFound404";
@@ -35,6 +36,7 @@ root.render(
               <Route path="" element={<CYFMS />} />
               <Route path="search" element={<CYFMSSearch />} />
               <Route path="register" element={<CYFMSRegister />} />
+              <Route path="other" element={<Other />} />
             </Route>
           </Routes>
         </BrowserRouter>
