@@ -1,3 +1,4 @@
+import React from 'react';
 import { ThemeProvider } from "@mui/material/styles";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";

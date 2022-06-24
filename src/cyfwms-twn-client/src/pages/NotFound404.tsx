@@ -1,3 +1,4 @@
+import React from 'react';
 import { Layout } from "../components/layout/Layout";
 import { Box, Typography } from "@mui/material";
 

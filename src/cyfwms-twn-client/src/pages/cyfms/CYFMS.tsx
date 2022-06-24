@@ -1,3 +1,4 @@
+import React from 'react';
 import { Box, Button } from "@mui/material";
 import { Layout } from "../../components/auth/layout/Layout";
 import { Link } from "react-router-dom";

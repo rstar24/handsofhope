@@ -1,3 +1,4 @@
+import React from 'react';
 import Layout from "../../components/auth/layout/Layout";
 import CYFMSHeader from "./CYFMSHeader";
 import type { ReactChildren } from "../../shared/types";
