@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import Footer from "../../layout/Footer";
 import Header from "./Header";
+import React from "react";
 import type { ReactElement, ReactNode } from "react";
 
 /**
@@ -14,7 +15,7 @@ import type { ReactElement, ReactNode } from "react";
  * ```
  * @returns Layout component skeleton.
  */
-export const Layout = (props: {
+const Layout = (props: {
   children: ReactNode | ReactNode[];
 }): ReactElement => {
   return (
