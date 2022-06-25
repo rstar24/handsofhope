@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Box,
   Button,
@@ -32,7 +33,7 @@ const CYFMSSearch = (): ReactElement => {
     setPersonName(value);
   };
   return (
-    <Layout>
+    <>
       <CYFMSHeader />
       <Grid
         container
@@ -248,7 +249,7 @@ const CYFMSSearch = (): ReactElement => {
           </form>
         </Grid>
       </Grid>
-    </Layout>
+    </>
   );
 };
 

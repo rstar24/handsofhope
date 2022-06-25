@@ -51,47 +51,49 @@ public class Participant implements Serializable {
     private LocalDate creationDate;
     @Getter @Setter @Column(name = "lastwritten")
     private LocalDateTime lastwritten;
+    @Getter @Setter @Column(name = "isprimary")
+    private boolean isPrimary;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "participantid", referencedColumnName = "participantid")
     @Getter @Setter
     private List<Address> addressList;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "participantid", referencedColumnName = "participantid")
     @Getter @Setter
     private List<CounselorCFSWorker> counselorCFSWorkerList;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "participantid", referencedColumnName = "participantid")
     @Getter @Setter
     private List<CriminalHistory> criminalHistoryList;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "participantid", referencedColumnName = "participantid")
     @Getter @Setter
     private List<Education> educationList;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "participantid", referencedColumnName = "participantid")
     @Getter @Setter
     private List<EmailAddress> emailAddressList;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "participantid", referencedColumnName = "participantid")
     @Getter @Setter
     private List<Employment> employmentList;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "participantid", referencedColumnName = "participantid")
     @Getter @Setter
     private List<FamilyPhysician> familyPhysicianList;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "participantid", referencedColumnName = "participantid")
     @Getter @Setter
     private List<PhoneNumber> phoneNumberList;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "participantid", referencedColumnName = "participantid")
     @Getter @Setter
     private List<ParticipantOtherInformation> participantOtherInfoList;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "participantid", referencedColumnName = "participantid")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "householdid", referencedColumnName = "householdid")
     @Getter @Setter
     private Household household;
 
