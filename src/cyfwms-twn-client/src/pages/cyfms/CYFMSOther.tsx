@@ -1,11 +1,10 @@
-import React from 'react';
+import { Button, Grid, InputLabel, Link, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
-import { Layout } from "../../components/auth/layout/Layout";
+import Layout from "../../components/auth/layout/Layout";
 import CYFMSHeader from "../../components/cyfms/CYFMSHeader";
-import { Button, Grid, InputLabel, Link, Typography } from "@mui/material";
 import React from "react";
 import theme from "../../library/theme";
 
