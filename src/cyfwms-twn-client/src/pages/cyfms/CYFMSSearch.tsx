@@ -7,17 +7,16 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import { useState } from "react";
 import Layout from "../../components/auth/layout/Layout";
-import CYFMSHeader from "./CYFMSHeader";
-import type { ReactChildren } from "../../shared/types";
+import CYFMSHeader from "../../components/cyfms/CYFMSHeader";
+import React, { useState } from "react";
 import type { ReactElement } from "react";
 
 /**
  * The CYFMSSearch functional component.
  * @returns CYFMSSearch component skeleton.
  */
-const CYFMSSearch = (props: ReactChildren): ReactElement => {
+const CYFMSSearch = (): ReactElement => {
   const names = ["Single", "Married", "Devorced"];
 
   const [personName, setPersonName] = useState<string[]>([]);

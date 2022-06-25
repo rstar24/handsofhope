@@ -1,6 +1,6 @@
-import React from 'react';
-import Layout from "../components/layout/Layout";
 import { Box, Typography } from "@mui/material";
+import Layout from "../components/layout/Layout";
+import React from "react";
 
 /**
  * The NotFound404 functional component.
