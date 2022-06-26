@@ -1,5 +1,3 @@
-import React from 'react';
-import { Layout } from "../components/layout/Layout";
 import {
   Button,
   Grid,
@@ -8,10 +6,12 @@ import {
   OutlinedInput,
   Typography,
 } from "@mui/material";
-import { ReactElement, useState } from "react";
 import { loginUser } from "../features/login/loginApi";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, useNavigate } from "react-router";
+import { Navigate, useNavigate } from "react-router-dom";
+import Layout from "../components/layout/Layout";
+import React, { useState } from "react";
+import type { ReactElement } from "react";
 
 /**
  * The Login functional component.

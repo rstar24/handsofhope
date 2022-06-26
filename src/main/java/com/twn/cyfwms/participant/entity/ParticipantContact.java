@@ -11,21 +11,21 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "address")
-public class Address implements Serializable {
+@Table(name = "participantcontact")
+public class ParticipantContact implements Serializable {
 
     @Id @Getter @Setter
-    @Column(name = "addressid", updatable = false, nullable = false)
+    @Column(name = "participantcontactid", updatable = false, nullable = false)
     @SequenceGenerator(
-            name = "addressIdGenerator",
-            sequenceName = "addressIdGenerator",
+            name = "participantContactIdGenerator",
+            sequenceName = "participantContactIdGenerator",
             allocationSize = 100
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "addressIdGenerator"
+            generator = "participantContactIdGenerator"
     )
-    private Long addressId;
+    private Long participantContactId;
     @Getter @Setter @Column(name = "addressline1")
     private String addressLine1;
     @Getter @Setter @Column(name = "addressline2")
@@ -36,8 +36,14 @@ public class Address implements Serializable {
     private String province;
     @Getter @Setter @Column(name = "postalcode")
     private String postalCode;
-    @Getter @Setter @Column(name = "type")
-    private String type;
+    @Getter @Setter @Column(name = "homephone")
+    private String homePhone;
+    @Getter @Setter @Column(name = "workhhone")
+    private String workPhone;
+    @Getter @Setter @Column(name = "cellphone")
+    private String cellPhone;
+    @Getter @Setter @Column(name = "emailaddress")
+    private String emailAddress;
     @Getter @Setter @Column(name = "status")
     private String status;
     @Getter @Setter @Column(name = "creationdate")
@@ -48,8 +54,6 @@ public class Address implements Serializable {
     private LocalDate endDate;
     @Getter @Setter @Column(name = "lastwritten")
     private LocalDateTime lastwritten;
-    @Getter @Setter @Column(name = "isprimary")
-    private boolean isPrimary;
     @Getter @Setter @Column(name = "participantid")
     private Long participantId;
 }

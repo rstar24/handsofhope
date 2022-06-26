@@ -1,6 +1,6 @@
 import React from 'react';
 import { createSlice } from "@reduxjs/toolkit";
-
+import jwt from "jwt-decode"
 const loginSlice = createSlice({
   name: "login",
   initialState: {
@@ -19,8 +19,10 @@ const loginSlice = createSlice({
       state.pending = true;
     },
     loginSuccess: (state, action) => {
+      const token  = action.payload;
+      const name: any = jwt(token);
       state.pending = false;
-      state.user = action.payload;
+      state.user = name.sub;
       state.authenticate = true;
       state.error = false;
     },

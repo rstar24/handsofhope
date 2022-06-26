@@ -1,12 +1,12 @@
-import React from 'react';
+import { Button, Grid, InputLabel, Link, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
-import { Layout } from "../../components/auth/layout/Layout";
-import CYFMSHeader from "./CYFMSHeader";
-import { Button, Grid, InputLabel, Link, Typography } from "@mui/material";
-import theme from "../../lib/theme";
+import Layout from "../../components/auth/layout/Layout";
+import CYFMSHeader from "../../components/cyfms/CYFMSHeader";
+import React from "react";
+import theme from "../../library/theme";
 
 const Item = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(1),
@@ -14,6 +14,10 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
+/**
+ * The CYFMSOther functional component.
+ * @returns CYFMSOther component skeleton.
+ */
 const Other = () => {
   return (
     <Layout>

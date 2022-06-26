@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   loginLoading,
   loginSuccess,
@@ -7,18 +6,21 @@ import {
   logoutSuccess,
   logoutError,
 } from "./loginSlice";
+import axios from "axios";
 
 export const loginUser = async (user: any, dispatch: any) => {
   dispatch(loginLoading());
   try {
-    // const res = await axios.post("", user);
-    // dispatch(loginSuccess(res.data));
-    console.log(user);
-    if (user.userName === "admin" && user.password === "admin123") {
-      await dispatch(loginSuccess(user));
-    } else {
-      dispatch(loginError());
-    }
+    const res = await axios.post(
+      "http://localhost:9088/v1/login/authenticate",
+      user
+    );
+    dispatch(loginSuccess(res.data.jwtToken));
+    //     if (user.userName === "admin" && user.password === "admin123") {
+    //       await dispatch(loginSuccess(user));
+    //     } else {
+    //       dispatch(loginError());
+    //     }
   } catch (err) {
     dispatch(loginError());
   }

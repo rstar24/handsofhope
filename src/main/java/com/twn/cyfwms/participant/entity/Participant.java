@@ -54,10 +54,11 @@ public class Participant implements Serializable {
     @Getter @Setter @Column(name = "isprimary")
     private boolean isPrimary;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "participantid", referencedColumnName = "participantid")
     @Getter @Setter
-    private List<Address> addressList;
+    private ParticipantContact participantContact;
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "participantid", referencedColumnName = "participantid")
     @Getter @Setter
@@ -70,10 +71,7 @@ public class Participant implements Serializable {
     @JoinColumn(name = "participantid", referencedColumnName = "participantid")
     @Getter @Setter
     private List<Education> educationList;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "participantid", referencedColumnName = "participantid")
-    @Getter @Setter
-    private List<EmailAddress> emailAddressList;
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "participantid", referencedColumnName = "participantid")
     @Getter @Setter
@@ -82,10 +80,6 @@ public class Participant implements Serializable {
     @JoinColumn(name = "participantid", referencedColumnName = "participantid")
     @Getter @Setter
     private List<FamilyPhysician> familyPhysicianList;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "participantid", referencedColumnName = "participantid")
-    @Getter @Setter
-    private List<PhoneNumber> phoneNumberList;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "participantid", referencedColumnName = "participantid")

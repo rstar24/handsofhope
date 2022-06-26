@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material";
+import React from "react";
 import type { ReactElement } from "react";
 
 /**
@@ -20,7 +21,7 @@ const Header = (): ReactElement => {
       </Typography>
       <Box
         component="img"
-        src="/img/mascot.png"
+        src="/logo.png"
         sx={{ mx: "1rem", mb: "1rem", width: "100px" }}
       />
       <Typography variant="h5" component="h1">

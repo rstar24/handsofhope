@@ -1,7 +1,11 @@
-import React from 'react';
 import { Box, Typography } from "@mui/material";
+import React from "react";
 import type { ReactElement } from "react";
 
+/**
+ * The CYFMSHeader functional component.
+ * @returns CYFMSHeader component skeleton.
+ */
 const CYFMSHeader = (): ReactElement => {
   return (
     <Box sx={{ display: "flex", alignItems: "center" }}>
