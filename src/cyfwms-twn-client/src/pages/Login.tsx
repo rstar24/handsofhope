@@ -1,17 +1,31 @@
 import {
+  Backdrop,
+  Box,
   Button,
-  Grid,
-  InputLabel,
-  Link,
-  OutlinedInput,
+  Modal,
+  Fade,
   Typography,
+  Link as MUILink,
 } from "@mui/material";
-import { loginUser } from "../features/login/loginApi";
-import { useDispatch, useSelector } from "react-redux";
-import { Navigate, useNavigate } from "react-router-dom";
+import { doLogin } from "../features/login/loginSlice";
+import { useAppDispatch, useAppSelector } from "../library/hooks";
+import { useNavigate, Link as ReactRouterLink } from "react-router-dom";
 import Layout from "../components/layout/Layout";
 import React, { useState } from "react";
-import type { ReactElement } from "react";
+import type { FormEvent, ReactElement } from "react";
+import CYFMSInput from "../components/cyfms/CYFMSInput";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "5px solid red",
+  boxShadow: 24,
+  p: 4,
+};
 
 /**
  * The Login functional component.
@@ -19,111 +33,97 @@ import type { ReactElement } from "react";
  */
 const Login = (): ReactElement => {
   const navigate = useNavigate();
-  const data = useSelector((state) => (state as any).login);
-  const dispatch = useDispatch();
+  const data = useAppSelector((state) => (state as any).login);
+  const dispatch = useAppDispatch();
 
-  const [user, setUser] = useState({
-    userName: "",
-    password: "",
-  });
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
-  const handleLogin = (e: any) => {
+  const submitHandler = (e: FormEvent) => {
     e.preventDefault();
-    console.log(data.authenticate);
-    loginUser(user, dispatch);
+    const data: any = e.currentTarget;
+    dispatch(
+      doLogin({
+        username: data.userName.value,
+        password: data.passWord.value,
+      })
+    )
+      .unwrap()
+      .then((res) => {
+        console.log(res);
+        navigate("/home");
+      })
+      .catch((err) => {
+        setOpen(true);
+      });
   };
 
-  // const handleLogout = () => {
-  //   setUser({ username: "", password: "" });
-  //   logoutUser(user, dispatch);
-  // };
+  const ErrorDialog: ReactElement = (
+    <Modal
+      aria-labelledby="transition-modal-title"
+      aria-describedby="transition-modal-description"
+      open={open}
+      onClose={handleClose}
+      closeAfterTransition
+      BackdropComponent={Backdrop}
+      BackdropProps={{
+        timeout: 500,
+      }}
+    >
+      <Fade in={open}>
+        <Box sx={style}>
+          <Typography
+            id="transition-modal-title"
+            variant="h6"
+            component="h2"
+            sx={{ color: "red" }}
+          >
+            Invalid Credentials
+          </Typography>
+          <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+            Username/Password combination does not match!
+          </Typography>
+        </Box>
+      </Fade>
+    </Modal>
+  );
+
   return (
-    <>
-      {!data.authenticate && (
-        <Layout>
-          <Grid container component="form" rowSpacing={2}>
-            <Grid
-              item
-              container
-              spacing={2}
-              sx={{ display: "flex", justifyContent: "center" }}
-            >
-              <Grid item>
-                <InputLabel htmlFor="userName">
-                  <Typography
-                    color="primary"
-                    onChange={(e) => setUser({ ...user, userName: "admin" })}
-                  >
-                    Username
-                  </Typography>
-                </InputLabel>
-              </Grid>
-              <Grid item>
-                <OutlinedInput
-                  id="userName"
-                  required
-                  onChange={(e) =>
-                    setUser({ ...user, userName: e.currentTarget.value })
-                  }
-                />
-              </Grid>
-            </Grid>
-            <Grid
-              item
-              container
-              spacing={2}
-              sx={{ display: "flex", justifyContent: "center" }}
-            >
-              <Grid item>
-                <InputLabel htmlFor="userName">
-                  <Typography color="primary">Password</Typography>
-                </InputLabel>
-              </Grid>
-              <Grid item>
-                <OutlinedInput
-                  id="passWord"
-                  type="password"
-                  required
-                  onChange={(e) =>
-                    setUser({ ...user, password: e.currentTarget.value })
-                  }
-                />
-              </Grid>
-            </Grid>
-            <Grid
-              item
-              container
-              sx={{ display: "flex", justifyContent: "center" }}
-            >
-              <Button
-                type="submit"
-                variant="contained"
-                sx={(theme) => ({
-                  backgroundColor: theme.palette.primary.dark,
-                })}
-                onClick={handleLogin}
-              >
-                Login
-              </Button>
-            </Grid>
-            <Grid
-              item
-              container
-              sx={{ display: "flex", justifyContent: "center" }}
-            >
-              <Link href="forgotPassword" underline="hover">
-                Forgot password?
-              </Link>
-            </Grid>
-          </Grid>
-        </Layout>
-      )}
-      {data.authenticate && (
-        <>
-          <Navigate to="/home" />
-        </>
-      )}
-    </>
+    <Layout>
+      <Box
+        component="form"
+        onSubmit={submitHandler}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          rowGap: "1.5rem",
+          my: "1rem",
+        }}
+      >
+        <CYFMSInput id="userName" name="userName" required value="Username" />
+        <CYFMSInput
+          id="passWord"
+          name="passWord"
+          required
+          type="password"
+          value="Password"
+        />
+        <Button type="submit" variant="contained">
+          Login
+        </Button>
+        {ErrorDialog}
+        <ReactRouterLink
+          style={{ textDecoration: "none" }}
+          to="/cyfms/forgot_password"
+        >
+          <MUILink component="span" underline="hover">
+            Forgot password?
+          </MUILink>
+        </ReactRouterLink>
+      </Box>
+    </Layout>
   );
 };
 

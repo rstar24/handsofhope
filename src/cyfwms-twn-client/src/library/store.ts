@@ -1,16 +1,25 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import counterReducer from "../features/counter/counterSlice";
-import loginSlice from "../features/login/loginSlice";
+import loginReducer from "../features/login/loginSlice";
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
-    login: loginSlice,
+    login: loginReducer,
   },
 });
 
+/**
+ * Infer the `AppDispatch` type from the store itself.
+ */
 export type AppDispatch = typeof store.dispatch;
+
+/**
+ * Infer the `RootState` type from the store itself.
+ */
 export type RootState = ReturnType<typeof store.getState>;
+
+/**
+ * Infer the `AppThunk` type from the store itself.
+ */
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
   RootState,

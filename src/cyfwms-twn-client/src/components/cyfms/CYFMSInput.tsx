@@ -20,15 +20,17 @@ const CYFMSInput = (
         flexDirection: "row",
         flexWrap: "wrap",
       }}
+      required={props.required}
     >
       <FormLabel htmlFor={props.id} sx={{ p: 1 }}>
         {props.value}
       </FormLabel>
       <OutlinedInput
         id={props.id}
+        name={props.name}
         sx={{ borderRadius: 0 }}
         inputProps={{ sx: { p: 1 } }}
-        type="text"
+        type={props.type}
       />
     </FormControl>
   );
