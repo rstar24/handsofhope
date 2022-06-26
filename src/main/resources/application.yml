@@ -1,21 +1,25 @@
 server:
   port: 9088
-
+#This is to avoid Swagger related version issues
 spring:
   application:
-    name: UCEP-SERVER
+    name: TWN-SERVER
   datasource:
     url: jdbc:mysql://localhost:3306/twn?allowPublicKeyRetrieval=true&useSSL=false
     username: root
-    password: password
+    password: GigaTorb123
   jpa:
     hibernate:
       ddl-auto: none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     generate-ddl: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 jwt:
   secret: gigatorb
+
 
 codetablevalues:
   gender:
