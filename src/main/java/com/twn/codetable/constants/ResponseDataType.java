@@ -2,6 +2,10 @@ package com.twn.codetable.constants;
 
 public enum ResponseDataType {
     gender,
+    maritalStatus,
+    role,
+    education,
+    typeOfEmployee,
     patientStatusReason,
     relation,
     cpakGroupType,

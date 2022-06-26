@@ -28,3 +28,45 @@ codetablevalues:
     LGQTB:
       "en": "LGQTB"
       "fr": "LGQTB"
+
+  maritalStatus:
+    MARRIED:
+      "en" : "Married"
+      "fr" : "Marry"
+    UNMARRIED:
+      "en": "Unmarried"
+      "fr": "unmarry"
+    DIVORCE:
+      "en": "Divorce"
+      "fr": "Divorce"
+  role:
+    COUNSELOR:
+      "en": "Counselor"
+      "fr": "Coun"
+    CFSWORKER:
+      "en": "CFSworker"
+      "fr": "Cfs"
+
+  education:
+    YES:
+      "en": "Yes"
+      "fr": "Yes"
+    NO:
+      "en": "No"
+      "fr": "No"
+    MAYBE:
+      "en": "Maybe"
+      "fr": "Maybe"
+
+  typeOFEmployee:
+    FULLTIME:
+      "en": "FullTime"
+      "fr": "FullTime"
+    PARTTIME:
+      "en": "PartTime"
+      "fr": "PartTime"
+
+    CASUAL:
+      "en": "Casual"
+      "fr": "Casual"
+

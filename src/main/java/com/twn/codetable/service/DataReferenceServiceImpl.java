@@ -18,4 +18,38 @@ public class DataReferenceServiceImpl implements DataReferenceService{
                 .valuesMap(dataReferenceHelper.getGender())
                 .build();
     }
+
+
+    public DataResponseDto getAllMaritalStatusValue() {
+        return
+                DataResponseDto.builder()
+                .type(ResponseDataType.maritalStatus.name())
+                .valuesMap(dataReferenceHelper.getMaritalStatus())
+                .build();
+}
+
+    public DataResponseDto getAllRoleValue() {
+        return
+                DataResponseDto.builder()
+                        .type(ResponseDataType.role.name())
+                        .valuesMap(dataReferenceHelper.getRole())
+                        .build();
+    }
+
+
+    public DataResponseDto getAllEducationValue() {
+        return
+                DataResponseDto.builder()
+                        .type(ResponseDataType.education.name())
+                        .valuesMap(dataReferenceHelper.getEducation())
+                        .build();
+    }
+
+    public DataResponseDto getAllEmployeeValue() {
+        return
+                DataResponseDto.builder()
+                        .type(ResponseDataType.typeOfEmployee.name())
+                        .valuesMap(dataReferenceHelper.getTypeOfEmployee())
+                        .build();
+    }
 }

@@ -26,6 +26,37 @@ public class DataReferenceController {
 
         return dataReferenceService.getAllGenderTypes();
     }
+    @GetMapping(value = "/maritalstatus", produces = "application/json")
+    @ApiOperation("Get All Marital Status Value")
+    @ResponseStatus(HttpStatus.OK)
+    public DataResponseDto getMaritalStatus() {
 
+        return dataReferenceService.getAllMaritalStatusValue();
+    }
+   @GetMapping(value = "/role", produces = "application/json")
+    @ApiOperation("Get All Role Value")
+    @ResponseStatus(HttpStatus.OK)
+    public DataResponseDto getRoleValue() {
+
+        return dataReferenceService.getAllRoleValue();
+    }
+
+
+
+    @GetMapping(value = "/education", produces = "application/json")
+    @ApiOperation("Get All Education Value")
+    @ResponseStatus(HttpStatus.OK)
+    public DataResponseDto getEducationValue() {
+
+        return dataReferenceService.getAllEducationValue();
+    }
+
+    @GetMapping(value = "/typeofemployee", produces = "application/json")
+    @ApiOperation("Get All Employee Value")
+    @ResponseStatus(HttpStatus.OK)
+    public DataResponseDto getEmployeeValue() {
+
+        return dataReferenceService.getAllEmployeeValue();
+    }
 
 }
