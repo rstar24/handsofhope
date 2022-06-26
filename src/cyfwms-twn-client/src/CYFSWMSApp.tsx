@@ -5,7 +5,7 @@ import "@fontsource/roboto/700.css";
 import { ThemeProvider } from "@mui/material/styles";
 import { Provider } from "react-redux";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { store } from "./app/store";
+import { store } from "./library/store";
 import theme from "./library/theme";
 import CYFMS from "./pages/cyfms/CYFMS";
 import CYFMSSearch from "./pages/cyfms/CYFMSSearch";
