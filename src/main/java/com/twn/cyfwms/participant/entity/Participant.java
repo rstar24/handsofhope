@@ -59,6 +59,11 @@ public class Participant implements Serializable {
     @Getter @Setter
     private ParticipantContact participantContact;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "participantid", referencedColumnName = "participantid")
+    @Getter @Setter
+    private List<HouseholdMember> householdMemberList;
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "participantid", referencedColumnName = "participantid")
     @Getter @Setter
@@ -85,11 +90,5 @@ public class Participant implements Serializable {
     @JoinColumn(name = "participantid", referencedColumnName = "participantid")
     @Getter @Setter
     private List<ParticipantOtherInformation> participantOtherInfoList;
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "householdid", referencedColumnName = "householdid")
-    @Getter @Setter
-    private Household household;
-
 
 }

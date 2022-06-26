@@ -1,7 +1,9 @@
 package com.twn.cyfwms.participant.api;
 
+import com.twn.cyfwms.participant.dto.HouseholdMemberDto;
 import com.twn.cyfwms.participant.dto.ParticipantContactDto;
 import com.twn.cyfwms.participant.dto.ParticipantIdentityDto;
+import com.twn.cyfwms.participant.service.HouseholdMemberService;
 import com.twn.cyfwms.participant.service.ParticipantContactService;
 import com.twn.cyfwms.participant.service.ParticipantService;
 import io.swagger.annotations.ApiOperation;
@@ -9,6 +11,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -19,6 +23,8 @@ public class TWNParticipantController {
     private ParticipantService participantService;
     @Autowired
     private ParticipantContactService participantContactService;
+    @Autowired
+    private HouseholdMemberService householdMemberService;
 
     @GetMapping(value = "/readParticipantIdentity/{participantid}", produces = "application/json")
     @ApiOperation("Read Identity")
@@ -48,5 +54,18 @@ public class TWNParticipantController {
         return participantContactService.saveParticipantContact(participantContactDto);
     }
 
+    @GetMapping(value = "/getAllHouseholdMembers/{participantid}", produces = "application/json")
+    @ApiOperation("Read All Household Members")
+    @ResponseStatus(HttpStatus.OK)
+    public List<HouseholdMemberDto> getAllHouseholdMembers(@PathVariable("participantid") Long participantId) {
+        return householdMemberService.getAllHouseholdMembers(participantId);
+    }
+
+    @PutMapping(value = "/saveAllHouseholdMembers", produces = "application/json")
+    @ApiOperation("Save All Household Members")
+    @ResponseStatus(HttpStatus.OK)
+    public List<HouseholdMemberDto> saveAllHouseholdMembers(List<HouseholdMemberDto> householdMemberDtoList) {
+        return householdMemberService.saveAllHouseholdMembers(householdMemberDtoList);
+    }
 
 }

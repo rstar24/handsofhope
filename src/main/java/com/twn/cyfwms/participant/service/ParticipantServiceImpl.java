@@ -1,10 +1,7 @@
 package com.twn.cyfwms.participant.service;
 
-import com.twn.cyfwms.participant.dto.ParticipantContactDto;
 import com.twn.cyfwms.participant.dto.ParticipantIdentityDto;
-import com.twn.cyfwms.participant.entity.Household;
 import com.twn.cyfwms.participant.entity.Participant;
-import com.twn.cyfwms.participant.repository.HouseholdRepository;
 import com.twn.cyfwms.participant.repository.ParticipantRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -20,8 +17,6 @@ import java.util.Optional;
 public class ParticipantServiceImpl implements ParticipantService {
     @Autowired
     private ParticipantRepository participantRepository;
-    @Autowired
-    private HouseholdRepository householdRepository;
     @Autowired
     private ModelMapper modelMapper;
 
@@ -55,8 +50,6 @@ public class ParticipantServiceImpl implements ParticipantService {
             participant.setCreationDate(LocalDate.now());
             participant.setType("CYFM");
             participant.setStatus("ACTIVE");
-            Household household = createHousehold();
-            participant.setHousehold(household);
         }else {
             participant = readParticipant(participantIdentityDto.getParticipantId());
             modelMapper.map(participantIdentityDto, participant);
@@ -65,16 +58,6 @@ public class ParticipantServiceImpl implements ParticipantService {
         participant = participantRepository.save(participant);
         participantIdentityDto.setParticipantId(participant.getParticipantId());
         return participantIdentityDto;
-    }
-
-    private Household createHousehold(){
-        Household household = new Household();
-        household.setCreationDate(LocalDate.now());
-        household.setLastwritten(LocalDateTime.now());
-        household.setStatus("ACTIVE");
-        household.setStartDate(LocalDate.now());
-        household = householdRepository.save(household);
-        return household;
     }
 
 }
