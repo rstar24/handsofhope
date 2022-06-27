@@ -8,11 +8,12 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { store } from "./library/store";
 import theme from "./library/theme";
 import CYFMS from "./pages/cyfms/CYFMS";
+import CYFMSFamilyPhysician from "./pages/cyfms/CYFMSFamilyPhysician";
 import CYFMSContact from "./pages/cyfms/CYFMSContact";
 import CYFMSCriminalHistory from "./pages/cyfms/CYFMSCriminalHistory";
 import CYFMSEducationAndEmployment from "./pages/cyfms/CYFMSEducationAndEmployment";
 import CYFMSHouseholdMembers from "./pages/cyfms/CYFMSHouseholdMembers";
-import CYFMSOther from "./pages/cyfms/CYFMSOther";
+import CYFMSOtherInformation from "./pages/cyfms/CYFMSOtherInformation";
 import CYFMSRegister from "./pages/cyfms/CYFMSRegister";
 import CYFMSSearch from "./pages/cyfms/CYFMSSearch";
 import CYFMSWorker from "./pages/cyfms/CYFMSWorker";
@@ -49,9 +50,15 @@ const CYFSWMSApp = (): ReactElement => {
                   path="criminal_history"
                   element={<CYFMSCriminalHistory />}
                 />
-                <Route path="family_physician" element={<></>} />
+                <Route
+                  path="family_physician"
+                  element={<CYFMSFamilyPhysician />}
+                />
                 <Route path="cyfms_worker" element={<CYFMSWorker />} />
-                <Route path="other_information" element={<CYFMSOther />} />
+                <Route
+                  path="other_information"
+                  element={<CYFMSOtherInformation />}
+                />
                 <Route path="search" element={<CYFMSSearch />} />
               </Route>
             </Routes>
