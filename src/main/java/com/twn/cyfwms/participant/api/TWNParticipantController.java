@@ -17,7 +17,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/v1/participantservice")
-public class TWNCYFSClientRegistrationController {
+public class TWNParticipantController {
 
     @Autowired
     private ParticipantService participantService;

@@ -3,24 +3,20 @@ package com.twn.cyfwms.participant.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
-import java.time.LocalDate;
-
 @Builder
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @AllArgsConstructor
 @NoArgsConstructor
-public class HouseholdMemberDto {
+public class EducationDto {
+    @Getter @Setter
+    private Long educationId;
+    @Getter @Setter
+    private String attendingSchool;
+    @Getter @Setter
+    private String school;
+    @Getter @Setter
+    private String grade;
     @Getter @Setter
     private Long participantId;
-    @Getter @Setter
-    private Long householdMemberId;
-    @Getter @Setter
-    private String name;
-    @Getter @Setter
-    private String gender;
-    @Getter @Setter
-    private LocalDate dateOfBirth;
-    @Getter @Setter
-    private String residing;
 }
