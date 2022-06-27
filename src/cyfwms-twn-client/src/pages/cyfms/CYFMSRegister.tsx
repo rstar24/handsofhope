@@ -1,5 +1,5 @@
 import { Box, Button } from "@mui/material";
-import Layout from "../../components/auth/layout/Layout";
+import AuthLayout from "../../components/auth/layout/AuthLayout";
 import CYFMSDropdown from "../../components/cyfms/CYFMSDropdown";
 import CYFMSInput from "../../components/cyfms/CYFMSInput";
 import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
@@ -17,7 +17,7 @@ const CYFMSRegister = (): ReactElement => {
   };
 
   return (
-    <Layout>
+    <AuthLayout>
       <CYFMSLayout>
         <Box
           component="form"
@@ -39,7 +39,7 @@ const CYFMSRegister = (): ReactElement => {
           </Button>
         </Box>
       </CYFMSLayout>
-    </Layout>
+    </AuthLayout>
   );
 };
 

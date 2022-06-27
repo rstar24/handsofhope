@@ -6,7 +6,7 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import Layout from "../../components/auth/layout/Layout";
+import AuthLayout from "../../components/auth/layout/AuthLayout";
 import CYFMSHeader from "../../components/cyfms/CYFMSHeader";
 import React, { useState } from "react";
 import type { ReactElement } from "react";
@@ -32,7 +32,7 @@ const CYFMSSearch = (): ReactElement => {
     setPersonName(value);
   };
   return (
-    <>
+    <AuthLayout>
       <CYFMSHeader />
       <Grid
         container
@@ -248,7 +248,7 @@ const CYFMSSearch = (): ReactElement => {
           </form>
         </Grid>
       </Grid>
-    </>
+    </AuthLayout>
   );
 };
 

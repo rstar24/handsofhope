@@ -1,6 +1,6 @@
 import { Box, Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import Layout from "../../components/auth/layout/Layout";
+import AuthLayout from "../../components/auth/layout/AuthLayout";
 import CYFMSHeader from "../../components/cyfms/CYFMSHeader";
 import React from "react";
 import type { ReactElement } from "react";
@@ -11,7 +11,7 @@ import type { ReactElement } from "react";
  */
 const CYFMS = (): ReactElement => {
   return (
-    <Layout>
+    <AuthLayout>
       <CYFMSHeader />
       <Box
         sx={{
@@ -53,7 +53,7 @@ const CYFMS = (): ReactElement => {
           </Button>
         </Box>
       </Box>
-    </Layout>
+    </AuthLayout>
   );
 };
 
