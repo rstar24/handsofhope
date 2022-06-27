@@ -2,7 +2,6 @@ package com.twn.cyfwms.participant.service;
 
 import com.twn.cyfwms.participant.dto.HouseholdMemberDto;
 import com.twn.cyfwms.participant.entity.HouseholdMember;
-import com.twn.cyfwms.participant.entity.Participant;
 import com.twn.cyfwms.participant.repository.HouseholdMemberRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,32 +23,32 @@ public class HouseholdMemberServiceImpl implements HouseholdMemberService {
 
     @Override
     public List<HouseholdMemberDto> getAllHouseholdMembers(Long participantId) {
-        List<HouseholdMemberDto> householdMemberDtoList = new ArrayList<HouseholdMemberDto>();
+        List<HouseholdMemberDto> HouseholdMemberDtoList = new ArrayList<HouseholdMemberDto>();
         if(participantId != 0){
             List<HouseholdMember> householdMemberList = householdMemberRepo.findByParticipantId(participantId);
-            modelMapper.map(householdMemberList, householdMemberDtoList);
+            modelMapper.map(householdMemberList, HouseholdMemberDtoList);
         }
-        return householdMemberDtoList;
+        return HouseholdMemberDtoList;
     }
 
     @Override
-    public List<HouseholdMemberDto> saveAllHouseholdMembers(List<HouseholdMemberDto> householdMemberDtoList) {
-        for(HouseholdMemberDto householdMemberDto:householdMemberDtoList){
+    public List<HouseholdMemberDto> saveAllHouseholdMembers(List<HouseholdMemberDto> HouseholdMemberDtoList) {
+        for(HouseholdMemberDto HouseholdMemberDto : HouseholdMemberDtoList){
             HouseholdMember householdMember = null;
-            if(householdMemberDto.getHouseholdMemberId() == 0){
+            if(HouseholdMemberDto.getHouseholdMemberId() == 0){
                 householdMember = new HouseholdMember();
-                modelMapper.map(householdMemberDto, householdMember);
+                modelMapper.map(HouseholdMemberDto, householdMember);
                 householdMember.setCreationDate(LocalDate.now());
                 householdMember.setStartDate(LocalDate.now());
                 householdMember.setStatus("ACTIVE");
             }else {
-                householdMember = householdMemberRepo.findById(householdMemberDto.getHouseholdMemberId()).get();
+                householdMember = householdMemberRepo.findById(HouseholdMemberDto.getHouseholdMemberId()).get();
                 modelMapper.map(householdMember, householdMember);
             }
             householdMember.setLastwritten(LocalDateTime.now());
             householdMember = householdMemberRepo.save(householdMember);
-            householdMemberDto.setHouseholdMemberId(householdMember.getHouseholdMemberId());
+            HouseholdMemberDto.setHouseholdMemberId(householdMember.getHouseholdMemberId());
         }
-        return householdMemberDtoList;
+        return HouseholdMemberDtoList;
     }
 }

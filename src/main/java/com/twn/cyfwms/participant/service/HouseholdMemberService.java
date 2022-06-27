@@ -7,5 +7,5 @@ import java.util.List;
 public interface HouseholdMemberService {
     List<HouseholdMemberDto> getAllHouseholdMembers(Long participantId);
 
-    List<HouseholdMemberDto> saveAllHouseholdMembers(List<HouseholdMemberDto> householdMemberDtoList);
+    List<HouseholdMemberDto> saveAllHouseholdMembers(List<HouseholdMemberDto> HouseholdMemberDtoList);
 }

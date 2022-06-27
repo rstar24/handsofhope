@@ -42,22 +42,22 @@ public class ParticipantServiceImpl implements ParticipantService {
     }
 
     @Override
-    public ParticipantIdentityDto saveParticipantIdentity(ParticipantIdentityDto participantIdentityDto) {
+    public ParticipantIdentityDto saveParticipantIdentity(ParticipantIdentityDto ParticipantIdentityDto) {
         Participant participant = null;
-        if(participantIdentityDto.getParticipantId() == 0){
+        if(ParticipantIdentityDto.getParticipantId() == 0){
             participant = new Participant();
-            modelMapper.map(participantIdentityDto, participant);
+            modelMapper.map(ParticipantIdentityDto, participant);
             participant.setCreationDate(LocalDate.now());
             participant.setType("CYFM");
             participant.setStatus("ACTIVE");
         }else {
-            participant = readParticipant(participantIdentityDto.getParticipantId());
-            modelMapper.map(participantIdentityDto, participant);
+            participant = readParticipant(ParticipantIdentityDto.getParticipantId());
+            modelMapper.map(ParticipantIdentityDto, participant);
         }
         participant.setLastwritten(LocalDateTime.now());
         participant = participantRepository.save(participant);
-        participantIdentityDto.setParticipantId(participant.getParticipantId());
-        return participantIdentityDto;
+        ParticipantIdentityDto.setParticipantId(participant.getParticipantId());
+        return ParticipantIdentityDto;
     }
 
 }

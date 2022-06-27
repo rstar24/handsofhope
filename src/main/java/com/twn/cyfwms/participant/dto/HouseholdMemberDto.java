@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @AllArgsConstructor
 @NoArgsConstructor
-public class HouseholdMemberDto{
+public class HouseholdMemberDto {
     @Getter @Setter
     private Long participantId;
     @Getter @Setter

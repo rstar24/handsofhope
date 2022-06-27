@@ -17,7 +17,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/v1/participantservice")
-public class TWNParticipantController {
+public class TWNCYFSClientRegistrationController {
 
     @Autowired
     private ParticipantService participantService;
@@ -50,8 +50,8 @@ public class TWNParticipantController {
     @PutMapping(value = "/saveParticipantContact", produces = "application/json")
     @ApiOperation("Save or Update Contact")
     @ResponseStatus(HttpStatus.OK)
-    public ParticipantContactDto saveParticipantContact(ParticipantContactDto participantContactDto) {
-        return participantContactService.saveParticipantContact(participantContactDto);
+    public ParticipantContactDto saveParticipantContact(ParticipantContactDto ParticipantContactDto) {
+        return participantContactService.saveParticipantContact(ParticipantContactDto);
     }
 
     @GetMapping(value = "/getAllHouseholdMembers/{participantid}", produces = "application/json")
@@ -64,8 +64,8 @@ public class TWNParticipantController {
     @PutMapping(value = "/saveAllHouseholdMembers", produces = "application/json")
     @ApiOperation("Save All Household Members")
     @ResponseStatus(HttpStatus.OK)
-    public List<HouseholdMemberDto> saveAllHouseholdMembers(List<HouseholdMemberDto> householdMemberDtoList) {
-        return householdMemberService.saveAllHouseholdMembers(householdMemberDtoList);
+    public List<HouseholdMemberDto> saveAllHouseholdMembers(List<HouseholdMemberDto> HouseholdMemberDtoList) {
+        return householdMemberService.saveAllHouseholdMembers(HouseholdMemberDtoList);
     }
 
 }
