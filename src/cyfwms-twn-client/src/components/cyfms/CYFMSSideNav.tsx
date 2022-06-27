@@ -23,16 +23,16 @@ const CYFMSSideNav = (): ReactElement => {
         <ListItemButton component={Link} to="/cyfms/education_and_employment">
           <ListItemText primary="Education and Employment" />
         </ListItemButton>
-        <ListItemButton disabled component={Link} to="/cyfms/criminal_history">
+        <ListItemButton component={Link} to="/cyfms/criminal_history">
           <ListItemText primary="Criminal History" />
         </ListItemButton>
-        <ListItemButton disabled component={Link} to="/cyfms/family_physician">
+        <ListItemButton component={Link} to="/cyfms/family_physician">
           <ListItemText primary="Family Physician" />
         </ListItemButton>
-        <ListItemButton disabled component={Link} to="/cyfms/cyfms_worker">
+        <ListItemButton component={Link} to="/cyfms/cyfms_worker">
           <ListItemText primary="Conselor / CYFMS Worker" />
         </ListItemButton>
-        <ListItemButton disabled component={Link} to="/cyfms/other_information">
+        <ListItemButton component={Link} to="/cyfms/other_information">
           <ListItemText primary="Other Information" />
         </ListItemButton>
       </List>
