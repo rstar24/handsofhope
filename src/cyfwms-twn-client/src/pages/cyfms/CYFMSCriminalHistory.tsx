@@ -1,11 +1,15 @@
-import { Typography, Box, Button, Checkbox } from "@mui/material";
-
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
+import {
+  Box,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+  Typography,
+} from "@mui/material";
 import AuthLayout from "../../components/auth/layout/AuthLayout";
+import CYFMSInput from "../../components/cyfms/CYFMSInput";
 import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
 import type { FormEvent, ReactElement } from "react";
-import CYFMSInput from "../../components/cyfms/CYFMSInput";
 
 /**
  * The CYFMSCriminalHistory functional component.
@@ -15,6 +19,7 @@ const CYFMSCriminalHistory = (): ReactElement => {
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
   };
+
   return (
     <AuthLayout>
       <CYFMSLayout>

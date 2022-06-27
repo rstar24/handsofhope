@@ -9,17 +9,18 @@ import { store } from "./library/store";
 import theme from "./library/theme";
 import CYFMS from "./pages/cyfms/CYFMS";
 import CYFMSContact from "./pages/cyfms/CYFMSContact";
+import CYFMSCriminalHistory from "./pages/cyfms/CYFMSCriminalHistory";
 import CYFMSEducationAndEmployment from "./pages/cyfms/CYFMSEducationAndEmployment";
 import CYFMSHouseholdMembers from "./pages/cyfms/CYFMSHouseholdMembers";
 import CYFMSOther from "./pages/cyfms/CYFMSOther";
 import CYFMSRegister from "./pages/cyfms/CYFMSRegister";
 import CYFMSSearch from "./pages/cyfms/CYFMSSearch";
+import CYFMSWorker from "./pages/cyfms/CYFMSWorker";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import NotFound404 from "./pages/NotFound404";
 import React, { StrictMode } from "react";
 import type { ReactElement } from "react";
-import CYFMSCriminalHistory from "./pages/cyfms/CYFMSCriminalHistory";
 
 const CYFSWMSApp = (): ReactElement => {
   return (
@@ -48,7 +49,9 @@ const CYFSWMSApp = (): ReactElement => {
                   path="criminal_history"
                   element={<CYFMSCriminalHistory />}
                 />
-                <Route path="other" element={<CYFMSOther />} />
+                <Route path="family_physician" element={<></>} />
+                <Route path="cyfms_worker" element={<CYFMSWorker />} />
+                <Route path="other_information" element={<CYFMSOther />} />
                 <Route path="search" element={<CYFMSSearch />} />
               </Route>
             </Routes>
