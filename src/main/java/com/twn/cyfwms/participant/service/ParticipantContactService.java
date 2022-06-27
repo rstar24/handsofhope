@@ -7,5 +7,5 @@ public interface ParticipantContactService {
 
     ParticipantContactDto readParticipantContact(Long participantId);
 
-    ParticipantContactDto saveParticipantContact(ParticipantContactDto participantContactDto);
+    ParticipantContactDto saveParticipantContact(ParticipantContactDto ParticipantContactDto);
 }

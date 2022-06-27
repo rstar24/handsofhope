@@ -59,37 +59,36 @@ public class Participant implements Serializable {
     @Getter @Setter
     private ParticipantContact participantContact;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "participantid", referencedColumnName = "participantid")
     @Getter @Setter
-    private List<CounselorCFSWorker> counselorCFSWorkerList;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "participantid", referencedColumnName = "participantid")
-    @Getter @Setter
-    private List<CriminalHistory> criminalHistoryList;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "participantid", referencedColumnName = "participantid")
-    @Getter @Setter
-    private List<Education> educationList;
+    private List<HouseholdMember> householdMemberList;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "participantid", referencedColumnName = "participantid")
     @Getter @Setter
-    private List<Employment> employmentList;
+    private List<CounselorCFSWorker> CounselorCFSWorkerList;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "participantid", referencedColumnName = "participantid")
     @Getter @Setter
-    private List<FamilyPhysician> familyPhysicianList;
+    private List<CriminalHistory> CriminalHistoryList;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "participantid", referencedColumnName = "participantid")
+    @Getter @Setter
+    private List<Education> EducationList;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "participantid", referencedColumnName = "participantid")
+    @Getter @Setter
+    private List<Employment> EmploymentList;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "participantid", referencedColumnName = "participantid")
+    @Getter @Setter
+    private List<FamilyPhysician> FamilyPhysicianList;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "participantid", referencedColumnName = "participantid")
     @Getter @Setter
     private List<ParticipantOtherInformation> participantOtherInfoList;
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "householdid", referencedColumnName = "householdid")
-    @Getter @Setter
-    private Household household;
-
 
 }
