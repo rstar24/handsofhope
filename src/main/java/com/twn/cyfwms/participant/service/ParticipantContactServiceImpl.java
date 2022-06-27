@@ -20,32 +20,32 @@ public class ParticipantContactServiceImpl implements ParticipantContactService 
 
     @Override
     public ParticipantContactDto readParticipantContact(Long participantId) {
-        ParticipantContactDto ParticipantContactDto = new ParticipantContactDto();
+        ParticipantContactDto participantContactDto = new ParticipantContactDto();
         if(participantId != 0) {
             ParticipantContact participantContact =
                     participantContactRepository.findByParticipantId(participantId);
-            modelMapper.map(participantContact, ParticipantContactDto);
+            modelMapper.map(participantContact, participantContactDto);
         }
-        return ParticipantContactDto;
+        return participantContactDto;
     }
 
     @Override
-    public ParticipantContactDto saveParticipantContact(ParticipantContactDto ParticipantContactDto) {
+    public ParticipantContactDto saveParticipantContact(ParticipantContactDto participantContactDto) {
         ParticipantContact participantContact = null;
-        if(ParticipantContactDto.getParticipantContactId() == 0){
+        if(participantContactDto.getParticipantContactId() == 0){
             participantContact = new ParticipantContact();
-            modelMapper.map(ParticipantContactDto, participantContact);
+            modelMapper.map(participantContactDto, participantContact);
             participantContact.setCreationDate(LocalDate.now());
             participantContact.setStatus("ACTIVE");
         }else {
             participantContact =
-                    participantContactRepository.findById(ParticipantContactDto.getParticipantContactId()).get();
-            modelMapper.map(ParticipantContactDto, participantContact);
+                    participantContactRepository.findById(participantContactDto.getParticipantContactId()).get();
+            modelMapper.map(participantContactDto, participantContact);
         }
         participantContact.setLastwritten(LocalDateTime.now());
         participantContact = participantContactRepository.save(participantContact);
-        ParticipantContactDto.setParticipantContactId(participantContact.getParticipantContactId());
-        return ParticipantContactDto;
+        participantContactDto.setParticipantContactId(participantContact.getParticipantContactId());
+        return participantContactDto;
     }
 
 }

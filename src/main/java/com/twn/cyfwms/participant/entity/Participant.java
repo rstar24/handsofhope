@@ -67,28 +67,30 @@ public class Participant implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "participantid", referencedColumnName = "participantid")
     @Getter @Setter
-    private List<CounselorCFSWorker> CounselorCFSWorkerList;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<CounselorCFSWorker> counselorCFSWorkerList;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "participantid", referencedColumnName = "participantid")
     @Getter @Setter
-    private List<CriminalHistory> CriminalHistoryList;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private CriminalHistory criminalHistory;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "participantid", referencedColumnName = "participantid")
     @Getter @Setter
-    private List<Education> EducationList;
+    private Education education;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "participantid", referencedColumnName = "participantid")
+    @Getter @Setter
+    private Employment employment;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "participantid", referencedColumnName = "participantid")
     @Getter @Setter
-    private List<Employment> EmploymentList;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "participantid", referencedColumnName = "participantid")
-    @Getter @Setter
-    private List<FamilyPhysician> FamilyPhysicianList;
+    private List<FamilyPhysician> familyPhysicianList;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "participantid", referencedColumnName = "participantid")
     @Getter @Setter
-    private List<ParticipantOtherInformation> participantOtherInfoList;
+    private ParticipantOtherInformation participantOtherInfo;
 
 }

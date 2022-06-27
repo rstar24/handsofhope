@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CriminalHistoryRepository extends JpaRepository<CriminalHistory, Long> {
+    CriminalHistory findByParticipantId(Long participantId);
 }

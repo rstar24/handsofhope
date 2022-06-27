@@ -1,11 +1,7 @@
 package com.twn.cyfwms.participant.api;
 
-import com.twn.cyfwms.participant.dto.HouseholdMemberDto;
-import com.twn.cyfwms.participant.dto.ParticipantContactDto;
-import com.twn.cyfwms.participant.dto.ParticipantIdentityDto;
-import com.twn.cyfwms.participant.service.HouseholdMemberService;
-import com.twn.cyfwms.participant.service.ParticipantContactService;
-import com.twn.cyfwms.participant.service.ParticipantService;
+import com.twn.cyfwms.participant.dto.*;
+import com.twn.cyfwms.participant.service.*;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +21,12 @@ public class TWNParticipantController {
     private ParticipantContactService participantContactService;
     @Autowired
     private HouseholdMemberService householdMemberService;
+    @Autowired
+    private EducationService educationService;
+    @Autowired
+    private EmploymentService employmentService;
+    @Autowired
+    CriminalHistoryService criminalHistoryService;
 
     @GetMapping(value = "/readParticipantIdentity/{participantid}", produces = "application/json")
     @ApiOperation("Read Identity")
@@ -66,6 +68,48 @@ public class TWNParticipantController {
     @ResponseStatus(HttpStatus.OK)
     public List<HouseholdMemberDto> saveAllHouseholdMembers(List<HouseholdMemberDto> HouseholdMemberDtoList) {
         return householdMemberService.saveAllHouseholdMembers(HouseholdMemberDtoList);
+    }
+
+    @GetMapping(value = "/readEducation/{participantid}", produces = "application/json")
+    @ApiOperation("Read Education")
+    @ResponseStatus(HttpStatus.OK)
+    public EducationDto readEducation(@PathVariable("participantid") Long participantId) {
+        return educationService.readEducation(participantId);
+    }
+
+    @PutMapping(value = "/saveEducation", produces = "application/json")
+    @ApiOperation("Save or Update Education")
+    @ResponseStatus(HttpStatus.OK)
+    public EducationDto saveEducation(EducationDto educationDto) {
+        return educationService.saveEducation(educationDto);
+    }
+
+    @GetMapping(value = "/readEmployment/{participantid}", produces = "application/json")
+    @ApiOperation("Read Employment")
+    @ResponseStatus(HttpStatus.OK)
+    public EmploymentDto readEmployment(@PathVariable("participantid") Long participantId) {
+        return employmentService.readEmployment(participantId);
+    }
+
+    @PutMapping(value = "/saveEmployment", produces = "application/json")
+    @ApiOperation("Save or Update Employment")
+    @ResponseStatus(HttpStatus.OK)
+    public EmploymentDto saveEmployment(EmploymentDto employmentDto) {
+        return employmentService.saveEmployment(employmentDto);
+    }
+
+    @GetMapping(value = "/readCriminalHistory/{participantid}", produces = "application/json")
+    @ApiOperation("Read Criminal History")
+    @ResponseStatus(HttpStatus.OK)
+    public CriminalHistoryDto readCriminalHistory(@PathVariable("participantid") Long participantId) {
+        return criminalHistoryService.readCriminalHistory(participantId);
+    }
+
+    @PutMapping(value = "/saveCriminalHistory", produces = "application/json")
+    @ApiOperation("Save or Update Criminal History")
+    @ResponseStatus(HttpStatus.OK)
+    public CriminalHistoryDto saveCriminalHistory(CriminalHistoryDto criminalHistoryDto) {
+        return criminalHistoryService.saveCriminalHistory(criminalHistoryDto);
     }
 
 }
