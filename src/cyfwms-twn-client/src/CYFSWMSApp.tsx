@@ -19,6 +19,7 @@ import Login from "./pages/Login";
 import NotFound404 from "./pages/NotFound404";
 import React, { StrictMode } from "react";
 import type { ReactElement } from "react";
+import CYFMSCriminalHistory from "./pages/cyfms/CYFMSCriminalHistory";
 
 const CYFSWMSApp = (): ReactElement => {
   return (
@@ -42,6 +43,10 @@ const CYFSWMSApp = (): ReactElement => {
                 <Route
                   path="education_and_employment"
                   element={<CYFMSEducationAndEmployment />}
+                />
+                <Route
+                  path="criminal_history"
+                  element={<CYFMSCriminalHistory />}
                 />
                 <Route path="other" element={<CYFMSOther />} />
                 <Route path="search" element={<CYFMSSearch />} />
