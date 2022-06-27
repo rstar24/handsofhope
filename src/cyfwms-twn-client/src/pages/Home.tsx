@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-import Layout from "../components/auth/layout/Layout";
+import AuthLayout from "../components/auth/layout/AuthLayout";
 import React from "react";
 import type { ReactElement, ReactNode } from "react";
 
@@ -83,7 +83,7 @@ const RenderIcons = (icons: IconType[]): ReactNode[] => {
  */
 const Home = (): ReactElement => {
   return (
-    <Layout>
+    <AuthLayout>
       <Box
         sx={{
           display: "flex",
@@ -103,7 +103,7 @@ const Home = (): ReactElement => {
           {RenderIcons(icons)}
         </Box>
       </Box>
-    </Layout>
+    </AuthLayout>
   );
 };
 

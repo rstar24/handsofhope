@@ -3,7 +3,7 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
-import Layout from "../../components/auth/layout/Layout";
+import AuthLayout from "../../components/auth/layout/AuthLayout";
 import CYFMSHeader from "../../components/cyfms/CYFMSHeader";
 import React from "react";
 import theme from "../../library/theme";
@@ -20,7 +20,7 @@ const Item = styled(Paper)(({ theme }) => ({
  */
 const Other = () => {
   return (
-    <Layout>
+    <AuthLayout>
       <CYFMSHeader />
       <Grid container spacing={0}>
         <Grid item xs={3} sm={10} md={1}>
@@ -146,7 +146,7 @@ const Other = () => {
           </Grid>
         </Grid>
       </Grid>
-    </Layout>
+    </AuthLayout>
   );
 };
 
