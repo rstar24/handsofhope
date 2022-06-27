@@ -1,16 +1,16 @@
 import { Box, Button } from "@mui/material";
 import AuthLayout from "../../components/auth/layout/AuthLayout";
-import CYFMSDropdown from "../../components/cyfms/CYFMSDropdown";
 import CYFMSInput from "../../components/cyfms/CYFMSInput";
 import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
 import React from "react";
 import type { FormEvent, ReactElement } from "react";
+import CYFMSDropdown from "../../components/cyfms/CYFMSDropdown";
 
 /**
- * The CYFMSRegister functional component.
- * @returns CYFMSRegister component skeleton.
+ * The CYFMSHouseholdMembers functional component.
+ * @returns CYFMSHouseholdMembers component skeleton.
  */
-const CYFMSRegister = (): ReactElement => {
+const CYFMSHouseholdMembers = (): ReactElement => {
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
   };
@@ -28,13 +28,15 @@ const CYFMSRegister = (): ReactElement => {
           }}
           onSubmit={submitHandler}
         >
-          <CYFMSInput id="firstName" value="First Name" />
-          <CYFMSInput id="middleName" value="Middle Name" />
-          <CYFMSInput id="lastName" value="Last Name" />
-          <CYFMSInput id="dateOfBirth" value="Date of Birth" />
-          <CYFMSDropdown id="gender" value="Gender" />
+          <CYFMSInput id="memberName" value="Name" />
+          <CYFMSInput id="memberDOB" value="Date of Birth" />
+          <CYFMSInput id="memberResiding" value="Residing" />
+          <CYFMSDropdown id="memberGender" value="Member Gender" />
           <Button variant="contained" type="submit">
-            Submit
+            Add More
+          </Button>
+          <Button variant="contained" type="submit">
+            Next
           </Button>
         </Box>
       </CYFMSLayout>
@@ -42,4 +44,4 @@ const CYFMSRegister = (): ReactElement => {
   );
 };
 
-export default CYFMSRegister;
+export default CYFMSHouseholdMembers;

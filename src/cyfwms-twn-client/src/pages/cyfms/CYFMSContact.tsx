@@ -1,16 +1,15 @@
 import { Box, Button } from "@mui/material";
 import AuthLayout from "../../components/auth/layout/AuthLayout";
-import CYFMSDropdown from "../../components/cyfms/CYFMSDropdown";
 import CYFMSInput from "../../components/cyfms/CYFMSInput";
 import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
 import React from "react";
 import type { FormEvent, ReactElement } from "react";
 
 /**
- * The CYFMSRegister functional component.
- * @returns CYFMSRegister component skeleton.
+ * The CYFMSContact functional component.
+ * @returns CYFMSContact component skeleton.
  */
-const CYFMSRegister = (): ReactElement => {
+const CYFMSContact = (): ReactElement => {
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
   };
@@ -28,13 +27,16 @@ const CYFMSRegister = (): ReactElement => {
           }}
           onSubmit={submitHandler}
         >
-          <CYFMSInput id="firstName" value="First Name" />
-          <CYFMSInput id="middleName" value="Middle Name" />
-          <CYFMSInput id="lastName" value="Last Name" />
-          <CYFMSInput id="dateOfBirth" value="Date of Birth" />
-          <CYFMSDropdown id="gender" value="Gender" />
+          <CYFMSInput id="addrLine1" value="Address Line 1" />
+          <CYFMSInput id="addrLine2" value="Address Line 2" />
+          <CYFMSInput id="city" value="Province" />
+          <CYFMSInput id="postalCode" value="Postal Code" />
+          <CYFMSInput id="homePhone" value="Home Phone" />
+          <CYFMSInput id="cellPhone" value="Cell Phone" />
+          <CYFMSInput id="workPhone" value="Work Phone" />
+          <CYFMSInput id="emailAddr" value="Email Address" />
           <Button variant="contained" type="submit">
-            Submit
+            Next
           </Button>
         </Box>
       </CYFMSLayout>
@@ -42,4 +44,4 @@ const CYFMSRegister = (): ReactElement => {
   );
 };
 
-export default CYFMSRegister;
+export default CYFMSContact;
