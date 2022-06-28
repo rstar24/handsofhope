@@ -1,5 +1,4 @@
 import { Box, Button, Typography } from "@mui/material";
-import AuthLayout from "../../components/auth/layout/AuthLayout";
 import CYFMSInput from "../../components/cyfms/CYFMSInput";
 import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
 import type { FormEvent, ReactElement } from "react";
@@ -14,33 +13,31 @@ const CYFMSOtherInformation = (): ReactElement => {
   };
 
   return (
-    <AuthLayout>
-      <CYFMSLayout>
-        <Box
-          component="form"
-          sx={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "2rem 2rem",
-            mb: "auto",
-          }}
-          onSubmit={submitHandler}
-        >
-          <Typography>Other Information</Typography>
-          <CYFMSInput id="strengths" value="Strengths" />
-          <CYFMSInput id="weaknesses" value="Weaknesses" />
-          <CYFMSInput id="skills" value="Skills" />
-          <CYFMSInput id="experiences" value="Experiences" />
-          <CYFMSInput
-            id="effectiveCopingSkills"
-            value="Effective Coping Skills"
-          />
-          <Button variant="contained" type="submit">
-            Next
-          </Button>
-        </Box>
-      </CYFMSLayout>
-    </AuthLayout>
+    <CYFMSLayout>
+      <Box
+        component="form"
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "2rem 2rem",
+          mb: "auto",
+        }}
+        onSubmit={submitHandler}
+      >
+        <Typography>Other Information</Typography>
+        <CYFMSInput id="strengths" value="Strengths" />
+        <CYFMSInput id="weaknesses" value="Weaknesses" />
+        <CYFMSInput id="skills" value="Skills" />
+        <CYFMSInput id="experiences" value="Experiences" />
+        <CYFMSInput
+          id="effectiveCopingSkills"
+          value="Effective Coping Skills"
+        />
+        <Button variant="contained" type="submit">
+          Next
+        </Button>
+      </Box>
+    </CYFMSLayout>
   );
 };
 

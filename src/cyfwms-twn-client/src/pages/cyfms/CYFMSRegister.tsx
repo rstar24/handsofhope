@@ -1,7 +1,6 @@
 import { Box, Button } from "@mui/material";
 import { doPostRegister } from "../../features/register/registerSlice";
 import { useAppDispatch } from "../../library/hooks";
-import AuthLayout from "../../components/auth/layout/AuthLayout";
 import CYFMSDropdown from "../../components/cyfms/CYFMSDropdown";
 import CYFMSInput from "../../components/cyfms/CYFMSInput";
 import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
@@ -42,30 +41,28 @@ const CYFMSRegister = (): ReactElement => {
   };
 
   return (
-    <AuthLayout>
-      <CYFMSLayout>
-        <Box
-          component="form"
-          sx={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "2rem 2rem",
-            mb: "auto",
-          }}
-          onSubmit={submitHandler}
-        >
-          <CYFMSInput id="firstname" value="First Name" />
-          <CYFMSInput id="middleName" value="Middle Name" />
-          <CYFMSInput id="surname" value="Last Name" />
-          <CYFMSInput id="dateOfBirth" value="Date of Birth" />
-          <CYFMSDropdown id="gender" value="Gender" />
-          <CYFMSDropdown id="maritalStatus" value="Marital Status" />
-          <Button variant="contained" type="submit">
-            Submit
-          </Button>
-        </Box>
-      </CYFMSLayout>
-    </AuthLayout>
+    <CYFMSLayout>
+      <Box
+        component="form"
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "2rem 2rem",
+          mb: "auto",
+        }}
+        onSubmit={submitHandler}
+      >
+        <CYFMSInput id="firstname" value="First Name" />
+        <CYFMSInput id="middleName" value="Middle Name" />
+        <CYFMSInput id="surname" value="Last Name" />
+        <CYFMSInput id="dateOfBirth" value="Date of Birth" />
+        <CYFMSDropdown id="gender" value="Gender" />
+        <CYFMSDropdown id="maritalStatus" value="Marital Status" />
+        <Button variant="contained" type="submit">
+          Submit
+        </Button>
+      </Box>
+    </CYFMSLayout>
   );
 };
 

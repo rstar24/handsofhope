@@ -1,16 +1,17 @@
-import { Box, Button } from "@mui/material";
-import { Link } from "react-router-dom";
 import AuthLayout from "../../components/auth/layout/AuthLayout";
 import CYFMSHeader from "../../components/cyfms/CYFMSHeader";
-import React from "react";
-import type { ReactElement } from "react";
-import { useAppDispatch, useAppSelector } from "../../library/hooks";
-import { doGetRegister } from "../../features/register/registerSlice";
+import CYFMSPopup from "../../components/cyfms/CYFMSPopup";
 import {
   doGetGender,
   doGetMaritalStatus,
   doGetRole,
 } from "../../features/codetable/codetableSlice";
+import { doGetRegister } from "../../features/register/registerSlice";
+import { useAppDispatch, useAppSelector } from "../../library/hooks";
+import { Box, Button } from "@mui/material";
+import React from "react";
+import { Link } from "react-router-dom";
+import type { ReactElement } from "react";
 
 /**
  * The CYFMS functional component.
@@ -21,6 +22,10 @@ const CYFMS = (): ReactElement => {
   const { participantId } = useAppSelector(
     (state) => (state as any).registration
   );
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const registrationHandler = () => {
     dispatch(doGetRegister(participantId));
@@ -55,7 +60,10 @@ const CYFMS = (): ReactElement => {
               color: "black",
               border: "1px solid black",
             }}
-            onClick={registrationHandler}
+            onClick={() => {
+              handleOpen();
+              registrationHandler();
+            }}
           >
             Register a Child, Youth, or Family Member
           </Button>
@@ -67,11 +75,13 @@ const CYFMS = (): ReactElement => {
               color: "black",
               border: "1px solid black",
             }}
+            onClick={handleOpen}
           >
             Search a Child, Youth, or Family Member
           </Button>
         </Box>
       </Box>
+      <CYFMSPopup open={open} onClose={handleClose} children={<></>} />
     </AuthLayout>
   );
 };

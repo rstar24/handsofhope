@@ -1,5 +1,4 @@
 import { Box, Button, Typography } from "@mui/material";
-import AuthLayout from "../../components/auth/layout/AuthLayout";
 import CYFMSInput from "../../components/cyfms/CYFMSInput";
 import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
 import React from "react";
@@ -16,32 +15,30 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
   };
 
   return (
-    <AuthLayout>
-      <CYFMSLayout>
-        <Box
-          component="form"
-          sx={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "2rem 2rem",
-            mb: "auto",
-          }}
-          onSubmit={submitHandler}
-        >
-          <Typography>Education</Typography>
-          <CYFMSDropdown id="attendingSchool" value="Attending School?" />
-          <CYFMSInput id="school" value="School" />
-          <CYFMSInput id="grade" value="Grade" />
-          <Typography>Employment</Typography>
-          <CYFMSDropdown id="employed" value="Employed?" />
-          <CYFMSDropdown id="typeOfEmployment" value="Type of Employment" />
-          <CYFMSInput id="desiredProfession" value="Desired Profession" />
-          <Button variant="contained" type="submit">
-            Next
-          </Button>
-        </Box>
-      </CYFMSLayout>
-    </AuthLayout>
+    <CYFMSLayout>
+      <Box
+        component="form"
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "2rem 2rem",
+          mb: "auto",
+        }}
+        onSubmit={submitHandler}
+      >
+        <Typography>Education</Typography>
+        <CYFMSDropdown id="attendingSchool" value="Attending School?" />
+        <CYFMSInput id="school" value="School" />
+        <CYFMSInput id="grade" value="Grade" />
+        <Typography>Employment</Typography>
+        <CYFMSDropdown id="employed" value="Employed?" />
+        <CYFMSDropdown id="typeOfEmployment" value="Type of Employment" />
+        <CYFMSInput id="desiredProfession" value="Desired Profession" />
+        <Button variant="contained" type="submit">
+          Next
+        </Button>
+      </Box>
+    </CYFMSLayout>
   );
 };
 
