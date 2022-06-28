@@ -1,25 +1,20 @@
 import { Box, Button } from "@mui/material";
+import { doPostRegister } from "../../features/register/registerSlice";
+import { useAppDispatch } from "../../library/hooks";
 import AuthLayout from "../../components/auth/layout/AuthLayout";
 import CYFMSDropdown from "../../components/cyfms/CYFMSDropdown";
 import CYFMSInput from "../../components/cyfms/CYFMSInput";
 import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
 import React, { useState } from "react";
 import type { FormEvent, ReactElement } from "react";
-import { useAppDispatch, useAppSelector } from "../../library/hooks";
-import {
-  doPostRegister,
-  RegisterPostData,
-} from "../../features/register/registerSlice";
 
 /**
  * The CYFMSRegister functional component.
  * @returns CYFMSRegister component skeleton.
  */
 const CYFMSRegister = (): ReactElement => {
-  // const participantId = useAppSelector(
-  //   (state) => (state as any).register.participantId
-  // );
   const dispatch = useAppDispatch();
+
   const [user, setUser] = useState({
     participantId: 0,
     firstname: "",
@@ -27,19 +22,21 @@ const CYFMSRegister = (): ReactElement => {
     surname: "",
     dateOfBirth: "",
     gender: "",
+    maritalStatus: "",
   });
+
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
     const data: any = e.currentTarget;
     const newUser = {
       participantId: 0,
-      firstname: data.firstname.value,
+      firstname: data.firstName.value,
       middleName: data.middleName.value,
-      surname: data.surname.value,
+      surname: data.lastName.value,
       dateOfBirth: data.dateOfBirth.value,
       gender: data.gender.value,
+      maritalStatus: data.maritalStatus.value,
     };
-    console.log(newUser);
     setUser(newUser);
     dispatch(doPostRegister({ user: newUser }));
   };
@@ -62,6 +59,7 @@ const CYFMSRegister = (): ReactElement => {
           <CYFMSInput id="surname" value="Last Name" />
           <CYFMSInput id="dateOfBirth" value="Date of Birth" />
           <CYFMSDropdown id="gender" value="Gender" />
+          <CYFMSDropdown id="maritalStatus" value="Marital Status" />
           <Button variant="contained" type="submit">
             Submit
           </Button>
