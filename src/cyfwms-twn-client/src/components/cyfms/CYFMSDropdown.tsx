@@ -30,10 +30,10 @@ const CYFMSDropdown = (
       <FormLabel htmlFor={props.id} sx={{ p: 1 }}>
         {props.value}
       </FormLabel>
-      <select name="pets" id={props.id}>
-        <option value="">Male</option>
-        <option value="dog">Female</option>
-        <option value="cat">LGBTQ</option>
+      <select name="gender" id={props.id}>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="LGBTQ">LGBTQ</option>
       </select>
     </FormControl>
   );

@@ -4,12 +4,30 @@ import AuthLayout from "../../components/auth/layout/AuthLayout";
 import CYFMSHeader from "../../components/cyfms/CYFMSHeader";
 import React from "react";
 import type { ReactElement } from "react";
+import { useAppDispatch, useAppSelector } from "../../library/hooks";
+import { doGetRegister } from "../../features/register/registerSlice";
+import {
+  doGetGender,
+  doGetMaritalStatus,
+  doGetRole,
+} from "../../features/codetable/codetableSlice";
 
 /**
  * The CYFMS functional component.
  * @returns CYFMS component skeleton.
  */
 const CYFMS = (): ReactElement => {
+  const dispatch = useAppDispatch();
+  const { participantId } = useAppSelector(
+    (state) => (state as any).registration
+  );
+
+  const registrationHandler = () => {
+    dispatch(doGetRegister(participantId));
+    dispatch(doGetGender());
+    dispatch(doGetMaritalStatus());
+    dispatch(doGetRole());
+  };
   return (
     <AuthLayout>
       <CYFMSHeader />
@@ -37,6 +55,7 @@ const CYFMS = (): ReactElement => {
               color: "black",
               border: "1px solid black",
             }}
+            onClick={registrationHandler}
           >
             Register a Child, Youth, or Family Member
           </Button>

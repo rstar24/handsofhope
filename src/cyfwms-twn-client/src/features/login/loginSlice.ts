@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { doLoginAPI } from "./loginAPI";
 import type { AxiosResponse } from "axios";
-import jwt from "jwt-decode";
 
 export interface LoginData {
   username: string;
@@ -10,6 +9,7 @@ export interface LoginData {
 
 export interface LoginState {
   isLoggedIn: boolean;
+  jwtToken: string;
   status: "failed" | "loading" | "success";
 }
 
@@ -26,6 +26,7 @@ export const loginSlice = createSlice({
   name: "login",
   initialState: {
     isLoggedIn: false,
+    jwtToken: "",
     status: "failed",
   },
   reducers: {},
@@ -34,8 +35,8 @@ export const loginSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(doLogin.fulfilled, (state, action) => {
       try {
-        const decodedPayload: any = jwt(action.payload);
-        console.log(decodedPayload);
+        //const decodedPayload: any = jwt(action.payload.jwtToken);
+        state.jwtToken = action.payload.jwtToken;
       } catch (err) {
         console.log(err);
       }
