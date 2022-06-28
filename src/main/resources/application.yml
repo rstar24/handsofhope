@@ -5,9 +5,12 @@ spring:
   application:
     name: TWN-SERVER
   datasource:
-    url: jdbc:mysql://localhost:3306/twn?allowPublicKeyRetrieval=true&useSSL=false
+#    url: jdbc:sqlserver://cyfmws-server.database.windows.net:1433;database=cyfmwsdb;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
+#    username: admin1
+#    password: Password@123
+    url: jdbc:mysql://localhost:3306/twn
     username: root
-    password: password
+    password: Sohani15@
   jpa:
     hibernate:
       ddl-auto: none
