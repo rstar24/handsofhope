@@ -6,6 +6,7 @@ import {
   doGetMaritalStatus,
   doGetRole,
 } from "../../features/codetable/codetableSlice";
+import { doGetContact } from "../../features/contact/contactSlice";
 import { doGetRegister } from "../../features/register/registerSlice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { Box, Button } from "@mui/material";
@@ -32,6 +33,7 @@ const CYFMS = (): ReactElement => {
     dispatch(doGetGender());
     dispatch(doGetMaritalStatus());
     dispatch(doGetRole());
+    dispatch(doGetContact(participantId));
   };
   return (
     <AuthLayout>

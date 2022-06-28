@@ -6,7 +6,14 @@ export interface RegisterGetData {
   participantId: Number;
 }
 export interface RegisterPostData {
-  user: {};
+  user: {
+    firstname: "",
+    middleName: "",
+    surname: "",
+    dateOfBirth: "",
+    gender: "",
+    maritalStatus: "",
+  };
 }
 
 export interface RegisterGetState {
@@ -46,7 +53,14 @@ export const registerSlice = createSlice({
   name: "register",
   initialState: {
     participantId: 0,
-    user: null,
+    user: {
+      firstname: "",
+      middleName: "",
+      surname: "",
+      dateOfBirth: "",
+      gender: "",
+      maritalStatus: "",
+    },
     jwtToken: "",
     status: "failed",
   },

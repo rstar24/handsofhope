@@ -52,9 +52,9 @@ const CYFMSRegister = (): ReactElement => {
         }}
         onSubmit={submitHandler}
       >
-        <CYFMSInput id="firstname" value="First Name" />
+        <CYFMSInput id="firstName" value="First Name" />
         <CYFMSInput id="middleName" value="Middle Name" />
-        <CYFMSInput id="surname" value="Last Name" />
+        <CYFMSInput id="lastName" value="Last Name" />
         <CYFMSInput id="dateOfBirth" value="Date of Birth" />
         <CYFMSDropdown id="gender" value="Gender" />
         <CYFMSDropdown id="maritalStatus" value="Marital Status" />
