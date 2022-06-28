@@ -1,11 +1,13 @@
 package com.twn.cyfwms.participant.api;
 
 import com.twn.cyfwms.participant.dto.*;
+import com.twn.cyfwms.participant.entity.FamilyPhysician;
 import com.twn.cyfwms.participant.service.*;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +19,12 @@ public class TWNParticipantController {
 
     @Autowired
     private ParticipantService participantService;
+
+    @Autowired
+    ParticipantOtherInformationService participantOtherInformationService;
+
+    @Autowired
+    CounselorCFSWorkerService counselorCFSWorkerService;
     @Autowired
     private ParticipantContactService participantContactService;
     @Autowired
@@ -28,6 +36,9 @@ public class TWNParticipantController {
     @Autowired
     CriminalHistoryService criminalHistoryService;
 
+    @Autowired
+    FamilyPhysicianService familyPhysicianService;
+
     @GetMapping(value = "/readParticipantIdentity/{participantid}", produces = "application/json")
     @ApiOperation("Read Identity")
     @ResponseStatus(HttpStatus.OK)
@@ -38,7 +49,7 @@ public class TWNParticipantController {
     @PutMapping(value = "/saveParticipantIdentity", produces = "application/json")
     @ApiOperation("Save or Update Identity")
     @ResponseStatus(HttpStatus.OK)
-    public ParticipantIdentityDto saveParticipantIdentity(ParticipantIdentityDto participantRequestDto) {
+    public ParticipantIdentityDto saveParticipantIdentity(@RequestBody ParticipantIdentityDto participantRequestDto) {
         return participantService.saveParticipantIdentity(participantRequestDto);
     }
 
@@ -111,5 +122,48 @@ public class TWNParticipantController {
     public CriminalHistoryDto saveCriminalHistory(CriminalHistoryDto criminalHistoryDto) {
         return criminalHistoryService.saveCriminalHistory(criminalHistoryDto);
     }
+
+    @GetMapping(value = "/getAllFamilyPhysicians/{participantid}", produces = "application/json")
+    @ApiOperation("Read All Family Physicians")
+    @ResponseStatus(HttpStatus.OK)
+    public List<FamilyPhysicianDto> getAllFamilyPhysicians(@PathVariable("participantid") Long participantId) {
+        return familyPhysicianService.getAllFamilyPhysicians(participantId);
+    }
+
+    @PutMapping(value = "/saveAllFamilyPhysicians", produces = "application/json")
+    @ApiOperation("Save All Family Physicians")
+    @ResponseStatus(HttpStatus.OK)
+    public List<FamilyPhysicianDto> saveAllFamilyPhysicians(List<FamilyPhysicianDto> FamilyPhysicianDtoList) {
+        return familyPhysicianService.saveAllFamilyPhysicians(FamilyPhysicianDtoList);
+    }
+
+    @GetMapping(value = "/getAllCounselorCFSWorkers/{participantid}", produces = "application/json")
+    @ApiOperation("Read All Counselor CFS Workers")
+    @ResponseStatus(HttpStatus.OK)
+    public List<CounselorCFSWorkersDto> getAllCounselorCFSWorkers(@PathVariable("participantid") Long participantId) {
+        return counselorCFSWorkerService.getAllCounselorCFSWorkers(participantId);
+    }
+
+    @PutMapping(value = "/saveAllCounselorCFSWorkers", produces = "application/json")
+    @ApiOperation("Save All Counselor CFS Workers")
+    @ResponseStatus(HttpStatus.OK)
+    public List<CounselorCFSWorkersDto> saveAllCounselorCFSWorkers(List<CounselorCFSWorkersDto> FamilyPhysicianDtoList) {
+        return counselorCFSWorkerService.saveAllCounselorCFSWorkers(FamilyPhysicianDtoList);
+    }
+
+    @GetMapping(value = "/readParticipantOtherInformation/{participantid}", produces = "application/json")
+    @ApiOperation("Read ParticipantOtherInformation")
+    @ResponseStatus(HttpStatus.OK)
+    public ParticipantOtherInformationServiceDto readParticipantOtherInformation(@PathVariable("participantid") Long participantId) {
+        return participantOtherInformationService.readParticipantOtherInformation(participantId);
+    }
+
+    @PutMapping(value = "/saveParticipantOtherInformation", produces = "application/json")
+    @ApiOperation("Save ParticipantOtherInformation")
+    @ResponseStatus(HttpStatus.OK)
+    public ParticipantOtherInformationServiceDto saveParticipantOtherInformation(ParticipantOtherInformationServiceDto participantOtherInformationServiceDto) {
+        return participantOtherInformationService.saveParticipantOtherInformation(participantOtherInformationServiceDto);
+    }
+
 
 }
