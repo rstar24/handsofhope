@@ -1,17 +1,17 @@
 import axios from "axios";
 import type { AxiosResponse } from "axios";
-import { HouseHoldGetData, HouseHoldPostData } from "./householdSlice";
+import { WorkerGetData, WorkerPostData } from "./workerSlice";
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:9088/v1/participantservice/",
 });
 
-export const doGetHouseHoldAPI = async (
-  data: HouseHoldGetData,
+export const doGetWorkerAPI = async (
+  data: WorkerGetData,
   jwtToken: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.get(
-    "getAllHouseholdMembers/" + data,
+    "getAllCounselorCFSWorkers/" + data,
     {
       headers: { Authorization: "Bearer " + jwtToken },
     }
@@ -19,12 +19,12 @@ export const doGetHouseHoldAPI = async (
   return res;
 };
 
-export const doPostHouseHoldAPI = async (
-  data: HouseHoldPostData,
+export const doPostWorkerAPI = async (
+  data: WorkerPostData,
   jwtToken: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.put(
-    "saveAllHouseholdMembers/",
+    "saveAllCounselorCFSWorkers/",
     data.user,
     {
       headers: { Authorization: "Bearer " + jwtToken },

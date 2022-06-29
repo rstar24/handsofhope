@@ -2,9 +2,11 @@ import AuthLayout from "../../components/auth/layout/AuthLayout";
 import CYFMSHeader from "../../components/cyfms/CYFMSHeader";
 import CYFMSPopup from "../../components/cyfms/CYFMSPopup";
 import {
+  doGetEducation,
   doGetGender,
   doGetMaritalStatus,
   doGetRole,
+  doGetTypeOfEmployee,
 } from "../../features/codetable/codetableSlice";
 import { doGetContact } from "../../features/contact/contactSlice";
 import { doGetRegister } from "../../features/register/registerSlice";
@@ -33,6 +35,8 @@ const CYFMS = (): ReactElement => {
     dispatch(doGetGender());
     dispatch(doGetMaritalStatus());
     dispatch(doGetRole());
+    dispatch(doGetEducation());
+    dispatch(doGetTypeOfEmployee());
     dispatch(doGetContact(participantId));
   };
   return (

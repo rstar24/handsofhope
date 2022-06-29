@@ -2,15 +2,49 @@ import CYFMSDropdown from "../../components/cyfms/CYFMSDropdown";
 import CYFMSInput from "../../components/cyfms/CYFMSInput";
 import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
 import { Box, Button, Typography } from "@mui/material";
-import type { FormEvent, ReactElement } from "react";
+import { FormEvent, ReactElement, useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../library/hooks";
+import { doGetWorker, doPostWorker } from "../../features/worker/workerSlice";
 
 /**
  * The CYFMSWorker functional component.
  * @returns CYFMSWorker component skeleton.
  */
 const CYFMSWorker = (): ReactElement => {
+  const dispatch = useAppDispatch();
+  const participantId = useAppSelector(
+    (state) => (state as any).registration.user.participantId
+  );
+  const data = useAppSelector((state) => (state as any).worker.user);
+  console.log("worker", data);
+  useEffect(() => {
+    dispatch(doGetWorker(participantId));
+  }, []);
+
+  const [contact, setContact] = useState([
+    {
+      participantId: participantId,
+      counselorCFSWorkerId: 0,
+      role: "",
+      name: "",
+      contactInformation: "",
+    },
+  ]);
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
+    const data: any = e.currentTarget;
+    console.log("worker data ", data.cyfmsWorkerName.value);
+    const newContact = [
+      {
+        participantId: participantId,
+        counselorCFSWorkerId: 0,
+        role: data.role.value,
+        name: data.cyfmsWorkerName.value,
+        contactInformation: data.cyfmsWorkerContactInfo.value,
+      },
+    ];
+    setContact(newContact);
+    dispatch(doPostWorker({ user: newContact }));
   };
 
   return (
@@ -26,7 +60,7 @@ const CYFMSWorker = (): ReactElement => {
         onSubmit={submitHandler}
       >
         <Typography>Record 1</Typography>
-        <CYFMSDropdown id="cyfmsWorkerRole" value="Role" />
+        <CYFMSDropdown id="role" value="Role" />
         <CYFMSInput id="cyfmsWorkerName" value="Name" />
         <CYFMSInput id="cyfmsWorkerContactInfo" value="Contact Information" />
         <Button variant="contained">Add More</Button>

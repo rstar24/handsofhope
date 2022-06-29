@@ -4,14 +4,17 @@ import RegistrationReducer from "../features/register/registerSlice";
 import codetableReducer from "../features/codetable/codetableSlice";
 import contactReducer from "../features/contact/contactSlice";
 import householdReducer from "../features/householdMember/householdSlice";
-
+import familyPhysiciansReducer from "../features/familyPhysicians/familyPhysiciansSlice";
+import workerReducer from "../features/worker/workerSlice";
 export const store = configureStore({
   reducer: {
     login: loginReducer,
     registration: RegistrationReducer,
     codetable: codetableReducer,
-    contact:contactReducer,
-    household:householdReducer
+    contact: contactReducer,
+    household: householdReducer,
+    familyPhysicians: familyPhysiciansReducer,
+    worker: workerReducer,
   },
 });
 
