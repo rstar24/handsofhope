@@ -49,5 +49,5 @@ jobs:
         with:
           app-name: 'cyfwms-twn-app'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B0D25A35724C4947B11B3DA570E7FFA3 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_6BCC05ADD8844DD1BAB0B6FFF589EBB9 }}
           package: '*.jar'
