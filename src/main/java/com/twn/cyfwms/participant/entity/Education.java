@@ -1,6 +1,8 @@
 package com.twn.cyfwms.participant.entity;
 
 import lombok.*;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -33,12 +35,14 @@ public class Education implements Serializable {
     private String grade;
     @Getter @Setter @Column(name = "status")
     private String status;
+    @CreatedDate
     @Getter @Setter @Column(name = "creationdate")
     private LocalDate creationDate;
     @Getter @Setter @Column(name = "startate")
     private LocalDate startDate;
     @Getter @Setter @Column(name = "enddate")
     private LocalDate endDate;
+    @UpdateTimestamp
     @Getter @Setter @Column(name = "lastwritten")
     private LocalDateTime lastwritten;
     @Getter @Setter @Column(name = "participantid")
