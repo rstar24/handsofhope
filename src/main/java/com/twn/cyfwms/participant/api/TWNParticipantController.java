@@ -36,6 +36,8 @@ public class TWNParticipantController {
     private EmploymentService employmentService;
     @Autowired
     CriminalHistoryService criminalHistoryService;
+    @Autowired
+    EducationAndEmploymentService educationAndEmploymentService;
 
     @Autowired
     FamilyPhysicianService familyPhysicianService;
@@ -82,33 +84,6 @@ public class TWNParticipantController {
         return householdMemberService.saveAllHouseholdMembers(HouseholdMemberDtoList);
     }
 
-    @GetMapping(value = "/readEducation/{participantid}", produces = "application/json")
-    @ApiOperation("Read Education")
-    @ResponseStatus(HttpStatus.OK)
-    public EducationDto readEducation(@PathVariable("participantid") Long participantId) {
-        return educationService.readEducation(participantId);
-    }
-
-    @PutMapping(value = "/saveEducation", produces = "application/json")
-    @ApiOperation("Save or Update Education")
-    @ResponseStatus(HttpStatus.OK)
-    public EducationDto saveEducation(@RequestBody EducationDto educationDto) {
-        return educationService.saveEducation(educationDto);
-    }
-
-    @GetMapping(value = "/readEmployment/{participantid}", produces = "application/json")
-    @ApiOperation("Read Employment")
-    @ResponseStatus(HttpStatus.OK)
-    public EmploymentDto readEmployment(@PathVariable("participantid")  Long participantId) {
-        return employmentService.readEmployment(participantId);
-    }
-
-    @PutMapping(value = "/saveEmployment", produces = "application/json")
-    @ApiOperation("Save or Update Employment")
-    @ResponseStatus(HttpStatus.OK)
-    public EmploymentDto saveEmployment(@RequestBody EmploymentDto employmentDto) {
-        return employmentService.saveEmployment(employmentDto);
-    }
 
     @GetMapping(value = "/readCriminalHistory/{participantid}", produces = "application/json")
     @ApiOperation("Read Criminal History")
@@ -164,6 +139,20 @@ public class TWNParticipantController {
     @ResponseStatus(HttpStatus.OK)
     public ParticipantOtherInformationServiceDto saveParticipantOtherInformation(@RequestBody ParticipantOtherInformationServiceDto participantOtherInformationServiceDto) {
         return participantOtherInformationService.saveParticipantOtherInformation(participantOtherInformationServiceDto);
+    }
+
+    @GetMapping(value = "/readEmploymentAndEducation/{participantid}", produces = "application/json")
+    @ApiOperation("Read Participant Employement and Education")
+    @ResponseStatus(HttpStatus.OK)
+    public EducationAndEmploymentCompositeDto readEmploymentAndEducation(@PathVariable("participantid") Long participantId) {
+        return educationAndEmploymentService.readEducationAndEmployment(participantId);
+    }
+
+    @PutMapping(value = "/saveEmploymentAndEducation", produces = "application/json")
+    @ApiOperation("Save Participant Employment And Education")
+    @ResponseStatus(HttpStatus.OK)
+    public EducationAndEmploymentCompositeDto savesaveEmploymentAndEducation(@RequestBody EducationAndEmploymentCompositeDto educationAndEmploymentCompositeDto) {
+        return educationAndEmploymentService.saveEducationAndEmployment(educationAndEmploymentCompositeDto);
     }
 
 

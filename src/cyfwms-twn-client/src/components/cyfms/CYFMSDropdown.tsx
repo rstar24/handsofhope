@@ -1,10 +1,11 @@
 import { FormControl, FormLabel } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import type {
   ElementType,
   ReactElement,
   ComponentPropsWithoutRef,
 } from "react";
+import { useAppSelector } from "../../library/hooks";
 
 /**
  * The CYFMSDropdown functional component.
@@ -14,6 +15,7 @@ import type {
 const CYFMSDropdown = (
   props: ComponentPropsWithoutRef<ElementType>
 ): ReactElement => {
+  const codetable = useAppSelector((state) => (state as any).codetable);
   return (
     <FormControl
       sx={{
@@ -25,11 +27,41 @@ const CYFMSDropdown = (
       <FormLabel htmlFor={props.id} sx={{ p: 1 }}>
         {props.value}
       </FormLabel>
-      <select name="gender" id={props.id}>
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
-        <option value="LGBTQ">LGBTQ</option>
-      </select>
+      {props.id === "maritalStatus" && (
+        <select name={props.id} id={props.id}>
+          {Object.keys(codetable.maritalstatus).map((key: any, index) => {
+            return <option>{key}</option>;
+          })}
+        </select>
+      )}
+      {props.id === "gender" && (
+        <select name={props.id} id={props.id}>
+          {Object.keys(codetable.gender).map((key: any, index) => {
+            return <option>{key}</option>;
+          })}
+        </select>
+      )}
+      {props.id === "education" && (
+        <select name={props.id} id={props.id}>
+          {Object.keys(codetable.education).map((key: any, index) => {
+            return <option>{key}</option>;
+          })}
+        </select>
+      )}
+      {props.id === "role" && (
+        <select name={props.id} id={props.id}>
+          {Object.keys(codetable.role).map((key: any, index) => {
+            return <option>{key}</option>;
+          })}
+        </select>
+      )}
+      {props.id === "typeOfEmployee" && (
+        <select name={props.id} id={props.id}>
+          {Object.keys(codetable.typeOfEmployee).map((key: any, index) => {
+            return <option>{key}</option>;
+          })}
+        </select>
+      )}
     </FormControl>
   );
 };

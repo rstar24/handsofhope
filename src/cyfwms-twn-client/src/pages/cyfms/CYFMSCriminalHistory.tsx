@@ -8,16 +8,79 @@ import {
 } from "@mui/material";
 import CYFMSInput from "../../components/cyfms/CYFMSInput";
 import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
+import { useAppDispatch, useAppSelector } from "../../library/hooks";
+import React, { useEffect, useState } from "react";
+
 import type { FormEvent, ReactElement } from "react";
+import { doGetCriminalHistory, doPostCriminalHistory } from "../../features/criminalHistory/criminalhistorySlice";
 
 /**
  * The CYFMSCriminalHistory functional component.
  * @returns CYFMSCriminalHistory component skeleton.
  */
 const CYFMSCriminalHistory = (): ReactElement => {
+  const dispatch = useAppDispatch();
+  const participantId = useAppSelector(state=>(state as any).registration.user.participantId);
+  const id = useAppSelector(state=>(state as any).criminalHistory.user.participantId);
+
+  useEffect(()=>{
+    dispatch(doGetCriminalHistory(id));
+  },[])
+
+  const [contact, setContact] = useState(
+    {
+      criminalHistoryId:0,
+      criminalHistoryRecordList:[
+          {
+          criminalHistoryRecordId:0,
+          charges:""
+          },
+          ],
+          participantId:participantId
+    }
+
+    
+    
+    // {
+    // participantId: data.participantId,
+    // criminalHistoryId:0, 
+    // probation: false,
+    // parole: false,
+    // conditions: "",
+    // courtWorkerAndContactInfo: "",
+    // //criminalHistoryRecordList:data.criminalHistoryRecordList
+    // }
+)
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
+
+    const data:any = e.currentTarget;
+    const newContact={
+      criminalHistoryId:0,
+      criminalHistoryRecordList:[
+          {
+          criminalHistoryRecordId:0,
+          charges:data.charges.value
+          },
+          ],
+          participantId:participantId
+    }
+      setContact(newContact);
+     dispatch(doPostCriminalHistory({user:newContact}));
+    // const data:any = e.currentTarget;
+    // const newContact = [{
+    //     participantId: participantId,
+    //     criminalHistoryId:0,
+    //     probation: true,
+    //     parole: true,
+    //     conditions: data.conditions.value,
+    //     courtWorkerAndContactInfo: data.courtContactInfo.value,
+    //     //criminalHistoryRecordList:data.criminalHistoryRecordList.value
+    // }]
+    // setContact(newContact);
+    // dispatch(doPostCriminalHistory({user:newContact}));
   };
+
 
   return (
     <CYFMSLayout>

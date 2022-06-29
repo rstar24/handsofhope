@@ -4,7 +4,10 @@ import { Box, Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import type { FormEvent, ReactElement } from "react";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
-import { doGetContact, doPostContact } from "../../features/contact/contactSlice";
+import {
+  doGetContact,
+  doPostContact,
+} from "../../features/contact/contactSlice";
 
 /**
  * The CYFMSContact functional component.
@@ -12,43 +15,32 @@ import { doGetContact, doPostContact } from "../../features/contact/contactSlice
  */
 const CYFMSContact = (): ReactElement => {
   const dispatch = useAppDispatch();
-  const participantId = useAppSelector(state=>(state as any).registration.user.participantId);
-  const data = useAppSelector(state=>(state as any).contact.user);
-  useEffect(()=>{
+  const participantId = useAppSelector(
+    (state) => (state as any).registration.user.participantId
+  );
+  const data = useAppSelector((state) => (state as any).contact.user);
+  useEffect(() => {
     dispatch(doGetContact(participantId));
-  },[])
-  const [contact, setContact] = useState({
+  }, []);
 
-    participantId: data.participantId,
-    participantContactId:data.participantContactId,
-    addressLine1: data.addressLine1,
-    addressLine2: data.addressLine2,
-    city: data.city,
-    province: data.province,
-    postalCode: data.postalCode,
-    homePhone: data.homePhone,
-    workPhone:data.workPhone,
-    cellPhone:data.cellPhone,
-    emailAddress:data.emailAddress
-  })
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
-    const data:any = e.currentTarget;
+    const data: any = e.currentTarget;
     const newContact = {
       participantId: participantId,
-      participantContactId:0,
+      participantContactId: 0,
       addressLine1: data.addrLine1.value,
       addressLine2: data.addrLine2.value,
       city: data.city.value,
       province: data.province.value,
-      postalCode:  data.postalCode.value,
+      postalCode: data.postalCode.value,
       homePhone: data.homePhone.value,
       workPhone: data.workPhone.value,
-      cellPhone:data.cellPhone.value,
-      emailAddress:data.emailAddr.value   
-    }
-    setContact(newContact);
-    dispatch(doPostContact({user:newContact}));
+      cellPhone: data.cellPhone.value,
+      emailAddress: data.emailAddr.value,
+    };
+
+    dispatch(doPostContact({ user: newContact }));
   };
 
   return (

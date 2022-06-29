@@ -3,17 +3,7 @@ import type { AxiosResponse } from "axios";
 import { doGetContactAPI, doPostContactAPI } from "./contactApi";
 
 export interface ContactGetData {
-    user:{ participantId: 0,
-        participantContactId:0,
-        addressLine1: "",
-        addressLine2: "",
-        city: "",
-        province: "",
-        postalCode: "",
-        homePhone: "",
-        workPhone:"",
-        cellPhone:"",
-        emailAddress:""}
+  user: {};
 }
 export interface ContactPostData {
   user: {};
@@ -29,8 +19,8 @@ export interface ContactPostState {
 }
 
 export const doGetContact = createAsyncThunk(
-    "contact/doGetContact",
-    async (data: ContactGetData, { dispatch, getState }) => {
+  "contact/doGetContact",
+  async (data: ContactGetData, { dispatch, getState }) => {
     const res: AxiosResponse = await doGetContactAPI(
       data,
       (getState() as any).login.jwtToken
@@ -40,7 +30,7 @@ export const doGetContact = createAsyncThunk(
   }
 );
 
-export const doPostContact= createAsyncThunk(
+export const doPostContact = createAsyncThunk(
   "contact/doPostContact",
   async (data: ContactPostData, { dispatch, getState }) => {
     const res: AxiosResponse = await doPostContactAPI(
@@ -56,17 +46,19 @@ export const contactSlice = createSlice({
   name: "contact",
   initialState: {
     participantId: 0,
-    user: { participantId: 0,
-        participantContactId:0,
-        addressLine1: "",
-        addressLine2: "",
-        city: "",
-        province: "",
-        postalCode: "",
-        homePhone: "",
-        workPhone:"",
-        cellPhone:"",
-        emailAddress:""},
+    user: {
+      participantId: 0,
+      participantContactId: 0,
+      addressLine1: "",
+      addressLine2: "",
+      city: "",
+      province: "",
+      postalCode: "",
+      homePhone: "",
+      workPhone: "",
+      cellPhone: "",
+      emailAddress: "",
+    },
     jwtToken: "",
     status: "failed",
   },

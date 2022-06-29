@@ -1,17 +1,18 @@
 import axios from "axios";
 import type { AxiosResponse } from "axios";
-import { HouseHoldGetData, HouseHoldPostData } from "./householdSlice";
+import { CriminalHistoryGetData, CriminalHistoryPostData } from "./criminalhistorySlice";
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:9088/v1/participantservice/",
 });
 
-export const doGetHouseHoldAPI = async (
-  data: HouseHoldGetData,
+export const doGetCriminalHistoryAPI = async (
+  data: CriminalHistoryGetData,
   jwtToken: string
 ): Promise<AxiosResponse> => {
+  console.log(data);
   const res: AxiosResponse = await axiosInstance.get(
-    "getAllHouseholdMembers/" + data,
+    "readCriminalHistory/" + data,
     {
       headers: { Authorization: "Bearer " + jwtToken },
     }
@@ -19,12 +20,13 @@ export const doGetHouseHoldAPI = async (
   return res;
 };
 
-export const doPostHouseHoldAPI = async (
-  data: HouseHoldPostData,
+export const doPostCriminalHistoryAPI = async (
+  data: CriminalHistoryPostData,
   jwtToken: string
 ): Promise<AxiosResponse> => {
+  console.log(data);
   const res: AxiosResponse = await axiosInstance.put(
-    "saveAllHouseholdMembers/",
+    "saveCriminalHistory/",
     data.user,
     {
       headers: { Authorization: "Bearer " + jwtToken },
