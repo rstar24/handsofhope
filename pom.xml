@@ -126,8 +126,6 @@
 						</goals>
 						<configuration>
 							<arguments>install</arguments>
-							<arguments>--peer</arguments>
-							
 						</configuration>
 					</execution>
 					<execution>
