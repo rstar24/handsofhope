@@ -107,37 +107,30 @@
 				<version>1.7.6</version>
 				<configuration>
 					<workingDirectory>${basedir}/src/cyfwms-twn-client</workingDirectory>
+					<nodeVersion>v16.15.1</nodeVersion>
 				</configuration>
 				<executions>
-					<execution>
-						<id>install node and yarn</id>
+						<execution>
+						<id>install node and npm</id>
 						<goals>
-							<goal>install-node-and-yarn</goal>
+							<goal>install-node-and-npm</goal>
 						</goals>
-						<configuration>
-							<nodeVersion>v16.15.1</nodeVersion>
-							<yarnVersion>v1.22.15</yarnVersion>
-						</configuration>
 					</execution>
 					<execution>
-						<id>yarn install</id>
+						<id>npm install</id>
 						<goals>
-							<goal>yarn</goal>
+							<goal>npm</goal>
 						</goals>
-						<configuration>
-							<arguments>install</arguments>
-						</configuration>
 					</execution>
 					<execution>
-						<id>yarn run build</id>
+						<id>npm run build</id>
 						<goals>
-							<goal>yarn</goal>
+							<goal>npm</goal>
 						</goals>
 						<phase>generate-resources</phase>
 						<configuration>
 							<arguments>run build</arguments>
 						</configuration>
-					</execution>
 				</executions>
 			</plugin>
 			<plugin>
