@@ -10,7 +10,6 @@ export const doGenderGetAPI = async (
   const res: AxiosResponse = await axiosInstance.get("gender", {
     headers: { Authorization: "Bearer " + jwtToken },
   });
-  console.log("codetable", res);
   return res;
 };
 
@@ -27,6 +26,24 @@ export const doGetRoleAPI = async (
   jwtToken: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.get("role", {
+    headers: { Authorization: "Bearer " + jwtToken },
+  });
+  return res;
+};
+
+export const doGetEducationAPI = async (
+  jwtToken: string
+): Promise<AxiosResponse> => {
+  const res: AxiosResponse = await axiosInstance.get("education", {
+    headers: { Authorization: "Bearer " + jwtToken },
+  });
+  return res;
+};
+
+export const doGetTypeOfEmployeeAPI = async (
+  jwtToken: string
+): Promise<AxiosResponse> => {
+  const res: AxiosResponse = await axiosInstance.get("typeofemployee", {
     headers: { Authorization: "Bearer " + jwtToken },
   });
   return res;
