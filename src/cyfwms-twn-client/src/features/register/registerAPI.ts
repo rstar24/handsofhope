@@ -3,7 +3,7 @@ import type { RegisterGetData, RegisterPostData } from "./registerSlice";
 import type { AxiosResponse } from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:9088/v1/participantservice/",
+  baseURL: "https://cyfwms-twn-app.azurewebsites.net/v1/participantservice/",
 });
 
 export const doGetRegisterAPI = async (

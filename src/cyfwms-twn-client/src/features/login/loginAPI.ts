@@ -3,7 +3,7 @@ import type { LoginData } from "./loginSlice";
 import type { AxiosResponse } from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:9088/v1/login/authenticate",
+  baseURL: "https://cyfwms-twn-app.azurewebsites.net/v1/login/authenticate",
 });
 
 export const doLoginAPI = async (data: LoginData): Promise<AxiosResponse> => {
