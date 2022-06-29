@@ -18,7 +18,7 @@ export const store = configureStore({
     familyPhysicians: familyPhysiciansReducer,
     worker: workerReducer,
     criminalHistory: criminalhistoryReducer,
-    otherInformation:otherInformationReducer
+    otherInformation: otherInformationReducer,
   },
 });
 

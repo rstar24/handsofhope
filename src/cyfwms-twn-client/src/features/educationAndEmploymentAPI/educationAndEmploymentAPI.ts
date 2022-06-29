@@ -1,21 +1,21 @@
 import axios from "axios";
 import type { AxiosResponse } from "axios";
 import {
-  CriminalHistoryGetData,
-  CriminalHistoryPostData,
-} from "./criminalhistorySlice";
+  EducationAndEmploymentGetData,
+  EducationAndEmploymentPostData,
+} from "./educationAndEmploymentSlice";
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:9088/v1/participantservice/",
 });
 
-export const doGetCriminalHistoryAPI = async (
-  data: CriminalHistoryGetData,
+export const doGetEducationAndEmploymentAPI = async (
+  data: EducationAndEmploymentGetData,
   jwtToken: string
 ): Promise<AxiosResponse> => {
   console.log(data);
   const res: AxiosResponse = await axiosInstance.get(
-    "readCriminalHistory/" + data,
+    "readEmploymentAndEducation/" + data,
     {
       headers: { Authorization: "Bearer " + jwtToken },
     }
@@ -23,13 +23,13 @@ export const doGetCriminalHistoryAPI = async (
   return res;
 };
 
-export const doPostCriminalHistoryAPI = async (
-  data: CriminalHistoryPostData,
+export const doPostEducationAndEmploymentAPI = async (
+  data: EducationAndEmploymentPostData,
   jwtToken: string
 ): Promise<AxiosResponse> => {
   console.log(data);
   const res: AxiosResponse = await axiosInstance.put(
-    "saveCriminalHistory/",
+    "saveEmploymentAndEducation/",
     data.user,
     {
       headers: { Authorization: "Bearer " + jwtToken },
