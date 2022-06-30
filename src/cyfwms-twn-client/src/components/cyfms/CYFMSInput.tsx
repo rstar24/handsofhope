@@ -32,6 +32,7 @@ const CYFMSInput = (
         sx={{ borderRadius: 0, flexGrow: 1 }}
         inputProps={{ sx: { p: 1 } }}
         type={props.type}
+        defaultValue={props.autofill}
       />
     </FormControl>
   );

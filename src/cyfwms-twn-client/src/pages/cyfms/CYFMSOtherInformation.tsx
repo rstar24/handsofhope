@@ -18,17 +18,22 @@ const CYFMSOtherInformation = (): ReactElement => {
   const participantId = useAppSelector(
     (state) => (state as any).registration.user.participantId
   );
-  const data = useAppSelector((state) => (state as any).contact.user);
+  const readData = useAppSelector(
+    (state) => (state as any).otherInformation.readUser
+  );
+  const otherInformationData = useAppSelector(
+    (state) => (state as any).otherInformation.user
+  );
   useEffect(() => {
     dispatch(doGetOtherInformation(participantId));
-  }, []);
+  }, [dispatch, otherInformationData, participantId]);
 
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
     const data: any = e.currentTarget;
     const newOtherInformation = {
       participantId: participantId,
-      participantOtherInfoId: 0,
+      participantOtherInfoId: otherInformationData.participantOtherInfoId,
       strength: data.strengths.value,
       weakness: data.weaknesses.value,
       skills: data.skills.value,
@@ -52,13 +57,26 @@ const CYFMSOtherInformation = (): ReactElement => {
         onSubmit={submitHandler}
       >
         <Typography>Other Information</Typography>
-        <CYFMSInput id="strengths" value="Strengths" />
-        <CYFMSInput id="weaknesses" value="Weaknesses" />
-        <CYFMSInput id="skills" value="Skills" />
-        <CYFMSInput id="experiences" value="Experiences" />
+        <CYFMSInput
+          id="strengths"
+          value="Strengths"
+          autofill={readData.strength}
+        />
+        <CYFMSInput
+          id="weaknesses"
+          value="Weaknesses"
+          autofill={readData.weakness}
+        />
+        <CYFMSInput id="skills" value="Skills" autofill={readData.skills} />
+        <CYFMSInput
+          id="experiences"
+          value="Experiences"
+          autofill={readData.experiences}
+        />
         <CYFMSInput
           id="effectiveCopingSkills"
           value="Effective Coping Skills"
+          autofill={readData.effectiveCopingSkills}
         />
         <Button variant="contained" type="submit">
           Next

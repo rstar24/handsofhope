@@ -16,7 +16,6 @@ const CYFMSDropdown = (
   props: ComponentPropsWithoutRef<ElementType>
 ): ReactElement => {
   const codetable = useAppSelector((state) => (state as any).codetable);
-  console.log("codetable=", codetable);
   return (
     <FormControl
       sx={{

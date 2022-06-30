@@ -25,51 +25,40 @@ const CYFMSCriminalHistory = (): ReactElement => {
   const participantId = useAppSelector(
     (state) => (state as any).registration.user.participantId
   );
-  const id = useAppSelector(
-    (state) => (state as any).criminalHistory.user.participantId
+  const readData = useAppSelector(
+    (state) => (state as any).criminalHistory.readUser
   );
+  const criminalHistoryData = useAppSelector(
+    (state) => (state as any).criminalHistory.user
+  );
+  console.log("criminal ", criminalHistoryData);
 
   useEffect(() => {
-    dispatch(doGetCriminalHistory(id));
-  });
+    dispatch(doGetCriminalHistory(participantId));
+  }, [criminalHistoryData, dispatch, participantId]);
 
-  const [contact, setContact] = useState(
-    {
-      criminalHistoryId: 0,
-      criminalHistoryRecordList: [
-        {
-          criminalHistoryRecordId: 0,
-          charges: "",
-        },
-      ],
-      participantId: participantId,
-    }
-
-    // {
-    // participantId: data.participantId,
-    // criminalHistoryId:0,
-    // probation: false,
-    // parole: false,
-    // conditions: "",
-    // courtWorkerAndContactInfo: "",
-    // //criminalHistoryRecordList:data.criminalHistoryRecordList
-    // }
-  );
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
     const data: any = e.currentTarget;
-    const newContact = {
-      criminalHistoryId: 0,
+    const newCriminalHistory = {
+      criminalHistoryId: criminalHistoryData.criminalHistoryId,
       criminalHistoryRecordList: [
         {
           criminalHistoryRecordId: 0,
           charges: data.charges.value,
+          arrestDate: data.arrestDate.value,
+          conviction: data.conviction.value,
+          sentence: data.sentence.value,
         },
       ],
+      //probation: data.probation.value,
+      //parole: data.parole.value,
+      conditions: data.conditions.value,
+      courtWorkerAndContactInfo: data.courtContactInfo.value,
       participantId: participantId,
     };
-    setContact(newContact);
-    dispatch(doPostCriminalHistory({ user: newContact }));
+
+    dispatch(doPostCriminalHistory({ user: newCriminalHistory }));
   };
 
   return (
@@ -85,14 +74,26 @@ const CYFMSCriminalHistory = (): ReactElement => {
         onSubmit={submitHandler}
       >
         <Typography>Record 1</Typography>
-        <CYFMSInput id="arrestDate" value="Arrest Date" />
-        <CYFMSInput id="charges" value="Charges" />
-        <CYFMSInput id="conviction" value="Conviction" />
-        <CYFMSInput id="sentence" value="Sentence" />
+        <CYFMSInput
+          id="arrestDate"
+          value="Arrest Date"
+          autofill={readData.arrestDate}
+        />
+        <CYFMSInput id="charges" value="Charges" autofill={readData.charges} />
+        <CYFMSInput
+          id="conviction"
+          value="Conviction"
+          autofill={readData.conviction}
+        />
+        <CYFMSInput
+          id="sentence"
+          value="Sentence"
+          autofill={readData.sentence}
+        />
         <Button variant="contained">Add More</Button>
         <FormGroup>
           <FormControlLabel
-            control={<Checkbox defaultChecked={false} />}
+            control={<Checkbox defaultChecked={false} id="probation" />}
             label="Probation"
           />
           <FormControlLabel
@@ -100,10 +101,15 @@ const CYFMSCriminalHistory = (): ReactElement => {
             label="Parole"
           />
         </FormGroup>
-        <CYFMSInput id="conditions" value="Conditions" />
+        <CYFMSInput
+          id="conditions"
+          value="Conditions"
+          autofill={readData.conditions}
+        />
         <CYFMSInput
           id="courtContactInfo"
           value="Court Worker(s) And Contact Information"
+          autofill={readData.courtWorkerAndContactInfo}
         />
         <Button variant="contained" type="submit">
           Next

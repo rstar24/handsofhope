@@ -8,7 +8,7 @@ import familyPhysiciansReducer from "../features/familyPhysicians/familyPhysicia
 import workerReducer from "../features/worker/workerSlice";
 import criminalhistoryReducer from "../features/criminalHistory/criminalhistorySlice";
 import otherInformationReducer from "../features/otherInformation/otherInformationSlice";
-
+import educationAndEmploymentReducer from "../features/educationAndEmploymentAPI/educationAndEmploymentSlice";
 export const store = configureStore({
   reducer: {
     login: loginReducer,
@@ -20,6 +20,7 @@ export const store = configureStore({
     worker: workerReducer,
     criminalHistory: criminalhistoryReducer,
     otherInformation: otherInformationReducer,
+    educationAndEmployment: educationAndEmploymentReducer,
   },
 });
 

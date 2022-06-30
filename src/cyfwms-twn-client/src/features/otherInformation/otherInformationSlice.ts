@@ -6,7 +6,7 @@ import {
 } from "./otherInformationAPI";
 
 export interface OtherInformationGetData {
-  user: {};
+  readUser: {};
 }
 export interface OtherInformationPostData {
   user: {};
@@ -49,6 +49,7 @@ export const otherInformationSlice = createSlice({
   name: "otherInformation",
   initialState: {
     participantId: 0,
+    readUser: {},
     user: {
       participantId: 0,
       participantOtherInfoId: 0,
@@ -69,7 +70,7 @@ export const otherInformationSlice = createSlice({
       .addCase(doGetOtherInformation.fulfilled, (state, action) => {
         try {
           //const decodedPayload: any = jwt(action.payload.jwtToken);
-          state.user = action.payload;
+          state.readUser = action.payload;
         } catch (err) {
           console.log(err);
         }
