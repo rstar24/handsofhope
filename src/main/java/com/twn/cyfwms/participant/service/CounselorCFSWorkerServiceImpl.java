@@ -42,14 +42,11 @@ public class CounselorCFSWorkerServiceImpl implements CounselorCFSWorkerService{
             if(CounselorCFSWorkersDto.getCounselorCFSWorkerId() == 0){
                 counselorCFSWorker = new CounselorCFSWorker();
                 modelMapper.map(CounselorCFSWorkersDto, counselorCFSWorker);
-                counselorCFSWorker.setCreationDate(LocalDate.now());
-                counselorCFSWorker.setStartDate(LocalDate.now());
                 counselorCFSWorker.setStatus("ACTIVE");
             }else {
                 counselorCFSWorker = cfsWorkerRepository.findById(CounselorCFSWorkersDto.getCounselorCFSWorkerId()).get();
                 modelMapper.map(CounselorCFSWorkersDto, counselorCFSWorker);
             }
-            counselorCFSWorker.setLastwritten(LocalDateTime.now());
             counselorCFSWorker = cfsWorkerRepository.save(counselorCFSWorker);
             CounselorCFSWorkersDto.setCounselorCFSWorkerId(counselorCFSWorker.getCounselorCFSWorkerId());
         }

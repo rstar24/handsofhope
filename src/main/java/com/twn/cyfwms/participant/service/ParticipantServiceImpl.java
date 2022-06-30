@@ -47,14 +47,12 @@ public class ParticipantServiceImpl implements ParticipantService {
         if(ParticipantIdentityDto.getParticipantId() == 0){
             participant = new Participant();
             modelMapper.map(ParticipantIdentityDto, participant);
-            participant.setCreationDate(LocalDate.now());
             participant.setType("CYFM");
             participant.setStatus("ACTIVE");
         }else {
             participant = readParticipant(ParticipantIdentityDto.getParticipantId());
             modelMapper.map(ParticipantIdentityDto, participant);
         }
-        participant.setLastwritten(LocalDateTime.now());
         participant = participantRepository.save(participant);
         ParticipantIdentityDto.setParticipantId(participant.getParticipantId());
         return ParticipantIdentityDto;

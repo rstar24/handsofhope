@@ -38,14 +38,12 @@ public class ParticipantOtherInformationServiceImpl implements ParticipantOtherI
         if(participantOtherInformationServiceDto.getParticipantOtherInfoId() == 0){
             participantOtherInformation = new ParticipantOtherInformation();
             modelMapper.map(participantOtherInformationServiceDto, participantOtherInformation);
-            participantOtherInformation.setCreationDate(LocalDate.now());
             participantOtherInformation.setStatus("ACTIVE");
         }else {
             participantOtherInformation =
                     participantOtherInformationRepository.findById(participantOtherInformationServiceDto.getParticipantOtherInfoId()).get();
             modelMapper.map(participantOtherInformationServiceDto, participantOtherInformation);
         }
-        participantOtherInformation.setLastwritten(LocalDateTime.now());
         participantOtherInformation = participantOtherInformationRepository.save(participantOtherInformation);
         participantOtherInformationServiceDto.setParticipantOtherInfoId(participantOtherInformation.getParticipantOtherInfoId());
         return participantOtherInformationServiceDto;

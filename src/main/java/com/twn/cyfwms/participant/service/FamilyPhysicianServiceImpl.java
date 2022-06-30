@@ -43,14 +43,11 @@ public class FamilyPhysicianServiceImpl implements FamilyPhysicianService {
             if(FamilyPhysicianDto.getFamilyPhysicianId() == 0){
                 familyPhysician = new FamilyPhysician();
                 modelMapper.map(FamilyPhysicianDto, familyPhysician);
-                familyPhysician.setCreationDate(LocalDate.now());
-                familyPhysician.setStartDate(LocalDate.now());
                 familyPhysician.setStatus("ACTIVE");
             }else {
                 familyPhysician = familyPhysicianRepository.findById(FamilyPhysicianDto.getFamilyPhysicianId()).get();
                 modelMapper.map(FamilyPhysicianDto, familyPhysician);
             }
-            familyPhysician.setLastwritten(LocalDateTime.now());
             familyPhysician = familyPhysicianRepository.save(familyPhysician);
             FamilyPhysicianDto.setFamilyPhysicianId(familyPhysician.getFamilyPhysicianId());
         }
