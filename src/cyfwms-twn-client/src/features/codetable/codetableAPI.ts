@@ -1,7 +1,9 @@
 import axios, { AxiosResponse } from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "https://cyfwms-twn.azurewebsites.net/v1/dataservice/",
+  baseURL: `${
+    process.env.REACT_APP_REST_API || "http://localhost:9088"
+  }/v1/dataservice/`,
 });
 
 export const doGenderGetAPI = async (

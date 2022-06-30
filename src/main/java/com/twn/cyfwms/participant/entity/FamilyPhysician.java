@@ -4,10 +4,7 @@ import lombok.*;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -18,8 +15,17 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "familyphysician")
 public class FamilyPhysician implements Serializable {
-    @Id @Column(name = "familyphysicianid", updatable = false, nullable = false)
+    @Id @Column(name = "familyPhysicianid", updatable = false, nullable = false)
     @Getter @Setter
+    @SequenceGenerator(
+            name = "familyPhysicianidGenerator",
+            sequenceName = "familyPhysicianidGenerator",
+            allocationSize = 100
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "familyPhysicianidGenerator"
+    )
     private Long familyPhysicianId;
 
     @Getter @Setter @Column(name = "name")

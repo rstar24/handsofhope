@@ -28,9 +28,6 @@ public class HouseholdMemberServiceImpl implements HouseholdMemberService {
 
         if(participantId != 0){
             List<HouseholdMember> householdMemberList = householdMemberRepo.findByParticipantId(participantId);
-           // modelMapper.map(householdMemberList, HouseholdMemberDtoList);
-
-            //This is due to the occurrence of type erasure during runtime execution.
             HouseholdMemberDtoList= modelMapper.map(householdMemberList, new TypeToken<List<HouseholdMemberDto>>() {}.getType());
         }
         return HouseholdMemberDtoList;
@@ -43,15 +40,11 @@ public class HouseholdMemberServiceImpl implements HouseholdMemberService {
             if(HouseholdMemberDto.getHouseholdMemberId() == 0){
                 householdMember = new HouseholdMember();
                 modelMapper.map(HouseholdMemberDto, householdMember);
-                householdMember.setCreationDate(LocalDate.now());
-                householdMember.setStartDate(LocalDate.now());
                 householdMember.setStatus("ACTIVE");
             }else {
                 householdMember = householdMemberRepo.findById(HouseholdMemberDto.getHouseholdMemberId()).get();
-//                modelMapper.map(householdMember, householdMember);
                 modelMapper.map(HouseholdMemberDto,householdMember);
             }
-            householdMember.setLastwritten(LocalDateTime.now());
             householdMember = householdMemberRepo.save(householdMember);
             HouseholdMemberDto.setHouseholdMemberId(householdMember.getHouseholdMemberId());
         }

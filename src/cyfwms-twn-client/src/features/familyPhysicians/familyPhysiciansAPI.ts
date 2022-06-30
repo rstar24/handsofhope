@@ -6,7 +6,9 @@ import {
 } from "./familyPhysiciansSlice";
 
 const axiosInstance = axios.create({
-  baseURL: "https://cyfwms-twn.azurewebsites.net/v1/participantservice/",
+  baseURL: `${
+    process.env.REACT_APP_REST_API || "http://localhost:9088"
+  }/v1/participantservice/`,
 });
 
 export const doGetFamilyPhysiciansAPI = async (

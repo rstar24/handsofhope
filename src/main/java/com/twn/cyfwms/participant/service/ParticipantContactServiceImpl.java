@@ -35,14 +35,12 @@ public class ParticipantContactServiceImpl implements ParticipantContactService 
         if(participantContactDto.getParticipantContactId() == 0){
             participantContact = new ParticipantContact();
             modelMapper.map(participantContactDto, participantContact);
-            participantContact.setCreationDate(LocalDate.now());
             participantContact.setStatus("ACTIVE");
         }else {
             participantContact =
                     participantContactRepository.findById(participantContactDto.getParticipantContactId()).get();
             modelMapper.map(participantContactDto, participantContact);
         }
-        participantContact.setLastwritten(LocalDateTime.now());
         participantContact = participantContactRepository.save(participantContact);
         participantContactDto.setParticipantContactId(participantContact.getParticipantContactId());
         return participantContactDto;

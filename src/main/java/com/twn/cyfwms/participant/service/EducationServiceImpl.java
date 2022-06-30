@@ -38,14 +38,12 @@ public class EducationServiceImpl  implements EducationService{
         if(educationDto.getEducationId() == 0){
             education = new Education();
             modelMapper.map(educationDto, education);
-            education.setCreationDate(LocalDate.now());
             education.setStatus("ACTIVE");
         }else {
             education =
                     educationRepository.findById(educationDto.getEducationId()).get();
             modelMapper.map(educationDto, education);
         }
-        education.setLastwritten(LocalDateTime.now());
         education = educationRepository.save(education);
         educationDto.setEducationId(education.getEducationId());
         return educationDto;
