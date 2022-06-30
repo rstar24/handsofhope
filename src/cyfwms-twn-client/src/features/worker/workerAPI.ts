@@ -3,7 +3,7 @@ import type { AxiosResponse } from "axios";
 import { WorkerGetData, WorkerPostData } from "./workerSlice";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:9088/v1/participantservice/",
+  baseURL: "https://cyfwms-twn.azurewebsites.net/v1/participantservice/",
 });
 
 export const doGetWorkerAPI = async (
