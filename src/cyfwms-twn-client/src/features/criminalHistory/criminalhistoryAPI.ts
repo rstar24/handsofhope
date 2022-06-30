@@ -1,6 +1,9 @@
 import axios from "axios";
 import type { AxiosResponse } from "axios";
-import { CriminalHistoryGetData, CriminalHistoryPostData } from "./criminalhistorySlice";
+import {
+  CriminalHistoryGetData,
+  CriminalHistoryPostData,
+} from "./criminalhistorySlice";
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:9088/v1/participantservice/",

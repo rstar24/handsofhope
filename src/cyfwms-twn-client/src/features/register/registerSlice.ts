@@ -7,12 +7,12 @@ export interface RegisterGetData {
 }
 export interface RegisterPostData {
   user: {
-    firstname: "",
-    middleName: "",
-    surname: "",
-    dateOfBirth: "",
-    gender: "",
-    maritalStatus: "",
+    firstname: "";
+    middleName: "";
+    surname: "";
+    dateOfBirth: "";
+    gender: "";
+    maritalStatus: "";
   };
 }
 

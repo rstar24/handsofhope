@@ -1,6 +1,9 @@
 import axios from "axios";
 import type { AxiosResponse } from "axios";
-import { OtherInformationGetData, OtherInformationPostData } from "./otherInformationSlice";
+import {
+  OtherInformationGetData,
+  OtherInformationPostData,
+} from "./otherInformationSlice";
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:9088/v1/participantservice/",

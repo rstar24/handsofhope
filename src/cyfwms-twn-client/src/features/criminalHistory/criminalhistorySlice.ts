@@ -1,11 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { AxiosResponse } from "axios";
-import { doGetCriminalHistoryAPI, doPostCriminalHistoryAPI } from "./criminalhistoryAPI";
+import {
+  doGetCriminalHistoryAPI,
+  doPostCriminalHistoryAPI,
+} from "./criminalhistoryAPI";
 
 export interface CriminalHistoryGetData {
-    user:{ 
-       
-    }
+  user: {};
 }
 export interface CriminalHistoryPostData {
   user: {};
@@ -21,8 +22,8 @@ export interface CriminalHistoryPostState {
 }
 
 export const doGetCriminalHistory = createAsyncThunk(
-    "criminalhistory/doGetCriminalHistory",
-    async (data: CriminalHistoryGetData, { dispatch, getState }) => {
+  "criminalhistory/doGetCriminalHistory",
+  async (data: CriminalHistoryGetData, { dispatch, getState }) => {
     const res: AxiosResponse = await doGetCriminalHistoryAPI(
       data,
       (getState() as any).login.jwtToken
@@ -32,7 +33,7 @@ export const doGetCriminalHistory = createAsyncThunk(
   }
 );
 
-export const doPostCriminalHistory= createAsyncThunk(
+export const doPostCriminalHistory = createAsyncThunk(
   "criminalhistory/doPostCriminalHistory",
   async (data: CriminalHistoryPostData, { dispatch, getState }) => {
     const res: AxiosResponse = await doPostCriminalHistoryAPI(
@@ -40,7 +41,7 @@ export const doPostCriminalHistory= createAsyncThunk(
       (getState() as any).login.jwtToken
     );
     // Becomes the `fulfilled` action payload:
-    console.log("criminal",data)
+    console.log("criminal", data);
     return res.data;
   }
 );
@@ -49,14 +50,14 @@ export const criminalhistorySlice = createSlice({
   name: "criminalhistory",
   initialState: {
     participantId: 0,
-    user: { 
-        participantId: 0,
-        criminalHistoryId:0,
-        probation: "",
-        parole: "",
-        conditions: "",
-        courtWorkerAndContactInfo: "",
-        criminalHistoryRecordList:""
+    user: {
+      participantId: 0,
+      criminalHistoryId: 0,
+      probation: "",
+      parole: "",
+      conditions: "",
+      courtWorkerAndContactInfo: "",
+      criminalHistoryRecordList: "",
     },
     jwtToken: "",
     status: "failed",
