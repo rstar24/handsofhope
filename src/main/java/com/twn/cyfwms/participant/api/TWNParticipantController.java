@@ -20,27 +20,22 @@ public class TWNParticipantController {
 
     @Autowired
     private ParticipantService participantService;
-
     @Autowired
-    ParticipantOtherInformationService participantOtherInformationService;
-
+    private ParticipantOtherInformationService participantOtherInformationService;
     @Autowired
-    CounselorCFSWorkerService counselorCFSWorkerService;
+    private CounselorCFSWorkerService counselorCFSWorkerService;
     @Autowired
     private ParticipantContactService participantContactService;
     @Autowired
     private HouseholdMemberService householdMemberService;
     @Autowired
-    private EducationService educationService;
+    private CriminalHistoryService criminalHistoryService;
     @Autowired
-    private EmploymentService employmentService;
+    private EducationAndEmploymentService educationAndEmploymentService;
     @Autowired
-    CriminalHistoryService criminalHistoryService;
+    private FamilyPhysicianService familyPhysicianService;
     @Autowired
-    EducationAndEmploymentService educationAndEmploymentService;
-
-    @Autowired
-    FamilyPhysicianService familyPhysicianService;
+    private ParticipantSearchService participantSearchService;
 
     @GetMapping(value = "/readParticipantIdentity/{participantid}", produces = "application/json")
     @ApiOperation("Read Identity")
@@ -151,9 +146,15 @@ public class TWNParticipantController {
     @PutMapping(value = "/saveEmploymentAndEducation", produces = "application/json")
     @ApiOperation("Save Participant Employment And Education")
     @ResponseStatus(HttpStatus.OK)
-    public EducationAndEmploymentCompositeDto savesaveEmploymentAndEducation(@RequestBody EducationAndEmploymentCompositeDto educationAndEmploymentCompositeDto) {
+    public EducationAndEmploymentCompositeDto saveEmploymentAndEducation(@RequestBody EducationAndEmploymentCompositeDto educationAndEmploymentCompositeDto) {
         return educationAndEmploymentService.saveEducationAndEmployment(educationAndEmploymentCompositeDto);
     }
 
+    @GetMapping(value = "/searchParticipants", produces = "application/json")
+    @ApiOperation("Search Participants")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ParticipantSearchResultsDto> searchParticipants(@RequestBody ParticipantSearchCriteriaDto participantSearchCriteriaDto) {
+        return participantSearchService.search(participantSearchCriteriaDto);
+    }
 
 }

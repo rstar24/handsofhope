@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @AllArgsConstructor
 @NoArgsConstructor
-public class SearchCYFSClientDto {
+public class ParticipantSearchCriteriaDto {
     @Getter @Setter
     private String firstname;
     @Getter @Setter

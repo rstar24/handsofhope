@@ -18,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "Participant")
+@Table(name = "participant")
 public class Participant implements Serializable {
     @Id @Getter @Setter
     @Column(name = "participantid", updatable = false, nullable = false)
