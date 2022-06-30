@@ -3,7 +3,9 @@ import type { LoginData } from "./loginSlice";
 import type { AxiosResponse } from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:9088/v1/login/authenticate",
+  baseURL: `${
+    process.env.REACT_APP_REST_API || "http://localhost:9088"
+  }/v1/login/authenticate`,
 });
 
 export const doLoginAPI = async (data: LoginData): Promise<AxiosResponse> => {
