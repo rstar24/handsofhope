@@ -5,6 +5,7 @@ import com.twn.cyfwms.participant.entity.HouseholdMember;
 import com.twn.cyfwms.participant.repository.HouseholdMemberRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,9 +25,13 @@ public class HouseholdMemberServiceImpl implements HouseholdMemberService {
     @Override
     public List<HouseholdMemberDto> getAllHouseholdMembers(Long participantId) {
         List<HouseholdMemberDto> HouseholdMemberDtoList = new ArrayList<HouseholdMemberDto>();
+
         if(participantId != 0){
             List<HouseholdMember> householdMemberList = householdMemberRepo.findByParticipantId(participantId);
-            modelMapper.map(householdMemberList, HouseholdMemberDtoList);
+           // modelMapper.map(householdMemberList, HouseholdMemberDtoList);
+
+            //This is due to the occurrence of type erasure during runtime execution.
+            HouseholdMemberDtoList= modelMapper.map(householdMemberList, new TypeToken<List<HouseholdMemberDto>>() {}.getType());
         }
         return HouseholdMemberDtoList;
     }
@@ -43,7 +48,8 @@ public class HouseholdMemberServiceImpl implements HouseholdMemberService {
                 householdMember.setStatus("ACTIVE");
             }else {
                 householdMember = householdMemberRepo.findById(HouseholdMemberDto.getHouseholdMemberId()).get();
-                modelMapper.map(householdMember, householdMember);
+//                modelMapper.map(householdMember, householdMember);
+                modelMapper.map(HouseholdMemberDto,householdMember);
             }
             householdMember.setLastwritten(LocalDateTime.now());
             householdMember = householdMemberRepo.save(householdMember);

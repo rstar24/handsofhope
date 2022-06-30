@@ -7,6 +7,7 @@ import com.twn.cyfwms.participant.entity.HouseholdMember;
 import com.twn.cyfwms.participant.repository.FamilyPhysicianRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,8 @@ public class FamilyPhysicianServiceImpl implements FamilyPhysicianService {
         List<FamilyPhysicianDto> FamilyPhysicianDtoList = new ArrayList<FamilyPhysicianDto>();
         if(participantId != 0){
             List<FamilyPhysician> familyPhysicianList = familyPhysicianRepository.findByParticipantId(participantId);
-            modelMapper.map(familyPhysicianList, FamilyPhysicianDtoList);
+            FamilyPhysicianDtoList= modelMapper.map(familyPhysicianList, new TypeToken<List<FamilyPhysicianDto>>() {}.getType());
+
         }
         return FamilyPhysicianDtoList;
     }
@@ -46,7 +48,7 @@ public class FamilyPhysicianServiceImpl implements FamilyPhysicianService {
                 familyPhysician.setStatus("ACTIVE");
             }else {
                 familyPhysician = familyPhysicianRepository.findById(FamilyPhysicianDto.getFamilyPhysicianId()).get();
-                modelMapper.map(familyPhysician, familyPhysician);
+                modelMapper.map(FamilyPhysicianDto, familyPhysician);
             }
             familyPhysician.setLastwritten(LocalDateTime.now());
             familyPhysician = familyPhysicianRepository.save(familyPhysician);

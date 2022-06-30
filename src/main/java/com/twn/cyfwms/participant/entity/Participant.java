@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -47,8 +49,10 @@ public class Participant implements Serializable {
     private String type;
     @Getter @Setter @Column(name = "status")
     private String status;
+    @CreatedDate
     @Getter @Setter @Column(name = "creationdate")
     private LocalDate creationDate;
+    @UpdateTimestamp
     @Getter @Setter @Column(name = "lastwritten")
     private LocalDateTime lastwritten;
     @Getter @Setter @Column(name = "isprimary")

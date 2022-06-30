@@ -2,11 +2,24 @@ import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import loginReducer from "../features/login/loginSlice";
 import RegistrationReducer from "../features/register/registerSlice";
 import codetableReducer from "../features/codetable/codetableSlice";
+import contactReducer from "../features/contact/contactSlice";
+import householdReducer from "../features/householdMember/householdSlice";
+import familyPhysiciansReducer from "../features/familyPhysicians/familyPhysiciansSlice";
+import workerReducer from "../features/worker/workerSlice";
+import criminalhistoryReducer from "../features/criminalHistory/criminalhistorySlice";
+import otherInformationReducer from "../features/otherInformation/otherInformationSlice";
+
 export const store = configureStore({
   reducer: {
     login: loginReducer,
-    registration: RegistrationReducer,
     codetable: codetableReducer,
+    registration: RegistrationReducer,
+    contact: contactReducer,
+    household: householdReducer,
+    familyPhysicians: familyPhysiciansReducer,
+    worker: workerReducer,
+    criminalHistory: criminalhistoryReducer,
+    otherInformation: otherInformationReducer,
   },
 });
 

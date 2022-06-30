@@ -4,12 +4,16 @@ import {
   doGenderGetAPI,
   doGetMaritalStatusAPI,
   doGetRoleAPI,
+  doGetEducationAPI,
+  doGetTypeOfEmployeeAPI,
 } from "./codetableAPI";
 
 export interface CodeTableData {
   gender: {};
   maritalstatus: {};
   role: {};
+  education: {};
+  typeOfEmployee: {};
 }
 
 export interface CodeTableState {
@@ -50,12 +54,36 @@ export const doGetRole = createAsyncThunk(
   }
 );
 
+export const doGetEducation = createAsyncThunk(
+  "codetable/doGetEducation",
+  async (_, { dispatch, getState }) => {
+    const res: AxiosResponse = await doGetEducationAPI(
+      (getState() as any).login.jwtToken
+    );
+    // Becomes the `fulfilled` action payload:
+    return res.data;
+  }
+);
+
+export const doGetTypeOfEmployee = createAsyncThunk(
+  "codetable/doGetTypeOfEmployee",
+  async (_, { dispatch, getState }) => {
+    const res: AxiosResponse = await doGetTypeOfEmployeeAPI(
+      (getState() as any).login.jwtToken
+    );
+    // Becomes the `fulfilled` action payload:
+    return res.data;
+  }
+);
+
 export const CodeTableSlice = createSlice({
   name: "codetable",
   initialState: {
     gender: {},
     maritalstatus: {},
     role: {},
+    education: {},
+    typeOfEmployee: {},
     jwtToken: "",
     status: "failed",
   },
@@ -98,7 +126,7 @@ export const CodeTableSlice = createSlice({
     //role
     builder.addCase(doGetRole.fulfilled, (state, action) => {
       try {
-        state.maritalstatus = action.payload.valuesMap;
+        state.role = action.payload.valuesMap;
       } catch (err) {
         console.log(err);
       }
@@ -108,6 +136,38 @@ export const CodeTableSlice = createSlice({
       state.status = "loading";
     });
     builder.addCase(doGetRole.rejected, (state) => {
+      state.status = "failed";
+    });
+
+    //Education
+    builder.addCase(doGetEducation.fulfilled, (state, action) => {
+      try {
+        state.education = action.payload.valuesMap;
+      } catch (err) {
+        console.log(err);
+      }
+      state.status = "success";
+    });
+    builder.addCase(doGetEducation.pending, (state) => {
+      state.status = "loading";
+    });
+    builder.addCase(doGetEducation.rejected, (state) => {
+      state.status = "failed";
+    });
+
+    //TypeOfEmployees
+    builder.addCase(doGetTypeOfEmployee.fulfilled, (state, action) => {
+      try {
+        state.typeOfEmployee = action.payload.valuesMap;
+      } catch (err) {
+        console.log(err);
+      }
+      state.status = "success";
+    });
+    builder.addCase(doGetTypeOfEmployee.pending, (state) => {
+      state.status = "loading";
+    });
+    builder.addCase(doGetTypeOfEmployee.rejected, (state) => {
       state.status = "failed";
     });
   },
