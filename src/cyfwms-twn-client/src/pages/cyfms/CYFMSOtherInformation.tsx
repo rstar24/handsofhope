@@ -4,41 +4,40 @@ import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
 import type { FormEvent, ReactElement } from "react";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import React, { useEffect, useState } from "react";
-import { doGetOtherInformation, doPostOtherInformation } from "../../features/otherInformation/otherInformationSlice";
-
+import {
+  doGetOtherInformation,
+  doPostOtherInformation,
+} from "../../features/otherInformation/otherInformationSlice";
 
 /**
  * The CYFMSOtherInformation functional component.
  * @returns CYFMSOtherInformation component skeleton.
  */
- const CYFMSOtherInformation = (): ReactElement => {
+const CYFMSOtherInformation = (): ReactElement => {
+  const dispatch = useAppDispatch();
+  const participantId = useAppSelector(
+    (state) => (state as any).registration.user.participantId
+  );
+  const data = useAppSelector((state) => (state as any).contact.user);
+  useEffect(() => {
+    dispatch(doGetOtherInformation(participantId));
+  }, []);
 
- const dispatch = useAppDispatch();
- const participantId = useAppSelector(
-   (state) => (state as any).registration.user.participantId
- );
- const data = useAppSelector((state) => (state as any).contact.user);
- useEffect(() => {
-   dispatch(doGetOtherInformation(participantId));
- }, []);
+  const submitHandler = (e: FormEvent) => {
+    e.preventDefault();
+    const data: any = e.currentTarget;
+    const newOtherInformation = {
+      participantId: participantId,
+      participantOtherInfoId: 0,
+      strength: data.strengths.value,
+      weakness: data.weaknesses.value,
+      skills: data.skills.value,
+      experiences: data.experiences.value,
+      effectiveCopingSkills: data.effectiveCopingSkills.value,
+    };
 
- const submitHandler = (e: FormEvent) => {
-   e.preventDefault();
-   const data: any = e.currentTarget;
-   const newOtherInformation = {
-     participantId: participantId,
-     participantOtherInfoId: 0,
-     strength: data.strengths.value,
-     weakness: data.weaknesses.value,
-     skills: data.skills.value,
-     experiences: data.experiences.value,
-     effectiveCopingSkills: data.effectiveCopingSkills.value,
-    
-   };
-
-   dispatch(doPostOtherInformation({ user: newOtherInformation }));
- };
-
+    dispatch(doPostOtherInformation({ user: newOtherInformation }));
+  };
 
   return (
     <CYFMSLayout>
