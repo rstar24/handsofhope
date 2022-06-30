@@ -1,6 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { AxiosResponse } from "axios";
-import { doGetOtherInformationAPI, doPostOtherInformationAPI } from "./otherInformationAPI";
+import {
+  doGetOtherInformationAPI,
+  doPostOtherInformationAPI,
+} from "./otherInformationAPI";
 
 export interface OtherInformationGetData {
   user: {};
@@ -54,7 +57,6 @@ export const otherInformationSlice = createSlice({
       skills: "",
       experiences: "",
       effectiveCopingSkills: "",
-     
     },
     jwtToken: "",
     status: "failed",
