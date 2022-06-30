@@ -5,7 +5,6 @@ import CYFMSEducationAndEmployment from "../../pages/cyfms/CYFMSEducationAndEmpl
 import CYFMSHouseholdMembers from "../../pages/cyfms/CYFMSHouseholdMembers";
 import CYFMSOtherInformation from "../../pages/cyfms/CYFMSOtherInformation";
 import CYFMSRegister from "../../pages/cyfms/CYFMSRegister";
-import CYFMSSearch from "../../pages/cyfms/CYFMSSearch";
 import CYFMSWorker from "../../pages/cyfms/CYFMSWorker";
 import { Box, Modal } from "@mui/material";
 import React from "react";
@@ -54,7 +53,6 @@ const CYFMSPopup = (props: ModalUnstyledProps): ReactElement => {
           <Route path="family_physician" element={<CYFMSFamilyPhysician />} />
           <Route path="cyfms_worker" element={<CYFMSWorker />} />
           <Route path="other_information" element={<CYFMSOtherInformation />} />
-          <Route path="search" element={<CYFMSSearch />} />
         </Routes>
       </Box>
     </Modal>
