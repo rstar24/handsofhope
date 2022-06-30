@@ -3,7 +3,9 @@ import type { RegisterGetData, RegisterPostData } from "./registerSlice";
 import type { AxiosResponse } from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:9088/v1/participantservice/",
+  baseURL: `${
+    process.env.REACT_APP_REST_API || "http://localhost:9088"
+  }/v1/participantservice/`,
 });
 
 export const doGetRegisterAPI = async (
