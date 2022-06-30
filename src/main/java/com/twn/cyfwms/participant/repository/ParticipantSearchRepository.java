@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,14 +25,15 @@ public class ParticipantSearchRepository {
                         new ParticipantSearchResultsDto(
                                 rs.getLong("participantid"),
                                 rs.getString("firstname"),
-                                rs.getString("middlename"),
+                                rs.getString("middleName"),
                                 rs.getString("surname"),
-                                rs.getString("maritalstatus"),
-                                rs.getDate("dateofbirth"),
+                                rs.getString("maritalStatus"),
+                                rs.getDate("dateOfBirth") != null ?
+                                        rs.getDate("dateOfBirth").toLocalDate() : LocalDate.of(1,1,1),
                                 rs.getString("city"),
-                                rs.getString("homephone"),
-                                rs.getString("cellphone"),
-                                rs.getString("workhhone")
+                                rs.getString("homePhone"),
+                                rs.getString("cellPhone"),
+                                rs.getString("workPhone")
                         )
         );
     }
@@ -38,7 +41,7 @@ public class ParticipantSearchRepository {
     private StringBuffer createSearchQuery(ParticipantSearchCriteriaDto searchCriteria, List<Object> argsObjectList){
 
         StringBuffer  querySBuff = new StringBuffer();
-        querySBuff.append("select p.participantid, p.firstname, p.middlename, p.surname, p.maritalstatus,  p.dateofbirth, p2.city, p2.homephone, p2.cellphone, p2.workhhone ");
+        querySBuff.append("select p.participantid, p.firstname, p.middlename, p.surname, p.maritalstatus,  p.dateofbirth, p2.city, p2.homephone, p2.cellphone, p2.workphone ");
         querySBuff.append("from participant p inner join participantcontact p2 on p.participantid = p2.participantid ");
 
         String firstName = searchCriteria.getFirstname();
@@ -107,7 +110,7 @@ public class ParticipantSearchRepository {
                     .replace("%", "!%")
                     .replace("_", "!_")
                     .replace("[", "![");
-            querySBuff.append(" AND (p2.homephone = ? OR p2.cellphone = ? OR p2.workhhone = ?)");
+            querySBuff.append(" AND (p2.homephone = ? OR p2.cellphone = ? OR p2.workphone = ?)");
             argsObjectList.add(phoneNumber);
             argsObjectList.add(phoneNumber);
             argsObjectList.add(phoneNumber);

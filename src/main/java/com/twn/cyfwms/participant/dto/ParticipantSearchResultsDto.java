@@ -33,7 +33,7 @@ public class ParticipantSearchResultsDto {
     @Getter @Setter
     private String cellPhone;
 
-    public ParticipantSearchResultsDto(Long participantid, String firstname, String middlename, String surname, String maritalstatus, Date dateofbirth, String city, String homephone, String cellphone, String workhhone) {
+    public ParticipantSearchResultsDto(Long participantId, String firstname, String middleName, String surname, String maritalStatus, LocalDate dateOfBirth, String city, String homePhone, String workPhone, String cellPhone) {
         this.participantId = participantId;
         this.firstname = firstname;
         this.middleName = middleName;

@@ -40,7 +40,7 @@ public class ParticipantContact implements Serializable {
     private String postalCode;
     @Getter @Setter @Column(name = "homephone")
     private String homePhone;
-    @Getter @Setter @Column(name = "workhhone")
+    @Getter @Setter @Column(name = "workphone")
     private String workPhone;
     @Getter @Setter @Column(name = "cellphone")
     private String cellPhone;
