@@ -1,4 +1,4 @@
-import { Box, Button, Grid } from "@mui/material";
+import { unhideTabs } from "../../features/cyfms/cyfmsSideNavSlice";
 import {
   doGetRegister,
   doPostRegister,
@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import CYFMSDropdown from "../../components/cyfms/CYFMSDropdown";
 import CYFMSInput from "../../components/cyfms/CYFMSInput";
 import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
+import { Box, Button, Grid } from "@mui/material";
 import React, { useEffect } from "react";
 import type { FormEvent, ReactElement } from "react";
 
@@ -24,6 +25,7 @@ const CYFMSRegister = (): ReactElement => {
   useEffect(() => {
     dispatch(doGetRegister(userData.participantId));
   }, [userData]);
+
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
     const data: any = e.currentTarget;
@@ -36,8 +38,9 @@ const CYFMSRegister = (): ReactElement => {
       gender: data.gender.value,
       maritalStatus: data.maritalStatus.value,
     };
-
-    dispatch(doPostRegister({ user: newUser }));
+    dispatch(doPostRegister({ user: newUser })).then(() => {
+      dispatch(unhideTabs());
+    });
   };
 
   return (
@@ -58,6 +61,7 @@ const CYFMSRegister = (): ReactElement => {
               id="firstName"
               value="First Name"
               autofill={readData.firstname}
+              required
             />
           </Grid>
           <Grid item xs={1} sm={5} md={5}>
@@ -72,6 +76,7 @@ const CYFMSRegister = (): ReactElement => {
               id="lastName"
               value="Last Name"
               autofill={readData.surname}
+              required
             />
           </Grid>
           <Grid item xs={1} sm={5} md={5}>
@@ -79,6 +84,7 @@ const CYFMSRegister = (): ReactElement => {
               id="dateOfBirth"
               value="Date of Birth"
               autofill={readData.dateOfBirth}
+              required
             />
           </Grid>
           <Grid item xs={1} sm={5} md={5}>
@@ -86,6 +92,7 @@ const CYFMSRegister = (): ReactElement => {
               id="gender"
               value="Gender"
               autofill={readData.gender}
+              required
             />
           </Grid>
           <Grid item xs={1} sm={5} md={5}>

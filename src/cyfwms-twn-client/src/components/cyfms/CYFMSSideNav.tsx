@@ -1,62 +1,77 @@
-import { Box, List, ListItemButton, ListItemText } from "@mui/material";
-import { Link } from "react-router-dom";
-import React, { useEffect, useState } from "react";
-import type { ReactElement } from "react";
 import { useAppSelector } from "../../library/hooks";
+import { Box, List, ListItemButton, ListItemText } from "@mui/material";
+import { createSelector } from "@reduxjs/toolkit";
+import React from "react";
+import { Link } from "react-router-dom";
+import type { ReactElement } from "react";
+
+const hideTabsSelector = createSelector(
+  (state: any) => (state as any).cyfmsSideNav.hideTabs,
+  (hideTabs) => hideTabs
+);
 
 /**
  * The CYFMSSideNav functional component.
  * @returns CYFMSideNav component skeleton.
  */
 const CYFMSSideNav = (): ReactElement => {
-  const participantId = useAppSelector(
-    (state) => (state as any).registration.user.participantId
-  );
-  const [textColor, setTextColor] = useState("black");
-  const [isBlack, setIsBlack] = useState(true);
+  const hideTabs = useAppSelector(hideTabsSelector);
 
-  const handleClick = (e: any) => {
-    e.target.style.color = "black";
-    console.log(e.target);
-  };
-  useEffect(() => {}, []);
   return (
-    <Box
-      aria-label="tabs"
-      sx={{ bgcolor: "background.paper", color: textColor }}
-    >
+    <Box aria-label="tabs" sx={{ bgcolor: "background.paper" }}>
       <List disablePadding>
         <ListItemButton component={Link} to="/cyfms/register">
           <ListItemText primary="Identity" />
         </ListItemButton>
-        {participantId !== 0 && (
-          <>
-            <ListItemButton component={Link} to="/cyfms/contact">
-              <ListItemText primary="Contact" />
-            </ListItemButton>
-            <ListItemButton component={Link} to="/cyfms/household_members">
-              <ListItemText primary="Household Members" />
-            </ListItemButton>
-            <ListItemButton
-              component={Link}
-              to="/cyfms/education_and_employment"
-            >
-              <ListItemText primary="Education and Employment" />
-            </ListItemButton>
-            <ListItemButton component={Link} to="/cyfms/criminal_history">
-              <ListItemText primary="Criminal History" />
-            </ListItemButton>
-            <ListItemButton component={Link} to="/cyfms/family_physician">
-              <ListItemText primary="Family Physician" />
-            </ListItemButton>
-            <ListItemButton component={Link} to="/cyfms/cyfms_worker">
-              <ListItemText primary="Conselor / CYFMS Worker" />
-            </ListItemButton>
-            <ListItemButton component={Link} to="/cyfms/other_information">
-              <ListItemText primary="Other Information" />
-            </ListItemButton>
-          </>
-        )}
+        <ListItemButton
+          disabled={hideTabs}
+          component={Link}
+          to="/cyfms/contact"
+        >
+          <ListItemText primary="Contact" />
+        </ListItemButton>
+        <ListItemButton
+          disabled={hideTabs}
+          component={Link}
+          to="/cyfms/household_members"
+        >
+          <ListItemText primary="Household Members" />
+        </ListItemButton>
+        <ListItemButton
+          disabled={hideTabs}
+          component={Link}
+          to="/cyfms/education_and_employment"
+        >
+          <ListItemText primary="Education and Employment" />
+        </ListItemButton>
+        <ListItemButton
+          disabled={hideTabs}
+          component={Link}
+          to="/cyfms/criminal_history"
+        >
+          <ListItemText primary="Criminal History" />
+        </ListItemButton>
+        <ListItemButton
+          disabled={hideTabs}
+          component={Link}
+          to="/cyfms/family_physician"
+        >
+          <ListItemText primary="Family Physician" />
+        </ListItemButton>
+        <ListItemButton
+          disabled={hideTabs}
+          component={Link}
+          to="/cyfms/cyfms_worker"
+        >
+          <ListItemText primary="Conselor / CYFMS Worker" />
+        </ListItemButton>
+        <ListItemButton
+          disabled={hideTabs}
+          component={Link}
+          to="/cyfms/other_information"
+        >
+          <ListItemText primary="Other Information" />
+        </ListItemButton>
       </List>
     </Box>
   );
