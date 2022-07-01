@@ -1,6 +1,6 @@
 import { Box, List, ListItemButton, ListItemText } from "@mui/material";
 import { Link } from "react-router-dom";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import type { ReactElement } from "react";
 import { useAppSelector } from "../../library/hooks";
 
@@ -12,10 +12,19 @@ const CYFMSSideNav = (): ReactElement => {
   const participantId = useAppSelector(
     (state) => (state as any).registration.user.participantId
   );
+  const [textColor, setTextColor] = useState("black");
+  const [isBlack, setIsBlack] = useState(true);
 
+  const handleClick = (e: any) => {
+    e.target.style.color = "black";
+    console.log(e.target);
+  };
   useEffect(() => {}, []);
   return (
-    <Box aria-label="tabs" sx={{ bgcolor: "background.paper" }}>
+    <Box
+      aria-label="tabs"
+      sx={{ bgcolor: "background.paper", color: textColor }}
+    >
       <List disablePadding>
         <ListItemButton component={Link} to="/cyfms/register">
           <ListItemText primary="Identity" />

@@ -1,10 +1,11 @@
 import CYFMSDropdown from "../../components/cyfms/CYFMSDropdown";
 import CYFMSInput from "../../components/cyfms/CYFMSInput";
 import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import { FormEvent, ReactElement, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { doGetWorker, doPostWorker } from "../../features/worker/workerSlice";
+import CYFMSLongInput from "../../components/cyfms/CYFMSLongInput";
 
 /**
  * The CYFMSWorker functional component.
@@ -59,14 +60,36 @@ const CYFMSWorker = (): ReactElement => {
         }}
         onSubmit={submitHandler}
       >
-        <Typography>Record 1</Typography>
-        <CYFMSDropdown id="role" value="Role" />
-        <CYFMSInput id="cyfmsWorkerName" value="Name" />
-        <CYFMSInput id="cyfmsWorkerContactInfo" value="Contact Information" />
-        <Button variant="contained">Add More</Button>
-        <Button variant="contained" type="submit">
-          Next
-        </Button>
+        <Typography sx={{ color: "blue" }}>Record 1</Typography>
+        <Grid container sm={12} spacing={2}>
+          <Grid item sm={5}>
+            <CYFMSDropdown id="role" value="Role" />
+          </Grid>
+          <Grid item sm={5}></Grid>
+          <Grid item sm={5}>
+            <CYFMSInput id="cyfmsWorkerName" value="Name" />
+          </Grid>
+          <Grid item sm={5}></Grid>
+          <Grid item sm={8.7}>
+            <CYFMSLongInput
+              id="cyfmsWorkerContactInfo"
+              value="Contact Information"
+              multiline={true}
+            />
+          </Grid>
+
+          <Grid item sm={2.2}></Grid>
+          <Grid item sm={2.1}></Grid>
+          <Grid item sm={5}>
+            <Button variant="contained">Add More</Button>
+          </Grid>
+        </Grid>
+        <Grid item sm={7}></Grid>
+        <Grid item sm={4}>
+          <Button variant="contained" type="submit">
+            Next
+          </Button>
+        </Grid>
       </Box>
     </CYFMSLayout>
   );

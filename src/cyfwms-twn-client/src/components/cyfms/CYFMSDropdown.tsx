@@ -19,44 +19,68 @@ const CYFMSDropdown = (
   return (
     <FormControl
       sx={{
+        display: "flex",
         flexDirection: "row",
         flexWrap: "wrap",
-        width: { xs: "100%", sm: "50%" },
       }}
     >
-      <FormLabel htmlFor={props.id} sx={{ p: 1 }}>
+      <FormLabel htmlFor={props.id} sx={{ p: 1, flexGrow: 1, color: "black" }}>
         {props.value}
       </FormLabel>
       {props.id === "maritalStatus" && (
-        <select name={props.id} id={props.id}>
+        <select
+          name={props.id}
+          id={props.id}
+          style={{
+            height: "40px",
+            backgroundColor: "#dfdada",
+            width: "200px",
+          }}
+        >
           {Object.keys(codetable.maritalstatus).map((key: any, index) => {
             return <option>{key}</option>;
           })}
         </select>
       )}
       {props.id === "gender" && (
-        <select name={props.id} id={props.id}>
+        <select
+          name={props.id}
+          id={props.id}
+          style={{ height: "40px", backgroundColor: "#dfdada", width: "200px" }}
+        >
           {Object.keys(codetable.gender).map((key: any, index) => {
             return <option>{key}</option>;
           })}
         </select>
       )}
       {props.id === "education" && (
-        <select name={props.id} id={props.id}>
+        <select
+          name={props.id}
+          id={props.id}
+          style={{ height: "40px", backgroundColor: "#dfdada", width: "200px" }}
+        >
           {Object.keys(codetable.education).map((key: any, index) => {
             return <option>{key}</option>;
           })}
         </select>
       )}
       {props.id === "role" && (
-        <select name={props.id} id={props.id}>
+        <select
+          name={props.id}
+          id={props.id}
+          style={{ height: "40px", backgroundColor: "#dfdada", width: "200px" }}
+        >
           {Object.keys(codetable.role).map((key: any, index) => {
             return <option>{key}</option>;
           })}
         </select>
       )}
       {props.id === "typeOfEmployee" && (
-        <select name={props.id} id={props.id}>
+        <select
+          name={props.id}
+          id={props.id}
+          style={{ height: "40px", backgroundColor: "#dfdada" }}
+        >
           {Object.keys(codetable.typeOfEmployee).map((key: any, index) => {
             return <option>{key}</option>;
           })}

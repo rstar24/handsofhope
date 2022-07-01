@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import CYFMSInput from "../../components/cyfms/CYFMSInput";
 import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
 import type { FormEvent, ReactElement } from "react";
@@ -8,6 +8,7 @@ import {
   doGetOtherInformation,
   doPostOtherInformation,
 } from "../../features/otherInformation/otherInformationSlice";
+import CYFMSLongInput from "../../components/cyfms/CYFMSLongInput";
 
 /**
  * The CYFMSOtherInformation functional component.
@@ -56,31 +57,51 @@ const CYFMSOtherInformation = (): ReactElement => {
         }}
         onSubmit={submitHandler}
       >
-        <Typography>Other Information</Typography>
-        <CYFMSInput
-          id="strengths"
-          value="Strengths"
-          autofill={readData.strength}
-        />
-        <CYFMSInput
-          id="weaknesses"
-          value="Weaknesses"
-          autofill={readData.weakness}
-        />
-        <CYFMSInput id="skills" value="Skills" autofill={readData.skills} />
-        <CYFMSInput
-          id="experiences"
-          value="Experiences"
-          autofill={readData.experiences}
-        />
-        <CYFMSInput
-          id="effectiveCopingSkills"
-          value="Effective Coping Skills"
-          autofill={readData.effectiveCopingSkills}
-        />
-        <Button variant="contained" type="submit">
-          Next
-        </Button>
+        <Typography sx={{ color: "blue" }}>Other Information</Typography>
+        <Grid container sm={12} spacing={2}>
+          <Grid item sm={10}>
+            <CYFMSLongInput
+              id="strengths"
+              value="Strengths"
+              autofill={readData.strength}
+            />
+          </Grid>
+          <Grid item sm={10}>
+            <CYFMSLongInput
+              id="weaknesses"
+              value="Weaknesses"
+              autofill={readData.weakness}
+            />
+          </Grid>
+          <Grid item sm={10}>
+            <CYFMSLongInput
+              id="skills"
+              value="Skills"
+              autofill={readData.skills}
+            />
+          </Grid>
+          <Grid item sm={10}>
+            <CYFMSLongInput
+              id="experiences"
+              value="Experiences"
+              autofill={readData.experiences}
+            />
+          </Grid>
+          <Grid item sm={10}>
+            <CYFMSLongInput
+              id="effectiveCopingSkills"
+              value="Effective Coping Skills"
+              autofill={readData.effectiveCopingSkills}
+              multiline={false}
+            />
+          </Grid>
+          <Grid item sm={8.6}></Grid>
+          <Grid item sm={2}>
+            <Button variant="contained" type="submit">
+              Next
+            </Button>
+          </Grid>
+        </Grid>
       </Box>
     </CYFMSLayout>
   );

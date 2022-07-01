@@ -6,9 +6,7 @@ import {
 } from "./familyPhysiciansSlice";
 
 const axiosInstance = axios.create({
-  baseURL: `${
-    process.env.REACT_APP_REST_API || "http://localhost:9088"
-  }/v1/participantservice/`,
+  baseURL: "http://localhost:9088/v1/participantservice/",
 });
 
 export const doGetFamilyPhysiciansAPI = async (

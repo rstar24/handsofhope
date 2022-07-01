@@ -3,6 +3,7 @@ import CYFMSHeader from "./CYFMSHeader";
 import CYFMSSideNav from "./CYFMSSideNav";
 import React from "react";
 import type { ReactElement, ReactNode } from "react";
+import { Grid } from "@mui/material";
 
 /**
  * The CYFMSLayout functional component.
@@ -21,8 +22,14 @@ const CYFMSLayout = (props: {
     <Box>
       <CYFMSHeader />
       <Box sx={{ display: "flex" }}>
-        <CYFMSSideNav />
-        {props.children}
+        <Grid container md={12}>
+          <Grid item md={2}>
+            <CYFMSSideNav />
+          </Grid>
+          <Grid item md={10}>
+            {props.children}
+          </Grid>
+        </Grid>
       </Box>
     </Box>
   );

@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import CYFMSInput from "../../components/cyfms/CYFMSInput";
 import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
 import { FormEvent, ReactElement, useEffect, useState } from "react";
@@ -54,15 +54,34 @@ const CYFMSFamilyPhysician = (): ReactElement => {
         }}
         onSubmit={submitHandler}
       >
-        <Typography>Family Physician:1</Typography>
-        <CYFMSInput id="name" value="Name" />
-        <CYFMSInput id="phone" value="Phone" />
-        <CYFMSInput id="cell" value="Cell" />
-        <CYFMSInput id="medicationInfo" value="List Of Medication" />
-        <Button variant="contained">Add More</Button>
-        <Button variant="contained" type="submit">
-          Next
-        </Button>
+        <Typography sx={{ color: "blue" }}>Family Physician:1</Typography>
+        <Grid container sm={12} spacing={2}>
+          <Grid item sm={5}>
+            <CYFMSInput id="name" value="Name" />
+          </Grid>
+          <Grid item sm={5}>
+            <CYFMSInput id="phone" value="Phone" />
+          </Grid>
+          <Grid item sm={5}>
+            <CYFMSInput id="cell" value="Cell" />
+          </Grid>
+          <Grid item sm={5}></Grid>
+          <Grid item sm={5}>
+            <CYFMSInput id="medicationInfo" value="List Of Medication" />
+          </Grid>
+          <Grid item sm={5}></Grid>
+          <Grid item sm={12}></Grid>
+          <Grid item sm={2.4}></Grid>
+          <Button variant="contained">Add More</Button>
+        </Grid>
+        <Grid container sm={12} spacing={2}>
+          <Grid item sm={9}></Grid>
+          <Grid item sm={2}>
+            <Button variant="contained" type="submit">
+              Next
+            </Button>
+          </Grid>
+        </Grid>
       </Box>
     </CYFMSLayout>
   );

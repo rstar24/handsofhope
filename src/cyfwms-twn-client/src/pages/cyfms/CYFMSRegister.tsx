@@ -1,4 +1,4 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, Grid } from "@mui/material";
 import {
   doGetRegister,
   doPostRegister,
@@ -52,41 +52,62 @@ const CYFMSRegister = (): ReactElement => {
         }}
         onSubmit={submitHandler}
       >
-        <CYFMSInput
-          id="firstName"
-          value="First Name"
-          autofill={readData.firstname}
-        />
-        <CYFMSInput
-          id="middleName"
-          value="Middle Name"
-          autofill={readData.middleName}
-        />
-        <CYFMSInput
-          id="lastName"
-          value="Last Name"
-          autofill={readData.surname}
-        />
-        <CYFMSInput
-          id="dateOfBirth"
-          value="Date of Birth"
-          autofill={readData.dateOfBirth}
-        />
-        <CYFMSDropdown id="gender" value="Gender" autofill={readData.gender} />
-        <CYFMSDropdown
-          id="maritalStatus"
-          value="Marital Status"
-          autofill={readData.maritalStatus}
-        />
-        {userData.participantId ? (
-          <Button variant="contained" type="submit">
-            Next
-          </Button>
-        ) : (
-          <Button variant="contained" type="submit">
-            Save
-          </Button>
-        )}
+        <Grid container sm={12} spacing={2}>
+          <Grid item xs={1} sm={5} md={5}>
+            <CYFMSInput
+              id="firstName"
+              value="First Name"
+              autofill={readData.firstname}
+            />
+          </Grid>
+          <Grid item xs={1} sm={5} md={5}>
+            <CYFMSInput
+              id="middleName"
+              value="Middle Name"
+              autofill={readData.middleName}
+            />
+          </Grid>
+          <Grid item xs={1} sm={5} md={5}>
+            <CYFMSInput
+              id="lastName"
+              value="Last Name"
+              autofill={readData.surname}
+            />
+          </Grid>
+          <Grid item xs={1} sm={5} md={5}>
+            <CYFMSInput
+              id="dateOfBirth"
+              value="Date of Birth"
+              autofill={readData.dateOfBirth}
+            />
+          </Grid>
+          <Grid item xs={1} sm={5} md={5}>
+            <CYFMSDropdown
+              id="gender"
+              value="Gender"
+              autofill={readData.gender}
+            />
+          </Grid>
+          <Grid item xs={1} sm={5} md={5}>
+            <CYFMSDropdown
+              id="maritalStatus"
+              value="Marital Status"
+              autofill={readData.maritalStatus}
+            />
+          </Grid>
+          <Grid item sm={8.8}></Grid>
+          <Grid item sm={0}>
+            {userData.participantId ? (
+              <Button variant="contained" type="submit">
+                Next
+              </Button>
+            ) : (
+              <Button variant="contained" type="submit">
+                Save
+              </Button>
+            )}
+          </Grid>{" "}
+        </Grid>
       </Box>
     </CYFMSLayout>
   );

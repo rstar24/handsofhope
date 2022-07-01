@@ -11,10 +11,12 @@ import {
   Checkbox,
   FormControlLabel,
   FormGroup,
+  Grid,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import type { FormEvent, ReactElement } from "react";
+import CYFMSLongInput from "../../components/cyfms/CYFMSLongInput";
 
 /**
  * The CYFMSCriminalHistory functional component.
@@ -73,47 +75,77 @@ const CYFMSCriminalHistory = (): ReactElement => {
         }}
         onSubmit={submitHandler}
       >
-        <Typography>Record 1</Typography>
-        <CYFMSInput
-          id="arrestDate"
-          value="Arrest Date"
-          autofill={readData.arrestDate}
-        />
-        <CYFMSInput id="charges" value="Charges" autofill={readData.charges} />
-        <CYFMSInput
-          id="conviction"
-          value="Conviction"
-          autofill={readData.conviction}
-        />
-        <CYFMSInput
-          id="sentence"
-          value="Sentence"
-          autofill={readData.sentence}
-        />
-        <Button variant="contained">Add More</Button>
-        <FormGroup>
-          <FormControlLabel
-            control={<Checkbox defaultChecked={false} id="probation" />}
-            label="Probation"
-          />
-          <FormControlLabel
-            control={<Checkbox defaultChecked={false} />}
-            label="Parole"
-          />
-        </FormGroup>
-        <CYFMSInput
-          id="conditions"
-          value="Conditions"
-          autofill={readData.conditions}
-        />
-        <CYFMSInput
-          id="courtContactInfo"
-          value="Court Worker(s) And Contact Information"
-          autofill={readData.courtWorkerAndContactInfo}
-        />
-        <Button variant="contained" type="submit">
-          Next
-        </Button>
+        <Typography sx={{ color: "blue" }}>Record 1</Typography>
+        <Grid container sm={12} spacing={2}>
+          <Grid item sm={5}>
+            <CYFMSInput
+              id="arrestDate"
+              value="Arrest Date"
+              autofill={readData.arrestDate}
+            />
+          </Grid>
+          <Grid item sm={5}>
+            <CYFMSInput
+              id="charges"
+              value="Charges"
+              autofill={readData.charges}
+            />
+          </Grid>
+          <Grid item sm={5}>
+            <CYFMSInput
+              id="conviction"
+              value="Conviction"
+              autofill={readData.conviction}
+            />
+          </Grid>
+          <Grid item sm={5}>
+            <CYFMSInput
+              id="sentence"
+              value="Sentence"
+              autofill={readData.sentence}
+            />
+          </Grid>
+          <Grid item sm={2.2}></Grid>
+          <Grid item sm={9.8}>
+            <Button variant="contained">Add More</Button>
+          </Grid>
+        </Grid>
+
+        <Grid container sm={12} spacing={2}>
+          <Grid item sm={5}>
+            <FormGroup>
+              <FormControlLabel
+                control={<Checkbox defaultChecked={false} id="probation" />}
+                label="Probation"
+              />
+              <FormControlLabel
+                control={<Checkbox defaultChecked={false} id="parole" />}
+                label="Parole"
+              />
+            </FormGroup>
+          </Grid>
+          <Grid item sm={5}>
+            <CYFMSInput
+              id="conditions"
+              value="Conditions"
+              autofill={readData.conditions}
+            />
+          </Grid>
+          <Grid item sm={10}>
+            <CYFMSLongInput
+              id="courtContactInfo"
+              value="Court Worker(s) And Contact Information"
+              autofill={readData.courtWorkerAndContactInfo}
+              multiline={true}
+            />
+          </Grid>
+          <Grid item sm={9}></Grid>
+          <Grid item sm={2}>
+            <Button variant="contained" type="submit">
+              Next
+            </Button>
+          </Grid>
+        </Grid>
       </Box>
     </CYFMSLayout>
   );

@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import CYFMSInput from "../../components/cyfms/CYFMSInput";
 import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
 import React, { useEffect } from "react";
@@ -63,33 +63,53 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
         }}
         onSubmit={submitHandler}
       >
-        <Typography>Education</Typography>
-        <CYFMSDropdown
-          id="education"
-          value="Attending School?"
-          autofill={readData.attendingSchool}
-        />
-        <CYFMSInput id="school" value="School" autofill={readData.school} />
-        <CYFMSInput id="grade" value="Grade" autofill={readData.grade} />
-        <Typography>Employment</Typography>
-        <CYFMSDropdown
-          id="education"
-          value="Employed?"
-          autofill={readData.employed}
-        />
-        <CYFMSDropdown
-          id="typeOfEmployee"
-          value="Type of Employment"
-          autofill={readData.typeOfEmployment}
-        />
-        <CYFMSInput
-          id="desiredProfession"
-          value="Desired Profession"
-          autofill={readData.desiredProfession}
-        />
-        <Button variant="contained" type="submit">
-          Next
-        </Button>
+        <Typography sx={{ color: "blue" }}>Education</Typography>
+        <Grid container sm={12} spacing={2}>
+          <Grid item sm={5}>
+            <CYFMSDropdown
+              id="education"
+              value="Attending School?"
+              autofill={readData.attendingSchool}
+            />
+          </Grid>
+          <Grid item sm={5}></Grid>
+          <Grid item sm={5}>
+            <CYFMSInput id="school" value="School" autofill={readData.school} />
+          </Grid>
+          <Grid item sm={5}>
+            <CYFMSInput id="grade" value="Grade" autofill={readData.grade} />
+          </Grid>
+        </Grid>
+        <Typography sx={{ color: "blue" }}>Employment</Typography>
+        <Grid container sm={12} spacing={2}>
+          <Grid item sm={5}>
+            <CYFMSDropdown
+              id="education"
+              value="Employed?"
+              autofill={readData.employed}
+            />
+          </Grid>
+          <Grid item sm={5}>
+            <CYFMSDropdown
+              id="typeOfEmployee"
+              value="Type of Employment"
+              autofill={readData.typeOfEmployment}
+            />
+          </Grid>
+          <Grid item sm={5}>
+            <CYFMSInput
+              id="desiredProfession"
+              value="Desired Profession"
+              autofill={readData.desiredProfession}
+            />
+          </Grid>
+          <Grid item sm={9}></Grid>
+          <Grid item sm={2}>
+            <Button variant="contained" type="submit">
+              Next
+            </Button>
+          </Grid>
+        </Grid>
       </Box>
     </CYFMSLayout>
   );

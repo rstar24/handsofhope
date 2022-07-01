@@ -1,6 +1,6 @@
 import CYFMSInput from "../../components/cyfms/CYFMSInput";
 import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import type { FormEvent, ReactElement } from "react";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
@@ -52,55 +52,78 @@ const CYFMSContact = (): ReactElement => {
         sx={{
           display: "flex",
           flexWrap: "wrap",
-          gap: "2rem 2rem",
           mb: "auto",
         }}
         onSubmit={submitHandler}
       >
-        <CYFMSInput
-          id="addrLine1"
-          value="Address Line 1"
-          autofill={readData.addressLine1}
-        />
-        <CYFMSInput
-          id="addrLine2"
-          value="Address Line 2"
-          autofill={readData.addressLine2}
-        />
-        <CYFMSInput id="city" value="City" autofill={readData.city} />
-        <CYFMSInput
-          id="province"
-          value="Province"
-          autofill={readData.province}
-        />
-        <CYFMSInput
-          id="postalCode"
-          value="Postal Code"
-          autofill={readData.postalCode}
-        />
-        <CYFMSInput
-          id="homePhone"
-          value="Home Phone"
-          autofill={readData.homePhone}
-        />
-        <CYFMSInput
-          id="cellPhone"
-          value="Cell Phone"
-          autofill={readData.cellPhone}
-        />
-        <CYFMSInput
-          id="workPhone"
-          value="Work Phone"
-          autofill={readData.workPhone}
-        />
-        <CYFMSInput
-          id="emailAddr"
-          value="Email Address"
-          autofill={readData.emailAddress}
-        />
-        <Button variant="contained" type="submit">
-          Next
-        </Button>
+        <Grid container sm={12} spacing={2}>
+          <Grid item sm={5}>
+            <CYFMSInput
+              id="addrLine1"
+              value="Address Line 1"
+              autofill={readData.addressLine1}
+            />
+          </Grid>
+          <Grid item sm={5}>
+            <CYFMSInput
+              id="addrLine2"
+              value="Address Line 2"
+              autofill={readData.addressLine2}
+            />
+          </Grid>
+          <Grid item sm={5}>
+            <CYFMSInput id="city" value="City" autofill={readData.city} />
+          </Grid>
+          <Grid item sm={5}>
+            <CYFMSInput
+              id="province"
+              value="Province"
+              autofill={readData.province}
+            />
+          </Grid>
+          <Grid item sm={5}>
+            <CYFMSInput
+              id="postalCode"
+              value="Postal Code"
+              autofill={readData.postalCode}
+            />
+          </Grid>
+          <Grid item sm={5}>
+            <CYFMSInput
+              id="homePhone"
+              value="Home Phone"
+              autofill={readData.homePhone}
+            />
+          </Grid>
+          <Grid item sm={5}>
+            <CYFMSInput
+              id="cellPhone"
+              value="Cell Phone"
+              autofill={readData.cellPhone}
+            />
+          </Grid>
+          <Grid item sm={5}>
+            <CYFMSInput
+              id="workPhone"
+              value="Work Phone"
+              autofill={readData.workPhone}
+            />
+          </Grid>
+          <Grid item sm={5}>
+            <CYFMSInput
+              id="emailAddr"
+              value="Email Address"
+              autofill={readData.emailAddress}
+            />
+          </Grid>
+          <Grid item sm={5}></Grid>
+          <Grid item sm={8.8}></Grid>
+          <Grid item sm={2}>
+            <Button variant="contained" type="submit">
+              Next
+            </Button>
+          </Grid>
+        </Grid>
       </Box>
     </CYFMSLayout>
   );
