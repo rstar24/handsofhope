@@ -48,7 +48,8 @@ public class WebSecurityConfiguration  {
             "/**/*.jpg",
             "/**/*.html",
             "/**/*.css",
-            "/**/*.js"
+            "/**/*.js",
+            "/**/"
 
     };
 
