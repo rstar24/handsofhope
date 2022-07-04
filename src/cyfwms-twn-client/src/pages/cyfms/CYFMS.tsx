@@ -12,7 +12,7 @@ import { doGetContact } from "../../features/contact/contactSlice";
 import { doGetRegister } from "../../features/register/registerSlice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { Box, Button } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import type { ReactElement } from "react";
 

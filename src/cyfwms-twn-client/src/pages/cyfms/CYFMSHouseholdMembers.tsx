@@ -1,4 +1,4 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, Grid } from "@mui/material";
 import CYFMSInput from "../../components/cyfms/CYFMSInput";
 import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
 import React, { useEffect, useState } from "react";
@@ -72,16 +72,34 @@ const CYFMSHouseholdMembers = (): ReactElement => {
         }}
         onSubmit={submitHandler}
       >
-        <CYFMSInput id="memberName" value="Name" />
-        <CYFMSInput id="memberDOB" value="Date of Birth" />
-        <CYFMSInput id="memberResiding" value="Residing" />
-        <CYFMSDropdown id="gender" value="Member Gender" />
-        <Button variant="contained" type="submit">
-          Add More
-        </Button>
-        <Button variant="contained" type="submit">
-          Next
-        </Button>
+        <Grid container sm={12} spacing={2}>
+          <Grid item sm={5}>
+            <CYFMSInput id="memberName" value="Name" />
+          </Grid>
+          <Grid item sm={5}>
+            <CYFMSInput id="memberDOB" value="Date of Birth" />
+          </Grid>
+          <Grid item sm={5}>
+            <CYFMSInput id="memberResiding" value="Residing" />
+          </Grid>
+          <Grid item sm={5}>
+            <CYFMSDropdown id="gender" value="Member Gender" />
+          </Grid>
+
+          <Grid item sm={2.1}></Grid>
+          <Grid item sm={9.9}>
+            <Button variant="contained" type="submit">
+              Add More
+            </Button>
+          </Grid>
+
+          <Grid item sm={8.8}></Grid>
+          <Grid item sm={3.2}>
+            <Button variant="contained" type="submit">
+              Next
+            </Button>
+          </Grid>
+        </Grid>
       </Box>
     </CYFMSLayout>
   );

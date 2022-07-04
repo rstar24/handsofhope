@@ -6,7 +6,8 @@ import CYFMSHouseholdMembers from "../../pages/cyfms/CYFMSHouseholdMembers";
 import CYFMSOtherInformation from "../../pages/cyfms/CYFMSOtherInformation";
 import CYFMSRegister from "../../pages/cyfms/CYFMSRegister";
 import CYFMSWorker from "../../pages/cyfms/CYFMSWorker";
-import { Box, Modal } from "@mui/material";
+import { Box, IconButton, Modal } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import type { ModalUnstyledProps } from "@mui/material";
@@ -41,6 +42,14 @@ const CYFMSPopup = (props: ModalUnstyledProps): ReactElement => {
           overflowY: "auto",
         }}
       >
+        <IconButton
+          color="primary"
+          aria-label="Close the popup box."
+          onClick={(e) => props.onClose!(e, "backdropClick")}
+          sx={{ position: "absolute", right: 0 }}
+        >
+          <CloseIcon />
+        </IconButton>
         <Routes>
           <Route path="register" element={<CYFMSRegister />} />
           <Route path="contact" element={<CYFMSContact />} />

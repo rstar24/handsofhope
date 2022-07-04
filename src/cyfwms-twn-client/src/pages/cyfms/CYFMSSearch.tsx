@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import type { ReactElement } from "react";
+import CYFMSInput from "../../components/cyfms/CYFMSInput";
 
 /**
  * The CYFMSSearch functional component.
@@ -36,7 +37,7 @@ const CYFMSSearch = (): ReactElement => {
       <CYFMSHeader />
       <Grid
         container
-        rowSpacing={1}
+        spacing={2}
         direction="row"
         columns={{ xs: 2, sm: 8, md: 12 }}
       >
@@ -63,8 +64,50 @@ const CYFMSSearch = (): ReactElement => {
             Search for a Child, Youth, and Family Members
           </Button>
         </Grid>
+        <Grid item xs={2} sm={4} md={1}></Grid>
+        <Grid item xs={2} sm={4} md={6}>
+          <Grid container spacing={2}>
+            <Grid item md={10}>
+              <CYFMSInput id="firstName" value="First Name" autofill="" />
+            </Grid>
+            <Grid item md={10}>
+              <CYFMSInput id="MiddleName" value="Middle Name" autofill="" />
+            </Grid>
+            <Grid item md={10}>
+              <CYFMSInput id="lastName" value="Last Name" autofill="" />
+            </Grid>
+
+            <Grid item md={10}>
+              <CYFMSInput id="dateOfBirth" value="Date of Birth" autofill="" />
+            </Grid>
+
+            <Grid item md={10}>
+              <CYFMSInput
+                id="maritalStatus"
+                value="Marital Status"
+                autofill=""
+              />
+            </Grid>
+            <Grid item md={10}>
+              <CYFMSInput id="phone" value="Phone Number" autofill="" />
+            </Grid>
+            <Grid item md={10}>
+              <CYFMSInput id="city" value="City" autofill="" />
+            </Grid>
+          </Grid>
+          <Grid item md={10}></Grid>
+          <Grid container>
+            <Grid item md={5.5}></Grid>
+            <Grid item md={4}>
+              <Button variant="contained" color="info">
+                Search
+              </Button>
+            </Grid>
+          </Grid>
+        </Grid>
+
         <Grid item xs={2} sm={4} md={8}>
-          <form>
+          {/* <form>
             <Box
               component="form"
               sx={{
@@ -245,7 +288,7 @@ const CYFMSSearch = (): ReactElement => {
                 </Grid>
               </Grid>
             </Box>
-          </form>
+          </form> */}
         </Grid>
       </Grid>
     </AuthLayout>

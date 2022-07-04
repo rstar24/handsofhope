@@ -39,7 +39,17 @@ public class WebSecurityConfiguration  {
             "/swagger-ui/**",
             "/swagger-ui.html",
             "/webjars/**",
-            "/v1/login/**"
+            "/v1/login/**",
+            "/",
+            "/favicon.ico",
+            "/**/*.png",
+            "/**/*.gif",
+            "/**/*.svg",
+            "/**/*.jpg",
+            "/**/*.html",
+            "/**/*.css",
+            "/**/*.js",
+            "/**/"
 
     };
 

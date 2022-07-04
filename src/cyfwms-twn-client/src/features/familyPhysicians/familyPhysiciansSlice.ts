@@ -6,7 +6,7 @@ import {
 } from "./familyPhysiciansAPI";
 
 export interface FamilyPhysiciansGetData {
-  user: {};
+  readData: {};
 }
 export interface FamilyPhysiciansPostData {
   user: {};
@@ -49,6 +49,7 @@ export const familyPhysiciansSlice = createSlice({
   name: "household",
   initialState: {
     participantId: 0,
+    readData: [],
     user: {
       participantId: 0,
       familyPhysicianId: 0,
@@ -68,7 +69,7 @@ export const familyPhysiciansSlice = createSlice({
       .addCase(doGetFamilyPhysicians.fulfilled, (state, action) => {
         try {
           //const decodedPayload: any = jwt(action.payload.jwtToken);
-          state.user = action.payload;
+          state.readData = action.payload;
         } catch (err) {
           console.log(err);
         }

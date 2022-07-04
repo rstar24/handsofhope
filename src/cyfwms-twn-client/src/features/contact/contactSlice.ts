@@ -3,7 +3,7 @@ import type { AxiosResponse } from "axios";
 import { doGetContactAPI, doPostContactAPI } from "./contactApi";
 
 export interface ContactGetData {
-  user: {};
+  readUser: {};
 }
 export interface ContactPostData {
   user: {};
@@ -46,6 +46,7 @@ export const contactSlice = createSlice({
   name: "contact",
   initialState: {
     participantId: 0,
+    readUser: {},
     user: {
       participantId: 0,
       participantContactId: 0,
@@ -70,7 +71,7 @@ export const contactSlice = createSlice({
       .addCase(doGetContact.fulfilled, (state, action) => {
         try {
           //const decodedPayload: any = jwt(action.payload.jwtToken);
-          state.user = action.payload;
+          state.readUser = action.payload;
         } catch (err) {
           console.log(err);
         }

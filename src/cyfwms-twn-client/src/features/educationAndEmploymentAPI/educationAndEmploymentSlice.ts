@@ -6,7 +6,7 @@ import {
 } from "./educationAndEmploymentAPI";
 
 export interface EducationAndEmploymentGetData {
-  user: {};
+  readUser: {};
 }
 export interface EducationAndEmploymentPostData {
   user: {};
@@ -49,6 +49,7 @@ export const educationAndEmploymentSlice = createSlice({
   name: "educationAndEmployment",
   initialState: {
     participantId: 0,
+    readUser: {},
     user: {
       participantId: 0,
       educationId: 0,
@@ -71,7 +72,7 @@ export const educationAndEmploymentSlice = createSlice({
       .addCase(doGetEducationAndEmployment.fulfilled, (state, action) => {
         try {
           //const decodedPayload: any = jwt(action.payload.jwtToken);
-          state.user = action.payload;
+          state.readUser = action.payload;
         } catch (err) {
           console.log(err);
         }

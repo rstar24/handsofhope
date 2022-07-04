@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import CYFMSInput from "../../components/cyfms/CYFMSInput";
 import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
 import React, { useEffect } from "react";
@@ -21,29 +21,34 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
   const participantId = useAppSelector(
     (state) => (state as any).registration.user.participantId
   );
-  const data = useAppSelector(
+
+  const readData = useAppSelector(
+    (state) => (state as any).educationAndEmployment.readUser
+  );
+
+  const educationData = useAppSelector(
     (state) => (state as any).educationAndEmployment.user
   );
   useEffect(() => {
     dispatch(doGetEducationAndEmployment(participantId));
-  }, []);
+  }, [dispatch, educationData, participantId]);
 
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
     const data: any = e.currentTarget;
-    const newContact = {
+    const newEducationAndEmployment = {
       participantId: participantId,
-      educationId: 0,
+      educationId: educationData.educationId,
       attendingSchool: data.education.value,
       school: data.school.value,
       grade: data.grade.value,
-      employmentId: 0,
+      employmentId: educationData.employmentId,
       employed: data.education.value,
       typeOfEmployment: data.typeOfEmployee.value,
       desiredProfession: data.desiredProfession.value,
     };
 
-    dispatch(doPostEducationAndEmployment({ user: newContact }));
+    dispatch(doPostEducationAndEmployment({ user: newEducationAndEmployment }));
   };
 
   return (
@@ -58,17 +63,53 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
         }}
         onSubmit={submitHandler}
       >
-        <Typography>Education</Typography>
-        <CYFMSDropdown id="education" value="Attending School?" />
-        <CYFMSInput id="school" value="School" />
-        <CYFMSInput id="grade" value="Grade" />
-        <Typography>Employment</Typography>
-        <CYFMSDropdown id="education" value="Employed?" />
-        <CYFMSDropdown id="typeOfEmployee" value="Type of Employment" />
-        <CYFMSInput id="desiredProfession" value="Desired Profession" />
-        <Button variant="contained" type="submit">
-          Next
-        </Button>
+        <Typography sx={{ color: "blue" }}>Education</Typography>
+        <Grid container sm={12} spacing={2}>
+          <Grid item sm={5}>
+            <CYFMSDropdown
+              id="education"
+              value="Attending School?"
+              autofill={readData.attendingSchool}
+            />
+          </Grid>
+          <Grid item sm={5}></Grid>
+          <Grid item sm={5}>
+            <CYFMSInput id="school" value="School" autofill={readData.school} />
+          </Grid>
+          <Grid item sm={5}>
+            <CYFMSInput id="grade" value="Grade" autofill={readData.grade} />
+          </Grid>
+        </Grid>
+        <Typography sx={{ color: "blue" }}>Employment</Typography>
+        <Grid container sm={12} spacing={2}>
+          <Grid item sm={5}>
+            <CYFMSDropdown
+              id="education"
+              value="Employed?"
+              autofill={readData.employed}
+            />
+          </Grid>
+          <Grid item sm={5}>
+            <CYFMSDropdown
+              id="typeOfEmployee"
+              value="Type of Employment"
+              autofill={readData.typeOfEmployment}
+            />
+          </Grid>
+          <Grid item sm={5}>
+            <CYFMSInput
+              id="desiredProfession"
+              value="Desired Profession"
+              autofill={readData.desiredProfession}
+            />
+          </Grid>
+          <Grid item sm={9}></Grid>
+          <Grid item sm={2}>
+            <Button variant="contained" type="submit">
+              Next
+            </Button>
+          </Grid>
+        </Grid>
       </Box>
     </CYFMSLayout>
   );

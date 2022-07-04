@@ -3,7 +3,15 @@ import { doGetRegisterAPI, doPostRegisterAPI } from "./registerAPI";
 import type { AxiosResponse } from "axios";
 
 export interface RegisterGetData {
-  participantId: Number;
+  readUser: {
+    participantId: Number;
+    firstname: "";
+    middleName: "";
+    surname: "";
+    dateOfBirth: "";
+    gender: "";
+    maritalStatus: "";
+  };
 }
 export interface RegisterPostData {
   user: {
@@ -52,8 +60,17 @@ export const doPostRegister = createAsyncThunk(
 export const registerSlice = createSlice({
   name: "register",
   initialState: {
-    participantId: 0,
+    readUser: {
+      participantId: 0,
+      firstname: "",
+      middleName: "",
+      surname: "",
+      dateOfBirth: "",
+      gender: "",
+      maritalStatus: "",
+    },
     user: {
+      participantId: 0,
       firstname: "",
       middleName: "",
       surname: "",
@@ -72,7 +89,7 @@ export const registerSlice = createSlice({
       .addCase(doGetRegister.fulfilled, (state, action) => {
         try {
           //const decodedPayload: any = jwt(action.payload.jwtToken);
-          //state.participantId = action.payload;
+          state.readUser = action.payload;
         } catch (err) {
           console.log(err);
         }

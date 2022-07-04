@@ -6,7 +6,7 @@ import {
 } from "./criminalhistoryAPI";
 
 export interface CriminalHistoryGetData {
-  user: {};
+  readUser: {};
 }
 export interface CriminalHistoryPostData {
   user: {};
@@ -41,7 +41,6 @@ export const doPostCriminalHistory = createAsyncThunk(
       (getState() as any).login.jwtToken
     );
     // Becomes the `fulfilled` action payload:
-    console.log("criminal", data);
     return res.data;
   }
 );
@@ -50,14 +49,23 @@ export const criminalhistorySlice = createSlice({
   name: "criminalhistory",
   initialState: {
     participantId: 0,
+    readUser: {},
     user: {
-      participantId: 0,
       criminalHistoryId: 0,
+      criminalHistoryRecordList: [
+        {
+          criminalHistoryRecordId: 0,
+          charges: "",
+          arrestDate: "",
+          conviction: "",
+          sentence: "",
+        },
+      ],
       probation: "",
       parole: "",
       conditions: "",
       courtWorkerAndContactInfo: "",
-      criminalHistoryRecordList: "",
+      participantId: "",
     },
     jwtToken: "",
     status: "failed",
@@ -70,7 +78,7 @@ export const criminalhistorySlice = createSlice({
       .addCase(doGetCriminalHistory.fulfilled, (state, action) => {
         try {
           //const decodedPayload: any = jwt(action.payload.jwtToken);
-          state.user = action.payload;
+          state.readUser = action.payload;
         } catch (err) {
           console.log(err);
         }
