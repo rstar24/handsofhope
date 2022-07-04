@@ -14,6 +14,7 @@ import NotFound404 from "./pages/NotFound404";
 import CYFMSSearch from "./pages/cyfms/CYFMSSearch";
 import React, { StrictMode } from "react";
 import type { ReactElement } from "react";
+import CYFMSSearchPanel from "./pages/cyfms/CYFMSSearchPanel";
 
 const CYFSWMSApp = (): ReactElement => {
   return (
@@ -27,7 +28,7 @@ const CYFSWMSApp = (): ReactElement => {
               <Route path="home" element={<Home />} />
               <Route path="login" element={<Login />} />
               <Route path="cyfms/*" element={<CYFMS />} />
-              <Route path="cyfms/search" element={<CYFMSSearch />} />
+              <Route path="cyfms/search" element={<CYFMSSearchPanel />} />
             </Routes>
           </BrowserRouter>
         </ThemeProvider>

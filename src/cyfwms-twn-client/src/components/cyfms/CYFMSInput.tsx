@@ -30,7 +30,7 @@ const CYFMSInput = (
         id={props.id}
         name={props.name}
         sx={{ borderRadius: 0, flexGrow: 1 }}
-        inputProps={{ sx: { p: 1 } }}
+        inputProps={{ sx: { p: 1, mx: 3 } }}
         type={props.type}
       />
     </FormControl>
