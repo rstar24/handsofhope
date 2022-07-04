@@ -1,64 +1,58 @@
-import { Box, Button, Grid } from "@mui/material";
-import CYFMSInput from "../../components/cyfms/CYFMSInput";
+import {
+  CYFSWMSAddButton,
+  CYFSWMSSaveButton,
+  CYFSWMSNextButton,
+} from "../../components/CYFSWMSButtons";
 import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
+import {
+  doGetHouseholdAndMembers,
+  doPostHouseholdAndMembers,
+} from "../../features/cyfms/householdAndMembers/householdAndMembersSlice";
+import { useAppDispatch, useAppSelector } from "../../library/hooks";
+import { Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import type { FormEvent, ReactElement } from "react";
-import CYFMSDropdown from "../../components/cyfms/CYFMSDropdown";
-import { useAppDispatch, useAppSelector } from "../../library/hooks";
-import {
-  doGetHouseHold,
-  doPostHouseHold,
-} from "../../features/householdMember/householdSlice";
-import { Link } from "react-router-dom";
+import CYFMSHouseholdAndMembersRecordList from "../../components/cyfms/records/CYFMSHouseholdAndMembersRecordList";
 
 /**
  * The CYFMSHouseholdMembers functional component.
  * @returns CYFMSHouseholdMembers component skeleton.
  */
 const CYFMSHouseholdMembers = (): ReactElement => {
-  const dispatch = useAppDispatch();
-  const participantId = useAppSelector(
-    (state) => (state as any).registration.user.participantId
-  );
-  const data = useAppSelector((state) => (state as any).household.user);
+  // const dispatch = useAppDispatch();
+  // const participantId = useAppSelector(
+  //   (state) => (state as any).registration.user.participantId
+  // );
+  // const data = useAppSelector((state) => (state as any).household.user);
 
-  const [formField, setFormField] = useState([
-    {
-      memberName: "",
-      memberDOB: "",
-      memberResiding: "",
-      gender: "",
-    },
-  ]);
-  useEffect(() => {
-    dispatch(doGetHouseHold(participantId));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(doGetHouseholdAndMembers(participantId));
+  // }, []);
 
-  const [contact, setContact] = useState([
-    {
-      participantId: data.participantId,
-      householdMemberId: data.participantContactId,
-      name: data.name,
-      gender: data.gender,
-      dateOfBirth: data.dateOfBirth,
-      residing: data.residing,
-    },
-  ]);
+  // State for the records list
+  const [recordList, setRecordList] = useState([{}]);
+
+  // State for the save button
+  const [saveButtonDisabled, setSaveButtonDisabled] = useState(true);
+
+  // Handles the form data submission and other
+  // activities.
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
-    const data: any = e.currentTarget;
-    const newContact = [
-      {
-        participantId: participantId,
-        householdMemberId: 0,
-        name: data.memberName.value,
-        gender: data.gender.value,
-        dateOfBirth: data.memberDOB.value,
-        residing: data.memberResiding.value,
-      },
-    ];
-    setContact(newContact);
-    dispatch(doPostHouseHold({ user: newContact }));
+    //dispatch(doPostHouseholdAndMembers());
+    /* Disable save button. */
+    setSaveButtonDisabled(true);
+  };
+
+  const addMoreHandler = (e: MouseEvent) => {
+    e.preventDefault();
+    setRecordList((previousRecordList) => [...previousRecordList, {}]);
+  };
+
+  // Enables/Re-enables the `Save` button whenever
+  // any form field value changes.
+  const changeHandler = (e: FormEvent) => {
+    setSaveButtonDisabled(false);
   };
 
   return (
@@ -67,45 +61,24 @@ const CYFMSHouseholdMembers = (): ReactElement => {
         component="form"
         sx={{
           display: "flex",
+          flexDirection: "column",
           flexWrap: "wrap",
-          gap: "2rem 2rem",
+          gap: "1rem 0",
           mb: "auto",
         }}
         onSubmit={submitHandler}
+        onChange={changeHandler}
       >
-        <Grid container sm={12} spacing={2}>
-          <Grid item sm={5}>
-            <CYFMSInput id="memberName" value="Name" />
-          </Grid>
-          <Grid item sm={5}>
-            <CYFMSInput id="memberDOB" value="Date of Birth" />
-          </Grid>
-          <Grid item sm={5}>
-            <CYFMSInput id="memberResiding" value="Residing" />
-          </Grid>
-          <Grid item sm={5}>
-            <CYFMSDropdown id="gender" value="Member Gender" />
-          </Grid>
-
-          <Grid item sm={2.1}></Grid>
-          <Grid item sm={9.9}>
-            <Button variant="contained" type="submit">
-              Add More
-            </Button>
-          </Grid>
-
-          <Grid item sm={8.8}></Grid>
-          <Grid item sm={3.2}>
-            <Button
-              variant="contained"
-              type="submit"
-              component={Link}
-              to="/cyfms/education_and_employment"
-            >
-              Next
-            </Button>
-          </Grid>
-        </Grid>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem 0" }}>
+          {CYFMSHouseholdAndMembersRecordList(recordList)}
+        </Box>
+        <Box>
+          <CYFSWMSAddButton onClick={addMoreHandler} />
+        </Box>
+        <Box sx={{ display: "flex", gap: "0 1rem", justifyContent: "right" }}>
+          <CYFSWMSSaveButton disabled={saveButtonDisabled} />
+          <CYFSWMSNextButton to="/cyfms/education_and_employment" />
+        </Box>
       </Box>
     </CYFMSLayout>
   );

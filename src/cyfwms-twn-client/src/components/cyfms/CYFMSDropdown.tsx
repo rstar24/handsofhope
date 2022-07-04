@@ -42,7 +42,7 @@ const CYFMSDropdown = (
           })}
         </select>
       )}
-      {props.id === "gender" && (
+      {props.id.includes("gender") && (
         <select
           name={props.id}
           id={props.id}
