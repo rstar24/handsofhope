@@ -17,6 +17,7 @@ import {
 import React, { useEffect } from "react";
 import type { FormEvent, ReactElement } from "react";
 import CYFMSLongInput from "../../components/cyfms/CYFMSLongInput";
+import { Link } from "react-router-dom";
 
 /**
  * The CYFMSCriminalHistory functional component.
@@ -141,7 +142,12 @@ const CYFMSCriminalHistory = (): ReactElement => {
           </Grid>
           <Grid item sm={9}></Grid>
           <Grid item sm={2}>
-            <Button variant="contained" type="submit">
+            <Button
+              variant="contained"
+              type="submit"
+              component={Link}
+              to="/cyfms/family_physician"
+            >
               Next
             </Button>
           </Grid>

@@ -8,6 +8,7 @@ import {
   doGetFamilyPhysicians,
   doPostFamilyPhysicians,
 } from "../../features/familyPhysicians/familyPhysiciansSlice";
+import { Link } from "react-router-dom";
 
 /**
  * The CYFMSFamilyPhysician functional component.
@@ -77,7 +78,12 @@ const CYFMSFamilyPhysician = (): ReactElement => {
         <Grid container sm={12} spacing={2}>
           <Grid item sm={9}></Grid>
           <Grid item sm={2}>
-            <Button variant="contained" type="submit">
+            <Button
+              variant="contained"
+              type="submit"
+              component={Link}
+              to="/cyfms/cyfms_worker"
+            >
               Next
             </Button>
           </Grid>

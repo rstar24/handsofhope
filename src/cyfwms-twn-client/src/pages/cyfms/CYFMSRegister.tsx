@@ -10,6 +10,7 @@ import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
 import { Box, Button, Grid } from "@mui/material";
 import React, { useEffect } from "react";
 import type { FormEvent, ReactElement } from "react";
+import { Link } from "react-router-dom";
 
 /**
  * The CYFMSRegister functional component.
@@ -105,7 +106,12 @@ const CYFMSRegister = (): ReactElement => {
           <Grid item sm={8.8}></Grid>
           <Grid item sm={0}>
             {userData.participantId ? (
-              <Button variant="contained" type="submit">
+              <Button
+                variant="contained"
+                type="submit"
+                component={Link}
+                to="/cyfms/contact"
+              >
                 Next
               </Button>
             ) : (

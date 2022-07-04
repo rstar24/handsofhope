@@ -9,6 +9,7 @@ import {
   doGetHouseHold,
   doPostHouseHold,
 } from "../../features/householdMember/householdSlice";
+import { Link } from "react-router-dom";
 
 /**
  * The CYFMSHouseholdMembers functional component.
@@ -95,7 +96,12 @@ const CYFMSHouseholdMembers = (): ReactElement => {
 
           <Grid item sm={8.8}></Grid>
           <Grid item sm={3.2}>
-            <Button variant="contained" type="submit">
+            <Button
+              variant="contained"
+              type="submit"
+              component={Link}
+              to="/cyfms/education_and_employment"
+            >
               Next
             </Button>
           </Grid>

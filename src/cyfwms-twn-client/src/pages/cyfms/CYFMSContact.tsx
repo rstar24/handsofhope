@@ -8,6 +8,7 @@ import {
   doGetContact,
   doPostContact,
 } from "../../features/contact/contactSlice";
+import { Link } from "react-router-dom";
 
 /**
  * The CYFMSContact functional component.
@@ -119,7 +120,12 @@ const CYFMSContact = (): ReactElement => {
           <Grid item sm={5}></Grid>
           <Grid item sm={8.8}></Grid>
           <Grid item sm={2}>
-            <Button variant="contained" type="submit">
+            <Button
+              variant="contained"
+              type="submit"
+              component={Link}
+              to="/cyfms/household_members"
+            >
               Next
             </Button>
           </Grid>
