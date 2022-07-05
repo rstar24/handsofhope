@@ -3,7 +3,6 @@ import CYFMSInput from "../../components/cyfms/CYFMSInput";
 import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
 import { FormEvent, ReactElement, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
-import { doGetHouseHold } from "../../features/householdMember/householdSlice";
 import {
   doGetFamilyPhysicians,
   doPostFamilyPhysicians,
