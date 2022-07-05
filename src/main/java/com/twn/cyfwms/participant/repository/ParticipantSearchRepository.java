@@ -90,7 +90,7 @@ public class ParticipantSearchRepository {
                     .replace("%", "!%")
                     .replace("_", "!_")
                     .replace("[", "![");
-            querySBuff.append(" AND p.maritalstatus=");
+            querySBuff.append(" AND p.maritalstatus=?");
             argsObjectList.add(maritalStatus);
         }
         String city = searchCriteria.getCity();

@@ -6,10 +6,15 @@ import com.twn.cyfwms.participant.service.*;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -150,10 +155,25 @@ public class TWNParticipantController {
         return educationAndEmploymentService.saveEducationAndEmployment(educationAndEmploymentCompositeDto);
     }
 
-    @GetMapping(value = "/searchParticipants", produces = "application/json")
+    @GetMapping(value = "/searchParticipants/{firstname}/{surname}/{middleName}/{dateOfBirth}/{maritalStatus}/{city}/{phoneNumber}", produces = "application/json")
     @ApiOperation("Search Participants")
     @ResponseStatus(HttpStatus.OK)
-    public List<ParticipantSearchResultsDto> searchParticipants(@RequestBody ParticipantSearchCriteriaDto participantSearchCriteriaDto) {
+    public List<ParticipantSearchResultsDto> searchParticipants(@PathVariable("firstname") String firstname,@PathVariable("surname") String surname,
+                                                                @PathVariable("middleName") String middleName, @PathVariable("dateOfBirth") String dateOfBirth,
+                                                                @PathVariable("maritalStatus") String maritalStatus,
+                                                                @PathVariable("city") String city,@PathVariable("phoneNumber") String phoneNumber)
+    {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate dateTime = LocalDate.parse(dateOfBirth, formatter);
+
+        ParticipantSearchCriteriaDto participantSearchCriteriaDto=new ParticipantSearchCriteriaDto();
+        participantSearchCriteriaDto.setFirstname(firstname);
+        participantSearchCriteriaDto.setCity(city);
+        participantSearchCriteriaDto.setDateOfBirth(dateTime);
+        participantSearchCriteriaDto.setMaritalStatus(maritalStatus);
+        participantSearchCriteriaDto.setSurname(surname);
+        participantSearchCriteriaDto.setMiddleName(middleName);
+        participantSearchCriteriaDto.setPhoneNumber(phoneNumber);
         return participantSearchService.search(participantSearchCriteriaDto);
     }
 
