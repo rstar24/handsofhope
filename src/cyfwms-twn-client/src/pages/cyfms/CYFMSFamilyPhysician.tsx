@@ -7,13 +7,14 @@ import {
   doGetFamilyPhysicians,
   doPostFamilyPhysicians,
 } from "../../features/familyPhysicians/familyPhysiciansSlice";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 /**
  * The CYFMSFamilyPhysician functional component.
  * @returns CYFMSFamilyPhysician component skeleton.
  */
 const CYFMSFamilyPhysician = (): ReactElement => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const participantId = useAppSelector(
     (state) => (state as any).registration.user.participantId
@@ -39,7 +40,9 @@ const CYFMSFamilyPhysician = (): ReactElement => {
       },
     ];
     setContact(newContact);
-    dispatch(doPostFamilyPhysicians({ user: newContact }));
+    dispatch(doPostFamilyPhysicians({ user: newContact })).then(() => {
+      navigate("/cyfms/cyfms_worker");
+    });
   };
 
   return (
@@ -77,12 +80,7 @@ const CYFMSFamilyPhysician = (): ReactElement => {
         <Grid container sm={12} spacing={2}>
           <Grid item sm={9}></Grid>
           <Grid item sm={2}>
-            <Button
-              variant="contained"
-              type="submit"
-              component={Link}
-              to="/cyfms/cyfms_worker"
-            >
+            <Button variant="contained" type="submit">
               Next
             </Button>
           </Grid>

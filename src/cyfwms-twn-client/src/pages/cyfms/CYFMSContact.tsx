@@ -8,13 +8,14 @@ import {
   doGetContact,
   doPostContact,
 } from "../../features/contact/contactSlice";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 /**
  * The CYFMSContact functional component.
  * @returns CYFMSContact component skeleton.
  */
 const CYFMSContact = (): ReactElement => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const participantId = useAppSelector(
     (state) => (state as any).registration.user.participantId
@@ -43,7 +44,9 @@ const CYFMSContact = (): ReactElement => {
       emailAddress: data.emailAddr.value,
     };
 
-    dispatch(doPostContact({ user: newContact }));
+    dispatch(doPostContact({ user: newContact })).then(() => {
+      navigate("/cyfms/household_members");
+    });
   };
 
   return (
@@ -120,12 +123,7 @@ const CYFMSContact = (): ReactElement => {
           <Grid item sm={5}></Grid>
           <Grid item sm={8.8}></Grid>
           <Grid item sm={2}>
-            <Button
-              variant="contained"
-              type="submit"
-              component={Link}
-              to="/cyfms/household_members"
-            >
+            <Button variant="contained" type="submit">
               Next
             </Button>
           </Grid>

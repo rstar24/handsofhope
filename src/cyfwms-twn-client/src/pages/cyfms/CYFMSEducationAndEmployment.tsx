@@ -11,13 +11,14 @@ import {
   doPostEducationAndEmployment,
 } from "../../features/educationAndEmploymentAPI/educationAndEmploymentSlice";
 import { doGetEducation } from "../../features/codetable/codetableSlice";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 /**
  * The CYFMSEducationAndEmployment functional component.
  * @returns CYFMSEducationAndEmployment component skeleton.
  */
 const CYFMSEducationAndEmployment = (): ReactElement => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const participantId = useAppSelector(
     (state) => (state as any).registration.user.participantId
@@ -49,7 +50,11 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
       desiredProfession: data.desiredProfession.value,
     };
 
-    dispatch(doPostEducationAndEmployment({ user: newEducationAndEmployment }));
+    dispatch(
+      doPostEducationAndEmployment({ user: newEducationAndEmployment })
+    ).then(() => {
+      navigate("/cyfms/criminal_history");
+    });
   };
 
   return (
@@ -68,6 +73,7 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
         <Grid container sm={12} spacing={2}>
           <Grid item sm={5}>
             <CYFMSDropdown
+              name="education1"
               id="education"
               value="Attending School?"
               autofill={readData.attendingSchool}
@@ -85,6 +91,7 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
         <Grid container sm={12} spacing={2}>
           <Grid item sm={5}>
             <CYFMSDropdown
+              name="education2"
               id="education"
               value="Employed?"
               autofill={readData.employed}
@@ -106,12 +113,7 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
           </Grid>
           <Grid item sm={9}></Grid>
           <Grid item sm={2}>
-            <Button
-              variant="contained"
-              type="submit"
-              component={Link}
-              to="/cyfms/criminal_history"
-            >
+            <Button variant="contained" type="submit">
               Next
             </Button>
           </Grid>

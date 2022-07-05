@@ -17,13 +17,14 @@ import {
 import React, { useEffect } from "react";
 import type { FormEvent, ReactElement } from "react";
 import CYFMSLongInput from "../../components/cyfms/CYFMSLongInput";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 /**
  * The CYFMSCriminalHistory functional component.
  * @returns CYFMSCriminalHistory component skeleton.
  */
 const CYFMSCriminalHistory = (): ReactElement => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const participantId = useAppSelector(
     (state) => (state as any).registration.user.participantId
@@ -61,7 +62,9 @@ const CYFMSCriminalHistory = (): ReactElement => {
       participantId: participantId,
     };
 
-    dispatch(doPostCriminalHistory({ user: newCriminalHistory }));
+    dispatch(doPostCriminalHistory({ user: newCriminalHistory })).then(() => {
+      navigate("/cyfms/family_physician");
+    });
   };
 
   return (
@@ -143,12 +146,7 @@ const CYFMSCriminalHistory = (): ReactElement => {
           </Grid>
           <Grid item sm={9}></Grid>
           <Grid item sm={2}>
-            <Button
-              variant="contained"
-              type="submit"
-              component={Link}
-              to="/cyfms/family_physician"
-            >
+            <Button variant="contained" type="submit">
               Next
             </Button>
           </Grid>

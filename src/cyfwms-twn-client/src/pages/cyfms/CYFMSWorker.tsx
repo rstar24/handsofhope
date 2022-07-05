@@ -6,13 +6,14 @@ import { FormEvent, ReactElement, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { doGetWorker, doPostWorker } from "../../features/worker/workerSlice";
 import CYFMSLongInput from "../../components/cyfms/CYFMSLongInput";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 /**
  * The CYFMSWorker functional component.
  * @returns CYFMSWorker component skeleton.
  */
 const CYFMSWorker = (): ReactElement => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const participantId = useAppSelector(
     (state) => (state as any).registration.user.participantId
@@ -46,7 +47,9 @@ const CYFMSWorker = (): ReactElement => {
       },
     ];
     setContact(newContact);
-    dispatch(doPostWorker({ user: newContact }));
+    dispatch(doPostWorker({ user: newContact })).then(() => {
+      navigate("/cyfms/other_information");
+    });
   };
 
   return (
