@@ -6,6 +6,7 @@ import { FormEvent, ReactElement, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { doGetWorker, doPostWorker } from "../../features/worker/workerSlice";
 import CYFMSLongInput from "../../components/cyfms/CYFMSLongInput";
+import { Link } from "react-router-dom";
 
 /**
  * The CYFMSWorker functional component.
@@ -86,7 +87,12 @@ const CYFMSWorker = (): ReactElement => {
         </Grid>
         <Grid item sm={7}></Grid>
         <Grid item sm={4}>
-          <Button variant="contained" type="submit">
+          <Button
+            variant="contained"
+            type="submit"
+            component={Link}
+            to="/cyfms/other_information"
+          >
             Next
           </Button>
         </Grid>

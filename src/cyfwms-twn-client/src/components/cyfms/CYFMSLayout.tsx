@@ -26,7 +26,7 @@ const CYFMSLayout = (props: {
           <Grid item md={2}>
             <CYFMSSideNav />
           </Grid>
-          <Grid item md={10}>
+          <Grid item md={10} sx={{ px: "1rem" }}>
             {props.children}
           </Grid>
         </Grid>

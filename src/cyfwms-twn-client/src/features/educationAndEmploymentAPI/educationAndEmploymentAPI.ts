@@ -15,7 +15,7 @@ export const doGetEducationAndEmploymentAPI = async (
   data: EducationAndEmploymentGetData,
   jwtToken: string
 ): Promise<AxiosResponse> => {
-  console.log(data);
+  console.log("halo re halo", data);
   const res: AxiosResponse = await axiosInstance.get(
     "readEmploymentAndEducation/" + data,
     {

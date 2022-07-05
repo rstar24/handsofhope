@@ -98,7 +98,7 @@ const CYFMSOtherInformation = (): ReactElement => {
           <Grid item sm={8.6}></Grid>
           <Grid item sm={2}>
             <Button variant="contained" type="submit">
-              Next
+              Save
             </Button>
           </Grid>
         </Grid>

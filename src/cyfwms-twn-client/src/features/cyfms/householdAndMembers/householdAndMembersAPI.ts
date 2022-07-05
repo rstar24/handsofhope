@@ -1,6 +1,9 @@
 import axios from "axios";
+import type {
+  HouseholdAndMembersGetData,
+  HouseholdAndMembersPostData,
+} from "./householdAndMembersSlice";
 import type { AxiosResponse } from "axios";
-import { HouseHoldGetData, HouseHoldPostData } from "./householdSlice";
 
 const axiosInstance = axios.create({
   baseURL: `${
@@ -8,8 +11,8 @@ const axiosInstance = axios.create({
   }/v1/participantservice/`,
 });
 
-export const doGetHouseHoldAPI = async (
-  data: HouseHoldGetData,
+export const doGetHouseholdAndMembersAPI = async (
+  data: HouseholdAndMembersGetData,
   jwtToken: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.get(
@@ -21,8 +24,8 @@ export const doGetHouseHoldAPI = async (
   return res;
 };
 
-export const doPostHouseHoldAPI = async (
-  data: HouseHoldPostData,
+export const doPostHouseholdAndMembersAPI = async (
+  data: HouseholdAndMembersPostData,
   jwtToken: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.put(

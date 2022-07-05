@@ -11,6 +11,7 @@ import {
   doPostEducationAndEmployment,
 } from "../../features/educationAndEmploymentAPI/educationAndEmploymentSlice";
 import { doGetEducation } from "../../features/codetable/codetableSlice";
+import { Link } from "react-router-dom";
 
 /**
  * The CYFMSEducationAndEmployment functional component.
@@ -105,7 +106,12 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
           </Grid>
           <Grid item sm={9}></Grid>
           <Grid item sm={2}>
-            <Button variant="contained" type="submit">
+            <Button
+              variant="contained"
+              type="submit"
+              component={Link}
+              to="/cyfms/criminal_history"
+            >
               Next
             </Button>
           </Grid>
