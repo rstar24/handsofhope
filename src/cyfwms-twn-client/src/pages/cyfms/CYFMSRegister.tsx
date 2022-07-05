@@ -84,8 +84,8 @@ const CYFMSRegister = (): ReactElement => {
             <CYFMSInput
               id="dateOfBirth"
               value="Date of Birth"
-              type="date"
               autofill={readData.dateOfBirth}
+              type="date"
               required
             />
           </Grid>

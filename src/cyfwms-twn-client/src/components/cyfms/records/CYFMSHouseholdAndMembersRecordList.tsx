@@ -46,6 +46,7 @@ export const CYFMSHouseholdAndMembersRecord = (
           />
           <CYFMSInput
             id={`householdAndMembers-record-${props.recordNumber}-dateOfBirth`}
+            type="date"
             value="Date of Birth"
           />
           <CYFMSInput

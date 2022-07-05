@@ -81,8 +81,8 @@ const CYFMSCriminalHistory = (): ReactElement => {
           <Grid item sm={5}>
             <CYFMSInput
               id="arrestDate"
-              type="date"
               value="Arrest Date"
+              type="date"
               autofill={readData.arrestDate}
             />
           </Grid>
