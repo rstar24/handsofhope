@@ -1,12 +1,8 @@
 package com.twn.cyfwms.participant.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -49,7 +45,7 @@ public class Participant implements Serializable {
     private String type;
     @Getter @Setter @Column(name = "status")
     private String status;
-    @CreatedDate
+    @CreationTimestamp
     @Getter @Setter @Column(name = "creationdate")
     private LocalDate creationDate;
     @UpdateTimestamp
