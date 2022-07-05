@@ -14,6 +14,7 @@ import Layout from "../components/layout/Layout";
 import React, { useState } from "react";
 import type { FormEvent, ReactElement } from "react";
 import CYFMSInput from "../components/cyfms/CYFMSInput";
+import CYFMSInput1 from "../components/cyfms/CYFMSInput1";
 
 const style = {
   position: "absolute",
@@ -103,7 +104,7 @@ const Login = (): ReactElement => {
         }}
       >
         <CYFMSInput id="userName" name="userName" required value="Username" />
-        <CYFMSInput
+        <CYFMSInput1
           id="passWord"
           name="passWord"
           required
