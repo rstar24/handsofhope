@@ -78,7 +78,7 @@ const CYFMSHouseholdMembers = (): ReactElement => {
             <CYFMSInput id="memberName" value="Name" />
           </Grid>
           <Grid item sm={5}>
-            <CYFMSInput id="memberDOB" type="date" value="Date of Birth" />
+            <CYFMSInput id="memberDOB" value="Date of Birth" type="date" />
           </Grid>
           <Grid item sm={5}>
             <CYFMSInput id="memberResiding" value="Residing" />
