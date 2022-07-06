@@ -39,7 +39,9 @@ const CYFMSHouseholdMembers = (): ReactElement => {
   // activities.
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
-    //dispatch(doPostHouseholdAndMembers());
+    // dispatch(doPostHouseholdAndMembers()).then(() => {
+    //   navigate("/cyfms/education_and_employment");
+    // });
     /* Disable save button. */
     setSaveButtonDisabled(true);
   };

@@ -52,7 +52,7 @@ public class ParticipantSearchRepository {
                     .replace("_", "!_")
                     .replace("[", "![");
             querySBuff.append(" AND p.firstname LIKE ?");
-            argsObjectList.add(firstName);
+            argsObjectList.add(firstName+"%");
         }
 
         String middleName = searchCriteria.getMiddleName();
@@ -63,7 +63,7 @@ public class ParticipantSearchRepository {
                     .replace("_", "!_")
                     .replace("[", "![");
             querySBuff.append(" AND p.middlename LIKE ?");
-            argsObjectList.add(middleName);
+            argsObjectList.add(middleName+"%");
         }
 
         String surname = searchCriteria.getSurname();
@@ -74,7 +74,7 @@ public class ParticipantSearchRepository {
                     .replace("_", "!_")
                     .replace("[", "![");
             querySBuff.append(" AND p.surname LIKE ?");
-            argsObjectList.add(surname);
+            argsObjectList.add(surname+"%");
         }
 
         LocalDate dateOfBirth = searchCriteria.getDateOfBirth();
@@ -90,7 +90,7 @@ public class ParticipantSearchRepository {
                     .replace("%", "!%")
                     .replace("_", "!_")
                     .replace("[", "![");
-            querySBuff.append(" AND p.maritalstatus=");
+            querySBuff.append(" AND p.maritalstatus=?");
             argsObjectList.add(maritalStatus);
         }
         String city = searchCriteria.getCity();
@@ -101,7 +101,7 @@ public class ParticipantSearchRepository {
                     .replace("_", "!_")
                     .replace("[", "![");
             querySBuff.append(" AND p2.city LIKE ?");
-            argsObjectList.add(city);
+            argsObjectList.add(city+"%");
         }
         String phoneNumber = searchCriteria.getPhoneNumber();
         if ( phoneNumber != null && !phoneNumber.trim().isEmpty()) {

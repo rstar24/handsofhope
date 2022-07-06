@@ -10,13 +10,14 @@ import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
 import { Box, Button, Grid } from "@mui/material";
 import React, { useEffect } from "react";
 import type { FormEvent, ReactElement } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 /**
  * The CYFMSRegister functional component.
  * @returns CYFMSRegister component skeleton.
  */
 const CYFMSRegister = (): ReactElement => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const userData = useAppSelector((state) => (state as any).registration.user);
   const readData = useAppSelector(
@@ -39,9 +40,15 @@ const CYFMSRegister = (): ReactElement => {
       gender: data.gender.value,
       maritalStatus: data.maritalStatus.value,
     };
-    dispatch(doPostRegister({ user: newUser })).then(() => {
-      dispatch(unhideTabs());
-    });
+    const res = dispatch(doPostRegister({ user: newUser }))
+      .then(() => {
+        dispatch(unhideTabs());
+      })
+      .then(() => {
+        if (userData.participantId) {
+          navigate("/cyfms/contact");
+        }
+      });
   };
 
   return (
@@ -83,8 +90,8 @@ const CYFMSRegister = (): ReactElement => {
           <Grid item xs={1} sm={5} md={5}>
             <CYFMSInput
               id="dateOfBirth"
-              value="Date of Birth"
               type="date"
+              value="Date of Birth"
               autofill={readData.dateOfBirth}
               required
             />
@@ -107,12 +114,7 @@ const CYFMSRegister = (): ReactElement => {
           <Grid item sm={8.8}></Grid>
           <Grid item sm={0}>
             {userData.participantId ? (
-              <Button
-                variant="contained"
-                type="submit"
-                component={Link}
-                to="/cyfms/contact"
-              >
+              <Button variant="contained" type="submit">
                 Next
               </Button>
             ) : (
