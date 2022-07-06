@@ -12,9 +12,17 @@ import { doGetContact } from "../../features/contact/contactSlice";
 import { doGetRegister } from "../../features/register/registerSlice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { Box, Button } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { createContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import type { ReactElement } from "react";
+
+export const PopupContext = createContext<{
+  open: boolean;
+  setOpen: (open: boolean) => void;
+}>({
+  open: false,
+  setOpen: (open) => {},
+});
 
 /**
  * The CYFMS functional component.
@@ -41,64 +49,66 @@ const CYFMS = (): ReactElement => {
   };
   return (
     <AuthLayout>
-      <CYFMSHeader />
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          py: "3rem",
-        }}
-      >
+      <PopupContext.Provider value={{ open: open, setOpen: setOpen }}>
+        <CYFMSHeader />
         <Box
           sx={{
             display: "flex",
-            flexDirection: "column",
-            maxWidth: 300,
-            rowGap: "1rem",
+            alignItems: "center",
+            justifyContent: "center",
+            py: "3rem",
           }}
         >
-          <Button
-            component={Link}
-            to="/cyfms/register"
+          <Box
             sx={{
-              background: "lightgrey",
-              color: "black",
-              border: "1px solid black",
-            }}
-            onClick={() => {
-              handleOpen();
-              registrationHandler();
+              display: "flex",
+              flexDirection: "column",
+              maxWidth: 300,
+              rowGap: "1rem",
             }}
           >
-            Register a Child, Youth, or Family Member
-          </Button>
-          <Button
-            component={Link}
-            to="/cyfms/search"
-            sx={{
-              background: "lightgrey",
-              color: "black",
-              border: "1px solid black",
-            }}
-            onClick={handleOpen}
-          >
-            Search a Child, Youth, or Family Member
-          </Button>
+            <Button
+              component={Link}
+              to="/cyfms/register"
+              sx={{
+                background: "lightgrey",
+                color: "black",
+                border: "1px solid black",
+              }}
+              onClick={() => {
+                handleOpen();
+                registrationHandler();
+              }}
+            >
+              Register a Child, Youth, or Family Member
+            </Button>
+            <Button
+              component={Link}
+              to="/cyfms/search"
+              sx={{
+                background: "lightgrey",
+                color: "black",
+                border: "1px solid black",
+              }}
+              onClick={handleOpen}
+            >
+              Search a Child, Youth, or Family Member
+            </Button>
+          </Box>
         </Box>
-      </Box>
-      <CYFMSPopup
-        open={open}
-        onClose={(event, reason) => {
-          switch (reason) {
-            case "backdropClick":
-              return;
-            case "escapeKeyDown":
-              handleClose();
-          }
-        }}
-        children={<></>}
-      />
+        <CYFMSPopup
+          open={open}
+          onClose={(event, reason) => {
+            switch (reason) {
+              case "backdropClick":
+                return;
+              case "escapeKeyDown":
+                handleClose();
+            }
+          }}
+          children={<></>}
+        />
+      </PopupContext.Provider>
     </AuthLayout>
   );
 };

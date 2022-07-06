@@ -1,20 +1,22 @@
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { CYFSWMSSaveButton } from "../../components/CYFSWMSButtons";
 import CYFMSInput from "../../components/cyfms/CYFMSInput";
 import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
-import type { FormEvent, ReactElement } from "react";
-import { useAppDispatch, useAppSelector } from "../../library/hooks";
-import React, { useEffect, useState } from "react";
 import {
   doGetOtherInformation,
   doPostOtherInformation,
-} from "../../features/otherInformation/otherInformationSlice";
-import CYFMSLongInput from "../../components/cyfms/CYFMSLongInput";
+} from "../../features/cyfms/otherInformation/otherInformationSlice";
+import { PopupContext } from "./CYFMS";
+import { Box, Typography } from "@mui/material";
+import type { FormEvent, ReactElement } from "react";
+import { useAppDispatch, useAppSelector } from "../../library/hooks";
+import React, { useContext, useEffect, useState } from "react";
 
 /**
  * The CYFMSOtherInformation functional component.
  * @returns CYFMSOtherInformation component skeleton.
  */
 const CYFMSOtherInformation = (): ReactElement => {
+  const popupContext = useContext(PopupContext);
   const dispatch = useAppDispatch();
   const participantId = useAppSelector(
     (state) => (state as any).registration.user.participantId
@@ -25,6 +27,7 @@ const CYFMSOtherInformation = (): ReactElement => {
   const otherInformationData = useAppSelector(
     (state) => (state as any).otherInformation.user
   );
+
   useEffect(() => {
     dispatch(doGetOtherInformation(participantId));
   }, [dispatch, otherInformationData, participantId]);
@@ -34,15 +37,23 @@ const CYFMSOtherInformation = (): ReactElement => {
     const data: any = e.currentTarget;
     const newOtherInformation = {
       participantId: participantId,
-      participantOtherInfoId: otherInformationData.participantOtherInfoId,
-      strength: data.strengths.value,
-      weakness: data.weaknesses.value,
-      skills: data.skills.value,
-      experiences: data.experiences.value,
-      effectiveCopingSkills: data.effectiveCopingSkills.value,
+      strength: data.otherInformation_Strengths.value,
+      weakness: data.otherInformation_Weaknesses.value,
+      skills: data.otherInformation_Skills.value,
+      experiences: data.otherInformation_Experiences.value,
+      effectiveCopingSkills: data.otherInformation_EffectiveCopingSkills.value,
     };
-
-    dispatch(doPostOtherInformation({ user: newOtherInformation }));
+    dispatch(doPostOtherInformation({ user: newOtherInformation })).then(
+      () => {
+        console.log("OtherInformation data has been posted!");
+        // TODO: And also perform other store cleanups
+        popupContext.setOpen(false);
+      },
+      (err) => {
+        console.log("EducationAndEmployment data NOT posted!");
+        console.log(err);
+      }
+    );
   };
 
   return (
@@ -51,57 +62,42 @@ const CYFMSOtherInformation = (): ReactElement => {
         component="form"
         sx={{
           display: "flex",
-          flexWrap: "wrap",
-          gap: "2rem 2rem",
-          mb: "auto",
+          flexDirection: "column",
+          gap: "1rem 0",
         }}
         onSubmit={submitHandler}
       >
-        <Typography sx={{ color: "blue" }}>Other Information</Typography>
-        <Grid container sm={12} spacing={2}>
-          <Grid item sm={10}>
-            <CYFMSLongInput
-              id="strengths"
-              value="Strengths"
-              autofill={readData.strength}
-            />
-          </Grid>
-          <Grid item sm={10}>
-            <CYFMSLongInput
-              id="weaknesses"
-              value="Weaknesses"
-              autofill={readData.weakness}
-            />
-          </Grid>
-          <Grid item sm={10}>
-            <CYFMSLongInput
-              id="skills"
-              value="Skills"
-              autofill={readData.skills}
-            />
-          </Grid>
-          <Grid item sm={10}>
-            <CYFMSLongInput
-              id="experiences"
-              value="Experiences"
-              autofill={readData.experiences}
-            />
-          </Grid>
-          <Grid item sm={10}>
-            <CYFMSLongInput
-              id="effectiveCopingSkills"
-              value="Effective Coping Skills"
-              autofill={readData.effectiveCopingSkills}
-              multiline={false}
-            />
-          </Grid>
-          <Grid item sm={8.6}></Grid>
-          <Grid item sm={2}>
-            <Button variant="contained" type="submit">
-              Save
-            </Button>
-          </Grid>
-        </Grid>
+        <Typography variant="body1" color="primary">
+          Other Information
+        </Typography>
+        <CYFMSInput
+          id="otherInformation_Strengths"
+          value="Strengths"
+          autofil={readData.strengths}
+        />
+        <CYFMSInput
+          id="otherInformation_Weaknesses"
+          value="Weaknesses"
+          autofill={readData.weakness}
+        />
+        <CYFMSInput
+          id="otherInformation_Skills"
+          value="Skills"
+          autofill={readData.skills}
+        />
+        <CYFMSInput
+          id="otherInformation_Experiences"
+          value="Experiences"
+          autofill={readData.experiences}
+        />
+        <CYFMSInput
+          id="otherInformation_EffectiveCopingSkills"
+          value="Effective Coping Skills"
+          autofill={readData.experiences}
+        />
+        <Box sx={{ display: "flex", justifyContent: "right" }}>
+          <CYFSWMSSaveButton />
+        </Box>
       </Box>
     </CYFMSLayout>
   );

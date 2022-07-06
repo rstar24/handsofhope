@@ -6,11 +6,12 @@ import cyfmsSideNavReducer from "../features/cyfms/cyfmsSideNavSlice";
 import familyPhysiciansReducer from "../features/familyPhysicians/familyPhysiciansSlice";
 import householdAndMembersReducer from "../features/cyfms/householdAndMembers/householdAndMembersSlice";
 import loginReducer from "../features/login/loginSlice";
-import otherInformationReducer from "../features/otherInformation/otherInformationSlice";
+import otherInformationReducer from "../features/cyfms/otherInformation/otherInformationSlice";
 import RegistrationReducer from "../features/register/registerSlice";
 import workerReducer from "../features/worker/workerSlice";
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import searchReducer from "../features/search/searchSlice";
+
 export const store = configureStore({
   reducer: {
     login: loginReducer,

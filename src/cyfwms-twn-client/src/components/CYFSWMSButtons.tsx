@@ -1,6 +1,6 @@
-import SaveIcon from "@mui/icons-material/Save";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import AddIcon from "@mui/icons-material/Add";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import SaveIcon from "@mui/icons-material/Save";
 import Button from "@mui/material/Button";
 import React from "react";
 import type {
@@ -31,6 +31,18 @@ export const CYFSWMSNextButton = (): ReactElement => {
   return (
     <Button endIcon={<NavigateNextIcon />} type="submit" variant="contained">
       Next
+    </Button>
+  );
+};
+
+/**
+ * The CYFSWMSSaveButton functional component.
+ * @returns CYFSWMSSaveButton component skeleton.
+ */
+export const CYFSWMSSaveButton = (): ReactElement => {
+  return (
+    <Button startIcon={<SaveIcon />} type="submit" variant="contained">
+      Save
     </Button>
   );
 };
