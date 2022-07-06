@@ -1,20 +1,37 @@
 import AuthLayout from "../../components/auth/layout/AuthLayout";
 import CYFMSInput from "../../components/cyfms/CYFMSInput";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button } from "@mui/material";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import CYFMSHeader from "../../components/cyfms/CYFMSHeader";
 import type { FormEvent, ReactElement } from "react";
 import CYFMSSearchResult from "./CYFMSSearchResult";
+import { useAppDispatch, useAppSelector } from "../../library/hooks";
+import { doGetSearch } from "../../features/search/searchSlice";
 /**
  * The CYFMSSearchPanel functional component.
  * @returns CYFMSSearchPanel component skeleton.
  */
 const CYFMSSearchPanel = (): ReactElement => {
+  const dispatch = useAppDispatch();
   const [isShown, setIsShown] = useState(false);
-  const handleClick = () => {
-    setIsShown((current) => !current);
+
+  const submitHandler = (e: FormEvent) => {
+    e.preventDefault();
+    const data: any = e.currentTarget;
+    const searchUser = {
+      firstname: data.firstName.value,
+      surname: data.lastName.value,
+      middleName: data.middleName.value,
+      dateOfBirth: data.dateOfBirth.value,
+      maritalStatus: data.maritalStatus.value,
+      city: data.city.value,
+      phoneNumber: data.phoneNo.value,
+    };
+    dispatch(doGetSearch({ readUser: searchUser })).then(() => {
+      setIsShown((current) => !current);
+    });
   };
 
   return (
@@ -38,10 +55,10 @@ const CYFMSSearchPanel = (): ReactElement => {
           Search for a Child, Youth, or Family Member
         </Button>
       </Box>
-      <Box sx={{ ml: 60 }}>
+      <Box component="form" sx={{ ml: 60 }} onSubmit={submitHandler}>
         <CYFMSInput id="firstName" value="First Name" required />
-        <CYFMSInput id="middleName" value="Middle Name" />
-        <CYFMSInput id="lastName" value="last Name" />
+        <CYFMSInput id="middleName" value="Middle Name" required />
+        <CYFMSInput id="lastName" value="last Name" required />
         <CYFMSInput
           id="dateOfBirth"
           type="date"
@@ -53,15 +70,16 @@ const CYFMSSearchPanel = (): ReactElement => {
           id="maritalStatus"
           value="MaritalStatus"
           name="maritalStatus"
+          required
         />
-        <CYFMSInput id="phoneNo" value="Phone No" name="phoneNo" />
-        <CYFMSInput id="city" value="City" name="city" />
+        <CYFMSInput id="phoneNo" value="Phone No" name="phoneNo" required />
+        <CYFMSInput id="city" value="City" name="city" required />
 
         <div className="column">
-          <Button variant="contained" type="submit" onClick={handleClick}>
+          <Button variant="contained" type="submit">
             Search
           </Button>
-          <Button variant="contained" type="reset" sx={{ ml: 2 }}>
+          <Button variant="contained" sx={{ ml: 2 }}>
             Reset
           </Button>
         </div>

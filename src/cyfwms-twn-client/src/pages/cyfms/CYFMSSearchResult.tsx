@@ -1,28 +1,14 @@
-import { Typography, Box, TextField } from "@mui/material";
 import React, { ReactElement } from "react";
-import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-
-function createData(
-  first: string,
-  middle: string,
-  last: string,
-  phone: number,
-  city: string
-) {
-  return { first, middle, last, phone, city };
-}
-
-const rows = [
-  createData("Nazim", "nazim", " Khan", 123456, " indore"),
-  createData("Sana", "sana", "khan", 3723, "indore"),
-];
+import { useAppSelector } from "../../library/hooks";
+import { Box } from "@mui/material";
 
 const CYFMSSearchResult = (): ReactElement => {
+  const searchData = useAppSelector((state) => (state as any).search.readUser);
   return (
     <Box sx={{ my: 10, ml: -55 }}>
       <Table sx={{ minWidth: 800 }} aria-label="simple table">
@@ -31,23 +17,24 @@ const CYFMSSearchResult = (): ReactElement => {
             <TableCell>First Name</TableCell>
             <TableCell>Middle Name</TableCell>
             <TableCell>Last Name</TableCell>
+            <TableCell>Date of birth</TableCell>
             <TableCell>City</TableCell>
             <TableCell>Phone Number</TableCell>
           </TableRow>
         </TableHead>
+
         <TableBody>
-          {rows.map((row) => (
+          {searchData.map((i: any) => (
             <TableRow
-              key={row.first}
+              key={i}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-              <TableCell component="th" scope="row">
-                {row.first}
-              </TableCell>
-              <TableCell>{row.middle}</TableCell>
-              <TableCell>{row.last}</TableCell>
-              <TableCell>{row.city}</TableCell>
-              <TableCell>{row.phone}</TableCell>
+              <TableCell>{i.firstname}</TableCell>
+              <TableCell>{i.middleName}</TableCell>
+              <TableCell>{i.surname}</TableCell>
+              <TableCell>{i.dateOfBirth}</TableCell>
+              <TableCell>{i.city}</TableCell>
+              <TableCell>{i.workPhone}</TableCell>
             </TableRow>
           ))}
         </TableBody>
