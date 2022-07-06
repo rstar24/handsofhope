@@ -41,11 +41,11 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
     const newEducationAndEmployment = {
       participantId: participantId,
       educationId: educationData.educationId,
-      attendingSchool: data.education.value,
+      attendingSchool: data.education1.value,
       school: data.school.value,
       grade: data.grade.value,
       employmentId: educationData.employmentId,
-      employed: data.education.value,
+      employed: data.education2.value,
       typeOfEmployment: data.typeOfEmployee.value,
       desiredProfession: data.desiredProfession.value,
     };
@@ -74,7 +74,7 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
           <Grid item sm={5}>
             <CYFMSDropdown
               name="education1"
-              id="education"
+              id="education1"
               value="Attending School?"
               autofill={readData.attendingSchool}
             />
@@ -92,7 +92,7 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
           <Grid item sm={5}>
             <CYFMSDropdown
               name="education2"
-              id="education"
+              id="education2"
               value="Employed?"
               autofill={readData.employed}
             />

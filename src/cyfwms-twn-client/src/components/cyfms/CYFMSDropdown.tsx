@@ -42,6 +42,7 @@ const CYFMSDropdown = (
           })}
         </select>
       )}
+
       {props.id.includes("gender") && (
         <select
           name={props.id}
@@ -53,7 +54,19 @@ const CYFMSDropdown = (
           })}
         </select>
       )}
-      {props.id === "education" && (
+
+      {props.id === "education1" && (
+        <select
+          name={props.id}
+          id={props.id}
+          style={{ height: "40px", backgroundColor: "#dfdada", width: "200px" }}
+        >
+          {Object.keys(codetable.education).map((key: any, index) => {
+            return <option>{key}</option>;
+          })}
+        </select>
+      )}
+      {props.id === "education2" && (
         <select
           name={props.id}
           id={props.id}
