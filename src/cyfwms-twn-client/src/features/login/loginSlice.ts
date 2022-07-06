@@ -35,7 +35,6 @@ export const loginSlice = createSlice({
     },
     setIsLoggedInFalse(state: any) {
       state.isLoggedIn = false;
-
     },
   },
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
