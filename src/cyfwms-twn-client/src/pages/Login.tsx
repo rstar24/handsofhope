@@ -52,7 +52,6 @@ const Login = (): ReactElement => {
     )
       .unwrap()
       .then((res) => {
-        console.log(res);
         navigate("/home");
       })
       .catch((err) => {

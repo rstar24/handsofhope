@@ -158,7 +158,7 @@ public class TWNParticipantController {
     }
 
 
-    @GetMapping(value = {"/searchParticipants/{firstname}/{surname}/{middleName}/{dateOfBirth}/{maritalStatus}/{city}/{phoneNumber}"},produces = "application/json")
+    @GetMapping(value = {"/searchParticipants/{firstname}/{middleName}/{surname}/{dateOfBirth}/{maritalStatus}/{city}/{phoneNumber}"},produces = "application/json")
     @ApiOperation("Search Participants")
     @ResponseStatus(HttpStatus.OK)
       public List<ParticipantSearchResultsDto> searchParticipants(@PathVariable Map<String, String> var)
