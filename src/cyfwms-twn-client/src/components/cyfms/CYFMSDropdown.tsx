@@ -1,5 +1,5 @@
 import { FormControl, FormLabel } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import type {
   ElementType,
   ReactElement,
@@ -7,31 +7,59 @@ import type {
 } from "react";
 import { useAppSelector } from "../../library/hooks";
 
+export interface CYFMSDropdownPropsType
+  extends ComponentPropsWithoutRef<ElementType> {
+  optionsList?: any[];
+}
+
 /**
  * The CYFMSDropdown functional component.
  * @param props - HTML attributes.
  * @returns CYFMSDropdown component skeleton.
  */
-const CYFMSDropdown = (
-  props: ComponentPropsWithoutRef<ElementType>
-): ReactElement => {
+const CYFMSDropdown = (props: CYFMSDropdownPropsType): ReactElement => {
   const codetable = useAppSelector((state) => (state as any).codetable);
+  console.log(codetable);
   return (
     <FormControl
+      required={props.required}
+      disabled={props.disabled}
       sx={{
         display: "flex",
         flexDirection: "row",
         flexWrap: "wrap",
       }}
     >
-      <FormLabel htmlFor={props.id} sx={{ p: 1, flexGrow: 1, color: "black" }}>
+      <FormLabel
+        htmlFor={props.id}
+        sx={{ p: 1, flexBasis: 0, flexGrow: 1, color: "black" }}
+      >
         {props.value}
       </FormLabel>
+      {props.optionsList && (
+        <select
+          disabled={props.disabled}
+          name={props.id}
+          id={props.id}
+          style={{
+            display: "block",
+            flexBasis: 0,
+            flexGrow: 1,
+            height: "40px",
+            backgroundColor: "#dfdada",
+          }}
+        >
+          {props.optionsList.map((item: any) => (
+            <option>{item}</option>
+          ))}
+        </select>
+      )}
       {props.id === "maritalStatus" && (
         <select
           name={props.id}
           id={props.id}
           style={{
+            display: "block",
             height: "40px",
             backgroundColor: "#dfdada",
             width: "200px",

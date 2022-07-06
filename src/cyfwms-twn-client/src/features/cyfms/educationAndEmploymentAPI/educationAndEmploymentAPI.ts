@@ -1,9 +1,9 @@
 import axios from "axios";
-import type { AxiosResponse } from "axios";
-import {
+import type {
   EducationAndEmploymentGetData,
   EducationAndEmploymentPostData,
 } from "./educationAndEmploymentSlice";
+import type { AxiosResponse } from "axios";
 
 const axiosInstance = axios.create({
   baseURL: `${

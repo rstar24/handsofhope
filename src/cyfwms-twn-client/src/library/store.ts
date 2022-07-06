@@ -1,4 +1,4 @@
-import educationAndEmploymentReducer from "../features/educationAndEmploymentAPI/educationAndEmploymentSlice";
+import educationAndEmploymentReducer from "../features/cyfms/educationAndEmploymentAPI/educationAndEmploymentSlice";
 import codetableReducer from "../features/codetable/codetableSlice";
 import contactReducer from "../features/contact/contactSlice";
 import criminalhistoryReducer from "../features/criminalHistory/criminalhistorySlice";

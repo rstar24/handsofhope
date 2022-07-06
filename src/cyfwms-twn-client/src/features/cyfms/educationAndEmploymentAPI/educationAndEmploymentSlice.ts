@@ -1,22 +1,15 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import type { AxiosResponse } from "axios";
 import {
   doGetEducationAndEmploymentAPI,
   doPostEducationAndEmploymentAPI,
 } from "./educationAndEmploymentAPI";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import type { AxiosResponse } from "axios";
 
 export interface EducationAndEmploymentGetData {
   readUser: {};
 }
-export interface EducationAndEmploymentPostData {
-  user: {};
-}
 
 export interface EducationAndEmploymentGetState {
-  jwtToken: string;
-  status: "failed" | "loading" | "success";
-}
-export interface EducationAndEmploymentPostState {
   jwtToken: string;
   status: "failed" | "loading" | "success";
 }
@@ -32,6 +25,15 @@ export const doGetEducationAndEmployment = createAsyncThunk(
     return res.data;
   }
 );
+
+export interface EducationAndEmploymentPostData {
+  user: {};
+}
+
+export interface EducationAndEmploymentPostState {
+  jwtToken: string;
+  status: "failed" | "loading" | "success";
+}
 
 export const doPostEducationAndEmployment = createAsyncThunk(
   "educationAndEmployment/doPostEducationAndEmployment",
@@ -76,7 +78,6 @@ export const educationAndEmploymentSlice = createSlice({
         } catch (err) {
           console.log(err);
         }
-
         state.status = "success";
       })
       .addCase(doGetEducationAndEmployment.pending, (state) => {
@@ -93,7 +94,6 @@ export const educationAndEmploymentSlice = createSlice({
         } catch (err) {
           console.log(err);
         }
-
         state.status = "success";
       })
       .addCase(doPostEducationAndEmployment.pending, (state) => {

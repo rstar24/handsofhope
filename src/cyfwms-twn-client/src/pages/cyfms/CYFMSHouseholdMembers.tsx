@@ -62,9 +62,7 @@ const CYFMSHouseholdMembers = (): ReactElement => {
         sx={{
           display: "flex",
           flexDirection: "column",
-          flexWrap: "wrap",
           gap: "1rem 0",
-          mb: "auto",
         }}
         onSubmit={submitHandler}
         onChange={changeHandler}
