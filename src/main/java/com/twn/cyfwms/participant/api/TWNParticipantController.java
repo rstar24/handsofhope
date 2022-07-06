@@ -165,7 +165,7 @@ public class TWNParticipantController {
     {
         ParticipantSearchCriteriaDto participantSearchCriteriaDto = new ParticipantSearchCriteriaDto();
         LocalDate dateTime=null;
-        if(var.get("dateOfBirth")!=null) {
+        if(!"null".equals(var.get("dateOfBirth"))) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             dateTime = LocalDate.parse(var.get("dateOfBirth"), formatter);
         }
