@@ -1,9 +1,9 @@
 import {
   CYFSWMSAddButton,
-  CYFSWMSSaveButton,
   CYFSWMSNextButton,
 } from "../../components/CYFSWMSButtons";
 import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
+import CYFMSHouseholdAndMembersRecordList from "../../components/cyfms/records/CYFMSHouseholdAndMembersRecordList";
 import {
   doGetHouseholdAndMembers,
   doPostHouseholdAndMembers,
@@ -11,39 +11,44 @@ import {
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import type { FormEvent, ReactElement } from "react";
-import CYFMSHouseholdAndMembersRecordList from "../../components/cyfms/records/CYFMSHouseholdAndMembersRecordList";
 
 /**
  * The CYFMSHouseholdMembers functional component.
  * @returns CYFMSHouseholdMembers component skeleton.
  */
 const CYFMSHouseholdMembers = (): ReactElement => {
-  // const dispatch = useAppDispatch();
-  // const participantId = useAppSelector(
-  //   (state) => (state as any).registration.user.participantId
-  // );
-  // const data = useAppSelector((state) => (state as any).household.user);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const participantId = useAppSelector(
+    (state) => (state as any).registration.user.participantId
+  );
+  const data = useAppSelector(
+    (state) => (state as any).householdAndMembers.user
+  );
 
-  // useEffect(() => {
-  //   dispatch(doGetHouseholdAndMembers(participantId));
-  // }, []);
+  useEffect(() => {
+    dispatch(doGetHouseholdAndMembers(participantId));
+  }, []);
 
   // State for the records list
   const [recordList, setRecordList] = useState([{}]);
-
-  // State for the save button
-  const [saveButtonDisabled, setSaveButtonDisabled] = useState(true);
 
   // Handles the form data submission and other
   // activities.
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
-    // dispatch(doPostHouseholdAndMembers()).then(() => {
-    //   navigate("/cyfms/education_and_employment");
-    // });
-    /* Disable save button. */
-    setSaveButtonDisabled(true);
+    dispatch(doPostHouseholdAndMembers({ user: data })).then(
+      () => {
+        console.log("EducationAndEmployment data has been posted!");
+        navigate("/cyfms/education_and_employment");
+      },
+      (err) => {
+        console.log("EducationAndEmployment data NOT posted!");
+        console.log(err);
+      }
+    );
   };
 
   const addMoreHandler = (e: MouseEvent) => {
@@ -53,9 +58,7 @@ const CYFMSHouseholdMembers = (): ReactElement => {
 
   // Enables/Re-enables the `Save` button whenever
   // any form field value changes.
-  const changeHandler = (e: FormEvent) => {
-    setSaveButtonDisabled(false);
-  };
+  const changeHandler = (e: FormEvent) => {};
 
   return (
     <CYFMSLayout>
@@ -76,8 +79,7 @@ const CYFMSHouseholdMembers = (): ReactElement => {
           <CYFSWMSAddButton onClick={addMoreHandler} />
         </Box>
         <Box sx={{ display: "flex", gap: "0 1rem", justifyContent: "right" }}>
-          <CYFSWMSSaveButton disabled={saveButtonDisabled} />
-          <CYFSWMSNextButton to="/cyfms/education_and_employment" />
+          <CYFSWMSNextButton />
         </Box>
       </Box>
     </CYFMSLayout>

@@ -8,7 +8,7 @@ import {
   doPostEducationAndEmployment,
 } from "../../features/cyfms/educationAndEmploymentAPI/educationAndEmploymentSlice";
 import { doGetEducation } from "../../features/codetable/codetableSlice";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { CYFSWMSNextButton } from "../../components/CYFSWMSButtons";
 import React, { useEffect, useState } from "react";
 import type { FormEvent, ReactElement } from "react";
@@ -18,6 +18,7 @@ import type { FormEvent, ReactElement } from "react";
  * @returns CYFMSEducationAndEmployment component skeleton.
  */
 const CYFMSEducationAndEmployment = (): ReactElement => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const participantId = useAppSelector(
     (state) => (state as any).registration.user.participantId
@@ -43,19 +44,28 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
   // activities.
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
-    // const data: any = e.currentTarget;
-    // const newEducationAndEmployment = {
-    //   participantId: participantId,
-    //   educationId: educationData.educationId,
-    //   attendingSchool: data.education.value,
-    //   school: data.school.value,
-    //   grade: data.grade.value,
-    //   employmentId: educationData.employmentId,
-    //   employed: data.education.value,
-    //   typeOfEmployment: data.typeOfEmployee.value,
-    //   desiredProfession: data.desiredProfession.value,
-    // };
-    // dispatch(doPostEducationAndEmployment({ user: newEducationAndEmployment }));
+    const data: any = e.currentTarget;
+    const newEducationAndEmploymentData = {
+      participantId: participantId,
+      attendingSchool: data.educationAndEmployment_AttendingSchool.value,
+      school: data.educationAndEmployment_SchoolName.value,
+      grade: data.educationAndEmployment_SchoolGrade.value,
+      employed: data.educationAndEmployment_Employed.value,
+      typeOfEmployment: data.educationAndEmployment_TypeOfEmployment.value,
+      desiredProfession: data.educationAndEmployment_DesiredProfession.value,
+    };
+    dispatch(
+      doPostEducationAndEmployment({ user: newEducationAndEmploymentData })
+    ).then(
+      () => {
+        console.log("EducationAndEmployment data has been posted!");
+        navigate("/cyfms/criminal_history");
+      },
+      (err) => {
+        console.log("EducationAndEmployment data NOT posted!");
+        console.log(err);
+      }
+    );
   };
 
   // Handles the form fields' value changes
@@ -167,7 +177,7 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
           </Box>
         </Box>
         <Box sx={{ display: "flex", justifyContent: "right" }}>
-          <CYFSWMSNextButton to="/cyfms/criminal_history" />
+          <CYFSWMSNextButton />
         </Box>
       </Box>
     </CYFMSLayout>

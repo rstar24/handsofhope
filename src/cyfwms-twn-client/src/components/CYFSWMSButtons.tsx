@@ -3,7 +3,6 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
 import React from "react";
-import { Link as RouterLink, NavLinkProps } from "react-router-dom";
 import type {
   ComponentPropsWithoutRef,
   ElementType,
@@ -28,35 +27,10 @@ export const CYFSWMSAddButton = (
  * The CYFSWMSNextButton functional component.
  * @returns CYFSWMSNextButton component skeleton.
  */
-export const CYFSWMSNextButton = (props: NavLinkProps): ReactElement => {
+export const CYFSWMSNextButton = (): ReactElement => {
   return (
-    <Button
-      component={RouterLink}
-      endIcon={<NavigateNextIcon />}
-      to={props.to}
-      type="submit"
-      variant="contained"
-    >
+    <Button endIcon={<NavigateNextIcon />} type="submit" variant="contained">
       Next
-    </Button>
-  );
-};
-
-/**
- * The CYFSWMSSaveButton functional component.
- * @returns CYFSWMSSaveButton component skeleton.
- */
-export const CYFSWMSSaveButton = (
-  props: ComponentPropsWithoutRef<ElementType>
-): ReactElement => {
-  return (
-    <Button
-      variant="contained"
-      disabled={props.disabled}
-      startIcon={<SaveIcon />}
-      type="submit"
-    >
-      Save
     </Button>
   );
 };
