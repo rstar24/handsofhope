@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import {
   doGetEducationAndEmployment,
   doPostEducationAndEmployment,
-} from "../../features/cyfms/educationAndEmploymentAPI/educationAndEmploymentSlice";
+} from "../../features/cyfms/educationAndEmployment/educationAndEmploymentSlice";
 import { doGetEducation } from "../../features/codetable/codetableSlice";
 import { useNavigate } from "react-router-dom";
 import { CYFSWMSNextButton } from "../../components/CYFSWMSButtons";
