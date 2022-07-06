@@ -1,4 +1,4 @@
-import educationAndEmploymentReducer from "../features/educationAndEmploymentAPI/educationAndEmploymentSlice";
+import educationAndEmploymentReducer from "../features/cyfms/educationAndEmploymentAPI/educationAndEmploymentSlice";
 import codetableReducer from "../features/codetable/codetableSlice";
 import contactReducer from "../features/contact/contactSlice";
 import criminalhistoryReducer from "../features/criminalHistory/criminalhistorySlice";
@@ -10,7 +10,7 @@ import otherInformationReducer from "../features/otherInformation/otherInformati
 import RegistrationReducer from "../features/register/registerSlice";
 import workerReducer from "../features/worker/workerSlice";
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-
+import searchReducer from "../features/search/searchSlice";
 export const store = configureStore({
   reducer: {
     login: loginReducer,
@@ -24,6 +24,7 @@ export const store = configureStore({
     criminalHistory: criminalhistoryReducer,
     otherInformation: otherInformationReducer,
     educationAndEmployment: educationAndEmploymentReducer,
+    search: searchReducer,
   },
 });
 

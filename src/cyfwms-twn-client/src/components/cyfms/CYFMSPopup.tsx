@@ -27,7 +27,7 @@ import type { ReactElement } from "react";
  */
 const CYFMSPopup = (props: ModalUnstyledProps): ReactElement => {
   return (
-    <Modal open={props.open} onClose={props.onClose}>
+    <Modal {...props}>
       <Box
         sx={{
           position: "relative",
@@ -45,7 +45,7 @@ const CYFMSPopup = (props: ModalUnstyledProps): ReactElement => {
         <IconButton
           color="primary"
           aria-label="Close the popup box."
-          onClick={(e) => props.onClose!(e, "backdropClick")}
+          onClick={(e) => props.onClose!(e, "escapeKeyDown")}
           sx={{ position: "absolute", right: 0 }}
         >
           <CloseIcon />

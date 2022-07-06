@@ -1,17 +1,17 @@
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import CYFMSInput from "../../components/cyfms/CYFMSInput";
 import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
-import React, { useEffect } from "react";
-import type { FormEvent, ReactElement } from "react";
 import CYFMSDropdown from "../../components/cyfms/CYFMSDropdown";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
-import { doGetContact } from "../../features/contact/contactSlice";
 import {
   doGetEducationAndEmployment,
   doPostEducationAndEmployment,
-} from "../../features/educationAndEmploymentAPI/educationAndEmploymentSlice";
+} from "../../features/cyfms/educationAndEmploymentAPI/educationAndEmploymentSlice";
 import { doGetEducation } from "../../features/codetable/codetableSlice";
 import { useNavigate } from "react-router-dom";
+import { CYFSWMSNextButton } from "../../components/CYFSWMSButtons";
+import React, { useEffect, useState } from "react";
+import type { FormEvent, ReactElement } from "react";
 
 /**
  * The CYFMSEducationAndEmployment functional component.
@@ -35,26 +35,50 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
     dispatch(doGetEducationAndEmployment(participantId));
   }, [dispatch, educationData, participantId]);
 
+  const [disabledSchoolFields, setDisabledSchoolFields] =
+    useState<boolean>(true);
+  const [disabledDesiredProfession, setDisabledDesiredProfession] =
+    useState<boolean>(true);
+
+  // Handles the form data submission and other
+  // activities.
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
     const data: any = e.currentTarget;
-    const newEducationAndEmployment = {
+    const newEducationAndEmploymentData = {
       participantId: participantId,
-      educationId: educationData.educationId,
-      attendingSchool: data.education.value,
-      school: data.school.value,
-      grade: data.grade.value,
-      employmentId: educationData.employmentId,
-      employed: data.education.value,
-      typeOfEmployment: data.typeOfEmployee.value,
-      desiredProfession: data.desiredProfession.value,
+      attendingSchool: data.educationAndEmployment_AttendingSchool.value,
+      school: data.educationAndEmployment_SchoolName.value,
+      grade: data.educationAndEmployment_SchoolGrade.value,
+      employed: data.educationAndEmployment_Employed.value,
+      typeOfEmployment: data.educationAndEmployment_TypeOfEmployment.value,
+      desiredProfession: data.educationAndEmployment_DesiredProfession.value,
     };
-
     dispatch(
-      doPostEducationAndEmployment({ user: newEducationAndEmployment })
-    ).then(() => {
-      navigate("/cyfms/criminal_history");
-    });
+      doPostEducationAndEmployment({ user: newEducationAndEmploymentData })
+    ).then(
+      () => {
+        console.log("EducationAndEmployment data has been posted!");
+        navigate("/cyfms/criminal_history");
+      },
+      (err) => {
+        console.log("EducationAndEmployment data NOT posted!");
+        console.log(err);
+      }
+    );
+  };
+
+  // Handles the form fields' value changes
+  // and other activities.
+  const changeHandler = (e: FormEvent) => {
+    const data: any = e.currentTarget;
+    console.log(data.educationAndEmployment_AttendingSchool.value);
+    data.educationAndEmployment_AttendingSchool.value === "Yes"
+      ? setDisabledSchoolFields(false)
+      : setDisabledSchoolFields(true);
+    data.educationAndEmployment_TypeOfEmployment.value === "Job Search"
+      ? setDisabledDesiredProfession(false)
+      : setDisabledDesiredProfession(true);
   };
 
   return (
@@ -63,61 +87,98 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
         component="form"
         sx={{
           display: "flex",
-          flexWrap: "wrap",
-          gap: "2rem 2rem",
-          mb: "auto",
+          flexDirection: "column",
+          gap: "1rem 0",
         }}
         onSubmit={submitHandler}
+        onChange={changeHandler}
       >
-        <Typography sx={{ color: "blue" }}>Education</Typography>
-        <Grid container sm={12} spacing={2}>
-          <Grid item sm={5}>
-            <CYFMSDropdown
-              name="education1"
-              id="education"
-              value="Attending School?"
-              autofill={readData.attendingSchool}
-            />
-          </Grid>
-          <Grid item sm={5}></Grid>
-          <Grid item sm={5}>
-            <CYFMSInput id="school" value="School" autofill={readData.school} />
-          </Grid>
-          <Grid item sm={5}>
-            <CYFMSInput id="grade" value="Grade" autofill={readData.grade} />
-          </Grid>
-        </Grid>
-        <Typography sx={{ color: "blue" }}>Employment</Typography>
-        <Grid container sm={12} spacing={2}>
-          <Grid item sm={5}>
-            <CYFMSDropdown
-              name="education2"
-              id="education"
-              value="Employed?"
-              autofill={readData.employed}
-            />
-          </Grid>
-          <Grid item sm={5}>
-            <CYFMSDropdown
-              id="typeOfEmployee"
-              value="Type of Employment"
-              autofill={readData.typeOfEmployment}
-            />
-          </Grid>
-          <Grid item sm={5}>
-            <CYFMSInput
-              id="desiredProfession"
-              value="Desired Profession"
-              autofill={readData.desiredProfession}
-            />
-          </Grid>
-          <Grid item sm={9}></Grid>
-          <Grid item sm={2}>
-            <Button variant="contained" type="submit">
-              Next
-            </Button>
-          </Grid>
-        </Grid>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem 0" }}>
+          <Box>
+            <Typography variant="body1" color="primary">
+              Education
+            </Typography>
+            <Box
+              sx={{ display: "flex", flexDirection: "column", gap: "1rem 0" }}
+            >
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
+                <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+                  <CYFMSDropdown
+                    id="educationAndEmployment_AttendingSchool"
+                    value="Attending School?"
+                    optionsList={["No", "Yes"]}
+                  />
+                </Box>
+                <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
+              </Box>
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
+                <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+                  <CYFMSInput
+                    disabled={disabledSchoolFields}
+                    id="educationAndEmployment_SchoolName"
+                    value="School"
+                  />
+                </Box>
+                <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+                  <CYFMSInput
+                    disabled={disabledSchoolFields}
+                    id="educationAndEmployment_SchoolGrade"
+                    value="Grade"
+                  />
+                </Box>
+              </Box>
+            </Box>
+          </Box>
+          <Box>
+            <Typography variant="body1" color="primary">
+              Employment
+            </Typography>
+            <Box
+              sx={{ display: "flex", flexDirection: "column", gap: "1rem 0" }}
+            >
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
+                <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+                  <CYFMSDropdown
+                    id="educationAndEmployment_Employed"
+                    value="Employed?"
+                    optionsList={["No", "Yes"]}
+                  />
+                </Box>
+                <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+                  <CYFMSDropdown
+                    id="educationAndEmployment_TypeOfEmployment"
+                    value="Type of Employment"
+                    optionsList={[
+                      "Part-time",
+                      "Full-time",
+                      "Casual",
+                      "Job Search",
+                    ]}
+                  />
+                </Box>
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: "0 1rem",
+                }}
+              >
+                <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+                  <CYFMSInput
+                    disabled={disabledDesiredProfession}
+                    id="educationAndEmployment_DesiredProfession"
+                    value="Desired Profession"
+                  />
+                </Box>
+                <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
+              </Box>
+            </Box>
+          </Box>
+        </Box>
+        <Box sx={{ display: "flex", justifyContent: "right" }}>
+          <CYFSWMSNextButton />
+        </Box>
       </Box>
     </CYFMSLayout>
   );

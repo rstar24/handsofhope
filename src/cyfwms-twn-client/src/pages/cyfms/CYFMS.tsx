@@ -87,7 +87,18 @@ const CYFMS = (): ReactElement => {
           </Button>
         </Box>
       </Box>
-      <CYFMSPopup open={open} onClose={handleClose} children={<></>} />
+      <CYFMSPopup
+        open={open}
+        onClose={(event, reason) => {
+          switch (reason) {
+            case "backdropClick":
+              return;
+            case "escapeKeyDown":
+              handleClose();
+          }
+        }}
+        children={<></>}
+      />
     </AuthLayout>
   );
 };
