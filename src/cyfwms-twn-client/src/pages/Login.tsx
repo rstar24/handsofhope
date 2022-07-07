@@ -1,3 +1,8 @@
+import CYFMSInput from "../components/cyfms/CYFMSInput";
+import Layout from "../components/layout/Layout";
+import CYFMSPasswordInput from "../components/cyfms/CYFMSPasswordInput";
+import { doLogin } from "../features/login/loginSlice";
+import { useAppDispatch, useAppSelector } from "../library/hooks";
 import {
   Backdrop,
   Box,
@@ -7,14 +12,9 @@ import {
   Typography,
   Link as MUILink,
 } from "@mui/material";
-import { doLogin } from "../features/login/loginSlice";
-import { useAppDispatch, useAppSelector } from "../library/hooks";
 import { useNavigate, Link as ReactRouterLink } from "react-router-dom";
-import Layout from "../components/layout/Layout";
 import React, { useState } from "react";
 import type { FormEvent, ReactElement } from "react";
-import CYFMSInput from "../components/cyfms/CYFMSInput";
-import CYFMSInput1 from "../components/cyfms/CYFMSInput1";
 
 const style = {
   position: "absolute",
@@ -102,26 +102,31 @@ const Login = (): ReactElement => {
           my: "1rem",
         }}
       >
-        <CYFMSInput id="userName" name="userName" required value="Username" />
-        <CYFMSInput1
-          id="passWord"
-          name="passWord"
-          required
-          type="password"
-          value="Password"
-        />
-        <Button type="submit" variant="contained">
-          Login
-        </Button>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem 0" }}>
+          <CYFMSInput id="userName" name="userName" required value="Username" />
+          <CYFMSPasswordInput
+            id="passWord"
+            name="passWord"
+            required
+            value="Password"
+          />
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <Button type="submit" variant="contained">
+              Login
+            </Button>
+          </Box>
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <ReactRouterLink
+              style={{ textDecoration: "none" }}
+              to="/cyfms/forgot_password"
+            >
+              <MUILink component="span" underline="hover">
+                Forgot password?
+              </MUILink>
+            </ReactRouterLink>
+          </Box>
+        </Box>
         {ErrorDialog}
-        <ReactRouterLink
-          style={{ textDecoration: "none" }}
-          to="/cyfms/forgot_password"
-        >
-          <MUILink component="span" underline="hover">
-            Forgot password?
-          </MUILink>
-        </ReactRouterLink>
       </Box>
     </Layout>
   );
