@@ -1,6 +1,9 @@
+import {
+  CYFMSCounselorsGetData,
+  CYFMSCounselorsPostData,
+} from "./cyfmsCounselorsSlice";
 import axios from "axios";
 import type { AxiosResponse } from "axios";
-import { WorkerGetData, WorkerPostData } from "./workerSlice";
 
 const axiosInstance = axios.create({
   baseURL: `${
@@ -8,8 +11,8 @@ const axiosInstance = axios.create({
   }/v1/participantservice/`,
 });
 
-export const doGetWorkerAPI = async (
-  data: WorkerGetData,
+export const doGetCYFMSCounselorsAPI = async (
+  data: CYFMSCounselorsGetData,
   jwtToken: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.get(
@@ -21,8 +24,8 @@ export const doGetWorkerAPI = async (
   return res;
 };
 
-export const doPostWorkerAPI = async (
-  data: WorkerPostData,
+export const doPostCYFMSCounselorsAPI = async (
+  data: CYFMSCounselorsPostData,
   jwtToken: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.put(

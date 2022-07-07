@@ -1,11 +1,11 @@
 import CYFMSFamilyPhysicians from "../../pages/cyfms/CYFMSFamilyPhysicians";
 import CYFMSContact from "../../pages/cyfms/CYFMSContact";
 import CYFMSCriminalHistory from "../../pages/cyfms/CYFMSCriminalHistory";
+import CYFMSCYFMSCounselors from "../../pages/cyfms/CYFMSCYFMSCounselors";
 import CYFMSEducationAndEmployment from "../../pages/cyfms/CYFMSEducationAndEmployment";
 import CYFMSHouseholdMembers from "../../pages/cyfms/CYFMSHouseholdMembers";
 import CYFMSOtherInformation from "../../pages/cyfms/CYFMSOtherInformation";
 import CYFMSRegister from "../../pages/cyfms/CYFMSRegister";
-import CYFMSWorker from "../../pages/cyfms/CYFMSWorker";
 import { Box, IconButton, Modal } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import React from "react";
@@ -60,7 +60,7 @@ const CYFMSPopup = (props: ModalUnstyledProps): ReactElement => {
           />
           <Route path="criminal_history" element={<CYFMSCriminalHistory />} />
           <Route path="family_physician" element={<CYFMSFamilyPhysicians />} />
-          <Route path="cyfms_worker" element={<CYFMSWorker />} />
+          <Route path="cyfms_worker" element={<CYFMSCYFMSCounselors />} />
           <Route path="other_information" element={<CYFMSOtherInformation />} />
         </Routes>
       </Box>

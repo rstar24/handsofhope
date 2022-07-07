@@ -8,7 +8,7 @@ import householdAndMembersReducer from "../features/cyfms/householdAndMembers/ho
 import loginReducer from "../features/login/loginSlice";
 import otherInformationReducer from "../features/cyfms/otherInformation/otherInformationSlice";
 import RegistrationReducer from "../features/register/registerSlice";
-import workerReducer from "../features/worker/workerSlice";
+import cyfmsCounselorsReducer from "../features/cyfms/cyfmsCounselors/cyfmsCounselorsSlice";
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import searchReducer from "../features/search/searchSlice";
 
@@ -21,7 +21,7 @@ export const store = configureStore({
     contact: contactReducer,
     householdAndMembers: householdAndMembersReducer,
     familyPhysicians: familyPhysiciansReducer,
-    worker: workerReducer,
+    cyfmsCounselors: cyfmsCounselorsReducer,
     criminalHistory: criminalhistoryReducer,
     otherInformation: otherInformationReducer,
     educationAndEmployment: educationAndEmploymentReducer,
