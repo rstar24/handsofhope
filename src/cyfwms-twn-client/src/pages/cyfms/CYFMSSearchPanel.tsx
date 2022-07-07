@@ -9,6 +9,7 @@ import type { FormEvent, ReactElement } from "react";
 import CYFMSSearchResult from "./CYFMSSearchResult";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { doGetSearch } from "../../features/search/searchSlice";
+import { current } from "@reduxjs/toolkit";
 /**
  * The CYFMSSearchPanel functional component.
  * @returns CYFMSSearchPanel component skeleton.
@@ -19,20 +20,24 @@ const CYFMSSearchPanel = (): ReactElement => {
 
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
-    const data: any = e.currentTarget;
 
+    const data: any = e.currentTarget;
     const searchUser = {
       firstname: data.firstName.value,
-      middleName: data.middleName.value || null,
-      surname: data.lastName.value || null,
-      dateOfBirth: data.dateOfBirth.value || null,
-      maritalStatus: data.maritalStatus.value || null,
-      city: data.city.value || null,
-      phoneNumber: data.phoneNo.value || null,
+      surname: data.lastName.value,
+      middleName: data.middleName.value,
+      dateOfBirth: data.dateOfBirth.value,
+      maritalStatus: data.maritalStatus.value,
+      city: data.city.value,
+      phoneNumber: data.phoneNo.value,
     };
     dispatch(doGetSearch({ readUser: searchUser })).then(() => {
       setIsShown((current) => !current);
     });
+  };
+
+  const hide = () => {
+    setIsShown(false);
   };
 
   return (
@@ -56,21 +61,16 @@ const CYFMSSearchPanel = (): ReactElement => {
           Search for a Child, Youth, or Family Member
         </Button>
       </Box>
-      <Box
-        component="form"
-        sx={{
-          ml: 65,
-          mr: 15,
-          display: "flex",
-          flexDirection: "column",
-          gap: "0.5rem 0",
-        }}
-        onSubmit={submitHandler}
-      >
+      <Box component="form" sx={{ ml: 60 }} onSubmit={submitHandler}>
         <CYFMSInput id="firstName" value="First Name" required />
         <CYFMSInput id="middleName" value="Middle Name" />
-        <CYFMSInput id="lastName" value="last Name" />
-        <CYFMSInput id="dateOfBirth" type="date" value="Date Of Birth" />
+        <CYFMSInput id="lastName" value="last Name" required />
+        <CYFMSInput
+          id="dateOfBirth"
+          type="date"
+          value="Date Of Birth"
+          required
+        />
 
         <CYFMSInput
           id="maritalStatus"
@@ -84,7 +84,12 @@ const CYFMSSearchPanel = (): ReactElement => {
           <Button variant="contained" type="submit">
             Search
           </Button>
-          <Button variant="contained" sx={{ ml: 2 }}>
+          <Button
+            variant="contained"
+            sx={{ ml: 2 }}
+            type="reset"
+            onClick={hide}
+          >
             Reset
           </Button>
         </div>
