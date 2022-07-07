@@ -1,9 +1,9 @@
-import axios from "axios";
-import type { AxiosResponse } from "axios";
 import {
   CriminalHistoryGetData,
   CriminalHistoryPostData,
 } from "./criminalhistorySlice";
+import axios from "axios";
+import type { AxiosResponse } from "axios";
 
 const axiosInstance = axios.create({
   baseURL: `${
@@ -15,7 +15,6 @@ export const doGetCriminalHistoryAPI = async (
   data: CriminalHistoryGetData,
   jwtToken: string
 ): Promise<AxiosResponse> => {
-  console.log(data);
   const res: AxiosResponse = await axiosInstance.get(
     "readCriminalHistory/" + data,
     {
@@ -29,7 +28,6 @@ export const doPostCriminalHistoryAPI = async (
   data: CriminalHistoryPostData,
   jwtToken: string
 ): Promise<AxiosResponse> => {
-  console.log(data);
   const res: AxiosResponse = await axiosInstance.put(
     "saveCriminalHistory/",
     data.user,

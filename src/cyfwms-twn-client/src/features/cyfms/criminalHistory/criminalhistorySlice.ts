@@ -1,22 +1,15 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import type { AxiosResponse } from "axios";
 import {
   doGetCriminalHistoryAPI,
   doPostCriminalHistoryAPI,
 } from "./criminalhistoryAPI";
+import type { AxiosResponse } from "axios";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export interface CriminalHistoryGetData {
   readUser: {};
 }
-export interface CriminalHistoryPostData {
-  user: {};
-}
 
 export interface CriminalHistoryGetState {
-  jwtToken: string;
-  status: "failed" | "loading" | "success";
-}
-export interface CriminalHistoryPostState {
   jwtToken: string;
   status: "failed" | "loading" | "success";
 }
@@ -32,6 +25,15 @@ export const doGetCriminalHistory = createAsyncThunk(
     return res.data;
   }
 );
+
+export interface CriminalHistoryPostData {
+  user: {};
+}
+
+export interface CriminalHistoryPostState {
+  jwtToken: string;
+  status: "failed" | "loading" | "success";
+}
 
 export const doPostCriminalHistory = createAsyncThunk(
   "criminalhistory/doPostCriminalHistory",
