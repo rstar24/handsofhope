@@ -3,7 +3,7 @@ import codetableReducer from "../features/codetable/codetableSlice";
 import contactReducer from "../features/contact/contactSlice";
 import criminalhistoryReducer from "../features/cyfms/criminalHistory/criminalhistorySlice";
 import cyfmsSideNavReducer from "../features/cyfms/cyfmsSideNavSlice";
-import familyPhysiciansReducer from "../features/familyPhysicians/familyPhysiciansSlice";
+import familyPhysiciansReducer from "../features/cyfms/familyPhysicians/familyPhysiciansSlice";
 import householdAndMembersReducer from "../features/cyfms/householdAndMembers/householdAndMembersSlice";
 import loginReducer from "../features/login/loginSlice";
 import otherInformationReducer from "../features/cyfms/otherInformation/otherInformationSlice";

@@ -1,9 +1,9 @@
-import axios from "axios";
-import type { AxiosResponse } from "axios";
 import {
   FamilyPhysiciansGetData,
   FamilyPhysiciansPostData,
 } from "./familyPhysiciansSlice";
+import axios from "axios";
+import type { AxiosResponse } from "axios";
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:9088/v1/participantservice/",

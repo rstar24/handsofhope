@@ -1,4 +1,4 @@
-import CYFMSFamilyPhysician from "../../pages/cyfms/CYFMSFamilyPhysician";
+import CYFMSFamilyPhysicians from "../../pages/cyfms/CYFMSFamilyPhysicians";
 import CYFMSContact from "../../pages/cyfms/CYFMSContact";
 import CYFMSCriminalHistory from "../../pages/cyfms/CYFMSCriminalHistory";
 import CYFMSEducationAndEmployment from "../../pages/cyfms/CYFMSEducationAndEmployment";
@@ -59,7 +59,7 @@ const CYFMSPopup = (props: ModalUnstyledProps): ReactElement => {
             element={<CYFMSEducationAndEmployment />}
           />
           <Route path="criminal_history" element={<CYFMSCriminalHistory />} />
-          <Route path="family_physician" element={<CYFMSFamilyPhysician />} />
+          <Route path="family_physician" element={<CYFMSFamilyPhysicians />} />
           <Route path="cyfms_worker" element={<CYFMSWorker />} />
           <Route path="other_information" element={<CYFMSOtherInformation />} />
         </Routes>

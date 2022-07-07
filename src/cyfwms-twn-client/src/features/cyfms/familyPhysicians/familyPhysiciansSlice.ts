@@ -1,22 +1,15 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import type { AxiosResponse } from "axios";
 import {
   doGetFamilyPhysiciansAPI,
   doPostFamilyPhysiciansAPI,
 } from "./familyPhysiciansAPI";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import type { AxiosResponse } from "axios";
 
 export interface FamilyPhysiciansGetData {
   readData: {};
 }
-export interface FamilyPhysiciansPostData {
-  user: {};
-}
 
 export interface FamilyPhysiciansGetState {
-  jwtToken: string;
-  status: "failed" | "loading" | "success";
-}
-export interface FamilyPhysiciansPostState {
   jwtToken: string;
   status: "failed" | "loading" | "success";
 }
@@ -33,6 +26,15 @@ export const doGetFamilyPhysicians = createAsyncThunk(
   }
 );
 
+export interface FamilyPhysiciansPostData {
+  user: {};
+}
+
+export interface FamilyPhysiciansPostState {
+  jwtToken: string;
+  status: "failed" | "loading" | "success";
+}
+
 export const doPostFamilyPhysicians = createAsyncThunk(
   "familyPhysicians/doPostFamilyPhysicians",
   async (data: FamilyPhysiciansPostData, { dispatch, getState }) => {
@@ -46,7 +48,7 @@ export const doPostFamilyPhysicians = createAsyncThunk(
 );
 
 export const familyPhysiciansSlice = createSlice({
-  name: "household",
+  name: "familyPhysicians",
   initialState: {
     participantId: 0,
     readData: [],
