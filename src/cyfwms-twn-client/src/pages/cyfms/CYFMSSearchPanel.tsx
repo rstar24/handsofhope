@@ -56,7 +56,17 @@ const CYFMSSearchPanel = (): ReactElement => {
           Search for a Child, Youth, or Family Member
         </Button>
       </Box>
-      <Box component="form" sx={{ ml: 60 }} onSubmit={submitHandler}>
+      <Box
+        component="form"
+        sx={{
+          ml: 65,
+          mr: 15,
+          display: "flex",
+          flexDirection: "column",
+          gap: "0.5rem 0",
+        }}
+        onSubmit={submitHandler}
+      >
         <CYFMSInput id="firstName" value="First Name" required />
         <CYFMSInput id="middleName" value="Middle Name" />
         <CYFMSInput id="lastName" value="last Name" />

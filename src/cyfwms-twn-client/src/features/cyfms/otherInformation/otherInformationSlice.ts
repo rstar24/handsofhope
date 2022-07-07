@@ -65,16 +65,12 @@ export const otherInformationSlice = createSlice({
     status: "failed",
   },
   reducers: {
-    cleanOtherInformation(state: any) {
-      state.user = {
-        participantId: 0,
-        participantOtherInfoId: 0,
-        strength: "",
-        weakness: "",
-        skills: "",
-        experiences: "",
-        effectiveCopingSkills: "",
-      };
+    cleanOtherInformationState(state: any) {
+      state.participantId = 0;
+      state.readUser = {};
+      state.user = {};
+      state.jwtToken = "";
+      state.status = "failed";
     },
   },
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -115,6 +111,6 @@ export const otherInformationSlice = createSlice({
   },
 });
 
-export const { cleanOtherInformation } = otherInformationSlice.actions;
+export const { cleanOtherInformationState } = otherInformationSlice.actions;
 
 export default otherInformationSlice.reducer;

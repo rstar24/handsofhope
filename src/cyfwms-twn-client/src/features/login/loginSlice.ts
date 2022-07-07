@@ -30,6 +30,11 @@ export const loginSlice = createSlice({
     status: "failed",
   },
   reducers: {
+    onLogout(state: any) {
+      state.isLoggedIn = false;
+      state.jwtToken = "";
+      state.status = "failed";
+    },
     setIsLoggedInTrue(state: any) {
       state.isLoggedIn = true;
     },
