@@ -116,10 +116,7 @@ const Login = (): ReactElement => {
             </Button>
           </Box>
           <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <ReactRouterLink
-              style={{ textDecoration: "none" }}
-              to="/cyfms/forgot_password"
-            >
+            <ReactRouterLink style={{ textDecoration: "none" }} to="/login">
               <MUILink component="span" underline="hover">
                 Forgot password?
               </MUILink>

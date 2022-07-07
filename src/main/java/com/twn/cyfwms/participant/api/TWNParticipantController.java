@@ -169,14 +169,26 @@ public class TWNParticipantController {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             dateTime = LocalDate.parse(var.get("dateOfBirth"), formatter);
         }
-            participantSearchCriteriaDto.setFirstname(var.get("firstname"));
-            participantSearchCriteriaDto.setCity(var.get("city"));
-            participantSearchCriteriaDto.setDateOfBirth(dateTime);
-            participantSearchCriteriaDto.setMaritalStatus(var.get("maritalStatus"));
-            participantSearchCriteriaDto.setSurname(var.get("surname"));
-            participantSearchCriteriaDto.setMiddleName(var.get("middleName"));
-            participantSearchCriteriaDto.setPhoneNumber(var.get("phoneNumber"));
-
+        participantSearchCriteriaDto.setFirstname(
+                ("null".equals(var.get("firstname"))
+                        || var.get("firstname") == null) ?null:var.get("firstname"));
+        participantSearchCriteriaDto.setCity(
+                ("null".equals(var.get("city"))
+                        || var.get("city") == null) ?null:var.get("city"));
+        participantSearchCriteriaDto.setDateOfBirth(dateTime);
+        participantSearchCriteriaDto.setMaritalStatus(
+                ("null".equals(var.get("maritalStatus"))
+                        || var.get("maritalStatus") == null) ?null:var.get("maritalStatus"));
+        ;
+        participantSearchCriteriaDto.setSurname(
+                ("null".equals(var.get("surname"))
+                        || var.get("surname") == null) ?null:var.get("surname"));
+        participantSearchCriteriaDto.setMiddleName(
+                ("null".equals(var.get("middleName"))
+                        || var.get("middleName") == null) ?null:var.get("middleName"));
+        participantSearchCriteriaDto.setPhoneNumber(
+                ("null".equals(var.get("phoneNumber"))
+                        || var.get("phoneNumber") == null) ?null:var.get("phoneNumber"));
         return participantSearchService.search(participantSearchCriteriaDto);
     }
 
