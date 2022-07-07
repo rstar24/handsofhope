@@ -9,9 +9,19 @@ import CYFMSRegister from "../../pages/cyfms/CYFMSRegister";
 import { Box, IconButton, Modal } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import type { ModalUnstyledProps } from "@mui/material";
 import type { ReactElement } from "react";
+import { useAppDispatch } from "../../library/hooks";
+import { cleanCodetableState } from "../../features/codetable/codetableSlice";
+import { cleanContactState } from "../../features/contact/contactSlice";
+import { cleanCriminalHistoryState } from "../../features/cyfms/criminalHistory/criminalhistorySlice";
+import { cleanEducationAndEmploymentState } from "../../features/cyfms/educationAndEmployment/educationAndEmploymentSlice";
+import { cleanFamilyPhysiciansState } from "../../features/cyfms/familyPhysicians/familyPhysiciansSlice";
+import { cleanHouseHoldAndMemberState } from "../../features/cyfms/householdAndMembers/householdAndMembersSlice";
+import { cleanOtherInformationState } from "../../features/cyfms/otherInformation/otherInformationSlice";
+import { cleanRegisterState } from "../../features/register/registerSlice";
+import { cleanSearchState } from "../../features/search/searchSlice";
 
 /**
  * The CYFMSPopup functional component.
@@ -26,6 +36,20 @@ import type { ReactElement } from "react";
  * @returns CYFMSPopup component skeleton.
  */
 const CYFMSPopup = (props: ModalUnstyledProps): ReactElement => {
+  const dispatch = useAppDispatch();
+
+  const handleClose = () => {
+    sessionStorage.removeItem("token");
+    dispatch(cleanCodetableState());
+    dispatch(cleanContactState());
+    dispatch(cleanCriminalHistoryState());
+    dispatch(cleanEducationAndEmploymentState());
+    dispatch(cleanFamilyPhysiciansState());
+    dispatch(cleanHouseHoldAndMemberState());
+    dispatch(cleanOtherInformationState());
+    dispatch(cleanRegisterState());
+    dispatch(cleanSearchState());
+  };
   return (
     <Modal {...props}>
       <Box
