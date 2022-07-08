@@ -34,7 +34,7 @@ export const CYFMSCYFMSCounselorsRecord = (
       </Typography>
       <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem 0" }}>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
-          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+          <Box sx={{ flexBasis: 0, flexGrow: 1.08 }}>
             <CYFMSDropdown
               id={`cyfmsCounselors_record_${props.recordNumber}_Role`}
               value="Role"
@@ -44,18 +44,23 @@ export const CYFMSCYFMSCounselorsRecord = (
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
-          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+          <Box sx={{ flexBasis: 0, flexGrow: 1.3 }}>
             <CYFMSInput
               id={`cyfmsCounselors_record_${props.recordNumber}_Name`}
               value="Name"
             />
           </Box>
-          <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
+          <Box sx={{ flexBasis: 0, flexGrow: 1.22 }}></Box>
         </Box>
-        <CYFMSTextArea
-          id={`cyfmsCounselors_record_${props.recordNumber}_ContactInformation`}
-          value="Contact Information"
-        />
+        <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
+          <Box sx={{ flexBasis: 0, flexGrow: 2.5 }}>
+            <CYFMSTextArea
+              id={`cyfmsCounselors_record_${props.recordNumber}_ContactInformation`}
+              value="Contact Information"
+            />
+          </Box>
+          <Box sx={{ flexBasis: 0, flexGrow: 1.22 }}></Box>
+        </Box>
       </Box>
     </Box>
   );

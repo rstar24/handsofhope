@@ -44,7 +44,7 @@ const CYFMSPasswordInput = (
         sx={{
           borderRadius: 0,
           flexBasis: 0,
-          flexGrow: 1,
+          flexGrow: 2.2,
           backgroundColor: "#dfdada",
         }}
         inputProps={{ sx: { p: 1 } }}

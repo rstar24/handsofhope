@@ -98,18 +98,14 @@ const Login = (): ReactElement => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          rowGap: "1.5rem",
+          rowGap: "1rem",
           my: "1rem",
         }}
       >
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "1rem 0",
-            width: "20rem",
-          }}
-        >
+        <Typography>
+          <b>Child, Youth and Faimly Services Wellness Management System</b>
+        </Typography>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem 0" }}>
           <CYFMSInput id="userName" name="userName" required value="Username" />
           <CYFMSPasswordInput
             id="passWord"
@@ -118,13 +114,13 @@ const Login = (): ReactElement => {
             value="Password"
           />
           <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <Button type="submit" variant="contained">
+            <Button type="submit" variant="contained" sx={{ ml: 10 }}>
               Login
             </Button>
           </Box>
           <Box sx={{ display: "flex", justifyContent: "center" }}>
             <ReactRouterLink style={{ textDecoration: "none" }} to="/login">
-              <MUILink component="span" underline="hover">
+              <MUILink component="span" underline="hover" sx={{ ml: 10 }}>
                 Forgot password?
               </MUILink>
             </ReactRouterLink>

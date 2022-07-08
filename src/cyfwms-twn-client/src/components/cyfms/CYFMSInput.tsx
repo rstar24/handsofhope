@@ -33,7 +33,7 @@ const CYFMSInput = (
       <OutlinedInput
         id={props.id}
         name={props.name}
-        sx={{ borderRadius: 0, flexBasis: 0, flexGrow: 1 }}
+        sx={{ borderRadius: 0, flexBasis: 0, flexGrow: 2, ml: -1 }}
         inputProps={{ sx: { p: 1 } }}
         type={props.type}
         defaultValue={props.autofill}

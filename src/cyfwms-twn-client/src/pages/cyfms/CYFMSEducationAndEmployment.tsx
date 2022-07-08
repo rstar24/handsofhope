@@ -78,10 +78,10 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
   const changeHandler = (e: FormEvent) => {
     const data: any = e.currentTarget;
     console.log(data.educationAndEmployment_AttendingSchool.value);
-    data.educationAndEmployment_AttendingSchool.value === "Yes"
+    data.educationAndEmployment_AttendingSchool.value === "true"
       ? setDisabledSchoolFields(false)
       : setDisabledSchoolFields(true);
-    data.educationAndEmployment_TypeOfEmployment.value === "Job Search"
+    data.educationAndEmployment_TypeOfEmployment.value === "JOBSEARCH"
       ? setDisabledDesiredProfession(false)
       : setDisabledDesiredProfession(true);
   };
@@ -117,8 +117,15 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
                 </Box>
                 <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
               </Box>
-              <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
-                <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: "1rem",
+                  flexGrow: 5,
+                }}
+              >
+                <Box sx={{ flexBasis: 0, flexGrow: 0.5 }}>
                   <CYFMSInput
                     disabled={disabledSchoolFields}
                     id="educationAndEmployment_SchoolName"
@@ -126,7 +133,7 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
                     autofill={readData.school}
                   />
                 </Box>
-                <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+                <Box sx={{ flexBasis: 0, flexGrow: 0.5 }}>
                   <CYFMSInput
                     disabled={disabledSchoolFields}
                     id="educationAndEmployment_SchoolGrade"
@@ -169,7 +176,7 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
                   gap: "0 1rem",
                 }}
               >
-                <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+                <Box sx={{ flexBasis: 0, flexGrow: 0.999999 }}>
                   <CYFMSInput
                     disabled={disabledDesiredProfession}
                     id="educationAndEmployment_DesiredProfession"

@@ -50,8 +50,7 @@ export const CYFMSFamilyPhysiciansRecord = (
             <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
               <CYFMSInput
                 id={`familyPhysicians_record_${props.recordNumber}_phone`}
-                value="Date of Birth"
-                type="date"
+                value="Phone"
               />
             </Box>
           </Box>
@@ -59,16 +58,19 @@ export const CYFMSFamilyPhysiciansRecord = (
             <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
               <CYFMSInput
                 id={`familyPhysicians_record_${props.recordNumber}_cell`}
-                value="Residing"
+                value="Cell"
               />
             </Box>
             <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
           </Box>
-          <Box sx={{ flexGrow: 1 }}>
-            <CYFMSTextArea
-              id={`familyPhysicians_record_${props.recordNumber}_listOfMedication`}
-              value="List of Medication"
-            />
+          <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
+            <Box sx={{ flexBasis: 0, flexGrow: 2 }}>
+              <CYFMSTextArea
+                id={`familyPhysicians_record_${props.recordNumber}_listOfMedication`}
+                value="List of Medication"
+              />
+            </Box>
+            <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
           </Box>
         </Box>
       </Box>

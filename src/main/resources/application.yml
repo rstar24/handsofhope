@@ -5,13 +5,10 @@ spring:
   application:
     name: TWN-SERVER
   datasource:
-    url: jdbc:mysql://localhost:3306/twn
-    username: root
-    password: password
-#    url: jdbc:sqlserver://cyfwms-twn-server.database.windows.net:1433;database=cyfwmsdb;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
-#    username: admin1
-#    password: Password@123
-    
+    url: jdbc:sqlserver://cyfwms-twn-server.database.windows.net:1433;database=cyfwmsdb;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
+    username: admin1
+    password: Password@123
+
   jpa:
     hibernate:
       ddl-auto: none
@@ -24,12 +21,11 @@ spring:
 jwt:
   secret: gigatorb
 
-
 codetablevalues:
   gender:
     MALE:
-      "en" : "Male"
-      "fr" : "Masculin"
+      "en": "Male"
+      "fr": "Masculin"
     FEMALE:
       "en": "Female"
       "fr": "Féminin"
@@ -39,8 +35,8 @@ codetablevalues:
 
   maritalStatus:
     MARRIED:
-      "en" : "Married"
-      "fr" : "Marry"
+      "en": "Married"
+      "fr": "Marry"
     UNMARRIED:
       "en": "Unmarried"
       "fr": "unmarry"
@@ -78,3 +74,6 @@ codetablevalues:
       "en": "Casual"
       "fr": "Casual"
 
+    JOBSEARCH:
+      "en": "Job search"
+      "fr": "Job search"
