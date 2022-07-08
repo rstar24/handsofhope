@@ -23,6 +23,7 @@ import { cleanOtherInformationState } from "../../features/cyfms/otherInformatio
 import { cleanRegisterState } from "../../features/cyfms/register/cyfmsRegisterSlice";
 import { cleanSearchState } from "../../features/search/searchSlice";
 import { CYFMSSideNavContext } from "./CYFMSSideNav";
+import { cleanCounselors } from "../../features/cyfms/cyfmsCounselors/cyfmsCounselorsSlice";
 
 /**
  * The CYFMSPopup functional component.
@@ -50,6 +51,7 @@ const CYFMSPopup = (props: ModalUnstyledProps): ReactElement => {
     dispatch(cleanOtherInformationState());
     dispatch(cleanRegisterState());
     dispatch(cleanSearchState());
+    dispatch(cleanCounselors());
   };
 
   return (

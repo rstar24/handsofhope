@@ -65,7 +65,7 @@ export const householdAndMembersSlice = createSlice({
   reducers: {
     cleanHouseHoldAndMemberState(state: any) {
       state.participantId = 0;
-      state.user = {};
+      state.user = { educationId: 0 };
       state.jwtToken = "";
       state.status = "failed";
     },

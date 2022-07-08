@@ -88,8 +88,8 @@ export const cyfmsRegisterSlice = createSlice({
   },
   reducers: {
     cleanRegisterState(state: any) {
-      state.readUser = {};
-      state.user = {};
+      state.readUser = { participantId: 0 };
+      state.user = { participantId: 0 };
       state.jwtToken = "";
       state.status = "failed";
     },

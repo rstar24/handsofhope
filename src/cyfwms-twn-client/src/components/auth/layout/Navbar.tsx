@@ -2,7 +2,7 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import { Link, useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../../library/hooks";
+import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import { cleanCodetableState } from "../../../features/codetable/codetableSlice";
 import { cleanContactState } from "../../../features/contact/contactSlice";
 import { cleanCriminalHistoryState } from "../../../features/cyfms/criminalHistory/criminalhistorySlice";
@@ -12,6 +12,8 @@ import { cleanHouseHoldAndMemberState } from "../../../features/cyfms/householdA
 import { cleanOtherInformationState } from "../../../features/cyfms/otherInformation/otherInformationSlice";
 import { cleanRegisterState } from "../../../features/cyfms/register/cyfmsRegisterSlice";
 import { cleanSearchState } from "../../../features/search/searchSlice";
+import { cleanCounselors } from "../../../features/cyfms/cyfmsCounselors/cyfmsCounselorsSlice";
+import { onLogout } from "../../../features/login/loginSlice";
 
 interface LinkTabProps {
   label?: string;
@@ -32,9 +34,9 @@ function LinkTab(props: LinkTabProps) {
 }
 
 export default function Navbar() {
-  const navigate = useNavigate();
   const [value, setValue] = React.useState(0);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -42,6 +44,7 @@ export default function Navbar() {
 
   const handleLogout = () => {
     sessionStorage.removeItem("token");
+    dispatch(onLogout());
     dispatch(cleanCodetableState());
     dispatch(cleanContactState());
     dispatch(cleanCriminalHistoryState());
@@ -51,8 +54,10 @@ export default function Navbar() {
     dispatch(cleanOtherInformationState());
     dispatch(cleanRegisterState());
     dispatch(cleanSearchState());
+    dispatch(cleanCounselors());
     navigate("/login");
   };
+
   return (
     <Box
       sx={{

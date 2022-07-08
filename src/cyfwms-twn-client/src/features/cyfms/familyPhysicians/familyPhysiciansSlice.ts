@@ -67,7 +67,7 @@ export const familyPhysiciansSlice = createSlice({
     cleanFamilyPhysiciansState(state: any) {
       state.participantId = 0;
       state.readData = [];
-      state.user = {};
+      state.user = { educationId: 0 };
       state.jwtToken = "";
       state.status = "failed";
     },

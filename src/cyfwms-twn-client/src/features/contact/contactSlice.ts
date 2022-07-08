@@ -65,8 +65,8 @@ export const contactSlice = createSlice({
   },
   reducers: {
     cleanContactState(state: any) {
-      state.user = {};
-      state.readUser = {};
+      state.user = { participantContactId: 0 };
+      state.readUser = { participantContactId: 0 };
       state.jwtToken = "";
       state.status = "failed";
     },

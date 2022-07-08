@@ -75,8 +75,8 @@ export const criminalhistorySlice = createSlice({
   reducers: {
     cleanCriminalHistoryState(state: any) {
       state.participantId = 0;
-      state.readUser = {};
-      state.user = {};
+      state.readUser = { criminalHistoryId: 0 };
+      state.user = { criminalHistoryId: 0 };
       state.jwtToken = "";
       state.status = "failed";
     },
