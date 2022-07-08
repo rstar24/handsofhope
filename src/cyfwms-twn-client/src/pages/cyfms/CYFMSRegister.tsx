@@ -26,6 +26,10 @@ const CYFMSRegister = (): ReactElement => {
   const participantId = useAppSelector(
     (state) => (state as any).cyfmsRegister.user.participantId
   );
+  const { gender, maritalstatus } = useAppSelector(
+    (state) => (state as any).codetable
+  );
+
   const userData = useAppSelector((state) => (state as any).cyfmsRegister.user);
   const readData = useAppSelector(
     (state) => (state as any).cyfmsRegister.readUser
@@ -119,7 +123,7 @@ const CYFMSRegister = (): ReactElement => {
             <CYFMSDropdown
               autofill={readData.gender}
               id="cyfmsRegister_Gender"
-              optionsList={["Male", "Female", "LGBTQ"]}
+              optionsList={Object.keys(gender)}
               value="Gender"
               required
             />
@@ -128,7 +132,7 @@ const CYFMSRegister = (): ReactElement => {
             <CYFMSDropdown
               autofill={readData.maritalStatus}
               id="cyfmsRegister_MaritalStatus"
-              optionsList={["Single", "Married", "Divorced"]}
+              optionsList={Object.keys(maritalstatus)}
               value="Marital Status"
             />
           </Box>

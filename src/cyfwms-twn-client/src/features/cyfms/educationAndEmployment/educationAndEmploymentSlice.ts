@@ -69,8 +69,8 @@ export const educationAndEmploymentSlice = createSlice({
   reducers: {
     cleanEducationAndEmploymentState(state: any) {
       state.participantId = 0;
-      state.readUser = { educationId: 0 };
-      state.user = { educationId: 0 };
+      state.readUser = { educationId: 0, employmentId: 0 };
+      state.user = { educationId: 0, employmentId: 0 };
       state.jwtToken = "";
       state.status = "failed";
     },

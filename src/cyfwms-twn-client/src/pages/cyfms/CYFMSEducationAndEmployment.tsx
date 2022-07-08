@@ -23,6 +23,9 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
   const participantId = useAppSelector(
     (state) => (state as any).cyfmsRegister.user.participantId
   );
+  const { education, typeOfEmployee } = useAppSelector(
+    (state) => (state as any).codetable
+  );
 
   const readData = useAppSelector(
     (state) => (state as any).educationAndEmployment.readUser
@@ -47,6 +50,8 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
     const data: any = e.currentTarget;
     const newEducationAndEmploymentData = {
       participantId: participantId,
+      educationId: 0,
+      employmentId: 0,
       attendingSchool: data.educationAndEmployment_AttendingSchool.value,
       school: data.educationAndEmployment_SchoolName.value,
       grade: data.educationAndEmployment_SchoolGrade.value,
@@ -106,7 +111,8 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
                   <CYFMSDropdown
                     id="educationAndEmployment_AttendingSchool"
                     value="Attending School?"
-                    optionsList={["No", "Yes"]}
+                    optionsList={Object.keys(education)}
+                    autofill={readData.attendingSchool}
                   />
                 </Box>
                 <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
@@ -117,6 +123,7 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
                     disabled={disabledSchoolFields}
                     id="educationAndEmployment_SchoolName"
                     value="School"
+                    autofill={readData.school}
                   />
                 </Box>
                 <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
@@ -124,6 +131,7 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
                     disabled={disabledSchoolFields}
                     id="educationAndEmployment_SchoolGrade"
                     value="Grade"
+                    autofill={readData.grade}
                   />
                 </Box>
               </Box>
@@ -141,19 +149,16 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
                   <CYFMSDropdown
                     id="educationAndEmployment_Employed"
                     value="Employed?"
-                    optionsList={["No", "Yes"]}
+                    optionsList={Object.keys(education)}
+                    autofill={readData.employed}
                   />
                 </Box>
                 <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
                   <CYFMSDropdown
                     id="educationAndEmployment_TypeOfEmployment"
                     value="Type of Employment"
-                    optionsList={[
-                      "Part-time",
-                      "Full-time",
-                      "Casual",
-                      "Job Search",
-                    ]}
+                    optionsList={Object.keys(typeOfEmployee)}
+                    autofill={readData.typeOfEmployment}
                   />
                 </Box>
               </Box>
@@ -169,6 +174,7 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
                     disabled={disabledDesiredProfession}
                     id="educationAndEmployment_DesiredProfession"
                     value="Desired Profession"
+                    autofill={readData.desiredProfession}
                   />
                 </Box>
                 <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>

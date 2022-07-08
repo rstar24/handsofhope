@@ -2,6 +2,7 @@ import { CYFSWMSSaveButton } from "../../components/CYFSWMSButtons";
 import CYFMSInput from "../../components/cyfms/CYFMSInput";
 import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
 import {
+  cleanOtherInformationState,
   doGetOtherInformation,
   doPostOtherInformation,
 } from "../../features/cyfms/otherInformation/otherInformationSlice";
@@ -10,6 +11,15 @@ import { Box, Typography } from "@mui/material";
 import type { FormEvent, ReactElement } from "react";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import React, { useContext, useEffect, useState } from "react";
+import { cleanCodetableState } from "../../features/codetable/codetableSlice";
+import { cleanContactState } from "../../features/contact/contactSlice";
+import { cleanCriminalHistoryState } from "../../features/cyfms/criminalHistory/criminalhistorySlice";
+import { cleanEducationAndEmploymentState } from "../../features/cyfms/educationAndEmployment/educationAndEmploymentSlice";
+import { cleanFamilyPhysiciansState } from "../../features/cyfms/familyPhysicians/familyPhysiciansSlice";
+import { cleanHouseHoldAndMemberState } from "../../features/cyfms/householdAndMembers/householdAndMembersSlice";
+import { cleanRegisterState } from "../../features/cyfms/register/cyfmsRegisterSlice";
+import { cleanSearchState } from "../../features/search/searchSlice";
+import { cleanCounselors } from "../../features/cyfms/cyfmsCounselors/cyfmsCounselorsSlice";
 
 /**
  * The CYFMSOtherInformation functional component.
@@ -27,7 +37,7 @@ const CYFMSOtherInformation = (): ReactElement => {
   const otherInformationData = useAppSelector(
     (state) => (state as any).otherInformation.user
   );
-
+  console.log(readData);
   useEffect(() => {
     dispatch(doGetOtherInformation(participantId));
   }, [dispatch, otherInformationData, participantId]);
@@ -37,23 +47,37 @@ const CYFMSOtherInformation = (): ReactElement => {
     const data: any = e.currentTarget;
     const newOtherInformation = {
       participantId: participantId,
+      participantOtherInfoId: 0,
       strength: data.otherInformation_Strengths.value,
       weakness: data.otherInformation_Weaknesses.value,
       skills: data.otherInformation_Skills.value,
       experiences: data.otherInformation_Experiences.value,
       effectiveCopingSkills: data.otherInformation_EffectiveCopingSkills.value,
     };
-    dispatch(doPostOtherInformation({ user: newOtherInformation })).then(
-      () => {
-        console.log("OtherInformation data has been posted!");
-        // TODO: And also perform other store cleanups
-        popupContext.setOpen(false);
-      },
-      (err) => {
-        console.log("EducationAndEmployment data NOT posted!");
-        console.log(err);
-      }
-    );
+    dispatch(doPostOtherInformation({ user: newOtherInformation }))
+      .then(
+        () => {
+          console.log("OtherInformation data has been posted!");
+          // TODO: And also perform other store cleanups
+          popupContext.setOpen(false);
+        },
+        (err) => {
+          console.log("EducationAndEmployment data NOT posted!");
+          console.log(err);
+        }
+      )
+      .then(() => {
+        dispatch(cleanCodetableState());
+        dispatch(cleanContactState());
+        dispatch(cleanCriminalHistoryState());
+        dispatch(cleanEducationAndEmploymentState());
+        dispatch(cleanFamilyPhysiciansState());
+        dispatch(cleanHouseHoldAndMemberState());
+        dispatch(cleanOtherInformationState());
+        dispatch(cleanRegisterState());
+        dispatch(cleanSearchState());
+        dispatch(cleanCounselors());
+      });
   };
 
   return (
@@ -93,7 +117,7 @@ const CYFMSOtherInformation = (): ReactElement => {
         <CYFMSInput
           id="otherInformation_EffectiveCopingSkills"
           value="Effective Coping Skills"
-          autofill={readData.experiences}
+          autofill={readData.effectiveCopingSkills}
         />
         <Box sx={{ display: "flex", justifyContent: "right" }}>
           <CYFSWMSSaveButton />
