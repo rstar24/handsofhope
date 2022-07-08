@@ -10,55 +10,102 @@ import {
 } from "../../features/cyfms/householdAndMembers/householdAndMembersSlice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { Box } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import type { FormEvent, ReactElement } from "react";
 
 /**
- * The CYFMSHouseholdMembers functional component.
- * @returns CYFMSHouseholdMembers component skeleton.
+ * The CYFMSHouseholdAndMembers functional component.
+ * @returns CYFMSHouseholdAndMembers component skeleton.
  */
-const CYFMSHouseholdMembers = (): ReactElement => {
+const CYFMSHouseholdAndMembers = (): ReactElement => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const participantId = useAppSelector(
     (state) => (state as any).cyfmsRegister.user.participantId
   );
   const data = useAppSelector(
-    (state) => (state as any).householdAndMembers.user
+    (state) => (state as any).householdAndMembers.recordList
   );
 
-  useEffect(() => {
-    dispatch(doGetHouseholdAndMembers(participantId));
-  }, []);
-
   // State for the records list
-  const [recordList, setRecordList] = useState([{}]);
+  const [recordList, setRecordList] = useState([
+    {
+      participantId: participantId,
+      householdMemberId: 0,
+      name: "",
+      gender: "",
+      dateOfBirth: "",
+      residing: "",
+    },
+  ]);
+
+  // Reference to the form
+  const formRef = useRef(null);
+
+  useEffect(() => {
+    dispatch(doGetHouseholdAndMembers(participantId))
+      .unwrap()
+      .then((recordListFromAPI) => {
+        setRecordList(recordListFromAPI);
+      })
+      .catch((err) => {
+        console.log("HouseholdAndMembers backend API didn't work");
+        console.log(err);
+      });
+  }, []);
 
   // Handles the form data submission and other
   // activities.
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
-    dispatch(doPostHouseholdAndMembers({ user: data })).then(
-      () => {
-        console.log("EducationAndEmployment data has been posted!");
+    dispatch(doPostHouseholdAndMembers({ recordList: recordList }))
+      .unwrap()
+      .then(() => {
+        console.log("HouseholdAndMembers data has been posted!");
         navigate("/cyfms/education_and_employment");
-      },
-      (err) => {
-        console.log("EducationAndEmployment data NOT posted!");
+      })
+      .catch((err) => {
+        console.log("HouseholdAndMembers data NOT posted!");
         console.log(err);
-      }
-    );
+      });
   };
 
   const addMoreHandler = (e: MouseEvent) => {
     e.preventDefault();
-    setRecordList((previousRecordList) => [...previousRecordList, {}]);
+    if (recordList.length >= 1) {
+      setRecordList((previousList: any) => [
+        ...previousList,
+        {
+          participantId: participantId,
+          householdMemberId: 0,
+          name: (formRef.current as any)[`householdAndMembers_record_${1}_Name`]
+            .value,
+          gender: (formRef.current as any)[
+            `householdAndMembers_record_${1}_Gender`
+          ].value,
+          dateOfBirth: (formRef.current as any)[
+            `householdAndMembers_record_${1}_DateOfBirth`
+          ].value,
+          residing: (formRef.current as any)[
+            `householdAndMembers_record_${1}_Residing`
+          ].value,
+        },
+      ]);
+    } else {
+      setRecordList((previousRecordList) => [
+        ...previousRecordList,
+        {
+          participantId: participantId,
+          householdMemberId: 0,
+          name: "",
+          gender: "",
+          dateOfBirth: "",
+          residing: "",
+        },
+      ]);
+    }
   };
-
-  // Enables/Re-enables the `Save` button whenever
-  // any form field value changes.
-  const changeHandler = (e: FormEvent) => {};
 
   return (
     <CYFMSLayout>
@@ -70,7 +117,7 @@ const CYFMSHouseholdMembers = (): ReactElement => {
           gap: "1rem 0",
         }}
         onSubmit={submitHandler}
-        onChange={changeHandler}
+        ref={formRef}
       >
         <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem 0" }}>
           {CYFMSHouseholdAndMembersRecordList(recordList)}
@@ -86,4 +133,4 @@ const CYFMSHouseholdMembers = (): ReactElement => {
   );
 };
 
-export default CYFMSHouseholdMembers;
+export default CYFMSHouseholdAndMembers;

@@ -30,7 +30,7 @@ export const doPostHouseholdAndMembersAPI = async (
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.put(
     "saveAllHouseholdMembers/",
-    data.user,
+    data.recordList,
     {
       headers: { Authorization: "Bearer " + jwtToken },
     }

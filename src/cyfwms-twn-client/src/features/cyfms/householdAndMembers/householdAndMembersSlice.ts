@@ -27,7 +27,7 @@ export const doGetHouseholdAndMembers = createAsyncThunk(
 );
 
 export interface HouseholdAndMembersPostData {
-  user: {};
+  recordList: {};
 }
 
 export interface HouseholdAndMembersPostState {
@@ -65,7 +65,7 @@ export const householdAndMembersSlice = createSlice({
   reducers: {
     cleanHouseHoldAndMemberState(state: any) {
       state.participantId = 0;
-      state.user = { educationId: 0 };
+      state.user = {};
       state.jwtToken = "";
       state.status = "failed";
     },

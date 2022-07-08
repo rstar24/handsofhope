@@ -14,6 +14,8 @@ import type {
  */
 export interface CYFMSHouseholdAndMembersRecordProps
   extends ComponentPropsWithoutRef<ElementType> {
+  /** Holds data within a record. */
+  record: any;
   /** Uniquely identifies a record. */
   recordNumber: number;
 }
@@ -27,7 +29,7 @@ export const CYFMSHouseholdAndMembersRecord = (
   props: CYFMSHouseholdAndMembersRecordProps
 ): ReactElement => {
   return (
-    <Box key={`householdAndMembers-record-${props.recordNumber}`}>
+    <Box key={`householdAndMembers_record_${props.recordNumber}`}>
       <Typography variant="body1" color="primary">
         Member {props.recordNumber}
       </Typography>
@@ -41,22 +43,26 @@ export const CYFMSHouseholdAndMembersRecord = (
           }}
         >
           <CYFMSInput
-            id={`householdAndMembers-record-${props.recordNumber}-name`}
+            autofill={props.record.name}
+            id={`householdAndMembers_record_${props.recordNumber}_Name`}
             value="Name"
           />
           <CYFMSInput
-            id={`householdAndMembers-record-${props.recordNumber}-dateOfBirth`}
+            autofill={props.record.date}
+            id={`householdAndMembers_record_${props.recordNumber}_DateOfBirth`}
             value="Date of Birth"
             type="date"
           />
           <CYFMSInput
-            id={`householdAndMembers-record-${props.recordNumber}-residing`}
+            autofill={props.record.residing}
+            id={`householdAndMembers_record_${props.recordNumber}_Residing`}
             value="Residing"
           />
         </Box>
         <Box sx={{ flexGrow: 1 }}>
           <CYFMSDropdown
-            id={`householdAndMembers-record-${props.recordNumber}-gender`}
+            autofill={props.record.gender}
+            id={`householdAndMembers_record_${props.recordNumber}_Gender`}
             optionsList={["Male", "Female", "LGBTQ"]}
             value="Gender"
           />
@@ -71,7 +77,12 @@ const CYFMSHouseholdAndMembersRecordList = (
 ): ReactElement[] => {
   let res: ReactElement[] = new Array(recordList.length);
   for (let index = 0; index < recordList.length; ++index) {
-    res.push(<CYFMSHouseholdAndMembersRecord recordNumber={index + 1} />);
+    res.unshift(
+      <CYFMSHouseholdAndMembersRecord
+        record={recordList[index]}
+        recordNumber={index + 1}
+      />
+    );
   }
   return res;
 };
