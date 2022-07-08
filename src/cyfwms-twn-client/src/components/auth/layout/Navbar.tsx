@@ -14,6 +14,7 @@ import { cleanRegisterState } from "../../../features/cyfms/register/cyfmsRegist
 import { cleanSearchState } from "../../../features/search/searchSlice";
 import { cleanCounselors } from "../../../features/cyfms/cyfmsCounselors/cyfmsCounselorsSlice";
 import { onLogout } from "../../../features/login/loginSlice";
+import Button from "@mui/material/Button";
 
 interface LinkTabProps {
   label?: string;
@@ -77,14 +78,10 @@ export default function Navbar() {
       >
         Home
       </Box>
-      <Box
-        alignItems="flex-end"
-        justifyContent="flex-end"
-        color="#ffffff"
-        sx={{ p: 1, textDecoration: "none" }}
-        onClick={handleLogout}
-      >
-        Logout
+      <Box color="#ffffff" sx={{ p: 0 }}>
+        <Button sx={{ color: "white" }} onClick={handleLogout}>
+          Logout
+        </Button>
       </Box>
     </Box>
   );

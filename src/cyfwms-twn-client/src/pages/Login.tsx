@@ -102,7 +102,14 @@ const Login = (): ReactElement => {
           my: "1rem",
         }}
       >
-        <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem 0" }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "1rem 0",
+            width: "20rem",
+          }}
+        >
           <CYFMSInput id="userName" name="userName" required value="Username" />
           <CYFMSPasswordInput
             id="passWord"

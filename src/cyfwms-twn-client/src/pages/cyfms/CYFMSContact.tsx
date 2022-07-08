@@ -118,6 +118,8 @@ const CYFMSContact = (): ReactElement => {
               id="emailAddr"
               value="Email Address"
               autofill={readData.emailAddress}
+              required
+              type="gmail"
             />
           </Grid>
           <Grid item sm={5}></Grid>
