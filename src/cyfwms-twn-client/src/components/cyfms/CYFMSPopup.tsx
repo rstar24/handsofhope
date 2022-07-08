@@ -77,6 +77,7 @@ const CYFMSPopup = (props: ModalUnstyledProps): ReactElement => {
             aria-label="Close the popup box."
             onClick={(e) => {
               setHideTabs(true);
+              handleClose();
               props.onClose!(e, "escapeKeyDown");
             }}
             sx={{ position: "absolute", right: 0 }}
