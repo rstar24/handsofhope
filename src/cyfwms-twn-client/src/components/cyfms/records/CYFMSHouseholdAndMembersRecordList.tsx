@@ -57,6 +57,7 @@ export const CYFMSHouseholdAndMembersRecord = (
         <Box sx={{ flexGrow: 1 }}>
           <CYFMSDropdown
             id={`householdAndMembers-record-${props.recordNumber}-gender`}
+            optionsList={["Male", "Female", "LGBTQ"]}
             value="Gender"
           />
         </Box>

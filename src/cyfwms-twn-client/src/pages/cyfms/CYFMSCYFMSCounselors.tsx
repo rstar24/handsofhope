@@ -21,7 +21,7 @@ const CYFMSWorker = (): ReactElement => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const participantId = useAppSelector(
-    (state) => (state as any).registration.user.participantId
+    (state) => (state as any).cyfmsRegister.user.participantId
   );
   const data = useAppSelector((state) => (state as any).cyfmsCounselors.user);
   console.log("worker", data);

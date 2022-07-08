@@ -27,9 +27,16 @@ export const CYFSWMSAddButton = (
  * The CYFSWMSNextButton functional component.
  * @returns CYFSWMSNextButton component skeleton.
  */
-export const CYFSWMSNextButton = (): ReactElement => {
+export const CYFSWMSNextButton = (
+  props: ComponentPropsWithoutRef<ElementType>
+): ReactElement => {
   return (
-    <Button endIcon={<NavigateNextIcon />} type="submit" variant="contained">
+    <Button
+      endIcon={<NavigateNextIcon />}
+      type="submit"
+      variant="contained"
+      {...props}
+    >
       Next
     </Button>
   );

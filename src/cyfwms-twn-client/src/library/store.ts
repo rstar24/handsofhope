@@ -2,12 +2,11 @@ import educationAndEmploymentReducer from "../features/cyfms/educationAndEmploym
 import codetableReducer from "../features/codetable/codetableSlice";
 import contactReducer from "../features/contact/contactSlice";
 import criminalhistoryReducer from "../features/cyfms/criminalHistory/criminalhistorySlice";
-import cyfmsSideNavReducer from "../features/cyfms/cyfmsSideNavSlice";
 import familyPhysiciansReducer from "../features/cyfms/familyPhysicians/familyPhysiciansSlice";
 import householdAndMembersReducer from "../features/cyfms/householdAndMembers/householdAndMembersSlice";
 import loginReducer from "../features/login/loginSlice";
 import otherInformationReducer from "../features/cyfms/otherInformation/otherInformationSlice";
-import RegistrationReducer from "../features/register/registerSlice";
+import cyfmsRegisterReducer from "../features/cyfms/register/cyfmsRegisterSlice";
 import cyfmsCounselorsReducer from "../features/cyfms/cyfmsCounselors/cyfmsCounselorsSlice";
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import searchReducer from "../features/search/searchSlice";
@@ -15,9 +14,8 @@ import searchReducer from "../features/search/searchSlice";
 export const store = configureStore({
   reducer: {
     login: loginReducer,
-    cyfmsSideNav: cyfmsSideNavReducer,
     codetable: codetableReducer,
-    registration: RegistrationReducer,
+    cyfmsRegister: cyfmsRegisterReducer,
     contact: contactReducer,
     householdAndMembers: householdAndMembersReducer,
     familyPhysicians: familyPhysiciansReducer,

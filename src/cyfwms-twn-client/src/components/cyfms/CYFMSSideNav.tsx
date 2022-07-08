@@ -1,27 +1,31 @@
-import { useAppSelector } from "../../library/hooks";
 import { Box, List, ListItemButton, ListItemText } from "@mui/material";
-import { createSelector } from "@reduxjs/toolkit";
 import { NavLink } from "react-router-dom";
-import React from "react";
-import ListItem, { listItemClasses } from "@mui/material/ListItem";
+import React, { createContext, useContext } from "react";
+import { listItemClasses } from "@mui/material/ListItem";
 import type { ReactElement } from "react";
 
 function MyNavLink(props: any) {
   return <NavLink {...props} activeClassName="active" />;
 }
 
-const hideTabsSelector = createSelector(
-  (state: any) => (state as any).cyfmsSideNav.hideTabs,
-  (hideTabs) => hideTabs
-);
+/**
+ * The CYFMSSideNavContext is used to hide/unhide
+ * tabs of the side navbar.
+ */
+export const CYFMSSideNavContext = createContext<{
+  hideTabs: boolean;
+  setHideTabs: (hideTabs: boolean) => void;
+}>({
+  hideTabs: true,
+  setHideTabs: (hideTabs) => {},
+});
 
 /**
  * The CYFMSSideNav functional component.
  * @returns CYFMSideNav component skeleton.
  */
 const CYFMSSideNav = (): ReactElement => {
-  const hideTabs = useAppSelector(hideTabsSelector);
-
+  const { hideTabs } = useContext(CYFMSSideNavContext);
   return (
     <Box aria-label="tabs" sx={{ bgcolor: "background.paper" }}>
       <List

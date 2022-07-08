@@ -19,7 +19,7 @@ const CYFMSOtherInformation = (): ReactElement => {
   const popupContext = useContext(PopupContext);
   const dispatch = useAppDispatch();
   const participantId = useAppSelector(
-    (state) => (state as any).registration.user.participantId
+    (state) => (state as any).cyfmsRegister.user.participantId
   );
   const readData = useAppSelector(
     (state) => (state as any).otherInformation.readUser

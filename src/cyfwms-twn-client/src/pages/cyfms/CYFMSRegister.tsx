@@ -1,16 +1,17 @@
-import { unhideTabs } from "../../features/cyfms/cyfmsSideNavSlice";
 import {
-  doGetRegister,
-  doPostRegister,
-} from "../../features/register/registerSlice";
+  CYFSWMSNextButton,
+  CYFSWMSSaveButton,
+} from "../../components/CYFSWMSButtons";
+import { doPostCYFMSRegister } from "../../features/cyfms/register/cyfmsRegisterSlice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import CYFMSDropdown from "../../components/cyfms/CYFMSDropdown";
 import CYFMSInput from "../../components/cyfms/CYFMSInput";
 import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
-import { Box, Button, Grid } from "@mui/material";
-import React, { useEffect } from "react";
+import { Box } from "@mui/material";
+import React, { useContext, useState } from "react";
 import type { FormEvent, ReactElement } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { CYFMSSideNavContext } from "../../components/cyfms/CYFMSSideNav";
+import { useNavigate } from "react-router-dom";
 
 /**
  * The CYFMSRegister functional component.
@@ -19,36 +20,41 @@ import { Link, useNavigate } from "react-router-dom";
 const CYFMSRegister = (): ReactElement => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const userData = useAppSelector((state) => (state as any).registration.user);
+  const userData = useAppSelector((state) => (state as any).cyfmsRegister.user);
   const readData = useAppSelector(
-    (state) => (state as any).registration.readUser
+    (state) => (state as any).cyfmsRegister.readUser
   );
+  const { setHideTabs } = useContext(CYFMSSideNavContext);
+  const [isRegistered, setIsRegistered] = useState<boolean>(false);
 
-  useEffect(() => {
-    dispatch(doGetRegister(userData.participantId));
-  }, [userData]);
-
+  // Handles the form data submission and other
+  // activities.
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
     const data: any = e.currentTarget;
     const newUser = {
       participantId: userData.participantId,
-      firstname: data.firstName.value,
-      middleName: data.middleName.value,
-      surname: data.lastName.value,
-      dateOfBirth: data.dateOfBirth.value,
-      gender: data.gender.value,
-      maritalStatus: data.maritalStatus.value,
+      firstname: data.cyfmsRegister_FirstName.value,
+      middleName: data.cyfmsRegister_MiddleName.value,
+      surname: data.cyfmsRegister_LastName.value,
+      dateOfBirth: data.cyfmsRegister_DateOfBirth.value,
+      gender: data.cyfmsRegister_Gender.value,
+      maritalStatus: data.cyfmsRegister_MaritalStatus.value,
     };
-    const res = dispatch(doPostRegister({ user: newUser }))
+    dispatch(doPostCYFMSRegister({ user: newUser }))
+      .unwrap()
       .then(() => {
-        dispatch(unhideTabs());
+        setHideTabs(false);
+        setIsRegistered(true);
       })
-      .then(() => {
-        if (userData.participantId) {
-          navigate("/cyfms/contact");
-        }
+      .catch((err) => {
+        console.log("Unable to register.");
+        console.log(err);
       });
+  };
+
+  const nextClickHandler = () => {
+    navigate("/cyfms/contact");
   };
 
   return (
@@ -57,73 +63,73 @@ const CYFMSRegister = (): ReactElement => {
         component="form"
         sx={{
           display: "flex",
-          flexWrap: "wrap",
-          gap: "2rem 2rem",
-          mb: "auto",
+          flexDirection: "column",
+          gap: "1rem 0",
         }}
         onSubmit={submitHandler}
       >
-        <Grid container sm={12} spacing={2}>
-          <Grid item xs={1} sm={5} md={5}>
+        <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
+          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CYFMSInput
-              id="firstName"
+              id="cyfmsRegister_FirstName"
               value="First Name"
               autofill={readData.firstname}
               required
             />
-          </Grid>
-          <Grid item xs={1} sm={5} md={5}>
+          </Box>
+          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CYFMSInput
-              id="middleName"
+              id="cyfmsRegister_MiddleName"
               value="Middle Name"
               autofill={readData.middleName}
             />
-          </Grid>
-          <Grid item xs={1} sm={5} md={5}>
+          </Box>
+        </Box>
+        <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
+          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CYFMSInput
-              id="lastName"
+              id="cyfmsRegister_LastName"
               value="Last Name"
               autofill={readData.surname}
               required
             />
-          </Grid>
-          <Grid item xs={1} sm={5} md={5}>
+          </Box>
+          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CYFMSInput
-              id="dateOfBirth"
+              id="cyfmsRegister_DateOfBirth"
               type="date"
               value="Date of Birth"
               autofill={readData.dateOfBirth}
               required
             />
-          </Grid>
-          <Grid item xs={1} sm={5} md={5}>
+          </Box>
+        </Box>
+        <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
+          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CYFMSDropdown
-              id="gender"
-              value="Gender"
               autofill={readData.gender}
+              id="cyfmsRegister_Gender"
+              optionsList={["Male", "Female", "LGBTQ"]}
+              value="Gender"
               required
             />
-          </Grid>
-          <Grid item xs={1} sm={5} md={5}>
+          </Box>
+          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CYFMSDropdown
-              id="maritalStatus"
-              value="Marital Status"
               autofill={readData.maritalStatus}
+              id="cyfmsRegister_MaritalStatus"
+              optionsList={["Single", "Married", "Divorced"]}
+              value="Marital Status"
             />
-          </Grid>
-          <Grid item sm={8.8}></Grid>
-          <Grid item sm={0}>
-            {userData.participantId ? (
-              <Button variant="contained" type="submit">
-                Next
-              </Button>
-            ) : (
-              <Button variant="contained" type="submit">
-                Save
-              </Button>
-            )}
-          </Grid>{" "}
-        </Grid>
+          </Box>
+        </Box>
+        <Box sx={{ display: "flex", justifyContent: "right" }}>
+          {isRegistered ? (
+            <CYFSWMSNextButton onClick={nextClickHandler} />
+          ) : (
+            <CYFSWMSSaveButton />
+          )}
+        </Box>
       </Box>
     </CYFMSLayout>
   );

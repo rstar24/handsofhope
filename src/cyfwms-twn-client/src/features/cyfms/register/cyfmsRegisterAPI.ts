@@ -1,5 +1,8 @@
 import axios from "axios";
-import type { RegisterGetData, RegisterPostData } from "./registerSlice";
+import type {
+  CYFMSRegisterGetData,
+  CYFMSRegisterPostData,
+} from "./cyfmsRegisterSlice";
 import type { AxiosResponse } from "axios";
 
 const axiosInstance = axios.create({
@@ -8,11 +11,10 @@ const axiosInstance = axios.create({
   }/v1/participantservice/`,
 });
 
-export const doGetRegisterAPI = async (
-  data: RegisterGetData,
+export const doGetCYFMSRegisterAPI = async (
+  data: CYFMSRegisterGetData,
   jwtToken: string
 ): Promise<AxiosResponse> => {
-  console.log(data);
   const res: AxiosResponse = await axiosInstance.get(
     "readParticipantIdentity/" + data,
     {
@@ -22,11 +24,10 @@ export const doGetRegisterAPI = async (
   return res;
 };
 
-export const doPostRegisterAPI = async (
-  data: RegisterPostData,
+export const doPostCYFMSRegisterAPI = async (
+  data: CYFMSRegisterPostData,
   jwtToken: string
 ): Promise<AxiosResponse> => {
-  console.log(data);
   const res: AxiosResponse = await axiosInstance.put(
     "saveParticipantIdentity/",
     data.user,

@@ -9,10 +9,10 @@ import {
   doGetTypeOfEmployee,
 } from "../../features/codetable/codetableSlice";
 import { doGetContact } from "../../features/contact/contactSlice";
-import { doGetRegister } from "../../features/register/registerSlice";
+import { doGetCYFMSRegister } from "../../features/cyfms/register/cyfmsRegisterSlice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { Box, Button } from "@mui/material";
-import React, { createContext, useEffect } from "react";
+import React, { createContext } from "react";
 import { Link } from "react-router-dom";
 import type { ReactElement } from "react";
 
@@ -31,7 +31,7 @@ export const PopupContext = createContext<{
 const CYFMS = (): ReactElement => {
   const dispatch = useAppDispatch();
   const { participantId } = useAppSelector(
-    (state) => (state as any).registration
+    (state) => (state as any).cyfmsRegister
   );
 
   const [open, setOpen] = React.useState(false);
@@ -39,7 +39,7 @@ const CYFMS = (): ReactElement => {
   const handleClose = () => setOpen(false);
 
   const registrationHandler = () => {
-    dispatch(doGetRegister(participantId));
+    dispatch(doGetCYFMSRegister(participantId));
     dispatch(doGetGender());
     dispatch(doGetMaritalStatus());
     dispatch(doGetRole());
@@ -47,6 +47,7 @@ const CYFMS = (): ReactElement => {
     dispatch(doGetTypeOfEmployee());
     dispatch(doGetContact(participantId));
   };
+
   return (
     <AuthLayout>
       <PopupContext.Provider value={{ open: open, setOpen: setOpen }}>

@@ -8,8 +8,8 @@ import CYFMSOtherInformation from "../../pages/cyfms/CYFMSOtherInformation";
 import CYFMSRegister from "../../pages/cyfms/CYFMSRegister";
 import { Box, IconButton, Modal } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import React from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Route, Routes } from "react-router-dom";
 import type { ModalUnstyledProps } from "@mui/material";
 import type { ReactElement } from "react";
 import { useAppDispatch } from "../../library/hooks";
@@ -20,8 +20,9 @@ import { cleanEducationAndEmploymentState } from "../../features/cyfms/education
 import { cleanFamilyPhysiciansState } from "../../features/cyfms/familyPhysicians/familyPhysiciansSlice";
 import { cleanHouseHoldAndMemberState } from "../../features/cyfms/householdAndMembers/householdAndMembersSlice";
 import { cleanOtherInformationState } from "../../features/cyfms/otherInformation/otherInformationSlice";
-import { cleanRegisterState } from "../../features/register/registerSlice";
+import { cleanRegisterState } from "../../features/cyfms/register/cyfmsRegisterSlice";
 import { cleanSearchState } from "../../features/search/searchSlice";
+import { CYFMSSideNavContext } from "./CYFMSSideNav";
 
 /**
  * The CYFMSPopup functional component.
@@ -37,6 +38,7 @@ import { cleanSearchState } from "../../features/search/searchSlice";
  */
 const CYFMSPopup = (props: ModalUnstyledProps): ReactElement => {
   const dispatch = useAppDispatch();
+  const [hideTabs, setHideTabs] = useState<boolean>(true);
 
   const handleClose = () => {
     sessionStorage.removeItem("token");
@@ -50,6 +52,7 @@ const CYFMSPopup = (props: ModalUnstyledProps): ReactElement => {
     dispatch(cleanRegisterState());
     dispatch(cleanSearchState());
   };
+
   return (
     <Modal {...props}>
       <Box
@@ -66,27 +69,43 @@ const CYFMSPopup = (props: ModalUnstyledProps): ReactElement => {
           overflowY: "auto",
         }}
       >
-        <IconButton
-          color="primary"
-          aria-label="Close the popup box."
-          onClick={(e) => props.onClose!(e, "escapeKeyDown")}
-          sx={{ position: "absolute", right: 0 }}
+        <CYFMSSideNavContext.Provider
+          value={{ hideTabs: hideTabs, setHideTabs: setHideTabs }}
         >
-          <CloseIcon />
-        </IconButton>
-        <Routes>
-          <Route path="register" element={<CYFMSRegister />} />
-          <Route path="contact" element={<CYFMSContact />} />
-          <Route path="household_members" element={<CYFMSHouseholdMembers />} />
-          <Route
-            path="education_and_employment"
-            element={<CYFMSEducationAndEmployment />}
-          />
-          <Route path="criminal_history" element={<CYFMSCriminalHistory />} />
-          <Route path="family_physician" element={<CYFMSFamilyPhysicians />} />
-          <Route path="cyfms_worker" element={<CYFMSCYFMSCounselors />} />
-          <Route path="other_information" element={<CYFMSOtherInformation />} />
-        </Routes>
+          <IconButton
+            color="primary"
+            aria-label="Close the popup box."
+            onClick={(e) => {
+              setHideTabs(true);
+              props.onClose!(e, "escapeKeyDown");
+            }}
+            sx={{ position: "absolute", right: 0 }}
+          >
+            <CloseIcon />
+          </IconButton>
+          <Routes>
+            <Route path="register" element={<CYFMSRegister />} />
+            <Route path="contact" element={<CYFMSContact />} />
+            <Route
+              path="household_members"
+              element={<CYFMSHouseholdMembers />}
+            />
+            <Route
+              path="education_and_employment"
+              element={<CYFMSEducationAndEmployment />}
+            />
+            <Route path="criminal_history" element={<CYFMSCriminalHistory />} />
+            <Route
+              path="family_physician"
+              element={<CYFMSFamilyPhysicians />}
+            />
+            <Route path="cyfms_worker" element={<CYFMSCYFMSCounselors />} />
+            <Route
+              path="other_information"
+              element={<CYFMSOtherInformation />}
+            />
+          </Routes>
+        </CYFMSSideNavContext.Provider>
       </Box>
     </Modal>
   );

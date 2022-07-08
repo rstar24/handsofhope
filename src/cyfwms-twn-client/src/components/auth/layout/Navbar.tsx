@@ -1,10 +1,7 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import { Link, useNavigate } from "react-router-dom";
-import HomeIcon from "@mui/icons-material/Home";
-import { Button, Typography } from "@mui/material";
 import { useAppDispatch } from "../../../library/hooks";
 import { cleanCodetableState } from "../../../features/codetable/codetableSlice";
 import { cleanContactState } from "../../../features/contact/contactSlice";
@@ -13,8 +10,9 @@ import { cleanEducationAndEmploymentState } from "../../../features/cyfms/educat
 import { cleanFamilyPhysiciansState } from "../../../features/cyfms/familyPhysicians/familyPhysiciansSlice";
 import { cleanHouseHoldAndMemberState } from "../../../features/cyfms/householdAndMembers/householdAndMembersSlice";
 import { cleanOtherInformationState } from "../../../features/cyfms/otherInformation/otherInformationSlice";
-import { cleanRegisterState } from "../../../features/register/registerSlice";
+import { cleanRegisterState } from "../../../features/cyfms/register/cyfmsRegisterSlice";
 import { cleanSearchState } from "../../../features/search/searchSlice";
+
 interface LinkTabProps {
   label?: string;
   href?: string;
