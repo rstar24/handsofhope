@@ -53,7 +53,7 @@ export const CYFMSCYFMSCounselorsRecord = (
           <Box sx={{ flexBasis: 0, flexGrow: 1.22 }}></Box>
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
-          <Box sx={{ flexBasis: 0, flexGrow: 2.5 }}>
+          <Box sx={{ flexBasis: 0, flexGrow: 2.7 }}>
             <CYFMSTextArea
               id={`cyfmsCounselors_record_${props.recordNumber}_ContactInformation`}
               value="Contact Information"
