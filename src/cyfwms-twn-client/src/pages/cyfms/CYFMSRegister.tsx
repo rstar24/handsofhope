@@ -2,13 +2,16 @@ import {
   CYFSWMSNextButton,
   CYFSWMSSaveButton,
 } from "../../components/CYFSWMSButtons";
-import { doPostCYFMSRegister } from "../../features/cyfms/register/cyfmsRegisterSlice";
+import {
+  doGetCYFMSRegister,
+  doPostCYFMSRegister,
+} from "../../features/cyfms/register/cyfmsRegisterSlice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import CYFMSDropdown from "../../components/cyfms/CYFMSDropdown";
 import CYFMSInput from "../../components/cyfms/CYFMSInput";
 import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
 import { Box } from "@mui/material";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import type { FormEvent, ReactElement } from "react";
 import { CYFMSSideNavContext } from "../../components/cyfms/CYFMSSideNav";
 import { useNavigate } from "react-router-dom";
@@ -20,12 +23,19 @@ import { useNavigate } from "react-router-dom";
 const CYFMSRegister = (): ReactElement => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const participantId = useAppSelector(
+    (state) => (state as any).cyfmsRegister.user.participantId
+  );
   const userData = useAppSelector((state) => (state as any).cyfmsRegister.user);
   const readData = useAppSelector(
     (state) => (state as any).cyfmsRegister.readUser
   );
   const { setHideTabs } = useContext(CYFMSSideNavContext);
   const [isRegistered, setIsRegistered] = useState<boolean>(false);
+
+  useEffect(() => {
+    dispatch(doGetCYFMSRegister(userData.participantId));
+  }, [userData, dispatch, participantId]);
 
   // Handles the form data submission and other
   // activities.

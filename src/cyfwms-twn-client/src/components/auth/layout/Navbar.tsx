@@ -61,6 +61,7 @@ export default function Navbar() {
         display: "flex",
         textAlign: "center",
         justifyContent: "space-between",
+        mt: 4,
       }}
     >
       <Box

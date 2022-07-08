@@ -23,16 +23,16 @@ const CYFMSSearchPanel = (): ReactElement => {
 
     const data: any = e.currentTarget;
     const searchUser = {
-      firstname: data.firstName.value,
-      surname: data.lastName.value,
-      middleName: data.middleName.value,
-      dateOfBirth: data.dateOfBirth.value,
-      maritalStatus: data.maritalStatus.value,
-      city: data.city.value,
-      phoneNumber: data.phoneNo.value,
+      firstname: data.firstName.value || null,
+      surname: data.lastName.value || null,
+      middleName: data.middleName.value || null,
+      dateOfBirth: data.dateOfBirth.value || null,
+      maritalStatus: data.maritalStatus.value || null,
+      city: data.city.value || null,
+      phoneNumber: data.phoneNo.value || null,
     };
     dispatch(doGetSearch({ readUser: searchUser })).then(() => {
-      setIsShown((current) => !current);
+      setIsShown(true);
     });
   };
 

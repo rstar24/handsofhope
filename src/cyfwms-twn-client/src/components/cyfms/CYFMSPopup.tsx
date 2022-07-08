@@ -41,7 +41,6 @@ const CYFMSPopup = (props: ModalUnstyledProps): ReactElement => {
   const [hideTabs, setHideTabs] = useState<boolean>(true);
 
   const handleClose = () => {
-    sessionStorage.removeItem("token");
     dispatch(cleanCodetableState());
     dispatch(cleanContactState());
     dispatch(cleanCriminalHistoryState());
