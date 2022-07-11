@@ -48,7 +48,7 @@ export const CYFMSHouseholdAndMembersRecord = (
             value="Name"
           />
           <CYFMSInput
-            autofill={props.record.date}
+            autofill={props.record.dateOfBirth}
             id={`householdAndMembers_record_${props.recordNumber}_DateOfBirth`}
             value="Date of Birth"
             type="date"

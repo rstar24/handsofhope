@@ -119,7 +119,7 @@ const CYFMSOtherInformation = (): ReactElement => {
           value="Effective Coping Skills"
           autofill={readData.effectiveCopingSkills}
         />
-        <Box sx={{ display: "flex", justifyContent: "flex" }}>
+        <Box sx={{ display: "flex", justifyContent: "right" }}>
           <CYFSWMSSaveButton />
         </Box>
       </Box>
