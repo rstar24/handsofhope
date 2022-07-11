@@ -1,5 +1,5 @@
 import { CYFSWMSSaveButton } from "../../components/CYFSWMSButtons";
-import CYFMSInput from "../../components/cyfms/CYFMSInput";
+import CYFMSTextArea from "../../components/cyfms/CYFMSTextArea";
 import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
 import {
   cleanOtherInformationState,
@@ -94,27 +94,27 @@ const CYFMSOtherInformation = (): ReactElement => {
         <Typography variant="body1" color="primary">
           Other Information
         </Typography>
-        <CYFMSInput
+        <CYFMSTextArea
           id="otherInformation_Strengths"
           value="Strengths"
           autofil={readData.strengths}
         />
-        <CYFMSInput
+        <CYFMSTextArea
           id="otherInformation_Weaknesses"
           value="Weaknesses"
           autofill={readData.weakness}
         />
-        <CYFMSInput
+        <CYFMSTextArea
           id="otherInformation_Skills"
           value="Skills"
           autofill={readData.skills}
         />
-        <CYFMSInput
+        <CYFMSTextArea
           id="otherInformation_Experiences"
           value="Experiences"
           autofill={readData.experiences}
         />
-        <CYFMSInput
+        <CYFMSTextArea
           id="otherInformation_EffectiveCopingSkills"
           value="Effective Coping Skills"
           autofill={readData.effectiveCopingSkills}

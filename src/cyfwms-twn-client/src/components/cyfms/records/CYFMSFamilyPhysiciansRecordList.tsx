@@ -68,16 +68,14 @@ export const CYFMSFamilyPhysiciansRecord = (
             </Box>
             <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
           </Box>
-          <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
-            <Box sx={{ flexBasis: 0, flexGrow: 2 }}>
-              <CYFMSTextArea
-                autofill={props.record.listOfMedication}
-                id={`familyPhysicians_record_${props.recordNumber}_ListOfMedication`}
-                value="List of Medication"
-              />
-            </Box>
-            <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
+          <Box sx={{ flexBasis: 0, flexGrow: 2 }}>
+            <CYFMSTextArea
+              autofill={props.record.listOfMedication}
+              id={`familyPhysicians_record_${props.recordNumber}_ListOfMedication`}
+              value="List of Medication"
+            />
           </Box>
+          <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
         </Box>
       </Box>
     </Box>

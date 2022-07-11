@@ -1,4 +1,5 @@
 import CYFMSInput from "../CYFMSInput";
+import CYFMSTextArea from "../CYFMSTextArea";
 import { Box, Typography } from "@mui/material";
 import React from "react";
 import type {
@@ -41,28 +42,20 @@ export const CYFMSCriminalHistoryRecord = (
               type="date"
             />
           </Box>
-          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CYFMSInput
-              sx={{ flexGrow: 1 }}
-              id={`criminalHistory_record_${props.recordNumber}_Charges`}
-              value="Charges"
-            />
-          </Box>
+          <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
         </Box>
-        <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
-          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CYFMSInput
-              id={`criminalHistory_record_${props.recordNumber}_Conviction`}
-              value="Conviction"
-            />
-          </Box>
-          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CYFMSInput
-              id={`criminalHistory_record_${props.recordNumber}_Sentence`}
-              value="Sentence"
-            />
-          </Box>
-        </Box>
+        <CYFMSTextArea
+          id={`criminalHistory_record_${props.recordNumber}_Charges`}
+          value="Charges"
+        />
+        <CYFMSTextArea
+          id={`criminalHistory_record_${props.recordNumber}_Conviction`}
+          value="Conviction"
+        />
+        <CYFMSTextArea
+          id={`criminalHistory_record_${props.recordNumber}_Sentence`}
+          value="Sentence"
+        />
       </Box>
     </Box>
   );
