@@ -72,7 +72,7 @@ const CYFMSSearchPanel = (): ReactElement => {
         }}
         onSubmit={submitHandler}
       >
-        <CYFMSInput id="firstName" value="First Name" required />
+        <CYFMSInput id="firstName" value="First Name" />
         <CYFMSInput id="middleName" value="Middle Name" />
         <CYFMSInput id="lastName" value="last Name" />
         <CYFMSInput id="dateOfBirth" type="date" value="Date Of Birth" />
