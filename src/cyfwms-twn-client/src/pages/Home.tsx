@@ -24,7 +24,7 @@ const icons: IconType[] = [
     src: "/img/heartInCircle.svg",
   },
   {
-    value: "Initial Contact",
+    value: "Initial Contacts",
     route: "/initial_contact",
     src: "/img/flower.svg",
   },

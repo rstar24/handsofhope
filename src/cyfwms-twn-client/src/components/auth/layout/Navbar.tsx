@@ -79,7 +79,10 @@ export default function Navbar() {
         Home
       </Box>
       <Box color="#ffffff" sx={{ p: 0 }}>
-        <Button sx={{ color: "white" }} onClick={handleLogout}>
+        <Button
+          sx={{ color: "white", textTransform: "none" }}
+          onClick={handleLogout}
+        >
           Logout
         </Button>
       </Box>

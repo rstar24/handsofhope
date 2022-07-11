@@ -17,7 +17,7 @@ const CYFMSSearchResult = (): ReactElement => {
             <TableCell>First Name</TableCell>
             <TableCell>Middle Name</TableCell>
             <TableCell>Last Name</TableCell>
-            <TableCell>Date of birth</TableCell>
+            <TableCell>Date of Birth</TableCell>
             <TableCell>City</TableCell>
             <TableCell>Phone Number</TableCell>
           </TableRow>

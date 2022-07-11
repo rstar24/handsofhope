@@ -161,7 +161,7 @@ const CYFMSCriminalHistory = (): ReactElement => {
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CYFMSInput
               id="criminalHistory_Conditions"
-              value="Conditions"
+              value="Condition(s)"
               autofill={readData.conditions}
             />
           </Box>

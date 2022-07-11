@@ -103,7 +103,7 @@ const Login = (): ReactElement => {
         }}
       >
         <Typography>
-          <b>Child, Youth and Faimly Services Wellness Management System</b>
+          <b>Child, Youth and Family Services Wellness Management System</b>
         </Typography>
         <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem 0" }}>
           <CYFMSInput id="userName" name="userName" required value="Username" />

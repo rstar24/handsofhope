@@ -74,18 +74,18 @@ const CYFMSSearchPanel = (): ReactElement => {
       >
         <CYFMSInput id="firstName" value="First Name" />
         <CYFMSInput id="middleName" value="Middle Name" />
-        <CYFMSInput id="lastName" value="last Name" />
+        <CYFMSInput id="lastName" value="Last Name" />
         <CYFMSInput id="dateOfBirth" type="date" value="Date Of Birth" />
 
         <CYFMSInput
           id="maritalStatus"
-          value="MaritalStatus"
+          value="Marital Status"
           name="maritalStatus"
         />
         <CYFMSInput id="phoneNo" value="Phone No" name="phoneNo" />
         <CYFMSInput id="city" value="City" name="city" />
 
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <Box sx={{ display: "flex", justifyContent: "center", width: 730 }}>
           <Button variant="contained" type="submit">
             Search
           </Button>

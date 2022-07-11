@@ -93,7 +93,7 @@ const CYFMS = (): ReactElement => {
               }}
               onClick={handleOpen}
             >
-              Search a Child, Youth, or Family Member
+              Search for a Child, Youth, or Family Member
             </Button>
           </Box>
         </Box>
