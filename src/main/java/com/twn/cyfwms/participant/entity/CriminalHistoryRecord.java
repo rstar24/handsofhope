@@ -47,4 +47,6 @@ public class CriminalHistoryRecord implements Serializable {
     @UpdateTimestamp
     @Getter @Setter @Column(name = "lastwritten")
     private LocalDateTime lastwritten;
+    @Getter @Setter @Column(name = "criminalhistoryid")
+    private Long criminalHistoryId;
 }

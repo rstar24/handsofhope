@@ -24,4 +24,7 @@ public class CriminalHistoryRecordDto{
 
     @Getter @Setter
     private String sentence;
+
+    @Getter @Setter
+    private Long criminalHistoryId;
 }
