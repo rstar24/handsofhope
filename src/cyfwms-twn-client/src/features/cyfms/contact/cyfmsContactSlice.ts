@@ -1,28 +1,32 @@
+import { doGetContactAPI, doPostContactAPI } from "./cyfmsContactAPI";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import type { SliceCaseReducers } from "@reduxjs/toolkit";
 import type { AxiosResponse } from "axios";
-import { doGetContactAPI, doPostContactAPI } from "./contactApi";
 
-export interface ContactGetData {
-  readUser: {};
-}
-export interface ContactPostData {
-  user: {};
+export interface cyfmsContactData {
+  participantId: number;
+  participantContactId: number;
+  addressLine1: string;
+  addressLine2: string;
+  city: string;
+  province: string;
+  postalCode: string;
+  homePhone: string;
+  workPhone: string;
+  cellPhone: string;
+  emailAddress: string;
 }
 
-export interface ContactGetState {
-  jwtToken: string;
-  status: "failed" | "loading" | "success";
-}
-export interface ContactPostState {
-  jwtToken: string;
+export interface cyfmsContactState {
+  contactData: cyfmsContactData;
   status: "failed" | "loading" | "success";
 }
 
 export const doGetContact = createAsyncThunk(
-  "contact/doGetContact",
-  async (data: ContactGetData, { dispatch, getState }) => {
+  "cyfmsContact/doGetContact",
+  async (participantId: number, { getState }) => {
     const res: AxiosResponse = await doGetContactAPI(
-      data,
+      participantId,
       (getState() as any).login.jwtToken
     );
     // Becomes the `fulfilled` action payload:
@@ -31,10 +35,10 @@ export const doGetContact = createAsyncThunk(
 );
 
 export const doPostContact = createAsyncThunk(
-  "contact/doPostContact",
-  async (data: ContactPostData, { dispatch, getState }) => {
+  "cyfmsContact/doPostContact",
+  async (contactData: cyfmsContactData, { getState }) => {
     const res: AxiosResponse = await doPostContactAPI(
-      data,
+      contactData,
       (getState() as any).login.jwtToken
     );
     // Becomes the `fulfilled` action payload:
@@ -42,12 +46,13 @@ export const doPostContact = createAsyncThunk(
   }
 );
 
-export const contactSlice = createSlice({
-  name: "contact",
+export const cyfmsContactSlice = createSlice<
+  cyfmsContactState,
+  SliceCaseReducers<cyfmsContactState>
+>({
+  name: "cyfmsContact",
   initialState: {
-    participantId: 0,
-    readUser: {},
-    user: {
+    contactData: {
       participantId: 0,
       participantContactId: 0,
       addressLine1: "",
@@ -60,14 +65,21 @@ export const contactSlice = createSlice({
       cellPhone: "",
       emailAddress: "",
     },
-    jwtToken: "",
     status: "failed",
   },
   reducers: {
-    cleanContactState(state: any) {
-      state.user = { participantContactId: 0 };
-      state.readUser = { participantContactId: 0 };
-      state.jwtToken = "";
+    cleanContactState(state) {
+      state.contactData.participantId = 0;
+      state.contactData.participantContactId = 0;
+      state.contactData.addressLine1 = "";
+      state.contactData.addressLine2 = "";
+      state.contactData.city = "";
+      state.contactData.province = "";
+      state.contactData.postalCode = "";
+      state.contactData.homePhone = "";
+      state.contactData.workPhone = "";
+      state.contactData.cellPhone = "";
+      state.contactData.emailAddress = "";
       state.status = "failed";
     },
   },
@@ -78,11 +90,10 @@ export const contactSlice = createSlice({
       .addCase(doGetContact.fulfilled, (state, action) => {
         try {
           //const decodedPayload: any = jwt(action.payload.jwtToken);
-          state.readUser = action.payload;
+          state.contactData = action.payload;
         } catch (err) {
           console.log(err);
         }
-
         state.status = "success";
       })
       .addCase(doGetContact.pending, (state) => {
@@ -95,11 +106,10 @@ export const contactSlice = createSlice({
       .addCase(doPostContact.fulfilled, (state, action) => {
         try {
           //const decodedPayload: any = jwt(action.payload.jwtToken);
-          state.user = action.payload;
+          state.contactData = action.payload;
         } catch (err) {
           console.log(err);
         }
-
         state.status = "success";
       })
       .addCase(doPostContact.pending, (state) => {
@@ -111,6 +121,6 @@ export const contactSlice = createSlice({
   },
 });
 
-export const { cleanContactState } = contactSlice.actions;
+export const { cleanContactState } = cyfmsContactSlice.actions;
 
-export default contactSlice.reducer;
+export default cyfmsContactSlice.reducer;

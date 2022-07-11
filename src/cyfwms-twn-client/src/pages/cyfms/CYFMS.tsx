@@ -8,11 +8,9 @@ import {
   doGetRole,
   doGetTypeOfEmployee,
 } from "../../features/codetable/codetableSlice";
-import { doGetContact } from "../../features/contact/contactSlice";
-import { doGetCYFMSRegister } from "../../features/cyfms/register/cyfmsRegisterSlice";
-import { useAppDispatch, useAppSelector } from "../../library/hooks";
+import { useAppDispatch } from "../../library/hooks";
 import { Box, Button } from "@mui/material";
-import React, { createContext } from "react";
+import React, { createContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import type { ReactElement } from "react";
 
@@ -30,23 +28,19 @@ export const PopupContext = createContext<{
  */
 const CYFMS = (): ReactElement => {
   const dispatch = useAppDispatch();
-  const { participantId } = useAppSelector(
-    (state) => (state as any).cyfmsRegister
-  );
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const registrationHandler = () => {
-    dispatch(doGetCYFMSRegister(participantId));
+  useEffect(() => {
+    // Load all the code tables:
     dispatch(doGetGender());
     dispatch(doGetMaritalStatus());
     dispatch(doGetRole());
     dispatch(doGetEducation());
     dispatch(doGetTypeOfEmployee());
-    dispatch(doGetContact(participantId));
-  };
+  });
 
   return (
     <AuthLayout>
@@ -78,7 +72,6 @@ const CYFMS = (): ReactElement => {
               }}
               onClick={() => {
                 handleOpen();
-                registrationHandler();
               }}
             >
               Register a Child, Youth, or Family Member

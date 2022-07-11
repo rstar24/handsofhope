@@ -4,7 +4,7 @@ import Tab from "@mui/material/Tab";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import { cleanCodetableState } from "../../../features/codetable/codetableSlice";
-import { cleanContactState } from "../../../features/contact/contactSlice";
+import { cleanContactState } from "../../../features/cyfms/contact/cyfmsContactSlice";
 import { cleanCriminalHistoryState } from "../../../features/cyfms/criminalHistory/criminalhistorySlice";
 import { cleanEducationAndEmploymentState } from "../../../features/cyfms/educationAndEmployment/educationAndEmploymentSlice";
 import { cleanFamilyPhysiciansState } from "../../../features/cyfms/familyPhysicians/familyPhysiciansSlice";
@@ -47,7 +47,7 @@ export default function Navbar() {
     sessionStorage.removeItem("token");
     dispatch(onLogout());
     dispatch(cleanCodetableState());
-    dispatch(cleanContactState());
+    dispatch(cleanContactState);
     dispatch(cleanCriminalHistoryState());
     dispatch(cleanEducationAndEmploymentState());
     dispatch(cleanFamilyPhysiciansState());

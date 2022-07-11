@@ -1,6 +1,6 @@
 import axios from "axios";
+import type { cyfmsContactData } from "./cyfmsContactSlice";
 import type { AxiosResponse } from "axios";
-import { ContactGetData, ContactPostData } from "./contactSlice";
 
 const axiosInstance = axios.create({
   baseURL: `${
@@ -9,12 +9,11 @@ const axiosInstance = axios.create({
 });
 
 export const doGetContactAPI = async (
-  data: ContactGetData,
+  participantId: number,
   jwtToken: string
 ): Promise<AxiosResponse> => {
-  console.log(data);
   const res: AxiosResponse = await axiosInstance.get(
-    "readParticipantContact/" + data,
+    "readParticipantContact/" + participantId,
     {
       headers: { Authorization: "Bearer " + jwtToken },
     }
@@ -23,13 +22,12 @@ export const doGetContactAPI = async (
 };
 
 export const doPostContactAPI = async (
-  data: ContactPostData,
+  contactData: cyfmsContactData,
   jwtToken: string
 ): Promise<AxiosResponse> => {
-  console.log(data);
   const res: AxiosResponse = await axiosInstance.put(
     "saveParticipantContact/",
-    data.user,
+    contactData,
     {
       headers: { Authorization: "Bearer " + jwtToken },
     }

@@ -10,9 +10,9 @@ import { PopupContext } from "./CYFMS";
 import { Box, Typography } from "@mui/material";
 import type { FormEvent, ReactElement } from "react";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { cleanCodetableState } from "../../features/codetable/codetableSlice";
-import { cleanContactState } from "../../features/contact/contactSlice";
+import { cleanContactState } from "../../features/cyfms/contact/cyfmsContactSlice";
 import { cleanCriminalHistoryState } from "../../features/cyfms/criminalHistory/criminalhistorySlice";
 import { cleanEducationAndEmploymentState } from "../../features/cyfms/educationAndEmployment/educationAndEmploymentSlice";
 import { cleanFamilyPhysiciansState } from "../../features/cyfms/familyPhysicians/familyPhysiciansSlice";
@@ -68,7 +68,7 @@ const CYFMSOtherInformation = (): ReactElement => {
       )
       .then(() => {
         dispatch(cleanCodetableState());
-        dispatch(cleanContactState());
+        dispatch(cleanContactState);
         dispatch(cleanCriminalHistoryState());
         dispatch(cleanEducationAndEmploymentState());
         dispatch(cleanFamilyPhysiciansState());

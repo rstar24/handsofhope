@@ -1,14 +1,15 @@
+import { CYFSWMSNextButton } from "../../components/CYFSWMSButtons";
 import CYFMSInput from "../../components/cyfms/CYFMSInput";
 import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
-import { Box, Button, Grid } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import type { FormEvent, ReactElement } from "react";
-import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import {
   doGetContact,
   doPostContact,
-} from "../../features/contact/contactSlice";
+} from "../../features/cyfms/contact/cyfmsContactSlice";
+import { useAppDispatch, useAppSelector } from "../../library/hooks";
+import { Box } from "@mui/material";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import type { FormEvent, ReactElement } from "react";
 
 /**
  * The CYFMSContact functional component.
@@ -18,35 +19,48 @@ const CYFMSContact = (): ReactElement => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const participantId = useAppSelector(
-    (state) => (state as any).cyfmsRegister.user.participantId
+    (state) => state.cyfmsRegister.user.participantId
   );
-  const readData = useAppSelector((state) => (state as any).contact.readUser);
-  const contactData = useAppSelector((state) => (state as any).contact.user);
+  const contactData = useAppSelector((state) => state.cyfmsContact.contactData);
 
   useEffect(() => {
-    dispatch(doGetContact(participantId));
-  }, [contactData, dispatch, participantId]);
+    dispatch(doGetContact(participantId))
+      .unwrap()
+      .then((data) => {
+        console.log("cyfmsContact GET backend API worked successfully");
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log("cyfmsContact GET backend API didn't work");
+        console.log(err);
+      });
+  }, []);
 
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
-    const data: any = e.currentTarget;
-    const newContact = {
+    const cyfmsContactForm: any = e.currentTarget;
+    const cyfmsContactFormData = {
       participantId: participantId,
       participantContactId: contactData.participantContactId,
-      addressLine1: data.addrLine1.value,
-      addressLine2: data.addrLine2.value,
-      city: data.city.value,
-      province: data.province.value,
-      postalCode: data.postalCode.value,
-      homePhone: data.homePhone.value,
-      workPhone: data.workPhone.value,
-      cellPhone: data.cellPhone.value,
-      emailAddress: data.emailAddr.value,
+      addressLine1: cyfmsContactForm.cyfmsContactAddressLine1.value,
+      addressLine2: cyfmsContactForm.cyfmsContactAddressLine2.value,
+      city: cyfmsContactForm.cyfmsContactCity.value,
+      province: cyfmsContactForm.cyfmsContactProvince.value,
+      postalCode: cyfmsContactForm.cyfmsContactPostalCode.value,
+      homePhone: cyfmsContactForm.cyfmsContactHomePhone.value,
+      workPhone: cyfmsContactForm.cyfmsContactWorkPhone.value,
+      cellPhone: cyfmsContactForm.cyfmsContactCellPhone.value,
+      emailAddress: cyfmsContactForm.cyfmsContactEmailAddress.value,
     };
-
-    dispatch(doPostContact({ user: newContact })).then(() => {
-      navigate("/cyfms/household_members");
-    });
+    dispatch(doPostContact(cyfmsContactFormData))
+      .unwrap()
+      .then(() => {
+        navigate("/cyfms/household_members");
+      })
+      .catch((err) => {
+        console.log("Unable to save Contact.");
+        console.log(err);
+      });
   };
 
   return (
@@ -55,80 +69,89 @@ const CYFMSContact = (): ReactElement => {
         component="form"
         sx={{
           display: "flex",
-          flexWrap: "wrap",
-          mb: "auto",
+          flexDirection: "column",
+          gap: "1rem 0",
         }}
         onSubmit={submitHandler}
       >
-        <Grid container sm={12} spacing={2}>
-          <Grid item sm={5}>
+        <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
+          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CYFMSInput
-              id="addrLine1"
+              id="cyfmsContactAddressLine1"
               value="Address Line 1"
-              autofill={readData.addressLine1}
+              autofill={contactData.addressLine1}
             />
-          </Grid>
-          <Grid item sm={5}>
+          </Box>
+          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CYFMSInput
-              id="addrLine2"
+              id="cyfmsContactAddressLine2"
               value="Address Line 2"
-              autofill={readData.addressLine2}
+              autofill={contactData.addressLine2}
             />
-          </Grid>
-          <Grid item sm={5}>
-            <CYFMSInput id="city" value="City" autofill={readData.city} />
-          </Grid>
-          <Grid item sm={5}>
+          </Box>
+        </Box>
+        <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
+          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CYFMSInput
-              id="province"
+              id="cyfmsContactCity"
+              value="City"
+              autofill={contactData.city}
+            />
+          </Box>
+          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+            <CYFMSInput
+              id="cyfmsContactProvince"
               value="Province"
-              autofill={readData.province}
+              autofill={contactData.province}
             />
-          </Grid>
-          <Grid item sm={5}>
+          </Box>
+        </Box>
+        <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
+          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CYFMSInput
-              id="postalCode"
+              id="cyfmsContactPostalCode"
               value="Postal Code"
-              autofill={readData.postalCode}
+              autofill={contactData.postalCode}
             />
-          </Grid>
-          <Grid item sm={5}>
+          </Box>
+          <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
+        </Box>
+        <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
+          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CYFMSInput
-              id="homePhone"
+              id="cyfmsContactHomePhone"
               value="Home Phone"
-              autofill={readData.homePhone}
+              autofill={contactData.homePhone}
             />
-          </Grid>
-          <Grid item sm={5}>
+          </Box>
+          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CYFMSInput
-              id="cellPhone"
+              id="cyfmsContactCellPhone"
               value="Cell Phone"
-              autofill={readData.cellPhone}
+              autofill={contactData.cellPhone}
             />
-          </Grid>
-          <Grid item sm={5}>
+          </Box>
+        </Box>
+        <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
+          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CYFMSInput
-              id="workPhone"
+              id="cyfmsContactWorkPhone"
               value="Work Phone"
-              autofill={readData.workPhone}
+              autofill={contactData.workPhone}
             />
-          </Grid>
-          <Grid item sm={5}>
+          </Box>
+          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CYFMSInput
-              id="emailAddr"
+              id="cyfmsContactEmailAddress"
               value="Email Address"
-              autofill={readData.emailAddress}
+              autofill={contactData.emailAddress}
               type="gmail"
             />
-          </Grid>
-          <Grid item sm={5}></Grid>
-          <Grid item sm={8.8}></Grid>
-          <Grid item sm={2}>
-            <Button variant="contained" type="submit">
-              Next
-            </Button>
-          </Grid>
-        </Grid>
+          </Box>
+        </Box>
+        <Box sx={{ display: "flex", justifyContent: "right" }}>
+          <CYFSWMSNextButton />
+        </Box>
       </Box>
     </CYFMSLayout>
   );

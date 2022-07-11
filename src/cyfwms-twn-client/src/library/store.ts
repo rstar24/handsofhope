@@ -1,6 +1,6 @@
 import educationAndEmploymentReducer from "../features/cyfms/educationAndEmployment/educationAndEmploymentSlice";
 import codetableReducer from "../features/codetable/codetableSlice";
-import contactReducer from "../features/contact/contactSlice";
+import cyfmsContactReducer from "../features/cyfms/contact/cyfmsContactSlice";
 import criminalhistoryReducer from "../features/cyfms/criminalHistory/criminalhistorySlice";
 import familyPhysiciansReducer from "../features/cyfms/familyPhysicians/familyPhysiciansSlice";
 import householdAndMembersReducer from "../features/cyfms/householdAndMembers/householdAndMembersSlice";
@@ -16,7 +16,7 @@ export const store = configureStore({
     login: loginReducer,
     codetable: codetableReducer,
     cyfmsRegister: cyfmsRegisterReducer,
-    contact: contactReducer,
+    cyfmsContact: cyfmsContactReducer,
     householdAndMembers: householdAndMembersReducer,
     familyPhysicians: familyPhysiciansReducer,
     cyfmsCounselors: cyfmsCounselorsReducer,
