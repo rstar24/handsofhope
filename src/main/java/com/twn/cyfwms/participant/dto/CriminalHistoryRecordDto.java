@@ -12,12 +12,16 @@ import java.time.LocalDate;
 public class CriminalHistoryRecordDto{
     @Getter @Setter
     private Long criminalHistoryRecordId;
+
     @Getter @Setter
     private LocalDate arrestDate;
+
     @Getter @Setter
     private String charges;
+
     @Getter @Setter
     private String conviction;
+
     @Getter @Setter
     private String sentence;
 }

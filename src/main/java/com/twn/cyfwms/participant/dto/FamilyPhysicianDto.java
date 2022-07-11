@@ -3,8 +3,6 @@ package com.twn.cyfwms.participant.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
-
-
 @Builder
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -23,9 +21,10 @@ public class FamilyPhysicianDto {
 
     @Getter @Setter
     private String phone;
+
     @Getter @Setter
     private String cell;
+
     @Getter @Setter
     private String listOfMedication;
-
 }

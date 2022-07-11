@@ -11,13 +11,13 @@ import lombok.*;
 public class CounselorCFSWorkersDto {
     @Getter
     @Setter
-    private Long counselorCFSWorkerId;
-    @Getter @Setter
-    private String role;
+    private Long participantId;
 
     @Getter
     @Setter
-    private Long participantId;
+    private Long counselorCFSWorkerId;
+    @Getter @Setter
+    private String role;
 
     @Getter @Setter
     private String name;

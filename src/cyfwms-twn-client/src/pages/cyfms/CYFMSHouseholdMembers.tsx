@@ -24,9 +24,6 @@ const CYFMSHouseholdAndMembers = (): ReactElement => {
   const participantId = useAppSelector(
     (state) => (state as any).cyfmsRegister.user.participantId
   );
-  const data = useAppSelector(
-    (state) => (state as any).householdAndMembers.recordList
-  );
 
   // State for the records list
   const [recordList, setRecordList] = useState([

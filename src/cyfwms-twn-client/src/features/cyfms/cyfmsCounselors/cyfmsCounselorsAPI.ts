@@ -30,7 +30,7 @@ export const doPostCYFMSCounselorsAPI = async (
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.put(
     "saveAllCounselorCFSWorkers/",
-    data.user,
+    data.recordList,
     {
       headers: { Authorization: "Bearer " + jwtToken },
     }

@@ -27,7 +27,7 @@ export const doGetFamilyPhysicians = createAsyncThunk(
 );
 
 export interface FamilyPhysiciansPostData {
-  user: {};
+  recordList: {};
 }
 
 export interface FamilyPhysiciansPostState {

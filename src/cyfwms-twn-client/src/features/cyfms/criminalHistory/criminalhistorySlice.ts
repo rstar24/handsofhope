@@ -53,6 +53,7 @@ export const criminalhistorySlice = createSlice({
     participantId: 0,
     readUser: {},
     user: {
+      participantId: 0,
       criminalHistoryId: 0,
       criminalHistoryRecordList: [
         {
@@ -67,7 +68,6 @@ export const criminalhistorySlice = createSlice({
       parole: "",
       conditions: "",
       courtWorkerAndContactInfo: "",
-      participantId: "",
     },
     jwtToken: "",
     status: "failed",
@@ -92,7 +92,6 @@ export const criminalhistorySlice = createSlice({
         } catch (err) {
           console.log(err);
         }
-
         state.status = "success";
       })
       .addCase(doGetCriminalHistory.pending, (state) => {
@@ -109,7 +108,6 @@ export const criminalhistorySlice = createSlice({
         } catch (err) {
           console.log(err);
         }
-
         state.status = "success";
       })
       .addCase(doPostCriminalHistory.pending, (state) => {

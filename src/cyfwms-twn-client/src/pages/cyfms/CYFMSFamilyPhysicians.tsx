@@ -10,7 +10,7 @@ import {
 } from "../../features/cyfms/familyPhysicians/familyPhysiciansSlice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { Box } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import type { FormEvent, ReactElement } from "react";
 
@@ -24,39 +24,82 @@ const CYFMSFamilyPhysicians = (): ReactElement => {
   const participantId = useAppSelector(
     (state) => (state as any).cyfmsRegister.user.participantId
   );
-  const data = useAppSelector((state) => (state as any).familyPhysicians.user);
-  console.log("family", data);
 
   // State for the records list
-  const [recordList, setRecordList] = useState([{}]);
+  const [recordList, setRecordList] = useState([
+    {
+      participantId: participantId,
+      familyPhysicianId: 0,
+      name: "",
+      phone: "",
+      cell: "",
+      listOfMedication: "",
+    },
+  ]);
+
+  // Reference to the form
+  const formRef = useRef(null);
 
   useEffect(() => {
-    dispatch(doGetFamilyPhysicians(participantId));
+    dispatch(doGetFamilyPhysicians(participantId))
+      .unwrap()
+      .then((recordListFromAPI) => {
+        setRecordList(recordListFromAPI);
+      })
+      .catch((err) => {
+        console.log("familyPhysicians backend API didn't work");
+        console.log(err);
+      });
   }, []);
 
-  const [contact, setContact] = useState([{}]);
+  // Handles the form data submission and other
+  // activities.
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
-    const data: any = e.currentTarget;
-    const newContact = [
-      {
-        participantId: participantId,
-        familyPhysicianId: 0,
-        name: data.name.value,
-        phone: data.phone.value,
-        cell: data.cell.value,
-        listOfMedication: data.medicationInfo.value,
-      },
-    ];
-    setContact(newContact);
-    dispatch(doPostFamilyPhysicians({ user: newContact })).then(() => {
-      navigate("/cyfms/cyfms_worker");
-    });
+    dispatch(doPostFamilyPhysicians({ recordList: recordList }))
+      .unwrap()
+      .then(() => {
+        console.log("FamilyPhysicians data has been posted!");
+        navigate("/cyfms/cyfms_worker");
+      })
+      .catch((err) => {
+        console.log("FamilyPhysicians data NOT posted!");
+        console.log(err);
+      });
   };
 
   const addMoreHandler = (e: MouseEvent) => {
     e.preventDefault();
-    setRecordList((previousRecordList) => [...previousRecordList, {}]);
+    if (recordList.length >= 1) {
+      setRecordList((previousList: any) => [
+        ...previousList,
+        {
+          participantId: participantId,
+          familyPhysicianId: 0,
+          name: (formRef.current as any)[`familyPhysicians_record_${1}_Name`]
+            .value,
+          phone: (formRef.current as any)[`familyPhysicians_record_${1}_Phone`]
+            .value,
+          cell: (formRef.current as any)[`familyPhysicians_record_${1}_Cell`]
+            .value,
+          listOfMedication: (formRef.current as any)[
+            `familyPhysicians_record_${1}_ListOfMedication`
+          ].value,
+        },
+      ]);
+    } else {
+      setRecordList((previousRecordList) => [
+        ...previousRecordList,
+        {
+          participantId: participantId,
+          familyPhysicianId: 0,
+          name: "",
+          phone: "",
+          cell: "",
+          listOfMedication: "",
+        },
+      ]);
+    }
   };
 
   return (
@@ -69,6 +112,7 @@ const CYFMSFamilyPhysicians = (): ReactElement => {
           gap: "1rem 0",
         }}
         onSubmit={submitHandler}
+        ref={formRef}
       >
         <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem 0" }}>
           {CYFMSHouseholdAndMembersRecordList(recordList)}

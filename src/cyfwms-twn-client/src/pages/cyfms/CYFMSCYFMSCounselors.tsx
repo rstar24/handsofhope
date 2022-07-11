@@ -1,17 +1,18 @@
+import {
+  CYFSWMSAddButton,
+  CYFSWMSNextButton,
+} from "../../components/CYFSWMSButtons";
 import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
+import CYFMSCYFMSCounselorsRecordList from "../../components/cyfms/records/CYFMSCounselorsRecordList";
 import {
   doGetCYFMSCounselors,
   doPostCYFMSCounselors,
 } from "../../features/cyfms/cyfmsCounselors/cyfmsCounselorsSlice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
-import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/material";
-import { FormEvent, ReactElement, useEffect, useState } from "react";
-import {
-  CYFSWMSAddButton,
-  CYFSWMSNextButton,
-} from "../../components/CYFSWMSButtons";
-import CYFMSCYFMSCounselorsRecordList from "../../components/cyfms/records/CYFMSCounselorsRecordList";
+import { useEffect, useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import type { FormEvent, ReactElement } from "react";
 
 /**
  * The CYFMSWorker functional component.
@@ -23,16 +24,9 @@ const CYFMSWorker = (): ReactElement => {
   const participantId = useAppSelector(
     (state) => (state as any).cyfmsRegister.user.participantId
   );
-  const data = useAppSelector((state) => (state as any).cyfmsCounselors.user);
-  console.log("worker", data);
-  useEffect(() => {
-    dispatch(doGetCYFMSCounselors(participantId));
-  }, []);
 
   // State for the records list
-  const [recordList, setRecordList] = useState([{}]);
-
-  const [contact, setContact] = useState([
+  const [recordList, setRecordList] = useState([
     {
       participantId: participantId,
       counselorCFSWorkerId: 0,
@@ -41,27 +35,68 @@ const CYFMSWorker = (): ReactElement => {
       contactInformation: "",
     },
   ]);
+
+  // Reference to the form
+  const formRef = useRef(null);
+
+  useEffect(() => {
+    dispatch(doGetCYFMSCounselors(participantId));
+    dispatch(doGetCYFMSCounselors(participantId))
+      .unwrap()
+      .then((recordListFromAPI) => {
+        setRecordList(recordListFromAPI);
+      })
+      .catch((err) => {
+        console.log("cyfmsCounselors backend API didn't work");
+        console.log(err);
+      });
+  }, []);
+
+  // Handles the form data submission and other
+  // activities.
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
-    const data: any = e.currentTarget;
-    const newContact = [
-      {
-        participantId: participantId,
-        counselorCFSWorkerId: 0,
-        role: data.role.value,
-        name: data.cyfmsWorkerName.value,
-        contactInformation: data.cyfmsWorkerContactInfo.value,
-      },
-    ];
-    setContact(newContact);
-    dispatch(doPostCYFMSCounselors({ user: newContact })).then(() => {
-      navigate("/cyfms/other_information");
-    });
+    dispatch(doPostCYFMSCounselors({ recordList: recordList }))
+      .unwrap()
+      .then(() => {
+        console.log("Counselors data has been posted!");
+        navigate("/cyfms/other_information");
+      })
+      .catch((err) => {
+        console.log("Counselors data NOT posted!");
+        console.log(err);
+      });
   };
 
   const addMoreHandler = (e: MouseEvent) => {
     e.preventDefault();
-    setRecordList((previousRecordList) => [...previousRecordList, {}]);
+    if (recordList.length >= 1) {
+      setRecordList((previousList: any) => [
+        ...previousList,
+        {
+          participantId: participantId,
+          counselorCFSWorkerId: 0,
+          role: (formRef.current as any)[`cyfmsCounselors_record_${1}_Role`]
+            .value,
+          name: (formRef.current as any)[`cyfmsCounselors_record_${1}_Name`]
+            .value,
+          contactInformation: (formRef.current as any)[
+            `cyfmsCounselors_record_${1}_ContactInformation`
+          ].value,
+        },
+      ]);
+    } else {
+      setRecordList((previousRecordList) => [
+        ...previousRecordList,
+        {
+          participantId: participantId,
+          counselorCFSWorkerId: 0,
+          role: "",
+          name: "",
+          contactInformation: "",
+        },
+      ]);
+    }
   };
 
   return (
@@ -74,6 +109,7 @@ const CYFMSWorker = (): ReactElement => {
           gap: "1rem 0",
         }}
         onSubmit={submitHandler}
+        ref={formRef}
       >
         <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem 0" }}>
           {CYFMSCYFMSCounselorsRecordList(recordList)}

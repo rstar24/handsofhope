@@ -15,6 +15,8 @@ import type {
  */
 export interface CYFMSCYFMSCounselorsRecordProps
   extends ComponentPropsWithoutRef<ElementType> {
+  /** Holds data within a record. */
+  record: any;
   /** Uniquely identifies a record. */
   recordNumber: number;
 }
@@ -36,6 +38,7 @@ export const CYFMSCYFMSCounselorsRecord = (
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1.08 }}>
             <CYFMSDropdown
+              autofill={props.record.role}
               id={`cyfmsCounselors_record_${props.recordNumber}_Role`}
               value="Role"
               optionsList={["Counselor", "CFS Worker"]}
@@ -46,6 +49,7 @@ export const CYFMSCYFMSCounselorsRecord = (
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1.3 }}>
             <CYFMSInput
+              autofill={props.record.name}
               id={`cyfmsCounselors_record_${props.recordNumber}_Name`}
               value="Name"
             />
@@ -55,6 +59,7 @@ export const CYFMSCYFMSCounselorsRecord = (
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 2.7 }}>
             <CYFMSTextArea
+              autofill={props.record.contactInformation}
               id={`cyfmsCounselors_record_${props.recordNumber}_ContactInformation`}
               value="Contact Information"
             />
@@ -69,7 +74,12 @@ export const CYFMSCYFMSCounselorsRecord = (
 const CYFMSCYFMSCounselorsRecordList = (recordList: any): ReactElement[] => {
   let res: ReactElement[] = new Array(recordList.length);
   for (let index = 0; index < recordList.length; ++index) {
-    res.push(<CYFMSCYFMSCounselorsRecord recordNumber={index + 1} />);
+    res.unshift(
+      <CYFMSCYFMSCounselorsRecord
+        record={recordList[index]}
+        recordNumber={index + 1}
+      />
+    );
   }
   return res;
 };

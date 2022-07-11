@@ -1,4 +1,3 @@
-import CYFMSDropdown from "../CYFMSDropdown";
 import CYFMSInput from "../CYFMSInput";
 import { Box, Typography } from "@mui/material";
 import React from "react";
@@ -14,6 +13,8 @@ import type {
  */
 export interface CYFMSCriminalHistoryRecordProps
   extends ComponentPropsWithoutRef<ElementType> {
+  /** Holds data within a record. */
+  record: any;
   /** Uniquely identifies a record. */
   recordNumber: number;
 }
@@ -27,7 +28,7 @@ export const CYFMSCriminalHistoryRecord = (
   props: CYFMSCriminalHistoryRecordProps
 ): ReactElement => {
   return (
-    <Box key={`criminalHistory-record-${props.recordNumber}`}>
+    <Box key={`criminalHistory_record_${props.recordNumber}`}>
       <Typography variant="body1" color="primary">
         Record {props.recordNumber}
       </Typography>
@@ -35,7 +36,7 @@ export const CYFMSCriminalHistoryRecord = (
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CYFMSInput
-              id={`criminalHistory-record-${props.recordNumber}-arrestDate`}
+              id={`criminalHistory_record_${props.recordNumber}_ArrestDate`}
               value="Arrest Date"
               type="date"
             />
@@ -43,7 +44,7 @@ export const CYFMSCriminalHistoryRecord = (
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CYFMSInput
               sx={{ flexGrow: 1 }}
-              id={`criminalHistory-record-${props.recordNumber}-charges`}
+              id={`criminalHistory_record_${props.recordNumber}_Charges`}
               value="Charges"
             />
           </Box>
@@ -51,13 +52,13 @@ export const CYFMSCriminalHistoryRecord = (
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CYFMSInput
-              id={`criminalHistory-record-${props.recordNumber}-conviction`}
+              id={`criminalHistory_record_${props.recordNumber}_Conviction`}
               value="Conviction"
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CYFMSInput
-              id={`criminalHistory-record-${props.recordNumber}-sentence`}
+              id={`criminalHistory_record_${props.recordNumber}_Sentence`}
               value="Sentence"
             />
           </Box>
@@ -70,7 +71,12 @@ export const CYFMSCriminalHistoryRecord = (
 const CYFMSCriminalHistoryRecordList = (recordList: any): ReactElement[] => {
   let res: ReactElement[] = new Array(recordList.length);
   for (let index = 0; index < recordList.length; ++index) {
-    res.push(<CYFMSCriminalHistoryRecord recordNumber={index + 1} />);
+    res.unshift(
+      <CYFMSCriminalHistoryRecord
+        record={recordList[index]}
+        recordNumber={index + 1}
+      />
+    );
   }
   return res;
 };

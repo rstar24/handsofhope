@@ -27,7 +27,7 @@ export const doGetCYFMSCounselors = createAsyncThunk(
 );
 
 export interface CYFMSCounselorsPostData {
-  user: {};
+  recordList: {};
 }
 
 export interface CYFMSCounselorsPostState {

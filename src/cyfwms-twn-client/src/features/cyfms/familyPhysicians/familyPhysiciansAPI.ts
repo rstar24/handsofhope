@@ -29,7 +29,7 @@ export const doPostFamilyPhysiciansAPI = async (
   console.log(data);
   const res: AxiosResponse = await axiosInstance.put(
     "saveAllFamilyPhysicians/",
-    data.user,
+    data.recordList,
     {
       headers: { Authorization: "Bearer " + jwtToken },
     }

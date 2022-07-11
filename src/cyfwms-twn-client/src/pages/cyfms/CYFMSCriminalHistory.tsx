@@ -11,7 +11,7 @@ import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
 import CYFMSCriminalHistoryRecordList from "../../components/cyfms/records/CYFMSCriminalHistoryRecordList";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { Box, Checkbox, FormControlLabel, FormGroup } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import type { FormEvent, ReactElement } from "react";
 import CYFMSTextArea from "../../components/cyfms/CYFMSTextArea";
@@ -32,14 +32,27 @@ const CYFMSCriminalHistory = (): ReactElement => {
   const criminalHistoryData = useAppSelector(
     (state) => (state as any).criminalHistory.user
   );
-  console.log("criminal ", criminalHistoryData);
 
   // State for the records list
   const [recordList, setRecordList] = useState([{}]);
 
+  // Reference to the form
+  const formRef = useRef(null);
+
   useEffect(() => {
-    dispatch(doGetCriminalHistory(participantId));
-  }, [criminalHistoryData, dispatch, participantId]);
+    dispatch(doGetCriminalHistory(participantId))
+      .unwrap()
+      .then((recordListFromAPI) => {
+        setRecordList((previousRecordList) => [
+          ...previousRecordList,
+          ...recordListFromAPI,
+        ]);
+      })
+      .catch((err) => {
+        console.log("CriminalHistory backend API didn't work");
+        console.log(err);
+      });
+  }, []);
 
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
@@ -62,14 +75,51 @@ const CYFMSCriminalHistory = (): ReactElement => {
       participantId: participantId,
     };
 
-    dispatch(doPostCriminalHistory({ user: newCriminalHistory })).then(() => {
-      navigate("/cyfms/family_physician");
-    });
+    dispatch(doPostCriminalHistory({ user: newCriminalHistory }))
+      .unwrap()
+      .then(() => {
+        console.log("CriminalHistory data has been posted!");
+        navigate("/cyfms/family_physician");
+      })
+      .catch((err) => {
+        console.log("CriminalHistory data NOT posted!");
+        console.log(err);
+      });
   };
 
   const addMoreHandler = (e: MouseEvent) => {
     e.preventDefault();
-    setRecordList((previousRecordList) => [...previousRecordList, {}]);
+    if (recordList.length >= 1) {
+      setRecordList((previousList: any) => [
+        ...previousList,
+        {
+          participantId: participantId,
+          householdMemberId: 0,
+          name: (formRef.current as any)[`criminalHistory_record_${1}_Arrest`]
+            .value,
+          gender: (formRef.current as any)[
+            `criminalHistory_record_${1}_Charges`
+          ].value,
+          dateOfBirth: (formRef.current as any)[
+            `criminalHistory_record_${1}_Conviction`
+          ].value,
+          residing: (formRef.current as any)[
+            `criminalHistory_record_${1}_Sentence`
+          ].value,
+        },
+      ]);
+    } else {
+      setRecordList((previousRecordList) => [
+        ...previousRecordList,
+        {
+          criminalHistoryRecordId: 0,
+          charges: "",
+          arrestDate: "",
+          conviction: "",
+          sentence: "",
+        },
+      ]);
+    }
   };
 
   return (
@@ -82,6 +132,7 @@ const CYFMSCriminalHistory = (): ReactElement => {
           gap: "1rem 0",
         }}
         onSubmit={submitHandler}
+        ref={formRef}
       >
         <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem 0" }}>
           {CYFMSCriminalHistoryRecordList(recordList)}

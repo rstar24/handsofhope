@@ -12,17 +12,23 @@ import java.util.List;
 @NoArgsConstructor
 public class CriminalHistoryDto{
     @Getter @Setter
+    private Long participantId;
+
+    @Getter @Setter
     private Long criminalHistoryId;
+
     @Getter @Setter
     private List<CriminalHistoryRecord> criminalHistoryRecordList;
+
     @Getter @Setter
     private boolean probation;
+
     @Getter @Setter
     private boolean parole;
+
     @Getter @Setter
     private String conditions;
+
     @Getter @Setter
     private String courtWorkerAndContactInfo;
-    @Getter @Setter
-    private Long participantId;
 }
