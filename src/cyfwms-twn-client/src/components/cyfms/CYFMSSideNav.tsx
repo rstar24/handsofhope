@@ -27,13 +27,13 @@ export const CYFMSSideNavContext = createContext<{
 const CYFMSSideNav = (): ReactElement => {
   const { hideTabs } = useContext(CYFMSSideNavContext);
   return (
-    <Box aria-label="tabs" sx={{ bgcolor: "background.paper" }}>
+    <Box aria-label="tabs" sx={{ bgcolor: "#DFDADA" }}>
       <List
         disablePadding
         sx={{
           [`& .active, & .${listItemClasses.root}:hover`]: {
-            color: "red",
-            backgroundColor: "#D9D9D9",
+            color: "white",
+            backgroundColor: "#da0404",
           },
         }}
       >
