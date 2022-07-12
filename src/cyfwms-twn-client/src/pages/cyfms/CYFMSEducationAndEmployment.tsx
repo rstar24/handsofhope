@@ -42,7 +42,6 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
     useState<boolean>(true);
   const [disabledDesiredProfession, setDisabledDesiredProfession] =
     useState<boolean>(true);
-
   // Handles the form data submission and other
   // activities.
   const submitHandler = (e: FormEvent) => {
@@ -50,8 +49,8 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
     const data: any = e.currentTarget;
     const newEducationAndEmploymentData = {
       participantId: participantId,
-      educationId: 0,
-      employmentId: 0,
+      educationId: readData.educationId || 0,
+      employmentId: readData.employmentId || 0,
       attendingSchool: data.educationAndEmployment_AttendingSchool.value,
       school: data.educationAndEmployment_SchoolName.value,
       grade: data.educationAndEmployment_SchoolGrade.value,
@@ -78,10 +77,10 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
   const changeHandler = (e: FormEvent) => {
     const data: any = e.currentTarget;
     console.log(data.educationAndEmployment_AttendingSchool.value);
-    data.educationAndEmployment_AttendingSchool.value === "true"
+    data.educationAndEmployment_AttendingSchool.value === "Yes"
       ? setDisabledSchoolFields(false)
       : setDisabledSchoolFields(true);
-    data.educationAndEmployment_TypeOfEmployment.value === "JOBSEARCH"
+    data.educationAndEmployment_TypeOfEmployment.value === "Job Search"
       ? setDisabledDesiredProfession(false)
       : setDisabledDesiredProfession(true);
   };
@@ -111,7 +110,9 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
                   <CYFMSDropdown
                     id="educationAndEmployment_AttendingSchool"
                     value="Attending School?"
-                    optionsList={Object.keys(education)}
+                    optionsList={Object.values(education).map(
+                      (education: any) => education.en
+                    )}
                     autofill={readData.attendingSchool}
                   />
                 </Box>
@@ -156,7 +157,9 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
                   <CYFMSDropdown
                     id="educationAndEmployment_Employed"
                     value="Employed?"
-                    optionsList={Object.keys(education)}
+                    optionsList={Object.values(education).map(
+                      (education: any) => education.en
+                    )}
                     autofill={readData.employed}
                   />
                 </Box>
@@ -164,7 +167,9 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
                   <CYFMSDropdown
                     id="educationAndEmployment_TypeOfEmployment"
                     value="Type of Employment"
-                    optionsList={Object.keys(typeOfEmployee)}
+                    optionsList={Object.values(typeOfEmployee).map(
+                      (employee: any) => employee.en
+                    )}
                     autofill={readData.typeOfEmployment}
                   />
                 </Box>

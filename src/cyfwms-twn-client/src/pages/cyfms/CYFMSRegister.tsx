@@ -123,7 +123,9 @@ const CYFMSRegister = (): ReactElement => {
             <CYFMSDropdown
               autofill={readData.gender}
               id="cyfmsRegister_Gender"
-              optionsList={Object.keys(gender)}
+              optionsList={Object.values(gender).map(
+                (gender: any) => gender.en
+              )}
               value="Gender"
               required
             />
@@ -132,7 +134,9 @@ const CYFMSRegister = (): ReactElement => {
             <CYFMSDropdown
               autofill={readData.maritalStatus}
               id="cyfmsRegister_MaritalStatus"
-              optionsList={Object.keys(maritalstatus)}
+              optionsList={Object.values(maritalstatus).map(
+                (status: any) => status.en
+              )}
               value="Marital Status"
             />
           </Box>
