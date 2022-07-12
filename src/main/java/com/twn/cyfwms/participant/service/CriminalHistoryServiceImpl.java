@@ -12,10 +12,14 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 
 @Service
@@ -35,7 +39,11 @@ public class CriminalHistoryServiceImpl implements CriminalHistoryService{
         if(participantId != 0) {
             CriminalHistory criminalHistory =
                     criminalHistoryRepo.findByParticipantId(participantId);
-            modelMapper.map(criminalHistory, criminalHistoryDto);
+            if(criminalHistory!=null) {
+                modelMapper.map(criminalHistory, criminalHistoryDto);
+            }else{
+                throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
+            }
         }
         return criminalHistoryDto;
     }

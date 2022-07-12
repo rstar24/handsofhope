@@ -10,11 +10,14 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
 @AllArgsConstructor
@@ -30,8 +33,11 @@ public class FamilyPhysicianServiceImpl implements FamilyPhysicianService {
         List<FamilyPhysicianDto> FamilyPhysicianDtoList = new ArrayList<FamilyPhysicianDto>();
         if(participantId != 0){
             List<FamilyPhysician> familyPhysicianList = familyPhysicianRepository.findByParticipantId(participantId);
-            FamilyPhysicianDtoList= modelMapper.map(familyPhysicianList, new TypeToken<List<FamilyPhysicianDto>>() {}.getType());
-
+            if(familyPhysicianList!=null) {
+                FamilyPhysicianDtoList = modelMapper.map(familyPhysicianList, new TypeToken<List<FamilyPhysicianDto>>() {}.getType());
+            }else{
+                throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
+            }
         }
         return FamilyPhysicianDtoList;
     }

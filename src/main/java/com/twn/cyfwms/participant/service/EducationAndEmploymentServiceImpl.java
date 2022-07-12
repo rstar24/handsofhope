@@ -11,9 +11,12 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
 @AllArgsConstructor
@@ -35,9 +38,17 @@ public class EducationAndEmploymentServiceImpl implements EducationAndEmployment
         if(participantId != 0) {
             Education education =
                     educationRepository.findByParticipantId(participantId);
-            modelMapper.map(education, educationAndEmploymentCompositeDto);
+            if(education!=null) {
+                modelMapper.map(education, educationAndEmploymentCompositeDto);
+            }else{
+                throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
+            }
             Employment employment= employmentRepository.findByParticipantId(participantId);
-            modelMapper.map(employment,educationAndEmploymentCompositeDto);
+            if(employment!=null) {
+                modelMapper.map(employment, educationAndEmploymentCompositeDto);
+            }else{
+                throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
+            }
         }
         return educationAndEmploymentCompositeDto;
     }

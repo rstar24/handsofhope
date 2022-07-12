@@ -8,11 +8,14 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
 @AllArgsConstructor
@@ -28,7 +31,11 @@ public class HouseholdMemberServiceImpl implements HouseholdMemberService {
 
         if(participantId != 0){
             List<HouseholdMember> householdMemberList = householdMemberRepo.findByParticipantId(participantId);
-            HouseholdMemberDtoList= modelMapper.map(householdMemberList, new TypeToken<List<HouseholdMemberDto>>() {}.getType());
+            if(householdMemberList!=null) {
+                HouseholdMemberDtoList = modelMapper.map(householdMemberList, new TypeToken<List<HouseholdMemberDto>>() {}.getType());
+            }else{
+                throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
+            }
         }
         return HouseholdMemberDtoList;
     }

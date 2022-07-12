@@ -11,11 +11,14 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
 @AllArgsConstructor
@@ -29,7 +32,15 @@ public class CounselorCFSWorkerServiceImpl implements CounselorCFSWorkerService{
         List<CounselorCFSWorkersDto> counselorCFSWorkersDtoList = new ArrayList<CounselorCFSWorkersDto>();
         if(participantId != 0){
             List<CounselorCFSWorker> CounselorCFSWorkersList = cfsWorkerRepository.findByParticipantId(participantId);
-            counselorCFSWorkersDtoList= modelMapper.map(CounselorCFSWorkersList, new TypeToken<List<CounselorCFSWorkersDto>>() {}.getType());
+            if(CounselorCFSWorkersList!=null) {
+                counselorCFSWorkersDtoList = modelMapper.map(CounselorCFSWorkersList, new TypeToken<List<CounselorCFSWorkersDto>>() {
+                }.getType());
+            }else{
+                throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
+
+            }
+
+
 
         }
         return counselorCFSWorkersDtoList;

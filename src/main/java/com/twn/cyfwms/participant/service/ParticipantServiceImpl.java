@@ -7,10 +7,13 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
+
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
 @AllArgsConstructor
@@ -27,6 +30,8 @@ public class ParticipantServiceImpl implements ParticipantService {
             Participant participant = readParticipant(participantId);
             if(participant != null){
                 modelMapper.map(participant, participantIdentityResponseDto);
+            }else{
+                throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
             }
         }
         return participantIdentityResponseDto;

@@ -9,9 +9,12 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
 @AllArgsConstructor
@@ -27,7 +30,11 @@ public class ParticipantOtherInformationServiceImpl implements ParticipantOtherI
         if(participantId != 0) {
             ParticipantOtherInformation participantContact =
                     participantOtherInformationRepository.findByParticipantId(participantId);
-            modelMapper.map(participantContact, participantOtherInformationServiceDto);
+            if(participantContact!=null) {
+                modelMapper.map(participantContact, participantOtherInformationServiceDto);
+            }else{
+                throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
+            }
         }
         return participantOtherInformationServiceDto;
     }

@@ -7,8 +7,12 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
 @AllArgsConstructor
@@ -24,7 +28,12 @@ public class ParticipantContactServiceImpl implements ParticipantContactService 
         if(participantId != 0) {
             ParticipantContact participantContact =
                     participantContactRepository.findByParticipantId(participantId);
-            modelMapper.map(participantContact, participantContactDto);
+            if(participantContact!=null) {
+                modelMapper.map(participantContact, participantContactDto);
+            }else{
+                throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
+
+            }
         }
         return participantContactDto;
     }

@@ -5,9 +5,9 @@ spring:
   application:
     name: TWN-SERVER
   datasource:
-    url: jdbc:sqlserver://cyfwms-twn-server.database.windows.net:1433;database=cyfwmsdb;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
-    username: admin1
-    password: Password@123
+    url: jdbc:mysql://localhost:3306/twn
+    username: root
+    password: password
 
   jpa:
     hibernate:
@@ -23,17 +23,23 @@ jwt:
 
 codetablevalues:
   gender:
+    DEFAULT:
+      "en": ""
+      "fr": ""
     MALE:
       "en": "Male"
       "fr": "Masculin"
     FEMALE:
       "en": "Female"
       "fr": "Féminin"
-    LGQTB:
-      "en": "LGQTB"
-      "fr": "LGQTB"
+    LGBTQ:
+      "en": "LGBTQ"
+      "fr": "LGBTQ"
 
   maritalStatus:
+    DEFAULT:
+      "en": ""
+      "fr": ""
     MARRIED:
       "en": "Married"
       "fr": "Marry"
@@ -41,9 +47,12 @@ codetablevalues:
       "en": "Unmarried"
       "fr": "unmarry"
     DIVORCE:
-      "en": "Divorce"
+      "en": "Divorced"
       "fr": "Divorce"
   role:
+    DEFAULT:
+      "en": ""
+      "fr": ""
     COUNSELOR:
       "en": "Counselor"
       "fr": "Coun"
@@ -52,6 +61,9 @@ codetablevalues:
       "fr": "Cfs"
 
   education:
+    DEFAULT:
+      "en": ""
+      "fr": ""
     NO:
       "en": "No"
       "fr": "No"
@@ -63,17 +75,18 @@ codetablevalues:
       "fr": "Maybe"
 
   typeOFEmployee:
+    DEFAULT:
+      "en": ""
+      "fr": ""
     FULLTIME:
-      "en": "FullTime"
+      "en": "Full-Time"
       "fr": "FullTime"
     PARTTIME:
-      "en": "PartTime"
+      "en": "Part-Time"
       "fr": "PartTime"
-
-    CASUAL:
+    Casual:
       "en": "Casual"
       "fr": "Casual"
-
     JOBSEARCH:
-      "en": "Job search"
+      "en": "Job Search"
       "fr": "Job search"
