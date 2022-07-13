@@ -32,6 +32,9 @@ const CYFMSSideNav = (): ReactElement => {
         disablePadding
         sx={{
           [`& .active, & .${listItemClasses.root}:hover`]: {
+            "&:hover": {
+              backgroundColor: "#740808",
+            },
             color: "white",
             backgroundColor: "#da0404",
           },

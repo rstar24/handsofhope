@@ -17,7 +17,7 @@ import ICFullInput from "../../components/initialContact/ICFullInput";
  */
 const ICPatientCareInformation = (): ReactElement => {
   const navigate = useNavigate();
-  const [patient, setPatient] = useState("Outpatient");
+  const [patient, setPatient] = useState("Inpatient");
   // Handles the form data submission and other
   // activities.
   const submitHandler = (e: FormEvent) => {

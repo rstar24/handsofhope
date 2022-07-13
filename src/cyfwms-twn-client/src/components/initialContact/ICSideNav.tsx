@@ -32,8 +32,11 @@ const ICSideNav = (): ReactElement => {
         disablePadding
         sx={{
           [`& .active, & .${listItemClasses.root}:hover`]: {
-            color: "red",
-            backgroundColor: "#D9D9D9",
+            "&:hover": {
+              backgroundColor: "#740808",
+            },
+            color: "white",
+            backgroundColor: "#da0404",
           },
         }}
       >
@@ -43,6 +46,7 @@ const ICSideNav = (): ReactElement => {
 
         <ListItemButton
           //disabled={hideTabs}
+
           component={MyNavLink}
           to="/initial_contact/referral"
         >
