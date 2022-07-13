@@ -17,7 +17,7 @@ import { cleanCodetableState } from "../../features/codetable/codetableSlice";
 import { cleanContactState } from "../../features/cyfms/contact/cyfmsContactSlice";
 import { cleanCriminalHistoryState } from "../../features/cyfms/criminalHistory/criminalhistorySlice";
 import { cleanEducationAndEmploymentState } from "../../features/cyfms/educationAndEmployment/educationAndEmploymentSlice";
-import { cleanFamilyPhysiciansState } from "../../features/cyfms/familyPhysicians/familyPhysiciansSlice";
+import { cleanFamilyPhysiciansState } from "../../features/cyfms/familyPhysicians/cyfmsFamilyPhysiciansSlice";
 import { cleanHouseHoldAndMemberState } from "../../features/cyfms/householdAndMembers/householdAndMembersSlice";
 import { cleanOtherInformationState } from "../../features/cyfms/otherInformation/otherInformationSlice";
 import { cleanRegisterState } from "../../features/cyfms/register/cyfmsRegisterSlice";
@@ -46,7 +46,7 @@ const CYFMSPopup = (props: ModalUnstyledProps): ReactElement => {
     dispatch(cleanContactState);
     dispatch(cleanCriminalHistoryState());
     dispatch(cleanEducationAndEmploymentState());
-    dispatch(cleanFamilyPhysiciansState());
+    dispatch(cleanFamilyPhysiciansState);
     dispatch(cleanHouseHoldAndMemberState());
     dispatch(cleanOtherInformationState());
     dispatch(cleanRegisterState());

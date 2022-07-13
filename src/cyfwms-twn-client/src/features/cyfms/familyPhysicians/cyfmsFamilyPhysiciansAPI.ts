@@ -1,8 +1,5 @@
-import {
-  FamilyPhysiciansGetData,
-  FamilyPhysiciansPostData,
-} from "./familyPhysiciansSlice";
 import axios from "axios";
+import type { cyfmsFamilyPhysiciansRecord } from "./cyfmsFamilyPhysiciansSlice";
 import type { AxiosResponse } from "axios";
 
 const axiosInstance = axios.create({
@@ -10,11 +7,11 @@ const axiosInstance = axios.create({
 });
 
 export const doGetFamilyPhysiciansAPI = async (
-  data: FamilyPhysiciansGetData,
+  participantId: number,
   jwtToken: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.get(
-    "getAllFamilyPhysicians/" + data,
+    "getAllFamilyPhysicians/" + participantId,
     {
       headers: { Authorization: "Bearer " + jwtToken },
     }
@@ -23,13 +20,12 @@ export const doGetFamilyPhysiciansAPI = async (
 };
 
 export const doPostFamilyPhysiciansAPI = async (
-  data: FamilyPhysiciansPostData,
+  cyfmsFamilyPhysiciansFormData: cyfmsFamilyPhysiciansRecord[],
   jwtToken: string
 ): Promise<AxiosResponse> => {
-  console.log(data);
   const res: AxiosResponse = await axiosInstance.put(
     "saveAllFamilyPhysicians/",
-    data.recordList,
+    cyfmsFamilyPhysiciansFormData,
     {
       headers: { Authorization: "Bearer " + jwtToken },
     }

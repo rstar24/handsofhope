@@ -77,14 +77,14 @@ const CYFMSSideNav = (): ReactElement => {
           component={MyNavLink}
           to="/cyfms/family_physician"
         >
-          <ListItemText primary="Family Physician" />
+          <ListItemText primary="Family Physician(s)" />
         </ListItemButton>
         <ListItemButton
           disabled={hideTabs}
           component={MyNavLink}
           to="/cyfms/cyfms_worker"
         >
-          <ListItemText primary="Counselor / CFS Worker" />
+          <ListItemText primary="Counselor(s) / CFS Worker(s)" />
         </ListItemButton>
         <ListItemButton
           disabled={hideTabs}

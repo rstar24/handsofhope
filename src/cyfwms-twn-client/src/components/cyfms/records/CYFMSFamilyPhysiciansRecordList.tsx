@@ -29,9 +29,12 @@ export const CYFMSFamilyPhysiciansRecord = (
   props: CYFMSFamilyPhysiciansRecordProps
 ): ReactElement => {
   return (
-    <Box key={`familyPhysicians_record_${props.recordNumber}`}>
+    <Box
+      id="familyPhysiciansRecord"
+      key={`familyPhysicians_record_${props.recordNumber}`}
+    >
       <Typography variant="body1" color="primary">
-        Family Physician {props.recordNumber}
+        Family Physician: {props.recordNumber}
       </Typography>
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
         <Box
@@ -85,7 +88,7 @@ export const CYFMSFamilyPhysiciansRecord = (
 const CYFMSFamilyPhysiciansRecordList = (recordList: any): ReactElement[] => {
   let res: ReactElement[] = new Array(recordList.length);
   for (let index = 0; index < recordList.length; ++index) {
-    res.unshift(
+    res.push(
       <CYFMSFamilyPhysiciansRecord
         record={recordList[index]}
         recordNumber={index + 1}

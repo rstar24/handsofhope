@@ -2,14 +2,14 @@ import educationAndEmploymentReducer from "../features/cyfms/educationAndEmploym
 import codetableReducer from "../features/codetable/codetableSlice";
 import cyfmsContactReducer from "../features/cyfms/contact/cyfmsContactSlice";
 import criminalhistoryReducer from "../features/cyfms/criminalHistory/criminalhistorySlice";
-import familyPhysiciansReducer from "../features/cyfms/familyPhysicians/familyPhysiciansSlice";
+import cyfmsFamilyPhysiciansReducer from "../features/cyfms/familyPhysicians/cyfmsFamilyPhysiciansSlice";
 import householdAndMembersReducer from "../features/cyfms/householdAndMembers/householdAndMembersSlice";
 import loginReducer from "../features/login/loginSlice";
 import otherInformationReducer from "../features/cyfms/otherInformation/otherInformationSlice";
 import cyfmsRegisterReducer from "../features/cyfms/register/cyfmsRegisterSlice";
 import cyfmsCounselorsReducer from "../features/cyfms/cyfmsCounselors/cyfmsCounselorsSlice";
-import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import searchReducer from "../features/search/searchSlice";
+import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 
 export const store = configureStore({
   reducer: {
@@ -18,7 +18,7 @@ export const store = configureStore({
     cyfmsRegister: cyfmsRegisterReducer,
     cyfmsContact: cyfmsContactReducer,
     householdAndMembers: householdAndMembersReducer,
-    familyPhysicians: familyPhysiciansReducer,
+    cyfmsFamilyPhysicians: cyfmsFamilyPhysiciansReducer,
     cyfmsCounselors: cyfmsCounselorsReducer,
     criminalHistory: criminalhistoryReducer,
     otherInformation: otherInformationReducer,
