@@ -52,4 +52,60 @@ public class DataReferenceServiceImpl implements DataReferenceService{
                         .valuesMap(dataReferenceHelper.getTypeOfEmployee())
                         .build();
     }
+
+    @Override
+    public DataResponseDto getAllInitialContactStatusValue() {
+        return
+                DataResponseDto.builder()
+                        .type(ResponseDataType.initialContactStatus.name())
+                        .valuesMap(dataReferenceHelper.getInitialContactStatus())
+                        .build();
+    }
+
+    @Override
+    public DataResponseDto getAllInitialContactReferralValue() {
+        return
+                DataResponseDto.builder()
+                        .type(ResponseDataType.initialContactReferral.name())
+                        .valuesMap(dataReferenceHelper.getInitialContactReferral())
+                        .build();
+    }
+
+    @Override
+    public DataResponseDto getAllPresentConcernsValue() {
+        return
+                DataResponseDto.builder()
+                        .type(ResponseDataType.presentConcerns.name())
+                        .valuesMap(dataReferenceHelper.getPresentConcerns())
+                        .build();
+    }
+
+    @Override
+    public DataResponseDto getAllMentalHealthOrSubstanceAbuseValue() {
+        return
+                DataResponseDto.builder()
+                        .type(ResponseDataType.mentalHealthOrSubstanceAbuse.name())
+                        .valuesMap(dataReferenceHelper.getMentalHealthOrSubstanceAbuse())
+                        .build();
+    }
+
+    @Override
+    public DataResponseDto getAllTypeOfPatientValue() {
+        return
+                DataResponseDto.builder()
+                        .type(ResponseDataType.typeOfPatient.name())
+                        .valuesMap(dataReferenceHelper.getTypeOfPatient())
+                        .build();
+    }
+
+    @Override
+    public DataResponseDto getAllRiskValue() {
+        return
+                DataResponseDto.builder()
+                        .type(ResponseDataType.risk.name())
+                        .valuesMap(dataReferenceHelper.getRisk())
+                        .build();
+    }
+
+
 }

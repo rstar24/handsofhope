@@ -57,4 +57,47 @@ public class DataReferenceController {
         return dataReferenceService.getAllEmployeeValue();
     }
 
+    @GetMapping(value = "/initialContactStatus", produces = "application/json")
+    @ApiOperation("Get All Employee Value")
+    @ResponseStatus(HttpStatus.OK)
+    public DataResponseDto getAllInitialContactStatusValue() {
+
+        return dataReferenceService.getAllInitialContactStatusValue();
+    }
+    @GetMapping(value = "/initialContactReferral", produces = "application/json")
+    @ApiOperation("Get All Employee Value")
+    @ResponseStatus(HttpStatus.OK)
+    public DataResponseDto getAllInitialContactReferralValue() {
+
+        return dataReferenceService.getAllInitialContactReferralValue();
+    }
+    @GetMapping(value = "/presentConcerns", produces = "application/json")
+    @ApiOperation("Get All Employee Value")
+    @ResponseStatus(HttpStatus.OK)
+    public DataResponseDto getAllPresentConcernsValue() {
+
+        return dataReferenceService.getAllPresentConcernsValue();
+    }
+    @GetMapping(value = "/mentalHealthOrSubstanceAbuse", produces = "application/json")
+    @ApiOperation("Get All Employee Value")
+    @ResponseStatus(HttpStatus.OK)
+    public DataResponseDto getAllMentalHealthOrSubstanceAbuseValue() {
+
+        return dataReferenceService.getAllMentalHealthOrSubstanceAbuseValue();
+    }
+    @GetMapping(value = "/typeOfPatient", produces = "application/json")
+    @ApiOperation("Get All Employee Value")
+    @ResponseStatus(HttpStatus.OK)
+    public DataResponseDto getAllTypeOfPatientValue() {
+
+        return dataReferenceService.getAllTypeOfPatientValue();
+    }
+    @GetMapping(value = "/risk", produces = "application/json")
+    @ApiOperation("Get All Employee Value")
+    @ResponseStatus(HttpStatus.OK)
+    public DataResponseDto getAllRiskValue() {
+
+        return dataReferenceService.getAllRiskValue();
+    }
+
 }

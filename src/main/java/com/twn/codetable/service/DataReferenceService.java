@@ -11,6 +11,14 @@ public interface DataReferenceService {
     DataResponseDto getAllRoleValue();
 
     DataResponseDto getAllEducationValue();
-
     DataResponseDto getAllEmployeeValue();
+
+    DataResponseDto getAllInitialContactStatusValue();
+
+    DataResponseDto getAllInitialContactReferralValue();
+    DataResponseDto getAllPresentConcernsValue();
+    DataResponseDto getAllMentalHealthOrSubstanceAbuseValue();
+    DataResponseDto getAllTypeOfPatientValue();
+    DataResponseDto getAllRiskValue();
+
 }
