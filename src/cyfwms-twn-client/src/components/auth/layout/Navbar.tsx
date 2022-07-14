@@ -12,7 +12,7 @@ import { cleanHouseholdMembersState } from "../../../features/cyfms/householdMem
 import { cleanOtherInformationState } from "../../../features/cyfms/otherInformation/otherInformationSlice";
 import { cleanRegisterState } from "../../../features/cyfms/register/cyfmsRegisterSlice";
 import { cleanSearchState } from "../../../features/search/searchSlice";
-import { cleanCounselors } from "../../../features/cyfms/cyfmsCounselors/cyfmsCounselorsSlice";
+import { cleanCounselorsState } from "../../../features/cyfms/counselors/cyfmsCounselorsSlice";
 import { onLogout } from "../../../features/login/loginSlice";
 import Button from "@mui/material/Button";
 
@@ -55,7 +55,7 @@ export default function Navbar() {
     dispatch(cleanOtherInformationState());
     dispatch(cleanRegisterState());
     dispatch(cleanSearchState());
-    dispatch(cleanCounselors());
+    dispatch(cleanCounselorsState);
     navigate("/login");
   };
 

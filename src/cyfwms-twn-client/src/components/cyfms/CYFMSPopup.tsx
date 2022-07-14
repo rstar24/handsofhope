@@ -1,7 +1,7 @@
 import CYFMSFamilyPhysicians from "../../pages/cyfms/CYFMSFamilyPhysicians";
 import CYFMSContact from "../../pages/cyfms/CYFMSContact";
 import CYFMSCriminalHistory from "../../pages/cyfms/CYFMSCriminalHistory";
-import CYFMSCYFMSCounselors from "../../pages/cyfms/CYFMSCYFMSCounselors";
+import CYFMSCounselors from "../../pages/cyfms/CYFMSCounselors";
 import CYFMSEducationAndEmployment from "../../pages/cyfms/CYFMSEducationAndEmployment";
 import CYFMSHouseholdMembers from "../../pages/cyfms/CYFMSHouseholdMembers";
 import CYFMSOtherInformation from "../../pages/cyfms/CYFMSOtherInformation";
@@ -23,7 +23,7 @@ import { cleanOtherInformationState } from "../../features/cyfms/otherInformatio
 import { cleanRegisterState } from "../../features/cyfms/register/cyfmsRegisterSlice";
 import { cleanSearchState } from "../../features/search/searchSlice";
 import { CYFMSSideNavContext } from "./CYFMSSideNav";
-import { cleanCounselors } from "../../features/cyfms/cyfmsCounselors/cyfmsCounselorsSlice";
+import { cleanCounselorsState } from "../../features/cyfms/counselors/cyfmsCounselorsSlice";
 
 /**
  * The CYFMSPopup functional component.
@@ -51,7 +51,7 @@ const CYFMSPopup = (props: ModalUnstyledProps): ReactElement => {
     dispatch(cleanOtherInformationState());
     dispatch(cleanRegisterState());
     dispatch(cleanSearchState());
-    dispatch(cleanCounselors());
+    dispatch(cleanCounselorsState);
   };
 
   return (
@@ -98,10 +98,10 @@ const CYFMSPopup = (props: ModalUnstyledProps): ReactElement => {
             />
             <Route path="criminal_history" element={<CYFMSCriminalHistory />} />
             <Route
-              path="family_physician"
+              path="family_physicians"
               element={<CYFMSFamilyPhysicians />}
             />
-            <Route path="cyfms_worker" element={<CYFMSCYFMSCounselors />} />
+            <Route path="counselors" element={<CYFMSCounselors />} />
             <Route
               path="other_information"
               element={<CYFMSOtherInformation />}

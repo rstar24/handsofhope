@@ -19,7 +19,7 @@ import { cleanFamilyPhysiciansState } from "../../features/cyfms/familyPhysician
 import { cleanHouseholdMembersState } from "../../features/cyfms/householdMembers/cyfmsHouseholdMembersSlice";
 import { cleanRegisterState } from "../../features/cyfms/register/cyfmsRegisterSlice";
 import { cleanSearchState } from "../../features/search/searchSlice";
-import { cleanCounselors } from "../../features/cyfms/cyfmsCounselors/cyfmsCounselorsSlice";
+import { cleanCounselorsState } from "../../features/cyfms/counselors/cyfmsCounselorsSlice";
 
 /**
  * The CYFMSOtherInformation functional component.
@@ -76,7 +76,7 @@ const CYFMSOtherInformation = (): ReactElement => {
         dispatch(cleanOtherInformationState());
         dispatch(cleanRegisterState());
         dispatch(cleanSearchState());
-        dispatch(cleanCounselors());
+        dispatch(cleanCounselorsState);
       });
   };
 

@@ -1,11 +1,3 @@
-import CYFMSFamilyPhysicians from "../../pages/cyfms/CYFMSFamilyPhysicians";
-
-import CYFMSCriminalHistory from "../../pages/cyfms/CYFMSCriminalHistory";
-import CYFMSCYFMSCounselors from "../../pages/cyfms/CYFMSCYFMSCounselors";
-import CYFMSEducationAndEmployment from "../../pages/cyfms/CYFMSEducationAndEmployment";
-import CYFMSHouseholdMembers from "../../pages/cyfms/CYFMSHouseholdMembers";
-import CYFMSOtherInformation from "../../pages/cyfms/CYFMSOtherInformation";
-
 import { Box, IconButton, Modal } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import React, { useState } from "react";

@@ -80,7 +80,7 @@ const CYFMSFamilyPhysicians = (): ReactElement => {
       .unwrap()
       .then(() => {
         console.log("familyPhysicians POST backend API was successful!");
-        navigate("/cyfms/cyfms_worker");
+        navigate("/cyfms/counselors");
       })
       .catch((err) => {
         console.log("familyPhysicians POST backend API didn't work!");

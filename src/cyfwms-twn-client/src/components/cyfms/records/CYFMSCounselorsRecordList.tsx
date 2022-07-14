@@ -13,7 +13,7 @@ import type {
  * A custom props data type for the props passed
  * to the `CYFMSCounselorsRecord` component.
  */
-export interface CYFMSCYFMSCounselorsRecordProps
+export interface CYFMSCounselorsRecordProps
   extends ComponentPropsWithoutRef<ElementType> {
   /** Holds data within a record. */
   record: any;
@@ -27,10 +27,10 @@ export interface CYFMSCYFMSCounselorsRecordProps
  * @returns CYFMSCounselorsRecord component skeleton.
  */
 export const CYFMSCYFMSCounselorsRecord = (
-  props: CYFMSCYFMSCounselorsRecordProps
+  props: CYFMSCounselorsRecordProps
 ): ReactElement => {
   return (
-    <Box key={`cyfmsCounselors_record_${props.recordNumber}`}>
+    <Box key={`counselors_record_${props.recordNumber}`}>
       <Typography variant="body1" color="primary">
         Counselor / CFS Worker: {props.recordNumber}
       </Typography>
@@ -39,7 +39,7 @@ export const CYFMSCYFMSCounselorsRecord = (
           <Box sx={{ flexBasis: 0, flexGrow: 1.08 }}>
             <CYFMSDropdown
               autofill={props.record.role}
-              id={`cyfmsCounselors_record_${props.recordNumber}_Role`}
+              id={`counselors_record_${props.recordNumber}_Role`}
               value="Role"
               optionsList={["Counselor", "CFS Worker"]}
             />
@@ -50,7 +50,7 @@ export const CYFMSCYFMSCounselorsRecord = (
           <Box sx={{ flexBasis: 0, flexGrow: 1.3 }}>
             <CYFMSInput
               autofill={props.record.name}
-              id={`cyfmsCounselors_record_${props.recordNumber}_Name`}
+              id={`counselors_record_${props.recordNumber}_Name`}
               value="Name"
             />
           </Box>
@@ -60,7 +60,7 @@ export const CYFMSCYFMSCounselorsRecord = (
           <Box sx={{ flexBasis: 0, flexGrow: 2.7 }}>
             <CYFMSTextArea
               autofill={props.record.contactInformation}
-              id={`cyfmsCounselors_record_${props.recordNumber}_ContactInformation`}
+              id={`counselors_record_${props.recordNumber}_ContactInformation`}
               value="Contact Information"
             />
           </Box>
@@ -71,10 +71,10 @@ export const CYFMSCYFMSCounselorsRecord = (
   );
 };
 
-const CYFMSCYFMSCounselorsRecordList = (recordList: any): ReactElement[] => {
+const CYFMSCounselorsRecordList = (recordList: any): ReactElement[] => {
   let res: ReactElement[] = new Array(recordList.length);
   for (let index = 0; index < recordList.length; ++index) {
-    res.unshift(
+    res.push(
       <CYFMSCYFMSCounselorsRecord
         record={recordList[index]}
         recordNumber={index + 1}
@@ -84,4 +84,4 @@ const CYFMSCYFMSCounselorsRecordList = (recordList: any): ReactElement[] => {
   return res;
 };
 
-export default CYFMSCYFMSCounselorsRecordList;
+export default CYFMSCounselorsRecordList;

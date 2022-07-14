@@ -79,7 +79,7 @@ const CYFMSCriminalHistory = (): ReactElement => {
       .unwrap()
       .then(() => {
         console.log("CriminalHistory data has been posted!");
-        navigate("/cyfms/family_physician");
+        navigate("/cyfms/family_physicians");
       })
       .catch((err) => {
         console.log("CriminalHistory data NOT posted!");

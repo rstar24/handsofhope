@@ -7,7 +7,7 @@ import cyfmsHouseholdMembersReducer from "../features/cyfms/householdMembers/cyf
 import loginReducer from "../features/login/loginSlice";
 import otherInformationReducer from "../features/cyfms/otherInformation/otherInformationSlice";
 import cyfmsRegisterReducer from "../features/cyfms/register/cyfmsRegisterSlice";
-import cyfmsCounselorsReducer from "../features/cyfms/cyfmsCounselors/cyfmsCounselorsSlice";
+import cyfmsCounselorsReducer from "../features/cyfms/counselors/cyfmsCounselorsSlice";
 import searchReducer from "../features/search/searchSlice";
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 

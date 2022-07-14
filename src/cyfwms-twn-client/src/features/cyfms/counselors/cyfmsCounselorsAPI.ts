@@ -1,8 +1,5 @@
-import {
-  CYFMSCounselorsGetData,
-  CYFMSCounselorsPostData,
-} from "./cyfmsCounselorsSlice";
 import axios from "axios";
+import type { cyfmsCounselorsRecord } from "./cyfmsCounselorsSlice";
 import type { AxiosResponse } from "axios";
 
 const axiosInstance = axios.create({
@@ -11,12 +8,12 @@ const axiosInstance = axios.create({
   }/v1/participantservice/`,
 });
 
-export const doGetCYFMSCounselorsAPI = async (
-  data: CYFMSCounselorsGetData,
+export const doGetCounselorsAPI = async (
+  participantId: number,
   jwtToken: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.get(
-    "getAllCounselorCFSWorkers/" + data,
+    "getAllCounselorCFSWorkers/" + participantId,
     {
       headers: { Authorization: "Bearer " + jwtToken },
     }
@@ -24,13 +21,13 @@ export const doGetCYFMSCounselorsAPI = async (
   return res;
 };
 
-export const doPostCYFMSCounselorsAPI = async (
-  data: CYFMSCounselorsPostData,
+export const doPostCounselorsAPI = async (
+  cyfmsCounselorsFormData: cyfmsCounselorsRecord[],
   jwtToken: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.put(
     "saveAllCounselorCFSWorkers/",
-    data.recordList,
+    cyfmsCounselorsFormData,
     {
       headers: { Authorization: "Bearer " + jwtToken },
     }
