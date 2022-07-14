@@ -12,7 +12,7 @@ import type {
  * A custom props data type for the props passed
  * to the `CYFMSHouseholdMembersRecord` component.
  */
-export interface CYFMSHouseholdAndMembersRecordProps
+export interface CYFMSHouseholdMembersRecordProps
   extends ComponentPropsWithoutRef<ElementType> {
   /** Holds data within a record. */
   record: any;
@@ -25,11 +25,11 @@ export interface CYFMSHouseholdAndMembersRecordProps
  * @param props Must contain the `recordNumber` prop.
  * @returns CYFMSHouseholdMembersRecord component skeleton.
  */
-export const CYFMSHouseholdAndMembersRecord = (
-  props: CYFMSHouseholdAndMembersRecordProps
+export const CYFMSHouseholdMembersRecord = (
+  props: CYFMSHouseholdMembersRecordProps
 ): ReactElement => {
   return (
-    <Box key={`householdAndMembers_record_${props.recordNumber}`}>
+    <Box key={`householdMembers_record_${props.recordNumber}`}>
       <Typography variant="body1" color="primary">
         Member {props.recordNumber}
       </Typography>
@@ -44,25 +44,25 @@ export const CYFMSHouseholdAndMembersRecord = (
         >
           <CYFMSInput
             autofill={props.record.name}
-            id={`householdAndMembers_record_${props.recordNumber}_Name`}
+            id={`householdMembers_record_${props.recordNumber}_Name`}
             value="Name"
           />
           <CYFMSInput
             autofill={props.record.dateOfBirth}
-            id={`householdAndMembers_record_${props.recordNumber}_DateOfBirth`}
+            id={`householdMembers_record_${props.recordNumber}_DateOfBirth`}
             value="Date of Birth"
             type="date"
           />
           <CYFMSInput
             autofill={props.record.residing}
-            id={`householdAndMembers_record_${props.recordNumber}_Residing`}
+            id={`householdMembers_record_${props.recordNumber}_Residing`}
             value="Residing"
           />
         </Box>
         <Box sx={{ flexGrow: 1 }}>
           <CYFMSDropdown
             autofill={props.record.gender}
-            id={`householdAndMembers_record_${props.recordNumber}_Gender`}
+            id={`householdMembers_record_${props.recordNumber}_Gender`}
             optionsList={["Male", "Female", "LGBTQ"]}
             value="Gender"
           />
@@ -72,13 +72,11 @@ export const CYFMSHouseholdAndMembersRecord = (
   );
 };
 
-const CYFMSHouseholdAndMembersRecordList = (
-  recordList: any
-): ReactElement[] => {
+const CYFMSHouseholdMembersRecordList = (recordList: any): ReactElement[] => {
   let res: ReactElement[] = new Array(recordList.length);
   for (let index = 0; index < recordList.length; ++index) {
-    res.unshift(
-      <CYFMSHouseholdAndMembersRecord
+    res.push(
+      <CYFMSHouseholdMembersRecord
         record={recordList[index]}
         recordNumber={index + 1}
       />
@@ -87,4 +85,4 @@ const CYFMSHouseholdAndMembersRecordList = (
   return res;
 };
 
-export default CYFMSHouseholdAndMembersRecordList;
+export default CYFMSHouseholdMembersRecordList;

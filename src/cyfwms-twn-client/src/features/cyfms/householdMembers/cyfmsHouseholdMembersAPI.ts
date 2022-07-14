@@ -1,8 +1,5 @@
 import axios from "axios";
-import type {
-  HouseholdAndMembersGetData,
-  HouseholdAndMembersPostData,
-} from "./householdAndMembersSlice";
+import type { cyfmsHouseholdMembersRecord } from "./cyfmsHouseholdMembersSlice";
 import type { AxiosResponse } from "axios";
 
 const axiosInstance = axios.create({
@@ -11,12 +8,12 @@ const axiosInstance = axios.create({
   }/v1/participantservice/`,
 });
 
-export const doGetHouseholdAndMembersAPI = async (
-  data: HouseholdAndMembersGetData,
+export const doGetHouseholdMembersAPI = async (
+  participantId: number,
   jwtToken: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.get(
-    "getAllHouseholdMembers/" + data,
+    "getAllHouseholdMembers/" + participantId,
     {
       headers: { Authorization: "Bearer " + jwtToken },
     }
@@ -24,13 +21,13 @@ export const doGetHouseholdAndMembersAPI = async (
   return res;
 };
 
-export const doPostHouseholdAndMembersAPI = async (
-  data: HouseholdAndMembersPostData,
+export const doPostHouseholdMembersAPI = async (
+  cyfmsHouseholdMembersFormData: cyfmsHouseholdMembersRecord[],
   jwtToken: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.put(
     "saveAllHouseholdMembers/",
-    data.recordList,
+    cyfmsHouseholdMembersFormData,
     {
       headers: { Authorization: "Bearer " + jwtToken },
     }

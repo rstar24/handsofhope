@@ -16,7 +16,7 @@ import { cleanContactState } from "../../features/cyfms/contact/cyfmsContactSlic
 import { cleanCriminalHistoryState } from "../../features/cyfms/criminalHistory/criminalhistorySlice";
 import { cleanEducationAndEmploymentState } from "../../features/cyfms/educationAndEmployment/educationAndEmploymentSlice";
 import { cleanFamilyPhysiciansState } from "../../features/cyfms/familyPhysicians/cyfmsFamilyPhysiciansSlice";
-import { cleanHouseHoldAndMemberState } from "../../features/cyfms/householdAndMembers/householdAndMembersSlice";
+import { cleanHouseholdMembersState } from "../../features/cyfms/householdMembers/cyfmsHouseholdMembersSlice";
 import { cleanRegisterState } from "../../features/cyfms/register/cyfmsRegisterSlice";
 import { cleanSearchState } from "../../features/search/searchSlice";
 import { cleanCounselors } from "../../features/cyfms/cyfmsCounselors/cyfmsCounselorsSlice";
@@ -72,7 +72,7 @@ const CYFMSOtherInformation = (): ReactElement => {
         dispatch(cleanCriminalHistoryState());
         dispatch(cleanEducationAndEmploymentState());
         dispatch(cleanFamilyPhysiciansState);
-        dispatch(cleanHouseHoldAndMemberState());
+        dispatch(cleanHouseholdMembersState);
         dispatch(cleanOtherInformationState());
         dispatch(cleanRegisterState());
         dispatch(cleanSearchState());
