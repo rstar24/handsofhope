@@ -1,23 +1,14 @@
 package com.twn.cyfwms.participant.service;
 
 import com.twn.cyfwms.participant.dto.CriminalHistoryDto;
-import com.twn.cyfwms.participant.dto.CriminalHistoryRecordDto;
-import com.twn.cyfwms.participant.dto.FamilyPhysicianDto;
 import com.twn.cyfwms.participant.entity.CriminalHistory;
-import com.twn.cyfwms.participant.entity.CriminalHistoryRecord;
-import com.twn.cyfwms.participant.repository.CriminalHistoryRecordRepository;
 import com.twn.cyfwms.participant.repository.CriminalHistoryRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
@@ -27,8 +18,6 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 public class CriminalHistoryServiceImpl implements CriminalHistoryService{
     @Autowired
     private CriminalHistoryRepository criminalHistoryRepo;
-    @Autowired
-    private CriminalHistoryRecordRepository criminalHistoryRecordRepo;
     @Autowired
     private ModelMapper modelMapper;
 
@@ -51,7 +40,6 @@ public class CriminalHistoryServiceImpl implements CriminalHistoryService{
     @Override
     public CriminalHistoryDto saveCriminalHistory(CriminalHistoryDto criminalHistoryDto) {
         CriminalHistory criminalHistory = null;
-        CriminalHistoryRecord criminalHistoryRecord=null;
 
 
         if(criminalHistoryDto.getCriminalHistoryId() == 0){

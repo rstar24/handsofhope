@@ -19,6 +19,7 @@ import InitialContact from "./pages/initialContact/InitialContact";
 import ICSearchPanel from "./pages/initialContact/ICSearchPanel";
 import ICFileDetails from "./pages/initialContact/ICFileDetails";
 import ICREferralInformation from "./pages/initialContact/ICReferralInformation";
+import CYFMSSearchView from "./pages/cyfms/CYFMSSearchView";
 
 const CYFSWMSApp = (): ReactElement => {
   return (
@@ -33,7 +34,7 @@ const CYFSWMSApp = (): ReactElement => {
               <Route path="login" element={<Login />} />
               <Route path="cyfms/*" element={<CYFMS />} />
               <Route path="cyfms/search" element={<CYFMSSearchPanel />} />
-
+              <Route path="cyfms/search/*" element={<CYFMSSearchView />} />
               <Route path="initial_contact/*" element={<InitialContact />} />
               <Route
                 path="/initial_contact/search"

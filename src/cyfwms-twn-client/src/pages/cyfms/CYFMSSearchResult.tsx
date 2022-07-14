@@ -4,16 +4,31 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { useAppSelector } from "../../library/hooks";
+import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { Box } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
+import { doGetCYFMSRegister } from "../../features/cyfms/register/cyfmsRegisterSlice";
+import { doGetContact } from "../../features/cyfms/contact/cyfmsContactSlice";
+import { doGetEducationAndEmployment } from "../../features/cyfms/educationAndEmployment/educationAndEmploymentSlice";
+import { doGetOtherInformation } from "../../features/cyfms/otherInformation/otherInformationSlice";
 
 const CYFMSSearchResult = (): ReactElement => {
+  const dispatch = useAppDispatch();
   const searchData = useAppSelector((state) => (state as any).search.readUser);
+  const navigate = useNavigate();
+  console.log("--->", searchData);
+  const handleSearchView = (id: any) => {
+    dispatch(doGetCYFMSRegister(id));
+    dispatch(doGetContact(id));
+    dispatch(doGetEducationAndEmployment(id));
+    dispatch(doGetOtherInformation(id));
+  };
   return (
     <Box sx={{ my: 10, ml: -55 }}>
       <Table sx={{ minWidth: 800 }} aria-label="simple table">
         <TableHead>
           <TableRow>
+            <TableCell>Id</TableCell>
             <TableCell>First Name</TableCell>
             <TableCell>Middle Name</TableCell>
             <TableCell>Last Name</TableCell>
@@ -29,6 +44,14 @@ const CYFMSSearchResult = (): ReactElement => {
               key={i}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
+              <TableCell>
+                <Link
+                  to={`view/${i.participantId}`}
+                  onClick={() => handleSearchView(i.participantId)}
+                >
+                  {i.participantId}
+                </Link>
+              </TableCell>
               <TableCell>{i.firstname}</TableCell>
               <TableCell>{i.middleName}</TableCell>
               <TableCell>{i.surname}</TableCell>

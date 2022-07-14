@@ -90,3 +90,85 @@ codetablevalues:
     JOBSEARCH:
       "en": "Job Search"
       "fr": "Job search"
+
+  initialContactStatus:
+    DEFAULT:
+      "en": ""
+      "fr": ""
+    PROGRESS:
+      "en": "In Progress"
+      "fr": "In Progress"
+    CLOSED:
+      "en": "Closed"
+      "fr": "Closed"
+
+
+  initialContactReferral:
+    DEFAULT:
+      "en": ""
+      "fr": ""
+    YES:
+      "en": "Yes"
+      "fr": "Yes"
+    No:
+      "en": "No"
+      "fr": "No"
+
+
+  presentConcerns:
+     DEFAULT:
+      "en": ""
+      "fr": ""
+     HEALTH:
+      "en": "Health"
+      "fr": "Health"
+     ADDICTION:
+      "en": "Addiction"
+      "fr": "Addiction"
+     ABUSE:
+      "en": "Abuse"
+      "fr": "Abuse"
+
+
+  mentalHealthOrSubstanceAbuse:
+    DEFAULT:
+      "en": ""
+      "fr": ""
+    ALCOHOL:
+      "en": "Alcohol"
+      "fr": "Alcohol"
+    DRUGS:
+      "en": "Drugs"
+      "fr": "Drugs"
+    NARCOTIC:
+      "en": "Narcotic"
+      "fr": "Narcotic"
+
+
+  typeOfPatient:
+    DEFAULT:
+      "en": ""
+      "fr": ""
+    OUTPATIENT:
+      "en": "Outpatient"
+      "fr": "Outpatient"
+    INPATIENT:
+      "en": "Inpatient"
+      "fr": "Inpatient"
+
+  risk:
+    DEFAULT:
+      "en": ""
+      "fr": ""
+    LOW:
+      "en": "Low"
+      "fr": "Low"
+    MEDIUM:
+      "en": "Medium"
+      "fr": "Medium"
+    HIGH:
+      "en": "High"
+      "fr": "High"
+
+
+
