@@ -19,7 +19,7 @@ import { cleanCriminalHistoryState } from "../../features/cyfms/criminalHistory/
 import { cleanEducationAndEmploymentState } from "../../features/cyfms/educationAndEmployment/educationAndEmploymentSlice";
 import { cleanFamilyPhysiciansState } from "../../features/cyfms/familyPhysicians/cyfmsFamilyPhysiciansSlice";
 import { cleanHouseholdMembersState } from "../../features/cyfms/householdMembers/cyfmsHouseholdMembersSlice";
-import { cleanOtherInformationState } from "../../features/cyfms/otherInformation/otherInformationSlice";
+import { cleanOtherInformationState } from "../../features/cyfms/otherInformation/cyfmsOtherInformationSlice";
 import { cleanRegisterState } from "../../features/cyfms/register/cyfmsRegisterSlice";
 import { cleanSearchState } from "../../features/search/searchSlice";
 import { CYFMSSideNavContext } from "./CYFMSSideNav";
@@ -43,15 +43,15 @@ const CYFMSPopup = (props: ModalUnstyledProps): ReactElement => {
 
   const handleClose = () => {
     dispatch(cleanCodetableState());
-    dispatch(cleanContactState);
+    dispatch(cleanContactState(null));
     dispatch(cleanCriminalHistoryState());
     dispatch(cleanEducationAndEmploymentState());
-    dispatch(cleanFamilyPhysiciansState);
-    dispatch(cleanHouseholdMembersState);
-    dispatch(cleanOtherInformationState());
+    dispatch(cleanFamilyPhysiciansState(null));
+    dispatch(cleanHouseholdMembersState(null));
+    dispatch(cleanOtherInformationState(null));
     dispatch(cleanRegisterState());
     dispatch(cleanSearchState());
-    dispatch(cleanCounselorsState);
+    dispatch(cleanCounselorsState(null));
   };
 
   return (

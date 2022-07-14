@@ -9,7 +9,7 @@ import { cleanCriminalHistoryState } from "../../../features/cyfms/criminalHisto
 import { cleanEducationAndEmploymentState } from "../../../features/cyfms/educationAndEmployment/educationAndEmploymentSlice";
 import { cleanFamilyPhysiciansState } from "../../../features/cyfms/familyPhysicians/cyfmsFamilyPhysiciansSlice";
 import { cleanHouseholdMembersState } from "../../../features/cyfms/householdMembers/cyfmsHouseholdMembersSlice";
-import { cleanOtherInformationState } from "../../../features/cyfms/otherInformation/otherInformationSlice";
+import { cleanOtherInformationState } from "../../../features/cyfms/otherInformation/cyfmsOtherInformationSlice";
 import { cleanRegisterState } from "../../../features/cyfms/register/cyfmsRegisterSlice";
 import { cleanSearchState } from "../../../features/search/searchSlice";
 import { cleanCounselorsState } from "../../../features/cyfms/counselors/cyfmsCounselorsSlice";
@@ -52,7 +52,7 @@ export default function Navbar() {
     dispatch(cleanEducationAndEmploymentState());
     dispatch(cleanFamilyPhysiciansState);
     dispatch(cleanHouseholdMembersState);
-    dispatch(cleanOtherInformationState());
+    dispatch(cleanOtherInformationState);
     dispatch(cleanRegisterState());
     dispatch(cleanSearchState());
     dispatch(cleanCounselorsState);

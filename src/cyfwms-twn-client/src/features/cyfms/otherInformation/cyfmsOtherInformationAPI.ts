@@ -1,8 +1,5 @@
-import {
-  OtherInformationGetData,
-  OtherInformationPostData,
-} from "./otherInformationSlice";
 import axios from "axios";
+import type { cyfmsOtherInformationData } from "./cyfmsOtherInformationSlice";
 import type { AxiosResponse } from "axios";
 
 const axiosInstance = axios.create({
@@ -12,11 +9,11 @@ const axiosInstance = axios.create({
 });
 
 export const doGetOtherInformationAPI = async (
-  data: OtherInformationGetData,
+  participantId: number,
   jwtToken: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.get(
-    "readParticipantOtherInformation/" + data,
+    "readParticipantOtherInformation/" + participantId,
     {
       headers: { Authorization: "Bearer " + jwtToken },
     }
@@ -25,12 +22,12 @@ export const doGetOtherInformationAPI = async (
 };
 
 export const doPostOtherInformationAPI = async (
-  data: OtherInformationPostData,
+  cyfmsHouseholdMembersFormData: cyfmsOtherInformationData,
   jwtToken: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.put(
     "saveParticipantOtherInformation/",
-    data.user,
+    cyfmsHouseholdMembersFormData,
     {
       headers: { Authorization: "Bearer " + jwtToken },
     }

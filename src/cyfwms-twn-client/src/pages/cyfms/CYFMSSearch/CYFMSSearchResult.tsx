@@ -11,7 +11,7 @@ import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import { doGetCYFMSRegister } from "../../../features/cyfms/register/cyfmsRegisterSlice";
 import { doGetContact } from "../../../features/cyfms/contact/cyfmsContactSlice";
 import { doGetEducationAndEmployment } from "../../../features/cyfms/educationAndEmployment/educationAndEmploymentSlice";
-import { doGetOtherInformation } from "../../../features/cyfms/otherInformation/otherInformationSlice";
+import { doGetOtherInformation } from "../../../features/cyfms/otherInformation/cyfmsOtherInformationSlice";
 import { doGetCriminalHistory } from "../../../features/cyfms/criminalHistory/criminalhistorySlice";
 
 const CYFMSSearchResult = (): ReactElement => {

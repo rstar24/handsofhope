@@ -1,25 +1,27 @@
 import { CYFSWMSSaveButton } from "../../components/CYFSWMSButtons";
-import CYFMSTextArea from "../../components/cyfms/CYFMSTextArea";
 import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
-import {
-  cleanOtherInformationState,
-  doGetOtherInformation,
-  doPostOtherInformation,
-} from "../../features/cyfms/otherInformation/otherInformationSlice";
-import { PopupContext } from "./CYFMS";
-import { Box, Typography } from "@mui/material";
-import type { FormEvent, ReactElement } from "react";
-import { useAppDispatch, useAppSelector } from "../../library/hooks";
-import React, { useContext, useEffect } from "react";
+import CYFMSTextArea from "../../components/cyfms/CYFMSTextArea";
 import { cleanCodetableState } from "../../features/codetable/codetableSlice";
 import { cleanContactState } from "../../features/cyfms/contact/cyfmsContactSlice";
+import { cleanCounselorsState } from "../../features/cyfms/counselors/cyfmsCounselorsSlice";
 import { cleanCriminalHistoryState } from "../../features/cyfms/criminalHistory/criminalhistorySlice";
 import { cleanEducationAndEmploymentState } from "../../features/cyfms/educationAndEmployment/educationAndEmploymentSlice";
 import { cleanFamilyPhysiciansState } from "../../features/cyfms/familyPhysicians/cyfmsFamilyPhysiciansSlice";
 import { cleanHouseholdMembersState } from "../../features/cyfms/householdMembers/cyfmsHouseholdMembersSlice";
+import {
+  cleanOtherInformationState,
+  doGetOtherInformation,
+  doPostOtherInformation,
+} from "../../features/cyfms/otherInformation/cyfmsOtherInformationSlice";
 import { cleanRegisterState } from "../../features/cyfms/register/cyfmsRegisterSlice";
 import { cleanSearchState } from "../../features/search/searchSlice";
-import { cleanCounselorsState } from "../../features/cyfms/counselors/cyfmsCounselorsSlice";
+import { useAppDispatch, useAppSelector } from "../../library/hooks";
+import { PopupContext } from "./CYFMS";
+import { CYFMSSideNavContext } from "../../components/cyfms/CYFMSSideNav";
+import { Box, Typography } from "@mui/material";
+import React, { useContext, useEffect } from "react";
+import type { cyfmsOtherInformationData } from "../../features/cyfms/otherInformation/cyfmsOtherInformationSlice";
+import type { FormEvent, ReactElement } from "react";
 
 /**
  * The CYFMSOtherInformation functional component.
@@ -27,56 +29,61 @@ import { cleanCounselorsState } from "../../features/cyfms/counselors/cyfmsCouns
  */
 const CYFMSOtherInformation = (): ReactElement => {
   const popupContext = useContext(PopupContext);
+  const sideNavContext = useContext(CYFMSSideNavContext);
   const dispatch = useAppDispatch();
   const participantId = useAppSelector(
     (state) => (state as any).cyfmsRegister.user.participantId
   );
-  const readData = useAppSelector(
-    (state) => (state as any).otherInformation.readUser
-  );
   const otherInformationData = useAppSelector(
-    (state) => (state as any).otherInformation.user
+    (state: any) => state.cyfmsOtherInformation.otherInformationData
   );
-  console.log(readData);
-  useEffect(() => {
-    dispatch(doGetOtherInformation(participantId));
-  }, [dispatch, otherInformationData, participantId]);
 
+  useEffect(() => {
+    dispatch(doGetOtherInformation(null))
+      .unwrap()
+      .then((otherInformationDataFromAPI) => {
+        console.log("otherInformation GET backend API was successful!");
+      })
+      .catch((err) => {
+        console.log("otherInformation GET backend API didn't work!");
+        console.log(err);
+      });
+  }, []);
+
+  // Handles the form data submission and other
+  // activities.
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
-    const data: any = e.currentTarget;
-    const newOtherInformation = {
+    const cyfmsOtherInformationForm: any = e.currentTarget;
+    const cyfmsOtherInformationFormData: cyfmsOtherInformationData = {
       participantId: participantId,
-      participantOtherInfoId: 0,
-      strength: data.otherInformation_Strengths.value,
-      weakness: data.otherInformation_Weaknesses.value,
-      skills: data.otherInformation_Skills.value,
-      experiences: data.otherInformation_Experiences.value,
-      effectiveCopingSkills: data.otherInformation_EffectiveCopingSkills.value,
+      participantOtherInfoId: otherInformationData.participantOtherInfoId,
+      strength: cyfmsOtherInformationForm.otherInformation_Strengths.value,
+      weakness: cyfmsOtherInformationForm.otherInformation_Weaknesses.value,
+      skills: cyfmsOtherInformationForm.otherInformation_Skills.value,
+      experiences: cyfmsOtherInformationForm.otherInformation_Experiences.value,
+      effectiveCopingSkills:
+        cyfmsOtherInformationForm.otherInformation_EffectiveCopingSkills.value,
     };
-    dispatch(doPostOtherInformation({ user: newOtherInformation }))
-      .then(
-        () => {
-          console.log("OtherInformation data has been posted!");
-          // TODO: And also perform other store cleanups
-          popupContext.setOpen(false);
-        },
-        (err) => {
-          console.log("EducationAndEmployment data NOT posted!");
-          console.log(err);
-        }
-      )
+    dispatch(doPostOtherInformation(cyfmsOtherInformationFormData))
       .then(() => {
         dispatch(cleanCodetableState());
-        dispatch(cleanContactState);
+        dispatch(cleanContactState(null));
         dispatch(cleanCriminalHistoryState());
         dispatch(cleanEducationAndEmploymentState());
-        dispatch(cleanFamilyPhysiciansState);
-        dispatch(cleanHouseholdMembersState);
-        dispatch(cleanOtherInformationState());
+        dispatch(cleanFamilyPhysiciansState(null));
+        dispatch(cleanHouseholdMembersState(null));
+        dispatch(cleanOtherInformationState(null));
         dispatch(cleanRegisterState());
         dispatch(cleanSearchState());
-        dispatch(cleanCounselorsState);
+        dispatch(cleanCounselorsState(null));
+        console.log("otherInformation POST backend API was successful!");
+        popupContext.setOpen(false);
+        sideNavContext.setHideTabs(true);
+      })
+      .catch((err) => {
+        console.log("otherInformation POST backend API was successful!");
+        console.log(err);
       });
   };
 
@@ -97,27 +104,27 @@ const CYFMSOtherInformation = (): ReactElement => {
         <CYFMSTextArea
           id="otherInformation_Strengths"
           value="Strengths"
-          autofil={readData.strengths}
+          autofil={otherInformationData.strengths}
         />
         <CYFMSTextArea
           id="otherInformation_Weaknesses"
           value="Weaknesses"
-          autofill={readData.weakness}
+          autofill={otherInformationData.weakness}
         />
         <CYFMSTextArea
           id="otherInformation_Skills"
           value="Skills"
-          autofill={readData.skills}
+          autofill={otherInformationData.skills}
         />
         <CYFMSTextArea
           id="otherInformation_Experiences"
           value="Experiences"
-          autofill={readData.experiences}
+          autofill={otherInformationData.experiences}
         />
         <CYFMSTextArea
           id="otherInformation_EffectiveCopingSkills"
           value="Effective Coping Skills"
-          autofill={readData.effectiveCopingSkills}
+          autofill={otherInformationData.effectiveCopingSkills}
         />
         <Box sx={{ display: "flex", justifyContent: "right" }}>
           <CYFSWMSSaveButton />

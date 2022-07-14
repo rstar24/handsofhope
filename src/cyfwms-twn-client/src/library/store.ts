@@ -5,7 +5,7 @@ import criminalhistoryReducer from "../features/cyfms/criminalHistory/criminalhi
 import cyfmsFamilyPhysiciansReducer from "../features/cyfms/familyPhysicians/cyfmsFamilyPhysiciansSlice";
 import cyfmsHouseholdMembersReducer from "../features/cyfms/householdMembers/cyfmsHouseholdMembersSlice";
 import loginReducer from "../features/login/loginSlice";
-import otherInformationReducer from "../features/cyfms/otherInformation/otherInformationSlice";
+import cyfmsOtherInformationReducer from "../features/cyfms/otherInformation/cyfmsOtherInformationSlice";
 import cyfmsRegisterReducer from "../features/cyfms/register/cyfmsRegisterSlice";
 import cyfmsCounselorsReducer from "../features/cyfms/counselors/cyfmsCounselorsSlice";
 import searchReducer from "../features/search/searchSlice";
@@ -21,7 +21,7 @@ export const store = configureStore({
     cyfmsFamilyPhysicians: cyfmsFamilyPhysiciansReducer,
     cyfmsCounselors: cyfmsCounselorsReducer,
     criminalHistory: criminalhistoryReducer,
-    otherInformation: otherInformationReducer,
+    cyfmsOtherInformation: cyfmsOtherInformationReducer,
     educationAndEmployment: educationAndEmploymentReducer,
     search: searchReducer,
   },
