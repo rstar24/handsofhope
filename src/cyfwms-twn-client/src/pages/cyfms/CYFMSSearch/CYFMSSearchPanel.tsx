@@ -1,14 +1,14 @@
-import AuthLayout from "../../components/auth/layout/AuthLayout";
-import CYFMSInput from "../../components/cyfms/CYFMSInput";
+import AuthLayout from "../../../components/auth/layout/AuthLayout";
+import CYFMSInput from "../../../components/cyfms/CYFMSInput";
 import { Box, Button } from "@mui/material";
 
 import React, { useState } from "react";
 
-import CYFMSHeader from "../../components/cyfms/CYFMSHeader";
+import CYFMSHeader from "../../../components/cyfms/CYFMSHeader";
 import type { FormEvent, ReactElement } from "react";
 import CYFMSSearchResult from "./CYFMSSearchResult";
-import { useAppDispatch, useAppSelector } from "../../library/hooks";
-import { doGetSearch } from "../../features/search/searchSlice";
+import { useAppDispatch, useAppSelector } from "../../../library/hooks";
+import { doGetSearch } from "../../../features/search/searchSlice";
 import { current } from "@reduxjs/toolkit";
 /**
  * The CYFMSSearchPanel functional component.

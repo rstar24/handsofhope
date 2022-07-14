@@ -14,12 +14,12 @@ import NotFound404 from "./pages/NotFound404";
 import CYFMSSearch from "./pages/cyfms/CYFMSSearch";
 import React, { StrictMode } from "react";
 import type { ReactElement } from "react";
-import CYFMSSearchPanel from "./pages/cyfms/CYFMSSearchPanel";
+import CYFMSSearchPanel from "./pages/cyfms/CYFMSSearch/CYFMSSearchPanel";
 import InitialContact from "./pages/initialContact/InitialContact";
 import ICSearchPanel from "./pages/initialContact/ICSearchPanel";
-import ICFileDetails from "./pages/initialContact/ICFileDetails";
-import ICREferralInformation from "./pages/initialContact/ICReferralInformation";
-import CYFMSSearchView from "./pages/cyfms/CYFMSSearchView";
+
+import ViewHome from "./pages/cyfms/CYFMSSearch/View/ViewHome";
+import CYFMSSearchView from "./pages/cyfms/CYFMSSearch/CYFMSSearchView";
 
 const CYFSWMSApp = (): ReactElement => {
   return (
@@ -35,6 +35,7 @@ const CYFSWMSApp = (): ReactElement => {
               <Route path="cyfms/*" element={<CYFMS />} />
               <Route path="cyfms/search" element={<CYFMSSearchPanel />} />
               <Route path="cyfms/search/*" element={<CYFMSSearchView />} />
+              <Route path="cyfms/search/view" element={<ViewHome />} />
               <Route path="initial_contact/*" element={<InitialContact />} />
               <Route
                 path="/initial_contact/search"

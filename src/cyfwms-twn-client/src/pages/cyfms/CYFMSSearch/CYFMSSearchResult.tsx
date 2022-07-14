@@ -4,13 +4,15 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { useAppDispatch, useAppSelector } from "../../library/hooks";
+
 import { Box } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import { doGetCYFMSRegister } from "../../features/cyfms/register/cyfmsRegisterSlice";
-import { doGetContact } from "../../features/cyfms/contact/cyfmsContactSlice";
-import { doGetEducationAndEmployment } from "../../features/cyfms/educationAndEmployment/educationAndEmploymentSlice";
-import { doGetOtherInformation } from "../../features/cyfms/otherInformation/otherInformationSlice";
+import { useAppDispatch, useAppSelector } from "../../../library/hooks";
+import { doGetCYFMSRegister } from "../../../features/cyfms/register/cyfmsRegisterSlice";
+import { doGetContact } from "../../../features/cyfms/contact/cyfmsContactSlice";
+import { doGetEducationAndEmployment } from "../../../features/cyfms/educationAndEmployment/educationAndEmploymentSlice";
+import { doGetOtherInformation } from "../../../features/cyfms/otherInformation/otherInformationSlice";
+import { doGetCriminalHistory } from "../../../features/cyfms/criminalHistory/criminalhistorySlice";
 
 const CYFMSSearchResult = (): ReactElement => {
   const dispatch = useAppDispatch();
@@ -22,6 +24,7 @@ const CYFMSSearchResult = (): ReactElement => {
     dispatch(doGetContact(id));
     dispatch(doGetEducationAndEmployment(id));
     dispatch(doGetOtherInformation(id));
+    dispatch(doGetCriminalHistory(id));
   };
   return (
     <Box sx={{ my: 10, ml: -55 }}>
