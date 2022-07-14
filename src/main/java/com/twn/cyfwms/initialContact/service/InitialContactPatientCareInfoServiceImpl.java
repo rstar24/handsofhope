@@ -39,12 +39,12 @@ public class InitialContactPatientCareInfoServiceImpl implements InitialContactP
     @Override
     public InitialContactPatientCareInfoDto saveAllPatientCareInfo(InitialContactPatientCareInfoDto initialContactPatientCareInfoDto) {
         InitialContactPatientCareInfo initialContactPatientCareInfo=null;
-        if(initialContactPatientCareInfoDto.getFileDetailsId()==0) {
+        if(initialContactPatientCareInfoDto.getPatientCareInfoId()==0) {
             initialContactPatientCareInfo=new InitialContactPatientCareInfo();
             modelMapper.map(initialContactPatientCareInfoDto, initialContactPatientCareInfo);
         }else {
             initialContactPatientCareInfo=initialContactPatientCareInfoRepository
-                    .findById(initialContactPatientCareInfoDto.getFileDetailsId()).get();
+                    .findById(initialContactPatientCareInfoDto.getPatientCareInfoId()).get();
             modelMapper.map(initialContactPatientCareInfoDto, initialContactPatientCareInfo);
         }
         initialContactPatientCareInfo=initialContactPatientCareInfoRepository.save(initialContactPatientCareInfo);

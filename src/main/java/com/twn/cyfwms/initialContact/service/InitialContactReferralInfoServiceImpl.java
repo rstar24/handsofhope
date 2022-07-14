@@ -40,12 +40,12 @@ public class InitialContactReferralInfoServiceImpl implements InitialContactRefe
     @Override
     public InitialContactReferralInfoDto saveAllReferralInfo(InitialContactReferralInfoDto initialContactReferralInfoDto) {
         InitialContactReferralInfo initialContactReferralInfo=null;
-        if(initialContactReferralInfoDto.getFileDetailsId()==0) {
+        if(initialContactReferralInfoDto.getReferralInfoId()==0) {
             initialContactReferralInfo=new InitialContactReferralInfo();
             modelMapper.map(initialContactReferralInfoDto, initialContactReferralInfo);
         }else {
             initialContactReferralInfo=initialContactReferralInfoRepository
-                    .findById(initialContactReferralInfoDto.getFileDetailsId()).get();
+                    .findById(initialContactReferralInfoDto.getReferralInfoId()).get();
             modelMapper.map(initialContactReferralInfoDto, initialContactReferralInfo);
         }
         initialContactReferralInfo=initialContactReferralInfoRepository.save(initialContactReferralInfo);

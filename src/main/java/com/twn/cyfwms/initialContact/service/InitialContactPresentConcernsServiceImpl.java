@@ -39,12 +39,12 @@ public class InitialContactPresentConcernsServiceImpl  implements InitialContact
     @Override
     public InitialContactPresentConcernsDto saveAllPresentConcerns(InitialContactPresentConcernsDto initialContactPresentConcernsDto) {
         InitialContactPresentConcerns initialContactPresentConcerns=null;
-        if(initialContactPresentConcernsDto.getFileDetailsId()==0) {
+        if(initialContactPresentConcernsDto.getPresentConcernsId()==0) {
             initialContactPresentConcerns=new InitialContactPresentConcerns();
             modelMapper.map(initialContactPresentConcernsDto, initialContactPresentConcerns);
         }else {
             initialContactPresentConcerns=initialContactPresentConcernsRepository
-                    .findById(initialContactPresentConcernsDto.getFileDetailsId()).get();
+                    .findById(initialContactPresentConcernsDto.getPresentConcernsId()).get();
             modelMapper.map(initialContactPresentConcernsDto, initialContactPresentConcerns);
         }
         initialContactPresentConcerns=initialContactPresentConcernsRepository.save(initialContactPresentConcerns);

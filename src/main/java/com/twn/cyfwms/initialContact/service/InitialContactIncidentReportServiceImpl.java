@@ -39,11 +39,11 @@ public class InitialContactIncidentReportServiceImpl implements InitialContactIn
     @Override
     public InitialContactIncidentReportDto saveAllIncidentReports(InitialContactIncidentReportDto initialContactIncidentReportDto) {
         InitialContactIncidentReport initialContactIncidentReport=null;
-        if(initialContactIncidentReportDto.getFileDetailsId()==0) {
+        if(initialContactIncidentReportDto.getIncidentReportId()==0) {
             initialContactIncidentReport=new InitialContactIncidentReport();
             modelMapper.map(initialContactIncidentReportDto, initialContactIncidentReport);
         }else {
-            initialContactIncidentReport=initialContactIncidentReportRepository.findById(initialContactIncidentReportDto.getFileDetailsId()).get();
+            initialContactIncidentReport=initialContactIncidentReportRepository.findById(initialContactIncidentReportDto.getIncidentReportId()).get();
             modelMapper.map(initialContactIncidentReportDto, initialContactIncidentReport);
         }
         initialContactIncidentReport=initialContactIncidentReportRepository.save(initialContactIncidentReport);
