@@ -49,6 +49,8 @@ public class CriminalHistoryServiceImpl implements CriminalHistoryService{
             for (int i=0;criminalHistory.getCriminalHistoryRecordList().size()-1>=i; i++ ){
                 criminalHistory.getCriminalHistoryRecordList().get(i).setStatus("ACTIVE");
 
+
+
             }
 
         }
@@ -59,6 +61,19 @@ public class CriminalHistoryServiceImpl implements CriminalHistoryService{
         }
         criminalHistory = criminalHistoryRepo.save(criminalHistory);
         criminalHistoryDto.setCriminalHistoryId(criminalHistory.getCriminalHistoryId());
+        for (int i=0;criminalHistory.getCriminalHistoryRecordList().size()-1>=i; i++ ){
+            criminalHistoryDto.getCriminalHistoryRecordList().get(i)
+                    .setCriminalHistoryRecordId(criminalHistory.getCriminalHistoryRecordList().get(i).getCriminalHistoryRecordId());
+
+            criminalHistory.getCriminalHistoryRecordList().get(i)
+                    .setCriminalHistoryId(criminalHistoryDto.getCriminalHistoryId());
+
+            criminalHistoryDto.getCriminalHistoryRecordList().get(i)
+                    .setCriminalHistoryId(criminalHistory.getCriminalHistoryRecordList().get(i).getCriminalHistoryId());
+
+
+        }
+
         return criminalHistoryDto;
     }
 }
