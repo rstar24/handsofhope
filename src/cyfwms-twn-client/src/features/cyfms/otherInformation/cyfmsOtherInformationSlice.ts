@@ -37,7 +37,7 @@ export const doGetOtherInformation = createAsyncThunk(
   async (arg: any, { getState }) => {
     const store: any = getState();
     const res: AxiosResponse = await doGetOtherInformationAPI(
-      store.cyfmsRegister.user.participantId,
+      arg || store.cyfmsRegister.user.participantId,
       store.login.jwtToken
     );
     // Becomes the `fulfilled` action payload:

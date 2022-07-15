@@ -39,7 +39,7 @@ export const doGetFamilyPhysicians = createAsyncThunk(
   async (arg: any, { getState }) => {
     const store: any = getState();
     const res: AxiosResponse = await doGetFamilyPhysiciansAPI(
-      store.cyfmsRegister.user.participantId,
+      arg || store.cyfmsRegister.user.participantId,
       store.login.jwtToken
     );
     // Becomes the `fulfilled` action payload:

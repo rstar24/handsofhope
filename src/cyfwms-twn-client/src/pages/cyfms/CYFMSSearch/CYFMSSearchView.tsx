@@ -11,6 +11,9 @@ import ViewContact from "./View/ViewContact";
 import ViewEducationAndEmployment from "./View/ViewEducationAndEmployment";
 import ViewOtherInformation from "./View/ViewOtherInformation";
 import { useAppSelector } from "../../../library/hooks";
+import ViewFamilyPhysician from "./View/ViewFamilyPhysician";
+import ViewHouseholdMembers from "./View/ViewHouseholdMembers";
+import ViewCouncelors from "./View/ViewCouncelors";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -127,6 +130,7 @@ const CYFMSSearchView = (): ReactElement => {
             }}
           >
             <Tabs
+              variant="scrollable"
               value={value}
               onChange={handleChange}
               aria-label="basic tabs example"
@@ -142,7 +146,7 @@ const CYFMSSearchView = (): ReactElement => {
               <Tab label="Education and Employment" {...tabPanelProps(3)} />
               <Tab label="Criminal History" {...tabPanelProps(4)} />
               <Tab label="Family Physician" {...tabPanelProps(5)} />
-              <Tab label="CFS Worker" {...tabPanelProps(6)} />
+              <Tab label="Counselor/ CFS Worker" {...tabPanelProps(6)} />
               <Tab label="Other Information" {...tabPanelProps(7)} />
             </Tabs>
           </Box>
@@ -153,7 +157,7 @@ const CYFMSSearchView = (): ReactElement => {
             <ViewContact />
           </TabPanel>
           <TabPanel value={value} index={2}>
-            working
+            <ViewHouseholdMembers />
           </TabPanel>
           <TabPanel value={value} index={3}>
             <ViewEducationAndEmployment />
@@ -162,10 +166,10 @@ const CYFMSSearchView = (): ReactElement => {
             Working
           </TabPanel>
           <TabPanel value={value} index={5}>
-            Working
+            <ViewFamilyPhysician />
           </TabPanel>
           <TabPanel value={value} index={6}>
-            Working
+            <ViewCouncelors />
           </TabPanel>
           <TabPanel value={value} index={7}>
             <ViewOtherInformation />

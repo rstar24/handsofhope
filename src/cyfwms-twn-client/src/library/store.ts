@@ -18,11 +18,11 @@ export const store = configureStore({
     cyfmsRegister: cyfmsRegisterReducer,
     cyfmsContact: cyfmsContactReducer,
     cyfmsHouseholdMembers: cyfmsHouseholdMembersReducer,
+    educationAndEmployment: educationAndEmploymentReducer,
+    criminalHistory: criminalhistoryReducer,
     cyfmsFamilyPhysicians: cyfmsFamilyPhysiciansReducer,
     cyfmsCounselors: cyfmsCounselorsReducer,
-    criminalHistory: criminalhistoryReducer,
     cyfmsOtherInformation: cyfmsOtherInformationReducer,
-    educationAndEmployment: educationAndEmploymentReducer,
     search: searchReducer,
   },
 });

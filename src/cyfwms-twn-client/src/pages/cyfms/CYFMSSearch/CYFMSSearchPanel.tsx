@@ -45,6 +45,7 @@ const CYFMSSearchPanel = (): ReactElement => {
       <CYFMSHeader />
       <Box
         sx={{
+          p: 2,
           display: "flex",
           alignItems: "center",
           py: "1rem",
@@ -64,8 +65,8 @@ const CYFMSSearchPanel = (): ReactElement => {
       <Box
         component="form"
         sx={{
-          ml: 65,
-          mr: 15,
+          ml: 60,
+          mr: 20,
           display: "flex",
           flexDirection: "column",
           gap: "0.5rem 0",

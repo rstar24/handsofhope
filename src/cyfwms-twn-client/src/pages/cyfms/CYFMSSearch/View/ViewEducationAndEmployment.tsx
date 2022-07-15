@@ -1,10 +1,12 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 import { useAppSelector } from "../../../../library/hooks";
+import { styles } from "./ViewHome";
+
 const ViewEducationAndEmployment = () => {
   const data = useAppSelector((state) => state as any);
   return (
-    <Box sx={{ paddingLeft: "15%", borderBottom: 1, borderColor: "divider" }}>
+    <Box>
       {Object.entries(data.educationAndEmployment.readUser).map((t: any, k) => (
         <Box
           sx={{
@@ -18,14 +20,18 @@ const ViewEducationAndEmployment = () => {
             <>
               <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
                 {t[0] !== "participantId" && (
-                  <Typography variant="h6" fontWeight={600} fontSize={15}>
+                  <Typography
+                    variant="h6"
+                    textTransform="capitalize"
+                    style={styles.keys}
+                  >
                     {t[0]}
                   </Typography>
                 )}
               </Box>
               <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
                 {t[0] !== "participantId" && (
-                  <Typography variant="h6" fontWeight={400} fontSize={15}>
+                  <Typography variant="h6" style={styles.values}>
                     {t[1]}
                   </Typography>
                 )}

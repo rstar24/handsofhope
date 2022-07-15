@@ -39,7 +39,7 @@ const CYFMSOtherInformation = (): ReactElement => {
   );
 
   useEffect(() => {
-    dispatch(doGetOtherInformation(null))
+    dispatch(doGetOtherInformation(participantId))
       .unwrap()
       .then((otherInformationDataFromAPI) => {
         console.log("otherInformation GET backend API was successful!");
