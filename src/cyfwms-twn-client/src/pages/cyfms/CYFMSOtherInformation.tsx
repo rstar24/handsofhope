@@ -4,7 +4,7 @@ import CYFMSTextArea from "../../components/cyfms/CYFMSTextArea";
 import { cleanCodetableState } from "../../features/codetable/codetableSlice";
 import { cleanContactState } from "../../features/cyfms/contact/cyfmsContactSlice";
 import { cleanCounselorsState } from "../../features/cyfms/counselors/cyfmsCounselorsSlice";
-import { cleanCriminalHistoryState } from "../../features/cyfms/criminalHistory/criminalhistorySlice";
+import { cleanCriminalHistoryState } from "../../features/cyfms/criminalHistory/cyfmsCriminalHistorySlice";
 import { cleanEducationAndEmploymentState } from "../../features/cyfms/educationAndEmployment/educationAndEmploymentSlice";
 import { cleanFamilyPhysiciansState } from "../../features/cyfms/familyPhysicians/cyfmsFamilyPhysiciansSlice";
 import { cleanHouseholdMembersState } from "../../features/cyfms/householdMembers/cyfmsHouseholdMembersSlice";
@@ -39,7 +39,7 @@ const CYFMSOtherInformation = (): ReactElement => {
   );
 
   useEffect(() => {
-    dispatch(doGetOtherInformation(participantId))
+    dispatch(doGetOtherInformation(null))
       .unwrap()
       .then((otherInformationDataFromAPI) => {
         console.log("otherInformation GET backend API was successful!");
@@ -69,7 +69,7 @@ const CYFMSOtherInformation = (): ReactElement => {
       .then(() => {
         dispatch(cleanCodetableState());
         dispatch(cleanContactState(null));
-        dispatch(cleanCriminalHistoryState());
+        dispatch(cleanCriminalHistoryState(null));
         dispatch(cleanEducationAndEmploymentState());
         dispatch(cleanFamilyPhysiciansState(null));
         dispatch(cleanHouseholdMembersState(null));

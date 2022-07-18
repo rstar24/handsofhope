@@ -1,7 +1,7 @@
 import educationAndEmploymentReducer from "../features/cyfms/educationAndEmployment/educationAndEmploymentSlice";
 import codetableReducer from "../features/codetable/codetableSlice";
 import cyfmsContactReducer from "../features/cyfms/contact/cyfmsContactSlice";
-import criminalhistoryReducer from "../features/cyfms/criminalHistory/criminalhistorySlice";
+import cyfmsCriminalHistoryReducer from "../features/cyfms/criminalHistory/cyfmsCriminalHistorySlice";
 import cyfmsFamilyPhysiciansReducer from "../features/cyfms/familyPhysicians/cyfmsFamilyPhysiciansSlice";
 import cyfmsHouseholdMembersReducer from "../features/cyfms/householdMembers/cyfmsHouseholdMembersSlice";
 import loginReducer from "../features/login/loginSlice";
@@ -18,11 +18,11 @@ export const store = configureStore({
     cyfmsRegister: cyfmsRegisterReducer,
     cyfmsContact: cyfmsContactReducer,
     cyfmsHouseholdMembers: cyfmsHouseholdMembersReducer,
-    educationAndEmployment: educationAndEmploymentReducer,
-    criminalHistory: criminalhistoryReducer,
     cyfmsFamilyPhysicians: cyfmsFamilyPhysiciansReducer,
     cyfmsCounselors: cyfmsCounselorsReducer,
+    cyfmsCriminalHistory: cyfmsCriminalHistoryReducer,
     cyfmsOtherInformation: cyfmsOtherInformationReducer,
+    educationAndEmployment: educationAndEmploymentReducer,
     search: searchReducer,
   },
 });

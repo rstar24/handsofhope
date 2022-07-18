@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../../library/hooks";
 import { cleanCodetableState } from "../../../features/codetable/codetableSlice";
 import { cleanContactState } from "../../../features/cyfms/contact/cyfmsContactSlice";
-import { cleanCriminalHistoryState } from "../../../features/cyfms/criminalHistory/criminalhistorySlice";
+import { cleanCriminalHistoryState } from "../../../features/cyfms/criminalHistory/cyfmsCriminalHistorySlice";
 import { cleanEducationAndEmploymentState } from "../../../features/cyfms/educationAndEmployment/educationAndEmploymentSlice";
 import { cleanFamilyPhysiciansState } from "../../../features/cyfms/familyPhysicians/cyfmsFamilyPhysiciansSlice";
 import { cleanHouseholdMembersState } from "../../../features/cyfms/householdMembers/cyfmsHouseholdMembersSlice";
@@ -48,7 +48,7 @@ export default function Navbar() {
     dispatch(onLogout());
     dispatch(cleanCodetableState());
     dispatch(cleanContactState);
-    dispatch(cleanCriminalHistoryState());
+    dispatch(cleanCriminalHistoryState);
     dispatch(cleanEducationAndEmploymentState());
     dispatch(cleanFamilyPhysiciansState);
     dispatch(cleanHouseholdMembersState);
@@ -70,14 +70,13 @@ export default function Navbar() {
         mt: 4,
       }}
     >
-      <Box color="#ffffff" sx={{ p: 0 }}>
-        <Button
-          component={Link}
-          to="/cyfms/register"
-          sx={{ color: "white", textTransform: "none" }}
-        >
-          Home
-        </Button>
+      <Box
+        color="#ffffff"
+        sx={{ p: 1, textDecoration: "none" }}
+        component={Link}
+        to="/home"
+      >
+        Home
       </Box>
       <Box color="#ffffff" sx={{ p: 0 }}>
         <Button

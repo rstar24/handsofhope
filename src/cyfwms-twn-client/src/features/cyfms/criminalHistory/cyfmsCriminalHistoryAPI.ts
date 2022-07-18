@@ -1,8 +1,5 @@
-import {
-  CriminalHistoryGetData,
-  CriminalHistoryPostData,
-} from "./criminalhistorySlice";
 import axios from "axios";
+import type { cyfmsCHData } from "./cyfmsCriminalHistorySlice";
 import type { AxiosResponse } from "axios";
 
 const axiosInstance = axios.create({
@@ -12,11 +9,11 @@ const axiosInstance = axios.create({
 });
 
 export const doGetCriminalHistoryAPI = async (
-  data: CriminalHistoryGetData,
+  participantId: number,
   jwtToken: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.get(
-    "readCriminalHistory/" + data,
+    "readCriminalHistory/" + participantId,
     {
       headers: { Authorization: "Bearer " + jwtToken },
     }
@@ -25,12 +22,12 @@ export const doGetCriminalHistoryAPI = async (
 };
 
 export const doPostCriminalHistoryAPI = async (
-  data: CriminalHistoryPostData,
+  cyfmsCriminalHistoryFormData: cyfmsCHData,
   jwtToken: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.put(
     "saveCriminalHistory/",
-    data.user,
+    cyfmsCriminalHistoryFormData,
     {
       headers: { Authorization: "Bearer " + jwtToken },
     }

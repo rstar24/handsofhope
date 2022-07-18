@@ -3,18 +3,23 @@ import {
   CYFSWMSNextButton,
 } from "../../components/CYFSWMSButtons";
 import CYFMSInput from "../../components/cyfms/CYFMSInput";
+import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
+import CYFMSTextArea from "../../components/cyfms/CYFMSTextArea";
+import CYFMSCriminalHistoryRecordList from "../../components/cyfms/records/CYFMSCriminalHistoryRecordList";
 import {
+  addMoreCriminalHistoryRecord,
   doGetCriminalHistory,
   doPostCriminalHistory,
-} from "../../features/cyfms/criminalHistory/criminalhistorySlice";
-import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
-import CYFMSCriminalHistoryRecordList from "../../components/cyfms/records/CYFMSCriminalHistoryRecordList";
+} from "../../features/cyfms/criminalHistory/cyfmsCriminalHistorySlice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { Box, Checkbox, FormControlLabel, FormGroup } from "@mui/material";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import type { FormEvent, ReactElement } from "react";
-import CYFMSTextArea from "../../components/cyfms/CYFMSTextArea";
+import type {
+  cyfmsCHData,
+  cyfmsCHRecord,
+} from "../../features/cyfms/criminalHistory/cyfmsCriminalHistorySlice";
+import type { FormEvent, ReactElement, Ref } from "react";
 
 /**
  * The CYFMSCriminalHistory functional component.
@@ -26,100 +31,79 @@ const CYFMSCriminalHistory = (): ReactElement => {
   const participantId = useAppSelector(
     (state) => (state as any).cyfmsRegister.user.participantId
   );
-  const readData = useAppSelector(
-    (state) => (state as any).criminalHistory.readUser
-  );
-  const criminalHistoryData = useAppSelector(
-    (state) => (state as any).criminalHistory.user
-  );
-
-  // State for the records list
-  const [recordList, setRecordList] = useState([{}]);
+  const data = useAppSelector((state: any) => state.cyfmsCriminalHistory.data);
 
   // Reference to the form
-  const formRef = useRef(null);
+  const formRef: Ref<HTMLFormElement> = useRef(null);
 
   useEffect(() => {
     dispatch(doGetCriminalHistory(participantId))
       .unwrap()
-      .then((recordListFromAPI) => {
-        setRecordList((previousRecordList) => [
-          ...previousRecordList,
-          ...recordListFromAPI,
-        ]);
+      .then((criminalHistoryDataFromAPI) => {
+        console.log(criminalHistoryDataFromAPI);
+        console.log("CriminalHistory GET backend API was successful!");
       })
       .catch((err) => {
-        console.log("CriminalHistory backend API didn't work");
+        console.log("CriminalHistory GET backend API didn't work!");
         console.log(err);
       });
   }, []);
 
+  // Handles the form data submission and other
+  // activities.
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
-    const data: any = e.currentTarget;
-    const newCriminalHistory = {
-      criminalHistoryId: criminalHistoryData.criminalHistoryId,
-      criminalHistoryRecordList: [
-        {
-          criminalHistoryRecordId: 0,
-          charges: data.charges.value,
-          arrestDate: data.arrestDate.value,
-          conviction: data.conviction.value,
-          sentence: data.sentence.value,
-        },
-      ],
-      //probation: data.probation.value,
-      //parole: data.parole.value,
-      conditions: data.conditions.value,
-      courtWorkerAndContactInfo: data.courtContactInfo.value,
+    const form: any = e.currentTarget;
+    const len = data.criminalHistoryRecordList.length;
+    console.log(form.criminalHistory_Probation.value);
+    const formData: cyfmsCHData = {
       participantId: participantId,
+      criminalHistoryId: data.criminalHistoryId,
+      criminalHistoryRecordList: new Array<cyfmsCHRecord>(len),
+      probation: form.criminalHistory_Probation.value === "on" ? true : false,
+      parole: form.criminalHistory_Parole.value === "on" ? true : false,
+      conditions: form.criminalHistory_Conditions.value,
+      courtWorkerAndContactInfo:
+        form.criminalHistory_CourtWorkersAndContactInformation.value,
     };
-
-    dispatch(doPostCriminalHistory({ user: newCriminalHistory }))
+    for (let index = 0; index < len; ++index) {
+      formData.criminalHistoryRecordList[index] = {
+        criminalHistoryRecordId:
+          data.criminalHistoryRecordList[index].criminalHistoryRecordId,
+        arrestDate:
+          form[`criminalHistory_record_${index + 1}_ArrestDate`].value,
+        charges: form[`criminalHistory_record_${index + 1}_Charges`].value,
+        conviction:
+          form[`criminalHistory_record_${index + 1}_Conviction`].value,
+        sentence: form[`criminalHistory_record_${index + 1}_Sentence`].value,
+      };
+    }
+    console.log("this is executed by form submission: ", formData);
+    dispatch(doPostCriminalHistory(formData))
       .unwrap()
       .then(() => {
-        console.log("CriminalHistory data has been posted!");
+        console.log("criminalHistory POST backend API was successful!");
         navigate("/cyfms/family_physicians");
       })
       .catch((err) => {
-        console.log("CriminalHistory data NOT posted!");
+        console.log("criminalHistory POST backend API didn't work!");
         console.log(err);
       });
   };
 
   const addMoreHandler = (e: MouseEvent) => {
     e.preventDefault();
-    if (recordList.length >= 1) {
-      setRecordList((previousList: any) => [
-        ...previousList,
-        {
-          participantId: participantId,
-          householdMemberId: 0,
-          name: (formRef.current as any)[`criminalHistory_record_${1}_Arrest`]
-            .value,
-          gender: (formRef.current as any)[
-            `criminalHistory_record_${1}_Charges`
-          ].value,
-          dateOfBirth: (formRef.current as any)[
-            `criminalHistory_record_${1}_Conviction`
-          ].value,
-          residing: (formRef.current as any)[
-            `criminalHistory_record_${1}_Sentence`
-          ].value,
-        },
-      ]);
-    } else {
-      setRecordList((previousRecordList) => [
-        ...previousRecordList,
-        {
-          criminalHistoryRecordId: 0,
-          charges: "",
-          arrestDate: "",
-          conviction: "",
-          sentence: "",
-        },
-      ]);
-    }
+    const form: any = formRef.current;
+    const len = data.criminalHistoryRecordList.length;
+    dispatch(
+      addMoreCriminalHistoryRecord({
+        criminalHistoryRecordId: 0,
+        arrestDate: form[`criminalHistory_record_${len}_ArrestDate`].value,
+        charges: form[`criminalHistory_record_${len}_Charges`].value,
+        conviction: form[`criminalHistory_record_${len}_Conviction`].value,
+        sentence: form[`criminalHistory_record_${len}_Sentence`].value,
+      })
+    );
   };
 
   return (
@@ -135,7 +119,7 @@ const CYFMSCriminalHistory = (): ReactElement => {
         ref={formRef}
       >
         <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem 0" }}>
-          {CYFMSCriminalHistoryRecordList(recordList)}
+          {CYFMSCriminalHistoryRecordList(data.criminalHistoryRecordList)}
         </Box>
         <Box>
           <CYFSWMSAddButton onClick={addMoreHandler} />
@@ -145,7 +129,7 @@ const CYFMSCriminalHistory = (): ReactElement => {
             <FormControlLabel
               control={
                 <Checkbox
-                  defaultChecked={false}
+                  defaultChecked={data.probation}
                   id="criminalHistory_Probation"
                 />
               }
@@ -153,21 +137,24 @@ const CYFMSCriminalHistory = (): ReactElement => {
             />
             <FormControlLabel
               control={
-                <Checkbox defaultChecked={false} id="criminalHistory_Parole" />
+                <Checkbox
+                  defaultChecked={data.parole}
+                  id="criminalHistory_Parole"
+                />
               }
               label="Parole"
             />
           </FormGroup>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CYFMSInput
+              autofill={data.conditions}
               id="criminalHistory_Conditions"
               value="Condition(s)"
-              autofill={readData.conditions}
             />
           </Box>
         </Box>
         <CYFMSTextArea
-          autofill={readData.courtWorkerAndContactInfo}
+          autofill={data.courtWorkerAndContactInfo}
           id="criminalHistory_CourtWorkersAndContactInformation"
           value="Court Worker(s) And Contact Information"
         />

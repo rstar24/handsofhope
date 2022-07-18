@@ -15,7 +15,7 @@ import type { ReactElement } from "react";
 import { useAppDispatch } from "../../library/hooks";
 import { cleanCodetableState } from "../../features/codetable/codetableSlice";
 import { cleanContactState } from "../../features/cyfms/contact/cyfmsContactSlice";
-import { cleanCriminalHistoryState } from "../../features/cyfms/criminalHistory/criminalhistorySlice";
+import { cleanCriminalHistoryState } from "../../features/cyfms/criminalHistory/cyfmsCriminalHistorySlice";
 import { cleanEducationAndEmploymentState } from "../../features/cyfms/educationAndEmployment/educationAndEmploymentSlice";
 import { cleanFamilyPhysiciansState } from "../../features/cyfms/familyPhysicians/cyfmsFamilyPhysiciansSlice";
 import { cleanHouseholdMembersState } from "../../features/cyfms/householdMembers/cyfmsHouseholdMembersSlice";
@@ -44,7 +44,7 @@ const CYFMSPopup = (props: ModalUnstyledProps): ReactElement => {
   const handleClose = () => {
     dispatch(cleanCodetableState());
     dispatch(cleanContactState(null));
-    dispatch(cleanCriminalHistoryState());
+    dispatch(cleanCriminalHistoryState(null));
     dispatch(cleanEducationAndEmploymentState());
     dispatch(cleanFamilyPhysiciansState(null));
     dispatch(cleanHouseholdMembersState(null));

@@ -7,7 +7,7 @@ import type {
   ElementType,
   ReactElement,
 } from "react";
-import CYFMSDateInput from "../CYFMSDateInput";
+
 /**
  * A custom props data type for the props passed
  * to the `CYFMSCriminalHistoryRecord` component.
@@ -36,7 +36,8 @@ export const CYFMSCriminalHistoryRecord = (
       <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem 0" }}>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CYFMSDateInput
+            <CYFMSInput
+              autofill={props.record.arrestDate}
               id={`criminalHistory_record_${props.recordNumber}_ArrestDate`}
               value="Arrest Date"
               type="date"
@@ -45,14 +46,17 @@ export const CYFMSCriminalHistoryRecord = (
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
         </Box>
         <CYFMSTextArea
+          autofill={props.record.charges}
           id={`criminalHistory_record_${props.recordNumber}_Charges`}
           value="Charges"
         />
         <CYFMSTextArea
+          autofill={props.record.conviction}
           id={`criminalHistory_record_${props.recordNumber}_Conviction`}
           value="Conviction"
         />
         <CYFMSTextArea
+          autofill={props.record.sentence}
           id={`criminalHistory_record_${props.recordNumber}_Sentence`}
           value="Sentence"
         />
@@ -64,7 +68,7 @@ export const CYFMSCriminalHistoryRecord = (
 const CYFMSCriminalHistoryRecordList = (recordList: any): ReactElement[] => {
   let res: ReactElement[] = new Array(recordList.length);
   for (let index = 0; index < recordList.length; ++index) {
-    res.unshift(
+    res.push(
       <CYFMSCriminalHistoryRecord
         record={recordList[index]}
         recordNumber={index + 1}
