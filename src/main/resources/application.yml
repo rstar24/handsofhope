@@ -64,12 +64,12 @@ codetablevalues:
     DEFAULT:
       "en": ""
       "fr": ""
-    NO:
-      "en": "No"
-      "fr": "No"
     YES:
       "en": "Yes"
       "fr": "Yes"
+    NO:
+      "en": "No"
+      "fr": "No"
     MAYBE:
       "en": "Maybe"
       "fr": "Maybe"
