@@ -8,7 +8,7 @@ import type {
   ElementType,
   ReactElement,
 } from "react";
-
+import CYFMSDateInput from "../CYFMSDateInput";
 /**
  * A custom props data type for the props passed
  * to the `CYFMSHouseholdMembersRecord` component.
@@ -50,7 +50,7 @@ export const CYFMSHouseholdMembersRecord = (
             id={`householdMembers_record_${props.recordNumber}_Name`}
             value="Name"
           />
-          <CYFMSInput
+          <CYFMSDateInput
             autofill={props.record.dateOfBirth}
             id={`householdMembers_record_${props.recordNumber}_DateOfBirth`}
             value="Date of Birth"

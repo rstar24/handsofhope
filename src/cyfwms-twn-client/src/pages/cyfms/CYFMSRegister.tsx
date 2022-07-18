@@ -15,7 +15,7 @@ import React, { useContext, useEffect, useState } from "react";
 import type { FormEvent, ReactElement } from "react";
 import { CYFMSSideNavContext } from "../../components/cyfms/CYFMSSideNav";
 import { useNavigate } from "react-router-dom";
-
+import CYFMSDateInput from "../../components/cyfms/CYFMSDateInput";
 /**
  * The CYFMSRegister functional component.
  * @returns CYFMSRegister component skeleton.
@@ -109,7 +109,7 @@ const CYFMSRegister = (): ReactElement => {
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CYFMSInput
+            <CYFMSDateInput
               id="cyfmsRegister_DateOfBirth"
               type="date"
               value="Date of Birth"

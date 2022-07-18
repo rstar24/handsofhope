@@ -11,7 +11,7 @@ import {
 import React, { useState } from "react";
 import type { ReactElement } from "react";
 import CYFMSInput from "../../components/cyfms/CYFMSInput";
-
+import CYFMSDateInput from "../../components/cyfms/CYFMSDateInput";
 /**
  * The CYFMSSearch functional component.
  * @returns CYFMSSearch component skeleton.
@@ -78,7 +78,11 @@ const CYFMSSearch = (): ReactElement => {
             </Grid>
 
             <Grid item md={10}>
-              <CYFMSInput id="dateOfBirth" value="Date of Birth" autofill="" />
+              <CYFMSDateInput
+                id="dateOfBirth"
+                value="Date of Birth"
+                autofill=""
+              />
             </Grid>
 
             <Grid item md={10}>

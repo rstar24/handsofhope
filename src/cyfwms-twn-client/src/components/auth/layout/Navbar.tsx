@@ -70,13 +70,14 @@ export default function Navbar() {
         mt: 4,
       }}
     >
-      <Box
-        color="#ffffff"
-        sx={{ p: 1, textDecoration: "none" }}
-        component={Link}
-        to="/home"
-      >
-        Home
+      <Box color="#ffffff" sx={{ p: 0 }}>
+        <Button
+          component={Link}
+          to="/cyfms/register"
+          sx={{ color: "white", textTransform: "none" }}
+        >
+          Home
+        </Button>
       </Box>
       <Box color="#ffffff" sx={{ p: 0 }}>
         <Button

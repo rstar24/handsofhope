@@ -7,7 +7,7 @@ import type {
   ElementType,
   ReactElement,
 } from "react";
-
+import CYFMSDateInput from "../CYFMSDateInput";
 /**
  * A custom props data type for the props passed
  * to the `CYFMSCriminalHistoryRecord` component.
@@ -36,7 +36,7 @@ export const CYFMSCriminalHistoryRecord = (
       <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem 0" }}>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CYFMSInput
+            <CYFMSDateInput
               id={`criminalHistory_record_${props.recordNumber}_ArrestDate`}
               value="Arrest Date"
               type="date"
