@@ -100,13 +100,13 @@ const CYFMSHouseholdMembers = (): ReactElement => {
         name: (cyfmsHouseholdMembersForm as any)[
           `householdMembers_record_${recordsList.length}_Name`
         ].value,
-        phone: (cyfmsHouseholdMembersForm as any)[
+        gender: (cyfmsHouseholdMembersForm as any)[
           `householdMembers_record_${recordsList.length}_Gender`
         ].value,
-        cell: (cyfmsHouseholdMembersForm as any)[
+        dateOfBirth: (cyfmsHouseholdMembersForm as any)[
           `householdMembers_record_${recordsList.length}_DateOfBirth`
         ].value,
-        listOfMedication: (cyfmsHouseholdMembersForm as any)[
+        residing: (cyfmsHouseholdMembersForm as any)[
           `householdMembers_record_${recordsList.length}_Residing`
         ].value,
       })

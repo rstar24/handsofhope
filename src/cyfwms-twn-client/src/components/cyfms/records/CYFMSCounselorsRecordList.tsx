@@ -1,3 +1,4 @@
+import { useAppSelector } from "../../../library/hooks";
 import CYFMSDropdown from "../CYFMSDropdown";
 import CYFMSInput from "../CYFMSInput";
 import CYFMSTextArea from "../CYFMSTextArea";
@@ -29,6 +30,7 @@ export interface CYFMSCounselorsRecordProps
 export const CYFMSCYFMSCounselorsRecord = (
   props: CYFMSCounselorsRecordProps
 ): ReactElement => {
+  const role = useAppSelector((state: any) => state.codetable.role);
   return (
     <Box key={`counselors_record_${props.recordNumber}`}>
       <Typography variant="body1" color="primary">
@@ -41,7 +43,7 @@ export const CYFMSCYFMSCounselorsRecord = (
               autofill={props.record.role}
               id={`counselors_record_${props.recordNumber}_Role`}
               value="Role"
-              optionsList={["Counselor", "CFS Worker"]}
+              optionsList={Object.values(role).map((role: any) => role.en)}
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>

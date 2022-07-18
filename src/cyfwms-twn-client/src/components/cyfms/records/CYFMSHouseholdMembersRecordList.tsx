@@ -1,3 +1,4 @@
+import { useAppSelector } from "../../../library/hooks";
 import CYFMSDropdown from "../CYFMSDropdown";
 import CYFMSInput from "../CYFMSInput";
 import { Box, Typography } from "@mui/material";
@@ -28,6 +29,8 @@ export interface CYFMSHouseholdMembersRecordProps
 export const CYFMSHouseholdMembersRecord = (
   props: CYFMSHouseholdMembersRecordProps
 ): ReactElement => {
+  const gender = useAppSelector((state: any) => state.codetable.gender);
+
   return (
     <Box key={`householdMembers_record_${props.recordNumber}`}>
       <Typography variant="body1" color="primary">
@@ -63,7 +66,7 @@ export const CYFMSHouseholdMembersRecord = (
           <CYFMSDropdown
             autofill={props.record.gender}
             id={`householdMembers_record_${props.recordNumber}_Gender`}
-            optionsList={["Male", "Female", "LGBTQ"]}
+            optionsList={Object.values(gender).map((gender: any) => gender.en)}
             value="Gender"
           />
         </Box>
