@@ -2,15 +2,16 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import { useAppSelector } from "../../../../library/hooks";
 import { styles } from "./ViewHome";
+import { CouncelorsLabel } from "./ViewPagesLabels";
 const ViewCouncelors = () => {
   const data = useAppSelector(
     (state) => (state as any).cyfmsCounselors.counselorsData
   );
   return (
-    <>
+    <Box paddingTop={3}>
       {Object.keys(data.recordsList).map((i: any) => (
         <>
-          <Typography style={styles.header}>
+          <Typography paddingTop={2} paddingLeft={4}>
             Counselors/ CFS Worker {i}
           </Typography>
           <Box>
@@ -18,28 +19,19 @@ const ViewCouncelors = () => {
               <Box
                 sx={{
                   display: "flex",
-                  flexWrap: "wrap",
                   paddingLeft: 8,
                 }}
               >
                 {k !== 0 && k !== 1 && (
                   <>
                     <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                      <Typography
-                        variant="h6"
-                        textTransform="capitalize"
-                        style={styles.keys}
-                      >
-                        {t[0]}
+                      <Typography variant="h6" style={styles.keys}>
+                        {CouncelorsLabel[k]}
                       </Typography>
                     </Box>
 
                     <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                      <Typography
-                        variant="h6"
-                        textTransform="capitalize"
-                        style={styles.values}
-                      >
+                      <Typography variant="h6" style={styles.values}>
                         {t[1]}
                       </Typography>
                     </Box>
@@ -50,7 +42,7 @@ const ViewCouncelors = () => {
           </Box>
         </>
       ))}
-    </>
+    </Box>
   );
 };
 

@@ -10,6 +10,7 @@ import CYFMSSearchResult from "./CYFMSSearchResult";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import { doGetSearch } from "../../../features/search/searchSlice";
 import { current } from "@reduxjs/toolkit";
+import CYFMSDropdown from "../../../components/cyfms/CYFMSDropdown";
 /**
  * The CYFMSSearchPanel functional component.
  * @returns CYFMSSearchPanel component skeleton.
@@ -17,7 +18,7 @@ import { current } from "@reduxjs/toolkit";
 const CYFMSSearchPanel = (): ReactElement => {
   const dispatch = useAppDispatch();
   const [isShown, setIsShown] = useState(false);
-
+  const { maritalstatus } = useAppSelector((state) => (state as any).codetable);
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
 
@@ -78,10 +79,12 @@ const CYFMSSearchPanel = (): ReactElement => {
         <CYFMSInput id="lastName" value="Last Name" />
         <CYFMSInput id="dateOfBirth" type="date" value="Date Of Birth" />
 
-        <CYFMSInput
+        <CYFMSDropdown
           id="maritalStatus"
+          optionsList={Object.values(maritalstatus).map(
+            (status: any) => status.en
+          )}
           value="Marital Status"
-          name="maritalStatus"
         />
         <CYFMSInput id="phoneNo" value="Phone No" name="phoneNo" />
         <CYFMSInput id="city" value="City" name="city" />

@@ -2,35 +2,27 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import { useAppSelector } from "../../../../library/hooks";
 import { styles } from "./ViewHome";
+import { ContactLabel } from "./ViewPagesLabels";
 const ViewContact = () => {
-  const data = useAppSelector((state) => state as any);
+  const data = useAppSelector((state) => state as any).cyfmsContact.contactData;
   return (
-    <Box>
-      {Object.entries(data.cyfmsContact.contactData).map((t: any, k) => (
+    <Box paddingTop={3}>
+      {Object.entries(data).map((t: any, k: any) => (
         <Box
           sx={{
             display: "flex",
-            flexWrap: "wrap",
             paddingLeft: 8,
           }}
         >
           {k !== 0 && k !== 1 && (
             <>
               <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                <Typography
-                  variant="h6"
-                  textTransform="capitalize"
-                  style={styles.keys}
-                >
-                  {t[0]}
+                <Typography variant="h6" style={styles.keys}>
+                  {ContactLabel[k]}
                 </Typography>
               </Box>
               <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                <Typography
-                  variant="h6"
-                  textTransform="capitalize"
-                  style={styles.values}
-                >
+                <Typography variant="h6" style={styles.values}>
                   {t[1]}
                 </Typography>
               </Box>

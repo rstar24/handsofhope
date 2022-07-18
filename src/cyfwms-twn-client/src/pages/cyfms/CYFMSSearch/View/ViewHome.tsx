@@ -1,6 +1,21 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
 import { useAppSelector } from "../../../../library/hooks";
+import ViewContact from "./ViewContact";
+import ViewCouncelors from "./ViewCouncelors";
+import ViewEducationAndEmployment from "./ViewEducationAndEmployment";
+import ViewFamilyPhysician from "./ViewFamilyPhysician";
+import ViewHouseholdMembers from "./ViewHouseholdMembers";
+import ViewOtherInformation from "./ViewOtherInformation";
+import {
+  ContactLabel,
+  CouncelorsLabel,
+  EducationAndEmploymentLabels,
+  FamilyPhysiciansLabel,
+  HouseholdLabel,
+  OtherInformationLabels,
+  RegisterLabels,
+} from "./ViewPagesLabels";
 
 export const styles = {
   header: {
@@ -25,6 +40,7 @@ export const styles = {
 };
 const ViewHome = () => {
   const data = useAppSelector((state) => state as any);
+
   return (
     <Box
       sx={{
@@ -40,158 +56,54 @@ const ViewHome = () => {
         </Typography>
       </Box>
 
-      <Box
-        sx={{
-          paddingTop: 4,
-        }}
-      >
+      <Box>
         <Typography variant="h6" style={styles.header}>
           Registration
         </Typography>
-        {Object.entries(data.cyfmsRegister.readUser).map((t: any, k) => (
-          <Box
-            sx={{
-              display: "flex",
-              flexWrap: "wrap",
-              paddingLeft: 8,
-              paddingTop: 1,
-            }}
-          >
-            {k !== 0 && (
-              <>
-                <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                  <Typography textTransform="capitalize" style={styles.keys}>
-                    {t[0]}
-                  </Typography>
-                </Box>
-                <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                  <Typography style={styles.values}>{t[1]}</Typography>
-                </Box>
-              </>
-            )}
-          </Box>
-        ))}
-      </Box>
-      <Box
-        sx={{
-          paddingTop: 4,
-        }}
-      >
-        <Typography variant="h6" style={styles.header}>
-          Contact
-        </Typography>
-        {Object.entries(data.cyfmsContact.contactData).map((t: any, k) => (
-          <Box
-            sx={{
-              display: "flex",
-              flexWrap: "wrap",
-              paddingLeft: 8,
-              paddingTop: 1,
-            }}
-          >
-            {k !== 0 && k !== 1 && (
-              <>
-                <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                  <Typography textTransform="capitalize" style={styles.keys}>
-                    {t[0]}
-                  </Typography>
-                </Box>
-                <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                  <Typography style={styles.values}>{t[1]}</Typography>
-                </Box>
-              </>
-            )}
-          </Box>
-        ))}
-      </Box>
-      <Box
-        sx={{
-          paddingTop: 4,
-        }}
-      >
-        <Typography variant="h6" style={styles.header}>
-          Household Members
-        </Typography>
-        <>
-          {Object.keys(
-            data.cyfmsHouseholdMembers.householdMembersData.recordsList
-          ).map((i: any) => (
-            <Box paddingTop="2%">
-              <Typography paddingLeft="10%">Member {i}</Typography>
-              <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-                {Object.entries(
-                  data.cyfmsHouseholdMembers.householdMembersData.recordsList[i]
-                ).map((t: any, k: any) => (
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexWrap: "wrap",
-                      paddingLeft: 8,
-                    }}
-                  >
-                    {k !== 0 && k !== 1 && (
-                      <>
-                        <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                          <Typography
-                            variant="h6"
-                            textTransform="capitalize"
-                            style={styles.keys}
-                          >
-                            {t[0]}
-                          </Typography>
-                        </Box>
-
-                        <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                          <Typography
-                            variant="h6"
-                            textTransform="capitalize"
-                            style={styles.values}
-                          >
-                            {t[1]}
-                          </Typography>
-                        </Box>
-                      </>
-                    )}
-                  </Box>
-                ))}
-              </Box>
-            </Box>
-          ))}
-        </>
-      </Box>
-      <Box
-        sx={{
-          paddingTop: 4,
-        }}
-      >
-        <Typography variant="h6" style={styles.header}>
-          Education and Employment
-        </Typography>
-        {Object.entries(data.educationAndEmployment.readUser).map(
-          (t: any, k) => (
+        <Box paddingTop={3}>
+          {Object.entries(data.cyfmsRegister.readUser).map((t: any, k: any) => (
             <Box
               sx={{
                 display: "flex",
-                flexWrap: "wrap",
                 paddingLeft: 8,
-                paddingTop: 1,
               }}
             >
-              {k !== 0 && k !== 4 && k !== 5 && (
+              {k !== 0 && (
                 <>
                   <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                    <Typography textTransform="capitalize" style={styles.keys}>
-                      {t[0]}
+                    <Typography variant="h6" style={styles.keys}>
+                      {RegisterLabels[k]}
                     </Typography>
                   </Box>
                   <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                    <Typography style={styles.values}>{t[1]}</Typography>
+                    <Typography variant="h6" style={styles.values}>
+                      {t[1]}
+                    </Typography>
                   </Box>
                 </>
               )}
             </Box>
-          )
-        )}
+          ))}
+        </Box>
+      </Box>
+      <Box>
+        <Typography variant="h6" style={styles.header}>
+          Contact
+        </Typography>
+        <ViewContact />
+      </Box>
+
+      <Box>
+        <Typography variant="h6" style={styles.header}>
+          Household Members
+        </Typography>
+        <ViewHouseholdMembers />
+      </Box>
+      <Box>
+        <Typography variant="h6" style={styles.header}>
+          Education and Employment
+        </Typography>
+        <ViewEducationAndEmployment />
       </Box>
       <Box>
         <Typography variant="h6" style={styles.header}>
@@ -202,136 +114,19 @@ const ViewHome = () => {
         <Typography variant="h6" style={styles.header}>
           Family Physician
         </Typography>
-        <Box paddingTop={3}>
-          {Object.keys(
-            data.cyfmsFamilyPhysicians.familyPhysiciansData.recordsList
-          ).map((i: any) => (
-            <>
-              <Typography paddingLeft="10%">Family Physician {i}</Typography>
-              <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-                {Object.entries(
-                  data.cyfmsFamilyPhysicians.familyPhysiciansData.recordsList[i]
-                ).map((t: any, k: any) => (
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexWrap: "wrap",
-                      paddingLeft: 8,
-                    }}
-                  >
-                    {k !== 0 && k !== 1 && (
-                      <>
-                        <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                          <Typography
-                            variant="h6"
-                            textTransform="capitalize"
-                            style={styles.keys}
-                          >
-                            {t[0]}
-                          </Typography>
-                        </Box>
-
-                        <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                          <Typography
-                            variant="h6"
-                            textTransform="capitalize"
-                            style={styles.values}
-                          >
-                            {t[1]}
-                          </Typography>
-                        </Box>
-                      </>
-                    )}
-                  </Box>
-                ))}
-              </Box>
-            </>
-          ))}
-        </Box>
+        <ViewFamilyPhysician />
       </Box>
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+      <Box>
         <Typography variant="h6" style={styles.header}>
           Counselor / CFS Worker
         </Typography>
-        <Box paddingTop={3}>
-          {Object.keys(data.cyfmsCounselors.counselorsData.recordsList).map(
-            (i: any) => (
-              <>
-                <Typography paddingLeft="10%">
-                  Councelor/ CFS Worker {i}
-                </Typography>
-                <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-                  {Object.entries(
-                    data.cyfmsCounselors.counselorsData.recordsList[i]
-                  ).map((t: any, k: any) => (
-                    <Box
-                      sx={{
-                        display: "flex",
-                        flexWrap: "wrap",
-                        paddingLeft: 8,
-                      }}
-                    >
-                      {k !== 0 && k !== 1 && (
-                        <>
-                          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                            <Typography
-                              variant="h6"
-                              textTransform="capitalize"
-                              style={styles.keys}
-                            >
-                              {t[0]}
-                            </Typography>
-                          </Box>
-
-                          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                            <Typography
-                              variant="h6"
-                              textTransform="capitalize"
-                              style={styles.values}
-                            >
-                              {t[1]}
-                            </Typography>
-                          </Box>
-                        </>
-                      )}
-                    </Box>
-                  ))}
-                </Box>
-              </>
-            )
-          )}
-        </Box>
+        <ViewCouncelors />
       </Box>
       <Box>
         <Typography variant="h6" style={styles.header}>
           Other Information
         </Typography>
-        {Object.entries(data.cyfmsOtherInformation.otherInformationData).map(
-          (t: any, k) => (
-            <Box
-              sx={{
-                display: "flex",
-                flexWrap: "wrap",
-
-                paddingLeft: 8,
-                paddingTop: 1,
-              }}
-            >
-              {k !== 1 && (
-                <>
-                  <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                    <Typography textTransform="capitalize" style={styles.keys}>
-                      {t[0]}
-                    </Typography>
-                  </Box>
-                  <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                    <Typography style={styles.values}>{t[1]}</Typography>
-                  </Box>
-                </>
-              )}
-            </Box>
-          )
-        )}
+        <ViewOtherInformation />
       </Box>
     </Box>
   );
