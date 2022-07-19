@@ -34,10 +34,10 @@ const CYFMSFamilyPhysicians = (): ReactElement => {
   );
 
   // Reference to the form
-  const cyfmsFamilyPhysiciansFormRef: Ref<HTMLFormElement> = useRef(null);
+  const formRef: Ref<HTMLFormElement> = useRef(null);
 
   useEffect(() => {
-    dispatch(doGetFamilyPhysicians(null))
+    dispatch(doGetFamilyPhysicians(participantId))
       .unwrap()
       .then((recordListFromAPI) => {
         console.log("familyPhysicians GET backend API was successful!");
@@ -52,31 +52,22 @@ const CYFMSFamilyPhysicians = (): ReactElement => {
   // activities.
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
-    const cyfmsFamilyPhysiciansForm: any = e.currentTarget;
-    const cyfmsFamilyPhysiciansFormData: cyfmsFamilyPhysiciansData = {
+    const form: any = e.currentTarget;
+    const formData: cyfmsFamilyPhysiciansData = {
       recordsList: new Array<cyfmsFamilyPhysiciansRecord>(recordsList.length),
     };
     for (let index = 0; index < recordsList.length; ++index) {
-      cyfmsFamilyPhysiciansFormData.recordsList[index] = {
+      formData.recordsList[index] = {
         participantId: participantId,
         familyPhysicianId: recordsList[index].familyPhysicianId,
-        name: cyfmsFamilyPhysiciansForm[
-          `familyPhysicians_record_${index + 1}_Name`
-        ].value,
-        phone:
-          cyfmsFamilyPhysiciansForm[
-            `familyPhysicians_record_${index + 1}_Phone`
-          ].value,
-        cell: cyfmsFamilyPhysiciansForm[
-          `familyPhysicians_record_${index + 1}_Cell`
-        ].value,
+        name: form[`familyPhysicians_record_${index + 1}_Name`].value,
+        phone: form[`familyPhysicians_record_${index + 1}_Phone`].value,
+        cell: form[`familyPhysicians_record_${index + 1}_Cell`].value,
         listOfMedication:
-          cyfmsFamilyPhysiciansForm[
-            `familyPhysicians_record_${index + 1}_ListOfMedication`
-          ].value,
+          form[`familyPhysicians_record_${index + 1}_ListOfMedication`].value,
       };
     }
-    dispatch(doPostFamilyPhysicians(cyfmsFamilyPhysiciansFormData.recordsList))
+    dispatch(doPostFamilyPhysicians(formData.recordsList))
       .unwrap()
       .then(() => {
         console.log("familyPhysicians POST backend API was successful!");
@@ -90,24 +81,28 @@ const CYFMSFamilyPhysicians = (): ReactElement => {
 
   const addMoreHandler = (e: MouseEvent) => {
     e.preventDefault();
-    const cyfmsFamilyPhysiciansForm = cyfmsFamilyPhysiciansFormRef.current;
+    const form: any = formRef.current;
+    const flag: boolean = recordsList.length > 0;
     dispatch(
       addMoreFamilyPhysiciansRecord({
         participantId: participantId,
-        familyPhysicianId:
-          recordsList[recordsList.length - 1].familyPhysicianId,
-        name: (cyfmsFamilyPhysiciansForm as any)[
-          `familyPhysicians_record_${recordsList.length}_Name`
-        ].value,
-        phone: (cyfmsFamilyPhysiciansForm as any)[
-          `familyPhysicians_record_${recordsList.length}_Phone`
-        ].value,
-        cell: (cyfmsFamilyPhysiciansForm as any)[
-          `familyPhysicians_record_${recordsList.length}_Cell`
-        ].value,
-        listOfMedication: (cyfmsFamilyPhysiciansForm as any)[
-          `familyPhysicians_record_${recordsList.length}_ListOfMedication`
-        ].value,
+        familyPhysicianId: flag
+          ? recordsList[recordsList.length - 1].familyPhysicianId
+          : 0,
+        name: flag
+          ? form[`familyPhysicians_record_${recordsList.length}_Name`].value
+          : "",
+        phone: flag
+          ? form[`familyPhysicians_record_${recordsList.length}_Phone`].value
+          : "",
+        cell: flag
+          ? form[`familyPhysicians_record_${recordsList.length}_Cell`].value
+          : "",
+        listOfMedication: flag
+          ? form[
+              `familyPhysicians_record_${recordsList.length}_ListOfMedication`
+            ].value
+          : "",
       })
     );
   };
@@ -122,7 +117,7 @@ const CYFMSFamilyPhysicians = (): ReactElement => {
           gap: "1rem 0",
         }}
         onSubmit={submitHandler}
-        ref={cyfmsFamilyPhysiciansFormRef}
+        ref={formRef}
       >
         <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem 0" }}>
           {CYFMSHouseholdAndMembersRecordList(recordsList)}

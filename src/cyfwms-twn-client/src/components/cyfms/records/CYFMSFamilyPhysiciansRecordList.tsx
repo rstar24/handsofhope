@@ -1,6 +1,9 @@
+import { removeFamilyPhysiciansRecordNumber } from "../../../features/cyfms/familyPhysicians/cyfmsFamilyPhysiciansSlice";
+import { useAppDispatch } from "../../../library/hooks";
 import CYFMSInput from "../CYFMSInput";
 import CYFMSTextArea from "../CYFMSTextArea";
-import { Box, Typography } from "@mui/material";
+import CancelIcon from "@mui/icons-material/Cancel";
+import { Box, IconButton, Typography } from "@mui/material";
 import React from "react";
 import type {
   ComponentPropsWithoutRef,
@@ -28,14 +31,40 @@ export interface CYFMSFamilyPhysiciansRecordProps
 export const CYFMSFamilyPhysiciansRecord = (
   props: CYFMSFamilyPhysiciansRecordProps
 ): ReactElement => {
+  const dispatch = useAppDispatch();
+
+  const removeRecord = () => {
+    dispatch(removeFamilyPhysiciansRecordNumber(props.recordNumber));
+  };
+
   return (
     <Box
       id="familyPhysiciansRecord"
       key={`familyPhysicians_record_${props.recordNumber}`}
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "1rem 0",
+        p: "0.5rem",
+        borderRadius: "1rem",
+        boxShadow:
+          "inset 2px 2px 3px rgba(191, 191, 191, .6), inset -2px -2px 3px rgba(0, 0, 0, .6)",
+      }}
     >
-      <Typography variant="body1" color="primary">
-        Family Physician: {props.recordNumber}
-      </Typography>
+      <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
+        <Typography color="primary" sx={{ flexGrow: 1 }}>
+          Family Physician: {props.recordNumber}
+        </Typography>
+        <IconButton
+          aria-label="delete record"
+          size="medium"
+          color="primary"
+          sx={{ p: 0 }}
+          onClick={() => removeRecord()}
+        >
+          <CancelIcon fontSize="medium" />
+        </IconButton>
+      </Box>
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
         <Box
           sx={{

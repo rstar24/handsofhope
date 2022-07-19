@@ -34,7 +34,7 @@ const CYFMSCounselors = (): ReactElement => {
   );
 
   // Reference to the form
-  const cyfmsCounselorsFormRef: Ref<HTMLFormElement> = useRef(null);
+  const formRef: Ref<HTMLFormElement> = useRef(null);
 
   useEffect(() => {
     dispatch(doGetCounselors(null))
@@ -52,23 +52,21 @@ const CYFMSCounselors = (): ReactElement => {
   // activities.
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
-    const cyfmsCounselorsForm: any = e.currentTarget;
-    const cyfmsCounselorsFormData: cyfmsCounselorsData = {
+    const form: any = e.currentTarget;
+    const formData: cyfmsCounselorsData = {
       recordsList: new Array<cyfmsCounselorsRecord>(recordsList.length),
     };
     for (let index = 0; index < recordsList.length; ++index) {
-      cyfmsCounselorsFormData.recordsList[index] = {
+      formData.recordsList[index] = {
         participantId: participantId,
         counselorCFSWorkerId: recordsList[index].counselorCFSWorkerId,
-        role: cyfmsCounselorsForm[`counselors_record_${index + 1}_Role`].value,
-        name: cyfmsCounselorsForm[`counselors_record_${index + 1}_Name`].value,
+        role: form[`counselors_record_${index + 1}_Role`].value,
+        name: form[`counselors_record_${index + 1}_Name`].value,
         contactInformation:
-          cyfmsCounselorsForm[
-            `counselors_record_${index + 1}_ContactInformation`
-          ].value,
+          form[`counselors_record_${index + 1}_ContactInformation`].value,
       };
     }
-    dispatch(doPostCounselors(cyfmsCounselorsFormData.recordsList))
+    dispatch(doPostCounselors(formData.recordsList))
       .unwrap()
       .then(() => {
         console.log("Counselors data has been posted!");
@@ -82,21 +80,24 @@ const CYFMSCounselors = (): ReactElement => {
 
   const addMoreHandler = (e: MouseEvent) => {
     e.preventDefault();
-    const cyfmsCounselorsForm = cyfmsCounselorsFormRef.current;
+    const form: any = formRef.current;
+    const flag: boolean = recordsList.length > 0;
     dispatch(
       addMoreCounselorsRecord({
         participantId: participantId,
-        counselorCFSWorkerId:
-          recordsList[recordsList.length - 1].counselorCFSWorkerId,
-        role: (cyfmsCounselorsForm as any)[
-          `counselors_record_${recordsList.length}_Role`
-        ].value,
-        name: (cyfmsCounselorsForm as any)[
-          `counselors_record_${recordsList.length}_Name`
-        ].value,
-        contactInformation: (cyfmsCounselorsForm as any)[
-          `counselors_record_${recordsList.length}_ContactInformation`
-        ].value,
+        counselorCFSWorkerId: flag
+          ? recordsList[recordsList.length - 1].counselorCFSWorkerId
+          : 0,
+        role: flag
+          ? form[`counselors_record_${recordsList.length}_Role`].value
+          : "",
+        name: flag
+          ? form[`counselors_record_${recordsList.length}_Name`].value
+          : "",
+        contactInformation: flag
+          ? form[`counselors_record_${recordsList.length}_ContactInformation`]
+              .value
+          : "",
       })
     );
   };
@@ -111,7 +112,7 @@ const CYFMSCounselors = (): ReactElement => {
           gap: "1rem 0",
         }}
         onSubmit={submitHandler}
-        ref={cyfmsCounselorsFormRef}
+        ref={formRef}
       >
         <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem 0" }}>
           {CYFMSCounselorsRecordList(recordsList)}

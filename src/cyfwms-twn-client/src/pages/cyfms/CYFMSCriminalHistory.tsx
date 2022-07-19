@@ -95,13 +95,22 @@ const CYFMSCriminalHistory = (): ReactElement => {
     e.preventDefault();
     const form: any = formRef.current;
     const len = data.criminalHistoryRecordList.length;
+    const flag: boolean = data.criminalHistoryRecordList.length > 0;
     dispatch(
       addMoreCriminalHistoryRecord({
         criminalHistoryRecordId: 0,
-        arrestDate: form[`criminalHistory_record_${len}_ArrestDate`].value,
-        charges: form[`criminalHistory_record_${len}_Charges`].value,
-        conviction: form[`criminalHistory_record_${len}_Conviction`].value,
-        sentence: form[`criminalHistory_record_${len}_Sentence`].value,
+        arrestDate: flag
+          ? form[`criminalHistory_record_${len}_ArrestDate`].value
+          : "",
+        charges: flag
+          ? form[`criminalHistory_record_${len}_Charges`].value
+          : "",
+        conviction: flag
+          ? form[`criminalHistory_record_${len}_Conviction`].value
+          : "",
+        sentence: flag
+          ? form[`criminalHistory_record_${len}_Sentence`].value
+          : "",
       })
     );
   };

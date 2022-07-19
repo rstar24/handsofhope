@@ -34,10 +34,10 @@ const CYFMSHouseholdMembers = (): ReactElement => {
   );
 
   // Reference to the form
-  const cyfmsHouseholdMembersFormRef: Ref<HTMLFormElement> = useRef(null);
+  const formRef: Ref<HTMLFormElement> = useRef(null);
 
   useEffect(() => {
-    dispatch(doGetHouseholdMembers(null))
+    dispatch(doGetHouseholdMembers(participantId))
       .unwrap()
       .then((recordListFromAPI) => {
         console.log("householdMembers GET backend API was successful!");
@@ -52,32 +52,22 @@ const CYFMSHouseholdMembers = (): ReactElement => {
   // activities.
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
-    const cyfmsHouseholdMembersForm: any = e.currentTarget;
-    const cyfmsHouseholdMembersFormData: cyfmsHouseholdMembersData = {
+    const form: any = e.currentTarget;
+    const formData: cyfmsHouseholdMembersData = {
       recordsList: new Array<cyfmsHouseholdMembersRecord>(recordsList.length),
     };
     for (let index = 0; index < recordsList.length; ++index) {
-      cyfmsHouseholdMembersFormData.recordsList[index] = {
+      formData.recordsList[index] = {
         participantId: participantId,
         householdMemberId: recordsList[index].householdMemberId,
-        name: cyfmsHouseholdMembersForm[
-          `householdMembers_record_${index + 1}_Name`
-        ].value,
-        gender:
-          cyfmsHouseholdMembersForm[
-            `householdMembers_record_${index + 1}_Gender`
-          ].value,
+        name: form[`householdMembers_record_${index + 1}_Name`].value,
+        gender: form[`householdMembers_record_${index + 1}_Gender`].value,
         dateOfBirth:
-          cyfmsHouseholdMembersForm[
-            `householdMembers_record_${index + 1}_DateOfBirth`
-          ].value,
-        residing:
-          cyfmsHouseholdMembersForm[
-            `householdMembers_record_${index + 1}_Residing`
-          ].value,
+          form[`householdMembers_record_${index + 1}_DateOfBirth`].value,
+        residing: form[`householdMembers_record_${index + 1}_Residing`].value,
       };
     }
-    dispatch(doPostHouseholdMembers(cyfmsHouseholdMembersFormData.recordsList))
+    dispatch(doPostHouseholdMembers(formData.recordsList))
       .unwrap()
       .then(() => {
         console.log("householdMembers POST backend API was successful!");
@@ -91,24 +81,27 @@ const CYFMSHouseholdMembers = (): ReactElement => {
 
   const addMoreHandler = (e: MouseEvent) => {
     e.preventDefault();
-    const cyfmsHouseholdMembersForm = cyfmsHouseholdMembersFormRef.current;
+    const form: any = formRef.current;
+    const flag: boolean = recordsList.length > 0;
     dispatch(
       addMoreHouseholdMembersRecord({
         participantId: participantId,
-        householdMemberId:
-          recordsList[recordsList.length - 1].householdMemberId,
-        name: (cyfmsHouseholdMembersForm as any)[
-          `householdMembers_record_${recordsList.length}_Name`
-        ].value,
-        gender: (cyfmsHouseholdMembersForm as any)[
-          `householdMembers_record_${recordsList.length}_Gender`
-        ].value,
-        dateOfBirth: (cyfmsHouseholdMembersForm as any)[
-          `householdMembers_record_${recordsList.length}_DateOfBirth`
-        ].value,
-        residing: (cyfmsHouseholdMembersForm as any)[
-          `householdMembers_record_${recordsList.length}_Residing`
-        ].value,
+        householdMemberId: flag
+          ? recordsList[recordsList.length - 1].householdMemberId
+          : 0,
+        name: flag
+          ? form[`householdMembers_record_${recordsList.length}_Name`].value
+          : "",
+        gender: flag
+          ? form[`householdMembers_record_${recordsList.length}_Gender`].value
+          : "",
+        dateOfBirth: flag
+          ? form[`householdMembers_record_${recordsList.length}_DateOfBirth`]
+              .value
+          : "",
+        residing: flag
+          ? form[`householdMembers_record_${recordsList.length}_Residing`].value
+          : "",
       })
     );
   };
@@ -123,7 +116,7 @@ const CYFMSHouseholdMembers = (): ReactElement => {
           gap: "1rem 0",
         }}
         onSubmit={submitHandler}
-        ref={cyfmsHouseholdMembersFormRef}
+        ref={formRef}
       >
         <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem 0" }}>
           {CYFMSHouseholdMembersRecordList(recordsList)}
