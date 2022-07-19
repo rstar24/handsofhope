@@ -13,6 +13,9 @@ import { doGetContact } from "../../../features/cyfms/contact/cyfmsContactSlice"
 import { doGetEducationAndEmployment } from "../../../features/cyfms/educationAndEmployment/educationAndEmploymentSlice";
 import { doGetOtherInformation } from "../../../features/cyfms/otherInformation/cyfmsOtherInformationSlice";
 import { doGetCriminalHistory } from "../../../features/cyfms/criminalHistory/cyfmsCriminalHistorySlice";
+import { doGetHouseholdMembers } from "../../../features/cyfms/householdMembers/cyfmsHouseholdMembersSlice";
+import { doGetFamilyPhysicians } from "../../../features/cyfms/familyPhysicians/cyfmsFamilyPhysiciansSlice";
+import { doGetCounselors } from "../../../features/cyfms/counselors/cyfmsCounselorsSlice";
 
 const CYFMSSearchResult = (): ReactElement => {
   const dispatch = useAppDispatch();
@@ -25,6 +28,9 @@ const CYFMSSearchResult = (): ReactElement => {
     dispatch(doGetEducationAndEmployment(id));
     dispatch(doGetOtherInformation(id));
     dispatch(doGetCriminalHistory(id));
+    dispatch(doGetHouseholdMembers(id));
+    dispatch(doGetFamilyPhysicians(id));
+    dispatch(doGetCounselors(id));
   };
   return (
     <Box sx={{ my: 10, ml: -55 }}>

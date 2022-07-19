@@ -111,8 +111,8 @@ const CYFMSSearchView = (): ReactElement => {
             <hr></hr>
             <Typography paddingTop={2}>
               {data.cyfmsContact.contactData.addressLine1} ,
-              {data.cyfmsContact.contactData.province} ,
-              {data.cyfmsContact.contactData.city} <></>
+              {data.cyfmsContact.contactData.city} ,
+              {data.cyfmsContact.contactData.province} <></>
             </Typography>
             <br />
             <Typography>{data.cyfmsRegister.readUser.gender} </Typography>
