@@ -28,10 +28,10 @@ codetablevalues:
       "fr": ""
     MALE:
       "en": "Male"
-      "fr": "Masculin"
+      "fr": "Mâle"
     FEMALE:
       "en": "Female"
-      "fr": "Féminin"
+      "fr": "Femelle"
     LGBTQ:
       "en": "LGBTQ"
       "fr": "LGBTQ"
@@ -42,23 +42,23 @@ codetablevalues:
       "fr": ""
     MARRIED:
       "en": "Married"
-      "fr": "Marry"
+      "fr": "Marié"
     UNMARRIED:
       "en": "Unmarried"
-      "fr": "unmarry"
+      "fr": "Célibataire"
     DIVORCE:
       "en": "Divorced"
-      "fr": "Divorce"
+      "fr": "Divorcé"
   role:
     DEFAULT:
       "en": ""
       "fr": ""
     COUNSELOR:
       "en": "Counselor"
-      "fr": "Coun"
+      "fr": "Conseiller"
     CFSWORKER:
-      "en": "CFSworker"
-      "fr": "Cfs"
+      "en": "CFS Worker"
+      "fr": "CFS Ouvrier"
 
   education:
     DEFAULT:
@@ -66,13 +66,13 @@ codetablevalues:
       "fr": ""
     YES:
       "en": "Yes"
-      "fr": "Yes"
+      "fr": "Oui"
     NO:
       "en": "No"
-      "fr": "No"
+      "fr": "Non"
     MAYBE:
       "en": "Maybe"
-      "fr": "Maybe"
+      "fr": "Peut-être"
 
   typeOFEmployee:
     DEFAULT:
@@ -80,16 +80,16 @@ codetablevalues:
       "fr": ""
     FULLTIME:
       "en": "Full-Time"
-      "fr": "FullTime"
+      "fr": "Plein temps"
     PARTTIME:
       "en": "Part-Time"
-      "fr": "PartTime"
+      "fr": "Temps partiel"
     Casual:
       "en": "Casual"
-      "fr": "Casual"
+      "fr": "Décontracté"
     JOBSEARCH:
       "en": "Job Search"
-      "fr": "Job search"
+      "fr": "Recherche d'emploi"
 
   initialContactStatus:
     DEFAULT:
@@ -97,10 +97,10 @@ codetablevalues:
       "fr": ""
     PROGRESS:
       "en": "In Progress"
-      "fr": "In Progress"
+      "fr": "En Cours"
     CLOSED:
       "en": "Closed"
-      "fr": "Closed"
+      "fr": "Fermé"
 
 
   initialContactReferral:
@@ -109,10 +109,10 @@ codetablevalues:
       "fr": ""
     YES:
       "en": "Yes"
-      "fr": "Yes"
+      "fr": "Oui"
     No:
       "en": "No"
-      "fr": "No"
+      "fr": "Non"
 
 
   presentConcerns:
@@ -121,13 +121,13 @@ codetablevalues:
       "fr": ""
      HEALTH:
       "en": "Health"
-      "fr": "Health"
+      "fr": "Santé"
      ADDICTION:
       "en": "Addiction"
-      "fr": "Addiction"
+      "fr": "Dépendance"
      ABUSE:
       "en": "Abuse"
-      "fr": "Abuse"
+      "fr": "Abuser de"
 
 
   mentalHealthOrSubstanceAbuse:
@@ -136,13 +136,13 @@ codetablevalues:
       "fr": ""
     ALCOHOL:
       "en": "Alcohol"
-      "fr": "Alcohol"
+      "fr": "De l'alcool"
     DRUGS:
       "en": "Drugs"
-      "fr": "Drugs"
+      "fr": "Drogues"
     NARCOTIC:
       "en": "Narcotic"
-      "fr": "Narcotic"
+      "fr": "Narcotique"
 
 
   typeOfPatient:
@@ -151,10 +151,10 @@ codetablevalues:
       "fr": ""
     OUTPATIENT:
       "en": "Outpatient"
-      "fr": "Outpatient"
+      "fr": "Ambulatoire"
     INPATIENT:
       "en": "Inpatient"
-      "fr": "Inpatient"
+      "fr": "Hospitalisé"
 
   risk:
     DEFAULT:
@@ -162,13 +162,13 @@ codetablevalues:
       "fr": ""
     LOW:
       "en": "Low"
-      "fr": "Low"
+      "fr": "Bas"
     MEDIUM:
       "en": "Medium"
-      "fr": "Medium"
+      "fr": "Moyen"
     HIGH:
       "en": "High"
-      "fr": "High"
+      "fr": "haut"
 
 
 
