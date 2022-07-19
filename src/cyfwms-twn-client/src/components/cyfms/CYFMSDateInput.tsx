@@ -35,7 +35,11 @@ const CYFMSInput = (
         name={props.name}
         type="date"
         sx={{ borderRadius: 0, flexBasis: 0, flexGrow: 2, ml: -1 }}
-        inputProps={{ max: "1979-12-31", sx: { p: 1 } }}
+        inputProps={{
+          max: new Date().toISOString().split("T")[0],
+          min: "1900-01-01",
+          sx: { p: 1 },
+        }}
         defaultValue={props.autofill}
         style={{ backgroundColor: "#dfdada" }}
       />
