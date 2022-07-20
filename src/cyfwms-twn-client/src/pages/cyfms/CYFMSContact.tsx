@@ -145,7 +145,7 @@ const CYFMSContact = (): ReactElement => {
               id="cyfmsContactEmailAddress"
               value="Email Address"
               autofill={contactData.emailAddress}
-              type="gmail"
+              type="email"
             />
           </Box>
         </Box>
