@@ -16,6 +16,10 @@ import { doGetCriminalHistory } from "../../features/cyfms/criminalHistory/cyfms
 import { doGetHouseholdMembers } from "../../features/cyfms/householdMembers/cyfmsHouseholdMembersSlice";
 import { doGetFamilyPhysicians } from "../../features/cyfms/familyPhysicians/cyfmsFamilyPhysiciansSlice";
 import { doGetCounselors } from "../../features/cyfms/counselors/cyfmsCounselorsSlice";
+import {
+  doGetGender,
+  doGetMaritalStatus,
+} from "../../features/codetable/codetableSlice";
 const options = ["Edit", "Delete"];
 const style = {
   position: "absolute" as "absolute",
@@ -51,14 +55,16 @@ export default function EditIcon(props: any) {
       setOpenModel(true);
     } else {
       setOpen(true);
+      dispatch(doGetGender());
+      dispatch(doGetMaritalStatus());
+      dispatch(doGetCYFMSRegister(props.value));
       dispatch(doGetContact(props.value));
       dispatch(doGetEducationAndEmployment(props.value));
       dispatch(doGetOtherInformation(props.value));
       dispatch(doGetCriminalHistory(props.value));
       dispatch(doGetHouseholdMembers(props.value));
       dispatch(doGetFamilyPhysicians(props.value));
-      dispatch(doGetCounselors(props.value));
-      dispatch(doGetCYFMSRegister(props.value)).then(() => {
+      dispatch(doGetCounselors(props.value)).then(() => {
         navigate("/cyfms/register", { state: openPopup });
       });
     }

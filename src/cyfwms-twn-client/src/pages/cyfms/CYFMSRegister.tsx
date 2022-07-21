@@ -16,6 +16,7 @@ import type { FormEvent, ReactElement } from "react";
 import { CYFMSSideNavContext } from "../../components/cyfms/CYFMSSideNav";
 import { useNavigate } from "react-router-dom";
 import CYFMSDateInput from "../../components/cyfms/CYFMSDateInput";
+
 /**
  * The CYFMSRegister functional component.
  * @returns CYFMSRegister component skeleton.
@@ -23,6 +24,7 @@ import CYFMSDateInput from "../../components/cyfms/CYFMSDateInput";
 const CYFMSRegister = (): ReactElement => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
   const participantId = useAppSelector(
     (state) => (state as any).cyfmsRegister.user.participantId
   );
@@ -43,7 +45,8 @@ const CYFMSRegister = (): ReactElement => {
         readData.participantId ? readData.participantId : participantId
       )
     );
-  }, [userData, dispatch, participantId]);
+  }, []);
+
   // Handles the form data submission and other
   // activities.
   const submitHandler = (e: FormEvent) => {
@@ -126,13 +129,13 @@ const CYFMSRegister = (): ReactElement => {
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CYFMSDropdown
+              autofill={readData.gender}
               id="cyfmsRegister_Gender"
               optionsList={Object.values(gender).map(
                 (gender: any) => gender.en
               )}
               value="Gender"
               required
-              autofill={readData.gender}
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
