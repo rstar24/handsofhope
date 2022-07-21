@@ -38,16 +38,21 @@ const CYFMSRegister = (): ReactElement => {
   const [isRegistered, setIsRegistered] = useState<boolean>(false);
 
   useEffect(() => {
-    dispatch(doGetCYFMSRegister(userData.participantId));
+    dispatch(
+      doGetCYFMSRegister(
+        readData.participantId ? readData.participantId : participantId
+      )
+    );
   }, [userData, dispatch, participantId]);
-
   // Handles the form data submission and other
   // activities.
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
     const data: any = e.currentTarget;
     const newUser = {
-      participantId: userData.participantId,
+      participantId: readData.participantId
+        ? readData.participantId
+        : participantId,
       firstname: data.cyfmsRegister_FirstName.value,
       middleName: data.cyfmsRegister_MiddleName.value,
       surname: data.cyfmsRegister_LastName.value,
@@ -121,13 +126,13 @@ const CYFMSRegister = (): ReactElement => {
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CYFMSDropdown
-              autofill={readData.gender}
               id="cyfmsRegister_Gender"
               optionsList={Object.values(gender).map(
                 (gender: any) => gender.en
               )}
               value="Gender"
               required
+              autofill={readData.gender}
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>

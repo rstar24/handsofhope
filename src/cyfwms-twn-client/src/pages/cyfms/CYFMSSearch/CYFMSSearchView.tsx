@@ -14,6 +14,8 @@ import { useAppSelector } from "../../../library/hooks";
 import ViewFamilyPhysician from "./View/ViewFamilyPhysician";
 import ViewHouseholdMembers from "./View/ViewHouseholdMembers";
 import ViewCouncelors from "./View/ViewCouncelors";
+import ViewCriminalHistory from "./View/ViewCriminalHistory";
+import EditIcon from "../EditIcon";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -68,16 +70,27 @@ const CYFMSSearchView = (): ReactElement => {
         <Box
           component="form"
           paddingLeft={2}
-          boxShadow={3}
+          boxShadow={2}
           sx={{
+            display: "flex",
+            textAlign: "center",
+            justifyContent: "space-between",
+            backgroundColor: "#ededed",
             background: "#d7d3d354",
             maxHeight: "10vh",
           }}
         >
-          <Typography variant="h5" fontWeight={500}>
-            {data.cyfmsRegister.readUser.firstname} <></>
-            {data.cyfmsRegister.readUser.surname}
-          </Typography>
+          <Box>
+            <Typography variant="h5" fontWeight={500} paddingTop={0.3}>
+              {data.cyfmsRegister.readUser.firstname} <></>
+              {data.cyfmsRegister.readUser.surname}
+            </Typography>
+          </Box>
+          <Box>
+            <Typography paddingRight={1}>
+              <EditIcon value={data.cyfmsRegister.readUser.participantId} />
+            </Typography>
+          </Box>
         </Box>
         <Box
           sx={{
@@ -163,7 +176,7 @@ const CYFMSSearchView = (): ReactElement => {
             <ViewEducationAndEmployment />
           </TabPanel>
           <TabPanel value={value} index={4}>
-            Working
+            <ViewCriminalHistory />
           </TabPanel>
           <TabPanel value={value} index={5}>
             <ViewFamilyPhysician />
