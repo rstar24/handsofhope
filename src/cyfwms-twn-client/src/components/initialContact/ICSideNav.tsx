@@ -40,7 +40,10 @@ const ICSideNav = (): ReactElement => {
           },
         }}
       >
-        <ListItemButton component={MyNavLink} to="/initial_contact/fileDetails">
+        <ListItemButton
+          component={MyNavLink}
+          to="/initial_contact/file_details"
+        >
           <ListItemText primary="File Details" />
         </ListItemButton>
 
@@ -48,7 +51,7 @@ const ICSideNav = (): ReactElement => {
           //disabled={hideTabs}
 
           component={MyNavLink}
-          to="/initial_contact/referral"
+          to="/initial_contact/referral_information"
         >
           <ListItemText primary="Referral Information" />
         </ListItemButton>

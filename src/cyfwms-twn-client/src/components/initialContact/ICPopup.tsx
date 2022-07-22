@@ -62,8 +62,11 @@ const ICPopup = (props: ModalUnstyledProps): ReactElement => {
             <CloseIcon />
           </IconButton>
           <Routes>
-            <Route path="fileDetails" element={<ICFileDetails />} />
-            <Route path="referral" element={<ICREferralInformation />} />
+            <Route path="file_details" element={<ICFileDetails />} />
+            <Route
+              path="referral_information"
+              element={<ICREferralInformation />}
+            />
             <Route path="incident_report" element={<ICIncidentReport />} />
             <Route path="presentConcerns" element={<ICPresentConcerns />} />
             <Route

@@ -20,32 +20,30 @@ public class InitialContactFileDetailsServiceImpl implements  InitialContactFile
     private InitialContactFileDetailsRepository initialContactFileDetailsRepository;
     @Override
     public InitialContactFileDetailsDto readAllFileDetails(Long fileDetailsID) {
-        InitialContactFileDetailsDto initialContactFileDetailsDto = new InitialContactFileDetailsDto();
-        if(fileDetailsID!=0) {
-            InitialContactFileDetails initialContactFileDetails =
-                    initialContactFileDetailsRepository.findById(fileDetailsID).get();
-
+        if (fileDetailsID != 0) {
+            InitialContactFileDetailsDto initialContactFileDetailsDto = new InitialContactFileDetailsDto();
+            InitialContactFileDetails initialContactFileDetails = initialContactFileDetailsRepository.findById(fileDetailsID).get();
             if (initialContactFileDetails != null) {
                 modelMapper.map(initialContactFileDetails, initialContactFileDetailsDto);
             } else {
                 throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
             }
-
+            return initialContactFileDetailsDto;
         }
-        return initialContactFileDetailsDto;
+        throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
     }
 
     @Override
     public InitialContactFileDetailsDto saveAllFileDetails(InitialContactFileDetailsDto initialContactFileDetailsDto) {
-        InitialContactFileDetails initialContactFileDetails=null;
-        if(initialContactFileDetailsDto.getFileDetailsId()==0) {
-            initialContactFileDetails=new InitialContactFileDetails();
+        InitialContactFileDetails initialContactFileDetails = null;
+        if (initialContactFileDetailsDto.getFileDetailsId() == 0) {
+            initialContactFileDetails = new InitialContactFileDetails();
             modelMapper.map(initialContactFileDetailsDto, initialContactFileDetails);
-        }else {
-            initialContactFileDetails=initialContactFileDetailsRepository.findById(initialContactFileDetailsDto.getFileDetailsId()).get();
+        } else {
+            initialContactFileDetails = initialContactFileDetailsRepository.findById(initialContactFileDetailsDto.getFileDetailsId()).get();
             modelMapper.map(initialContactFileDetailsDto, initialContactFileDetails);
         }
-        initialContactFileDetails=initialContactFileDetailsRepository.save(initialContactFileDetails);
+        initialContactFileDetails = initialContactFileDetailsRepository.save(initialContactFileDetails);
         initialContactFileDetailsDto.setFileDetailsId(initialContactFileDetails.getFileDetailsId());
         return initialContactFileDetailsDto;
     }

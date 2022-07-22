@@ -45,7 +45,7 @@ const InitialContact = (): ReactElement => {
           >
             <Button
               component={Link}
-              to="/initial_contact/fileDetails"
+              to="/initial_contact/file_details"
               sx={{
                 background: "lightgrey",
                 color: "black",
