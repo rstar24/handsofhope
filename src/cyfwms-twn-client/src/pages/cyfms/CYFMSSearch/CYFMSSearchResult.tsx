@@ -4,7 +4,6 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-
 import { Box } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
@@ -16,12 +15,11 @@ import { doGetCriminalHistory } from "../../../features/cyfms/criminalHistory/cy
 import { doGetHouseholdMembers } from "../../../features/cyfms/householdMembers/cyfmsHouseholdMembersSlice";
 import { doGetFamilyPhysicians } from "../../../features/cyfms/familyPhysicians/cyfmsFamilyPhysiciansSlice";
 import { doGetCounselors } from "../../../features/cyfms/counselors/cyfmsCounselorsSlice";
-
+import EditIcon from "../EditIcon";
 const CYFMSSearchResult = (): ReactElement => {
   const dispatch = useAppDispatch();
   const searchData = useAppSelector((state) => (state as any).search.readUser);
   const navigate = useNavigate();
-  console.log("--->", searchData);
   const handleSearchView = (id: any) => {
     dispatch(doGetCYFMSRegister(id));
     dispatch(doGetContact(id));
@@ -32,8 +30,9 @@ const CYFMSSearchResult = (): ReactElement => {
     dispatch(doGetFamilyPhysicians(id));
     dispatch(doGetCounselors(id));
   };
+
   return (
-    <Box sx={{ my: 10, ml: -55 }}>
+    <Box sx={{ my: 10, ml: -45 }}>
       <Table sx={{ minWidth: 800 }} aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -44,6 +43,7 @@ const CYFMSSearchResult = (): ReactElement => {
             <TableCell>Date of Birth</TableCell>
             <TableCell>City</TableCell>
             <TableCell>Phone Number</TableCell>
+            <TableCell>Action</TableCell>
           </TableRow>
         </TableHead>
 
@@ -67,6 +67,9 @@ const CYFMSSearchResult = (): ReactElement => {
               <TableCell>{i.dateOfBirth}</TableCell>
               <TableCell>{i.city}</TableCell>
               <TableCell>{i.workPhone}</TableCell>
+              <TableCell>
+                <EditIcon value={i.participantId} />
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

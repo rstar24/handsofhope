@@ -39,7 +39,7 @@ const CYFMSOtherInformation = (): ReactElement => {
   );
 
   useEffect(() => {
-    dispatch(doGetOtherInformation(null))
+    dispatch(doGetOtherInformation(participantId))
       .unwrap()
       .then((otherInformationDataFromAPI) => {
         console.log("otherInformation GET backend API was successful!");
@@ -49,7 +49,6 @@ const CYFMSOtherInformation = (): ReactElement => {
         console.log(err);
       });
   }, []);
-
   // Handles the form data submission and other
   // activities.
   const submitHandler = (e: FormEvent) => {
@@ -104,7 +103,7 @@ const CYFMSOtherInformation = (): ReactElement => {
         <CYFMSTextArea
           id="otherInformation_Strengths"
           value="Strengths"
-          autofil={otherInformationData.strengths}
+          autofill={otherInformationData.strength}
         />
         <CYFMSTextArea
           id="otherInformation_Weaknesses"

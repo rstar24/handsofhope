@@ -68,3 +68,27 @@ export const OtherInformationLabels = [
   "Experiences",
   "Effective Coping Skills",
 ];
+
+export const CriminalHistoryLabels = [
+  "Criminal History Record Id",
+  "Arrest Date",
+  "Charges",
+  "Conviction",
+  "Sentence",
+  "Status",
+  "Creation Date",
+  "Start Date",
+  "End Date",
+  "Last Written",
+  "Criminal History Id",
+];
+
+export const CriminalHistoryRecordLabels = [
+  "ParticipantId",
+  "CriminalHistoryId",
+  "CriminalHistoryRecordList",
+  "Probation",
+  "Parole",
+  "Conditions",
+  "Court Worker And Contact Info",
+];

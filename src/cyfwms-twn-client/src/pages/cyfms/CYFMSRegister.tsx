@@ -16,6 +16,7 @@ import type { FormEvent, ReactElement } from "react";
 import { CYFMSSideNavContext } from "../../components/cyfms/CYFMSSideNav";
 import { useNavigate } from "react-router-dom";
 import CYFMSDateInput from "../../components/cyfms/CYFMSDateInput";
+
 /**
  * The CYFMSRegister functional component.
  * @returns CYFMSRegister component skeleton.
@@ -23,6 +24,7 @@ import CYFMSDateInput from "../../components/cyfms/CYFMSDateInput";
 const CYFMSRegister = (): ReactElement => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
   const participantId = useAppSelector(
     (state) => (state as any).cyfmsRegister.user.participantId
   );
@@ -38,8 +40,12 @@ const CYFMSRegister = (): ReactElement => {
   const [isRegistered, setIsRegistered] = useState<boolean>(false);
 
   useEffect(() => {
-    dispatch(doGetCYFMSRegister(userData.participantId));
-  }, [userData, dispatch, participantId]);
+    dispatch(
+      doGetCYFMSRegister(
+        readData.participantId ? readData.participantId : participantId
+      )
+    );
+  }, []);
 
   // Handles the form data submission and other
   // activities.
@@ -47,7 +53,9 @@ const CYFMSRegister = (): ReactElement => {
     e.preventDefault();
     const data: any = e.currentTarget;
     const newUser = {
-      participantId: userData.participantId,
+      participantId: readData.participantId
+        ? readData.participantId
+        : participantId,
       firstname: data.cyfmsRegister_FirstName.value,
       middleName: data.cyfmsRegister_MiddleName.value,
       surname: data.cyfmsRegister_LastName.value,

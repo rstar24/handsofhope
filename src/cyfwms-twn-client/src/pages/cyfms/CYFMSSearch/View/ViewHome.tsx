@@ -3,19 +3,12 @@ import React from "react";
 import { useAppSelector } from "../../../../library/hooks";
 import ViewContact from "./ViewContact";
 import ViewCouncelors from "./ViewCouncelors";
+import ViewCriminalHistory from "./ViewCriminalHistory";
 import ViewEducationAndEmployment from "./ViewEducationAndEmployment";
 import ViewFamilyPhysician from "./ViewFamilyPhysician";
 import ViewHouseholdMembers from "./ViewHouseholdMembers";
 import ViewOtherInformation from "./ViewOtherInformation";
-import {
-  ContactLabel,
-  CouncelorsLabel,
-  EducationAndEmploymentLabels,
-  FamilyPhysiciansLabel,
-  HouseholdLabel,
-  OtherInformationLabels,
-  RegisterLabels,
-} from "./ViewPagesLabels";
+import { RegisterLabels } from "./ViewPagesLabels";
 
 export const styles = {
   header: {
@@ -109,6 +102,7 @@ const ViewHome = () => {
         <Typography variant="h6" style={styles.header}>
           Criminal History
         </Typography>
+        <ViewCriminalHistory />
       </Box>
       <Box>
         <Typography variant="h6" style={styles.header}>
