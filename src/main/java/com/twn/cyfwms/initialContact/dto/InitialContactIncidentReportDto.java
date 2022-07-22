@@ -2,7 +2,6 @@ package com.twn.cyfwms.initialContact.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -14,34 +13,49 @@ import java.time.LocalTime;
 public class InitialContactIncidentReportDto {
     @Getter
     @Setter
-    private Long incidentReportId;
-
-    @Getter @Setter
     private Long fileDetailsId;
 
     @Getter
     @Setter
-    private String reportedBy;
-    @Getter @Setter
-    private String partiesInvolved;
-    @Getter @Setter
-    private String witnesses;
-    @Getter @Setter
-    private String incidentLocation;
-    @Getter @Setter
-    private String risk;
-    @Getter @Setter
-    private String actionTaken;
-    @Getter @Setter
-    private String actionPlan;
+    private Long incidentReportId;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private LocalDate dateOfReport;
 
-    @Getter @Setter
+    @Getter
+    @Setter
+    private String reportedBy;
+
+    @Getter
+    @Setter
+    private String partiesInvolved;
+
+    @Getter
+    @Setter
+    private String witnesses;
+
+    @Getter
+    @Setter
     private LocalDate incidentDate;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private LocalTime incidentTime;
 
+    @Getter
+    @Setter
+    private String incidentLocation;
+
+    @Getter
+    @Setter
+    private String risk;
+
+    @Getter
+    @Setter
+    private String actionTaken;
+
+    @Getter
+    @Setter
+    private String actionPlan;
 }

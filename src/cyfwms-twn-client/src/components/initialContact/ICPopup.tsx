@@ -68,7 +68,7 @@ const ICPopup = (props: ModalUnstyledProps): ReactElement => {
               element={<ICREferralInformation />}
             />
             <Route path="incident_report" element={<ICIncidentReport />} />
-            <Route path="presentConcerns" element={<ICPresentConcerns />} />
+            <Route path="present_concerns" element={<ICPresentConcerns />} />
             <Route
               path="patientCareInformation"
               element={<ICPatientCareInformation />}

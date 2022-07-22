@@ -1,7 +1,6 @@
 package com.twn.cyfwms.initialContact.service;
 
 import com.twn.cyfwms.initialContact.dto.InitialContactIncidentReportDto;
-
 import com.twn.cyfwms.initialContact.entity.InitialContactIncidentReport;
 import com.twn.cyfwms.initialContact.repository.InitialContactIncidentReportRepository;
 import lombok.AllArgsConstructor;
@@ -17,36 +16,36 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 public class InitialContactIncidentReportServiceImpl implements InitialContactIncidentReportService {
     @Autowired
     InitialContactIncidentReportRepository initialContactIncidentReportRepository;
+
     @Autowired
     private ModelMapper modelMapper;
+
     @Override
     public InitialContactIncidentReportDto readAllIncidentReports(Long fileDetailsID) {
-        InitialContactIncidentReportDto initialContactIncidentReportDto = new InitialContactIncidentReportDto();
-        if(fileDetailsID!=0) {
-            InitialContactIncidentReport initialContactIncidentReport =
-                    initialContactIncidentReportRepository.findByFileDetailsId(fileDetailsID);
-
+        if (fileDetailsID != 0) {
+            InitialContactIncidentReportDto initialContactIncidentReportDto = new InitialContactIncidentReportDto();
+            InitialContactIncidentReport initialContactIncidentReport = initialContactIncidentReportRepository.findByFileDetailsId(fileDetailsID);
             if (initialContactIncidentReport != null) {
                 modelMapper.map(initialContactIncidentReport, initialContactIncidentReportDto);
             } else {
                 throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
             }
-
+            return initialContactIncidentReportDto;
         }
-        return initialContactIncidentReportDto;
+        throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
     }
 
     @Override
     public InitialContactIncidentReportDto saveAllIncidentReports(InitialContactIncidentReportDto initialContactIncidentReportDto) {
-        InitialContactIncidentReport initialContactIncidentReport=null;
-        if(initialContactIncidentReportDto.getIncidentReportId()==0) {
-            initialContactIncidentReport=new InitialContactIncidentReport();
+        InitialContactIncidentReport initialContactIncidentReport = null;
+        if (initialContactIncidentReportDto.getIncidentReportId() == 0) {
+            initialContactIncidentReport = new InitialContactIncidentReport();
             modelMapper.map(initialContactIncidentReportDto, initialContactIncidentReport);
-        }else {
-            initialContactIncidentReport=initialContactIncidentReportRepository.findById(initialContactIncidentReportDto.getIncidentReportId()).get();
+        } else {
+            initialContactIncidentReport = initialContactIncidentReportRepository.findById(initialContactIncidentReportDto.getIncidentReportId()).get();
             modelMapper.map(initialContactIncidentReportDto, initialContactIncidentReport);
         }
-        initialContactIncidentReport=initialContactIncidentReportRepository.save(initialContactIncidentReport);
+        initialContactIncidentReport = initialContactIncidentReportRepository.save(initialContactIncidentReport);
         initialContactIncidentReportDto.setFileDetailsId(initialContactIncidentReport.getFileDetailsId());
         return initialContactIncidentReportDto;
     }

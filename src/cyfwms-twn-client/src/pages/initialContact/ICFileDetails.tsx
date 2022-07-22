@@ -26,10 +26,10 @@ const ICFileDetails = (): ReactElement => {
     dispatch(doGetIcFD(data.fileDetailsId))
       .unwrap()
       .then((fileDetailsDataFromAPI) => {
-        console.log("CriminalHistory GET backend API was successful!");
+        console.log("FileDetails GET backend API was successful!");
       })
       .catch((err) => {
-        console.log("CriminalHistory GET backend API didn't work!");
+        console.log("FileDetails GET backend API didn't work!");
         console.log(err);
       });
   }, []);
