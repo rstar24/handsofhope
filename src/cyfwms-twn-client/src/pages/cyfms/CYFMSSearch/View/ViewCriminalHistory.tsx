@@ -10,15 +10,16 @@ const ViewCriminalHistory = () => {
   const data = useAppSelector(
     (state) => (state as any).cyfmsCriminalHistory.data
   );
-  console.log(data);
   return (
     <>
-      <Box paddingTop={3}>
+      <Box paddingTop={1}>
         {Object.keys(data.criminalHistoryRecordList).map((i: any) => (
           <>
-            <Typography paddingTop={2} paddingLeft={4}>
-              Criminal History {i}
-            </Typography>
+            {data.criminalHistoryRecordList[0].participantId !== 0 && (
+              <Typography paddingTop={2} paddingLeft={4}>
+                Criminal History {i}
+              </Typography>
+            )}
             <Box>
               {Object.entries(data.criminalHistoryRecordList[i]).map(
                 (t: any, k) => (
@@ -28,27 +29,33 @@ const ViewCriminalHistory = () => {
                       paddingLeft: 8,
                     }}
                   >
-                    {k !== 0 &&
-                      k !== 5 &&
-                      k !== 6 &&
-                      k !== 7 &&
-                      k !== 8 &&
-                      k !== 9 &&
-                      k !== 10 && (
-                        <>
-                          <Box sx={{ flexBasis: 0, flexGrow: 2 }}>
-                            <Typography variant="h6" style={styles.keys}>
-                              {CriminalHistoryLabels[k]}
-                            </Typography>
-                          </Box>
+                    {t[1] === "" ? (
+                      <></>
+                    ) : (
+                      <>
+                        {k !== 0 &&
+                          k !== 5 &&
+                          k !== 6 &&
+                          k !== 7 &&
+                          k !== 8 &&
+                          k !== 9 &&
+                          k !== 10 && (
+                            <>
+                              <Box sx={{ flexBasis: 0, flexGrow: 2 }}>
+                                <Typography variant="h6" style={styles.keys}>
+                                  {CriminalHistoryLabels[k]}
+                                </Typography>
+                              </Box>
 
-                          <Box sx={{ flexBasis: 0, flexGrow: 2 }}>
-                            <Typography variant="h6" style={styles.values}>
-                              {t[1]}
-                            </Typography>
-                          </Box>
-                        </>
-                      )}
+                              <Box sx={{ flexBasis: 0, flexGrow: 2 }}>
+                                <Typography variant="h6" style={styles.values}>
+                                  {t[1]}
+                                </Typography>
+                              </Box>
+                            </>
+                          )}
+                      </>
+                    )}
                   </Box>
                 )
               )}
@@ -64,18 +71,24 @@ const ViewCriminalHistory = () => {
               paddingLeft: 8,
             }}
           >
-            {k !== 0 && k !== 1 && k !== 2 && (
+            {t[1] === "" ? (
+              <></>
+            ) : (
               <>
-                <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                  <Typography variant="h6" style={styles.keys}>
-                    {CriminalHistoryRecordLabels[k]}
-                  </Typography>
-                </Box>
-                <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                  <Typography variant="h6" style={styles.values}>
-                    {t[1]}
-                  </Typography>
-                </Box>
+                {k !== 0 && k !== 1 && k !== 2 && (
+                  <>
+                    <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+                      <Typography variant="h6" style={styles.keys}>
+                        {CriminalHistoryRecordLabels[k]}
+                      </Typography>
+                    </Box>
+                    <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+                      <Typography variant="h6" style={styles.values}>
+                        {t[1]}
+                      </Typography>
+                    </Box>
+                  </>
+                )}
               </>
             )}
           </Box>

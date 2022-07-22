@@ -6,14 +6,15 @@ import { HouseholdLabel } from "./ViewPagesLabels";
 const ViewHouseholdMembers = () => {
   const data = useAppSelector((state) => state as any).cyfmsHouseholdMembers
     .householdMembersData;
-
   return (
-    <Box paddingTop={3}>
+    <Box paddingTop={1}>
       {Object.keys(data.recordsList).map((i: any) => (
         <>
-          <Typography paddingTop={2} paddingLeft={4}>
-            Member {i}
-          </Typography>
+          {data.recordsList[0].participantId > 0 && (
+            <Typography paddingTop={2} paddingLeft={4}>
+              Member {i}
+            </Typography>
+          )}
           <Box>
             {Object.entries(data.recordsList[i]).map((t: any, k: any) => (
               <Box
@@ -22,19 +23,25 @@ const ViewHouseholdMembers = () => {
                   paddingLeft: 8,
                 }}
               >
-                {k !== 0 && k !== 1 && (
+                {t[1] === "" ? (
+                  <></>
+                ) : (
                   <>
-                    <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                      <Typography variant="h6" style={styles.keys}>
-                        {HouseholdLabel[k]}
-                      </Typography>
-                    </Box>
+                    {k !== 0 && k !== 1 && (
+                      <>
+                        <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+                          <Typography variant="h6" style={styles.keys}>
+                            {HouseholdLabel[k]}
+                          </Typography>
+                        </Box>
 
-                    <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                      <Typography variant="h6" style={styles.values}>
-                        {t[1]}
-                      </Typography>
-                    </Box>
+                        <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+                          <Typography variant="h6" style={styles.values}>
+                            {t[1]}
+                          </Typography>
+                        </Box>
+                      </>
+                    )}
                   </>
                 )}
               </Box>

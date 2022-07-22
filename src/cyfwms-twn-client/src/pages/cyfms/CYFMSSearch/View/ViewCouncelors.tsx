@@ -11,9 +11,11 @@ const ViewCouncelors = () => {
     <Box paddingTop={3}>
       {Object.keys(data.recordsList).map((i: any) => (
         <>
-          <Typography paddingTop={2} paddingLeft={4}>
-            Counselors/ CFS Worker {i}
-          </Typography>
+          {data.recordsList[0].participantId > 0 && (
+            <Typography paddingTop={2} paddingLeft={4}>
+              Counselors/ CFS Worker {i}
+            </Typography>
+          )}
           <Box>
             {Object.entries(data.recordsList[i]).map((t: any, k) => (
               <Box
@@ -22,19 +24,25 @@ const ViewCouncelors = () => {
                   paddingLeft: 8,
                 }}
               >
-                {k !== 0 && k !== 1 && (
+                {t[1] === "" ? (
+                  <></>
+                ) : (
                   <>
-                    <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                      <Typography variant="h6" style={styles.keys}>
-                        {CouncelorsLabel[k]}
-                      </Typography>
-                    </Box>
+                    {k !== 0 && k !== 1 && (
+                      <>
+                        <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+                          <Typography variant="h6" style={styles.keys}>
+                            {CouncelorsLabel[k]}
+                          </Typography>
+                        </Box>
 
-                    <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                      <Typography variant="h6" style={styles.values}>
-                        {t[1]}
-                      </Typography>
-                    </Box>
+                        <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+                          <Typography variant="h6" style={styles.values}>
+                            {t[1]}
+                          </Typography>
+                        </Box>
+                      </>
+                    )}
                   </>
                 )}
               </Box>
