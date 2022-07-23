@@ -3,8 +3,6 @@ package com.twn.cyfwms.initialContact.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
-import javax.persistence.Column;
-
 @Builder
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -14,21 +12,24 @@ public class InitialContactPresentConcernsDto {
     @Getter
     @Setter
     private Long fileDetailsId;
+
     @Getter
     @Setter
     private Long presentConcernsId;
 
-
-    @Getter @Setter
+    @Getter
+    @Setter
     private String selectPresentConcerns;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private String situation;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private String substanceAbuse;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private String explainMentalHealth;
-
 }

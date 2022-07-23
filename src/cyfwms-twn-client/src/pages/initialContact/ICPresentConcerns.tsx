@@ -1,10 +1,17 @@
-import { Box, Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import React from "react";
-import type { FormEvent, ReactElement } from "react";
-import ICLayout from "../../components/initialContact/ICLayout";
+import { CYFSWMSNextButton } from "../../components/CYFSWMSButtons";
 import ICDropdown from "../../components/initialContact/ICDropdown";
+import ICLayout from "../../components/initialContact/ICLayout";
 import ICTextArea from "../../components/initialContact/ICTextArea";
+import {
+  doGet,
+  doPost,
+} from "../../features/initialContact/presentConcerns/slice";
+import { useAppDispatch, useAppSelector } from "../../library/hooks";
+import { Box } from "@mui/material";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import type { Data } from "../../features/initialContact/presentConcerns/slice";
+import type { FormEvent, ReactElement } from "react";
 
 /**
  * The ICPresentConcerns functional component.
@@ -12,16 +19,48 @@ import ICTextArea from "../../components/initialContact/ICTextArea";
  */
 const ICPresentConcerns = (): ReactElement => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const initialContactID = useAppSelector(
+    (state) => state.icFileDetails.data.fileDetailsId
+  );
+  const data = useAppSelector((state) => state.icPresentConcerns.data);
+
+  useEffect(() => {
+    dispatch(doGet(initialContactID))
+      .unwrap()
+      .then((data) => {
+        console.log("PresentConcerns GET backend API was successful!");
+      })
+      .catch((err) => {
+        console.log("PresentConcerns GET backend API didn't work!");
+        console.log(err);
+      });
+  }, []);
 
   // Handles the form data submission and other
   // activities.
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
+    const form: any = e.currentTarget;
+    const formData: Data = {
+      fileDetailsId: initialContactID,
+      presentConcernsId: data.presentConcernsId,
+      selectPresentConcerns: form.selectPresentConcerns.value,
+      situation: form.situation.value,
+      substanceAbuse: form.substanceAbuse.value,
+      explainMentalHealth: form.explainMentalHealth.value,
+    };
+    dispatch(doPost(formData))
+      .unwrap()
+      .then(() => {
+        console.log("PresentConcerns POST backend API was successful!");
+        navigate("/initial_contact/patient_care_information");
+      })
+      .catch((err) => {
+        console.log("PresentConcerns POST backend API didn't work!");
+        console.log(err);
+      });
   };
-
-  // Handles the form fields' value changes
-  // and other activities.
-  const changeHandler = (e: FormEvent) => {};
 
   return (
     <ICLayout>
@@ -33,7 +72,6 @@ const ICPresentConcerns = (): ReactElement => {
           gap: "1rem 0",
         }}
         onSubmit={submitHandler}
-        onChange={changeHandler}
       >
         <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem 0" }}>
           <Box>
@@ -43,7 +81,8 @@ const ICPresentConcerns = (): ReactElement => {
               <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
                 <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
                   <ICDropdown
-                    id="ic_referral"
+                    autofill={data.selectPresentConcerns}
+                    id="selectPresentConcerns"
                     value="Please Select Present Concerns"
                     optionsList={["Health", "Adictions", "Abuse"]}
                   />
@@ -51,22 +90,25 @@ const ICPresentConcerns = (): ReactElement => {
                 <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
               </Box>
               <ICTextArea
-                id="ic_brieflyExplainSituation"
+                autofill={data.situation}
+                id="situation"
                 value="Briefly Explain Situation"
               />
               <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
                 <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
                   <ICDropdown
-                    id="ic_referral"
-                    value="Please Select Present Concerns"
+                    autofill={data.substanceAbuse}
+                    id="substanceAbuse"
+                    value="Mental Health or Alcohol / Substance Abuse"
                     optionsList={["Alcohol", "Drugs", "Narcotic"]}
                   />
                 </Box>
                 <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
               </Box>
               <ICTextArea
-                id="ic_brieflyExplainSituation"
-                value="Briefly Explain Situation"
+                autofill={data.explainMentalHealth}
+                id="explainMentalHealth"
+                value="Briefly Explain"
               />
             </Box>
           </Box>
@@ -77,7 +119,7 @@ const ICPresentConcerns = (): ReactElement => {
           </Box>
         </Box>
         <Box sx={{ display: "flex", justifyContent: "right" }}>
-          <Button variant="contained">Next</Button>
+          <CYFSWMSNextButton />
         </Box>
       </Box>
     </ICLayout>

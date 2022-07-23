@@ -72,7 +72,7 @@ const ICSideNav = (): ReactElement => {
         <ListItemButton
           //disabled={hideTabs}
           component={MyNavLink}
-          to="/initial_contact/patientCareInformation"
+          to="/initial_contact/patient_care_information"
         >
           <ListItemText primary="Patient Care Information" />
         </ListItemButton>

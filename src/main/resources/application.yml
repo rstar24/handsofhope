@@ -102,7 +102,6 @@ codetablevalues:
       "en": "Closed"
       "fr": "Fermé"
 
-
   initialContactReferral:
     DEFAULT:
       "en": ""
@@ -114,21 +113,19 @@ codetablevalues:
       "en": "No"
       "fr": "Non"
 
-
   presentConcerns:
-     DEFAULT:
+    DEFAULT:
       "en": ""
       "fr": ""
-     HEALTH:
+    HEALTH:
       "en": "Health"
       "fr": "Santé"
-     ADDICTION:
+    ADDICTION:
       "en": "Addiction"
       "fr": "Dépendance"
-     ABUSE:
+    ABUSE:
       "en": "Abuse"
       "fr": "Abuser de"
-
 
   mentalHealthOrSubstanceAbuse:
     DEFAULT:
@@ -143,7 +140,6 @@ codetablevalues:
     NARCOTIC:
       "en": "Narcotic"
       "fr": "Narcotique"
-
 
   typeOfPatient:
     DEFAULT:
@@ -169,6 +165,3 @@ codetablevalues:
     HIGH:
       "en": "High"
       "fr": "haut"
-
-
-
