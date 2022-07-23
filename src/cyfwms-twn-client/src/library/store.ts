@@ -10,6 +10,7 @@ import cyfmsRegisterReducer from "../features/cyfms/register/cyfmsRegisterSlice"
 import cyfmsCounselorsReducer from "../features/cyfms/counselors/cyfmsCounselorsSlice";
 import icFileDetailsReducer from "../features/initialContact/fileDetails/icFdSlice";
 import icIncidentReportReducer from "../features/initialContact/incidentReport/icIrSlice";
+import icReferralInformationReducer from "../features/initialContact/referralInformation/icRiSlice";
 import searchReducer from "../features/search/searchSlice";
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 
@@ -26,6 +27,7 @@ export const store = configureStore({
     cyfmsOtherInformation: cyfmsOtherInformationReducer,
     icFileDetails: icFileDetailsReducer,
     icIncidentReport: icIncidentReportReducer,
+    icReferralInformation: icReferralInformationReducer,
     educationAndEmployment: educationAndEmploymentReducer,
     search: searchReducer,
   },

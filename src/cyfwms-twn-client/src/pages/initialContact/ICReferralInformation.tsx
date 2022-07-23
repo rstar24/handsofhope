@@ -1,23 +1,67 @@
-import { Box, Button } from "@mui/material";
-import type { FormEvent, ReactElement } from "react";
-import ICLayout from "../../components/initialContact/ICLayout";
+import { CYFSWMSNextButton } from "../../components/CYFSWMSButtons";
 import ICDropdown from "../../components/initialContact/ICDropdown";
 import ICInput from "../../components/initialContact/ICInput";
+import ICLayout from "../../components/initialContact/ICLayout";
+import {
+  doGetIcRI,
+  doPostIcRI,
+} from "../../features/initialContact/referralInformation/icRiSlice";
+import { useAppDispatch, useAppSelector } from "../../library/hooks";
+import { Box } from "@mui/material";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import type { icRiData } from "../../features/initialContact/referralInformation/icRiSlice";
+import type { FormEvent, ReactElement } from "react";
 
 /**
- * The ICREferralInformation functional component.
- * @returns ICREferralInformation component skeleton.
+ * The ICReferralInformation functional component.
+ * @returns ICReferralInformation component skeleton.
  */
 const ICREferralInformation = (): ReactElement => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const initialContactID = useAppSelector(
+    (state) => state.icFileDetails.data.fileDetailsId
+  );
+  const data = useAppSelector((state) => state.icReferralInformation.data);
+
+  useEffect(() => {
+    dispatch(doGetIcRI(initialContactID))
+      .unwrap()
+      .then((data) => {
+        console.log("ReferralInformation GET backend API was successful!");
+      })
+      .catch((err) => {
+        console.log("ReferralInformation GET backend API didn't work!");
+        console.log(err);
+      });
+  }, []);
+
   // Handles the form data submission and other
   // activities.
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
+    const form: any = e.currentTarget;
+    const formData: icRiData = {
+      fileDetailsId: initialContactID,
+      referralInfoId: data.referralInfoId,
+      referral: form.referral.value,
+      agencyName: form.agencyName.value,
+      address: form.address.value,
+      phone: form.phone.value,
+      email: form.eMail.value,
+    };
+    dispatch(doPostIcRI(formData))
+      .unwrap()
+      .then(() => {
+        console.log("ReferralInformation POST backend API was successful!");
+        navigate("/initial_contact/incident_report");
+      })
+      .catch((err) => {
+        console.log("ReferralInformation POST backend API didn't work!");
+        console.log(err);
+      });
   };
-
-  // Handles the form fields' value changes
-  // and other activities.
-  const changeHandler = (e: FormEvent) => {};
 
   return (
     <ICLayout>
@@ -29,7 +73,6 @@ const ICREferralInformation = (): ReactElement => {
           gap: "1rem 0",
         }}
         onSubmit={submitHandler}
-        onChange={changeHandler}
       >
         <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem 0" }}>
           <Box>
@@ -39,7 +82,8 @@ const ICREferralInformation = (): ReactElement => {
               <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
                 <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
                   <ICDropdown
-                    id="ic_referral"
+                    autofill={data.referral}
+                    id="referral"
                     value="Referral"
                     optionsList={["Yes", "No"]}
                   />
@@ -55,10 +99,18 @@ const ICREferralInformation = (): ReactElement => {
                 }}
               >
                 <Box sx={{ flexBasis: 0, flexGrow: 0.5 }}>
-                  <ICInput id="ic_agencyName" value="Agency Name" />
+                  <ICInput
+                    autofill={data.agencyName}
+                    id="agencyName"
+                    value="Agency Name"
+                  />
                 </Box>
                 <Box sx={{ flexBasis: 0, flexGrow: 0.5 }}>
-                  <ICInput id="ic_address" value="Address" />
+                  <ICInput
+                    autofill={data.address}
+                    id="address"
+                    value="Address"
+                  />
                 </Box>
               </Box>
             </Box>
@@ -69,10 +121,10 @@ const ICREferralInformation = (): ReactElement => {
             >
               <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
                 <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                  <ICInput id="ic_phone" value="Phone" />
+                  <ICInput autofill={data.phone} id="phone" value="Phone" />
                 </Box>
                 <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                  <ICInput id="ic_email" value="Email" />
+                  <ICInput autofill={data.email} id="eMail" value="Email" />
                 </Box>
               </Box>
               <Box
@@ -88,7 +140,7 @@ const ICREferralInformation = (): ReactElement => {
           </Box>
         </Box>
         <Box sx={{ display: "flex", justifyContent: "right" }}>
-          <Button variant="contained">Next</Button>
+          <CYFSWMSNextButton />
         </Box>
       </Box>
     </ICLayout>

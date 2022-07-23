@@ -3,8 +3,6 @@ package com.twn.cyfwms.initialContact.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
-import javax.persistence.Column;
-
 @Builder
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -14,23 +12,28 @@ public class InitialContactReferralInfoDto {
     @Getter
     @Setter
     private Long fileDetailsId;
+
     @Getter
     @Setter
     private Long referralInfoId;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private String referral;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private String agencyName;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private String address;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private String phone;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private String email;
-
 }
