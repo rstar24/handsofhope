@@ -1,4 +1,3 @@
 package com.twn.cyfwms.initialContact.dto;
 
-public class PatientCareInfoOutpatientDto {
-}
+public class PatientCareInfoOutpatientDto {}

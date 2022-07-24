@@ -1,6 +1,5 @@
 package com.twn.cyfwms.initialContact.service;
 
-
 import com.twn.cyfwms.initialContact.dto.InitialContactPatientCareInfoDto;
 import com.twn.cyfwms.initialContact.entity.InitialContactPatientCareInfo;
 import com.twn.cyfwms.initialContact.repository.InitialContactPatientCareInfoRepository;
@@ -17,39 +16,37 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 public class InitialContactPatientCareInfoServiceImpl implements InitialContactPatientCareInfoService {
     @Autowired
     InitialContactPatientCareInfoRepository initialContactPatientCareInfoRepository;
+
     @Autowired
     ModelMapper modelMapper;
+
     @Override
     public InitialContactPatientCareInfoDto readAllPatientCareInfo(Long fileDetailsId) {
-        InitialContactPatientCareInfoDto initialContactPatientCareInfoDto = new InitialContactPatientCareInfoDto();
-        if(fileDetailsId!=0) {
-            InitialContactPatientCareInfo initialContactIncidentReport =
-                    initialContactPatientCareInfoRepository.findByFileDetailsId(fileDetailsId);
-
+        if (fileDetailsId != 0) {
+            InitialContactPatientCareInfoDto initialContactPatientCareInfoDto = new InitialContactPatientCareInfoDto();
+            InitialContactPatientCareInfo initialContactIncidentReport = initialContactPatientCareInfoRepository.findByFileDetailsId(fileDetailsId);
             if (initialContactIncidentReport != null) {
                 modelMapper.map(initialContactIncidentReport, initialContactPatientCareInfoDto);
             } else {
                 throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
             }
-
+            return initialContactPatientCareInfoDto;
         }
-        return initialContactPatientCareInfoDto;
+        throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
     }
 
     @Override
     public InitialContactPatientCareInfoDto saveAllPatientCareInfo(InitialContactPatientCareInfoDto initialContactPatientCareInfoDto) {
-        InitialContactPatientCareInfo initialContactPatientCareInfo=null;
-        if(initialContactPatientCareInfoDto.getPatientCareInfoId()==0) {
-            initialContactPatientCareInfo=new InitialContactPatientCareInfo();
+        InitialContactPatientCareInfo initialContactPatientCareInfo = null;
+        if (initialContactPatientCareInfoDto.getPatientCareInfoId() == 0) {
+            initialContactPatientCareInfo = new InitialContactPatientCareInfo();
             modelMapper.map(initialContactPatientCareInfoDto, initialContactPatientCareInfo);
-        }else {
-            initialContactPatientCareInfo=initialContactPatientCareInfoRepository
-                    .findById(initialContactPatientCareInfoDto.getPatientCareInfoId()).get();
+        } else {
+            initialContactPatientCareInfo = initialContactPatientCareInfoRepository.findById(initialContactPatientCareInfoDto.getPatientCareInfoId()).get();
             modelMapper.map(initialContactPatientCareInfoDto, initialContactPatientCareInfo);
         }
-        initialContactPatientCareInfo=initialContactPatientCareInfoRepository.save(initialContactPatientCareInfo);
+        initialContactPatientCareInfo = initialContactPatientCareInfoRepository.save(initialContactPatientCareInfo);
         initialContactPatientCareInfoDto.setFileDetailsId(initialContactPatientCareInfo.getFileDetailsId());
         return initialContactPatientCareInfoDto;
     }
 }
-

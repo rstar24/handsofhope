@@ -3,54 +3,63 @@ package com.twn.cyfwms.initialContact.entity;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Data
 @AllArgsConstructor
-@NoArgsConstructor
+@Data
 @Entity
+@NoArgsConstructor
 @Table(name = "initialcontactpatientcareinfo")
 public class InitialContactPatientCareInfo implements Serializable {
-    @Id
+    @Column(name = "typeofpatient")
     @Getter
     @Setter
+    private String typeOfPatient;
+
+    @Getter
+    @JoinColumn(name = "patientcareinfoid", referencedColumnName = "patientcareinfoid")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @Setter
+    private PatientCareInfoInpatient inpatient;
+
+    @Getter
+    @JoinColumn(name = "patientcareinfoid", referencedColumnName = "patientcareinfoid")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @Setter
+    private PatientCareInfoOutpatient outpatient;
+
     @Column(name = "patientcareinfoid", updatable = false, nullable = false)
+    @Getter
+    @Id
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "patientcareinfoidgenerator"
+    )
     @SequenceGenerator(
             name = "patientcareinfoidgenerator",
             sequenceName = "patientcareinfoidgenerator",
             allocationSize = 100
     )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "patientcareinfoidgenerator"
-    )
+    @Setter
     private Long patientCareInfoId;
 
-    @Getter @Setter @Column(name = "typeofpatient")
-    private String typeOfPatient;
+    @Column(name = "filedetailsid")
+    @Getter
+    @Setter
+    private Long fileDetailsId;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "patientcareinfoid", referencedColumnName = "patientcareinfoid")
-    @Getter @Setter
-    private PatientCareInfoOutpatient outpatient;
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "patientcareinfoid", referencedColumnName = "patientcareinfoid")
-    @Getter @Setter
-    private PatientCareInfoInpatient inpatient;
-
+    @Column(name = "creationdate")
     @CreationTimestamp
-    @Getter @Setter @Column(name = "creationdate")
+    @Getter
+    @Setter
     private LocalDate creationDate;
 
+    @Column(name = "lastwritten")
     @UpdateTimestamp
-    @Getter @Setter @Column(name = "lastwritten")
+    @Getter
+    @Setter
     private LocalDateTime lastwritten;
-
-    @Getter @Setter @Column(name = "filedetailsid")
-    private Long fileDetailsId;
 }

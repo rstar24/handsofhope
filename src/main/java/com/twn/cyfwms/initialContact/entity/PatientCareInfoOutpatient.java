@@ -3,68 +3,80 @@ package com.twn.cyfwms.initialContact.entity;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Data
 @AllArgsConstructor
-@NoArgsConstructor
 @Entity
+@Data
+@NoArgsConstructor
 @Table(name = "patientcareinfooutpatient")
 public class PatientCareInfoOutpatient {
-
-    @Id
+    @Column(name = "therapyorcounseling")
     @Getter
     @Setter
+    private String therapyOrCounseling;
+
+    @Column(name = "therapytimeperiod")
+    @Getter
+    @Setter
+    private String therapyTimePeriod;
+
+    @Column(name = "therapylocation")
+    @Getter
+    @Setter
+    private String therapyLocation;
+
+    @Column(name = "reasonfortherapy")
+    @Getter
+    @Setter
+    private String reasonForTherapy;
+
+    @Column(name = "selfhelpgroup")
+    @Getter
+    @Setter
+    private String selfHelpGroup;
+
+    @Column(name = "selfhelpgroupperiod")
+    @Getter
+    @Setter
+    private String selfHelpGroupPeriod;
+
+    @Column(name = "selfhelpgrouplocation")
+    @Getter
+    @Setter
+    private String selfHelpGroupLocation;
+
     @Column(name = "outpatientid", updatable = false, nullable = false)
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "outpatientidgenerator"
+    )
+    @Getter
+    @Id
     @SequenceGenerator(
             name = "outpatientidgenerator",
             sequenceName = "outpatientidgenerator",
             allocationSize = 100
     )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "outpatientidgenerator"
-    )
+    @Setter
     private Long outpatientId;
 
-    @Getter @Setter @Column(name = "therapyorcounseling")
-    private String therapyOrCounseling;
-
-    @Getter @Setter @Column(name = "therapytimeperiod")
-    private String therapyTimePeriod;
-
-    @Getter @Setter @Column(name = "therapylocation")
-    private String therapyLocation;
-
-    @Getter @Setter @Column(name = "reasonfortherapy")
-    private String reasonForTherapy;
-
-    @Getter @Setter @Column(name = "selfhelpgroup")
-    private String selfHelpGroup;
-
-    @Getter @Setter @Column(name = "selfhelpgroupperiod")
-    private String selfHelpGroupPeriod;
-
-    @Getter @Setter @Column(name = "selfhelpgrouplocation")
-    private String selfHelpGroupLocation;
-
-    @Getter @Setter @Column(name = "patientcareinfoid")
+    @Column(name = "patientcareinfoid")
+    @Getter
+    @Setter
     private Long patientCareInfoId;
 
+    @Column(name = "creationdate")
     @CreationTimestamp
-    @Getter @Setter @Column(name = "creationdate")
+    @Getter
+    @Setter
     private LocalDate creationDate;
 
+    @Column(name = "lastwritten")
+    @Getter
+    @Setter
     @UpdateTimestamp
-    @Getter @Setter @Column(name = "lastwritten")
     private LocalDateTime lastwritten;
-
-
-
-
-
-
 }

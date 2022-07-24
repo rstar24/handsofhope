@@ -12,6 +12,7 @@ import icFileDetailsReducer from "../features/initialContact/fileDetails/icFdSli
 import icIncidentReportReducer from "../features/initialContact/incidentReport/icIrSlice";
 import icReferralInformationReducer from "../features/initialContact/referralInformation/icRiSlice";
 import icPresentConcernsReducer from "../features/initialContact/presentConcerns/slice";
+import icPatientCareInformationReducer from "../features/initialContact/patientCareInformation/slice";
 import searchReducer from "../features/search/searchSlice";
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 
@@ -30,6 +31,7 @@ export const store = configureStore({
     icIncidentReport: icIncidentReportReducer,
     icReferralInformation: icReferralInformationReducer,
     icPresentConcerns: icPresentConcernsReducer,
+    icPatientCareInformation: icPatientCareInformationReducer,
     educationAndEmployment: educationAndEmploymentReducer,
     search: searchReducer,
   },

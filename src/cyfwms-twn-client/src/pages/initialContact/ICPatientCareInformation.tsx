@@ -1,32 +1,104 @@
-import { Box, Button, Typography } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "../../library/hooks";
-import { useNavigate } from "react-router-dom";
-import React, { useEffect, useState } from "react";
-import type { FormEvent, ReactElement } from "react";
+import { CYFSWMSNextButton } from "../../components/CYFSWMSButtons";
 import ICLayout from "../../components/initialContact/ICLayout";
 import ICDropdown from "../../components/initialContact/ICDropdown";
-import ICInput from "../../components/initialContact/ICInput";
-import ICTextArea from "../../components/initialContact/ICTextArea";
-import ICTextAreaMax from "../../components/initialContact/ICTextAreaMax";
-import ICHalfInput from "../../components/initialContact/ICHalfInput";
-import ICFullInput from "../../components/initialContact/ICFullInput";
+import Inpatient from "../../components/initialContact/Inpatient";
+import Outpatient from "../../components/initialContact/Outpatient";
+import {
+  doGet,
+  doPost,
+} from "../../features/initialContact/patientCareInformation/slice";
+import { useAppDispatch, useAppSelector } from "../../library/hooks";
+import { Box } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import type { Data } from "../../features/initialContact/patientCareInformation/slice";
+import type { FormEvent, ReactElement } from "react";
 
 /**
  * The ICPatientCareInformation functional component.
  * @returns ICPatientCareInformation component skeleton.
  */
 const ICPatientCareInformation = (): ReactElement => {
-  const navigate = useNavigate();
-  const [patient, setPatient] = useState("Inpatient");
+  const dispatch = useAppDispatch();
+  const initialContactID = useAppSelector(
+    (state) => state.icFileDetails.data.fileDetailsId
+  );
+  const data = useAppSelector((state) => state.icPatientCareInformation.data);
+
+  const [typeOfPatient, setTypeOfPatient] = useState("Outpatient");
+
+  useEffect(() => {
+    dispatch(doGet(initialContactID))
+      .unwrap()
+      .then((data) => {
+        console.log("PatientCareInformation GET backend API was successful!");
+      })
+      .catch((err) => {
+        console.log("PatientCareInformation GET backend API didn't work!");
+        console.log(err);
+      });
+  }, []);
+
   // Handles the form data submission and other
   // activities.
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
+    const form: any = e.currentTarget;
+    const formData: Data = {
+      fileDetailsId: initialContactID,
+      patientCareInfoId: data.patientCareInfoId,
+      typeOfPatient: form.typeOfPatient.value,
+      inpatient: {
+        hospitalizationRecord: form.hospitalizationRecord
+          ? form.hospitalizationRecord.value
+          : data.inpatient.hospitalizationRecord,
+        hospitalizationReasons: form.hospitalizationReasons
+          ? form.hospitalizationReasons.value
+          : data.inpatient.hospitalizationReasons,
+      },
+      outpatient: {
+        therapyOrCounseling: form.therapyOrCounseling
+          ? form.therapyOrCounseling.value
+          : data.outpatient.therapyOrCounseling,
+        therapyTimePeriod: form.therapyTimePeriod
+          ? form.therapyTimePeriod.value
+          : data.outpatient.therapyTimePeriod,
+        therapyLocation: form.therapyLocation
+          ? form.therapyLocation.value
+          : data.outpatient.therapyLocation,
+        reasonForTherapy: form.reasonForTherapy
+          ? form.reasonForTherapy.value
+          : data.outpatient.reasonForTherapy,
+        selfHelpGroup: form.selfHelpGroup
+          ? form.selfHelpGroup.value
+          : data.outpatient.selfHelpGroup,
+        selfHelpGroupPeriod: form.selfHelpGroupPeriod
+          ? form.selfHelpGroupPeriod.value
+          : data.outpatient.selfHelpGroupPeriod,
+        selfHelpGroupLocation: form.selfHelpGroupLocation
+          ? form.selfHelpGroupLocation.value
+          : data.outpatient.selfHelpGroupLocation,
+      },
+    };
+    dispatch(doPost(formData))
+      .unwrap()
+      .then(() => {
+        console.log("PatientCareInformation POST backend API was successful!");
+      })
+      .catch((err) => {
+        console.log("PatientCareInformation POST backend API didn't work!");
+        console.log(err);
+      });
   };
 
   // Handles the form fields' value changes
   // and other activities.
-  const changeHandler = (e: FormEvent) => {};
+  const changeHandler = (e: FormEvent) => {
+    e.preventDefault();
+    const form: any = e.currentTarget;
+    form.typeOfPatient.value === "Inpatient"
+      ? setTypeOfPatient("Inpatient")
+      : setTypeOfPatient("Outpatient");
+  };
 
   return (
     <ICLayout>
@@ -44,103 +116,18 @@ const ICPatientCareInformation = (): ReactElement => {
           <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
             <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
               <ICDropdown
-                id="ic_referral"
+                autofill={data.typeOfPatient}
+                id="typeOfPatient"
                 value="Type of Patient"
                 optionsList={["Outpatient", "Inpatient"]}
               />
             </Box>
             <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
           </Box>
-          <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem 0" }}>
-            <Typography
-              sx={{
-                paddingLeft: 1,
-                color: "blue",
-                fontWeight: "bold",
-              }}
-            >
-              {patient}
-            </Typography>
-            <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-              <Box
-                sx={{
-                  paddingLeft: 1,
-                  flexBasis: 0,
-                  flexDirection: "column",
-                  flexGrow: 200,
-                }}
-              >
-                <ICTextAreaMax
-                  value="Have you seen a therapist or counselor for personal or family
-              problems or alcohol/drug treatment?"
-                />
-              </Box>
-              <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
-            </Box>
-            {patient === "Outpatient" && (
-              <Box
-                sx={{ display: "flex", flexDirection: "column", gap: "1rem 0" }}
-              >
-                <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
-                  <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                    <ICInput id="ic_status" value="When?" />
-                  </Box>
-                  <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                    <ICInput id="ic_dateClosed" value="Where?" />
-                  </Box>
-                </Box>
-
-                <Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "1rem 0",
-                    }}
-                  >
-                    <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                      <ICFullInput id="ic_reasons" value="Reasons" />
-                    </Box>
-                  </Box>
-                </Box>
-
-                <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
-                  <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                    <ICHalfInput
-                      id="ic_dateClosed"
-                      value="Any involvement in self helf groups such as NA, AA, etc.?"
-                    />
-                  </Box>
-                </Box>
-
-                <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
-                  <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                    <ICInput id="ic_status" value="When?" />
-                  </Box>
-                  <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                    <ICInput id="ic_dateClosed" value="Where?" />
-                  </Box>
-                </Box>
-              </Box>
-            )}
-            {patient === "Inpatient" && (
-              <>
-                <Box
-                  sx={{
-                    paddingLeft: 1,
-                    flexBasis: 0,
-                    flexDirection: "column",
-                    flexGrow: 200,
-                  }}
-                >
-                  <ICTextAreaMax value="Reasons?" />
-                </Box>
-              </>
-            )}
-          </Box>
+          {typeOfPatient === "Outpatient" ? <Outpatient /> : <Inpatient />}
         </Box>
         <Box sx={{ display: "flex", justifyContent: "right" }}>
-          <Button variant="contained">Next</Button>
+          <CYFSWMSNextButton />
         </Box>
       </Box>
     </ICLayout>

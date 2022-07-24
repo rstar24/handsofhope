@@ -3,7 +3,6 @@ package com.twn.cyfwms.initialContact.entity;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -43,6 +42,5 @@ public class PatientCareInfoInpatient {
     private LocalDate creationDate;
 
     @UpdateTimestamp
-    @Getter @Setter @Column(name = "lastwritten")
     private LocalDateTime lastwritten;
 }
