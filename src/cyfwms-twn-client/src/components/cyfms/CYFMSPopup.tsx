@@ -1,18 +1,3 @@
-import CYFMSFamilyPhysicians from "../../pages/cyfms/CYFMSFamilyPhysicians";
-import CYFMSContact from "../../pages/cyfms/CYFMSContact";
-import CYFMSCriminalHistory from "../../pages/cyfms/CYFMSCriminalHistory";
-import CYFMSCounselors from "../../pages/cyfms/CYFMSCounselors";
-import CYFMSEducationAndEmployment from "../../pages/cyfms/CYFMSEducationAndEmployment";
-import CYFMSHouseholdMembers from "../../pages/cyfms/CYFMSHouseholdMembers";
-import CYFMSOtherInformation from "../../pages/cyfms/CYFMSOtherInformation";
-import CYFMSRegister from "../../pages/cyfms/CYFMSRegister";
-import { Box, IconButton, Modal } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import React, { useState } from "react";
-import { Route, Routes } from "react-router-dom";
-import type { ModalUnstyledProps } from "@mui/material";
-import type { ReactElement } from "react";
-import { useAppDispatch } from "../../library/hooks";
 import { cleanCodetableState } from "../../features/codetable/codetableSlice";
 import { cleanContactState } from "../../features/cyfms/contact/cyfmsContactSlice";
 import { cleanCriminalHistoryState } from "../../features/cyfms/criminalHistory/cyfmsCriminalHistorySlice";
@@ -22,8 +7,23 @@ import { cleanHouseholdMembersState } from "../../features/cyfms/householdMember
 import { cleanOtherInformationState } from "../../features/cyfms/otherInformation/cyfmsOtherInformationSlice";
 import { cleanRegisterState } from "../../features/cyfms/register/cyfmsRegisterSlice";
 import { cleanSearchState } from "../../features/search/searchSlice";
-import { CYFMSSideNavContext } from "./CYFMSSideNav";
 import { cleanCounselorsState } from "../../features/cyfms/counselors/cyfmsCounselorsSlice";
+import { hideTabs } from "../../features/sideNavBarSlice";
+import CYFMSFamilyPhysicians from "../../pages/cyfms/CYFMSFamilyPhysicians";
+import CYFMSContact from "../../pages/cyfms/CYFMSContact";
+import CYFMSCriminalHistory from "../../pages/cyfms/CYFMSCriminalHistory";
+import CYFMSCounselors from "../../pages/cyfms/CYFMSCounselors";
+import CYFMSEducationAndEmployment from "../../pages/cyfms/CYFMSEducationAndEmployment";
+import CYFMSHouseholdMembers from "../../pages/cyfms/CYFMSHouseholdMembers";
+import CYFMSOtherInformation from "../../pages/cyfms/CYFMSOtherInformation";
+import CYFMSRegister from "../../pages/cyfms/CYFMSRegister";
+import { useAppDispatch } from "../../library/hooks";
+import { Box, IconButton, Modal } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import type { ModalUnstyledProps } from "@mui/material";
+import type { ReactElement } from "react";
 
 /**
  * The CYFMSPopup functional component.
@@ -39,7 +39,6 @@ import { cleanCounselorsState } from "../../features/cyfms/counselors/cyfmsCouns
  */
 const CYFMSPopup = (props: ModalUnstyledProps): ReactElement => {
   const dispatch = useAppDispatch();
-  const [hideTabs, setHideTabs] = useState<boolean>(true);
 
   const handleClose = () => {
     dispatch(cleanCodetableState());
@@ -70,44 +69,31 @@ const CYFMSPopup = (props: ModalUnstyledProps): ReactElement => {
           overflowY: "auto",
         }}
       >
-        <CYFMSSideNavContext.Provider
-          value={{ hideTabs: hideTabs, setHideTabs: setHideTabs }}
+        <IconButton
+          color="primary"
+          aria-label="Close the popup box."
+          onClick={(e) => {
+            dispatch(hideTabs(null));
+            handleClose();
+            props.onClose!(e, "escapeKeyDown");
+          }}
+          sx={{ position: "absolute", right: 0 }}
         >
-          <IconButton
-            color="primary"
-            aria-label="Close the popup box."
-            onClick={(e) => {
-              setHideTabs(true);
-              handleClose();
-              props.onClose!(e, "escapeKeyDown");
-            }}
-            sx={{ position: "absolute", right: 0 }}
-          >
-            <CloseIcon />
-          </IconButton>
-          <Routes>
-            <Route path="register" element={<CYFMSRegister />} />
-            <Route path="contact" element={<CYFMSContact />} />
-            <Route
-              path="household_members"
-              element={<CYFMSHouseholdMembers />}
-            />
-            <Route
-              path="education_and_employment"
-              element={<CYFMSEducationAndEmployment />}
-            />
-            <Route path="criminal_history" element={<CYFMSCriminalHistory />} />
-            <Route
-              path="family_physicians"
-              element={<CYFMSFamilyPhysicians />}
-            />
-            <Route path="counselors" element={<CYFMSCounselors />} />
-            <Route
-              path="other_information"
-              element={<CYFMSOtherInformation />}
-            />
-          </Routes>
-        </CYFMSSideNavContext.Provider>
+          <CloseIcon />
+        </IconButton>
+        <Routes>
+          <Route path="register" element={<CYFMSRegister />} />
+          <Route path="contact" element={<CYFMSContact />} />
+          <Route path="household_members" element={<CYFMSHouseholdMembers />} />
+          <Route
+            path="education_and_employment"
+            element={<CYFMSEducationAndEmployment />}
+          />
+          <Route path="criminal_history" element={<CYFMSCriminalHistory />} />
+          <Route path="family_physicians" element={<CYFMSFamilyPhysicians />} />
+          <Route path="counselors" element={<CYFMSCounselors />} />
+          <Route path="other_information" element={<CYFMSOtherInformation />} />
+        </Routes>
       </Box>
     </Modal>
   );

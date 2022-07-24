@@ -14,6 +14,7 @@ import icReferralInformationReducer from "../features/initialContact/referralInf
 import icPresentConcernsReducer from "../features/initialContact/presentConcerns/slice";
 import icPatientCareInformationReducer from "../features/initialContact/patientCareInformation/slice";
 import searchReducer from "../features/search/searchSlice";
+import sideNavBarReducer from "../features/sideNavBarSlice";
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 
 export const store = configureStore({
@@ -34,6 +35,7 @@ export const store = configureStore({
     icPatientCareInformation: icPatientCareInformationReducer,
     educationAndEmployment: educationAndEmploymentReducer,
     search: searchReducer,
+    sideNavBar: sideNavBarReducer,
   },
 });
 

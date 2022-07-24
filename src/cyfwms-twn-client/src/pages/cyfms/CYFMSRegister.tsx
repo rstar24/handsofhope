@@ -1,3 +1,7 @@
+import CYFMSDropdown from "../../components/cyfms/CYFMSDropdown";
+import CYFMSInput from "../../components/cyfms/CYFMSInput";
+import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
+import CYFMSDateInput from "../../components/cyfms/CYFMSDateInput";
 import {
   CYFSWMSNextButton,
   CYFSWMSSaveButton,
@@ -6,16 +10,12 @@ import {
   doGetCYFMSRegister,
   doPostCYFMSRegister,
 } from "../../features/cyfms/register/cyfmsRegisterSlice";
+import { unhideTabs } from "../../features/sideNavBarSlice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
-import CYFMSDropdown from "../../components/cyfms/CYFMSDropdown";
-import CYFMSInput from "../../components/cyfms/CYFMSInput";
-import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
 import { Box } from "@mui/material";
-import React, { useContext, useEffect, useState } from "react";
-import type { FormEvent, ReactElement } from "react";
-import { CYFMSSideNavContext } from "../../components/cyfms/CYFMSSideNav";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import CYFMSDateInput from "../../components/cyfms/CYFMSDateInput";
+import type { FormEvent, ReactElement } from "react";
 
 /**
  * The CYFMSRegister functional component.
@@ -36,7 +36,6 @@ const CYFMSRegister = (): ReactElement => {
   const readData = useAppSelector(
     (state) => (state as any).cyfmsRegister.readUser
   );
-  const { setHideTabs } = useContext(CYFMSSideNavContext);
   const [isRegistered, setIsRegistered] = useState<boolean>(false);
 
   useEffect(() => {
@@ -66,7 +65,7 @@ const CYFMSRegister = (): ReactElement => {
     dispatch(doPostCYFMSRegister({ user: newUser }))
       .unwrap()
       .then(() => {
-        setHideTabs(false);
+        dispatch(unhideTabs(null));
         setIsRegistered(true);
       })
       .catch((err) => {

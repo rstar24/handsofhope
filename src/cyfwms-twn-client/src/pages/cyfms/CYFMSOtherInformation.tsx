@@ -15,9 +15,9 @@ import {
 } from "../../features/cyfms/otherInformation/cyfmsOtherInformationSlice";
 import { cleanRegisterState } from "../../features/cyfms/register/cyfmsRegisterSlice";
 import { cleanSearchState } from "../../features/search/searchSlice";
+import { hideTabs } from "../../features/sideNavBarSlice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { PopupContext } from "./CYFMS";
-import { CYFMSSideNavContext } from "../../components/cyfms/CYFMSSideNav";
 import { Box, Typography } from "@mui/material";
 import React, { useContext, useEffect } from "react";
 import type { cyfmsOtherInformationData } from "../../features/cyfms/otherInformation/cyfmsOtherInformationSlice";
@@ -29,7 +29,6 @@ import type { FormEvent, ReactElement } from "react";
  */
 const CYFMSOtherInformation = (): ReactElement => {
   const popupContext = useContext(PopupContext);
-  const sideNavContext = useContext(CYFMSSideNavContext);
   const dispatch = useAppDispatch();
   const participantId = useAppSelector(
     (state) => (state as any).cyfmsRegister.user.participantId
@@ -49,6 +48,7 @@ const CYFMSOtherInformation = (): ReactElement => {
         console.log(err);
       });
   }, []);
+
   // Handles the form data submission and other
   // activities.
   const submitHandler = (e: FormEvent) => {
@@ -78,7 +78,7 @@ const CYFMSOtherInformation = (): ReactElement => {
         dispatch(cleanCounselorsState(null));
         console.log("otherInformation POST backend API was successful!");
         popupContext.setOpen(false);
-        sideNavContext.setHideTabs(true);
+        dispatch(hideTabs(null));
       })
       .catch((err) => {
         console.log("otherInformation POST backend API was successful!");
