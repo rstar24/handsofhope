@@ -10,10 +10,11 @@ import {
   doGetCYFMSRegister,
   doPostCYFMSRegister,
 } from "../../features/cyfms/register/cyfmsRegisterSlice";
-import { unhideTabs } from "../../features/sideNavBarSlice";
+import { initiate } from "../../features/initiatorSlice";
+import { unhideTabs } from "../../features/navBarSlice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { Box } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import type { FormEvent, ReactElement } from "react";
 
@@ -24,7 +25,6 @@ import type { FormEvent, ReactElement } from "react";
 const CYFMSRegister = (): ReactElement => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
   const participantId = useAppSelector(
     (state) => (state as any).cyfmsRegister.user.participantId
   );
@@ -36,7 +36,9 @@ const CYFMSRegister = (): ReactElement => {
   const readData = useAppSelector(
     (state) => (state as any).cyfmsRegister.readUser
   );
-  const [isRegistered, setIsRegistered] = useState<boolean>(false);
+  const isInitiated = useAppSelector(
+    (state: any) => state.initiator.isInitiated
+  );
 
   useEffect(() => {
     dispatch(
@@ -66,7 +68,7 @@ const CYFMSRegister = (): ReactElement => {
       .unwrap()
       .then(() => {
         dispatch(unhideTabs(null));
-        setIsRegistered(true);
+        dispatch(initiate(null));
       })
       .catch((err) => {
         console.log("Unable to register.");
@@ -149,7 +151,7 @@ const CYFMSRegister = (): ReactElement => {
           </Box>
         </Box>
         <Box sx={{ display: "flex", justifyContent: "right" }}>
-          {isRegistered ? (
+          {isInitiated ? (
             <CYFSWMSNextButton onClick={nextClickHandler} />
           ) : (
             <CYFSWMSSaveButton />

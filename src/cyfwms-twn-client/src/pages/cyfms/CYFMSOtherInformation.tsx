@@ -15,7 +15,8 @@ import {
 } from "../../features/cyfms/otherInformation/cyfmsOtherInformationSlice";
 import { cleanRegisterState } from "../../features/cyfms/register/cyfmsRegisterSlice";
 import { cleanSearchState } from "../../features/search/searchSlice";
-import { hideTabs } from "../../features/sideNavBarSlice";
+import { uninitiate } from "../../features/initiatorSlice";
+import { hideTabs } from "../../features/navBarSlice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { PopupContext } from "./CYFMS";
 import { Box, Typography } from "@mui/material";
@@ -79,6 +80,7 @@ const CYFMSOtherInformation = (): ReactElement => {
         console.log("otherInformation POST backend API was successful!");
         popupContext.setOpen(false);
         dispatch(hideTabs(null));
+        dispatch(uninitiate(null));
       })
       .catch((err) => {
         console.log("otherInformation POST backend API was successful!");

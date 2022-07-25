@@ -62,8 +62,9 @@ export const icFileDetailsSlice = createSlice<
   name: "icFileDetails",
   initialState: { data: emptyData, status: "failed" },
   reducers: {
-    cleanIcFdState(state) {
-      state = { data: emptyData, status: "none" };
+    cleanState(state) {
+      state.data = emptyData;
+      state.status = "none";
     },
   },
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -94,6 +95,6 @@ export const icFileDetailsSlice = createSlice<
   },
 });
 
-export const { cleanIcFdState } = icFileDetailsSlice.actions;
+export const { cleanState } = icFileDetailsSlice.actions;
 
 export default icFileDetailsSlice.reducer;

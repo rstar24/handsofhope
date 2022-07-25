@@ -5,8 +5,8 @@ export interface State {
   tabsHidden: boolean;
 }
 
-const sideNavBarSlice = createSlice<State, SliceCaseReducers<State>>({
-  name: "sideNavBar",
+const navBarSlice = createSlice<State, SliceCaseReducers<State>>({
+  name: "navBar",
   initialState: { tabsHidden: true },
   reducers: {
     hideTabs(state) {
@@ -18,6 +18,6 @@ const sideNavBarSlice = createSlice<State, SliceCaseReducers<State>>({
   },
 });
 
-export const { hideTabs, unhideTabs } = sideNavBarSlice.actions;
+export const { hideTabs, unhideTabs } = navBarSlice.actions;
 
-export default sideNavBarSlice.reducer;
+export default navBarSlice.reducer;

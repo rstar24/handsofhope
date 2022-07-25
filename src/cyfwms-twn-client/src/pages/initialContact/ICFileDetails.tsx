@@ -1,4 +1,7 @@
-import { CYFSWMSNextButton } from "../../components/CYFSWMSButtons";
+import {
+  CYFSWMSNextButton,
+  CYFSWMSSaveButton,
+} from "../../components/CYFSWMSButtons";
 import ICLayout from "../../components/initialContact/ICLayout";
 import ICInput from "../../components/initialContact/ICInput";
 import ICDropdown from "../../components/initialContact/ICDropdown";
@@ -6,6 +9,8 @@ import {
   doGetIcFD,
   doPostIcFD,
 } from "../../features/initialContact/fileDetails/icFdSlice";
+import { initiate } from "../../features/initiatorSlice";
+import { unhideTabs } from "../../features/navBarSlice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { Box } from "@mui/material";
 import React, { useEffect } from "react";
@@ -21,6 +26,9 @@ const ICFileDetails = (): ReactElement => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const data = useAppSelector((state: any) => state.icFileDetails.data);
+  const isInitiated = useAppSelector(
+    (state: any) => state.initiator.isInitiated
+  );
 
   useEffect(() => {
     dispatch(doGetIcFD(data.fileDetailsId))
@@ -51,13 +59,18 @@ const ICFileDetails = (): ReactElement => {
     dispatch(doPostIcFD(formData))
       .unwrap()
       .then(() => {
-        console.log("criminalHistory POST backend API was successful!");
-        navigate("/initial_contact/referral_information");
+        console.log("FileDetails POST backend API was successful!");
+        dispatch(unhideTabs(null));
+        dispatch(initiate(null));
       })
       .catch((err) => {
-        console.log("criminalHistory POST backend API didn't work!");
+        console.log("FileDetails POST backend API didn't work!");
         console.log(err);
       });
+  };
+
+  const nextClickHandler = () => {
+    navigate("/initial_contact/referral_information");
   };
 
   return (
@@ -123,7 +136,11 @@ const ICFileDetails = (): ReactElement => {
           </Box>
         </Box>
         <Box sx={{ display: "flex", justifyContent: "right" }}>
-          <CYFSWMSNextButton />
+          {isInitiated ? (
+            <CYFSWMSNextButton onClick={nextClickHandler} />
+          ) : (
+            <CYFSWMSSaveButton />
+          )}
         </Box>
       </Box>
     </ICLayout>

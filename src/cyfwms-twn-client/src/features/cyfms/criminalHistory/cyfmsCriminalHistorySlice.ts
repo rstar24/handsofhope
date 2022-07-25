@@ -88,7 +88,8 @@ export const cyfmsCriminalHistorySlice = createSlice<
       state.data.criminalHistoryRecordList.push(emptyRecord);
     },
     cleanCriminalHistoryState(state) {
-      state = { data: emptyData, status: "failed" };
+      state.data = emptyData;
+      state.status = "failed";
     },
     removeCriminalHistoryRecordNumber(state, action) {
       state.data.criminalHistoryRecordList.splice(action.payload - 1, 1);

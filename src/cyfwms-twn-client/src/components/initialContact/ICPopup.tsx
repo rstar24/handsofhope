@@ -1,16 +1,22 @@
-import { Box, IconButton, Modal } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import React, { useState } from "react";
-import { Route, Routes } from "react-router-dom";
-import type { ModalUnstyledProps } from "@mui/material";
-import type { ReactElement } from "react";
-import { useAppDispatch } from "../../library/hooks";
-import { ICSideNavContext } from "./ICSideNav";
+import { cleanState as cleanFileDetailsState } from "../../features/initialContact/fileDetails/icFdSlice";
+import { cleanState as cleanIncidentReportState } from "../../features/initialContact/incidentReport/icIrSlice";
+import { cleanState as cleanPatientCareInformationState } from "../../features/initialContact/patientCareInformation/slice";
+import { cleanState as cleanPresentConcernsState } from "../../features/initialContact/presentConcerns/slice";
+import { cleanState as cleanReferralInformationState } from "../../features/initialContact/referralInformation/icRiSlice";
+import { initiate } from "../../features/initiatorSlice";
 import ICFileDetails from "../../pages/initialContact/ICFileDetails";
 import ICREferralInformation from "../../pages/initialContact/ICReferralInformation";
 import ICIncidentReport from "../../pages/initialContact/ICIncidentReport";
 import ICPresentConcerns from "../../pages/initialContact/ICPresentConcerns";
 import ICPatientCareInformation from "../../pages/initialContact/ICPatientCareInformation";
+import { hideTabs } from "../../features/navBarSlice";
+import { useAppDispatch } from "../../library/hooks";
+import { Box, IconButton, Modal } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import type { ModalUnstyledProps } from "@mui/material";
+import type { ReactElement } from "react";
 
 /**
  * The ICPopup functional component.
@@ -26,9 +32,14 @@ import ICPatientCareInformation from "../../pages/initialContact/ICPatientCareIn
  */
 const ICPopup = (props: ModalUnstyledProps): ReactElement => {
   const dispatch = useAppDispatch();
-  const [hideTabs, setHideTabs] = useState<boolean>(true);
 
-  const handleClose = () => {};
+  const handleClose = () => {
+    dispatch(cleanFileDetailsState(null));
+    dispatch(cleanReferralInformationState(null));
+    dispatch(cleanIncidentReportState(null));
+    dispatch(cleanPresentConcernsState(null));
+    dispatch(cleanPatientCareInformationState(null));
+  };
 
   return (
     <Modal {...props} sx={{ width: "100%", maxHeight: 1000 }}>
@@ -46,35 +57,32 @@ const ICPopup = (props: ModalUnstyledProps): ReactElement => {
           overflowY: "auto",
         }}
       >
-        <ICSideNavContext.Provider
-          value={{ hideTabs: hideTabs, setHideTabs: setHideTabs }}
+        <IconButton
+          color="primary"
+          aria-label="Close the popup box."
+          onClick={(e) => {
+            dispatch(hideTabs(null));
+            dispatch(initiate(null));
+            handleClose();
+            props.onClose!(e, "escapeKeyDown");
+          }}
+          sx={{ position: "absolute", right: 0 }}
         >
-          <IconButton
-            color="primary"
-            aria-label="Close the popup box."
-            onClick={(e) => {
-              setHideTabs(true);
-              handleClose();
-              props.onClose!(e, "escapeKeyDown");
-            }}
-            sx={{ position: "absolute", right: 0 }}
-          >
-            <CloseIcon />
-          </IconButton>
-          <Routes>
-            <Route path="file_details" element={<ICFileDetails />} />
-            <Route
-              path="referral_information"
-              element={<ICREferralInformation />}
-            />
-            <Route path="incident_report" element={<ICIncidentReport />} />
-            <Route path="present_concerns" element={<ICPresentConcerns />} />
-            <Route
-              path="patient_care_information"
-              element={<ICPatientCareInformation />}
-            />
-          </Routes>
-        </ICSideNavContext.Provider>
+          <CloseIcon />
+        </IconButton>
+        <Routes>
+          <Route path="file_details" element={<ICFileDetails />} />
+          <Route
+            path="referral_information"
+            element={<ICREferralInformation />}
+          />
+          <Route path="incident_report" element={<ICIncidentReport />} />
+          <Route path="present_concerns" element={<ICPresentConcerns />} />
+          <Route
+            path="patient_care_information"
+            element={<ICPatientCareInformation />}
+          />
+        </Routes>
       </Box>
     </Modal>
   );

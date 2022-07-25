@@ -112,6 +112,7 @@ const Login = (): ReactElement => {
             name="passWord"
             required
             value="Password"
+            formLabelFlex="1.06 1 0"
           />
           <Box sx={{ display: "flex", justifyContent: "center" }}>
             <Button type="submit" variant="contained" sx={{ ml: 10 }}>

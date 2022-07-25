@@ -8,7 +8,7 @@ import { cleanOtherInformationState } from "../../features/cyfms/otherInformatio
 import { cleanRegisterState } from "../../features/cyfms/register/cyfmsRegisterSlice";
 import { cleanSearchState } from "../../features/search/searchSlice";
 import { cleanCounselorsState } from "../../features/cyfms/counselors/cyfmsCounselorsSlice";
-import { hideTabs } from "../../features/sideNavBarSlice";
+import { hideTabs } from "../../features/navBarSlice";
 import CYFMSFamilyPhysicians from "../../pages/cyfms/CYFMSFamilyPhysicians";
 import CYFMSContact from "../../pages/cyfms/CYFMSContact";
 import CYFMSCriminalHistory from "../../pages/cyfms/CYFMSCriminalHistory";

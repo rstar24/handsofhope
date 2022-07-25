@@ -62,8 +62,9 @@ export const icReferralInformationSlice = createSlice<
   name: "icReferralInformation",
   initialState: { data: emptyData, status: "failed" },
   reducers: {
-    cleanIcRiState(state) {
-      state = { data: emptyData, status: "none" };
+    cleanState(state) {
+      state.data = emptyData;
+      state.status = "none";
     },
   },
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -94,6 +95,6 @@ export const icReferralInformationSlice = createSlice<
   },
 });
 
-export const { cleanIcRiState } = icReferralInformationSlice.actions;
+export const { cleanState } = icReferralInformationSlice.actions;
 
 export default icReferralInformationSlice.reducer;

@@ -1,15 +1,23 @@
-import { CYFSWMSNextButton } from "../../components/CYFSWMSButtons";
+import { CYFSWMSSaveButton } from "../../components/CYFSWMSButtons";
 import ICLayout from "../../components/initialContact/ICLayout";
 import ICDropdown from "../../components/initialContact/ICDropdown";
 import Inpatient from "../../components/initialContact/Inpatient";
 import Outpatient from "../../components/initialContact/Outpatient";
+import { cleanState as cleanFileDetailsState } from "../../features/initialContact/fileDetails/icFdSlice";
+import { cleanState as cleanIncidentReportState } from "../../features/initialContact/incidentReport/icIrSlice";
 import {
+  cleanState as cleanPatientCareInformationState,
   doGet,
   doPost,
 } from "../../features/initialContact/patientCareInformation/slice";
+import { cleanState as cleanPresentConcernsState } from "../../features/initialContact/presentConcerns/slice";
+import { cleanState as cleanReferralInformationState } from "../../features/initialContact/referralInformation/icRiSlice";
+import { uninitiate } from "../../features/initiatorSlice";
+import { hideTabs } from "../../features/navBarSlice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
+import { PopupContext } from "./InitialContact";
 import { Box } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import type { Data } from "../../features/initialContact/patientCareInformation/slice";
 import type { FormEvent, ReactElement } from "react";
 
@@ -18,6 +26,7 @@ import type { FormEvent, ReactElement } from "react";
  * @returns ICPatientCareInformation component skeleton.
  */
 const ICPatientCareInformation = (): ReactElement => {
+  const popupContext = useContext(PopupContext);
   const dispatch = useAppDispatch();
   const initialContactID = useAppSelector(
     (state) => state.icFileDetails.data.fileDetailsId
@@ -82,7 +91,15 @@ const ICPatientCareInformation = (): ReactElement => {
     dispatch(doPost(formData))
       .unwrap()
       .then(() => {
+        dispatch(cleanFileDetailsState(null));
+        dispatch(cleanReferralInformationState(null));
+        dispatch(cleanIncidentReportState(null));
+        dispatch(cleanPresentConcernsState(null));
+        dispatch(cleanPatientCareInformationState(null));
         console.log("PatientCareInformation POST backend API was successful!");
+        popupContext.setOpen(false);
+        dispatch(hideTabs(null));
+        dispatch(uninitiate(null));
       })
       .catch((err) => {
         console.log("PatientCareInformation POST backend API didn't work!");
@@ -127,7 +144,7 @@ const ICPatientCareInformation = (): ReactElement => {
           {typeOfPatient === "Outpatient" ? <Outpatient /> : <Inpatient />}
         </Box>
         <Box sx={{ display: "flex", justifyContent: "right" }}>
-          <CYFSWMSNextButton />
+          <CYFSWMSSaveButton />
         </Box>
       </Box>
     </ICLayout>

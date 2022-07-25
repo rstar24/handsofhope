@@ -58,7 +58,8 @@ export const presentConcernsSlice = createSlice<
   initialState: { data: emptyData, status: "failed" },
   reducers: {
     cleanState(state) {
-      state = { data: emptyData, status: "none" };
+      state.data = emptyData;
+      state.status = "none";
     },
   },
   // The `extraReducers` field lets the slice handle actions defined elsewhere,

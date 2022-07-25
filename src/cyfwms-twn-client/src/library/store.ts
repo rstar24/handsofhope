@@ -13,8 +13,9 @@ import icIncidentReportReducer from "../features/initialContact/incidentReport/i
 import icReferralInformationReducer from "../features/initialContact/referralInformation/icRiSlice";
 import icPresentConcernsReducer from "../features/initialContact/presentConcerns/slice";
 import icPatientCareInformationReducer from "../features/initialContact/patientCareInformation/slice";
+import initiatorReducer from "../features/initiatorSlice";
 import searchReducer from "../features/search/searchSlice";
-import sideNavBarReducer from "../features/sideNavBarSlice";
+import navBarReducer from "../features/navBarSlice";
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 
 export const store = configureStore({
@@ -33,9 +34,10 @@ export const store = configureStore({
     icReferralInformation: icReferralInformationReducer,
     icPresentConcerns: icPresentConcernsReducer,
     icPatientCareInformation: icPatientCareInformationReducer,
+    initiator: initiatorReducer,
     educationAndEmployment: educationAndEmploymentReducer,
+    navBar: navBarReducer,
     search: searchReducer,
-    sideNavBar: sideNavBarReducer,
   },
 });
 

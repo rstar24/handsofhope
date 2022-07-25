@@ -72,8 +72,9 @@ export const icIncidentReportSlice = createSlice<
   name: "icIncidentReport",
   initialState: { data: emptyData, status: "failed" },
   reducers: {
-    cleanIcIrState(state) {
-      state = { data: emptyData, status: "none" };
+    cleanState(state) {
+      state.data = emptyData;
+      state.status = "none";
     },
   },
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -104,6 +105,6 @@ export const icIncidentReportSlice = createSlice<
   },
 });
 
-export const { cleanIcIrState } = icIncidentReportSlice.actions;
+export const { cleanState } = icIncidentReportSlice.actions;
 
 export default icIncidentReportSlice.reducer;
