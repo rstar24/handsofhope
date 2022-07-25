@@ -10,6 +10,7 @@ const ViewEducationAndEmployment = () => {
     <Box paddingTop={3}>
       {Object.entries(data.educationAndEmployment.readUser).map((t: any, k) => (
         <Box
+          maxHeight={30}
           sx={{
             display: "flex",
             paddingLeft: 8,

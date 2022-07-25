@@ -56,6 +56,7 @@ const ViewHome = () => {
         <Box paddingTop={3}>
           {Object.entries(data.cyfmsRegister.readUser).map((t: any, k: any) => (
             <Box
+              maxHeight={30}
               sx={{
                 display: "flex",
                 paddingLeft: 8,

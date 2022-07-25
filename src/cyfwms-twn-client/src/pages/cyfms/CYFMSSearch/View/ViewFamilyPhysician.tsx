@@ -19,6 +19,7 @@ const ViewFamilyPhysician = () => {
           <Box>
             {Object.entries(data.recordsList[i]).map((t: any, k) => (
               <Box
+                maxHeight={30}
                 sx={{
                   display: "flex",
                   paddingLeft: 8,

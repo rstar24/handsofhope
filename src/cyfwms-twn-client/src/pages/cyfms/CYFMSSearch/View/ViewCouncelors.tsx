@@ -8,7 +8,7 @@ const ViewCouncelors = () => {
     (state) => (state as any).cyfmsCounselors.counselorsData
   );
   return (
-    <Box paddingTop={3}>
+    <Box paddingTop={1}>
       {Object.keys(data.recordsList).map((i: any) => (
         <>
           {data.recordsList[0].participantId > 0 && (
@@ -19,6 +19,7 @@ const ViewCouncelors = () => {
           <Box>
             {Object.entries(data.recordsList[i]).map((t: any, k) => (
               <Box
+                maxHeight={30}
                 sx={{
                   display: "flex",
                   paddingLeft: 8,

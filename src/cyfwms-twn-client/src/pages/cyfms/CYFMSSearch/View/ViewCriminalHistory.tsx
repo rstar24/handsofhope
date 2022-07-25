@@ -66,6 +66,7 @@ const ViewCriminalHistory = () => {
       <Box paddingTop={3}>
         {Object.entries(data).map((t: any, k: any) => (
           <Box
+            maxHeight={40}
             sx={{
               display: "flex",
               paddingLeft: 8,

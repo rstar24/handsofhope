@@ -18,6 +18,7 @@ const ViewHouseholdMembers = () => {
           <Box>
             {Object.entries(data.recordsList[i]).map((t: any, k: any) => (
               <Box
+                maxHeight={28}
                 sx={{
                   display: "flex",
                   paddingLeft: 8,
