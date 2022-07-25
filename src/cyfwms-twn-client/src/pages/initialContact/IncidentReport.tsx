@@ -4,21 +4,21 @@ import ICDropdown from "../../components/initialContact/ICDropdown";
 import ICLayout from "../../components/initialContact/ICLayout";
 import ICTextArea from "../../components/initialContact/ICTextArea";
 import {
-  doGetIcIR,
-  doPostIcIR,
-} from "../../features/initialContact/incidentReport/icIrSlice";
+  doGet,
+  doPost,
+} from "../../features/initialContact/incidentReport/slice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { Box } from "@mui/material";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import type { icIrData } from "../../features/initialContact/incidentReport/icIrSlice";
+import type { Data } from "../../features/initialContact/incidentReport/slice";
 import type { FormEvent, ReactElement } from "react";
 
 /**
- * The ICIncidentReport functional component.
- * @returns ICIncidentReport component skeleton.
+ * The IncidentReport functional component.
+ * @returns IncidentReport component skeleton.
  */
-const ICIncidentReport = (): ReactElement => {
+const IncidentReport = (): ReactElement => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const initialContactID = useAppSelector(
@@ -27,9 +27,9 @@ const ICIncidentReport = (): ReactElement => {
   const data = useAppSelector((state: any) => state.icIncidentReport.data);
 
   useEffect(() => {
-    dispatch(doGetIcIR(initialContactID))
+    dispatch(doGet(initialContactID))
       .unwrap()
-      .then((fileDetailsDataFromAPI) => {
+      .then((data) => {
         console.log("IncidentReport GET backend API was successful!");
       })
       .catch((err) => {
@@ -43,7 +43,7 @@ const ICIncidentReport = (): ReactElement => {
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
     const form: any = e.currentTarget;
-    const formData: icIrData = {
+    const formData: Data = {
       fileDetailsId: initialContactID,
       incidentReportId: data.incidentReportId,
       dateOfReport: form.incidentReport_DateOfReport.value,
@@ -57,14 +57,14 @@ const ICIncidentReport = (): ReactElement => {
       actionTaken: form.incidentReport_ActionTaken.value,
       actionPlan: form.incidentReport_ActionPlan.value,
     };
-    dispatch(doPostIcIR(formData))
+    dispatch(doPost(formData))
       .unwrap()
       .then(() => {
-        console.log("criminalHistory POST backend API was successful!");
+        console.log("IncidentReport POST backend API was successful!");
         navigate("/initial_contact/present_concerns");
       })
       .catch((err) => {
-        console.log("criminalHistory POST backend API didn't work!");
+        console.log("IncidentReport POST backend API didn't work!");
         console.log(err);
       });
   };
@@ -166,4 +166,4 @@ const ICIncidentReport = (): ReactElement => {
   );
 };
 
-export default ICIncidentReport;
+export default IncidentReport;

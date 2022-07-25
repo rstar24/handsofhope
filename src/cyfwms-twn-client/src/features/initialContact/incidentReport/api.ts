@@ -1,13 +1,13 @@
 import axiosInstance from "../../../library/axiosInstance";
-import type { icRiData } from "./icRiSlice";
+import type { Data } from "./slice";
 import type { AxiosResponse } from "axios";
 
-export const doGetIcRiAPI = async (
+export const doGetAPI = async (
   initialContactID: number,
   jwtToken: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.get(
-    `initialcontactservice/readAllReferralInfo/${initialContactID}`,
+    "initialcontactservice/readAllIncidentReports/" + initialContactID,
     {
       headers: { Authorization: "Bearer " + jwtToken },
     }
@@ -15,13 +15,13 @@ export const doGetIcRiAPI = async (
   return res;
 };
 
-export const doPostIcRiAPI = async (
-  icRiFormData: icRiData,
+export const doPostAPI = async (
+  formData: Data,
   jwtToken: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.put(
-    "initialcontactservice/saveAllReferralInfo",
-    icRiFormData,
+    "initialcontactservice/saveAllIncidentReports",
+    formData,
     {
       headers: { Authorization: "Bearer " + jwtToken },
     }

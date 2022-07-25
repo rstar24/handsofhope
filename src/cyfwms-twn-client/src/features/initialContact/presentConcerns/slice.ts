@@ -28,7 +28,7 @@ export interface State {
 }
 
 export const doGet = createAsyncThunk<Data, number>(
-  "icPresentConcerns/doGet",
+  "presentConcerns/doGet",
   async (initialContactID, { getState }) => {
     const store: any = getState();
     const res: AxiosResponse = await doGetAPI(
@@ -41,7 +41,7 @@ export const doGet = createAsyncThunk<Data, number>(
 );
 
 export const doPost = createAsyncThunk<Data, Data>(
-  "icPresentConcerns/doPost",
+  "presentConcerns/doPost",
   async (formData: Data, { getState }) => {
     const store: any = getState();
     const res: AxiosResponse = await doPostAPI(formData, store.login.jwtToken);

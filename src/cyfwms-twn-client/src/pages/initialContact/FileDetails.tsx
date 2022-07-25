@@ -5,24 +5,21 @@ import {
 import ICLayout from "../../components/initialContact/ICLayout";
 import ICInput from "../../components/initialContact/ICInput";
 import ICDropdown from "../../components/initialContact/ICDropdown";
-import {
-  doGetIcFD,
-  doPostIcFD,
-} from "../../features/initialContact/fileDetails/icFdSlice";
+import { doGet, doPost } from "../../features/initialContact/fileDetails/slice";
 import { initiate } from "../../features/initiatorSlice";
 import { unhideTabs } from "../../features/navBarSlice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { Box } from "@mui/material";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import type { icFdData } from "../../features/initialContact/fileDetails/icFdSlice";
+import type { Data } from "../../features/initialContact/fileDetails/slice";
 import type { FormEvent, ReactElement } from "react";
 
 /**
- * The ICFileDetails functional component.
- * @returns ICFileDetails component skeleton.
+ * The FileDetails functional component.
+ * @returns FileDetails component skeleton.
  */
-const ICFileDetails = (): ReactElement => {
+const FileDetails = (): ReactElement => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const data = useAppSelector((state: any) => state.icFileDetails.data);
@@ -31,9 +28,9 @@ const ICFileDetails = (): ReactElement => {
   );
 
   useEffect(() => {
-    dispatch(doGetIcFD(data.fileDetailsId))
+    dispatch(doGet(data.fileDetailsId))
       .unwrap()
-      .then((fileDetailsDataFromAPI) => {
+      .then((data) => {
         console.log("FileDetails GET backend API was successful!");
       })
       .catch((err) => {
@@ -47,7 +44,7 @@ const ICFileDetails = (): ReactElement => {
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
     const form: any = e.currentTarget;
-    const formData: icFdData = {
+    const formData: Data = {
       fileDetailsId: data.fileDetailsId,
       fileNumber: form.fileDetails_FileNumber.value,
       clientName: form.fileDetails_ClientName.value,
@@ -56,7 +53,7 @@ const ICFileDetails = (): ReactElement => {
       status: form.fileDetails_Status.value,
       dateClosed: form.fileDetails_ClosingDate.value,
     };
-    dispatch(doPostIcFD(formData))
+    dispatch(doPost(formData))
       .unwrap()
       .then(() => {
         console.log("FileDetails POST backend API was successful!");
@@ -147,4 +144,4 @@ const ICFileDetails = (): ReactElement => {
   );
 };
 
-export default ICFileDetails;
+export default FileDetails;

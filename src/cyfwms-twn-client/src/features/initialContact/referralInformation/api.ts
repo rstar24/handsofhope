@@ -1,13 +1,13 @@
 import axiosInstance from "../../../library/axiosInstance";
-import type { icFdData } from "./icFdSlice";
+import type { Data } from "./slice";
 import type { AxiosResponse } from "axios";
 
-export const doGetIcFdAPI = async (
+export const doGetAPI = async (
   initialContactID: number,
   jwtToken: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.get(
-    "initialcontactservice/readAllFileDetails/" + initialContactID,
+    `initialcontactservice/readAllReferralInfo/${initialContactID}`,
     {
       headers: { Authorization: "Bearer " + jwtToken },
     }
@@ -15,13 +15,13 @@ export const doGetIcFdAPI = async (
   return res;
 };
 
-export const doPostIcFdAPI = async (
-  icFdFormData: icFdData,
+export const doPostAPI = async (
+  formData: Data,
   jwtToken: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.put(
-    "initialcontactservice/saveAllFileDetails",
-    icFdFormData,
+    "initialcontactservice/saveAllReferralInfo",
+    formData,
     {
       headers: { Authorization: "Bearer " + jwtToken },
     }

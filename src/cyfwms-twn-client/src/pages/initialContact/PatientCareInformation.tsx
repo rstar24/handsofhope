@@ -3,15 +3,15 @@ import ICLayout from "../../components/initialContact/ICLayout";
 import ICDropdown from "../../components/initialContact/ICDropdown";
 import Inpatient from "../../components/initialContact/Inpatient";
 import Outpatient from "../../components/initialContact/Outpatient";
-import { cleanState as cleanFileDetailsState } from "../../features/initialContact/fileDetails/icFdSlice";
-import { cleanState as cleanIncidentReportState } from "../../features/initialContact/incidentReport/icIrSlice";
+import { cleanState as cleanFileDetailsState } from "../../features/initialContact/fileDetails/slice";
+import { cleanState as cleanIncidentReportState } from "../../features/initialContact/incidentReport/slice";
 import {
   cleanState as cleanPatientCareInformationState,
   doGet,
   doPost,
 } from "../../features/initialContact/patientCareInformation/slice";
 import { cleanState as cleanPresentConcernsState } from "../../features/initialContact/presentConcerns/slice";
-import { cleanState as cleanReferralInformationState } from "../../features/initialContact/referralInformation/icRiSlice";
+import { cleanState as cleanReferralInformationState } from "../../features/initialContact/referralInformation/slice";
 import { uninitiate } from "../../features/initiatorSlice";
 import { hideTabs } from "../../features/navBarSlice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
@@ -22,10 +22,10 @@ import type { Data } from "../../features/initialContact/patientCareInformation/
 import type { FormEvent, ReactElement } from "react";
 
 /**
- * The ICPatientCareInformation functional component.
- * @returns ICPatientCareInformation component skeleton.
+ * The PatientCareInformation functional component.
+ * @returns PatientCareInformation component skeleton.
  */
-const ICPatientCareInformation = (): ReactElement => {
+const PatientCareInformation = (): ReactElement => {
   const popupContext = useContext(PopupContext);
   const dispatch = useAppDispatch();
   const initialContactID = useAppSelector(
@@ -151,4 +151,4 @@ const ICPatientCareInformation = (): ReactElement => {
   );
 };
 
-export default ICPatientCareInformation;
+export default PatientCareInformation;

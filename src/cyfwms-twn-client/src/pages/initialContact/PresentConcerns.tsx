@@ -14,10 +14,10 @@ import type { Data } from "../../features/initialContact/presentConcerns/slice";
 import type { FormEvent, ReactElement } from "react";
 
 /**
- * The ICPresentConcerns functional component.
- * @returns ICPresentConcerns component skeleton.
+ * The PresentConcerns functional component.
+ * @returns PresentConcerns component skeleton.
  */
-const ICPresentConcerns = (): ReactElement => {
+const PresentConcerns = (): ReactElement => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const initialContactID = useAppSelector(
@@ -126,4 +126,4 @@ const ICPresentConcerns = (): ReactElement => {
   );
 };
 
-export default ICPresentConcerns;
+export default PresentConcerns;

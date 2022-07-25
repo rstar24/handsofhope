@@ -16,8 +16,7 @@ import React, { StrictMode } from "react";
 import type { ReactElement } from "react";
 import CYFMSSearchPanel from "./pages/cyfms/CYFMSSearch/CYFMSSearchPanel";
 import InitialContact from "./pages/initialContact/InitialContact";
-import ICSearchPanel from "./pages/initialContact/ICSearchPanel";
-
+import Search from "./pages/initialContact/Search";
 import ViewHome from "./pages/cyfms/CYFMSSearch/View/ViewHome";
 import CYFMSSearchView from "./pages/cyfms/CYFMSSearch/CYFMSSearchView";
 
@@ -37,10 +36,7 @@ const CYFSWMSApp = (): ReactElement => {
               <Route path="cyfms/search/*" element={<CYFMSSearchView />} />
               <Route path="cyfms/search/view" element={<ViewHome />} />
               <Route path="initial_contact/*" element={<InitialContact />} />
-              <Route
-                path="/initial_contact/search"
-                element={<ICSearchPanel />}
-              />
+              <Route path="initial_contact/search" element={<Search />} />
             </Routes>
           </BrowserRouter>
         </ThemeProvider>

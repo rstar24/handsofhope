@@ -8,11 +8,12 @@ import loginReducer from "../features/login/loginSlice";
 import cyfmsOtherInformationReducer from "../features/cyfms/otherInformation/cyfmsOtherInformationSlice";
 import cyfmsRegisterReducer from "../features/cyfms/register/cyfmsRegisterSlice";
 import cyfmsCounselorsReducer from "../features/cyfms/counselors/cyfmsCounselorsSlice";
-import icFileDetailsReducer from "../features/initialContact/fileDetails/icFdSlice";
-import icIncidentReportReducer from "../features/initialContact/incidentReport/icIrSlice";
-import icReferralInformationReducer from "../features/initialContact/referralInformation/icRiSlice";
+import icFileDetailsReducer from "../features/initialContact/fileDetails/slice";
+import icIncidentReportReducer from "../features/initialContact/incidentReport/slice";
 import icPresentConcernsReducer from "../features/initialContact/presentConcerns/slice";
 import icPatientCareInformationReducer from "../features/initialContact/patientCareInformation/slice";
+import icReferralInformationReducer from "../features/initialContact/referralInformation/slice";
+import icSearchReducer from "../features/initialContact/search/slice";
 import initiatorReducer from "../features/initiatorSlice";
 import searchReducer from "../features/search/searchSlice";
 import navBarReducer from "../features/navBarSlice";
@@ -34,6 +35,7 @@ export const store = configureStore({
     icReferralInformation: icReferralInformationReducer,
     icPresentConcerns: icPresentConcernsReducer,
     icPatientCareInformation: icPatientCareInformationReducer,
+    icSearch: icSearchReducer,
     initiator: initiatorReducer,
     educationAndEmployment: educationAndEmploymentReducer,
     navBar: navBarReducer,

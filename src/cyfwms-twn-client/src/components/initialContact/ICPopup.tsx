@@ -1,14 +1,14 @@
-import { cleanState as cleanFileDetailsState } from "../../features/initialContact/fileDetails/icFdSlice";
-import { cleanState as cleanIncidentReportState } from "../../features/initialContact/incidentReport/icIrSlice";
+import { cleanState as cleanFileDetailsState } from "../../features/initialContact/fileDetails/slice";
+import { cleanState as cleanIncidentReportState } from "../../features/initialContact/incidentReport/slice";
 import { cleanState as cleanPatientCareInformationState } from "../../features/initialContact/patientCareInformation/slice";
 import { cleanState as cleanPresentConcernsState } from "../../features/initialContact/presentConcerns/slice";
-import { cleanState as cleanReferralInformationState } from "../../features/initialContact/referralInformation/icRiSlice";
+import { cleanState as cleanReferralInformationState } from "../../features/initialContact/referralInformation/slice";
 import { initiate } from "../../features/initiatorSlice";
-import ICFileDetails from "../../pages/initialContact/ICFileDetails";
-import ICREferralInformation from "../../pages/initialContact/ICReferralInformation";
-import ICIncidentReport from "../../pages/initialContact/ICIncidentReport";
-import ICPresentConcerns from "../../pages/initialContact/ICPresentConcerns";
-import ICPatientCareInformation from "../../pages/initialContact/ICPatientCareInformation";
+import FileDetails from "../../pages/initialContact/FileDetails";
+import IncidentReport from "../../pages/initialContact/IncidentReport";
+import PatientCareInformation from "../../pages/initialContact/PatientCareInformation";
+import PresentConcerns from "../../pages/initialContact/PresentConcerns";
+import ReferralInformation from "../../pages/initialContact/ReferralInformation";
 import { hideTabs } from "../../features/navBarSlice";
 import { useAppDispatch } from "../../library/hooks";
 import { Box, IconButton, Modal } from "@mui/material";
@@ -71,16 +71,16 @@ const ICPopup = (props: ModalUnstyledProps): ReactElement => {
           <CloseIcon />
         </IconButton>
         <Routes>
-          <Route path="file_details" element={<ICFileDetails />} />
+          <Route path="file_details" element={<FileDetails />} />
           <Route
             path="referral_information"
-            element={<ICREferralInformation />}
+            element={<ReferralInformation />}
           />
-          <Route path="incident_report" element={<ICIncidentReport />} />
-          <Route path="present_concerns" element={<ICPresentConcerns />} />
+          <Route path="incident_report" element={<IncidentReport />} />
+          <Route path="present_concerns" element={<PresentConcerns />} />
           <Route
             path="patient_care_information"
-            element={<ICPatientCareInformation />}
+            element={<PatientCareInformation />}
           />
         </Routes>
       </Box>

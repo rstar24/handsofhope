@@ -1,13 +1,13 @@
 import axiosInstance from "../../../library/axiosInstance";
-import type { icIrData } from "./icIrSlice";
+import type { Data } from "./slice";
 import type { AxiosResponse } from "axios";
 
-export const doGetIcIrAPI = async (
+export const doGetAPI = async (
   initialContactID: number,
   jwtToken: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.get(
-    "initialcontactservice/readAllIncidentReports/" + initialContactID,
+    "initialcontactservice/readAllFileDetails/" + initialContactID,
     {
       headers: { Authorization: "Bearer " + jwtToken },
     }
@@ -15,13 +15,13 @@ export const doGetIcIrAPI = async (
   return res;
 };
 
-export const doPostIcIrAPI = async (
-  icIrFormData: icIrData,
+export const doPostAPI = async (
+  formData: Data,
   jwtToken: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.put(
-    "initialcontactservice/saveAllIncidentReports",
-    icIrFormData,
+    "initialcontactservice/saveAllFileDetails",
+    formData,
     {
       headers: { Authorization: "Bearer " + jwtToken },
     }

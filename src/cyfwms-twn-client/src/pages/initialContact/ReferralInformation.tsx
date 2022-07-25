@@ -3,21 +3,21 @@ import ICDropdown from "../../components/initialContact/ICDropdown";
 import ICInput from "../../components/initialContact/ICInput";
 import ICLayout from "../../components/initialContact/ICLayout";
 import {
-  doGetIcRI,
-  doPostIcRI,
-} from "../../features/initialContact/referralInformation/icRiSlice";
+  doGet,
+  doPost,
+} from "../../features/initialContact/referralInformation/slice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { Box } from "@mui/material";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import type { icRiData } from "../../features/initialContact/referralInformation/icRiSlice";
+import type { Data } from "../../features/initialContact/referralInformation/slice";
 import type { FormEvent, ReactElement } from "react";
 
 /**
- * The ICReferralInformation functional component.
- * @returns ICReferralInformation component skeleton.
+ * The ReferralInformation functional component.
+ * @returns ReferralInformation component skeleton.
  */
-const ICREferralInformation = (): ReactElement => {
+const ReferralInformation = (): ReactElement => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const initialContactID = useAppSelector(
@@ -26,7 +26,7 @@ const ICREferralInformation = (): ReactElement => {
   const data = useAppSelector((state) => state.icReferralInformation.data);
 
   useEffect(() => {
-    dispatch(doGetIcRI(initialContactID))
+    dispatch(doGet(initialContactID))
       .unwrap()
       .then((data) => {
         console.log("ReferralInformation GET backend API was successful!");
@@ -42,7 +42,7 @@ const ICREferralInformation = (): ReactElement => {
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
     const form: any = e.currentTarget;
-    const formData: icRiData = {
+    const formData: Data = {
       fileDetailsId: initialContactID,
       referralInfoId: data.referralInfoId,
       referral: form.referral.value,
@@ -51,7 +51,7 @@ const ICREferralInformation = (): ReactElement => {
       phone: form.phone.value,
       email: form.eMail.value,
     };
-    dispatch(doPostIcRI(formData))
+    dispatch(doPost(formData))
       .unwrap()
       .then(() => {
         console.log("ReferralInformation POST backend API was successful!");
@@ -147,4 +147,4 @@ const ICREferralInformation = (): ReactElement => {
   );
 };
 
-export default ICREferralInformation;
+export default ReferralInformation;

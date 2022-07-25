@@ -48,7 +48,7 @@ export interface State {
 }
 
 export const doGet = createAsyncThunk<Data, number>(
-  "icPatientCareInformation/doGet",
+  "patientCareInformation/doGet",
   async (initialContactID, { getState }) => {
     const store: any = getState();
     const res: AxiosResponse = await doGetAPI(
@@ -61,7 +61,7 @@ export const doGet = createAsyncThunk<Data, number>(
 );
 
 export const doPost = createAsyncThunk<Data, Data>(
-  "icPatientCareInformation/doPost",
+  "patientCareInformation/doPost",
   async (formData: Data, { getState }) => {
     const store: any = getState();
     const res: AxiosResponse = await doPostAPI(formData, store.login.jwtToken);
