@@ -10,6 +10,7 @@ import { Box } from "@mui/material";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import type { FormEvent, ReactElement } from "react";
+import CYFMSValidationInput from "../../components/cyfms/CYFMValidationInput";
 
 /**
  * The CYFMSContact functional component.
@@ -92,14 +93,14 @@ const CYFMSContact = (): ReactElement => {
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CYFMSInput
+            <CYFMSValidationInput
               id="cyfmsContactCity"
               value="City"
               autofill={contactData.city}
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CYFMSInput
+            <CYFMSValidationInput
               id="cyfmsContactProvince"
               value="Province"
               autofill={contactData.province}

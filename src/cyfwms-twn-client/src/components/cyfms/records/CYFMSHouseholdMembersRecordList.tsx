@@ -11,6 +11,7 @@ import type {
   ElementType,
   ReactElement,
 } from "react";
+import CYFMSValidationInput from "../CYFMValidationInput";
 
 /**
  * A custom props data type for the props passed
@@ -74,7 +75,7 @@ export const CYFMSHouseholdMembersRecord = (
       </Box>
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-          <CYFMSInput
+          <CYFMSValidationInput
             autofill={props.record.name}
             id={`householdMembers_record_${props.recordNumber}_Name`}
             value="Name"

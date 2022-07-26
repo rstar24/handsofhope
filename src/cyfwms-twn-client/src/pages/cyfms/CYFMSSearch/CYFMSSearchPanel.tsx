@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import { doGetSearch } from "../../../features/search/searchSlice";
 import { current } from "@reduxjs/toolkit";
 import CYFMSDropdown from "../../../components/cyfms/CYFMSDropdown";
+import CYFMSSearchInput from "../../../components/cyfms/CYFMSSearchInput";
 /**
  * The CYFMSSearchPanel functional component.
  * @returns CYFMSSearchPanel component skeleton.
@@ -74,9 +75,9 @@ const CYFMSSearchPanel = (): ReactElement => {
         }}
         onSubmit={submitHandler}
       >
-        <CYFMSInput id="firstName" value="First Name" />
-        <CYFMSInput id="middleName" value="Middle Name" />
-        <CYFMSInput id="lastName" value="Last Name" />
+        <CYFMSSearchInput id="firstName" value="First Name" />
+        <CYFMSSearchInput id="middleName" value="Middle Name" />
+        <CYFMSSearchInput id="lastName" value="Last Name" />
         <CYFMSInput id="dateOfBirth" type="date" value="Date Of Birth" />
 
         <CYFMSDropdown
@@ -87,7 +88,7 @@ const CYFMSSearchPanel = (): ReactElement => {
           value="Marital Status"
         />
         <CYFMSInput id="phoneNo" value="Phone No" name="phoneNo" />
-        <CYFMSInput id="city" value="City" name="city" />
+        <CYFMSSearchInput id="city" value="City" name="city" />
 
         <Box sx={{ display: "flex", justifyContent: "center", width: 730 }}>
           <Button variant="contained" type="submit">

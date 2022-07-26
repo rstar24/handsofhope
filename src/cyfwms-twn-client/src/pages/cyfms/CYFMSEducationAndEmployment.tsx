@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { CYFSWMSNextButton } from "../../components/CYFSWMSButtons";
 import React, { useEffect, useState } from "react";
 import type { FormEvent, ReactElement } from "react";
+import CYFMSValidationInput from "../../components/cyfms/CYFMValidationInput";
 
 /**
  * The CYFMSEducationAndEmployment functional component.
@@ -127,7 +128,7 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
                 }}
               >
                 <Box sx={{ flexBasis: 0, flexGrow: 0.5 }}>
-                  <CYFMSInput
+                  <CYFMSValidationInput
                     disabled={disabledSchoolFields}
                     id="educationAndEmployment_SchoolName"
                     value="School"
@@ -182,7 +183,7 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
                 }}
               >
                 <Box sx={{ flexBasis: 0, flexGrow: 0.999999 }}>
-                  <CYFMSInput
+                  <CYFMSValidationInput
                     disabled={disabledDesiredProfession}
                     id="educationAndEmployment_DesiredProfession"
                     value="Desired Profession"
