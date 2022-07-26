@@ -9,6 +9,7 @@ import { cleanRegisterState } from "../../features/cyfms/register/cyfmsRegisterS
 import { cleanSearchState } from "../../features/search/searchSlice";
 import { cleanCounselorsState } from "../../features/cyfms/counselors/cyfmsCounselorsSlice";
 import { hideTabs } from "../../features/navBarSlice";
+import { uninitiate } from "../../features/initiatorSlice";
 import CYFMSFamilyPhysicians from "../../pages/cyfms/CYFMSFamilyPhysicians";
 import CYFMSContact from "../../pages/cyfms/CYFMSContact";
 import CYFMSCriminalHistory from "../../pages/cyfms/CYFMSCriminalHistory";
@@ -74,6 +75,7 @@ const CYFMSPopup = (props: ModalUnstyledProps): ReactElement => {
           aria-label="Close the popup box."
           onClick={(e) => {
             dispatch(hideTabs(null));
+            dispatch(uninitiate(null));
             handleClose();
             props.onClose!(e, "escapeKeyDown");
           }}

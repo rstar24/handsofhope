@@ -3,7 +3,7 @@ import { cleanState as cleanIncidentReportState } from "../../features/initialCo
 import { cleanState as cleanPatientCareInformationState } from "../../features/initialContact/patientCareInformation/slice";
 import { cleanState as cleanPresentConcernsState } from "../../features/initialContact/presentConcerns/slice";
 import { cleanState as cleanReferralInformationState } from "../../features/initialContact/referralInformation/slice";
-import { initiate } from "../../features/initiatorSlice";
+import { uninitiate } from "../../features/initiatorSlice";
 import FileDetails from "../../pages/initialContact/FileDetails";
 import IncidentReport from "../../pages/initialContact/IncidentReport";
 import PatientCareInformation from "../../pages/initialContact/PatientCareInformation";
@@ -62,7 +62,7 @@ const ICPopup = (props: ModalUnstyledProps): ReactElement => {
           aria-label="Close the popup box."
           onClick={(e) => {
             dispatch(hideTabs(null));
-            dispatch(initiate(null));
+            dispatch(uninitiate(null));
             handleClose();
             props.onClose!(e, "escapeKeyDown");
           }}
