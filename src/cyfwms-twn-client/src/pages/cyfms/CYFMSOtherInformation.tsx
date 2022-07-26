@@ -13,7 +13,10 @@ import {
   doGetOtherInformation,
   doPostOtherInformation,
 } from "../../features/cyfms/otherInformation/cyfmsOtherInformationSlice";
-import { cleanRegisterState } from "../../features/cyfms/register/cyfmsRegisterSlice";
+import {
+  cleanRegisterState,
+  doGetCYFMSRegister,
+} from "../../features/cyfms/register/cyfmsRegisterSlice";
 import { cleanSearchState } from "../../features/search/searchSlice";
 import { uninitiate } from "../../features/initiatorSlice";
 import { hideTabs } from "../../features/navBarSlice";
@@ -23,6 +26,7 @@ import { Box, Typography } from "@mui/material";
 import React, { useContext, useEffect } from "react";
 import type { cyfmsOtherInformationData } from "../../features/cyfms/otherInformation/cyfmsOtherInformationSlice";
 import type { FormEvent, ReactElement } from "react";
+import { Navigate, useNavigate } from "react-router";
 
 /**
  * The CYFMSOtherInformation functional component.
@@ -31,6 +35,7 @@ import type { FormEvent, ReactElement } from "react";
 const CYFMSOtherInformation = (): ReactElement => {
   const popupContext = useContext(PopupContext);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const participantId = useAppSelector(
     (state) => (state as any).cyfmsRegister.user.participantId
   );
@@ -48,6 +53,7 @@ const CYFMSOtherInformation = (): ReactElement => {
         console.log("otherInformation GET backend API didn't work!");
         console.log(err);
       });
+    dispatch(doGetCYFMSRegister(participantId));
   }, []);
 
   // Handles the form data submission and other
@@ -67,16 +73,17 @@ const CYFMSOtherInformation = (): ReactElement => {
     };
     dispatch(doPostOtherInformation(cyfmsOtherInformationFormData))
       .then(() => {
-        dispatch(cleanCodetableState());
-        dispatch(cleanContactState(null));
-        dispatch(cleanCriminalHistoryState(null));
-        dispatch(cleanEducationAndEmploymentState());
-        dispatch(cleanFamilyPhysiciansState(null));
-        dispatch(cleanHouseholdMembersState(null));
-        dispatch(cleanOtherInformationState(null));
-        dispatch(cleanRegisterState());
-        dispatch(cleanSearchState());
-        dispatch(cleanCounselorsState(null));
+        // dispatch(cleanCodetableState());
+        // dispatch(cleanContactState(null));
+        // dispatch(cleanCriminalHistoryState(null));
+        // dispatch(cleanEducationAndEmploymentState());
+        // dispatch(cleanFamilyPhysiciansState(null));
+        // dispatch(cleanHouseholdMembersState(null));
+        // dispatch(cleanOtherInformationState(null));
+        // dispatch(cleanRegisterState());
+        // dispatch(cleanSearchState());
+        // dispatch(cleanCounselorsState(null));
+        navigate("../search/view/participantId");
         console.log("otherInformation POST backend API was successful!");
         popupContext.setOpen(false);
         dispatch(hideTabs(null));

@@ -66,20 +66,16 @@ const ViewHome = () => {
                 <></>
               ) : (
                 <>
-                  {k !== 0 && (
-                    <>
-                      <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                        <Typography variant="h6" style={styles.keys}>
-                          {RegisterLabels[k]}
-                        </Typography>
-                      </Box>
-                      <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                        <Typography variant="h6" style={styles.values}>
-                          {t[1]}
-                        </Typography>
-                      </Box>
-                    </>
-                  )}
+                  <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+                    <Typography variant="h6" style={styles.keys}>
+                      {RegisterLabels[k]}
+                    </Typography>
+                  </Box>
+                  <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+                    <Typography variant="h6" style={styles.values}>
+                      {t[1]}
+                    </Typography>
+                  </Box>
                 </>
               )}
             </Box>

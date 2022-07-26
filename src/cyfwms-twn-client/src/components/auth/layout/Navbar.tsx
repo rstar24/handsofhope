@@ -42,7 +42,19 @@ export default function Navbar() {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
-
+  const handleClean = () => {
+    dispatch(cleanCodetableState());
+    dispatch(cleanContactState(null));
+    dispatch(cleanCriminalHistoryState(null));
+    dispatch(cleanEducationAndEmploymentState());
+    dispatch(cleanFamilyPhysiciansState(null));
+    dispatch(cleanHouseholdMembersState(null));
+    dispatch(cleanOtherInformationState(null));
+    dispatch(cleanRegisterState());
+    dispatch(cleanSearchState());
+    dispatch(cleanCounselorsState(null));
+    navigate("/home");
+  };
   const handleLogout = () => {
     sessionStorage.removeItem("token");
     dispatch(onLogout());
@@ -72,9 +84,8 @@ export default function Navbar() {
     >
       <Box color="#ffffff" sx={{ p: 0 }}>
         <Button
-          component={Link}
-          to="/home"
           sx={{ color: "white", textTransform: "none" }}
+          onClick={handleClean}
         >
           Home
         </Button>
