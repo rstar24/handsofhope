@@ -42,7 +42,6 @@ const CYFMSPopup = (props: ModalUnstyledProps): ReactElement => {
   const dispatch = useAppDispatch();
 
   const handleClose = () => {
-    dispatch(cleanCodetableState());
     dispatch(cleanContactState(null));
     dispatch(cleanCriminalHistoryState(null));
     dispatch(cleanEducationAndEmploymentState());

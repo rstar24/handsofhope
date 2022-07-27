@@ -12,7 +12,7 @@ const ViewHouseholdMembers = () => {
         <>
           {data.recordsList[0].participantId > 0 && (
             <Typography paddingTop={2} paddingLeft={4}>
-              Member {i}
+              Member {Number(i) + 1}
             </Typography>
           )}
           <Box>

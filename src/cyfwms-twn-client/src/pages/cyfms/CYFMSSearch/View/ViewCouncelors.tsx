@@ -13,7 +13,7 @@ const ViewCouncelors = () => {
         <>
           {data.recordsList[0].participantId > 0 && (
             <Typography paddingTop={2} paddingLeft={4}>
-              Counselors/ CFS Worker {i}
+              Counselors/ CFS Worker {Number(i) + 1}
             </Typography>
           )}
           <Box>

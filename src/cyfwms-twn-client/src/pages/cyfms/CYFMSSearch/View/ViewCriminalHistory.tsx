@@ -17,7 +17,7 @@ const ViewCriminalHistory = () => {
           <>
             {data.criminalHistoryRecordList[0].participantId !== 0 && (
               <Typography paddingTop={2} paddingLeft={4}>
-                Criminal History {i}
+                Criminal History {Number(i) + 1}
               </Typography>
             )}
             <Box>

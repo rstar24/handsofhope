@@ -2,7 +2,7 @@ import AuthLayout from "../../../components/auth/layout/AuthLayout";
 import CYFMSInput from "../../../components/cyfms/CYFMSInput";
 import { Box, Button } from "@mui/material";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import CYFMSHeader from "../../../components/cyfms/CYFMSHeader";
 import type { FormEvent, ReactElement } from "react";
@@ -12,6 +12,7 @@ import { doGetSearch } from "../../../features/search/searchSlice";
 import { current } from "@reduxjs/toolkit";
 import CYFMSDropdown from "../../../components/cyfms/CYFMSDropdown";
 import CYFMSSearchInput from "../../../components/cyfms/CYFMSSearchInput";
+import { doGetMaritalStatus } from "../../../features/codetable/codetableSlice";
 /**
  * The CYFMSSearchPanel functional component.
  * @returns CYFMSSearchPanel component skeleton.
@@ -20,6 +21,9 @@ const CYFMSSearchPanel = (): ReactElement => {
   const dispatch = useAppDispatch();
   const [isShown, setIsShown] = useState(false);
   const { maritalstatus } = useAppSelector((state) => (state as any).codetable);
+  useEffect(() => {
+    dispatch(doGetMaritalStatus());
+  }, []);
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
 

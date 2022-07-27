@@ -13,7 +13,7 @@ const ViewFamilyPhysician = () => {
         <>
           {data.recordsList[0].participantId > 0 && (
             <Typography paddingTop={2} paddingLeft={4}>
-              Family Physician {i}
+              Family Physician {Number(i) + 1}
             </Typography>
           )}
           <Box>
