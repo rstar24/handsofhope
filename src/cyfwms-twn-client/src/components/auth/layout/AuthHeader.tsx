@@ -13,6 +13,8 @@ const Header = (): ReactElement => {
       <Box
         sx={{
           borderBottom: "5px solid black",
+          boxShadow: `inset 1px 1px black,
+                      inset -1px -1px black`,
         }}
       >
         <Box

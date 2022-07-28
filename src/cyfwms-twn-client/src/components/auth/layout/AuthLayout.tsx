@@ -51,6 +51,8 @@ const AuthLayout = (props: {
         border: "5px solid black",
         mx: { xs: "", md: "5rem" },
         my: { xs: "", md: "1rem" },
+        boxShadow: `inset 1px 1px black,
+                      inset -1px -1px black`,
       }}
     >
       <Header />
