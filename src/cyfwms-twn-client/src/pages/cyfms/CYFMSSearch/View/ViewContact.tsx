@@ -4,7 +4,8 @@ import { useAppSelector } from "../../../../library/hooks";
 import { styles } from "./ViewHome";
 import { ContactLabel } from "./ViewPagesLabels";
 const ViewContact = () => {
-  const data = useAppSelector((state) => state as any).cyfmsContact.contactData;
+  const data = useAppSelector((state) => state.cyfmsContact.data);
+
   return (
     <Box paddingTop={3}>
       {Object.entries(data).map((t: any, k: any) => (

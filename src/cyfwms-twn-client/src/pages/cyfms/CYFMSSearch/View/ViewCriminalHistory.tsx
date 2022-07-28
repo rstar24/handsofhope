@@ -7,15 +7,14 @@ import {
   CriminalHistoryRecordLabels,
 } from "./ViewPagesLabels";
 const ViewCriminalHistory = () => {
-  const data = useAppSelector(
-    (state) => (state as any).cyfmsCriminalHistory.data
-  );
+  const data = useAppSelector((state) => state.cyfmsCriminalHistory.data);
+
   return (
     <>
       <Box paddingTop={1}>
         {Object.keys(data.criminalHistoryRecordList).map((i: any) => (
           <>
-            {data.criminalHistoryRecordList[0].participantId !== 0 && (
+            {data.participantId !== 0 && (
               <Typography paddingTop={2} paddingLeft={4}>
                 Criminal History {Number(i) + 1}
               </Typography>

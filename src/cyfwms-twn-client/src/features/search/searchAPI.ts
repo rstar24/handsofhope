@@ -21,7 +21,7 @@ export const doGetSearchAPI = async (
   //   city: "Indore",
   //   phoneNumber: "12345",
   const res: AxiosResponse = await axiosInstance.get(
-    `searchParticipants/${data.readUser.firstname}/${data.readUser.middleName}/${data.readUser.surname}/${data.readUser.dateOfBirth}/${data.readUser.maritalStatus}/${data.readUser.city}/${data.readUser.phoneNumber}`,
+    `searchParticipants/${data.readUser.firstname}/${data.readUser.middleName}/${data.readUser.surname}/${data.readUser.dateOfBirth}/${data.readUser.maritalStatus}/${data.readUser.city}/${data.readUser.phoneNumber}/0`,
     {
       headers: { Authorization: "Bearer " + jwtToken },
     }

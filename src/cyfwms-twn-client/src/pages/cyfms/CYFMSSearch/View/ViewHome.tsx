@@ -32,7 +32,7 @@ export const styles = {
   },
 };
 const ViewHome = () => {
-  const data = useAppSelector((state) => state as any);
+  const state = useAppSelector((state) => state);
 
   return (
     <Box
@@ -54,7 +54,7 @@ const ViewHome = () => {
           Registration
         </Typography>
         <Box paddingTop={3}>
-          {Object.entries(data.cyfmsRegister.readUser).map((t: any, k: any) => (
+          {Object.entries(state.cyfmsRegister.data).map((t: any, k: any) => (
             <Box
               maxHeight={30}
               sx={{

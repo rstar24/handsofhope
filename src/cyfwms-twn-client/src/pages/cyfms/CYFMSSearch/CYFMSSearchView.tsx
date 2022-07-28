@@ -51,7 +51,7 @@ function tabPanelProps(index: number) {
   };
 }
 const CYFMSSearchView = (): ReactElement => {
-  const data = useAppSelector((state) => state as any);
+  const state = useAppSelector((state) => state);
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -82,13 +82,13 @@ const CYFMSSearchView = (): ReactElement => {
         >
           <Box>
             <Typography variant="h5" fontWeight={500} paddingTop={0.3}>
-              {data.cyfmsRegister.readUser.firstname} <></>
-              {data.cyfmsRegister.readUser.surname}
+              {state.cyfmsRegister.data.firstname} <></>
+              {state.cyfmsRegister.data.surname}
             </Typography>
           </Box>
           <Box>
             <Typography paddingRight={1}>
-              <EditIcon value={data.cyfmsRegister.readUser.participantId} />
+              <EditIcon value={state.cyfmsRegister.data.participantId} />
             </Typography>
           </Box>
         </Box>
@@ -118,20 +118,20 @@ const CYFMSSearchView = (): ReactElement => {
             }}
           >
             <Typography variant="h5" paddingTop={2}>
-              {data.cyfmsRegister.readUser.firstname} <></>
-              {data.cyfmsRegister.readUser.surname}
+              {state.cyfmsRegister.data.firstname} <></>
+              {state.cyfmsRegister.data.surname}
             </Typography>
             <hr></hr>
             <Typography paddingTop={2}>
-              {data.cyfmsContact.contactData.addressLine1} ,
-              {data.cyfmsContact.contactData.city} ,
-              {data.cyfmsContact.contactData.province} <></>
+              {state.cyfmsContact.data.addressLine1} ,
+              {state.cyfmsContact.data.city}, {state.cyfmsContact.data.province}{" "}
+              <></>
             </Typography>
             <br />
-            <Typography>{data.cyfmsRegister.readUser.gender} </Typography>
+            <Typography>{state.cyfmsRegister.data.gender} </Typography>
             <br />
             <Typography>
-              Born : {data.cyfmsRegister.readUser.dateOfBirth} <></>
+              Born : {state.cyfmsRegister.data.dateOfBirth} <></>
             </Typography>
           </Box>
         </Box>
