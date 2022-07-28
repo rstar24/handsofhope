@@ -10,13 +10,10 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class InitialContactFileDetailsDto {
-    @Getter
-    @Setter
-    private Long fileDetailsId;
 
     @Getter
     @Setter
-    private Long fileNumber;
+    private Long fileDetailsId;
 
     @Getter
     @Setter
@@ -24,11 +21,19 @@ public class InitialContactFileDetailsDto {
 
     @Getter
     @Setter
+    private String caseworker;
+
+    @Getter
+    @Setter
+    private Long fileNumber;
+
+    @Getter
+    @Setter
     private LocalDate startingDate;
 
     @Getter
     @Setter
-    private String caseworker;
+    private LocalDate dateClosed;
 
     @Getter
     @Setter
@@ -36,5 +41,5 @@ public class InitialContactFileDetailsDto {
 
     @Getter
     @Setter
-    private LocalDate dateClosed;
+    private Long initialContactReferenceId;
 }

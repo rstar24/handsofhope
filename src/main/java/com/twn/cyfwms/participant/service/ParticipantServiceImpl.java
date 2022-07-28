@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -54,12 +54,25 @@ public class ParticipantServiceImpl implements ParticipantService {
             modelMapper.map(ParticipantIdentityDto, participant);
             participant.setType("CYFM");
             participant.setStatus("ACTIVE");
+
+            List<Participant> participants= participantRepository.findAll();
+           if (!participants.isEmpty()){
+               Optional<Long> maximumReferenceId=participants.stream().map(e1->e1.getReferenceId()).sorted(Comparator.reverseOrder()).skip(0).findFirst();
+                participant.setReferenceId(maximumReferenceId.get()+128L);
+           }
+          else{
+                participant.setReferenceId(128L);
+            }
+
         }else {
             participant = readParticipant(ParticipantIdentityDto.getParticipantId());
             modelMapper.map(ParticipantIdentityDto, participant);
+
         }
         participant = participantRepository.save(participant);
         ParticipantIdentityDto.setParticipantId(participant.getParticipantId());
+        ParticipantIdentityDto.setReferenceId(participant.getReferenceId());
+
         return ParticipantIdentityDto;
     }
 

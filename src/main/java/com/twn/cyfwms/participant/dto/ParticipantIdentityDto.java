@@ -24,4 +24,6 @@ public class ParticipantIdentityDto {
     private String gender;
     @Getter @Setter
     private String maritalStatus;
+    @Getter @Setter
+    private Long referenceId;
 }

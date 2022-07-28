@@ -2,7 +2,10 @@ package com.twn.cyfwms.initialContact.service;
 
 import com.twn.cyfwms.initialContact.dto.InitialContactPatientCareInfoDto;
 import com.twn.cyfwms.initialContact.entity.InitialContactPatientCareInfo;
+import com.twn.cyfwms.initialContact.entity.PatientCareInfoInpatient;
+import com.twn.cyfwms.initialContact.entity.PatientCareInfoOutpatient;
 import com.twn.cyfwms.initialContact.repository.InitialContactPatientCareInfoRepository;
+import com.twn.cyfwms.initialContact.repository.PatientCareInfoOutpatientRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,9 @@ public class InitialContactPatientCareInfoServiceImpl implements InitialContactP
 
     @Autowired
     ModelMapper modelMapper;
+
+    @Autowired
+    PatientCareInfoOutpatientRepository patientCareInfoOutpatientRepository;
 
     @Override
     public InitialContactPatientCareInfoDto readAllPatientCareInfo(Long fileDetailsId) {
@@ -37,16 +43,34 @@ public class InitialContactPatientCareInfoServiceImpl implements InitialContactP
 
     @Override
     public InitialContactPatientCareInfoDto saveAllPatientCareInfo(InitialContactPatientCareInfoDto initialContactPatientCareInfoDto) {
-        InitialContactPatientCareInfo initialContactPatientCareInfo = null;
-        if (initialContactPatientCareInfoDto.getPatientCareInfoId() == 0) {
-            initialContactPatientCareInfo = new InitialContactPatientCareInfo();
+        InitialContactPatientCareInfo initialContactPatientCareInfo=null;
+        if(initialContactPatientCareInfoDto.getPatientCareInfoId()==0) {
+            initialContactPatientCareInfo=new InitialContactPatientCareInfo();
+
             modelMapper.map(initialContactPatientCareInfoDto, initialContactPatientCareInfo);
-        } else {
-            initialContactPatientCareInfo = initialContactPatientCareInfoRepository.findById(initialContactPatientCareInfoDto.getPatientCareInfoId()).get();
-            modelMapper.map(initialContactPatientCareInfoDto, initialContactPatientCareInfo);
+        }else {
+            initialContactPatientCareInfo = initialContactPatientCareInfoRepository
+                    .findById(initialContactPatientCareInfoDto.getPatientCareInfoId()).get();
+
+             modelMapper.map(initialContactPatientCareInfoDto, initialContactPatientCareInfo);
         }
-        initialContactPatientCareInfo = initialContactPatientCareInfoRepository.save(initialContactPatientCareInfo);
-        initialContactPatientCareInfoDto.setFileDetailsId(initialContactPatientCareInfo.getFileDetailsId());
-        return initialContactPatientCareInfoDto;
+
+            initialContactPatientCareInfo = initialContactPatientCareInfoRepository.save(initialContactPatientCareInfo);
+
+            initialContactPatientCareInfoDto.setPatientCareInfoId(initialContactPatientCareInfo.getPatientCareInfoId());
+            initialContactPatientCareInfoDto.setInpatient(initialContactPatientCareInfo.getInpatient());
+            initialContactPatientCareInfoDto.setOutpatient(initialContactPatientCareInfo.getOutpatient());
+
+            initialContactPatientCareInfo.getInpatient().setPatientCareInfoId(initialContactPatientCareInfo.getPatientCareInfoId());
+            initialContactPatientCareInfo.getOutpatient().setPatientCareInfoId(initialContactPatientCareInfo.getPatientCareInfoId());
+            initialContactPatientCareInfo.getOutpatient().setCreationDate(initialContactPatientCareInfo.getCreationDate());
+            initialContactPatientCareInfo.getInpatient().setCreationDate(initialContactPatientCareInfo.getCreationDate());
+            PatientCareInfoOutpatient  patientCareInfoOutpatient = patientCareInfoOutpatientRepository.findById(initialContactPatientCareInfo.getOutpatient().getOutpatientId()).get();
+
+            patientCareInfoOutpatientRepository.save(patientCareInfoOutpatient);
+
+
+       return initialContactPatientCareInfoDto;
     }
 }
+

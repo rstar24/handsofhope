@@ -32,8 +32,10 @@ public class ParticipantSearchResultsDto {
     private String workPhone;
     @Getter @Setter
     private String cellPhone;
+   @Getter @Setter
+   private Long referenceId;
 
-    public ParticipantSearchResultsDto(Long participantId, String firstname, String middleName, String surname, String maritalStatus, LocalDate dateOfBirth, String city, String homePhone, String workPhone, String cellPhone) {
+    public ParticipantSearchResultsDto(Long participantId, String firstname, String middleName, String surname, String maritalStatus, LocalDate dateOfBirth, String city, String homePhone, String workPhone, String cellPhone,Long referenceId) {
         this.participantId = participantId;
         this.firstname = firstname;
         this.middleName = middleName;
@@ -44,5 +46,8 @@ public class ParticipantSearchResultsDto {
         this.homePhone = homePhone;
         this.workPhone = workPhone;
         this.cellPhone = cellPhone;
+        this.referenceId=referenceId;
     }
+
+
 }

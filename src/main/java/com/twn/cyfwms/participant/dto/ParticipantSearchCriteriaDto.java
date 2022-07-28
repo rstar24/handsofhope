@@ -25,4 +25,8 @@ public class ParticipantSearchCriteriaDto {
     private String city;
     @Getter @Setter
     private String phoneNumber;
+   @Getter @Setter
+    private Long referenceId;
+
+
 }

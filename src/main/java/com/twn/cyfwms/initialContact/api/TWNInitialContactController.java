@@ -95,5 +95,4 @@ public class TWNInitialContactController {
     public InitialContactReferralInfoDto saveAllReferralInfo(@RequestBody InitialContactReferralInfoDto initialContactReferralInfoDto) {
         return initialContactReferralInfoService.saveAllReferralInfo(initialContactReferralInfoDto);
     }
-
 }

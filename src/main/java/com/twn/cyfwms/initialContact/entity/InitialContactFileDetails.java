@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.stream.DoubleStream;
 
 @Data
 @AllArgsConstructor
@@ -55,7 +56,9 @@ public class InitialContactFileDetails implements Serializable {
     @Getter @Setter @Column(name = "lastwritten")
     private LocalDateTime lastwritten;
 
-
+//    @Id
+    @Getter @Setter @Column(name = "initialcontactreferenceid")
+    private Long initialcontactreferenceid;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "filedetailsid", referencedColumnName = "filedetailsid")
@@ -76,4 +79,6 @@ public class InitialContactFileDetails implements Serializable {
     @JoinColumn(name = "filedetailsid", referencedColumnName = "filedetailsid")
     @Getter @Setter
     private InitialContactReferralInfo referralInfo;
+
+
 }

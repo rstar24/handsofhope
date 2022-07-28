@@ -3,18 +3,17 @@ package com.twn.cyfwms.participant.entity;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "participant")
+
 public class Participant implements Serializable {
     @Id @Getter @Setter
     @Column(name = "participantid", updatable = false, nullable = false)
@@ -53,6 +52,11 @@ public class Participant implements Serializable {
     private LocalDateTime lastwritten;
     @Getter @Setter @Column(name = "isprimary")
     private boolean isPrimary;
+
+
+    @Getter @Setter @Column(name = "referenceid", updatable = false, nullable = false)
+    private Long referenceId;
+
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "participantid", referencedColumnName = "participantid")

@@ -1,13 +1,10 @@
 package com.twn.codetable.api;
-
 import com.twn.codetable.dto.DataResponseDto;
 import com.twn.codetable.service.DataReferenceService;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-
 @RestController
 @AllArgsConstructor
 @RequestMapping("/v1/dataservice")
@@ -15,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 public class DataReferenceController {
 
     private DataReferenceService dataReferenceService;
-
 
     @GetMapping(value = "/gender", produces = "application/json")
     @ApiOperation("Get All Gender Types")

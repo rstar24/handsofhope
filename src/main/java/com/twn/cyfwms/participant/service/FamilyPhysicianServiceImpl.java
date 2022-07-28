@@ -41,7 +41,6 @@ public class FamilyPhysicianServiceImpl implements FamilyPhysicianService {
         }
         return FamilyPhysicianDtoList;
     }
-
     @Override
     public List<FamilyPhysicianDto> saveAllFamilyPhysicians(List<FamilyPhysicianDto> FamilyPhysicianDtoList) {
         for(FamilyPhysicianDto FamilyPhysicianDto : FamilyPhysicianDtoList){
@@ -58,6 +57,5 @@ public class FamilyPhysicianServiceImpl implements FamilyPhysicianService {
             FamilyPhysicianDto.setFamilyPhysicianId(familyPhysician.getFamilyPhysicianId());
         }
         return FamilyPhysicianDtoList;
-
     }
 }

@@ -8,7 +8,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
@@ -39,12 +41,20 @@ public class InitialContactFileDetailsServiceImpl implements  InitialContactFile
         if (initialContactFileDetailsDto.getFileDetailsId() == 0) {
             initialContactFileDetails = new InitialContactFileDetails();
             modelMapper.map(initialContactFileDetailsDto, initialContactFileDetails);
+            List<InitialContactFileDetails> initialContactFileDetail = initialContactFileDetailsRepository.findAll();
+            if (!initialContactFileDetail.isEmpty()) {
+                Optional<Long> maximumInitialContactReferenceId=initialContactFileDetail.stream().map(e1->e1.getInitialcontactreferenceid()).sorted(Comparator.reverseOrder()).skip(0).findFirst();
+               initialContactFileDetails.setInitialcontactreferenceid(maximumInitialContactReferenceId.get()+128L);
+            } else {
+               initialContactFileDetails.setInitialcontactreferenceid(128L);
+            }
         } else {
-            initialContactFileDetails = initialContactFileDetailsRepository.findById(initialContactFileDetailsDto.getFileDetailsId()).get();
+            initialContactFileDetails=initialContactFileDetailsRepository.findById(initialContactFileDetailsDto.getFileDetailsId()).get();
             modelMapper.map(initialContactFileDetailsDto, initialContactFileDetails);
         }
         initialContactFileDetails = initialContactFileDetailsRepository.save(initialContactFileDetails);
         initialContactFileDetailsDto.setFileDetailsId(initialContactFileDetails.getFileDetailsId());
+        initialContactFileDetailsDto.setInitialContactReferenceId(initialContactFileDetails.getInitialcontactreferenceid());
         return initialContactFileDetailsDto;
     }
 }

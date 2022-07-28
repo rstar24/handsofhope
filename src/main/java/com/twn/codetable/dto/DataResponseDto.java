@@ -4,7 +4,6 @@ package com.twn.codetable.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
-
 import java.util.Map;
 
 @Builder

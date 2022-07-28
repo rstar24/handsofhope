@@ -158,13 +158,14 @@ public class TWNParticipantController {
     }
 
 
-    @GetMapping(value = {"/searchParticipants/{firstname}/{middleName}/{surname}/{dateOfBirth}/{maritalStatus}/{city}/{phoneNumber}"},produces = "application/json")
+    @GetMapping(value = {"/searchParticipants/{firstname}/{middleName}/{surname}/{dateOfBirth}/{maritalStatus}/{city}/{phoneNumber}/{referenceId}"},produces = "application/json")
     @ApiOperation("Search Participants")
     @ResponseStatus(HttpStatus.OK)
       public List<ParticipantSearchResultsDto> searchParticipants(@PathVariable Map<String, String> var)
     {
         ParticipantSearchCriteriaDto participantSearchCriteriaDto = new ParticipantSearchCriteriaDto();
         LocalDate dateTime=null;
+
         if(!"null".equals(var.get("dateOfBirth"))) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             dateTime = LocalDate.parse(var.get("dateOfBirth"), formatter);
@@ -172,9 +173,12 @@ public class TWNParticipantController {
         participantSearchCriteriaDto.setFirstname(
                 ("null".equals(var.get("firstname"))
                         || var.get("firstname") == null) ?null:var.get("firstname"));
+
         participantSearchCriteriaDto.setCity(
                 ("null".equals(var.get("city"))
-                        || var.get("city") == null) ?null:var.get("city"));
+                       || var.get("city") == null) ?null:var.get("city"));
+
+
         participantSearchCriteriaDto.setDateOfBirth(dateTime);
         participantSearchCriteriaDto.setMaritalStatus(
                 ("null".equals(var.get("maritalStatus"))
@@ -189,6 +193,14 @@ public class TWNParticipantController {
         participantSearchCriteriaDto.setPhoneNumber(
                 ("null".equals(var.get("phoneNumber"))
                         || var.get("phoneNumber") == null) ?null:var.get("phoneNumber"));
+
+        long referenceId=0L;
+       if(!"0".equals(var.get("referenceId"))) {
+           referenceId=Long.parseLong(var.get("referenceId"));
+       }
+       participantSearchCriteriaDto.setReferenceId(referenceId);
+
+
         return participantSearchService.search(participantSearchCriteriaDto);
     }
 
