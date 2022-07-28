@@ -12,6 +12,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import type { Data } from "../../features/initialContact/presentConcerns/slice";
 import type { FormEvent, ReactElement } from "react";
+import ICMultiSelectDropdown from "../../components/initialContact/ICMultiSelectDropdown";
 
 /**
  * The PresentConcerns functional component.
@@ -20,6 +21,7 @@ import type { FormEvent, ReactElement } from "react";
 const PresentConcerns = (): ReactElement => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
   const initialContactID = useAppSelector(
     (state) => state.icFileDetails.data.fileDetailsId
   );
@@ -80,7 +82,7 @@ const PresentConcerns = (): ReactElement => {
             >
               <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
                 <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                  <ICDropdown
+                  <ICMultiSelectDropdown
                     autofill={data.selectPresentConcerns}
                     id="selectPresentConcerns"
                     value="Please Select Present Concerns"
@@ -96,7 +98,7 @@ const PresentConcerns = (): ReactElement => {
               />
               <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
                 <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                  <ICDropdown
+                  <ICMultiSelectDropdown
                     autofill={data.substanceAbuse}
                     id="substanceAbuse"
                     value="Mental Health or Alcohol / Substance Abuse"
