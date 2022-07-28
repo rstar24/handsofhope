@@ -1,23 +1,21 @@
-import CYFMSDropdown from "../../components/cyfms/CYFMSDropdown";
-import CYFMSInput from "../../components/cyfms/CYFMSInput";
-import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
-import CYFMSDateInput from "../../components/cyfms/CYFMSDateInput";
 import {
   CYFSWMSNextButton,
   CYFSWMSSaveButton,
 } from "../../components/CYFSWMSButtons";
-import {
-  doGetCYFMSRegister,
-  doPostCYFMSRegister,
-} from "../../features/cyfms/register/cyfmsRegisterSlice";
+import CYFMSDateInput from "../../components/cyfms/CYFMSDateInput";
+import CYFMSDropdown from "../../components/cyfms/CYFMSDropdown";
+import CYFMSInput from "../../components/cyfms/CYFMSInput";
+import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
+import CYFMSValidationInput from "../../components/cyfms/CYFMValidationInput";
+import { doGet, doPost } from "../../features/cyfms/register/slice";
 import { initiate } from "../../features/initiatorSlice";
 import { unhideTabs } from "../../features/navBarSlice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { Box } from "@mui/material";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import type { Data } from "../../features/cyfms/register/slice";
 import type { FormEvent, ReactElement } from "react";
-import CYFMSValidationInput from "../../components/cyfms/CYFMValidationInput";
 
 /**
  * The CYFMSRegister functional component.
@@ -26,48 +24,42 @@ import CYFMSValidationInput from "../../components/cyfms/CYFMValidationInput";
 const CYFMSRegister = (): ReactElement => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const participantId = useAppSelector(
-    (state) => (state as any).cyfmsRegister.user.participantId
-  );
   const { gender, maritalstatus } = useAppSelector(
     (state) => (state as any).codetable
   );
-
-  const userData = useAppSelector((state) => (state as any).cyfmsRegister.user);
-  const readData = useAppSelector(
-    (state) => (state as any).cyfmsRegister.readUser
-  );
-  const isInitiated = useAppSelector(
-    (state: any) => state.initiator.isInitiated
-  );
+  const data = useAppSelector((state) => state.cyfmsRegister.data);
+  const isInitiated = useAppSelector((state) => state.initiator.isInitiated);
 
   useEffect(() => {
-    dispatch(
-      doGetCYFMSRegister(
-        readData.participantId ? readData.participantId : participantId
-      )
-    );
+    dispatch(doGet(data.participantId))
+      .unwrap()
+      .then((data) => {
+        console.log("Register GET backend API was successful!");
+      })
+      .catch((err) => {
+        console.log("Register GET backend API didn't work!");
+        console.log(err);
+      });
   }, []);
 
   // Handles the form data submission and other
   // activities.
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
-    const data: any = e.currentTarget;
-    const newUser = {
-      participantId: readData.participantId
-        ? readData.participantId
-        : participantId,
-      firstname: data.cyfmsRegister_FirstName.value,
-      middleName: data.cyfmsRegister_MiddleName.value,
-      surname: data.cyfmsRegister_LastName.value,
-      dateOfBirth: data.cyfmsRegister_DateOfBirth.value,
-      gender: data.cyfmsRegister_Gender.value,
-      maritalStatus: data.cyfmsRegister_MaritalStatus.value,
+    const form: any = e.currentTarget;
+    const formData: Data = {
+      participantId: data.participantId,
+      firstname: form.firstName.value,
+      middleName: form.middleName.value,
+      surname: form.lastName.value,
+      dateOfBirth: form.dateOfBirth.value,
+      gender: form.gender.value,
+      maritalStatus: form.maritalStatus.value,
     };
-    dispatch(doPostCYFMSRegister({ user: newUser }))
+    dispatch(doPost(formData))
       .unwrap()
       .then(() => {
+        console.log("Register POST backend API was successful!");
         dispatch(unhideTabs(null));
         dispatch(initiate(null));
       })
@@ -94,36 +86,36 @@ const CYFMSRegister = (): ReactElement => {
       >
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CYFMSValidationInput
-              id="cyfmsRegister_FirstName"
+            <CYFMSInput
+              autofill={data.firstname}
+              id="firstName"
               value="First Name"
-              autofill={readData.firstname}
               required
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CYFMSValidationInput
-              id="cyfmsRegister_MiddleName"
+              autofill={data.middleName}
+              id="middleName"
               value="Middle Name"
-              autofill={readData.middleName}
             />
           </Box>
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CYFMSValidationInput
-              id="cyfmsRegister_LastName"
+              autofill={data.surname}
+              id="lastName"
               value="Last Name"
-              autofill={readData.surname}
               required
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CYFMSDateInput
-              id="cyfmsRegister_DateOfBirth"
+              autofill={data.dateOfBirth}
+              id="dateOfBirth"
               type="date"
               value="Date of Birth"
-              autofill={readData.dateOfBirth}
               required
             />
           </Box>
@@ -131,8 +123,8 @@ const CYFMSRegister = (): ReactElement => {
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CYFMSDropdown
-              autofill={readData.gender}
-              id="cyfmsRegister_Gender"
+              autofill={data.gender}
+              id="gender"
               optionsList={Object.values(gender).map(
                 (gender: any) => gender.en
               )}
@@ -142,8 +134,8 @@ const CYFMSRegister = (): ReactElement => {
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CYFMSDropdown
-              autofill={readData.maritalStatus}
-              id="cyfmsRegister_MaritalStatus"
+              autofill={data.maritalStatus}
+              id="maritalStatus"
               optionsList={Object.values(maritalstatus).map(
                 (status: any) => status.en
               )}

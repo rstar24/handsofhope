@@ -1,16 +1,14 @@
 import { CYFSWMSNextButton } from "../../components/CYFSWMSButtons";
 import CYFMSInput from "../../components/cyfms/CYFMSInput";
 import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
-import {
-  doGetContact,
-  doPostContact,
-} from "../../features/cyfms/contact/cyfmsContactSlice";
+import CYFMSValidationInput from "../../components/cyfms/CYFMValidationInput";
+import { doGet, doPost } from "../../features/cyfms/contact/slice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { Box } from "@mui/material";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import type { Data } from "../../features/cyfms/contact/slice";
 import type { FormEvent, ReactElement } from "react";
-import CYFMSValidationInput from "../../components/cyfms/CYFMValidationInput";
 
 /**
  * The CYFMSContact functional component.
@@ -19,47 +17,47 @@ import CYFMSValidationInput from "../../components/cyfms/CYFMValidationInput";
 const CYFMSContact = (): ReactElement => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const participantId = useAppSelector(
-    (state) => state.cyfmsRegister.user.participantId
+  const participantID = useAppSelector(
+    (state) => state.cyfmsRegister.data.participantId
   );
-  const contactData = useAppSelector((state) => state.cyfmsContact.contactData);
+  const data = useAppSelector((state) => state.cyfmsContact.data);
 
   useEffect(() => {
-    dispatch(doGetContact(participantId))
+    dispatch(doGet(participantID))
       .unwrap()
       .then((data) => {
-        console.log("cyfmsContact GET backend API worked successfully");
-        console.log(data);
+        console.log("Contact GET backend API worked successfully");
       })
       .catch((err) => {
-        console.log("cyfmsContact GET backend API didn't work");
+        console.log("Contact GET backend API didn't work");
         console.log(err);
       });
   }, []);
 
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
-    const cyfmsContactForm: any = e.currentTarget;
-    const cyfmsContactFormData = {
-      participantId: participantId,
-      participantContactId: contactData.participantContactId,
-      addressLine1: cyfmsContactForm.cyfmsContactAddressLine1.value,
-      addressLine2: cyfmsContactForm.cyfmsContactAddressLine2.value,
-      city: cyfmsContactForm.cyfmsContactCity.value,
-      province: cyfmsContactForm.cyfmsContactProvince.value,
-      postalCode: cyfmsContactForm.cyfmsContactPostalCode.value,
-      homePhone: cyfmsContactForm.cyfmsContactHomePhone.value,
-      workPhone: cyfmsContactForm.cyfmsContactWorkPhone.value,
-      cellPhone: cyfmsContactForm.cyfmsContactCellPhone.value,
-      emailAddress: cyfmsContactForm.cyfmsContactEmailAddress.value,
+    const form: any = e.currentTarget;
+    const formData: Data = {
+      participantId: participantID,
+      participantContactId: data.participantContactId,
+      addressLine1: form.addressLine1.value,
+      addressLine2: form.addressLine2.value,
+      city: form.city.value,
+      province: form.province.value,
+      postalCode: form.postalCode.value,
+      homePhone: form.homePhone.value,
+      workPhone: form.workPhone.value,
+      cellPhone: form.cellPhone.value,
+      emailAddress: form.emailAddress.value,
     };
-    dispatch(doPostContact(cyfmsContactFormData))
+    dispatch(doPost(formData))
       .unwrap()
       .then(() => {
+        console.log("Contact POST backend API was successful!");
         navigate("/cyfms/household_members");
       })
       .catch((err) => {
-        console.log("Unable to save Contact.");
+        console.log("Contact POST backend API didn't work!");
         console.log(err);
       });
   };
@@ -78,41 +76,37 @@ const CYFMSContact = (): ReactElement => {
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CYFMSInput
-              id="cyfmsContactAddressLine1"
+              autofill={data.addressLine1}
+              id="addressLine1"
               value="Address Line 1"
-              autofill={contactData.addressLine1}
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CYFMSInput
-              id="cyfmsContactAddressLine2"
+              autofill={data.addressLine2}
+              id="addressLine2"
               value="Address Line 2"
-              autofill={contactData.addressLine2}
             />
           </Box>
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CYFMSValidationInput
-              id="cyfmsContactCity"
-              value="City"
-              autofill={contactData.city}
-            />
+            <CYFMSValidationInput id="city" value="City" autofill={data.city} />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CYFMSValidationInput
-              id="cyfmsContactProvince"
+              autofill={data.province}
+              id="province"
               value="Province"
-              autofill={contactData.province}
             />
           </Box>
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CYFMSInput
-              id="cyfmsContactPostalCode"
+              autofill={data.postalCode}
+              id="postalCode"
               value="Postal Code"
-              autofill={contactData.postalCode}
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
@@ -120,32 +114,32 @@ const CYFMSContact = (): ReactElement => {
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CYFMSInput
-              id="cyfmsContactHomePhone"
+              autofill={data.homePhone}
+              id="homePhone"
               value="Home Phone"
-              autofill={contactData.homePhone}
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CYFMSInput
-              id="cyfmsContactCellPhone"
+              autofill={data.cellPhone}
+              id="cellPhone"
               value="Cell Phone"
-              autofill={contactData.cellPhone}
             />
           </Box>
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CYFMSInput
-              id="cyfmsContactWorkPhone"
+              autofill={data.workPhone}
+              id="workPhone"
               value="Work Phone"
-              autofill={contactData.workPhone}
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CYFMSInput
-              id="cyfmsContactEmailAddress"
+              autofill={data.emailAddress}
+              id="emailAddress"
               value="Email Address"
-              autofill={contactData.emailAddress}
               type="email"
             />
           </Box>

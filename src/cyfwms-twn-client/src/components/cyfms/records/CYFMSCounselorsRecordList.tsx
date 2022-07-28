@@ -1,7 +1,8 @@
-import { removeCounselorsRecordNumber } from "../../../features/cyfms/counselors/cyfmsCounselorsSlice";
+import { removeRecordNumber } from "../../../features/cyfms/counselors/slice";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import CYFMSDropdown from "../CYFMSDropdown";
 import CYFMSInput from "../CYFMSInput";
+import CYFMSValidationInput from "../CYFMValidationInput";
 import CYFMSTextArea from "../CYFMSTextArea";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { Box, IconButton, Typography } from "@mui/material";
@@ -11,7 +12,6 @@ import type {
   ElementType,
   ReactElement,
 } from "react";
-import CYFMSValidationInput from "../CYFMValidationInput";
 
 /**
  * A custom props data type for the props passed
@@ -37,20 +37,19 @@ export const CYFMSCYFMSCounselorsRecord = (
   const role = useAppSelector((state: any) => state.codetable.role);
 
   const removeRecord = () => {
-    dispatch(removeCounselorsRecordNumber(props.recordNumber));
+    dispatch(removeRecordNumber(props.recordNumber));
   };
 
   return (
     <Box
-      key={`counselors_record_${props.recordNumber}`}
       sx={{
         display: "flex",
         flexDirection: "column",
         gap: "1rem 0",
         p: "0.5rem",
         borderRadius: "1rem",
-        boxShadow:
-          "inset 2px 2px 3px rgba(191, 191, 191, .6), inset -2px -2px 3px rgba(0, 0, 0, .6)",
+        boxShadow: `inset 2px 2px 3px rgba(191, 191, 191, .6),
+                    inset -2px -2px 3px rgba(0, 0, 0, .6)`,
       }}
     >
       <Box
@@ -77,7 +76,7 @@ export const CYFMSCYFMSCounselorsRecord = (
         <Box sx={{ flexBasis: 0, flexGrow: 1.08 }}>
           <CYFMSDropdown
             autofill={props.record.role}
-            id={`counselors_record_${props.recordNumber}_Role`}
+            id={`record_${props.recordNumber}_Role`}
             value="Role"
             optionsList={Object.values(role).map((role: any) => role.en)}
           />
@@ -88,7 +87,7 @@ export const CYFMSCYFMSCounselorsRecord = (
         <Box sx={{ flexBasis: 0, flexGrow: 1.3 }}>
           <CYFMSValidationInput
             autofill={props.record.name}
-            id={`counselors_record_${props.recordNumber}_Name`}
+            id={`record_${props.recordNumber}_Name`}
             value="Name"
           />
         </Box>
@@ -98,7 +97,7 @@ export const CYFMSCYFMSCounselorsRecord = (
         <Box sx={{ flexBasis: 0, flexGrow: 2.7 }}>
           <CYFMSTextArea
             autofill={props.record.contactInformation}
-            id={`counselors_record_${props.recordNumber}_ContactInformation`}
+            id={`record_${props.recordNumber}_ContactInformation`}
             value="Contact Information"
           />
         </Box>

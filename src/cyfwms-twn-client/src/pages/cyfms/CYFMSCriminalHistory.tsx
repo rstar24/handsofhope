@@ -7,18 +7,17 @@ import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
 import CYFMSTextArea from "../../components/cyfms/CYFMSTextArea";
 import CYFMSCriminalHistoryRecordList from "../../components/cyfms/records/CYFMSCriminalHistoryRecordList";
 import {
-  addMoreCriminalHistoryRecord,
-  doGetCriminalHistory,
-  doPostCriminalHistory,
-} from "../../features/cyfms/criminalHistory/cyfmsCriminalHistorySlice";
+  flipProbation,
+  flipParole,
+  addMoreRecord,
+  doGet,
+  doPost,
+} from "../../features/cyfms/criminalHistory/slice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { Box, Checkbox, FormControlLabel, FormGroup } from "@mui/material";
 import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import type {
-  cyfmsCHData,
-  cyfmsCHRecord,
-} from "../../features/cyfms/criminalHistory/cyfmsCriminalHistorySlice";
+import type { Data, Record } from "../../features/cyfms/criminalHistory/slice";
 import type { FormEvent, ReactElement, Ref } from "react";
 
 /**
@@ -28,19 +27,18 @@ import type { FormEvent, ReactElement, Ref } from "react";
 const CYFMSCriminalHistory = (): ReactElement => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const participantId = useAppSelector(
-    (state) => (state as any).cyfmsRegister.user.participantId
+  const participantID = useAppSelector(
+    (state) => state.cyfmsRegister.data.participantId
   );
-  const data = useAppSelector((state: any) => state.cyfmsCriminalHistory.data);
+  const data = useAppSelector((state) => state.cyfmsCriminalHistory.data);
 
   // Reference to the form
   const formRef: Ref<HTMLFormElement> = useRef(null);
 
   useEffect(() => {
-    dispatch(doGetCriminalHistory(participantId))
+    dispatch(doGet(participantID))
       .unwrap()
-      .then((criminalHistoryDataFromAPI) => {
-        console.log(criminalHistoryDataFromAPI);
+      .then((data) => {
         console.log("CriminalHistory GET backend API was successful!");
       })
       .catch((err) => {
@@ -55,31 +53,28 @@ const CYFMSCriminalHistory = (): ReactElement => {
     e.preventDefault();
     const form: any = e.currentTarget;
     const len = data.criminalHistoryRecordList.length;
-    console.log(form.criminalHistory_Probation.value);
-    const formData: cyfmsCHData = {
-      participantId: participantId,
+    console.log(form.probation.value);
+    console.log(form.parole.value);
+    const formData: Data = {
+      participantId: participantID,
       criminalHistoryId: data.criminalHistoryId,
-      criminalHistoryRecordList: new Array<cyfmsCHRecord>(len),
-      probation: form.criminalHistory_Probation.value === "on" ? true : false,
-      parole: form.criminalHistory_Parole.value === "on" ? true : false,
-      conditions: form.criminalHistory_Conditions.value,
-      courtWorkerAndContactInfo:
-        form.criminalHistory_CourtWorkersAndContactInformation.value,
+      criminalHistoryRecordList: new Array<Record>(len),
+      probation: data.probation,
+      parole: data.parole,
+      conditions: form.conditions.value,
+      courtWorkerAndContactInfo: form.courtWorkersAndContactInformation.value,
     };
     for (let index = 0; index < len; ++index) {
       formData.criminalHistoryRecordList[index] = {
         criminalHistoryRecordId:
           data.criminalHistoryRecordList[index].criminalHistoryRecordId,
-        arrestDate:
-          form[`criminalHistory_record_${index + 1}_ArrestDate`].value,
-        charges: form[`criminalHistory_record_${index + 1}_Charges`].value,
-        conviction:
-          form[`criminalHistory_record_${index + 1}_Conviction`].value,
-        sentence: form[`criminalHistory_record_${index + 1}_Sentence`].value,
+        arrestDate: form[`record_${index + 1}_ArrestDate`].value,
+        charges: form[`record_${index + 1}_Charges`].value,
+        conviction: form[`record_${index + 1}_Conviction`].value,
+        sentence: form[`record_${index + 1}_Sentence`].value,
       };
     }
-    console.log("this is executed by form submission: ", formData);
-    dispatch(doPostCriminalHistory(formData))
+    dispatch(doPost(formData))
       .unwrap()
       .then(() => {
         console.log("criminalHistory POST backend API was successful!");
@@ -97,20 +92,12 @@ const CYFMSCriminalHistory = (): ReactElement => {
     const len = data.criminalHistoryRecordList.length;
     const flag: boolean = data.criminalHistoryRecordList.length > 0;
     dispatch(
-      addMoreCriminalHistoryRecord({
+      addMoreRecord({
         criminalHistoryRecordId: 0,
-        arrestDate: flag
-          ? form[`criminalHistory_record_${len}_ArrestDate`].value
-          : "",
-        charges: flag
-          ? form[`criminalHistory_record_${len}_Charges`].value
-          : "",
-        conviction: flag
-          ? form[`criminalHistory_record_${len}_Conviction`].value
-          : "",
-        sentence: flag
-          ? form[`criminalHistory_record_${len}_Sentence`].value
-          : "",
+        arrestDate: flag ? form[`record_${len}_ArrestDate`].value : "",
+        charges: flag ? form[`record_${len}_Charges`].value : "",
+        conviction: flag ? form[`record_${len}_Conviction`].value : "",
+        sentence: flag ? form[`record_${len}_Sentence`].value : "",
       })
     );
   };
@@ -138,8 +125,10 @@ const CYFMSCriminalHistory = (): ReactElement => {
             <FormControlLabel
               control={
                 <Checkbox
-                  defaultChecked={data.probation}
-                  id="criminalHistory_Probation"
+                  checked={data.probation}
+                  id="probation"
+                  onChange={() => dispatch(flipProbation(null))}
+                  value="Probation"
                 />
               }
               label="Probation"
@@ -147,8 +136,10 @@ const CYFMSCriminalHistory = (): ReactElement => {
             <FormControlLabel
               control={
                 <Checkbox
-                  defaultChecked={data.parole}
-                  id="criminalHistory_Parole"
+                  checked={data.parole}
+                  id="parole"
+                  onChange={() => dispatch(flipParole(null))}
+                  value="Parole"
                 />
               }
               label="Parole"
@@ -157,14 +148,14 @@ const CYFMSCriminalHistory = (): ReactElement => {
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CYFMSInput
               autofill={data.conditions}
-              id="criminalHistory_Conditions"
+              id="conditions"
               value="Condition(s)"
             />
           </Box>
         </Box>
         <CYFMSTextArea
           autofill={data.courtWorkerAndContactInfo}
-          id="criminalHistory_CourtWorkersAndContactInformation"
+          id="courtWorkersAndContactInformation"
           value="Court Worker(s) And Contact Information"
         />
         <Box sx={{ display: "flex", justifyContent: "right" }}>

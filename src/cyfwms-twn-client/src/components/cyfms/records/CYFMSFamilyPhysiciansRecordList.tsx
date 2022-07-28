@@ -1,4 +1,4 @@
-import { removeFamilyPhysiciansRecordNumber } from "../../../features/cyfms/familyPhysicians/cyfmsFamilyPhysiciansSlice";
+import { removeRecordNumber } from "../../../features/cyfms/familyPhysicians/slice";
 import { useAppDispatch } from "../../../library/hooks";
 import CYFMSInput from "../CYFMSInput";
 import CYFMSTextArea from "../CYFMSTextArea";
@@ -34,21 +34,20 @@ export const CYFMSFamilyPhysiciansRecord = (
   const dispatch = useAppDispatch();
 
   const removeRecord = () => {
-    dispatch(removeFamilyPhysiciansRecordNumber(props.recordNumber));
+    dispatch(removeRecordNumber(props.recordNumber));
   };
 
   return (
     <Box
       id="familyPhysiciansRecord"
-      key={`familyPhysicians_record_${props.recordNumber}`}
       sx={{
         display: "flex",
         flexDirection: "column",
         gap: "1rem 0",
         p: "0.5rem",
         borderRadius: "1rem",
-        boxShadow:
-          "inset 2px 2px 3px rgba(191, 191, 191, .6), inset -2px -2px 3px rgba(0, 0, 0, .6)",
+        boxShadow: `inset 2px 2px 3px rgba(191, 191, 191, .6),
+                    inset -2px -2px 3px rgba(0, 0, 0, .6)`,
       }}
     >
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
@@ -78,14 +77,14 @@ export const CYFMSFamilyPhysiciansRecord = (
             <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
               <CYFMSInput
                 autofill={props.record.name}
-                id={`familyPhysicians_record_${props.recordNumber}_Name`}
+                id={`record_${props.recordNumber}_Name`}
                 value="Name"
               />
             </Box>
             <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
               <CYFMSInput
                 autofill={props.record.phone}
-                id={`familyPhysicians_record_${props.recordNumber}_Phone`}
+                id={`record_${props.recordNumber}_Phone`}
                 value="Phone"
               />
             </Box>
@@ -94,7 +93,7 @@ export const CYFMSFamilyPhysiciansRecord = (
             <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
               <CYFMSInput
                 autofill={props.record.cell}
-                id={`familyPhysicians_record_${props.recordNumber}_Cell`}
+                id={`record_${props.recordNumber}_Cell`}
                 value="Cell"
               />
             </Box>
@@ -103,7 +102,7 @@ export const CYFMSFamilyPhysiciansRecord = (
           <Box sx={{ flexBasis: 0, flexGrow: 2 }}>
             <CYFMSTextArea
               autofill={props.record.listOfMedication}
-              id={`familyPhysicians_record_${props.recordNumber}_ListOfMedication`}
+              id={`record_${props.recordNumber}_ListOfMedication`}
               value="List of Medication"
             />
           </Box>

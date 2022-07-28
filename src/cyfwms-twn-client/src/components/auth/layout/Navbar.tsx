@@ -1,19 +1,18 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Tab from "@mui/material/Tab";
-import { Link, useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../../library/hooks";
 import { cleanCodetableState } from "../../../features/codetable/codetableSlice";
-import { cleanContactState } from "../../../features/cyfms/contact/cyfmsContactSlice";
-import { cleanCriminalHistoryState } from "../../../features/cyfms/criminalHistory/cyfmsCriminalHistorySlice";
-import { cleanEducationAndEmploymentState } from "../../../features/cyfms/educationAndEmployment/educationAndEmploymentSlice";
-import { cleanFamilyPhysiciansState } from "../../../features/cyfms/familyPhysicians/cyfmsFamilyPhysiciansSlice";
-import { cleanHouseholdMembersState } from "../../../features/cyfms/householdMembers/cyfmsHouseholdMembersSlice";
-import { cleanOtherInformationState } from "../../../features/cyfms/otherInformation/cyfmsOtherInformationSlice";
-import { cleanRegisterState } from "../../../features/cyfms/register/cyfmsRegisterSlice";
+import { cleanState as cleanContactState } from "../../../features/cyfms/contact/slice";
+import { cleanState as cleanCounselorsState } from "../../../features/cyfms/counselors/slice";
+import { cleanState as cleanCriminalHistoryState } from "../../../features/cyfms/criminalHistory/slice";
+import { cleanState as cleanEducationAndEmploymentState } from "../../../features/cyfms/educationAndEmployment/slice";
+import { cleanState as cleanFamilyPhysiciansState } from "../../../features/cyfms/familyPhysicians/slice";
+import { cleanState as cleanHouseholdMembersState } from "../../../features/cyfms/householdMembers/slice";
+import { cleanState as cleanOtherInformationState } from "../../../features/cyfms/otherInformation/slice";
+import { cleanState as cleanRegisterState } from "../../../features/cyfms/register/slice";
 import { cleanSearchState } from "../../../features/search/searchSlice";
-import { cleanCounselorsState } from "../../../features/cyfms/counselors/cyfmsCounselorsSlice";
 import { onLogout } from "../../../features/login/loginSlice";
+import { useAppDispatch } from "../../../library/hooks";
+import { Box, Tab } from "@mui/material";
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 
 interface LinkTabProps {
@@ -35,39 +34,46 @@ function LinkTab(props: LinkTabProps) {
 }
 
 export default function Navbar() {
-  const [value, setValue] = React.useState(0);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+
   const handleClean = () => {
+    sessionStorage.removeItem("token");
+    dispatch(onLogout());
     dispatch(cleanCodetableState());
+    dispatch(cleanRegisterState(null));
     dispatch(cleanContactState(null));
     dispatch(cleanCriminalHistoryState(null));
-    dispatch(cleanEducationAndEmploymentState());
-    dispatch(cleanFamilyPhysiciansState(null));
+    dispatch(cleanEducationAndEmploymentState(null));
     dispatch(cleanHouseholdMembersState(null));
+    dispatch(cleanFamilyPhysiciansState(null));
+    dispatch(cleanCounselorsState(null));
     dispatch(cleanOtherInformationState(null));
-    dispatch(cleanRegisterState());
+    dispatch(cleanRegisterState(null));
     dispatch(cleanSearchState());
     dispatch(cleanCounselorsState(null));
     navigate("/home");
   };
+
   const handleLogout = () => {
     sessionStorage.removeItem("token");
     dispatch(onLogout());
     dispatch(cleanCodetableState());
-    dispatch(cleanContactState);
-    dispatch(cleanCriminalHistoryState);
-    dispatch(cleanEducationAndEmploymentState());
-    dispatch(cleanFamilyPhysiciansState);
-    dispatch(cleanHouseholdMembersState);
-    dispatch(cleanOtherInformationState);
-    dispatch(cleanRegisterState());
+    dispatch(cleanContactState(null));
+    dispatch(cleanCriminalHistoryState(null));
+    dispatch(cleanEducationAndEmploymentState(null));
+    dispatch(cleanFamilyPhysiciansState(null));
+    dispatch(cleanHouseholdMembersState(null));
+    dispatch(cleanOtherInformationState(null));
+    dispatch(cleanRegisterState(null));
     dispatch(cleanSearchState());
-    dispatch(cleanCounselorsState);
+    dispatch(cleanCounselorsState(null));
     navigate("/login");
   };
 
@@ -84,6 +90,8 @@ export default function Navbar() {
     >
       <Box color="#ffffff" sx={{ p: 0 }}>
         <Button
+          component={Link}
+          to="/home"
           sx={{ color: "white", textTransform: "none" }}
           onClick={handleClean}
         >

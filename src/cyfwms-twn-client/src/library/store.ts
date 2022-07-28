@@ -1,13 +1,12 @@
-import educationAndEmploymentReducer from "../features/cyfms/educationAndEmployment/educationAndEmploymentSlice";
 import codetableReducer from "../features/codetable/codetableSlice";
-import cyfmsContactReducer from "../features/cyfms/contact/cyfmsContactSlice";
-import cyfmsCriminalHistoryReducer from "../features/cyfms/criminalHistory/cyfmsCriminalHistorySlice";
-import cyfmsFamilyPhysiciansReducer from "../features/cyfms/familyPhysicians/cyfmsFamilyPhysiciansSlice";
-import cyfmsHouseholdMembersReducer from "../features/cyfms/householdMembers/cyfmsHouseholdMembersSlice";
-import loginReducer from "../features/login/loginSlice";
-import cyfmsOtherInformationReducer from "../features/cyfms/otherInformation/cyfmsOtherInformationSlice";
-import cyfmsRegisterReducer from "../features/cyfms/register/cyfmsRegisterSlice";
-import cyfmsCounselorsReducer from "../features/cyfms/counselors/cyfmsCounselorsSlice";
+import cyfmsContactReducer from "../features/cyfms/contact/slice";
+import cyfmsCriminalHistoryReducer from "../features/cyfms/criminalHistory/slice";
+import cyfmsEducationAndEmploymentReducer from "../features/cyfms/educationAndEmployment/slice";
+import cyfmsFamilyPhysiciansReducer from "../features/cyfms/familyPhysicians/slice";
+import cyfmsHouseholdMembersReducer from "../features/cyfms/householdMembers/slice";
+import cyfmsOtherInformationReducer from "../features/cyfms/otherInformation/slice";
+import cyfmsRegisterReducer from "../features/cyfms/register/slice";
+import cyfmsCounselorsReducer from "../features/cyfms/counselors/slice";
 import icFileDetailsReducer from "../features/initialContact/fileDetails/slice";
 import icIncidentReportReducer from "../features/initialContact/incidentReport/slice";
 import icPresentConcernsReducer from "../features/initialContact/presentConcerns/slice";
@@ -15,6 +14,7 @@ import icPatientCareInformationReducer from "../features/initialContact/patientC
 import icReferralInformationReducer from "../features/initialContact/referralInformation/slice";
 import icSearchReducer from "../features/initialContact/search/slice";
 import initiatorReducer from "../features/initiatorSlice";
+import loginReducer from "../features/login/loginSlice";
 import searchReducer from "../features/search/searchSlice";
 import navBarReducer from "../features/navBarSlice";
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
@@ -22,13 +22,16 @@ import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 export const store = configureStore({
   reducer: {
     login: loginReducer,
+    navBar: navBarReducer,
+    initiator: initiatorReducer,
     codetable: codetableReducer,
     cyfmsRegister: cyfmsRegisterReducer,
     cyfmsContact: cyfmsContactReducer,
     cyfmsHouseholdMembers: cyfmsHouseholdMembersReducer,
+    cyfmsEducationAndEmployment: cyfmsEducationAndEmploymentReducer,
+    cyfmsCriminalHistory: cyfmsCriminalHistoryReducer,
     cyfmsFamilyPhysicians: cyfmsFamilyPhysiciansReducer,
     cyfmsCounselors: cyfmsCounselorsReducer,
-    cyfmsCriminalHistory: cyfmsCriminalHistoryReducer,
     cyfmsOtherInformation: cyfmsOtherInformationReducer,
     icFileDetails: icFileDetailsReducer,
     icIncidentReport: icIncidentReportReducer,
@@ -36,9 +39,6 @@ export const store = configureStore({
     icPresentConcerns: icPresentConcernsReducer,
     icPatientCareInformation: icPatientCareInformationReducer,
     icSearch: icSearchReducer,
-    initiator: initiatorReducer,
-    educationAndEmployment: educationAndEmploymentReducer,
-    navBar: navBarReducer,
     search: searchReducer,
   },
 });

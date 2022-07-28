@@ -5,18 +5,15 @@ import {
 import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
 import CYFMSCounselorsRecordList from "../../components/cyfms/records/CYFMSCounselorsRecordList";
 import {
-  addMoreCounselorsRecord,
-  doGetCounselors,
-  doPostCounselors,
-} from "../../features/cyfms/counselors/cyfmsCounselorsSlice";
+  addMoreRecord,
+  doGet,
+  doPost,
+} from "../../features/cyfms/counselors/slice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { Box } from "@mui/material";
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import type {
-  cyfmsCounselorsData,
-  cyfmsCounselorsRecord,
-} from "../../features/cyfms/counselors/cyfmsCounselorsSlice";
+import type { Data, Record } from "../../features/cyfms/counselors/slice";
 import type { FormEvent, ReactElement, Ref } from "react";
 
 /**
@@ -26,24 +23,24 @@ import type { FormEvent, ReactElement, Ref } from "react";
 const CYFMSCounselors = (): ReactElement => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const participantId = useAppSelector(
-    (state) => (state as any).cyfmsRegister.user.participantId
+  const participantID = useAppSelector(
+    (state) => state.cyfmsRegister.data.participantId
   );
   const recordsList = useAppSelector(
-    (state: any) => state.cyfmsCounselors.counselorsData.recordsList
+    (state) => state.cyfmsCounselors.data.recordsList
   );
 
   // Reference to the form
   const formRef: Ref<HTMLFormElement> = useRef(null);
 
   useEffect(() => {
-    dispatch(doGetCounselors(null))
+    dispatch(doGet(participantID))
       .unwrap()
-      .then((recordListFromAPI) => {
-        console.log("counselors GET backend API was successful!");
+      .then((data) => {
+        console.log("Counselors GET backend API was successful!");
       })
       .catch((err) => {
-        console.log("counselors GET backend API didn't work!");
+        console.log("Counselors GET backend API didn't work!");
         console.log(err);
       });
   }, []);
@@ -53,27 +50,27 @@ const CYFMSCounselors = (): ReactElement => {
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
     const form: any = e.currentTarget;
-    const formData: cyfmsCounselorsData = {
-      recordsList: new Array<cyfmsCounselorsRecord>(recordsList.length),
+    const formData: Data = {
+      recordsList: new Array<Record>(recordsList.length),
     };
     for (let index = 0; index < recordsList.length; ++index) {
       formData.recordsList[index] = {
-        participantId: participantId,
+        participantId: participantID,
         counselorCFSWorkerId: recordsList[index].counselorCFSWorkerId,
-        role: form[`counselors_record_${index + 1}_Role`].value,
-        name: form[`counselors_record_${index + 1}_Name`].value,
+        role: form[`record_${index + 1}_Role`].value,
+        name: form[`record_${index + 1}_Name`].value,
         contactInformation:
-          form[`counselors_record_${index + 1}_ContactInformation`].value,
+          form[`record_${index + 1}_ContactInformation`].value,
       };
     }
-    dispatch(doPostCounselors(formData.recordsList))
+    dispatch(doPost(formData))
       .unwrap()
-      .then(() => {
-        console.log("Counselors data has been posted!");
+      .then((data) => {
+        console.log("Counselors POST backend API was successful!");
         navigate("/cyfms/other_information");
       })
       .catch((err) => {
-        console.log("Counselors data NOT posted!");
+        console.log("Counselors POST backend API didn't work!");
         console.log(err);
       });
   };
@@ -83,20 +80,15 @@ const CYFMSCounselors = (): ReactElement => {
     const form: any = formRef.current;
     const flag: boolean = recordsList.length > 0;
     dispatch(
-      addMoreCounselorsRecord({
-        participantId: participantId,
+      addMoreRecord({
+        participantId: participantID,
         counselorCFSWorkerId: flag
           ? recordsList[recordsList.length - 1].counselorCFSWorkerId
           : 0,
-        role: flag
-          ? form[`counselors_record_${recordsList.length}_Role`].value
-          : "",
-        name: flag
-          ? form[`counselors_record_${recordsList.length}_Name`].value
-          : "",
+        role: flag ? form[`record_${recordsList.length}_Role`].value : "",
+        name: flag ? form[`record_${recordsList.length}_Name`].value : "",
         contactInformation: flag
-          ? form[`counselors_record_${recordsList.length}_ContactInformation`]
-              .value
+          ? form[`record_${recordsList.length}_ContactInformation`].value
           : "",
       })
     );

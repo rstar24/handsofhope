@@ -5,18 +5,15 @@ import {
 import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
 import CYFMSHouseholdMembersRecordList from "../../components/cyfms/records/CYFMSHouseholdMembersRecordList";
 import {
-  addMoreHouseholdMembersRecord,
-  doGetHouseholdMembers,
-  doPostHouseholdMembers,
-} from "../../features/cyfms/householdMembers/cyfmsHouseholdMembersSlice";
+  addMoreRecord,
+  doGet,
+  doPost,
+} from "../../features/cyfms/householdMembers/slice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { Box } from "@mui/material";
 import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import type {
-  cyfmsHouseholdMembersData,
-  cyfmsHouseholdMembersRecord,
-} from "../../features/cyfms/householdMembers/cyfmsHouseholdMembersSlice";
+import type { Data, Record } from "../../features/cyfms/householdMembers/slice";
 import type { FormEvent, ReactElement, Ref } from "react";
 
 /**
@@ -26,24 +23,24 @@ import type { FormEvent, ReactElement, Ref } from "react";
 const CYFMSHouseholdMembers = (): ReactElement => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const participantId = useAppSelector(
-    (state: any) => state.cyfmsRegister.user.participantId
+  const participantID = useAppSelector(
+    (state) => state.cyfmsRegister.data.participantId
   );
   const recordsList = useAppSelector(
-    (state: any) => state.cyfmsHouseholdMembers.householdMembersData.recordsList
+    (state) => state.cyfmsHouseholdMembers.data.recordsList
   );
 
   // Reference to the form
   const formRef: Ref<HTMLFormElement> = useRef(null);
 
   useEffect(() => {
-    dispatch(doGetHouseholdMembers(participantId))
+    dispatch(doGet(participantID))
       .unwrap()
-      .then((recordListFromAPI) => {
-        console.log("householdMembers GET backend API was successful!");
+      .then((data) => {
+        console.log("HouseholdMembers GET backend API was successful!");
       })
       .catch((err) => {
-        console.log("householdMembers GET backend API didn't work!");
+        console.log("HouseholdMembers GET backend API didn't work!");
         console.log(err);
       });
   }, []);
@@ -53,28 +50,27 @@ const CYFMSHouseholdMembers = (): ReactElement => {
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
     const form: any = e.currentTarget;
-    const formData: cyfmsHouseholdMembersData = {
-      recordsList: new Array<cyfmsHouseholdMembersRecord>(recordsList.length),
+    const formData: Data = {
+      recordsList: new Array<Record>(recordsList.length),
     };
     for (let index = 0; index < recordsList.length; ++index) {
       formData.recordsList[index] = {
-        participantId: participantId,
+        participantId: participantID,
         householdMemberId: recordsList[index].householdMemberId,
-        name: form[`householdMembers_record_${index + 1}_Name`].value,
-        gender: form[`householdMembers_record_${index + 1}_Gender`].value,
-        dateOfBirth:
-          form[`householdMembers_record_${index + 1}_DateOfBirth`].value,
-        residing: form[`householdMembers_record_${index + 1}_Residing`].value,
+        name: form[`record_${index + 1}_Name`].value,
+        gender: form[`record_${index + 1}_Gender`].value,
+        dateOfBirth: form[`record_${index + 1}_DateOfBirth`].value,
+        residing: form[`record_${index + 1}_Residing`].value,
       };
     }
-    dispatch(doPostHouseholdMembers(formData.recordsList))
+    dispatch(doPost(formData))
       .unwrap()
       .then(() => {
-        console.log("householdMembers POST backend API was successful!");
+        console.log("HouseholdMembers POST backend API was successful!");
         navigate("/cyfms/education_and_employment");
       })
       .catch((err) => {
-        console.log("householdMembers POST backend API was successful!");
+        console.log("HouseholdMembers POST backend API was successful!");
         console.log(err);
       });
   };
@@ -84,23 +80,18 @@ const CYFMSHouseholdMembers = (): ReactElement => {
     const form: any = formRef.current;
     const flag: boolean = recordsList.length > 0;
     dispatch(
-      addMoreHouseholdMembersRecord({
-        participantId: participantId,
+      addMoreRecord({
+        participantId: participantID,
         householdMemberId: flag
           ? recordsList[recordsList.length - 1].householdMemberId
           : 0,
-        name: flag
-          ? form[`householdMembers_record_${recordsList.length}_Name`].value
-          : "",
-        gender: flag
-          ? form[`householdMembers_record_${recordsList.length}_Gender`].value
-          : "",
+        name: flag ? form[`record_${recordsList.length}_Name`].value : "",
+        gender: flag ? form[`record_${recordsList.length}_Gender`].value : "",
         dateOfBirth: flag
-          ? form[`householdMembers_record_${recordsList.length}_DateOfBirth`]
-              .value
+          ? form[`record_${recordsList.length}_DateOfBirth`].value
           : "",
         residing: flag
-          ? form[`householdMembers_record_${recordsList.length}_Residing`].value
+          ? form[`record_${recordsList.length}_Residing`].value
           : "",
       })
     );

@@ -1,4 +1,4 @@
-import { removeCriminalHistoryRecordNumber } from "../../../features/cyfms/criminalHistory/cyfmsCriminalHistorySlice";
+import { removeRecordNumber } from "../../../features/cyfms/criminalHistory/slice";
 import { useAppDispatch } from "../../../library/hooks";
 import CYFMSInput from "../CYFMSInput";
 import CYFMSTextArea from "../CYFMSTextArea";
@@ -34,20 +34,19 @@ export const CYFMSCriminalHistoryRecord = (
   const dispatch = useAppDispatch();
 
   const removeRecord = () => {
-    dispatch(removeCriminalHistoryRecordNumber(props.recordNumber));
+    dispatch(removeRecordNumber(props.recordNumber));
   };
 
   return (
     <Box
-      key={`criminalHistory_record_${props.recordNumber}`}
       sx={{
         display: "flex",
         flexDirection: "column",
         gap: "1rem 0",
         p: "0.5rem",
         borderRadius: "1rem",
-        boxShadow:
-          "inset 2px 2px 3px rgba(191, 191, 191, .6), inset -2px -2px 3px rgba(0, 0, 0, .6)",
+        boxShadow: `inset 2px 2px 3px rgba(191, 191, 191, .6),
+                    inset -2px -2px 3px rgba(0, 0, 0, .6)`,
       }}
     >
       <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem 0" }}>
@@ -69,7 +68,7 @@ export const CYFMSCriminalHistoryRecord = (
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CYFMSInput
               autofill={props.record.arrestDate}
-              id={`criminalHistory_record_${props.recordNumber}_ArrestDate`}
+              id={`record_${props.recordNumber}_ArrestDate`}
               value="Arrest Date"
               type="date"
             />
@@ -78,17 +77,17 @@ export const CYFMSCriminalHistoryRecord = (
         </Box>
         <CYFMSTextArea
           autofill={props.record.charges}
-          id={`criminalHistory_record_${props.recordNumber}_Charges`}
+          id={`record_${props.recordNumber}_Charges`}
           value="Charges"
         />
         <CYFMSTextArea
           autofill={props.record.conviction}
-          id={`criminalHistory_record_${props.recordNumber}_Conviction`}
+          id={`record_${props.recordNumber}_Conviction`}
           value="Conviction"
         />
         <CYFMSTextArea
           autofill={props.record.sentence}
-          id={`criminalHistory_record_${props.recordNumber}_Sentence`}
+          id={`record_${props.recordNumber}_Sentence`}
           value="Sentence"
         />
       </Box>

@@ -1,18 +1,21 @@
-import { Box, Typography } from "@mui/material";
+import { CYFSWMSNextButton } from "../../components/CYFSWMSButtons";
 import CYFMSInput from "../../components/cyfms/CYFMSInput";
 import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
 import CYFMSDropdown from "../../components/cyfms/CYFMSDropdown";
-import { useAppDispatch, useAppSelector } from "../../library/hooks";
-import {
-  doGetEducationAndEmployment,
-  doPostEducationAndEmployment,
-} from "../../features/cyfms/educationAndEmployment/educationAndEmploymentSlice";
-import { doGetEducation } from "../../features/codetable/codetableSlice";
-import { useNavigate } from "react-router-dom";
-import { CYFSWMSNextButton } from "../../components/CYFSWMSButtons";
-import React, { useEffect, useState } from "react";
-import type { FormEvent, ReactElement } from "react";
 import CYFMSValidationInput from "../../components/cyfms/CYFMValidationInput";
+import {
+  enableDesiredProfession,
+  enableSchoolFields,
+  disableDesiredProfession,
+  disableSchoolFields,
+  doGet,
+  doPost,
+} from "../../features/cyfms/educationAndEmployment/slice";
+import { useAppDispatch, useAppSelector } from "../../library/hooks";
+import { Box, Typography } from "@mui/material";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import type { FormEvent, ReactElement } from "react";
 
 /**
  * The CYFMSEducationAndEmployment functional component.
@@ -21,69 +24,66 @@ import CYFMSValidationInput from "../../components/cyfms/CYFMValidationInput";
 const CYFMSEducationAndEmployment = (): ReactElement => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const participantId = useAppSelector(
-    (state) => (state as any).cyfmsRegister.user.participantId
+  const participantID = useAppSelector(
+    (state) => state.cyfmsRegister.data.participantId
   );
   const { education, typeOfEmployee } = useAppSelector(
     (state) => (state as any).codetable
   );
+  const state = useAppSelector((state) => state.cyfmsEducationAndEmployment);
 
-  const readData = useAppSelector(
-    (state) => (state as any).educationAndEmployment.readUser
-  );
-
-  const educationData = useAppSelector(
-    (state) => (state as any).educationAndEmployment.user
-  );
   useEffect(() => {
-    dispatch(doGetEducationAndEmployment(participantId));
-  }, [dispatch, educationData, participantId]);
+    dispatch(doGet(participantID))
+      .unwrap()
+      .then((data) => {
+        console.log(
+          "EducationAndEmployment GET backend API worked successfully"
+        );
+      })
+      .catch((err) => {
+        console.log("EducationAndEmployment GET backend API didn't work");
+        console.log(err);
+      });
+  }, []);
 
-  const [disabledSchoolFields, setDisabledSchoolFields] =
-    useState<boolean>(true);
-  const [disabledDesiredProfession, setDisabledDesiredProfession] =
-    useState<boolean>(true);
   // Handles the form data submission and other
   // activities.
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
-    const data: any = e.currentTarget;
-    const newEducationAndEmploymentData = {
-      participantId: participantId,
-      educationId: readData.educationId || 0,
-      employmentId: readData.employmentId || 0,
-      attendingSchool: data.educationAndEmployment_AttendingSchool.value,
-      school: data.educationAndEmployment_SchoolName.value,
-      grade: data.educationAndEmployment_SchoolGrade.value,
-      employed: data.educationAndEmployment_Employed.value,
-      typeOfEmployment: data.educationAndEmployment_TypeOfEmployment.value,
-      desiredProfession: data.educationAndEmployment_DesiredProfession.value,
+    const form: any = e.currentTarget;
+    const formData = {
+      participantId: participantID,
+      educationId: state.data.educationId,
+      employmentId: state.data.employmentId,
+      attendingSchool: form.attendingSchool.value,
+      school: form.schoolName.value,
+      grade: form.schoolGrade.value,
+      employed: form.employed.value,
+      typeOfEmployment: form.typeOfEmployment.value,
+      desiredProfession: form.desiredProfession.value,
     };
-    dispatch(
-      doPostEducationAndEmployment({ user: newEducationAndEmploymentData })
-    ).then(
-      () => {
-        console.log("EducationAndEmployment data has been posted!");
+    dispatch(doPost(formData))
+      .unwrap()
+      .then((data) => {
+        console.log("EducationAndEmployment POST backend API was successful!");
         navigate("/cyfms/criminal_history");
-      },
-      (err) => {
-        console.log("EducationAndEmployment data NOT posted!");
+      })
+      .catch((err) => {
+        console.log("EducationAndEmployment POST backend API didn't work!");
         console.log(err);
-      }
-    );
+      });
   };
 
   // Handles the form fields' value changes
   // and other activities.
   const changeHandler = (e: FormEvent) => {
-    const data: any = e.currentTarget;
-    console.log(data.educationAndEmployment_AttendingSchool.value);
-    data.educationAndEmployment_AttendingSchool.value === "Yes"
-      ? setDisabledSchoolFields(false)
-      : setDisabledSchoolFields(true);
-    data.educationAndEmployment_TypeOfEmployment.value === "Job Search"
-      ? setDisabledDesiredProfession(false)
-      : setDisabledDesiredProfession(true);
+    const form: any = e.currentTarget;
+    form.attendingSchool.value === "Yes"
+      ? dispatch(enableSchoolFields(null))
+      : dispatch(disableSchoolFields(null));
+    form.typeOfEmployment.value === "Job Search"
+      ? dispatch(enableDesiredProfession(null))
+      : dispatch(disableDesiredProfession(null));
   };
 
   return (
@@ -109,12 +109,12 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
               <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
                 <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
                   <CYFMSDropdown
-                    id="educationAndEmployment_AttendingSchool"
+                    autofill={state.data.attendingSchool}
+                    id="attendingSchool"
                     value="Attending School?"
                     optionsList={Object.values(education).map(
                       (education: any) => education.en
                     )}
-                    autofill={readData.attendingSchool}
                   />
                 </Box>
                 <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
@@ -129,18 +129,18 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
               >
                 <Box sx={{ flexBasis: 0, flexGrow: 0.5 }}>
                   <CYFMSValidationInput
-                    disabled={disabledSchoolFields}
-                    id="educationAndEmployment_SchoolName"
+                    autofill={state.data.school}
+                    disabled={state.disabledSchoolFields}
+                    id="schoolName"
                     value="School"
-                    autofill={readData.school}
                   />
                 </Box>
                 <Box sx={{ flexBasis: 0, flexGrow: 0.5 }}>
                   <CYFMSInput
-                    disabled={disabledSchoolFields}
-                    id="educationAndEmployment_SchoolGrade"
+                    autofill={state.data.grade}
+                    disabled={state.disabledSchoolFields}
+                    id="schoolGrade"
                     value="Grade"
-                    autofill={readData.grade}
                   />
                 </Box>
               </Box>
@@ -156,22 +156,22 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
               <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
                 <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
                   <CYFMSDropdown
-                    id="educationAndEmployment_Employed"
+                    autofill={state.data.employed}
+                    id="employed"
                     value="Employed?"
                     optionsList={Object.values(education).map(
                       (education: any) => education.en
                     )}
-                    autofill={readData.employed}
                   />
                 </Box>
                 <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
                   <CYFMSDropdown
-                    id="educationAndEmployment_TypeOfEmployment"
+                    autofill={state.data.typeOfEmployment}
+                    id="typeOfEmployment"
                     value="Type of Employment"
                     optionsList={Object.values(typeOfEmployee).map(
                       (employee: any) => employee.en
                     )}
-                    autofill={readData.typeOfEmployment}
                   />
                 </Box>
               </Box>
@@ -184,10 +184,10 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
               >
                 <Box sx={{ flexBasis: 0, flexGrow: 0.999999 }}>
                   <CYFMSValidationInput
-                    disabled={disabledDesiredProfession}
-                    id="educationAndEmployment_DesiredProfession"
+                    autofill={state.data.desiredProfession}
+                    disabled={state.disabledDesiredProfession}
+                    id="desiredProfession"
                     value="Desired Profession"
-                    autofill={readData.desiredProfession}
                   />
                 </Box>
                 <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>

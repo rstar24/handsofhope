@@ -46,12 +46,12 @@ const FileDetails = (): ReactElement => {
     const form: any = e.currentTarget;
     const formData: Data = {
       fileDetailsId: data.fileDetailsId,
-      fileNumber: form.fileDetails_FileNumber.value,
-      clientName: form.fileDetails_ClientName.value,
-      startingDate: form.fileDetails_StartingDate.value,
-      caseworker: form.fileDetails_CaseWorker.value,
-      status: form.fileDetails_Status.value,
-      dateClosed: form.fileDetails_ClosingDate.value,
+      fileNumber: form.fileNumber.value,
+      clientName: form.clientName.value,
+      startingDate: form.startingDate.value,
+      caseworker: form.caseWorker.value,
+      status: form.status.value,
+      dateClosed: form.closingDate.value,
     };
     dispatch(doPost(formData))
       .unwrap()
@@ -85,14 +85,14 @@ const FileDetails = (): ReactElement => {
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <ICInput
               autofill={data.fileNumber}
-              id="fileDetails_FileNumber"
+              id="fileNumber"
               value="File No."
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <ICInput
               autofill={data.clientName}
-              id="fileDetails_ClientName"
+              id="clientName"
               value="Client Name"
             />
           </Box>
@@ -101,7 +101,7 @@ const FileDetails = (): ReactElement => {
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <ICInput
               autofill={data.startingDate}
-              id="fileDetails_StartingDate"
+              id="startingDate"
               value="Date"
               type="date"
             />
@@ -109,7 +109,7 @@ const FileDetails = (): ReactElement => {
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <ICInput
               autofill={data.caseworker}
-              id="fileDetails_CaseWorker"
+              id="caseWorker"
               value="Case Worker"
             />
           </Box>
@@ -118,7 +118,7 @@ const FileDetails = (): ReactElement => {
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <ICDropdown
               autofill={data.status}
-              id="fileDetails_Status"
+              id="status"
               optionsList={["In Progress", "Closed"]}
               value="Status"
             />
@@ -126,7 +126,7 @@ const FileDetails = (): ReactElement => {
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <ICInput
               autofill={data.dateClosed}
-              id="fileDetails_ClosingDate"
+              id="closingDate"
               value="Date Closed"
               type="date"
             />

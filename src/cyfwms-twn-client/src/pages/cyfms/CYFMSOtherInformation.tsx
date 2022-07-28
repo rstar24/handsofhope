@@ -1,22 +1,18 @@
 import { CYFSWMSSaveButton } from "../../components/CYFSWMSButtons";
 import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
 import CYFMSTextArea from "../../components/cyfms/CYFMSTextArea";
-import { cleanCodetableState } from "../../features/codetable/codetableSlice";
-import { cleanContactState } from "../../features/cyfms/contact/cyfmsContactSlice";
-import { cleanCounselorsState } from "../../features/cyfms/counselors/cyfmsCounselorsSlice";
-import { cleanCriminalHistoryState } from "../../features/cyfms/criminalHistory/cyfmsCriminalHistorySlice";
-import { cleanEducationAndEmploymentState } from "../../features/cyfms/educationAndEmployment/educationAndEmploymentSlice";
-import { cleanFamilyPhysiciansState } from "../../features/cyfms/familyPhysicians/cyfmsFamilyPhysiciansSlice";
-import { cleanHouseholdMembersState } from "../../features/cyfms/householdMembers/cyfmsHouseholdMembersSlice";
+import { cleanState as cleanContactState } from "../../features/cyfms/contact/slice";
+import { cleanState as cleanCounselorsState } from "../../features/cyfms/counselors/slice";
+import { cleanState as cleanCriminalHistoryState } from "../../features/cyfms/criminalHistory/slice";
+import { cleanState as cleanEducationAndEmploymentState } from "../../features/cyfms/educationAndEmployment/slice";
+import { cleanState as cleanFamilyPhysiciansState } from "../../features/cyfms/familyPhysicians/slice";
+import { cleanState as cleanHouseholdMembersState } from "../../features/cyfms/householdMembers/slice";
 import {
-  cleanOtherInformationState,
-  doGetOtherInformation,
-  doPostOtherInformation,
-} from "../../features/cyfms/otherInformation/cyfmsOtherInformationSlice";
-import {
-  cleanRegisterState,
-  doGetCYFMSRegister,
-} from "../../features/cyfms/register/cyfmsRegisterSlice";
+  cleanState as cleanOtherInformationState,
+  doGet,
+  doPost,
+} from "../../features/cyfms/otherInformation/slice";
+import { cleanState as cleanRegisterState } from "../../features/cyfms/register/slice";
 import { cleanSearchState } from "../../features/search/searchSlice";
 import { uninitiate } from "../../features/initiatorSlice";
 import { hideTabs } from "../../features/navBarSlice";
@@ -24,9 +20,8 @@ import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { PopupContext } from "./CYFMS";
 import { Box, Typography } from "@mui/material";
 import React, { useContext, useEffect } from "react";
-import type { cyfmsOtherInformationData } from "../../features/cyfms/otherInformation/cyfmsOtherInformationSlice";
+import type { Data } from "../../features/cyfms/otherInformation/slice";
 import type { FormEvent, ReactElement } from "react";
-import { Navigate, useNavigate } from "react-router";
 
 /**
  * The CYFMSOtherInformation functional component.
@@ -35,55 +30,48 @@ import { Navigate, useNavigate } from "react-router";
 const CYFMSOtherInformation = (): ReactElement => {
   const popupContext = useContext(PopupContext);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const participantId = useAppSelector(
-    (state) => (state as any).cyfmsRegister.user.participantId
+  const participantID = useAppSelector(
+    (state) => state.cyfmsRegister.data.participantId
   );
-  const otherInformationData = useAppSelector(
-    (state: any) => state.cyfmsOtherInformation.otherInformationData
-  );
+  const data = useAppSelector((state) => state.cyfmsOtherInformation.data);
 
   useEffect(() => {
-    dispatch(doGetOtherInformation(participantId))
+    dispatch(doGet(participantID))
       .unwrap()
-      .then((otherInformationDataFromAPI) => {
-        console.log("otherInformation GET backend API was successful!");
+      .then((data) => {
+        console.log("OtherInformation GET backend API was successful!");
       })
       .catch((err) => {
-        console.log("otherInformation GET backend API didn't work!");
+        console.log("OtherInformation GET backend API didn't work!");
         console.log(err);
       });
-    dispatch(doGetCYFMSRegister(participantId));
   }, []);
 
   // Handles the form data submission and other
   // activities.
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
-    const cyfmsOtherInformationForm: any = e.currentTarget;
-    const cyfmsOtherInformationFormData: cyfmsOtherInformationData = {
-      participantId: participantId,
-      participantOtherInfoId: otherInformationData.participantOtherInfoId,
-      strength: cyfmsOtherInformationForm.otherInformation_Strengths.value,
-      weakness: cyfmsOtherInformationForm.otherInformation_Weaknesses.value,
-      skills: cyfmsOtherInformationForm.otherInformation_Skills.value,
-      experiences: cyfmsOtherInformationForm.otherInformation_Experiences.value,
-      effectiveCopingSkills:
-        cyfmsOtherInformationForm.otherInformation_EffectiveCopingSkills.value,
+    const form: any = e.currentTarget;
+    const formData: Data = {
+      participantId: participantID,
+      participantOtherInfoId: data.participantOtherInfoId,
+      strength: form.strengths.value,
+      weakness: form.weaknesses.value,
+      skills: form.skills.value,
+      experiences: form.experiences.value,
+      effectiveCopingSkills: form.effectiveCopingSkills.value,
     };
-    dispatch(doPostOtherInformation(cyfmsOtherInformationFormData))
+    dispatch(doPost(formData))
       .then(() => {
-        // dispatch(cleanCodetableState());
-        // dispatch(cleanContactState(null));
-        // dispatch(cleanCriminalHistoryState(null));
-        // dispatch(cleanEducationAndEmploymentState());
-        // dispatch(cleanFamilyPhysiciansState(null));
-        // dispatch(cleanHouseholdMembersState(null));
-        // dispatch(cleanOtherInformationState(null));
-        // dispatch(cleanRegisterState());
-        // dispatch(cleanSearchState());
-        // dispatch(cleanCounselorsState(null));
-        navigate("../search/view/participantId");
+        dispatch(cleanRegisterState(null));
+        dispatch(cleanContactState(null));
+        dispatch(cleanHouseholdMembersState(null));
+        dispatch(cleanEducationAndEmploymentState(null));
+        dispatch(cleanCriminalHistoryState(null));
+        dispatch(cleanFamilyPhysiciansState(null));
+        dispatch(cleanOtherInformationState(null));
+        dispatch(cleanSearchState());
+        dispatch(cleanCounselorsState(null));
         console.log("otherInformation POST backend API was successful!");
         popupContext.setOpen(false);
         dispatch(hideTabs(null));
@@ -110,29 +98,25 @@ const CYFMSOtherInformation = (): ReactElement => {
           Other Information
         </Typography>
         <CYFMSTextArea
-          id="otherInformation_Strengths"
+          autofill={data.strength}
+          id="strengths"
           value="Strengths"
-          autofill={otherInformationData.strength}
         />
         <CYFMSTextArea
-          id="otherInformation_Weaknesses"
+          autofill={data.weakness}
+          id="weaknesses"
           value="Weaknesses"
-          autofill={otherInformationData.weakness}
         />
+        <CYFMSTextArea autofill={data.skills} id="skills" value="Skills" />
         <CYFMSTextArea
-          id="otherInformation_Skills"
-          value="Skills"
-          autofill={otherInformationData.skills}
-        />
-        <CYFMSTextArea
-          id="otherInformation_Experiences"
+          autofill={data.experiences}
+          id="experiences"
           value="Experiences"
-          autofill={otherInformationData.experiences}
         />
         <CYFMSTextArea
-          id="otherInformation_EffectiveCopingSkills"
+          autofill={data.effectiveCopingSkills}
+          id="effectiveCopingSkills"
           value="Effective Coping Skills"
-          autofill={otherInformationData.effectiveCopingSkills}
         />
         <Box sx={{ display: "flex", justifyContent: "right" }}>
           <CYFSWMSSaveButton />

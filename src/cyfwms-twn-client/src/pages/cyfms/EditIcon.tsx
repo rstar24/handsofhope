@@ -5,17 +5,17 @@ import MenuItem from "@mui/material/MenuItem";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../library/hooks";
-import { doGetCYFMSRegister } from "../../features/cyfms/register/cyfmsRegisterSlice";
-import { doGetContact } from "../../features/cyfms/contact/cyfmsContactSlice";
 import { Button, Modal } from "@mui/material";
 import { Box } from "@mui/system";
 import { PopupContext } from "./CYFMS";
-import { doGetEducationAndEmployment } from "../../features/cyfms/educationAndEmployment/educationAndEmploymentSlice";
-import { doGetOtherInformation } from "../../features/cyfms/otherInformation/cyfmsOtherInformationSlice";
-import { doGetCriminalHistory } from "../../features/cyfms/criminalHistory/cyfmsCriminalHistorySlice";
-import { doGetHouseholdMembers } from "../../features/cyfms/householdMembers/cyfmsHouseholdMembersSlice";
-import { doGetFamilyPhysicians } from "../../features/cyfms/familyPhysicians/cyfmsFamilyPhysiciansSlice";
-import { doGetCounselors } from "../../features/cyfms/counselors/cyfmsCounselorsSlice";
+import { doGet as doGetRegister } from "../../features/cyfms/register/slice";
+import { doGet as doGetContact } from "../../features/cyfms/contact/slice";
+import { doGet as doGetCounselors } from "../../features/cyfms/counselors/slice";
+import { doGet as doGetEducationAndEmployment } from "../../features/cyfms/educationAndEmployment/slice";
+import { doGet as doGetOtherInformation } from "../../features/cyfms/otherInformation/slice";
+import { doGet as doGetCriminalHistory } from "../../features/cyfms/criminalHistory/slice";
+import { doGet as doGetHouseholdMembers } from "../../features/cyfms/householdMembers/slice";
+import { doGet as doGetFamilyPhysicians } from "../../features/cyfms/familyPhysicians/slice";
 import {
   doGetGender,
   doGetMaritalStatus,
@@ -55,9 +55,9 @@ export default function EditIcon(props: any) {
       setOpenModel(true);
     } else {
       setOpen(true);
+      dispatch(doGetRegister(props.value));
       dispatch(doGetGender());
       dispatch(doGetMaritalStatus());
-      dispatch(doGetCYFMSRegister(props.value));
       dispatch(doGetContact(props.value));
       dispatch(doGetEducationAndEmployment(props.value));
       dispatch(doGetOtherInformation(props.value));
