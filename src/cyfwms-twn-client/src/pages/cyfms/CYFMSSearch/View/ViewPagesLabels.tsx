@@ -6,6 +6,7 @@ export const RegisterLabels = [
   "Date of Birth",
   "Gender",
   "Marital Status",
+  "Reference Id",
 ];
 
 export const ContactLabel = [
