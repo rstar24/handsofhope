@@ -4,9 +4,7 @@ import { useAppSelector } from "../../../../library/hooks";
 import { styles } from "./ViewHome";
 import { OtherInformationLabels } from "./ViewPagesLabels";
 const ViewOtherInformation = () => {
-  const data = useAppSelector(
-    (state) => (state as any).cyfmsOtherInformation.otherInformationData
-  );
+  const data = useAppSelector((state) => state.cyfmsOtherInformation.data);
 
   return (
     <Box paddingTop={3}>

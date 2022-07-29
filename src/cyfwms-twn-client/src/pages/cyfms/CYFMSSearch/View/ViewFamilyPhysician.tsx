@@ -4,9 +4,8 @@ import { useAppSelector } from "../../../../library/hooks";
 import { styles } from "./ViewHome";
 import { FamilyPhysiciansLabel } from "./ViewPagesLabels";
 const ViewFamilyPhysician = () => {
-  const data = useAppSelector(
-    (state) => (state as any).cyfmsFamilyPhysicians.familyPhysiciansData
-  );
+  const data = useAppSelector((state) => state.cyfmsFamilyPhysicians.data);
+
   return (
     <Box paddingTop={1}>
       {Object.keys(data.recordsList).map((i: any) => (

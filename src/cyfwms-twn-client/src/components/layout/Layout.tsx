@@ -21,6 +21,8 @@ const Layout = (props: { children: ReactNode | ReactNode[] }): ReactElement => {
         border: "5px solid black",
         mx: { xs: 0, md: "5rem" },
         my: { xs: 0, md: "1rem" },
+        boxShadow: `inset 1px 1px black,
+                    inset -1px -1px black`,
       }}
     >
       <Header />

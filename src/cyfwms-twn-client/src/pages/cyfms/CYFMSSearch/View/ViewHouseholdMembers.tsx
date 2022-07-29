@@ -4,8 +4,8 @@ import { useAppSelector } from "../../../../library/hooks";
 import { styles } from "./ViewHome";
 import { HouseholdLabel } from "./ViewPagesLabels";
 const ViewHouseholdMembers = () => {
-  const data = useAppSelector((state) => state as any).cyfmsHouseholdMembers
-    .householdMembersData;
+  const data = useAppSelector((state) => state.cyfmsHouseholdMembers.data);
+
   return (
     <Box paddingTop={1}>
       {Object.keys(data.recordsList).map((i: any) => (

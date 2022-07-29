@@ -42,6 +42,7 @@ export const CYFMSHouseholdMembersRecord = (
 
   return (
     <Box
+      key={`record_${props.recordNumber}`}
       sx={{
         display: "flex",
         flexDirection: "column",

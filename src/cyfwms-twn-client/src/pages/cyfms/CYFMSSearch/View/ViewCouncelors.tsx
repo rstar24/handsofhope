@@ -4,9 +4,8 @@ import { useAppSelector } from "../../../../library/hooks";
 import { styles } from "./ViewHome";
 import { CouncelorsLabel } from "./ViewPagesLabels";
 const ViewCouncelors = () => {
-  const data = useAppSelector(
-    (state) => (state as any).cyfmsCounselors.counselorsData
-  );
+  const data = useAppSelector((state) => state.cyfmsCounselors.data);
+
   return (
     <Box paddingTop={1}>
       {Object.keys(data.recordsList).map((i: any) => (

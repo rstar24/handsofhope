@@ -5,10 +5,13 @@ import { styles } from "./ViewHome";
 import { EducationAndEmploymentLabels } from "./ViewPagesLabels";
 
 const ViewEducationAndEmployment = () => {
-  const data = useAppSelector((state) => state as any);
+  const data = useAppSelector(
+    (state) => state.cyfmsEducationAndEmployment.data
+  );
+
   return (
     <Box paddingTop={3}>
-      {Object.entries(data.educationAndEmployment.readUser).map((t: any, k) => (
+      {Object.entries(data).map((t: any, k) => (
         <Box
           maxHeight={30}
           sx={{

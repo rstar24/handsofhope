@@ -6,16 +6,17 @@ import {
   CriminalHistoryLabels,
   CriminalHistoryRecordLabels,
 } from "./ViewPagesLabels";
+
 const ViewCriminalHistory = () => {
-  const data = useAppSelector(
-    (state) => (state as any).cyfmsCriminalHistory.data
-  );
+  const data = useAppSelector((state) => state.cyfmsCriminalHistory.data);
+
+  console.log(data);
   return (
     <>
       <Box paddingTop={1}>
         {Object.keys(data.criminalHistoryRecordList).map((i: any) => (
           <>
-            {data.criminalHistoryRecordList[0].participantId !== 0 && (
+            {data.participantId !== 0 && (
               <Typography paddingTop={2} paddingLeft={4}>
                 Criminal History {Number(i) + 1}
               </Typography>
@@ -85,7 +86,11 @@ const ViewCriminalHistory = () => {
                     </Box>
                     <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
                       <Typography variant="h6" style={styles.values}>
-                        {t[1]}
+                        {(typeof t[1]).toString() === "boolean"
+                          ? t[1]
+                            ? "Yes"
+                            : "No"
+                          : t[1]}
                       </Typography>
                     </Box>
                   </>
