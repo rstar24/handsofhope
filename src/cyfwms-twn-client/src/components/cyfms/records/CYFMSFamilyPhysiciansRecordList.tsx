@@ -39,7 +39,7 @@ export const CYFMSFamilyPhysiciansRecord = (
 
   return (
     <Box
-      id="familyPhysiciansRecord"
+      key={`record_${props.recordNumber}`}
       sx={{
         display: "flex",
         flexDirection: "column",

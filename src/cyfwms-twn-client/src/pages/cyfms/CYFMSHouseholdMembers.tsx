@@ -78,6 +78,7 @@ const CYFMSHouseholdMembers = (): ReactElement => {
   const addMoreHandler = (e: MouseEvent) => {
     e.preventDefault();
     const form: any = formRef.current;
+    // Whenever all the records are removed on UI.
     const flag: boolean = recordsList.length > 0;
     dispatch(
       addMoreRecord({
