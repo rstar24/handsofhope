@@ -9,7 +9,6 @@ import type { FormEvent, ReactElement } from "react";
 import CYFMSSearchResult from "./CYFMSSearchResult";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import { doGetSearch } from "../../../features/search/searchSlice";
-import { current } from "@reduxjs/toolkit";
 import CYFMSDropdown from "../../../components/cyfms/CYFMSDropdown";
 import CYFMSSearchInput from "../../../components/cyfms/CYFMSSearchInput";
 import { doGetMaritalStatus } from "../../../features/codetable/codetableSlice";
@@ -37,9 +36,12 @@ const CYFMSSearchPanel = (): ReactElement => {
       city: data.city.value || null,
       phoneNumber: data.phoneNo.value || null,
     };
-    dispatch(doGetSearch({ readUser: searchUser })).then(() => {
-      setIsShown(true);
-    });
+    dispatch(doGetSearch({ readUser: searchUser }))
+      .unwrap()
+      .then(() => {
+        setIsShown(true);
+      })
+      .catch((err) => {});
   };
 
   const hide = () => {
@@ -83,7 +85,6 @@ const CYFMSSearchPanel = (): ReactElement => {
         <CYFMSSearchInput id="middleName" value="Middle Name" />
         <CYFMSSearchInput id="lastName" value="Last Name" />
         <CYFMSInput id="dateOfBirth" type="date" value="Date Of Birth" />
-
         <CYFMSDropdown
           id="maritalStatus"
           optionsList={Object.values(maritalstatus).map(

@@ -80,22 +80,36 @@ const CYFMSOtherInformation = (): ReactElement => {
           Other Information
         </Typography>
         <CYFMSTextArea
+          formLabelFlex="1 1 0"
+          outlinedInputFlex="5 1 0"
           autofill={data.strength}
           id="strengths"
           value="Strengths"
         />
         <CYFMSTextArea
+          formLabelFlex="1 1 0"
+          outlinedInputFlex="5 1 0"
           autofill={data.weakness}
           id="weaknesses"
           value="Weaknesses"
         />
-        <CYFMSTextArea autofill={data.skills} id="skills" value="Skills" />
         <CYFMSTextArea
+          formLabelFlex="1 1 0"
+          outlinedInputFlex="5.05 1 0"
+          autofill={data.skills}
+          id="skills"
+          value="Skills"
+        />
+        <CYFMSTextArea
+          formLabelFlex="1 1 0"
+          outlinedInputFlex="5 1 0"
           autofill={data.experiences}
           id="experiences"
           value="Experiences"
         />
         <CYFMSTextArea
+          formLabelFlex="1 1 0"
+          outlinedInputFlex="5 1 0"
           autofill={data.effectiveCopingSkills}
           id="effectiveCopingSkills"
           value="Effective Coping Skills"

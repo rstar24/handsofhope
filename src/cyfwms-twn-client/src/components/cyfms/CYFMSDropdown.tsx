@@ -29,7 +29,7 @@ const CYFMSDropdown = (props: CYFMSDropdownPropsType): ReactElement => {
     >
       <FormLabel
         htmlFor={props.id}
-        sx={{ p: 1, flexBasis: 0, flexGrow: 0.47, color: "black" }}
+        sx={{ p: 1, flexBasis: 0, flexGrow: 1, color: "black" }}
       >
         {props.value}
       </FormLabel>
@@ -39,9 +39,10 @@ const CYFMSDropdown = (props: CYFMSDropdownPropsType): ReactElement => {
         id={props.id}
         defaultValue={props.autofill}
         style={{
+          fontSize: 15,
           display: "block",
           flexBasis: 0,
-          flexGrow: 1,
+          flexGrow: 2,
           height: "40px",
           backgroundColor: "#dfdada",
         }}

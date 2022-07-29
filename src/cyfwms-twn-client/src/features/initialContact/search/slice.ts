@@ -4,20 +4,20 @@ import type { SliceCaseReducers } from "@reduxjs/toolkit";
 import type { AxiosResponse } from "axios";
 
 export interface Data {
-  clientName: string;
-  fileNumber: string;
-  caseworker: string;
-  date: string;
-  status: string;
+  clientName: string | null;
+  fileNumber: string | null;
+  caseworker: string | null;
+  date: string | null;
+  status: string | null;
 }
 
 // Empty Data
 const emptyData: Data = {
-  clientName: "",
-  fileNumber: "",
-  caseworker: "",
-  date: "",
-  status: "",
+  clientName: null,
+  fileNumber: null,
+  caseworker: null,
+  date: null,
+  status: null,
 };
 
 export interface State {
@@ -27,9 +27,9 @@ export interface State {
 
 export const doGet = createAsyncThunk<Data, Data>(
   "search/doGet",
-  async (data: Data, { getState }) => {
+  async (formData, { getState }) => {
     const store: any = getState();
-    const res: AxiosResponse = await doGetAPI(data, store.login.jwtToken);
+    const res: AxiosResponse = await doGetAPI(formData, store.login.jwtToken);
     // Becomes the `fulfilled` action payload:
     return res.data;
   }

@@ -53,8 +53,6 @@ const CYFMSCriminalHistory = (): ReactElement => {
     e.preventDefault();
     const form: any = e.currentTarget;
     const len = data.criminalHistoryRecordList.length;
-    console.log(form.probation.value);
-    console.log(form.parole.value);
     const formData: Data = {
       participantId: participantID,
       criminalHistoryId: data.criminalHistoryId,
@@ -154,6 +152,8 @@ const CYFMSCriminalHistory = (): ReactElement => {
           </Box>
         </Box>
         <CYFMSTextArea
+          formLabelFlex="1 1 0"
+          outlinedInputFlex="5.05 1 0"
           autofill={data.courtWorkerAndContactInfo}
           id="courtWorkersAndContactInformation"
           value="Court Worker(s) And Contact Information"

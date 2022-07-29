@@ -74,7 +74,7 @@ export const CYFMSCYFMSCounselorsRecord = (
         </IconButton>
       </Box>
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
-        <Box sx={{ flexBasis: 0, flexGrow: 1.08 }}>
+        <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
           <CYFMSDropdown
             autofill={props.record.role}
             id={`record_${props.recordNumber}_Role`}
@@ -85,25 +85,22 @@ export const CYFMSCYFMSCounselorsRecord = (
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
       </Box>
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
-        <Box sx={{ flexBasis: 0, flexGrow: 1.3 }}>
+        <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
           <CYFMSValidationInput
             autofill={props.record.name}
             id={`record_${props.recordNumber}_Name`}
             value="Name"
           />
         </Box>
-        <Box sx={{ flexBasis: 0, flexGrow: 1.22 }}></Box>
+        <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
       </Box>
-      <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
-        <Box sx={{ flexBasis: 0, flexGrow: 2.7 }}>
-          <CYFMSTextArea
-            autofill={props.record.contactInformation}
-            id={`record_${props.recordNumber}_ContactInformation`}
-            value="Contact Information"
-          />
-        </Box>
-        <Box sx={{ flexBasis: 0, flexGrow: 1.22 }}></Box>
-      </Box>
+      <CYFMSTextArea
+        formLabelFlex="1 1 0"
+        outlinedInputFlex="5.1 1 0"
+        autofill={props.record.contactInformation}
+        id={`record_${props.recordNumber}_ContactInformation`}
+        value="Contact Information"
+      />
     </Box>
   );
 };

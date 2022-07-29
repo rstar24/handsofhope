@@ -2,7 +2,7 @@ import { removeRecordNumber } from "../../../features/cyfms/householdMembers/sli
 import { useAppSelector, useAppDispatch } from "../../../library/hooks";
 import CYFMSDateInput from "../CYFMSDateInput";
 import CYFMSDropdown from "../CYFMSDropdown";
-import CYFMSInput from "../CYFMSInput";
+import CYFMSTextArea from "../CYFMSTextArea";
 import CYFMSValidationInput from "../CYFMValidationInput";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { Box, IconButton, Typography } from "@mui/material";
@@ -101,16 +101,13 @@ export const CYFMSHouseholdMembersRecord = (
         </Box>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
       </Box>
-      <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
-        <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-          <CYFMSInput
-            autofill={props.record.residing}
-            id={`record_${props.recordNumber}_Residing`}
-            value="Residing"
-          />
-        </Box>
-        <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
-      </Box>
+      <CYFMSTextArea
+        formLabelFlex="1 1 0"
+        outlinedInputFlex="5.05 1 0"
+        autofill={props.record.residing}
+        id={`record_${props.recordNumber}_Residing`}
+        value="Residing"
+      />
     </Box>
   );
 };

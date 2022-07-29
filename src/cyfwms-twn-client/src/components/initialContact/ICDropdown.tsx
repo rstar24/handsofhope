@@ -38,6 +38,7 @@ const ICDropdown = (props: ICDropdownPropsType): ReactElement => {
         name={props.id}
         id={props.id}
         style={{
+          fontSize: 15,
           display: "block",
           flexBasis: 0,
           flexGrow: 1,

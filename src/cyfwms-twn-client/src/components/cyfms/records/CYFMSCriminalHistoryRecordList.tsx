@@ -66,7 +66,7 @@ export const CYFMSCriminalHistoryRecord = (
           </IconButton>
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
-          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+          <Box sx={{ flexBasis: "0", flexGrow: 1 }}>
             <CYFMSInput
               autofill={props.record.arrestDate}
               id={`record_${props.recordNumber}_ArrestDate`}
@@ -77,16 +77,22 @@ export const CYFMSCriminalHistoryRecord = (
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
         </Box>
         <CYFMSTextArea
+          formLabelFlex="1 1 0"
+          outlinedInputFlex="5.05 1 0"
           autofill={props.record.charges}
           id={`record_${props.recordNumber}_Charges`}
           value="Charges"
         />
         <CYFMSTextArea
+          formLabelFlex="1 1 0"
+          outlinedInputFlex="5.05 1 0"
           autofill={props.record.conviction}
           id={`record_${props.recordNumber}_Conviction`}
           value="Conviction"
         />
         <CYFMSTextArea
+          formLabelFlex="1 1 0"
+          outlinedInputFlex="5.05 1 0"
           autofill={props.record.sentence}
           id={`record_${props.recordNumber}_Sentence`}
           value="Sentence"

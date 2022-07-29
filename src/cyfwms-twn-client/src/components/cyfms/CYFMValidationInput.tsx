@@ -33,9 +33,9 @@ const CYFMSValidationInput = (
       <OutlinedInput
         id={props.id}
         name={props.name}
-        sx={{ borderRadius: 0, flexBasis: 0, flexGrow: 2, ml: -1 }}
+        sx={{ borderRadius: 0, flexBasis: 0, flexGrow: 2 }}
         inputProps={{
-          pattern: "([a-zA-Z]+)",
+          pattern: `^[a-zA-Z ]*$`,
           title: "Only character are allow",
           sx: { p: 1 },
         }}

@@ -7,7 +7,7 @@ export const doGetAPI = async (
   jwtToken: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.get(
-    `initialcontactservice/searchParticipants/${data.clientName}/${data.fileNumber}/${data.caseworker}/${data.date}/${data.status}`,
+    `initialcontactservice/searchInitialContacts/${data.clientName}/${data.fileNumber}/${data.caseworker}/${data.date}/${data.status}`,
     {
       headers: { Authorization: "Bearer " + jwtToken },
     }

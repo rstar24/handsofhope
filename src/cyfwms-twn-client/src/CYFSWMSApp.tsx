@@ -11,14 +11,16 @@ import CYFMS from "./pages/cyfms/CYFMS";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import NotFound404 from "./pages/NotFound404";
-import CYFMSSearch from "./pages/cyfms/CYFMSSearch";
+//import CYFMSSearch from "./pages/cyfms/CYFMSSearch";
 import React, { StrictMode } from "react";
 import type { ReactElement } from "react";
 import CYFMSSearchPanel from "./pages/cyfms/CYFMSSearch/CYFMSSearchPanel";
 import InitialContact from "./pages/initialContact/InitialContact";
-import Search from "./pages/initialContact/Search";
-import ViewHome from "./pages/cyfms/CYFMSSearch/View/ViewHome";
+import ICSearch from "./pages/initialContact/search/Search";
+import CYFMSViewHome from "./pages/cyfms/CYFMSSearch/View/ViewHome";
+import ICViewHome from "./pages/initialContact/search/View/ViewHome";
 import CYFMSSearchView from "./pages/cyfms/CYFMSSearch/CYFMSSearchView";
+import ICSearchView from "./pages/initialContact/search/ICSearchView";
 
 const CYFSWMSApp = (): ReactElement => {
   return (
@@ -34,9 +36,17 @@ const CYFSWMSApp = (): ReactElement => {
               <Route path="cyfms/*" element={<CYFMS />} />
               <Route path="cyfms/search" element={<CYFMSSearchPanel />} />
               <Route path="cyfms/search/*" element={<CYFMSSearchView />} />
-              <Route path="cyfms/search/view" element={<ViewHome />} />
+              <Route path="cyfms/search/view" element={<CYFMSViewHome />} />
               <Route path="initial_contact/*" element={<InitialContact />} />
-              <Route path="initial_contact/search" element={<Search />} />
+              <Route path="initial_contact/search" element={<ICSearch />} />
+              <Route
+                path="initial_contact/search/*"
+                element={<ICSearchView />}
+              />
+              <Route
+                path="initial_contact/search/view"
+                element={<ICViewHome />}
+              />
             </Routes>
           </BrowserRouter>
         </ThemeProvider>

@@ -101,6 +101,8 @@ export const CYFMSFamilyPhysiciansRecord = (
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 2 }}>
             <CYFMSTextArea
+              formLabelFlex="1 1 0"
+              outlinedInputFlex="5.05 1 0"
               autofill={props.record.listOfMedication}
               id={`record_${props.recordNumber}_ListOfMedication`}
               value="List of Medication"
