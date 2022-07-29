@@ -37,6 +37,7 @@ const ICDropdown = (props: ICDropdownPropsType): ReactElement => {
         disabled={props.disabled}
         name={props.id}
         id={props.id}
+        defaultValue={props.autofill}
         style={{
           fontSize: 15,
           display: "block",

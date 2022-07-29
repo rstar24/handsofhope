@@ -31,6 +31,7 @@ const PatientCareInformation = (): ReactElement => {
   const initialContactID = useAppSelector(
     (state) => state.icFileDetails.data.fileDetailsId
   );
+  const { patient } = useAppSelector((state: any) => state.codetable);
   const data = useAppSelector((state) => state.icPatientCareInformation.data);
 
   const [typeOfPatient, setTypeOfPatient] = useState("Outpatient");
@@ -136,7 +137,9 @@ const PatientCareInformation = (): ReactElement => {
                 autofill={data.typeOfPatient}
                 id="typeOfPatient"
                 value="Type of Patient"
-                optionsList={["Outpatient", "Inpatient"]}
+                optionsList={Object.values(patient).map(
+                  (status: any) => status.en
+                )}
               />
             </Box>
             <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>

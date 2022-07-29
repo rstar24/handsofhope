@@ -21,6 +21,7 @@ import type { FormEvent, ReactElement } from "react";
 const IncidentReport = (): ReactElement => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { risk } = useAppSelector((state: any) => state.codetable);
   const initialContactID = useAppSelector(
     (state: any) => state.icFileDetails.data.fileDetailsId
   );
@@ -143,7 +144,7 @@ const IncidentReport = (): ReactElement => {
             <ICDropdown
               autofill={data.risk}
               id="incidentReport_Risk"
-              optionsList={["Low", "Medium", "High"]}
+              optionsList={Object.values(risk).map((status: any) => status.en)}
               value="Risk"
             />
           </Box>

@@ -22,6 +22,10 @@ import type { FormEvent, ReactElement } from "react";
 const FileDetails = (): ReactElement => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { initialContactStatus } = useAppSelector(
+    (state: any) => state.codetable
+  );
+
   const data = useAppSelector((state: any) => state.icFileDetails.data);
   const isInitiated = useAppSelector(
     (state: any) => state.initiator.isInitiated
@@ -119,7 +123,9 @@ const FileDetails = (): ReactElement => {
             <ICDropdown
               autofill={data.status}
               id="status"
-              optionsList={["In Progress", "Closed"]}
+              optionsList={Object.values(initialContactStatus).map(
+                (status: any) => status.en
+              )}
               value="Status"
             />
           </Box>

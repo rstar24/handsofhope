@@ -58,7 +58,7 @@ const ICMultiSelectDropdown = (props: ICDropdownPropsType): ReactElement => {
           >
             <Select
               id={props.id}
-              name={props.name}
+              name={props.id}
               defaultValue={props.autofill}
               multiple
               displayEmpty

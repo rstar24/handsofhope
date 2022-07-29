@@ -23,6 +23,10 @@ const ReferralInformation = (): ReactElement => {
   const initialContactID = useAppSelector(
     (state) => state.icFileDetails.data.fileDetailsId
   );
+  const { initialContactReferral } = useAppSelector(
+    (state: any) => state.codetable
+  );
+
   const data = useAppSelector((state) => state.icReferralInformation.data);
 
   useEffect(() => {
@@ -85,7 +89,9 @@ const ReferralInformation = (): ReactElement => {
                     autofill={data.referral}
                     id="referral"
                     value="Referral"
-                    optionsList={["Yes", "No"]}
+                    optionsList={Object.values(initialContactReferral).map(
+                      (referral: any) => referral.en
+                    )}
                   />
                 </Box>
                 <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
