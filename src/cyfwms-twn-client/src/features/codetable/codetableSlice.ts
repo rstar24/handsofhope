@@ -6,6 +6,12 @@ import {
   doGetRoleAPI,
   doGetEducationAPI,
   doGetTypeOfEmployeeAPI,
+  doGetInitialContactStatusAPI,
+  doGetInitialContactReferralAPI,
+  doGetInitialContactRiskAPI,
+  doGetInitialContactTypeOfPatientAPI,
+  doGetICMentalHealthOrSubstanceAbuseAPI,
+  doGetICPresentConcernsAPI,
 } from "./codetableAPI";
 
 export interface CodeTableData {
@@ -14,6 +20,12 @@ export interface CodeTableData {
   role: {};
   education: {};
   typeOfEmployee: {};
+  initialContactStatus: {};
+  initialContactReferral: {};
+  risk: {};
+  patient: {};
+  mentalHealthOrSubstanceAbuse: {};
+  presentConcerns: {};
 }
 
 export interface CodeTableState {
@@ -76,6 +88,71 @@ export const doGetTypeOfEmployee = createAsyncThunk(
   }
 );
 
+export const doGetICStatus = createAsyncThunk(
+  "codetable/doGetICStatus",
+  async (_, { dispatch, getState }) => {
+    const res: AxiosResponse = await doGetInitialContactStatusAPI(
+      (getState() as any).login.jwtToken
+    );
+    // Becomes the `fulfilled` action payload:
+    return res.data;
+  }
+);
+
+export const doGetICReferral = createAsyncThunk(
+  "codetable/doGetICReferral",
+  async (_, { dispatch, getState }) => {
+    const res: AxiosResponse = await doGetInitialContactReferralAPI(
+      (getState() as any).login.jwtToken
+    );
+    // Becomes the `fulfilled` action payload:
+    return res.data;
+  }
+);
+
+export const doGetICRisk = createAsyncThunk(
+  "codetable/doGetICRisk",
+  async (_, { dispatch, getState }) => {
+    const res: AxiosResponse = await doGetInitialContactRiskAPI(
+      (getState() as any).login.jwtToken
+    );
+    // Becomes the `fulfilled` action payload:
+    return res.data;
+  }
+);
+
+export const doGetICTypeOfPatient = createAsyncThunk(
+  "codetable/doGetICTypeOfPatient",
+  async (_, { dispatch, getState }) => {
+    const res: AxiosResponse = await doGetInitialContactTypeOfPatientAPI(
+      (getState() as any).login.jwtToken
+    );
+    // Becomes the `fulfilled` action payload:
+    return res.data;
+  }
+);
+export const doGetICMentalHealthOrSubstanceAbuse = createAsyncThunk(
+  "codetable/doGetICMentalHealthOrSubstanceAbuse",
+  async (_, { dispatch, getState }) => {
+    const res: AxiosResponse = await doGetICMentalHealthOrSubstanceAbuseAPI(
+      (getState() as any).login.jwtToken
+    );
+    // Becomes the `fulfilled` action payload:
+    return res.data;
+  }
+);
+
+export const doGetICPresentConcerns = createAsyncThunk(
+  "codetable/doGetICPresentConcerns",
+  async (_, { dispatch, getState }) => {
+    const res: AxiosResponse = await doGetICPresentConcernsAPI(
+      (getState() as any).login.jwtToken
+    );
+    // Becomes the `fulfilled` action payload:
+    return res.data;
+  }
+);
+
 export const CodeTableSlice = createSlice({
   name: "codetable",
   initialState: {
@@ -84,6 +161,12 @@ export const CodeTableSlice = createSlice({
     role: {},
     education: {},
     typeOfEmployee: {},
+    initialContactStatus: {},
+    initialContactReferral: {},
+    risk: {},
+    patient: {},
+    mentalHealthOrSubstanceAbuse: {},
+    presentConcerns: {},
     jwtToken: "",
     status: "failed",
   },
@@ -94,6 +177,12 @@ export const CodeTableSlice = createSlice({
       state.role = {};
       state.education = {};
       state.typeOfEmployee = {};
+      state.initialContactStatus = {};
+      state.initialContactReferral = {};
+      state.risk = {};
+      state.patient = {};
+      state.mentalHealthOrSubstanceAbuse = {};
+      state.presentConcerns = {};
       state.jwtToken = "";
       state.status = "failed";
     },
@@ -178,6 +267,106 @@ export const CodeTableSlice = createSlice({
       state.status = "loading";
     });
     builder.addCase(doGetTypeOfEmployee.rejected, (state) => {
+      state.status = "failed";
+    });
+
+    // Initial Contact Status
+
+    builder.addCase(doGetICStatus.fulfilled, (state, action) => {
+      try {
+        state.initialContactStatus = action.payload.valuesMap;
+      } catch (err) {
+        console.log(err);
+      }
+      state.status = "success";
+    });
+    builder.addCase(doGetICStatus.pending, (state) => {
+      state.status = "loading";
+    });
+    builder.addCase(doGetICStatus.rejected, (state) => {
+      state.status = "failed";
+    });
+
+    //Initial Contact Referral
+    builder.addCase(doGetICReferral.fulfilled, (state, action) => {
+      try {
+        state.initialContactReferral = action.payload.valuesMap;
+      } catch (err) {
+        console.log(err);
+      }
+      state.status = "success";
+    });
+    builder.addCase(doGetICReferral.pending, (state) => {
+      state.status = "loading";
+    });
+    builder.addCase(doGetICReferral.rejected, (state) => {
+      state.status = "failed";
+    });
+
+    //Initial Contact Risk
+    builder.addCase(doGetICRisk.fulfilled, (state, action) => {
+      try {
+        state.risk = action.payload.valuesMap;
+      } catch (err) {
+        console.log(err);
+      }
+      state.status = "success";
+    });
+    builder.addCase(doGetICRisk.pending, (state) => {
+      state.status = "loading";
+    });
+    builder.addCase(doGetICRisk.rejected, (state) => {
+      state.status = "failed";
+    });
+
+    //Initial Contact TypeofPatient
+    builder.addCase(doGetICTypeOfPatient.fulfilled, (state, action) => {
+      try {
+        state.patient = action.payload.valuesMap;
+      } catch (err) {
+        console.log(err);
+      }
+      state.status = "success";
+    });
+    builder.addCase(doGetICTypeOfPatient.pending, (state) => {
+      state.status = "loading";
+    });
+    builder.addCase(doGetICTypeOfPatient.rejected, (state) => {
+      state.status = "failed";
+    });
+
+    //Initial Contact MentalHealthOrSubstanceAbuse
+    builder.addCase(
+      doGetICMentalHealthOrSubstanceAbuse.fulfilled,
+      (state, action) => {
+        try {
+          state.mentalHealthOrSubstanceAbuse = action.payload.valuesMap;
+        } catch (err) {
+          console.log(err);
+        }
+        state.status = "success";
+      }
+    );
+    builder.addCase(doGetICMentalHealthOrSubstanceAbuse.pending, (state) => {
+      state.status = "loading";
+    });
+    builder.addCase(doGetICMentalHealthOrSubstanceAbuse.rejected, (state) => {
+      state.status = "failed";
+    });
+
+    //Initial Contact Patient Concerns
+    builder.addCase(doGetICPresentConcerns.fulfilled, (state, action) => {
+      try {
+        state.presentConcerns = action.payload.valuesMap;
+      } catch (err) {
+        console.log(err);
+      }
+      state.status = "success";
+    });
+    builder.addCase(doGetICPresentConcerns.pending, (state) => {
+      state.status = "loading";
+    });
+    builder.addCase(doGetICPresentConcerns.rejected, (state) => {
       state.status = "failed";
     });
   },

@@ -25,6 +25,9 @@ const PresentConcerns = (): ReactElement => {
   const initialContactID = useAppSelector(
     (state) => state.icFileDetails.data.fileDetailsId
   );
+  const { mentalHealthOrSubstanceAbuse, presentConcerns } = useAppSelector(
+    (state: any) => state.codetable
+  );
   const data = useAppSelector((state) => state.icPresentConcerns.data);
 
   useEffect(() => {
@@ -82,11 +85,13 @@ const PresentConcerns = (): ReactElement => {
             >
               <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
                 <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                  <ICDropdown
+                  <ICMultiSelectDropdown
                     autofill={data.selectPresentConcerns}
                     id="selectPresentConcerns"
                     value="Please Select Present Concerns"
-                    optionsList={["Health", "Adictions", "Abuse"]}
+                    optionsList={Object.values(presentConcerns).map(
+                      (substance: any) => substance.en
+                    )}
                   />
                 </Box>
                 <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
@@ -98,11 +103,13 @@ const PresentConcerns = (): ReactElement => {
               />
               <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
                 <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                  <ICDropdown
+                  <ICMultiSelectDropdown
                     autofill={data.substanceAbuse}
                     id="substanceAbuse"
                     value="Mental Health or Alcohol / Substance Abuse"
-                    optionsList={["Alcohol", "Drugs", "Narcotic"]}
+                    optionsList={Object.values(
+                      mentalHealthOrSubstanceAbuse
+                    ).map((substance: any) => substance.en)}
                   />
                 </Box>
                 <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>

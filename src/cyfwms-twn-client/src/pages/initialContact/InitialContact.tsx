@@ -2,9 +2,18 @@ import AuthLayout from "../../components/auth/layout/AuthLayout";
 import ICHeader from "../../components/initialContact/ICHeader";
 import ICPopup from "../../components/initialContact/ICPopup";
 import { Box, Button } from "@mui/material";
-import React, { createContext } from "react";
+import React, { createContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import type { ReactElement } from "react";
+import { useAppDispatch } from "../../library/hooks";
+import {
+  doGetICMentalHealthOrSubstanceAbuse,
+  doGetICPresentConcerns,
+  doGetICReferral,
+  doGetICRisk,
+  doGetICStatus,
+  doGetICTypeOfPatient,
+} from "../../features/codetable/codetableSlice";
 
 export const PopupContext = createContext<{
   open: boolean;
@@ -19,10 +28,20 @@ export const PopupContext = createContext<{
  * @returns InitialContact component skeleton.
  */
 const InitialContact = (): ReactElement => {
+  const dispatch = useAppDispatch();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  useEffect(() => {
+    // Load all the code tables:
+    dispatch(doGetICStatus());
+    dispatch(doGetICReferral());
+    dispatch(doGetICRisk());
+    dispatch(doGetICTypeOfPatient());
+    dispatch(doGetICMentalHealthOrSubstanceAbuse());
+    dispatch(doGetICPresentConcerns());
+  }, []);
   return (
     <AuthLayout>
       <PopupContext.Provider value={{ open: open, setOpen: setOpen }}>
