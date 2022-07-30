@@ -76,14 +76,17 @@ const CYFMSRegister = (): ReactElement => {
       <Box
         component="form"
         sx={{
+          height: "100%",
           display: "flex",
           flexDirection: "column",
           gap: "1rem 0",
+          "> div": { display: "flex", gap: "0 1rem" },
+          "> div > div": { flex: "1 1 0" },
         }}
         onSubmit={submitHandler}
       >
-        <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
-          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+        <Box>
+          <Box>
             <Input
               autofill={data.firstname}
               id="firstName"
@@ -93,7 +96,7 @@ const CYFMSRegister = (): ReactElement => {
               required
             />
           </Box>
-          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+          <Box>
             <Input
               autofill={data.middleName}
               id="middleName"
@@ -103,8 +106,8 @@ const CYFMSRegister = (): ReactElement => {
             />
           </Box>
         </Box>
-        <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
-          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+        <Box>
+          <Box>
             <Input
               autofill={data.surname}
               id="lastName"
@@ -114,7 +117,7 @@ const CYFMSRegister = (): ReactElement => {
               required
             />
           </Box>
-          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+          <Box>
             <Input
               autofill={data.dateOfBirth}
               id="dateOfBirth"
@@ -126,8 +129,8 @@ const CYFMSRegister = (): ReactElement => {
             />
           </Box>
         </Box>
-        <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
-          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+        <Box>
+          <Box>
             <CYFMSDropdown
               autofill={data.gender}
               id="gender"
@@ -138,7 +141,7 @@ const CYFMSRegister = (): ReactElement => {
               required
             />
           </Box>
-          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+          <Box>
             <CYFMSDropdown
               autofill={data.maritalStatus}
               id="maritalStatus"
@@ -149,7 +152,7 @@ const CYFMSRegister = (): ReactElement => {
             />
           </Box>
         </Box>
-        <Box sx={{ display: "flex", justifyContent: "right" }}>
+        <Box sx={{ justifyContent: "right" }}>
           {isInitiated ? (
             <CYFSWMSNextButton onClick={nextClickHandler} />
           ) : (
