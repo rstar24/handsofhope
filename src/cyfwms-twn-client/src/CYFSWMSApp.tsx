@@ -11,10 +11,9 @@ import CYFMS from "./pages/cyfms/CYFMS";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import NotFound404 from "./pages/NotFound404";
-//import CYFMSSearch from "./pages/cyfms/CYFMSSearch";
 import React, { StrictMode } from "react";
 import type { ReactElement } from "react";
-import CYFMSSearchPanel from "./pages/cyfms/CYFMSSearch/CYFMSSearchPanel";
+import CYFMSSearch from "./pages/cyfms/CYFMSSearch/Search";
 import InitialContact from "./pages/initialContact/InitialContact";
 import ICSearch from "./pages/initialContact/search/Search";
 import CYFMSViewHome from "./pages/cyfms/CYFMSSearch/View/ViewHome";
@@ -34,7 +33,7 @@ const CYFSWMSApp = (): ReactElement => {
               <Route path="home" element={<Home />} />
               <Route path="login" element={<Login />} />
               <Route path="cyfms/*" element={<CYFMS />} />
-              <Route path="cyfms/search" element={<CYFMSSearchPanel />} />
+              <Route path="cyfms/search" element={<CYFMSSearch />} />
               <Route path="cyfms/search/*" element={<CYFMSSearchView />} />
               <Route path="cyfms/search/view" element={<CYFMSViewHome />} />
               <Route path="initial_contact/*" element={<InitialContact />} />
