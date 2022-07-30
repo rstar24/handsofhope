@@ -1,5 +1,5 @@
+import Input from "../../../components/Input";
 import AuthLayout from "../../../components/auth/layout/AuthLayout";
-import CYFMSInput from "../../../components/cyfms/CYFMSInput";
 import { Box, Button } from "@mui/material";
 
 import React, { useEffect, useState } from "react";
@@ -10,7 +10,6 @@ import CYFMSSearchResult from "./CYFMSSearchResult";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import { doGetSearch } from "../../../features/search/searchSlice";
 import CYFMSDropdown from "../../../components/cyfms/CYFMSDropdown";
-import CYFMSSearchInput from "../../../components/cyfms/CYFMSSearchInput";
 import { doGetMaritalStatus } from "../../../features/codetable/codetableSlice";
 /**
  * The CYFMSSearchPanel functional component.
@@ -81,10 +80,34 @@ const CYFMSSearchPanel = (): ReactElement => {
         }}
         onSubmit={submitHandler}
       >
-        <CYFMSSearchInput id="firstName" value="First Name" />
-        <CYFMSSearchInput id="middleName" value="Middle Name" />
-        <CYFMSSearchInput id="lastName" value="Last Name" />
-        <CYFMSInput id="dateOfBirth" type="date" value="Date Of Birth" />
+        <Input
+          id="firstName"
+          minChars={2}
+          validationPattern={`^[a-zA-Z ]*$`}
+          validationTitle="Digits are not allowed!"
+          value="First Name"
+        />
+        <Input
+          id="middleName"
+          minChars={2}
+          validationPattern={`^[a-zA-Z ]*$`}
+          validationTitle="Digits are not allowed!"
+          value="Middle Name"
+        />
+        <Input
+          id="lastName"
+          minChars={2}
+          validationPattern={`^[a-zA-Z ]*$`}
+          validationTitle="Digits are not allowed!"
+          value="Last Name"
+        />
+        <Input
+          id="dateOfBirth"
+          maxDate={new Date().toISOString().substring(0, 10)}
+          minDate="1900-01-01"
+          type="date"
+          value="Date Of Birth"
+        />
         <CYFMSDropdown
           id="maritalStatus"
           optionsList={Object.values(maritalstatus).map(
@@ -92,9 +115,22 @@ const CYFMSSearchPanel = (): ReactElement => {
           )}
           value="Marital Status"
         />
-        <CYFMSInput id="phoneNo" value="Phone No" name="phoneNo" />
-        <CYFMSSearchInput id="city" value="City" name="city" />
-
+        <Input
+          id="phoneNo"
+          minChars={2}
+          validationPattern={`^[^a-zA-Z]*$`}
+          validationTitle="Alphabets are not allowed!"
+          value="Phone No"
+          name="phoneNo"
+        />
+        <Input
+          id="city"
+          minChars={2}
+          validationPattern={`^[a-zA-Z ]*$`}
+          validationTitle="Digits are not allowed!"
+          value="City"
+          name="city"
+        />
         <Box sx={{ display: "flex", justifyContent: "center", width: 730 }}>
           <Button variant="contained" type="submit">
             Search

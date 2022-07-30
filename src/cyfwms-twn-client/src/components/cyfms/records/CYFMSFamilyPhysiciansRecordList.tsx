@@ -1,6 +1,6 @@
 import { removeRecordNumber } from "../../../features/cyfms/familyPhysicians/slice";
 import { useAppDispatch } from "../../../library/hooks";
-import CYFMSInput from "../CYFMSInput";
+import Input from "../../Input";
 import CYFMSTextArea from "../CYFMSTextArea";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { Box, IconButton, Typography } from "@mui/material";
@@ -75,25 +75,31 @@ export const CYFMSFamilyPhysiciansRecord = (
         >
           <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
             <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-              <CYFMSInput
+              <Input
                 autofill={props.record.name}
                 id={`record_${props.recordNumber}_Name`}
+                validationPattern={`^[a-zA-Z ]*$`}
+                validationTitle="Digits are not allowed!"
                 value="Name"
               />
             </Box>
             <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-              <CYFMSInput
+              <Input
                 autofill={props.record.phone}
                 id={`record_${props.recordNumber}_Phone`}
+                validationPattern={`^[^a-zA-Z]*$`}
+                validationTitle="Alphabets are not allowed!"
                 value="Phone"
               />
             </Box>
           </Box>
           <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
             <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-              <CYFMSInput
+              <Input
                 autofill={props.record.cell}
                 id={`record_${props.recordNumber}_Cell`}
+                validationPattern={`^[^a-zA-Z]*$`}
+                validationTitle="Alphabets are not allowed!"
                 value="Cell"
               />
             </Box>

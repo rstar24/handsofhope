@@ -2,7 +2,7 @@ import {
   CYFSWMSAddButton,
   CYFSWMSNextButton,
 } from "../../components/CYFSWMSButtons";
-import CYFMSInput from "../../components/cyfms/CYFMSInput";
+import Input from "../../components/Input";
 import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
 import CYFMSTextArea from "../../components/cyfms/CYFMSTextArea";
 import CYFMSCriminalHistoryRecordList from "../../components/cyfms/records/CYFMSCriminalHistoryRecordList";
@@ -144,7 +144,7 @@ const CYFMSCriminalHistory = (): ReactElement => {
             />
           </FormGroup>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CYFMSInput
+            <Input
               autofill={data.conditions}
               id="conditions"
               value="Condition(s)"

@@ -1,6 +1,6 @@
 import { removeRecordNumber } from "../../../features/cyfms/criminalHistory/slice";
 import { useAppDispatch } from "../../../library/hooks";
-import CYFMSInput from "../CYFMSInput";
+import Input from "../../Input";
 import CYFMSTextArea from "../CYFMSTextArea";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { Box, IconButton, Typography } from "@mui/material";
@@ -67,9 +67,11 @@ export const CYFMSCriminalHistoryRecord = (
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: "0", flexGrow: 1 }}>
-            <CYFMSInput
+            <Input
               autofill={props.record.arrestDate}
               id={`record_${props.recordNumber}_ArrestDate`}
+              maxDate={new Date().toISOString().substring(0, 10)}
+              minDate="1900-01-01"
               value="Arrest Date"
               type="date"
             />

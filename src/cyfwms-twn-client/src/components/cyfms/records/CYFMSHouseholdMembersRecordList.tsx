@@ -1,9 +1,8 @@
 import { removeRecordNumber } from "../../../features/cyfms/householdMembers/slice";
 import { useAppSelector, useAppDispatch } from "../../../library/hooks";
-import CYFMSDateInput from "../CYFMSDateInput";
+import Input from "../../Input";
 import CYFMSDropdown from "../CYFMSDropdown";
 import CYFMSTextArea from "../CYFMSTextArea";
-import CYFMSValidationInput from "../CYFMValidationInput";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { Box, IconButton, Typography } from "@mui/material";
 import React from "react";
@@ -75,9 +74,11 @@ export const CYFMSHouseholdMembersRecord = (
       </Box>
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-          <CYFMSValidationInput
+          <Input
             autofill={props.record.name}
             id={`record_${props.recordNumber}_Name`}
+            validationPattern={`^[a-zA-Z ]*$`}
+            validationTitle="Digits are not allowed!"
             value="Name"
           />
         </Box>
@@ -92,9 +93,11 @@ export const CYFMSHouseholdMembersRecord = (
       </Box>
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-          <CYFMSDateInput
+          <Input
             autofill={props.record.dateOfBirth}
             id={`record_${props.recordNumber}_DateOfBirth`}
+            maxDate={new Date().toISOString().substring(0, 10)}
+            minDate="1900-01-01"
             value="Date of Birth"
             type="date"
           />

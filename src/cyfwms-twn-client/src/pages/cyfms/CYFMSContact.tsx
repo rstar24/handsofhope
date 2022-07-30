@@ -1,7 +1,6 @@
 import { CYFSWMSNextButton } from "../../components/CYFSWMSButtons";
-import CYFMSInput from "../../components/cyfms/CYFMSInput";
 import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
-import CYFMSValidationInput from "../../components/cyfms/CYFMValidationInput";
+import Input from "../../components/Input";
 import { doGet, doPost } from "../../features/cyfms/contact/slice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { Box } from "@mui/material";
@@ -75,14 +74,14 @@ const CYFMSContact = (): ReactElement => {
       >
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CYFMSInput
+            <Input
               autofill={data.addressLine1}
               id="addressLine1"
               value="Address Line 1"
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CYFMSInput
+            <Input
               autofill={data.addressLine2}
               id="addressLine2"
               value="Address Line 2"
@@ -91,19 +90,27 @@ const CYFMSContact = (): ReactElement => {
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CYFMSValidationInput id="city" value="City" autofill={data.city} />
+            <Input
+              autofill={data.city}
+              id="city"
+              validationPattern={`^[a-zA-Z ]*$`}
+              validationTitle="Digits are not allowed!"
+              value="City"
+            />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CYFMSValidationInput
+            <Input
               autofill={data.province}
               id="province"
+              validationPattern={`^[a-zA-Z ]*$`}
+              validationTitle="Digits are not allowed!"
               value="Province"
             />
           </Box>
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CYFMSInput
+            <Input
               autofill={data.postalCode}
               id="postalCode"
               value="Postal Code"
@@ -113,30 +120,36 @@ const CYFMSContact = (): ReactElement => {
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CYFMSInput
+            <Input
               autofill={data.homePhone}
               id="homePhone"
+              validationPattern={`^[^a-zA-Z]*$`}
+              validationTitle="Alphabets are not allowed!"
               value="Home Phone"
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CYFMSInput
+            <Input
               autofill={data.cellPhone}
               id="cellPhone"
+              validationPattern={`^[^a-zA-Z]*$`}
+              validationTitle="Alphabets are not allowed!"
               value="Cell Phone"
             />
           </Box>
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CYFMSInput
+            <Input
               autofill={data.workPhone}
               id="workPhone"
+              validationPattern={`^[^a-zA-Z]*$`}
+              validationTitle="Alphabets are not allowed!"
               value="Work Phone"
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CYFMSInput
+            <Input
               autofill={data.emailAddress}
               id="emailAddress"
               value="Email Address"

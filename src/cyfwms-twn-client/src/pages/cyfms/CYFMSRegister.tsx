@@ -2,11 +2,9 @@ import {
   CYFSWMSNextButton,
   CYFSWMSSaveButton,
 } from "../../components/CYFSWMSButtons";
-import CYFMSDateInput from "../../components/cyfms/CYFMSDateInput";
+import Input from "../../components/Input";
 import CYFMSDropdown from "../../components/cyfms/CYFMSDropdown";
-import CYFMSInput from "../../components/cyfms/CYFMSInput";
 import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
-import CYFMSValidationInput from "../../components/cyfms/CYFMValidationInput";
 import { doGet, doPost } from "../../features/cyfms/register/slice";
 import { initiate } from "../../features/initiatorSlice";
 import { unhideTabs } from "../../features/navBarSlice";
@@ -86,34 +84,42 @@ const CYFMSRegister = (): ReactElement => {
       >
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CYFMSInput
+            <Input
               autofill={data.firstname}
               id="firstName"
               value="First Name"
+              validationPattern={`^[a-zA-Z ]*$`}
+              validationTitle="Digits are not allowed!"
               required
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CYFMSValidationInput
+            <Input
               autofill={data.middleName}
               id="middleName"
               value="Middle Name"
+              validationPattern={`^[a-zA-Z ]*$`}
+              validationTitle="Digits are not allowed!"
             />
           </Box>
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CYFMSValidationInput
+            <Input
               autofill={data.surname}
               id="lastName"
               value="Last Name"
+              validationPattern={`^[a-zA-Z ]*$`}
+              validationTitle="Digits are not allowed!"
               required
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CYFMSDateInput
+            <Input
               autofill={data.dateOfBirth}
               id="dateOfBirth"
+              maxDate={new Date().toISOString().substring(0, 10)}
+              minDate="1900-01-01"
               type="date"
               value="Date of Birth"
               required

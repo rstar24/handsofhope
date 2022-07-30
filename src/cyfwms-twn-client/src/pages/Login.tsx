@@ -1,6 +1,5 @@
-import CYFMSInput from "../components/cyfms/CYFMSInput";
+import Input from "../components/Input";
 import Layout from "../components/layout/Layout";
-import CYFMSPasswordInput from "../components/cyfms/CYFMSPasswordInput";
 import { doLogin } from "../features/login/loginSlice";
 import { useAppDispatch, useAppSelector } from "../library/hooks";
 import {
@@ -106,25 +105,60 @@ const Login = (): ReactElement => {
           <b>Child, Youth and Family Services Wellness Management System</b>
         </Typography>
         <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem 0" }}>
-          <CYFMSInput id="userName" name="userName" required value="Username" />
-          <CYFMSPasswordInput
+          <Input id="userName" name="userName" value="Username" required />
+          <Input
+            formLabelFlex="1.06 1 0"
             id="passWord"
             name="passWord"
-            required
+            validationTitle="Password must be at least 6 characters long!"
+            validationPattern="^.{6,}$"
             value="Password"
-            formLabelFlex="1.06 1 0"
+            required
+            type="password"
           />
-          <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <Button type="submit" variant="contained" sx={{ ml: 10 }}>
-              Login
-            </Button>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              flexWrap: "wrap",
+            }}
+          >
+            <Box sx={{ flex: "1.08 1 0" }}></Box>
+            <Box
+              sx={{
+                flex: "2 1 0",
+                display: "flex",
+                justifyContent: "center",
+                gap: "0 1rem",
+              }}
+            >
+              <Button variant="contained" type="submit">
+                Login
+              </Button>
+            </Box>
           </Box>
-          <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <ReactRouterLink style={{ textDecoration: "none" }} to="/login">
-              <MUILink component="span" underline="hover" sx={{ ml: 10 }}>
-                Forgot password?
-              </MUILink>
-            </ReactRouterLink>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              flexWrap: "wrap",
+            }}
+          >
+            <Box sx={{ flex: "1.08 1 0" }}></Box>
+            <Box
+              sx={{
+                flex: "2 1 0",
+                display: "flex",
+                justifyContent: "center",
+                gap: "0 1rem",
+              }}
+            >
+              <ReactRouterLink style={{ textDecoration: "none" }} to="/login">
+                <MUILink component="span" underline="hover">
+                  Forgot password?
+                </MUILink>
+              </ReactRouterLink>
+            </Box>
           </Box>
         </Box>
         {ErrorDialog}

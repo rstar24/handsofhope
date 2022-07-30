@@ -1,8 +1,7 @@
 import { CYFSWMSNextButton } from "../../components/CYFSWMSButtons";
-import CYFMSInput from "../../components/cyfms/CYFMSInput";
+import Input from "../../components/Input";
 import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
 import CYFMSDropdown from "../../components/cyfms/CYFMSDropdown";
-import CYFMSValidationInput from "../../components/cyfms/CYFMValidationInput";
 import {
   enableDesiredProfession,
   enableSchoolFields,
@@ -128,15 +127,17 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
                 }}
               >
                 <Box sx={{ flexBasis: 0, flexGrow: 0.5 }}>
-                  <CYFMSValidationInput
+                  <Input
                     autofill={state.data.school}
                     disabled={state.disabledSchoolFields}
                     id="schoolName"
                     value="School"
+                    validationPattern={`^[a-zA-Z ]*$`}
+                    validationTitle="Digits are not allowed!"
                   />
                 </Box>
                 <Box sx={{ flexBasis: 0, flexGrow: 0.5 }}>
-                  <CYFMSInput
+                  <Input
                     autofill={state.data.grade}
                     disabled={state.disabledSchoolFields}
                     id="schoolGrade"
@@ -183,10 +184,12 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
                 }}
               >
                 <Box sx={{ flexBasis: 0, flexGrow: 0.999999 }}>
-                  <CYFMSValidationInput
+                  <Input
                     autofill={state.data.desiredProfession}
                     disabled={state.disabledDesiredProfession}
                     id="desiredProfession"
+                    validationPattern={`^[a-zA-Z ]*$`}
+                    validationTitle="Digits are not allowed!"
                     value="Desired Profession"
                   />
                 </Box>

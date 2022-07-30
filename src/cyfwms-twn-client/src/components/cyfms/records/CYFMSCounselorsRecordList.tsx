@@ -1,8 +1,7 @@
 import { removeRecordNumber } from "../../../features/cyfms/counselors/slice";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
+import Input from "../../Input";
 import CYFMSDropdown from "../CYFMSDropdown";
-import CYFMSInput from "../CYFMSInput";
-import CYFMSValidationInput from "../CYFMValidationInput";
 import CYFMSTextArea from "../CYFMSTextArea";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { Box, IconButton, Typography } from "@mui/material";
@@ -86,9 +85,11 @@ export const CYFMSCYFMSCounselorsRecord = (
       </Box>
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-          <CYFMSValidationInput
+          <Input
             autofill={props.record.name}
             id={`record_${props.recordNumber}_Name`}
+            validationPattern={`^[a-zA-Z ]*$`}
+            validationTitle="Digits are not allowed!"
             value="Name"
           />
         </Box>
