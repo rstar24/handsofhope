@@ -1,12 +1,13 @@
+import Input from "../../../components/Input";
 import AuthLayout from "../../../components/auth/layout/AuthLayout";
-import ICDropdown from "../../../components/initialContact/ICDropdown";
+import CYFMSDropdown from "../../../components/cyfms/CYFMSDropdown";
 import ICHeader from "../../../components/initialContact/ICHeader";
-import ICInput from "../../../components/initialContact/ICInput";
 import { doGet } from "../../../features/initialContact/search/slice";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
-import ICSearchResult from "./ICSearchResult";
+import SearchResults from "./SearchResults";
 import { Box, Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import type { Record } from "../../../features/initialContact/search/slice";
 import type { FormEvent, ReactElement } from "react";
 
 /**
@@ -25,12 +26,13 @@ const Search = (): ReactElement => {
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
     const form: any = e.currentTarget;
-    const formData = {
+    console.log(form.clientName.value);
+    const formData: Record = {
       clientName: form.clientName.value || null,
-      fileNumber: form.fileNumber.value || null,
-      caseworker: form.middleName.value || null,
-      date: form.dateOfBirth.value || null,
-      status: form.maritalStatus.value || null,
+      fileNumber: form.fileNumber.value || 0,
+      caseworker: form.caseWorker.value || null,
+      startingDate: form.startingDate.value || null,
+      status: form.status.value || null,
     };
     dispatch(doGet(formData))
       .unwrap()
@@ -38,8 +40,9 @@ const Search = (): ReactElement => {
         console.log("InitialContact Search POST backend API was successful!");
         setIsShown(true);
       })
-      .catch(() => {
+      .catch((err) => {
         console.log("InitialContact Search POST backend API didn't work!");
+        console.log(err);
       });
   };
 
@@ -84,13 +87,37 @@ const Search = (): ReactElement => {
           }}
           onSubmit={submitHandler}
         >
-          <ICInput id="firstName" value="Client Name" />
-          <ICInput id="middleName" value="File No." />
-          <ICInput id="lastName" value="Caseworker" />
-          <ICInput id="dateOfBirth" type="date" value="Date" />
-          <ICDropdown
+          <Input
+            id="clientName"
+            minChars={2}
+            validationPattern={`^[a-zA-Z ]*$`}
+            validationTitle="Digits are not allowed!"
+            value="Client Name"
+          />
+          <Input
+            id="fileNumber"
+            minChars={1}
+            validationPattern={`^[^a-zA-Z]*$`}
+            validationTitle="Alphabets are not allowed!"
+            value="File No."
+          />
+          <Input
+            id="caseWorker"
+            minChars={2}
+            validationPattern={`^[a-zA-Z ]*$`}
+            validationTitle="Digits are not allowed!"
+            value="Caseworker"
+          />
+          <Input
+            id="startingDate"
+            maxDate={new Date().toISOString().substring(0, 10)}
+            minDate="1900-01-01"
+            type="date"
+            value="Start Date"
+          />
+          <CYFMSDropdown
             id="status"
-            optionsList={["In Progress", "Closed"]}
+            optionsList={["", "In Progress", "Closed"]}
             value="Status"
           />
           <Box
@@ -118,8 +145,8 @@ const Search = (): ReactElement => {
             </Box>
           </Box>
         </Box>
-        {isShown && <ICSearchResult />}
       </Box>
+      {isShown && <SearchResults />}
     </AuthLayout>
   );
 };

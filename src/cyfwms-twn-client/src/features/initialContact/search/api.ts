@@ -1,13 +1,13 @@
 import axiosInstance from "../../../library/axiosInstance";
-import type { Data } from "./slice";
+import type { Record } from "./slice";
 import type { AxiosResponse } from "axios";
 
 export const doGetAPI = async (
-  data: Data,
+  data: Record,
   jwtToken: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.get(
-    `initialcontactservice/searchInitialContacts/${data.clientName}/${data.fileNumber}/${data.caseworker}/${data.date}/${data.status}`,
+    `initialcontactservice/searchInitialContacts/${data.clientName}/${data.fileNumber}/${data.caseworker}/${data.startingDate}/${data.status}`,
     {
       headers: { Authorization: "Bearer " + jwtToken },
     }

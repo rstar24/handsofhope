@@ -3,29 +3,20 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { SliceCaseReducers } from "@reduxjs/toolkit";
 import type { AxiosResponse } from "axios";
 
-export interface Data {
+export interface Record {
   clientName: string | null;
-  fileNumber: string | null;
+  fileNumber: string | 0;
   caseworker: string | null;
-  date: string | null;
+  startingDate: string | null;
   status: string | null;
 }
 
-// Empty Data
-const emptyData: Data = {
-  clientName: null,
-  fileNumber: null,
-  caseworker: null,
-  date: null,
-  status: null,
-};
-
 export interface State {
-  data: Data;
+  data: Record[];
   status: "failed" | "none" | "loading" | "success";
 }
 
-export const doGet = createAsyncThunk<Data, Data>(
+export const doGet = createAsyncThunk<Record[], Record>(
   "search/doGet",
   async (formData, { getState }) => {
     const store: any = getState();
@@ -38,12 +29,12 @@ export const doGet = createAsyncThunk<Data, Data>(
 export const searchSlice = createSlice<State, SliceCaseReducers<State>>({
   name: "search",
   initialState: {
-    data: emptyData,
+    data: [],
     status: "none",
   },
   reducers: {
     cleanState(state) {
-      state.data = emptyData;
+      state.data = [];
       state.status = "none";
     },
   },
