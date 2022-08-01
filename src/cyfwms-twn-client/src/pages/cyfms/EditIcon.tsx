@@ -41,13 +41,15 @@ export default function EditIcon(props: any) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const navigate = useNavigate();
   const [openModel, setOpenModel] = React.useState(false);
-  const openDropDown = Boolean(null);
+  const openDropDown = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
   // Close MoreHorIcon Popup
   const handleCloseDropDown = (event: React.MouseEvent<HTMLElement>) => {
+    console.log("current", props.value);
+
     if (event.currentTarget.tabIndex !== 0) {
       setOpenModel(true);
     } else {
