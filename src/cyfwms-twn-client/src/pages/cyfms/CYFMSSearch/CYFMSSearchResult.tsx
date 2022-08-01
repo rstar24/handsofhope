@@ -29,13 +29,13 @@ const CYFMSSearchResult = (): ReactElement => {
     dispatch(doGetFamilyPhysicians(id));
     dispatch(doGetCounselors(id));
   };
-
+  console.log(searchData);
   return (
-    <Box sx={{ my: 10, ml: -45 }}>
+    <Box>
       <Table sx={{ minWidth: 800 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Id</TableCell>
+            <TableCell>Reference ID</TableCell>
             <TableCell>First Name</TableCell>
             <TableCell>Middle Name</TableCell>
             <TableCell>Last Name</TableCell>
@@ -57,7 +57,7 @@ const CYFMSSearchResult = (): ReactElement => {
                   to={`view/${i.participantId}`}
                   onClick={() => handleSearchView(i.participantId)}
                 >
-                  {i.participantId}
+                  {i.referenceId}
                 </Link>
               </TableCell>
               <TableCell>{i.firstname}</TableCell>

@@ -11,6 +11,7 @@ export interface Data {
   dateOfBirth: string;
   gender: string;
   maritalStatus: string;
+  referenceId: number;
 }
 
 // Empty Data
@@ -22,6 +23,7 @@ const emptyData: Data = {
   dateOfBirth: "",
   gender: "",
   maritalStatus: "",
+  referenceId: 0,
 };
 
 export interface State {

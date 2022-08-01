@@ -84,7 +84,7 @@ const PresentConcerns = (): ReactElement => {
               sx={{ display: "flex", flexDirection: "column", gap: "1rem 0" }}
             >
               <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
-                <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+                <Box sx={{ flexBasis: 0, flexGrow: 2 }}>
                   <ICMultiSelectDropdown
                     autofill={data.selectPresentConcerns}
                     id="selectPresentConcerns"
@@ -102,7 +102,7 @@ const PresentConcerns = (): ReactElement => {
                 value="Briefly Explain Situation"
               />
               <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
-                <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+                <Box sx={{ flexBasis: 0, flexGrow: 2 }}>
                   <ICMultiSelectDropdown
                     autofill={data.substanceAbuse}
                     id="substanceAbuse"

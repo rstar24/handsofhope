@@ -160,9 +160,9 @@ const CYFMSSearchPanel = (): ReactElement => {
               </Button>
             </Box>
           </Box>
-          {isShown && <CYFMSSearchResult />}
         </Box>
       </Box>
+      {isShown && <CYFMSSearchResult />}
     </AuthLayout>
   );
 };

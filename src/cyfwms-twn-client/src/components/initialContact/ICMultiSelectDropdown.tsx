@@ -26,7 +26,10 @@ function getStyles(name: string, personName: string[], theme: Theme) {
 
 const ICMultiSelectDropdown = (props: ICDropdownPropsType): ReactElement => {
   const theme = useTheme();
-  const [alcoholName, setAlcoholName] = React.useState<string[]>([]);
+  var y = props.autofill.split(",");
+  const val = y.filter((item: any, index: any) => y.indexOf(item) === index);
+
+  const [alcoholName, setAlcoholName] = React.useState<string[]>(val);
 
   const handleChange = (event: SelectChangeEvent<typeof alcoholName>) => {
     const {
@@ -46,19 +49,24 @@ const ICMultiSelectDropdown = (props: ICDropdownPropsType): ReactElement => {
             {props.value}
           </FormLabel>
         </Box>
-        <Box sx={{ flexBasis: 0, flexGrow: 2 }}>
+        <Box
+          sx={{
+            flexBasis: 0,
+            borderRadius: 0,
+            flexGrow: 5,
+          }}
+        >
           <FormControl
             sx={{
               m: 1,
               width: 300,
               mt: 3,
-              paddingLeft: 4.5,
+              paddingLeft: 2.5,
             }}
           >
             <Select
               id={props.id}
               name={props.id}
-              defaultValue={props.autofill}
               multiple
               displayEmpty
               value={alcoholName}

@@ -53,6 +53,7 @@ const CYFMSRegister = (): ReactElement => {
       dateOfBirth: form.dateOfBirth.value,
       gender: form.gender.value,
       maritalStatus: form.maritalStatus.value,
+      referenceId: data.referenceId,
     };
     dispatch(doPost(formData))
       .unwrap()

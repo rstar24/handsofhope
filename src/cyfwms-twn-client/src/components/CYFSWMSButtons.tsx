@@ -31,13 +31,8 @@ export const CYFSWMSNextButton = (
   props: ComponentPropsWithoutRef<ElementType>
 ): ReactElement => {
   return (
-    <Button
-      endIcon={<NavigateNextIcon />}
-      type="submit"
-      variant="contained"
-      {...props}
-    >
-      Next
+    <Button type="submit" variant="contained" {...props}>
+      Save
     </Button>
   );
 };
