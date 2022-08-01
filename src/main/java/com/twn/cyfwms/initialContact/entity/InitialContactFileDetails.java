@@ -50,7 +50,7 @@ public class InitialContactFileDetails implements Serializable {
 
     @CreationTimestamp
     @Getter @Setter @Column(name = "creationdate")
-    private LocalDate creationDate;
+    private LocalDateTime creationDateTime;
 
     @UpdateTimestamp
     @Getter @Setter @Column(name = "lastwritten")
@@ -58,7 +58,7 @@ public class InitialContactFileDetails implements Serializable {
 
 //    @Id
     @Getter @Setter @Column(name = "initialcontactreferenceid")
-    private Long initialcontactreferenceid;
+    private Long initialcontactReferenceId;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "filedetailsid", referencedColumnName = "filedetailsid")

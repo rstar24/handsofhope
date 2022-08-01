@@ -13,6 +13,9 @@ import java.time.LocalDate;
 public class InitialContactSearchResultsDto {
     @Getter
     @Setter
+    private Long referenceId;
+    @Getter
+    @Setter
     private String clientName;
 
     @Getter
@@ -35,13 +38,14 @@ public class InitialContactSearchResultsDto {
     @Setter
     private String typeOfPatient;
 
-    public InitialContactSearchResultsDto(String clientName, Long fileNumber,String caseworker,LocalDate startingDate,String status, String typeOfPatient) {
+    public InitialContactSearchResultsDto(Long referenceId,String clientName, Long fileNumber,String caseworker,LocalDate startingDate,String status, String typeOfPatient  ) {
         this.clientName = clientName;
         this.fileNumber = fileNumber;
         this.caseworker=caseworker;
         this.startingDate=startingDate;
         this.status=status;
         this.typeOfPatient=typeOfPatient;
+        this.referenceId=referenceId;
     }
 
 

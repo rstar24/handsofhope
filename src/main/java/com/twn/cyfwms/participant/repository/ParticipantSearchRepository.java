@@ -49,7 +49,7 @@ public class ParticipantSearchRepository {
         querySBuff.append("select p.participantid, p.firstname, p.middlename, p.surname, p.maritalstatus,  p.dateofbirth, p2.city, p2.homephone, p2.cellphone, p2.workphone, p.referenceid ");
         querySBuff.append("from participant p left join participantcontact p2 on p.participantid = p2.participantid where 1=1");
 
-          if (searchCriteria.getFirstname()!=null ||searchCriteria.getMiddleName()!=null||searchCriteria.getSurname()!=null ||searchCriteria.getDateOfBirth()!=null||searchCriteria.getMaritalStatus()!=null||searchCriteria.getCity()!=null||searchCriteria.getPhoneNumber()!=null ||  searchCriteria.getReferenceId()!=0||searchCriteria.getCity()!=null) {
+          if (searchCriteria.getFirstname()!=null ||searchCriteria.getMiddleName()!=null||searchCriteria.getSurname()!=null ||searchCriteria.getDateOfBirth()!=null||searchCriteria.getMaritalStatus()!=null||searchCriteria.getCity()!=null||searchCriteria.getPhoneNumber()!=null || searchCriteria.getReferenceId()!=null) {
            String firstName = searchCriteria.getFirstname();
            if (firstName != null && !firstName.trim().isEmpty()) {
                firstName = firstName.trim()
@@ -123,7 +123,7 @@ public class ParticipantSearchRepository {
            }
 
            Long referenceId = searchCriteria.getReferenceId();
-           if (referenceId != 0) {
+           if (referenceId != null) {
                querySBuff.append(" AND p.referenceid = ?");
                argsObjectList.add(referenceId);
            }

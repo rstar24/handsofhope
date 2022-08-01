@@ -102,7 +102,7 @@ public class TWNInitialContactController {
         return initialContactReferralInfoService.saveAllReferralInfo(initialContactReferralInfoDto);
     }
 
-    @GetMapping(value = {"/searchInitialContacts/{clientname}/{fileNumber}/{caseworker}/{startingDate}/{status}"},produces = "application/json")
+    @GetMapping(value = {"/searchInitialContacts/{referenceId}/{clientname}/{fileNumber}/{caseworker}/{startingDate}/{status}"},produces = "application/json")
     @ApiOperation("Search InitialContact")
     @ResponseStatus(HttpStatus.OK)
     public List<InitialContactSearchResultsDto> searchInitialContact(@PathVariable Map<String, String> var)
@@ -112,11 +112,9 @@ public class TWNInitialContactController {
                 ("null".equals(var.get("clientname"))
                         || var.get("clientname") == null) ?null:var.get("clientname"));
 
-        long fileNumber=0L;
-        if(!"0".equals(var.get("fileNumber"))) {
-            fileNumber=Long.parseLong(var.get("fileNumber"));
-        }
-        initialContactSearchCriteriaDto.setFileNumber(fileNumber);
+
+        initialContactSearchCriteriaDto.setFileNumber(("null".equals(var.get("fileNumber"))
+                || var.get("fileNumber") == null) ?null:Long.parseLong(var.get("fileNumber")));
 
         initialContactSearchCriteriaDto.setCaseworker(
                 ("null".equals(var.get("caseworker"))
@@ -132,6 +130,10 @@ public class TWNInitialContactController {
         initialContactSearchCriteriaDto.setStatus(
                 ("null".equals(var.get("status"))
                         || var.get("status") == null) ?null:var.get("status"));
+
+
+        initialContactSearchCriteriaDto.setReferenceId(("null".equals(var.get("referenceId"))
+                || var.get("referenceId") == null) ?null:Long.parseLong(var.get("referenceId")));
 
         return initialContactSearchService.search(initialContactSearchCriteriaDto);
     }

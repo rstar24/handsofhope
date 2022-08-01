@@ -46,7 +46,7 @@ public class Participant implements Serializable {
     private String status;
     @CreationTimestamp
     @Getter @Setter @Column(name = "creationdate")
-    private LocalDate creationDate;
+    private LocalDateTime creationDateTime;
     @UpdateTimestamp
     @Getter @Setter @Column(name = "lastwritten")
     private LocalDateTime lastwritten;

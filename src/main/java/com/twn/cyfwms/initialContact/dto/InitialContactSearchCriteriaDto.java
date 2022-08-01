@@ -30,4 +30,8 @@ public class InitialContactSearchCriteriaDto {
     @Getter
     @Setter
     private String typeOfPatient;
+
+    @Getter
+    @Setter
+    private Long referenceId;
 }

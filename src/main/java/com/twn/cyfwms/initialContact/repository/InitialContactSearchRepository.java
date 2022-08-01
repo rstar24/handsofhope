@@ -21,6 +21,7 @@ public class InitialContactSearchRepository {
         return jdbcTemplate.query(querySBuff.toString(),argsObjectList.toArray(),
                 (rs, rowNum) ->
                         new InitialContactSearchResultsDto(
+                                rs.getLong("initialcontactreferenceid"),
                                 rs.getString("clientname"),
                                 rs.getLong("filenumber"),
                                  rs.getString("caseworker"),
@@ -33,9 +34,10 @@ public class InitialContactSearchRepository {
 
     private StringBuffer createSearchQuery(InitialContactSearchCriteriaDto searchCriteria, List<Object> argsObjectList) {
         StringBuffer  querySBuff = new StringBuffer();
-        querySBuff.append("select  p.clientname, p.fileNumber,p.caseworker,p.startingDate,p.status ,p2.typeofpatient ");
+        querySBuff.append("select  p.clientname,p.initialcontactreferenceid, p.fileNumber,p.caseworker,p.startingDate,p.status ,p2.typeofpatient ");
         querySBuff.append("from initialcontactfiledetails p left join initialcontactpatientcareinfo p2 on p.filedetailsid = p2.filedetailsid where 1=1");
-      if (searchCriteria.getClientName()!=null ||searchCriteria.getFileNumber()!=0||searchCriteria.getCaseworker()!=null||searchCriteria.getStartingDate()!=null|| searchCriteria.getStatus()!=null){
+      if (searchCriteria.getClientName()!=null ||searchCriteria.getFileNumber()!=null||searchCriteria.getCaseworker()!=null||
+              searchCriteria.getStartingDate()!=null|| searchCriteria.getStatus()!=null|| searchCriteria.getReferenceId()!=null ){
             String clientName=searchCriteria.getClientName();
             if (clientName!=null && !clientName.trim().isEmpty()){
                 clientName=clientName.trim()
@@ -47,7 +49,7 @@ public class InitialContactSearchRepository {
                 argsObjectList.add(clientName + "%");
             }
             Long fileNumber = searchCriteria.getFileNumber();
-            if (fileNumber != 0) {
+            if (fileNumber != null) {
                 querySBuff.append(" AND p.fileNumber = ?");
                 argsObjectList.add(fileNumber);
             }
@@ -77,6 +79,12 @@ public class InitialContactSearchRepository {
                 argsObjectList.add(status + "%");
 
             }
+          Long referenceId = searchCriteria.getReferenceId();
+          if (referenceId != null) {
+              querySBuff.append(" AND p.initialcontactreferenceid = ?");
+              argsObjectList.add(referenceId);
+          }
+
           String typeOfPatient=searchCriteria.getTypeOfPatient();
           if (typeOfPatient!=null && !typeOfPatient.trim().isEmpty()){
               typeOfPatient=typeOfPatient.trim()
