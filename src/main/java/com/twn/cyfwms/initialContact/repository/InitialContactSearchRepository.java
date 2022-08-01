@@ -93,7 +93,7 @@ public class InitialContactSearchRepository {
                       .replace("_", "!_")
                       .replace("[", "![");
               querySBuff.append(" AND p2.typeofpatient LIKE ?");
-              argsObjectList.add(status + "%");
+              argsObjectList.add(typeOfPatient + "%");
 
           }
         }

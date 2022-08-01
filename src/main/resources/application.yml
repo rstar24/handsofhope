@@ -126,7 +126,24 @@ codetablevalues:
     ABUSE:
       "en": "Abuse"
       "fr": "Abuser de"
-
+    LEGAL:
+      "en": "Legal"
+      "fr": "Juridique"
+    EMLOYMENT:
+      "en": "Employment"
+      "fr": "Emploi"
+    EDUCATION:
+      "en": "Education"
+      "fr": "Éducation"
+    PARENTING:
+      "en": "Parenting"
+      "fr": "Parentalité"
+    RELATIONSHIPS:
+      "en": "Relationships"
+      "fr": "Des relations"
+    FINANCIAL:
+      "en": "Financial"
+      "fr": "Financier"
   mentalHealthOrSubstanceAbuse:
     DEFAULT:
       "en": ""
@@ -140,7 +157,18 @@ codetablevalues:
     NARCOTIC:
       "en": "Narcotic"
       "fr": "Narcotique"
-
+    PILLS:
+      "en": "Pills"
+      "fr": "Pilules"
+    SOLVANTS:
+      "en": "Solvants"
+      "fr": "Solvants"
+    GAMBLING:
+      "en": "Gambling"
+      "fr": "Jeux d'argent"
+    OTHER:
+      "en": "Other"
+      "fr": "Autre"
   typeOfPatient:
     DEFAULT:
       "en": ""
