@@ -91,6 +91,7 @@ const FileDetails = (): ReactElement => {
               autofill={data.fileNumber}
               id="fileNumber"
               value="File No."
+              required
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
@@ -107,7 +108,10 @@ const FileDetails = (): ReactElement => {
               autofill={data.startingDate}
               id="startingDate"
               value="Date"
+              maxDate={new Date().toISOString().substring(0, 10)}
+              minDate="1900-01-01"
               type="date"
+              required
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
@@ -115,6 +119,7 @@ const FileDetails = (): ReactElement => {
               autofill={data.caseworker}
               id="caseWorker"
               value="Case Worker"
+              required
             />
           </Box>
         </Box>
@@ -133,6 +138,8 @@ const FileDetails = (): ReactElement => {
             <ICInput
               autofill={data.dateClosed}
               id="closingDate"
+              maxDate={new Date().toISOString().substring(0, 10)}
+              minDate="1900-01-01"
               value="Date Closed"
               type="date"
             />

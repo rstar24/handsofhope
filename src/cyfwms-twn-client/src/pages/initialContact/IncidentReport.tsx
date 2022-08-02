@@ -88,6 +88,8 @@ const IncidentReport = (): ReactElement => {
               id="incidentReport_DateOfReport"
               value="Date of Report"
               type="date"
+              maxDate={new Date().toISOString().substring(0, 10)}
+              minDate="1900-01-01"
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
@@ -121,6 +123,8 @@ const IncidentReport = (): ReactElement => {
               id="incidentReport_IncidentDate"
               value="Incident Date"
               type="date"
+              maxDate={new Date().toISOString().substring(0, 10)}
+              minDate="1900-01-01"
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>

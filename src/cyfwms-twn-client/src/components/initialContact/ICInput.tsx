@@ -11,6 +11,11 @@ import type {
  * @param props - HTML attributes.
  * @returns ICInput component skeleton.
  */
+export interface InputProps extends ComponentPropsWithoutRef<ElementType> {
+  /* Date */
+  maxDate?: string;
+  minDate?: string;
+}
 const ICInput = (
   props: ComponentPropsWithoutRef<ElementType>
 ): ReactElement => {
@@ -34,7 +39,7 @@ const ICInput = (
         id={props.id}
         name={props.name}
         sx={{ borderRadius: 0, flexBasis: 0, flexGrow: 2, ml: -1 }}
-        inputProps={{ sx: { p: 1 } }}
+        inputProps={{ min: props.minDate, max: props.maxDate, sx: { p: 1 } }}
         type={props.type}
         defaultValue={props.autofill}
         style={{ backgroundColor: "#dfdada" }}
