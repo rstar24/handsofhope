@@ -4,7 +4,7 @@ import type { SliceCaseReducers } from "@reduxjs/toolkit";
 import type { AxiosResponse } from "axios";
 
 export interface Data {
-  initialContactReferenceId: number;
+  initialContactReferenceId?: number;
   fileDetailsId: number;
   fileNumber: number;
   clientName: string;

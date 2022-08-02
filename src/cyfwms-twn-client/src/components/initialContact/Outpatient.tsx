@@ -44,7 +44,7 @@ const Outpatient = (): ReactElement => {
             autofill={data.therapyTimePeriod}
             id="therapyTimePeriod"
             value="When?"
-            type="datetime-local"
+            type="date"
           />
         </Box>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
@@ -87,7 +87,7 @@ const Outpatient = (): ReactElement => {
             autofill={data.selfHelpGroupPeriod}
             id="selfHelpGroupPeriod"
             value="When?"
-            type="datetime-local"
+            type="date"
           />
         </Box>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
