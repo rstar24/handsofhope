@@ -1,5 +1,6 @@
 package com.twn.cyfwms.participant.api;
 
+import com.twn.cyfwms.initialContact.dto.InitialContactSearchResultsDto;
 import com.twn.cyfwms.participant.dto.*;
 import com.twn.cyfwms.participant.service.*;
 import io.swagger.annotations.ApiOperation;
@@ -191,8 +192,11 @@ public class TWNParticipantController {
             || var.get("referenceId") == null) ?null:Long.parseLong(var.get("referenceId")));
 
 
-
-        return participantSearchService.search(participantSearchCriteriaDto);
+        ParticipantSearchResultsDto participantSearchResultsDto=new ParticipantSearchResultsDto();
+          List<ParticipantSearchResultsDto> newParticipantSearchResultsDto=participantSearchService.search(participantSearchCriteriaDto);
+        participantSearchResultsDto.setTotalCount((long) newParticipantSearchResultsDto.size());
+        newParticipantSearchResultsDto.add(participantSearchResultsDto);
+        return newParticipantSearchResultsDto;
     }
 
 

@@ -21,6 +21,7 @@ public class InitialContactSearchRepository {
         return jdbcTemplate.query(querySBuff.toString(),argsObjectList.toArray(),
                 (rs, rowNum) ->
                         new InitialContactSearchResultsDto(
+                                rs.getLong("filedetailsid"),
                                 rs.getLong("initialcontactreferenceid"),
                                 rs.getString("clientname"),
                                 rs.getLong("filenumber"),
@@ -28,16 +29,15 @@ public class InitialContactSearchRepository {
                                 rs.getDate("startingDate")!=null?rs.getDate("startingDate").toLocalDate(): LocalDate.of(1,1,1),
                                 rs.getString("status"),
                              rs.getString("typeofpatient")
+
                         )
                 );
     }
 
     private StringBuffer createSearchQuery(InitialContactSearchCriteriaDto searchCriteria, List<Object> argsObjectList) {
         StringBuffer  querySBuff = new StringBuffer();
-        querySBuff.append("select  p.clientname,p.initialcontactreferenceid, p.fileNumber,p.caseworker,p.startingDate,p.status ,p2.typeofpatient ");
+        querySBuff.append("select p.filedetailsid, p.clientname,p.initialcontactreferenceid, p.fileNumber,p.caseworker,p.startingDate,p.status ,p2.typeofpatient ");
         querySBuff.append("from initialcontactfiledetails p left join initialcontactpatientcareinfo p2 on p.filedetailsid = p2.filedetailsid where 1=1");
-      if (searchCriteria.getClientName()!=null ||searchCriteria.getFileNumber()!=null||searchCriteria.getCaseworker()!=null||
-              searchCriteria.getStartingDate()!=null|| searchCriteria.getStatus()!=null|| searchCriteria.getReferenceId()!=null ){
             String clientName=searchCriteria.getClientName();
             if (clientName!=null && !clientName.trim().isEmpty()){
                 clientName=clientName.trim()
@@ -96,10 +96,6 @@ public class InitialContactSearchRepository {
               argsObjectList.add(typeOfPatient + "%");
 
           }
-        }
-        else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find resource");
-        }
         return querySBuff;
     }
 
