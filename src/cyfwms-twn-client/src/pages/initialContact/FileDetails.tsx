@@ -111,6 +111,7 @@ const FileDetails = (): ReactElement => {
               autofill={state.data.fileNumber}
               id="fileNumber"
               value="File No."
+              required
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
@@ -127,7 +128,10 @@ const FileDetails = (): ReactElement => {
               autofill={state.data.startingDate}
               id="startingDate"
               value="Date"
+              maxDate={new Date().toISOString().substring(0, 10)}
+              minDate="1900-01-01"
               type="date"
+              required
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
@@ -135,6 +139,7 @@ const FileDetails = (): ReactElement => {
               autofill={state.data.caseworker}
               id="caseWorker"
               value="Case Worker"
+              required
             />
           </Box>
         </Box>
@@ -154,6 +159,8 @@ const FileDetails = (): ReactElement => {
               autofill={state.data.dateClosed}
               disabled={state.disabledClosingDate}
               id="closingDate"
+              maxDate={new Date().toISOString().substring(0, 10)}
+              minDate="1900-01-01"
               value="Date Closed"
               type="date"
             />

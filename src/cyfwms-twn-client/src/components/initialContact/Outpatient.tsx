@@ -74,7 +74,7 @@ const Outpatient = (): ReactElement => {
           <ICHalfInput
             autofill={data.selfHelpGroup}
             id="selfHelpGroup"
-            value="Any involvement in self helf groups such as NA, AA, etcetera?"
+            value="Any involvement in self help groups such as NA, AA, etc?"
           />
         </Box>
       </Box>
