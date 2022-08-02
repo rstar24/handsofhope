@@ -9,14 +9,14 @@ import { cleanState as cleanRegisterState } from "../../features/cyfms/register/
 import { cleanSearchState } from "../../features/search/searchSlice";
 import { hideTabs } from "../../features/navBarSlice";
 import { uninitiate } from "../../features/initiatorSlice";
-import CYFMSFamilyPhysicians from "../../pages/cyfms/CYFMSFamilyPhysicians";
-import CYFMSContact from "../../pages/cyfms/CYFMSContact";
-import CYFMSCriminalHistory from "../../pages/cyfms/CYFMSCriminalHistory";
-import CYFMSCounselors from "../../pages/cyfms/CYFMSCounselors";
-import CYFMSEducationAndEmployment from "../../pages/cyfms/CYFMSEducationAndEmployment";
-import CYFMSHouseholdMembers from "../../pages/cyfms/CYFMSHouseholdMembers";
-import CYFMSOtherInformation from "../../pages/cyfms/CYFMSOtherInformation";
-import CYFMSRegister from "../../pages/cyfms/CYFMSRegister";
+import FamilyPhysicians from "../../pages/cyfms/FamilyPhysicians";
+import Contact from "../../pages/cyfms/Contact";
+import CriminalHistory from "../../pages/cyfms/CriminalHistory";
+import Counselors from "../../pages/cyfms/Counselors";
+import EducationAndEmployment from "../../pages/cyfms/EducationAndEmployment";
+import HouseholdMembers from "../../pages/cyfms/HouseholdMembers";
+import OtherInformation from "../../pages/cyfms/OtherInformation";
+import Register from "../../pages/cyfms/Register";
 import { useAppDispatch } from "../../library/hooks";
 import { Box, IconButton, Modal } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
@@ -82,17 +82,17 @@ const CYFMSPopup = (props: ModalUnstyledProps): ReactElement => {
           <CloseIcon />
         </IconButton>
         <Routes>
-          <Route path="register" element={<CYFMSRegister />} />
-          <Route path="contact" element={<CYFMSContact />} />
-          <Route path="household_members" element={<CYFMSHouseholdMembers />} />
+          <Route path="register" element={<Register />} />
+          <Route path="contact" element={<Contact />} />
+          <Route path="household_members" element={<HouseholdMembers />} />
           <Route
             path="education_and_employment"
-            element={<CYFMSEducationAndEmployment />}
+            element={<EducationAndEmployment />}
           />
-          <Route path="criminal_history" element={<CYFMSCriminalHistory />} />
-          <Route path="family_physicians" element={<CYFMSFamilyPhysicians />} />
-          <Route path="counselors" element={<CYFMSCounselors />} />
-          <Route path="other_information" element={<CYFMSOtherInformation />} />
+          <Route path="criminal_history" element={<CriminalHistory />} />
+          <Route path="family_physicians" element={<FamilyPhysicians />} />
+          <Route path="counselors" element={<Counselors />} />
+          <Route path="other_information" element={<OtherInformation />} />
         </Routes>
       </Box>
     </Modal>

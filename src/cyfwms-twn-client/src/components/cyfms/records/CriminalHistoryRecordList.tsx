@@ -13,9 +13,9 @@ import type {
 
 /**
  * A custom props data type for the props passed
- * to the `CYFMSCriminalHistoryRecord` component.
+ * to the `CriminalHistoryRecord` component.
  */
-export interface CYFMSCriminalHistoryRecordProps
+export interface CriminalHistoryRecordProps
   extends ComponentPropsWithoutRef<ElementType> {
   /** Holds data within a record. */
   record: any;
@@ -24,12 +24,12 @@ export interface CYFMSCriminalHistoryRecordProps
 }
 
 /**
- * The CYFMSCriminalHistoryRecord functional component.
+ * The CriminalHistoryRecord functional component.
  * @param props Must contain the `recordNumber` prop.
- * @returns CYFMSHouseholdMembersRecord component skeleton.
+ * @returns HouseholdMembersRecord component skeleton.
  */
-export const CYFMSCriminalHistoryRecord = (
-  props: CYFMSCriminalHistoryRecordProps
+export const CriminalHistoryRecord = (
+  props: CriminalHistoryRecordProps
 ): ReactElement => {
   const dispatch = useAppDispatch();
 
@@ -104,11 +104,11 @@ export const CYFMSCriminalHistoryRecord = (
   );
 };
 
-const CYFMSCriminalHistoryRecordList = (recordList: any): ReactElement[] => {
+const CriminalHistoryRecordList = (recordList: any): ReactElement[] => {
   let res: ReactElement[] = new Array(recordList.length);
   for (let index = 0; index < recordList.length; ++index) {
     res.push(
-      <CYFMSCriminalHistoryRecord
+      <CriminalHistoryRecord
         record={recordList[index]}
         recordNumber={index + 1}
       />
@@ -117,4 +117,4 @@ const CYFMSCriminalHistoryRecordList = (recordList: any): ReactElement[] => {
   return res;
 };
 
-export default CYFMSCriminalHistoryRecordList;
+export default CriminalHistoryRecordList;

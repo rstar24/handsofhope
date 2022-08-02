@@ -12,15 +12,15 @@ import {
 } from "../../features/cyfms/educationAndEmployment/slice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { Box, Typography } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { BaseSyntheticEvent, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import type { FormEvent, ReactElement } from "react";
 
 /**
- * The CYFMSEducationAndEmployment functional component.
- * @returns CYFMSEducationAndEmployment component skeleton.
+ * The EducationAndEmployment functional component.
+ * @returns EducationAndEmployment component skeleton.
  */
-const CYFMSEducationAndEmployment = (): ReactElement => {
+const EducationAndEmployment = (): ReactElement => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const participantID = useAppSelector(
@@ -77,12 +77,20 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
   // and other activities.
   const changeHandler = (e: FormEvent) => {
     const form: any = e.currentTarget;
-    form.attendingSchool.value === "Yes"
-      ? dispatch(enableSchoolFields(null))
-      : dispatch(disableSchoolFields(null));
-    form.typeOfEmployment.value === "Job Search"
-      ? dispatch(enableDesiredProfession(null))
-      : dispatch(disableDesiredProfession(null));
+    console.log(form.school);
+    if (form.attendingSchool.value === "Yes") {
+      dispatch(enableSchoolFields(null));
+    } else {
+      form.schoolName.value = "";
+      form.schoolGrade.value = "";
+      dispatch(disableSchoolFields(null));
+    }
+    if (form.typeOfEmployment.value === "Job Search") {
+      dispatch(enableDesiredProfession(null));
+    } else {
+      form.desiredProfession.value = "";
+      dispatch(disableDesiredProfession(null));
+    }
   };
 
   return (
@@ -206,4 +214,4 @@ const CYFMSEducationAndEmployment = (): ReactElement => {
   );
 };
 
-export default CYFMSEducationAndEmployment;
+export default EducationAndEmployment;

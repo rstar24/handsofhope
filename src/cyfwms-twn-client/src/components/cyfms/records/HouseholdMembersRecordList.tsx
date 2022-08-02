@@ -1,5 +1,5 @@
-import { removeRecordNumber } from "../../../features/cyfms/counselors/slice";
-import { useAppDispatch, useAppSelector } from "../../../library/hooks";
+import { removeRecordNumber } from "../../../features/cyfms/householdMembers/slice";
+import { useAppSelector, useAppDispatch } from "../../../library/hooks";
 import Input from "../../Input";
 import CYFMSDropdown from "../CYFMSDropdown";
 import CYFMSTextArea from "../CYFMSTextArea";
@@ -14,9 +14,9 @@ import type {
 
 /**
  * A custom props data type for the props passed
- * to the `CYFMSCounselorsRecord` component.
+ * to the `HouseholdMembersRecord` component.
  */
-export interface CYFMSCounselorsRecordProps
+export interface HouseholdMembersRecordProps
   extends ComponentPropsWithoutRef<ElementType> {
   /** Holds data within a record. */
   record: any;
@@ -25,15 +25,15 @@ export interface CYFMSCounselorsRecordProps
 }
 
 /**
- * The CYFMSCounselorsRecord functional component.
+ * The HouseholdMembersRecord functional component.
  * @param props Must contain the `recordNumber` prop.
- * @returns CYFMSCounselorsRecord component skeleton.
+ * @returns HouseholdMembersRecord component skeleton.
  */
-export const CYFMSCYFMSCounselorsRecord = (
-  props: CYFMSCounselorsRecordProps
+export const HouseholdMembersRecord = (
+  props: HouseholdMembersRecordProps
 ): ReactElement => {
   const dispatch = useAppDispatch();
-  const role = useAppSelector((state: any) => state.codetable.role);
+  const gender = useAppSelector((state: any) => state.codetable.gender);
 
   const removeRecord = () => {
     dispatch(removeRecordNumber(props.recordNumber));
@@ -60,7 +60,7 @@ export const CYFMSCYFMSCounselorsRecord = (
         }}
       >
         <Typography color="primary" sx={{ flexGrow: 1 }}>
-          Counselor / CFS Worker: {props.recordNumber}
+          Member {props.recordNumber}
         </Typography>
         <IconButton
           aria-label="delete record"
@@ -74,17 +74,6 @@ export const CYFMSCYFMSCounselorsRecord = (
       </Box>
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-          <CYFMSDropdown
-            autofill={props.record.role}
-            id={`record_${props.recordNumber}_Role`}
-            value="Role"
-            optionsList={Object.values(role).map((role: any) => role.en)}
-          />
-        </Box>
-        <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
-      </Box>
-      <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
-        <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
           <Input
             autofill={props.record.name}
             id={`record_${props.recordNumber}_Name`}
@@ -93,24 +82,44 @@ export const CYFMSCYFMSCounselorsRecord = (
             value="Name"
           />
         </Box>
+        <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+          <CYFMSDropdown
+            autofill={props.record.gender}
+            id={`record_${props.recordNumber}_Gender`}
+            optionsList={Object.values(gender).map((gender: any) => gender.en)}
+            value="Gender"
+          />
+        </Box>
+      </Box>
+      <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
+        <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+          <Input
+            autofill={props.record.dateOfBirth}
+            id={`record_${props.recordNumber}_DateOfBirth`}
+            maxDate={new Date().toISOString().substring(0, 10)}
+            minDate="1900-01-01"
+            value="Date of Birth"
+            type="date"
+          />
+        </Box>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
       </Box>
       <CYFMSTextArea
         formLabelFlex="1 1 0"
-        outlinedInputFlex="5.1 1 0"
-        autofill={props.record.contactInformation}
-        id={`record_${props.recordNumber}_ContactInformation`}
-        value="Contact Information"
+        outlinedInputFlex="5.05 1 0"
+        autofill={props.record.residing}
+        id={`record_${props.recordNumber}_Residing`}
+        value="Residing"
       />
     </Box>
   );
 };
 
-const CYFMSCounselorsRecordList = (recordList: any): ReactElement[] => {
+const HouseholdMembersRecordList = (recordList: any): ReactElement[] => {
   let res: ReactElement[] = new Array(recordList.length);
   for (let index = 0; index < recordList.length; ++index) {
     res.push(
-      <CYFMSCYFMSCounselorsRecord
+      <HouseholdMembersRecord
         record={recordList[index]}
         recordNumber={index + 1}
       />
@@ -119,4 +128,4 @@ const CYFMSCounselorsRecordList = (recordList: any): ReactElement[] => {
   return res;
 };
 
-export default CYFMSCounselorsRecordList;
+export default HouseholdMembersRecordList;

@@ -13,9 +13,9 @@ import type {
 
 /**
  * A custom props data type for the props passed
- * to the `CYFMSFamilyPhysiciansRecord` component.
+ * to the `FamilyPhysiciansRecord` component.
  */
-export interface CYFMSFamilyPhysiciansRecordProps
+export interface FamilyPhysiciansRecordProps
   extends ComponentPropsWithoutRef<ElementType> {
   /** Holds data within a record. */
   record: any;
@@ -24,12 +24,12 @@ export interface CYFMSFamilyPhysiciansRecordProps
 }
 
 /**
- * The CYFMSFamilyPhysiciansRecord functional component.
+ * The FamilyPhysiciansRecord functional component.
  * @param props Must contain the `recordNumber` prop.
- * @returns CYFMSFamilyPhysiciansRecord component skeleton.
+ * @returns FamilyPhysiciansRecord component skeleton.
  */
-export const CYFMSFamilyPhysiciansRecord = (
-  props: CYFMSFamilyPhysiciansRecordProps
+export const FamilyPhysiciansRecord = (
+  props: FamilyPhysiciansRecordProps
 ): ReactElement => {
   const dispatch = useAppDispatch();
 
@@ -121,11 +121,11 @@ export const CYFMSFamilyPhysiciansRecord = (
   );
 };
 
-const CYFMSFamilyPhysiciansRecordList = (recordList: any): ReactElement[] => {
+const FamilyPhysiciansRecordList = (recordList: any): ReactElement[] => {
   let res: ReactElement[] = new Array(recordList.length);
   for (let index = 0; index < recordList.length; ++index) {
     res.push(
-      <CYFMSFamilyPhysiciansRecord
+      <FamilyPhysiciansRecord
         record={recordList[index]}
         recordNumber={index + 1}
       />
@@ -134,4 +134,4 @@ const CYFMSFamilyPhysiciansRecordList = (recordList: any): ReactElement[] => {
   return res;
 };
 
-export default CYFMSFamilyPhysiciansRecordList;
+export default FamilyPhysiciansRecordList;

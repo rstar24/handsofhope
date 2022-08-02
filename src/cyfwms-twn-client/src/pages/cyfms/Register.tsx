@@ -16,10 +16,10 @@ import type { Data } from "../../features/cyfms/register/slice";
 import type { FormEvent, ReactElement } from "react";
 
 /**
- * The CYFMSRegister functional component.
- * @returns CYFMSRegister component skeleton.
+ * The Register functional component.
+ * @returns Register component skeleton.
  */
-const CYFMSRegister = (): ReactElement => {
+const Register = (): ReactElement => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { gender, maritalstatus } = useAppSelector(
@@ -165,4 +165,4 @@ const CYFMSRegister = (): ReactElement => {
   );
 };
 
-export default CYFMSRegister;
+export default Register;

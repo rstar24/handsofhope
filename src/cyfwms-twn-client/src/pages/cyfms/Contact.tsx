@@ -10,10 +10,10 @@ import type { Data } from "../../features/cyfms/contact/slice";
 import type { FormEvent, ReactElement } from "react";
 
 /**
- * The CYFMSContact functional component.
- * @returns CYFMSContact component skeleton.
+ * The Contact functional component.
+ * @returns Contact component skeleton.
  */
-const CYFMSContact = (): ReactElement => {
+const Contact = (): ReactElement => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const participantID = useAppSelector(
@@ -165,4 +165,4 @@ const CYFMSContact = (): ReactElement => {
   );
 };
 
-export default CYFMSContact;
+export default Contact;

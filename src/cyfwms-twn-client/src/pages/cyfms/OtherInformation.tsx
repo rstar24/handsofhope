@@ -13,10 +13,10 @@ import type { Data } from "../../features/cyfms/otherInformation/slice";
 import type { FormEvent, ReactElement } from "react";
 
 /**
- * The CYFMSOtherInformation functional component.
- * @returns CYFMSOtherInformation component skeleton.
+ * The OtherInformation functional component.
+ * @returns OtherInformation component skeleton.
  */
-const CYFMSOtherInformation = (): ReactElement => {
+const OtherInformation = (): ReactElement => {
   const navigate = useNavigate();
   const popupContext = useContext(PopupContext);
   const dispatch = useAppDispatch();
@@ -122,4 +122,4 @@ const CYFMSOtherInformation = (): ReactElement => {
   );
 };
 
-export default CYFMSOtherInformation;
+export default OtherInformation;

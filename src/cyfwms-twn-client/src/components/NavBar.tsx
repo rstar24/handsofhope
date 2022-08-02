@@ -22,6 +22,12 @@ interface NavBarProps {
  */
 const NavBar = (props: NavBarProps): ReactElement => {
   const tabsHidden = useAppSelector((state) => state.navBar.tabsHidden);
+  const isInitiated = useAppSelector((state) => state.initiator.isInitiated);
+
+  // Change the value of Register to Identity when participant is registered.
+  if (props.tabs[0].value === "Register" && isInitiated) {
+    props.tabs[0].value = "Identity";
+  }
 
   return (
     <Box aria-label="tabs" sx={{ bgcolor: "#DFDADA" }}>

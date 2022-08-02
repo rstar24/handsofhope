@@ -5,7 +5,7 @@ import {
 import Input from "../../components/Input";
 import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
 import CYFMSTextArea from "../../components/cyfms/CYFMSTextArea";
-import CYFMSCriminalHistoryRecordList from "../../components/cyfms/records/CYFMSCriminalHistoryRecordList";
+import CriminalHistoryRecordList from "../../components/cyfms/records/CriminalHistoryRecordList";
 import {
   flipProbation,
   flipParole,
@@ -21,10 +21,10 @@ import type { Data, Record } from "../../features/cyfms/criminalHistory/slice";
 import type { FormEvent, ReactElement, Ref } from "react";
 
 /**
- * The CYFMSCriminalHistory functional component.
- * @returns CYFMSCriminalHistory component skeleton.
+ * The CriminalHistory functional component.
+ * @returns CriminalHistory component skeleton.
  */
-const CYFMSCriminalHistory = (): ReactElement => {
+const CriminalHistory = (): ReactElement => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const participantID = useAppSelector(
@@ -113,7 +113,7 @@ const CYFMSCriminalHistory = (): ReactElement => {
         ref={formRef}
       >
         <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem 0" }}>
-          {CYFMSCriminalHistoryRecordList(data.criminalHistoryRecordList)}
+          {CriminalHistoryRecordList(data.criminalHistoryRecordList)}
         </Box>
         <Box>
           <CYFSWMSAddButton onClick={addMoreHandler} />
@@ -166,4 +166,4 @@ const CYFMSCriminalHistory = (): ReactElement => {
   );
 };
 
-export default CYFMSCriminalHistory;
+export default CriminalHistory;
