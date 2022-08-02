@@ -27,6 +27,7 @@ const CYFMSSearchPanel = (): ReactElement => {
     e.preventDefault();
     const data: any = e.currentTarget;
     const searchUser = {
+      referenceId: null,
       firstname: data.firstName.value || null,
       surname: data.lastName.value || null,
       middleName: data.middleName.value || null,

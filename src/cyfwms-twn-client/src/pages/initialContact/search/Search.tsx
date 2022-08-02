@@ -17,7 +17,9 @@ import type { FormEvent, ReactElement } from "react";
 const Search = (): ReactElement => {
   const dispatch = useAppDispatch();
   const [isShown, setIsShown] = useState(false);
-  //const { status } = useAppSelector((state) => (state as any).codetable);
+  const { referenceId } = useAppSelector(
+    (state) => (state as any).cyfmsRegister
+  );
 
   useEffect(() => {
     // dispatch(doGetMaritalStatus());
@@ -28,8 +30,10 @@ const Search = (): ReactElement => {
     const form: any = e.currentTarget;
     console.log(form.clientName.value);
     const formData: Record = {
+      fileDetailsId: null,
+      referenceId: referenceId || null,
       clientName: form.clientName.value || null,
-      fileNumber: form.fileNumber.value || 0,
+      fileNumber: form.fileNumber.value || null,
       caseworker: form.caseWorker.value || null,
       startingDate: form.startingDate.value || null,
       status: form.status.value || null,

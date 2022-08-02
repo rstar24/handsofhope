@@ -6,6 +6,7 @@ import ViewIncidentReport from "./ViewIncidentReport";
 import ViewPresentConcerns from "./ViewPresentConcerns";
 import ViewPatientCareInformation from "./ViewPatientCareInformation";
 import { FileDetailsLabels } from "./ViewPagesLabels";
+import ViewFileDetails from "./ViewFileDetails";
 
 export const styles = {
   header: {
@@ -42,64 +43,37 @@ const ViewHome = () => {
     >
       <Box>
         <Typography variant="h5" fontWeight={1000} fontFamily="Helvetica Neue">
-          Person Details -
+          File Details -
         </Typography>
       </Box>
 
       <Box>
         <Typography variant="h6" style={styles.header}>
-          Registration
+          File Detail
         </Typography>
-        <Box paddingTop={3}>
-          {Object.entries(state.cyfmsRegister.data).map((t: any, k: any) => (
-            <Box
-              maxHeight={30}
-              sx={{
-                display: "flex",
-                paddingLeft: 8,
-              }}
-            >
-              {t[1] === "" ? (
-                <></>
-              ) : (
-                <>
-                  <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                    <Typography variant="h6" style={styles.keys}>
-                      {FileDetailsLabels[k]}
-                    </Typography>
-                  </Box>
-                  <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                    <Typography variant="h6" style={styles.values}>
-                      {t[1]}
-                    </Typography>
-                  </Box>
-                </>
-              )}
-            </Box>
-          ))}
-        </Box>
+        <ViewFileDetails />
       </Box>
       <Box>
         <Typography variant="h6" style={styles.header}>
-          Contact
+          Referral Information
         </Typography>
         <ViewReferralInformation />
       </Box>
       <Box>
         <Typography variant="h6" style={styles.header}>
-          Household Members
+          Incident Report
         </Typography>
         <ViewIncidentReport />
       </Box>
       <Box>
         <Typography variant="h6" style={styles.header}>
-          Education and Employment
+          Present Concerns
         </Typography>
         <ViewPresentConcerns />
       </Box>
       <Box>
         <Typography variant="h6" style={styles.header}>
-          Criminal History
+          Patient Care Information
         </Typography>
         <ViewPatientCareInformation />
       </Box>

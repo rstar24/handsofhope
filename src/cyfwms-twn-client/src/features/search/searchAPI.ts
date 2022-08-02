@@ -14,7 +14,7 @@ export const doGetSearchAPI = async (
   jwtToken: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.get(
-    `searchParticipants/null/${data.readUser.firstname}/${data.readUser.middleName}/${data.readUser.surname}/${data.readUser.dateOfBirth}/${data.readUser.maritalStatus}/${data.readUser.city}/${data.readUser.phoneNumber}`,
+    `searchParticipants/${data.readUser.referenceId}/${data.readUser.firstname}/${data.readUser.middleName}/${data.readUser.surname}/${data.readUser.dateOfBirth}/${data.readUser.maritalStatus}/${data.readUser.city}/${data.readUser.phoneNumber}`,
     {
       headers: { Authorization: "Bearer " + jwtToken },
     }

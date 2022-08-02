@@ -17,26 +17,26 @@ import React from "react";
 import { Link } from "react-router-dom";
 import type { Record } from "../../../features/initialContact/search/slice";
 import type { ReactElement } from "react";
+import { doGet } from "../../../features/initialContact/incidentReport/slice";
 
 const SearchResults = (): ReactElement => {
   const dispatch = useAppDispatch();
   const data = useAppSelector((state) => state.icSearch.data);
-const x = Object.values(data).map((num:any)=>{console.log(num.totalCount)})
-  const handleSearchView = (initialContactID: number) => {
-    /*dispatch(doGetFileDetails(initialContactID));
+
+  const handleSearchView = (initialContactID: any) => {
+    dispatch(doGetFileDetails(initialContactID));
     dispatch(doGetReferralInformation(initialContactID));
-    dispatch(doGetIncidentReport(initialContactID));
+    dispatch(doGet(initialContactID));
     dispatch(doGetPresentConcerns(initialContactID));
-    dispatch(doGetPatientCareInformation(initialContactID));*/
+    dispatch(doGetPatientCareInformation(initialContactID));
   };
 
   return (
     <Box>
       <Table sx={{ minWidth: 800 }} aria-label="simple table">
         <TableHead>
-          
           <TableRow>
-            <TableCell>Id</TableCell>
+            <TableCell>Reference Id</TableCell>
             <TableCell>Client Name</TableCell>
             <TableCell>File Number</TableCell>
             <TableCell>Caseworker</TableCell>
@@ -45,29 +45,28 @@ const x = Object.values(data).map((num:any)=>{console.log(num.totalCount)})
           </TableRow>
         </TableHead>
         <TableBody>
-          <h1>{Object.values(data).map((num:any)=>num.totalCount)}</h1>
           {data.map((initialContact: Record) => (
             <TableRow
               key={Math.random() * 1000}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell>
-                {/* <Link
+                <Link
                   to={`view/${initialContact.fileDetailsId}`}
                   onClick={() => handleSearchView(initialContact.fileDetailsId)}
                 >
-                {initialContact.referenceId}
-                </Link> */}
+                  {initialContact.referenceId}
+                </Link>
               </TableCell>
-              
+
               <TableCell>{initialContact.clientName}</TableCell>
               <TableCell>{initialContact.fileNumber}</TableCell>
               <TableCell>{initialContact.caseworker}</TableCell>
               <TableCell>{initialContact.startingDate}</TableCell>
               <TableCell>{initialContact.status}</TableCell>
-              {/* <TableCell>
-                <EditIcon value={i.participantId} />
-              </TableCell> */}
+              <TableCell>
+                <EditIcon value={initialContact.fileDetailsId} />
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

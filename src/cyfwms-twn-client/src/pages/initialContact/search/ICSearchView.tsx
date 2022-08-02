@@ -1,5 +1,4 @@
 import AuthLayout from "../../../components/auth/layout/AuthLayout";
-import CYFMSHeader from "../../../components/cyfms/CYFMSHeader";
 import { useAppSelector } from "../../../library/hooks";
 import EditIcon from "../EditIcon";
 import ViewFileDetails from "./View/ViewFileDetails";
@@ -10,6 +9,7 @@ import ViewPresentConcerns from "./View/ViewPresentConcerns";
 import ViewReferralInformation from "./View/ViewReferralInformation";
 import { Box, Tab, Tabs, Typography } from "@mui/material";
 import React, { ReactElement } from "react";
+import ICHeader from "../../../components/initialContact/ICHeader";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -44,7 +44,7 @@ function tabPanelProps(index: number) {
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
-const CYFMSSearchView = (): ReactElement => {
+const ICSearchView = (): ReactElement => {
   const state = useAppSelector((state) => state);
   const [value, setValue] = React.useState(0);
 
@@ -53,7 +53,7 @@ const CYFMSSearchView = (): ReactElement => {
   };
   return (
     <AuthLayout>
-      <CYFMSHeader />
+      <ICHeader />
       <Box
         component="form"
         sx={{
@@ -74,9 +74,9 @@ const CYFMSSearchView = (): ReactElement => {
           }}
         >
           <Box>
-            <Typography variant="h5" fontWeight={500} paddingTop={0.3}>
-              {state.cyfmsRegister.data.firstname} <></>
-              {state.cyfmsRegister.data.surname}
+            <Typography variant="h6" fontWeight={500} paddingTop={0.3}>
+              Reference ID -{" "}
+              {state.icFileDetails.data.initialContactReferenceId} <></>
             </Typography>
           </Box>
           <Box>
@@ -93,41 +93,7 @@ const CYFMSSearchView = (): ReactElement => {
             background: "#d7d3d354",
             maxHeight: "100vh",
           }}
-        >
-          <Box
-            sx={{ borderRadius: 0, flexBasis: 2, flexGrow: 1, p: 0 }}
-            component="img"
-            src="/img/profile1.png"
-            height={200}
-            width={200}
-          ></Box>
-          <Box
-            sx={{
-              borderRadius: 0,
-              flexBasis: 0,
-              flexGrow: 3,
-              ml: 2,
-              paddingLeft: 5,
-            }}
-          >
-            <Typography variant="h5" paddingTop={2}>
-              {state.cyfmsRegister.data.firstname} <></>
-              {state.cyfmsRegister.data.surname}
-            </Typography>
-            <hr></hr>
-            <Typography paddingTop={2}>
-              {state.cyfmsContact.data.addressLine1} ,
-              {state.cyfmsContact.data.city}, {state.cyfmsContact.data.province}{" "}
-              <></>
-            </Typography>
-            <br />
-            <Typography>{state.cyfmsRegister.data.gender} </Typography>
-            <br />
-            <Typography>
-              Born : {state.cyfmsRegister.data.dateOfBirth} <></>
-            </Typography>
-          </Box>
-        </Box>
+        ></Box>
         <Box sx={{ width: "100%" }}>
           <Box
             sx={{
@@ -178,4 +144,4 @@ const CYFMSSearchView = (): ReactElement => {
   );
 };
 
-export default CYFMSSearchView;
+export default ICSearchView;

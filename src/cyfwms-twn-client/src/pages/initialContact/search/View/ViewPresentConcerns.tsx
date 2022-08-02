@@ -21,20 +21,16 @@ const ViewPresentConcerns = () => {
             <></>
           ) : (
             <>
-              {k !== 0 && k !== 1 && (
-                <>
-                  <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                    <Typography variant="h6" style={styles.keys}>
-                      {PresentConcernsLabels[k]}
-                    </Typography>
-                  </Box>
-                  <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                    <Typography variant="h6" style={styles.values}>
-                      {t[1]}
-                    </Typography>
-                  </Box>
-                </>
-              )}
+              <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+                <Typography variant="h6" style={styles.keys}>
+                  {PresentConcernsLabels[k]}
+                </Typography>
+              </Box>
+              <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+                <Typography variant="h6" style={styles.values}>
+                  {t[1]}
+                </Typography>
+              </Box>
             </>
           )}
         </Box>

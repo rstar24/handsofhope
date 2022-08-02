@@ -88,6 +88,9 @@ const EditIcon = (props: any): ReactElement => {
         }}
         anchorEl={anchorEl}
         open={openDropDown}
+        onClose={(event, reason) => {
+          setAnchorEl(null);
+        }}
         PaperProps={{
           style: {
             maxHeight: ITEM_HEIGHT * 4.5,
