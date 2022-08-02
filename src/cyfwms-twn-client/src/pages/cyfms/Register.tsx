@@ -9,7 +9,7 @@ import { doGet, doPost } from "../../features/cyfms/register/slice";
 import { initiate } from "../../features/initiatorSlice";
 import { unhideTabs } from "../../features/navBarSlice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import type { Data } from "../../features/cyfms/register/slice";
@@ -25,11 +25,11 @@ const Register = (): ReactElement => {
   const { gender, maritalstatus } = useAppSelector(
     (state) => (state as any).codetable
   );
-  const data = useAppSelector((state) => state.cyfmsRegister.data);
   const isInitiated = useAppSelector((state) => state.initiator.isInitiated);
+  const state = useAppSelector((state) => state.cyfmsRegister);
 
   useEffect(() => {
-    dispatch(doGet(data.participantId))
+    dispatch(doGet(state.data.participantId))
       .unwrap()
       .then((data) => {
         console.log("Register GET backend API was successful!");
@@ -46,14 +46,14 @@ const Register = (): ReactElement => {
     e.preventDefault();
     const form: any = e.currentTarget;
     const formData: Data = {
-      participantId: data.participantId,
+      referenceId: state.data.referenceId,
+      participantId: state.data.participantId,
       firstname: form.firstName.value,
       middleName: form.middleName.value,
       surname: form.lastName.value,
       dateOfBirth: form.dateOfBirth.value,
       gender: form.gender.value,
       maritalStatus: form.maritalStatus.value,
-      referenceId: data.referenceId,
     };
     dispatch(doPost(formData))
       .unwrap()
@@ -86,10 +86,13 @@ const Register = (): ReactElement => {
         }}
         onSubmit={submitHandler}
       >
+        <Typography color="primary">
+          Reference ID: {state.data.referenceId}
+        </Typography>
         <Box>
           <Box>
             <Input
-              autofill={data.firstname}
+              autofill={state.data.firstname}
               id="firstName"
               value="First Name"
               validationPattern={`^[a-zA-Z ]*$`}
@@ -99,7 +102,7 @@ const Register = (): ReactElement => {
           </Box>
           <Box>
             <Input
-              autofill={data.middleName}
+              autofill={state.data.middleName}
               id="middleName"
               value="Middle Name"
               validationPattern={`^[a-zA-Z ]*$`}
@@ -110,7 +113,7 @@ const Register = (): ReactElement => {
         <Box>
           <Box>
             <Input
-              autofill={data.surname}
+              autofill={state.data.surname}
               id="lastName"
               value="Last Name"
               validationPattern={`^[a-zA-Z ]*$`}
@@ -120,7 +123,7 @@ const Register = (): ReactElement => {
           </Box>
           <Box>
             <Input
-              autofill={data.dateOfBirth}
+              autofill={state.data.dateOfBirth}
               id="dateOfBirth"
               maxDate={new Date().toISOString().substring(0, 10)}
               minDate="1900-01-01"
@@ -133,7 +136,7 @@ const Register = (): ReactElement => {
         <Box>
           <Box>
             <CYFMSDropdown
-              autofill={data.gender}
+              autofill={state.data.gender}
               id="gender"
               optionsList={Object.values(gender).map(
                 (gender: any) => gender.en
@@ -144,7 +147,7 @@ const Register = (): ReactElement => {
           </Box>
           <Box>
             <CYFMSDropdown
-              autofill={data.maritalStatus}
+              autofill={state.data.maritalStatus}
               id="maritalStatus"
               optionsList={Object.values(maritalstatus).map(
                 (status: any) => status.en
