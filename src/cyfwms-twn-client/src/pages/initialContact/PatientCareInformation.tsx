@@ -34,7 +34,7 @@ const PatientCareInformation = (): ReactElement => {
   const { patient } = useAppSelector((state: any) => state.codetable);
   const data = useAppSelector((state) => state.icPatientCareInformation.data);
 
-  const [typeOfPatient, setTypeOfPatient] = useState("Outpatient");
+  const [typeOfPatient, setTypeOfPatient] = useState("");
 
   useEffect(() => {
     dispatch(doGet(initialContactID))
@@ -113,9 +113,13 @@ const PatientCareInformation = (): ReactElement => {
   const changeHandler = (e: FormEvent) => {
     e.preventDefault();
     const form: any = e.currentTarget;
-    form.typeOfPatient.value === "Inpatient"
-      ? setTypeOfPatient("Inpatient")
-      : setTypeOfPatient("Outpatient");
+    if (form.typeOfPatient.value === "Inpatient") {
+      setTypeOfPatient("Inpatient");
+    } else if (form.typeOfPatient.value === "Outpatient") {
+      setTypeOfPatient("Outpatient");
+    } else {
+      setTypeOfPatient("");
+    }
   };
 
   return (
@@ -144,7 +148,9 @@ const PatientCareInformation = (): ReactElement => {
             </Box>
             <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
           </Box>
-          {typeOfPatient === "Outpatient" ? <Outpatient /> : <Inpatient />}
+          {typeOfPatient === "Outpatient" ? <Outpatient /> : ""}
+          {typeOfPatient === "Inpatient" ? <Inpatient /> : ""}
+          {typeOfPatient === "" ? "" : ""}
         </Box>
         <Box sx={{ display: "flex", justifyContent: "right" }}>
           <CYFSWMSSaveButton />

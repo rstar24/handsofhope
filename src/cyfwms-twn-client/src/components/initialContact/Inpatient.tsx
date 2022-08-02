@@ -1,6 +1,6 @@
 import { useAppSelector } from "../../library/hooks";
 import ICTextAreaMax from "./ICTextAreaMax";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import React from "react";
 import type { ReactElement } from "react";
 
@@ -15,6 +15,9 @@ const Inpatient = (): ReactElement => {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem 0" }}>
+      <Typography color="primary" sx={{ flexGrow: 1 }}>
+        Inpatient
+      </Typography>
       <Box sx={{ display: "flex", flexWrap: "wrap" }}>
         <Box
           sx={{

@@ -3,7 +3,7 @@ import ICFullInput from "./ICFullInput";
 import ICHalfInput from "./ICHalfInput";
 import ICTextAreaMax from "./ICTextAreaMax";
 import ICInput from "./ICInput";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import React from "react";
 import type { ReactElement } from "react";
 
@@ -18,6 +18,9 @@ const Outpatient = (): ReactElement => {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem 0" }}>
+      <Typography color="primary" sx={{ flexGrow: 1 }}>
+        Outpatient
+      </Typography>
       <Box sx={{ display: "flex", flexWrap: "wrap" }}>
         <Box
           sx={{
