@@ -39,6 +39,7 @@ public class ParticipantSearchRepository {
                                 rs.getString("cellPhone"),
                                 rs.getString("workPhone"),
                                 rs.getLong("referenceid")
+
                         )
         );
     }
@@ -49,7 +50,6 @@ public class ParticipantSearchRepository {
         querySBuff.append("select p.participantid, p.firstname, p.middlename, p.surname, p.maritalstatus,  p.dateofbirth, p2.city, p2.homephone, p2.cellphone, p2.workphone, p.referenceid ");
         querySBuff.append("from participant p left join participantcontact p2 on p.participantid = p2.participantid where 1=1");
 
-          if (searchCriteria.getFirstname()!=null ||searchCriteria.getMiddleName()!=null||searchCriteria.getSurname()!=null ||searchCriteria.getDateOfBirth()!=null||searchCriteria.getMaritalStatus()!=null||searchCriteria.getCity()!=null||searchCriteria.getPhoneNumber()!=null || searchCriteria.getReferenceId()!=null) {
            String firstName = searchCriteria.getFirstname();
            if (firstName != null && !firstName.trim().isEmpty()) {
                firstName = firstName.trim()
@@ -127,11 +127,6 @@ public class ParticipantSearchRepository {
                querySBuff.append(" AND p.referenceid = ?");
                argsObjectList.add(referenceId);
            }
-       }
-       else {
-          throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
-      }
-
         return querySBuff;
 
     }

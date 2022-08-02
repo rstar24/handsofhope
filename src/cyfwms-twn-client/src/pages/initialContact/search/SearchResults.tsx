@@ -21,7 +21,7 @@ import type { ReactElement } from "react";
 const SearchResults = (): ReactElement => {
   const dispatch = useAppDispatch();
   const data = useAppSelector((state) => state.icSearch.data);
-
+const x = Object.values(data).map((num:any)=>{console.log(num.totalCount)})
   const handleSearchView = (initialContactID: number) => {
     /*dispatch(doGetFileDetails(initialContactID));
     dispatch(doGetReferralInformation(initialContactID));
@@ -34,6 +34,7 @@ const SearchResults = (): ReactElement => {
     <Box>
       <Table sx={{ minWidth: 800 }} aria-label="simple table">
         <TableHead>
+          
           <TableRow>
             <TableCell>Id</TableCell>
             <TableCell>Client Name</TableCell>
@@ -44,6 +45,7 @@ const SearchResults = (): ReactElement => {
           </TableRow>
         </TableHead>
         <TableBody>
+          <h1>{Object.values(data).map((num:any)=>num.totalCount)}</h1>
           {data.map((initialContact: Record) => (
             <TableRow
               key={Math.random() * 1000}
@@ -53,10 +55,11 @@ const SearchResults = (): ReactElement => {
                 {/* <Link
                   to={`view/${initialContact.fileDetailsId}`}
                   onClick={() => handleSearchView(initialContact.fileDetailsId)}
-                > */}
-                {"nil"}
-                {/* </Link> */}
+                >
+                {initialContact.referenceId}
+                </Link> */}
               </TableCell>
+              
               <TableCell>{initialContact.clientName}</TableCell>
               <TableCell>{initialContact.fileNumber}</TableCell>
               <TableCell>{initialContact.caseworker}</TableCell>
