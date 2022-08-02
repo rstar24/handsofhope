@@ -26,6 +26,7 @@ const emptyData: Data = {
 
 export interface State {
   data: Data;
+  disabledClosingDate: boolean;
   status: "failed" | "none" | "loading" | "success";
 }
 
@@ -54,9 +55,20 @@ export const doPost = createAsyncThunk<Data, Data>(
 
 export const fileDetailsSlice = createSlice<State, SliceCaseReducers<State>>({
   name: "fileDetails",
-  initialState: { data: emptyData, status: "failed" },
+  initialState: {
+    data: emptyData,
+    disabledClosingDate: true,
+    status: "failed",
+  },
   reducers: {
+    disableClosingDate(state) {
+      state.disabledClosingDate = true;
+    },
+    enableClosingDate(state) {
+      state.disabledClosingDate = false;
+    },
     cleanState(state) {
+      state.disabledClosingDate = true;
       state.data = emptyData;
       state.status = "none";
     },
@@ -89,6 +101,7 @@ export const fileDetailsSlice = createSlice<State, SliceCaseReducers<State>>({
   },
 });
 
-export const { cleanState } = fileDetailsSlice.actions;
+export const { disableClosingDate, enableClosingDate, cleanState } =
+  fileDetailsSlice.actions;
 
 export default fileDetailsSlice.reducer;

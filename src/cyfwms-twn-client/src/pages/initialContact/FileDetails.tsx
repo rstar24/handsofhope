@@ -5,7 +5,12 @@ import {
 import ICLayout from "../../components/initialContact/ICLayout";
 import ICInput from "../../components/initialContact/ICInput";
 import ICDropdown from "../../components/initialContact/ICDropdown";
-import { doGet, doPost } from "../../features/initialContact/fileDetails/slice";
+import {
+  disableClosingDate,
+  enableClosingDate,
+  doGet,
+  doPost,
+} from "../../features/initialContact/fileDetails/slice";
 import { initiate } from "../../features/initiatorSlice";
 import { unhideTabs } from "../../features/navBarSlice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
@@ -14,6 +19,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import type { Data } from "../../features/initialContact/fileDetails/slice";
 import type { FormEvent, ReactElement } from "react";
+import Input from "../../components/Input";
 
 /**
  * The FileDetails functional component.
@@ -25,14 +31,13 @@ const FileDetails = (): ReactElement => {
   const { initialContactStatus } = useAppSelector(
     (state: any) => state.codetable
   );
-
-  const data = useAppSelector((state: any) => state.icFileDetails.data);
   const isInitiated = useAppSelector(
     (state: any) => state.initiator.isInitiated
   );
+  const state = useAppSelector((state) => state.icFileDetails);
 
   useEffect(() => {
-    dispatch(doGet(data.fileDetailsId))
+    dispatch(doGet(state.data.fileDetailsId))
       .unwrap()
       .then((data) => {
         console.log("FileDetails GET backend API was successful!");
@@ -49,7 +54,7 @@ const FileDetails = (): ReactElement => {
     e.preventDefault();
     const form: any = e.currentTarget;
     const formData: Data = {
-      fileDetailsId: data.fileDetailsId,
+      fileDetailsId: state.data.fileDetailsId,
       fileNumber: form.fileNumber.value,
       clientName: form.clientName.value,
       startingDate: form.startingDate.value,
@@ -70,6 +75,20 @@ const FileDetails = (): ReactElement => {
       });
   };
 
+  // Handles the form data submi and other
+  // activities.
+  const changeHandler = (e: FormEvent) => {
+    e.preventDefault();
+    const form: any = e.currentTarget;
+    console.log(form.closingDate.value);
+    if (form.status.value === "Closed") {
+      dispatch(enableClosingDate(null));
+    } else {
+      form.closingDate.value = "";
+      dispatch(disableClosingDate(null));
+    }
+  };
+
   const nextClickHandler = () => {
     navigate("/initial_contact/referral_information");
   };
@@ -84,18 +103,19 @@ const FileDetails = (): ReactElement => {
           gap: "1rem 0",
         }}
         onSubmit={submitHandler}
+        onChange={changeHandler}
       >
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <ICInput
-              autofill={data.fileNumber}
+              autofill={state.data.fileNumber}
               id="fileNumber"
               value="File No."
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <ICInput
-              autofill={data.clientName}
+              autofill={state.data.clientName}
               id="clientName"
               value="Client Name"
             />
@@ -104,7 +124,7 @@ const FileDetails = (): ReactElement => {
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <ICInput
-              autofill={data.startingDate}
+              autofill={state.data.startingDate}
               id="startingDate"
               value="Date"
               type="date"
@@ -112,7 +132,7 @@ const FileDetails = (): ReactElement => {
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <ICInput
-              autofill={data.caseworker}
+              autofill={state.data.caseworker}
               id="caseWorker"
               value="Case Worker"
             />
@@ -121,7 +141,7 @@ const FileDetails = (): ReactElement => {
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <ICDropdown
-              autofill={data.status}
+              autofill={state.data.status}
               id="status"
               optionsList={Object.values(initialContactStatus).map(
                 (status: any) => status.en
@@ -130,8 +150,9 @@ const FileDetails = (): ReactElement => {
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <ICInput
-              autofill={data.dateClosed}
+            <Input
+              autofill={state.data.dateClosed}
+              disabled={state.disabledClosingDate}
               id="closingDate"
               value="Date Closed"
               type="date"

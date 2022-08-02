@@ -60,12 +60,12 @@ const CYFMSPopup = (props: ModalUnstyledProps): ReactElement => {
           left: "50%",
           top: "50%",
           transform: "translate(-50%, -50%)",
-          maxHeight: 500,
+          height: 500,
           maxWidth: 1000,
           bgcolor: "background.paper",
           border: "5px solid black",
           boxShadow: 24,
-          overflowY: "auto",
+          //overflowY: "auto",
         }}
       >
         <IconButton

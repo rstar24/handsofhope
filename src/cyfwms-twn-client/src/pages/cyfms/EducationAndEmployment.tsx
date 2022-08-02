@@ -12,7 +12,7 @@ import {
 } from "../../features/cyfms/educationAndEmployment/slice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { Box, Typography } from "@mui/material";
-import React, { BaseSyntheticEvent, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import type { FormEvent, ReactElement } from "react";
 

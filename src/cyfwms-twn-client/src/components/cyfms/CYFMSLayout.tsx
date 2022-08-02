@@ -27,7 +27,7 @@ const CYFMSLayout = (props: {
           gap: { xs: "1rem 0", md: undefined },
         }}
       >
-        <Box sx={{ flex: "1 1 0" }}>
+        <Box sx={{ flex: "1 1 0", height: 400, overflowY: "auto" }}>
           <NavBar
             tabs={[
               { value: "Register", route: "/cyfms/register" },
@@ -56,7 +56,9 @@ const CYFMSLayout = (props: {
             ]}
           />
         </Box>
-        <Box sx={{ flex: "4 1 0", px: "1rem" }}>{props.children}</Box>
+        <Box sx={{ flex: "4 1 0", px: "1rem", height: 400, overflowY: "auto" }}>
+          {props.children}
+        </Box>
       </Box>
     </Box>
   );

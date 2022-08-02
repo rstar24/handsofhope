@@ -53,7 +53,9 @@ const ICLayout = (props: {
             ]}
           />
         </Box>
-        <Box sx={{ flex: "4 1 0", px: "1rem" }}>{props.children}</Box>
+        <Box sx={{ flex: "4 1 0", px: "1rem", height: 400, overflowY: "auto" }}>
+          {props.children}
+        </Box>
       </Box>
     </Box>
   );
