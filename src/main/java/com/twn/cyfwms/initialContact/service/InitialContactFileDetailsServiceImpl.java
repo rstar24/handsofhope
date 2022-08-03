@@ -8,6 +8,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.time.LocalDate;
 import java.util.Optional;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
@@ -18,6 +20,8 @@ public class InitialContactFileDetailsServiceImpl implements  InitialContactFile
     private ModelMapper modelMapper;
     @Autowired
     private InitialContactFileDetailsRepository initialContactFileDetailsRepository;
+
+
     @Override
     public InitialContactFileDetailsDto readAllFileDetails(Long fileDetailsID) {
         if (fileDetailsID != 0) {
@@ -25,6 +29,9 @@ public class InitialContactFileDetailsServiceImpl implements  InitialContactFile
             InitialContactFileDetails initialContactFileDetails = initialContactFileDetailsRepository.findById(fileDetailsID).get();
             if (initialContactFileDetails != null) {
                 modelMapper.map(initialContactFileDetails, initialContactFileDetailsDto);
+                if (initialContactFileDetailsDto.getDateClosed()==null){
+                    initialContactFileDetailsDto.setDateClosed(LocalDate.of(1,1,1));
+                }
             } else {
                 throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
             }
