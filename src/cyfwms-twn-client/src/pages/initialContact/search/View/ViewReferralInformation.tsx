@@ -5,7 +5,7 @@ import { Box, Typography } from "@mui/material";
 import React from "react";
 
 const ViewReferralInformation = () => {
-  const data = useAppSelector((state) => state.icPresentConcerns.data);
+  const data = useAppSelector((state) => state.icReferralInformation.data);
 
   return (
     <Box paddingTop={3}>
@@ -17,20 +17,24 @@ const ViewReferralInformation = () => {
             paddingLeft: 8,
           }}
         >
-          {t[1] === "" ? (
+          {t[1] === "" || t[1] === 0 ? (
             <></>
           ) : (
             <>
-              <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                <Typography variant="h6" style={styles.keys}>
-                  {ReferralInformationLabels[k]}
-                </Typography>
-              </Box>
-              <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                <Typography variant="h6" style={styles.values}>
-                  {t[1]}
-                </Typography>
-              </Box>
+              {k !== 1 && k !== 0 && (
+                <>
+                  <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+                    <Typography variant="h6" style={styles.keys}>
+                      {ReferralInformationLabels[k]}
+                    </Typography>
+                  </Box>
+                  <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+                    <Typography variant="h6" style={styles.values}>
+                      {t[1]}
+                    </Typography>
+                  </Box>
+                </>
+              )}
             </>
           )}
         </Box>

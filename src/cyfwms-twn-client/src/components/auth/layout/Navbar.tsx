@@ -7,6 +7,11 @@ import { cleanState as cleanFamilyPhysiciansState } from "../../../features/cyfm
 import { cleanState as cleanHouseholdMembersState } from "../../../features/cyfms/householdMembers/slice";
 import { cleanState as cleanOtherInformationState } from "../../../features/cyfms/otherInformation/slice";
 import { cleanState as cleanRegisterState } from "../../../features/cyfms/register/slice";
+import { cleanState as cleanFileDetailsState } from "../../../features/initialContact/fileDetails/slice";
+import { cleanState as cleanIncidentReportState } from "../../../features/initialContact/incidentReport/slice";
+import { cleanState as cleanPatientCareInformationState } from "../../../features/initialContact/patientCareInformation/slice";
+import { cleanState as cleanPresentConcernsState } from "../../../features/initialContact/presentConcerns/slice";
+import { cleanState as cleanReferralInformationState } from "../../../features/initialContact/referralInformation/slice";
 import { cleanSearchState } from "../../../features/search/searchSlice";
 import { onLogout } from "../../../features/login/loginSlice";
 import { useAppDispatch } from "../../../library/hooks";
@@ -74,6 +79,11 @@ export default function Navbar() {
     dispatch(cleanRegisterState(null));
     dispatch(cleanSearchState());
     dispatch(cleanCounselorsState(null));
+    dispatch(cleanFileDetailsState(null));
+    dispatch(cleanReferralInformationState(null));
+    dispatch(cleanIncidentReportState(null));
+    dispatch(cleanPresentConcernsState(null));
+    dispatch(cleanPatientCareInformationState(null));
     navigate("/login");
   };
 

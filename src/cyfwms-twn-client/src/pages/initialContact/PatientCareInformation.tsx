@@ -3,15 +3,11 @@ import ICLayout from "../../components/initialContact/ICLayout";
 import ICDropdown from "../../components/initialContact/ICDropdown";
 import Inpatient from "../../components/initialContact/Inpatient";
 import Outpatient from "../../components/initialContact/Outpatient";
-import { cleanState as cleanFileDetailsState } from "../../features/initialContact/fileDetails/slice";
-import { cleanState as cleanIncidentReportState } from "../../features/initialContact/incidentReport/slice";
 import {
   cleanState as cleanPatientCareInformationState,
   doGet,
   doPost,
 } from "../../features/initialContact/patientCareInformation/slice";
-import { cleanState as cleanPresentConcernsState } from "../../features/initialContact/presentConcerns/slice";
-import { cleanState as cleanReferralInformationState } from "../../features/initialContact/referralInformation/slice";
 import { uninitiate } from "../../features/initiatorSlice";
 import { hideTabs } from "../../features/navBarSlice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
@@ -20,6 +16,7 @@ import { Box } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import type { Data } from "../../features/initialContact/patientCareInformation/slice";
 import type { FormEvent, ReactElement } from "react";
+import { useNavigate } from "react-router";
 
 /**
  * The PatientCareInformation functional component.
@@ -28,9 +25,11 @@ import type { FormEvent, ReactElement } from "react";
 const PatientCareInformation = (): ReactElement => {
   const popupContext = useContext(PopupContext);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const initialContactID = useAppSelector(
     (state) => state.icFileDetails.data.fileDetailsId
   );
+  console.log(initialContactID);
   const { patient } = useAppSelector((state: any) => state.codetable);
   const data = useAppSelector((state) => state.icPatientCareInformation.data);
 
@@ -92,15 +91,11 @@ const PatientCareInformation = (): ReactElement => {
     dispatch(doPost(formData))
       .unwrap()
       .then(() => {
-        dispatch(cleanFileDetailsState(null));
-        dispatch(cleanReferralInformationState(null));
-        dispatch(cleanIncidentReportState(null));
-        dispatch(cleanPresentConcernsState(null));
-        dispatch(cleanPatientCareInformationState(null));
         console.log("PatientCareInformation POST backend API was successful!");
         popupContext.setOpen(false);
         dispatch(hideTabs(null));
         dispatch(uninitiate(null));
+        navigate(`../search/view/${initialContactID}`);
       })
       .catch((err) => {
         console.log("PatientCareInformation POST backend API didn't work!");

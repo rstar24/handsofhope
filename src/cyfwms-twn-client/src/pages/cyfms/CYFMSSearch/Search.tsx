@@ -27,7 +27,7 @@ const CYFMSSearchPanel = (): ReactElement => {
     e.preventDefault();
     const data: any = e.currentTarget;
     const searchUser = {
-      referenceId: null,
+      referenceId: data.referenceId.value || null,
       firstname: data.firstName.value || null,
       surname: data.lastName.value || null,
       middleName: data.middleName.value || null,
@@ -86,6 +86,12 @@ const CYFMSSearchPanel = (): ReactElement => {
           }}
           onSubmit={submitHandler}
         >
+          <Input
+            id="referenceId"
+            validationPattern={`^[^a-zA-Z]*$`}
+            validationTitle="Alphabets are not allowed!"
+            value="Reference Id"
+          />
           <Input
             id="firstName"
             minChars={2}

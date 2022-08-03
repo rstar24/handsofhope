@@ -86,9 +86,11 @@ const Register = (): ReactElement => {
         }}
         onSubmit={submitHandler}
       >
-        <Typography color="primary">
-          Reference ID: {state.data.referenceId}
-        </Typography>
+        {state.data.referenceId !== 0 && (
+          <Typography paddingLeft={1}>
+            Reference ID : {state.data.referenceId}
+          </Typography>
+        )}
         <Box>
           <Box>
             <Input

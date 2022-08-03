@@ -6,7 +6,6 @@ import React from "react";
 
 const ViewFileDetails = () => {
   const data = useAppSelector((state) => state.icFileDetails.data);
-
   return (
     <Box paddingTop={3}>
       {Object.entries(data).map((t: any, k: any) => (
@@ -21,18 +20,24 @@ const ViewFileDetails = () => {
             <></>
           ) : (
             <>
-              {k !== 0 && k !== 1 && (
+              {t[1] === "" ? (
+                <></>
+              ) : (
                 <>
-                  <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                    <Typography variant="h6" style={styles.keys}>
-                      {FileDetailsLabels[k]}
-                    </Typography>
-                  </Box>
-                  <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                    <Typography variant="h6" style={styles.values}>
-                      {t[1]}
-                    </Typography>
-                  </Box>
+                  {k !== 0 && (
+                    <>
+                      <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+                        <Typography variant="h6" style={styles.keys}>
+                          {FileDetailsLabels[k]}
+                        </Typography>
+                      </Box>
+                      <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+                        <Typography variant="h6" style={styles.values}>
+                          {t[1]}
+                        </Typography>
+                      </Box>
+                    </>
+                  )}
                 </>
               )}
             </>

@@ -106,9 +106,11 @@ const FileDetails = (): ReactElement => {
         onSubmit={submitHandler}
         onChange={changeHandler}
       >
-        <Typography color="primary">
-          Reference ID: {state.data.initialContactReferenceId}
-        </Typography>
+        {state.data.initialContactReferenceId !== 0 && (
+          <Typography paddingLeft={1}>
+            Reference ID: {state.data.initialContactReferenceId}
+          </Typography>
+        )}
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <ICInput

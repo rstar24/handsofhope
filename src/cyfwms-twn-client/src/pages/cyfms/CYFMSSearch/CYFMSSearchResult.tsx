@@ -4,7 +4,7 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import { doGet as doGetRegister } from "../../../features/cyfms/register/slice";
@@ -19,6 +19,7 @@ import EditIcon from "../EditIcon";
 const CYFMSSearchResult = (): ReactElement => {
   const dispatch = useAppDispatch();
   const searchData = useAppSelector((state) => (state as any).search.readUser);
+
   const handleSearchView = (id: any) => {
     dispatch(doGetRegister(id));
     dispatch(doGetContact(id));
@@ -29,9 +30,12 @@ const CYFMSSearchResult = (): ReactElement => {
     dispatch(doGetFamilyPhysicians(id));
     dispatch(doGetCounselors(id));
   };
-  console.log(searchData);
+
   return (
     <Box>
+      <Typography fontSize={20} fontWeight={800} color="red" paddingLeft={2}>
+        Total Results - {searchData.length}
+      </Typography>
       <Table sx={{ minWidth: 800 }} aria-label="simple table">
         <TableHead>
           <TableRow>

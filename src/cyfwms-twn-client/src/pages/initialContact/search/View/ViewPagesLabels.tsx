@@ -22,7 +22,7 @@ export const ReferralInformationLabels = [
 export const IncidentReportLabels = [
   "File Details Id",
   "Incident Report Id",
-  "Date Of Report",
+  "Date of Report",
   "Reported By",
   "Parties Involved",
   "Witnesses",

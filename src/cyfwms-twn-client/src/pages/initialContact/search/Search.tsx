@@ -31,7 +31,7 @@ const Search = (): ReactElement => {
     console.log(form.clientName.value);
     const formData: Record = {
       fileDetailsId: null,
-      referenceId: referenceId || null,
+      referenceId: form.refreferenceId.value || null,
       clientName: form.clientName.value || null,
       fileNumber: form.fileNumber.value || null,
       caseworker: form.caseWorker.value || null,
@@ -91,6 +91,12 @@ const Search = (): ReactElement => {
           }}
           onSubmit={submitHandler}
         >
+          <Input
+            id="refreferenceId"
+            validationPattern={`^[^a-zA-Z]*$`}
+            validationTitle="Alphabets are not allowed!"
+            value="Reference ID"
+          />
           <Input
             id="clientName"
             minChars={2}
