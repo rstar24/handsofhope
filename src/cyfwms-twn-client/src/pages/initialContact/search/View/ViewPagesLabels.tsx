@@ -53,10 +53,6 @@ export const InpatientLabels = [
 ];
 
 export const OutpatientLabels = [
-  "Creation Date",
-  "Last Written",
-  "Outpatient Id",
-  "PatientCare Info Id",
   "Reason For Therapy",
   "Self Help Group",
   "Self Help Group Location",

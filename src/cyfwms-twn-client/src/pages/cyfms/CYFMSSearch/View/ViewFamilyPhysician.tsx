@@ -24,7 +24,7 @@ const ViewFamilyPhysician = () => {
                   paddingLeft: 8,
                 }}
               >
-                {t[1] === "" ? (
+                {t[1] === "" || t[1] === "0001-01-01" ? (
                   <></>
                 ) : (
                   <>

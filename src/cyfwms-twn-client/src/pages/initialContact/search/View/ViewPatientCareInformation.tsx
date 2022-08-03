@@ -22,32 +22,22 @@ const ViewPatientCareInformation = () => {
                 paddingLeft: 8,
               }}
             >
-              {t[1] === "" ? (
-                <></>
-              ) : (
-                <>
-                  {k !== 1 && (
-                    <>
-                      <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                        <Typography variant="h6" style={styles.keys}>
-                          {InpatientLabels[k]}
-                        </Typography>
-                      </Box>
-                      <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                        <Typography variant="h6" style={styles.values}>
-                          {t[1]}
-                        </Typography>
-                      </Box>
-                    </>
-                  )}
-                </>
-              )}
+              <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+                <Typography variant="h6" style={styles.keys}>
+                  {InpatientLabels[k]}
+                </Typography>
+              </Box>
+              <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+                <Typography variant="h6" style={styles.values}>
+                  {t[1]}
+                </Typography>
+              </Box>
             </Box>
           ))}
         </Box>
       )}
 
-      {data.typeOfPatient === "Outpatient" && (
+      {/* {data.typeOfPatient === "Outpatient" && (
         <Box paddingTop={3}>
           <Typography fontSize={20} fontWeight={800}>
             {data.typeOfPatient}
@@ -81,7 +71,7 @@ const ViewPatientCareInformation = () => {
             </Box>
           ))}
         </Box>
-      )}
+      )} */}
     </>
   );
 };

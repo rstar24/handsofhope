@@ -10,7 +10,6 @@ import {
 const ViewCriminalHistory = () => {
   const data = useAppSelector((state) => state.cyfmsCriminalHistory.data);
 
-  console.log(typeof data.parole);
   return (
     <>
       <Box paddingTop={1}>
@@ -73,7 +72,7 @@ const ViewCriminalHistory = () => {
               paddingLeft: 8,
             }}
           >
-            {t[1] === "" || t[1] === false ? (
+            {t[1] === "" || t[1] === "0001-01-01" || t[1] === false ? (
               <></>
             ) : (
               <>
