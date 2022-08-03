@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 
+import java.time.LocalDate;
+
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 
@@ -30,6 +32,26 @@ public class CriminalHistoryServiceImpl implements CriminalHistoryService{
                     criminalHistoryRepo.findByParticipantId(participantId);
             if(criminalHistory!=null) {
                 modelMapper.map(criminalHistory, criminalHistoryDto);
+                if (criminalHistoryDto.getStartDate()==null){
+                    criminalHistoryDto.setStartDate(LocalDate.of(1,1,1));
+                }
+                if (criminalHistoryDto.getEndDate()==null){
+                    criminalHistoryDto.setEndDate(LocalDate.of(1,1,1));
+                }
+
+                for (int i=0;criminalHistory.getCriminalHistoryRecordList().size()-1>=i; i++ ) {
+                    if (criminalHistoryDto.getCriminalHistoryRecordList().get(i).getStartDate() == null) {
+                        criminalHistoryDto.getCriminalHistoryRecordList().get(i).setStartDate(LocalDate.of(1, 1, 1));
+                    }
+                    if (criminalHistoryDto.getCriminalHistoryRecordList().get(i).getEndDate()==null){
+                        criminalHistoryDto.getCriminalHistoryRecordList().get(i).setEndDate(LocalDate.of(1,1,1));
+                    }
+                    if (criminalHistoryDto.getCriminalHistoryRecordList().get(i).getArrestDate()==null){
+                        criminalHistoryDto.getCriminalHistoryRecordList().get(i).setArrestDate(LocalDate.of(1,1,1));
+                    }
+                }
+
+
             }else{
                 throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
             }

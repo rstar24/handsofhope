@@ -2,6 +2,10 @@ package com.twn.cyfwms.participant.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
+
+import javax.persistence.Column;
+import java.time.LocalDate;
+
 @Builder
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -30,5 +34,9 @@ public class ParticipantContactDto {
     private String cellPhone;
     @Getter @Setter
     private String emailAddress;
+    @Getter @Setter
+    private LocalDate startDate;
+    @Getter @Setter
+    private LocalDate endDate;
 
 }

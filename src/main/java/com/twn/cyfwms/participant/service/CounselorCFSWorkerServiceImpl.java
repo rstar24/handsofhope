@@ -35,6 +35,15 @@ public class CounselorCFSWorkerServiceImpl implements CounselorCFSWorkerService{
             if(CounselorCFSWorkersList!=null) {
                 counselorCFSWorkersDtoList = modelMapper.map(CounselorCFSWorkersList, new TypeToken<List<CounselorCFSWorkersDto>>() {
                 }.getType());
+
+                for (int i=0;i<=counselorCFSWorkersDtoList.size()-1;i++){
+                    if (counselorCFSWorkersDtoList.get(i).getStartDate()==null){
+                        counselorCFSWorkersDtoList.get(i).setStartDate(LocalDate.of(1,1,1));
+                    }
+                    if (counselorCFSWorkersDtoList.get(i).getEndDate()==null){
+                        counselorCFSWorkersDtoList.get(i).setEndDate(LocalDate.of(1,1,1));
+                    }
+                }
             }else{
                 throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
 

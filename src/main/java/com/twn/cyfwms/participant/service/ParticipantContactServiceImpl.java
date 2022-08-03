@@ -30,6 +30,12 @@ public class ParticipantContactServiceImpl implements ParticipantContactService 
                     participantContactRepository.findByParticipantId(participantId);
             if(participantContact!=null) {
                 modelMapper.map(participantContact, participantContactDto);
+                if (participantContactDto.getStartDate()==null){
+                    participantContactDto.setStartDate(LocalDate.of(1,1,1));
+                }
+                if (participantContactDto.getEndDate()==null){
+                    participantContactDto.setEndDate(LocalDate.of(1,1,1));
+                }
             }else{
                 throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
 

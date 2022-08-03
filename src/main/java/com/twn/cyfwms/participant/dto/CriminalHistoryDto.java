@@ -3,6 +3,9 @@ package com.twn.cyfwms.participant.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.twn.cyfwms.participant.entity.CriminalHistoryRecord;
 import lombok.*;
+
+import javax.persistence.Column;
+import java.time.LocalDate;
 import java.util.List;
 
 @Builder
@@ -31,4 +34,8 @@ public class CriminalHistoryDto{
 
     @Getter @Setter
     private String courtWorkerAndContactInfo;
+    @Getter @Setter
+    private LocalDate startDate;
+    @Getter @Setter
+    private LocalDate endDate;
 }

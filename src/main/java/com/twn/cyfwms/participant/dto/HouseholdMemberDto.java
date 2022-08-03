@@ -3,6 +3,7 @@ package com.twn.cyfwms.participant.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
+import javax.persistence.Column;
 import java.time.LocalDate;
 
 @Builder
@@ -23,4 +24,11 @@ public class HouseholdMemberDto {
     private LocalDate dateOfBirth;
     @Getter @Setter
     private String residing;
+    @Getter @Setter
+    private LocalDate startDate;
+    @Getter @Setter
+    private LocalDate endDate;
+
+
+
 }

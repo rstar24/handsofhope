@@ -46,6 +46,13 @@ public class EducationAndEmploymentServiceImpl implements EducationAndEmployment
             Employment employment= employmentRepository.findByParticipantId(participantId);
             if(employment!=null) {
                 modelMapper.map(employment, educationAndEmploymentCompositeDto);
+                if(educationAndEmploymentCompositeDto.getStartDate()==null){
+                    educationAndEmploymentCompositeDto.setStartDate(LocalDate.of(1,1,1));
+                }
+                if (educationAndEmploymentCompositeDto.getEndDate()==null){
+                    educationAndEmploymentCompositeDto.setEndDate(LocalDate.of(1,1,1));
+                }
+
             }else{
                 throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
             }

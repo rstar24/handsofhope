@@ -34,9 +34,7 @@ public class ParticipantSearchResultsDto {
     private String cellPhone;
    @Getter @Setter
    private Long referenceId;
-    @Getter
-    @Setter
-    private Long totalCount;
+
 
 
     public ParticipantSearchResultsDto(Long participantId, String firstname, String middleName, String surname, String maritalStatus, LocalDate dateOfBirth, String city, String homePhone, String workPhone, String cellPhone,Long referenceId) {

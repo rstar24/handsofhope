@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
@@ -27,6 +30,15 @@ public class InitialContactIncidentReportServiceImpl implements InitialContactIn
             InitialContactIncidentReport initialContactIncidentReport = initialContactIncidentReportRepository.findByFileDetailsId(fileDetailsID);
             if (initialContactIncidentReport != null) {
                 modelMapper.map(initialContactIncidentReport, initialContactIncidentReportDto);
+                if (initialContactIncidentReportDto.getDateOfReport()==null){
+                    initialContactIncidentReportDto.setDateOfReport(LocalDate.of(1,1,1));
+                }
+                if (initialContactIncidentReportDto.getIncidentDate()==null){
+                    initialContactIncidentReportDto.setIncidentDate(LocalDate.of(1,1,1));
+                }
+                if (initialContactIncidentReportDto.getIncidentTime()==null){
+                    initialContactIncidentReportDto.setIncidentTime(LocalTime.of(1,1,1));
+                }
             } else {
                 throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
             }

@@ -135,13 +135,7 @@ public class TWNInitialContactController {
         initialContactSearchCriteriaDto.setReferenceId(("null".equals(var.get("referenceId"))
                 || var.get("referenceId") == null) ?null:Long.parseLong(var.get("referenceId")));
 
-        InitialContactSearchResultsDto initialContactSearchResultsDto = new InitialContactSearchResultsDto();
-        List<InitialContactSearchResultsDto> newInitialContactSearchResultsDto = initialContactSearchService.search(initialContactSearchCriteriaDto);
-       initialContactSearchResultsDto.setTotalCount((long) newInitialContactSearchResultsDto.size());
-        newInitialContactSearchResultsDto.add(initialContactSearchResultsDto);
-        return newInitialContactSearchResultsDto;
+
+        return initialContactSearchService.search(initialContactSearchCriteriaDto);
     }
-
-
-
 }

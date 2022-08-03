@@ -35,6 +35,14 @@ public class FamilyPhysicianServiceImpl implements FamilyPhysicianService {
             List<FamilyPhysician> familyPhysicianList = familyPhysicianRepository.findByParticipantId(participantId);
             if(familyPhysicianList!=null) {
                 FamilyPhysicianDtoList = modelMapper.map(familyPhysicianList, new TypeToken<List<FamilyPhysicianDto>>() {}.getType());
+                for (int i=0;i<=FamilyPhysicianDtoList.size()-1;i++){
+                    if (FamilyPhysicianDtoList.get(i).getStartDate()==null){
+                        FamilyPhysicianDtoList.get(i).setStartDate(LocalDate.of(1,1,1));
+                    }
+                    if (FamilyPhysicianDtoList.get(i).getEndDate()==null){
+                        FamilyPhysicianDtoList.get(i).setEndDate(LocalDate.of(1,1,1));
+                    }
+                }
             }else{
                 throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
             }

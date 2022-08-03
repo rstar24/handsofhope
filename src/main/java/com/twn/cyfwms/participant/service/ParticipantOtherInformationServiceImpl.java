@@ -32,6 +32,12 @@ public class ParticipantOtherInformationServiceImpl implements ParticipantOtherI
                     participantOtherInformationRepository.findByParticipantId(participantId);
             if(participantContact!=null) {
                 modelMapper.map(participantContact, participantOtherInformationServiceDto);
+                if (participantOtherInformationServiceDto.getStartDate()==null){
+                    participantOtherInformationServiceDto.setStartDate(LocalDate.of(1,1,1));
+                }
+                if (participantOtherInformationServiceDto.getEndDate()==null){
+                    participantOtherInformationServiceDto.setEndDate(LocalDate.of(1,1,1));
+                }
             }else{
                 throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
             }
