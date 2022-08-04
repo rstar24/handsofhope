@@ -37,7 +37,7 @@ const ViewPatientCareInformation = () => {
         </Box>
       )}
 
-      {/* {data.typeOfPatient === "Outpatient" && (
+      {data.typeOfPatient === "Outpatient" && (
         <Box paddingTop={3}>
           <Typography fontSize={20} fontWeight={800}>
             {data.typeOfPatient}
@@ -55,23 +55,29 @@ const ViewPatientCareInformation = () => {
                   <></>
                 ) : (
                   <>
-                    <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                      <Typography variant="h6" style={styles.keys}>
-                        {OutpatientLabels[k]}
-                      </Typography>
-                    </Box>
-                    <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                      <Typography variant="h6" style={styles.values}>
-                        {t[1]}
-                      </Typography>
-                    </Box>
+                    <>
+                      {k !== 0 && k !== 8 && k !== 10 && k !== 9 && (
+                        <>
+                          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+                            <Typography variant="h6" style={styles.keys}>
+                              {OutpatientLabels[k]}
+                            </Typography>
+                          </Box>
+                          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+                            <Typography variant="h6" style={styles.values}>
+                              {t[1]}
+                            </Typography>
+                          </Box>
+                        </>
+                      )}
+                    </>
                   </>
                 )}
               </>
             </Box>
           ))}
         </Box>
-      )} */}
+      )}
     </>
   );
 };

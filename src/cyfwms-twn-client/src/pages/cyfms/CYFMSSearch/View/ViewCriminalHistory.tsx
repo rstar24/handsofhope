@@ -15,7 +15,8 @@ const ViewCriminalHistory = () => {
       <Box paddingTop={1}>
         {Object.keys(data.criminalHistoryRecordList).map((i: any) => (
           <>
-            {data.participantId !== 0 && (
+            {data.criminalHistoryRecordList[0].criminalHistoryRecordId !==
+              0 && (
               <Typography paddingTop={2} paddingLeft={4}>
                 Criminal History {Number(i) + 1}
               </Typography>
@@ -29,7 +30,7 @@ const ViewCriminalHistory = () => {
                       paddingLeft: 8,
                     }}
                   >
-                    {t[1] === "" ? (
+                    {t[1] === "" || t[1] === "0001-01-01" ? (
                       <></>
                     ) : (
                       <>
