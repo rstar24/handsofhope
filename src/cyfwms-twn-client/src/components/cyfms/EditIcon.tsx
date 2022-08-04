@@ -103,8 +103,8 @@ const EditIcon = (props: any): ReactElement => {
             dispatch(doGetHouseholdMembers(props.value));
             dispatch(doGetEducationAndEmployment(props.value));
             dispatch(doGetCriminalHistory(props.value));
-            dispatch(doGetFamilyPhysicians(props.value));
             dispatch(doGetCounselors(props.value));
+            dispatch(doGetFamilyPhysicians(props.value));
             dispatch(doGetOtherInformation(props.value));
             dispatch(doGetRegister(props.value))
               .unwrap()

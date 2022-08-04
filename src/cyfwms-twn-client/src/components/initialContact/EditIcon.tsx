@@ -100,8 +100,8 @@ const EditIcon = (props: any): ReactElement => {
             dispatch(doGetICTypeOfPatient());
             dispatch(doGetReferralInformation(props.value));
             dispatch(doGetIncidentReport(props.value));
-            dispatch(doGetPresentConcerns(props.value));
             dispatch(doGetPatientCareInformation(props.value));
+            dispatch(doGetPresentConcerns(props.value));
             dispatch(doGetFileDetails(props.value))
               .unwrap()
               .then(() => {

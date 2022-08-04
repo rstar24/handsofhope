@@ -24,6 +24,7 @@ import type { ReactElement } from "react";
 
 const SearchResults = (): ReactElement => {
   const dispatch = useAppDispatch();
+
   const searchData = useAppSelector((state) => (state as any).search.readUser);
 
   const handleSearchView = (id: any) => {
