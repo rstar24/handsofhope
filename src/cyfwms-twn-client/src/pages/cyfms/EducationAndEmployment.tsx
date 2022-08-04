@@ -65,7 +65,7 @@ const EducationAndEmployment = (): ReactElement => {
       .unwrap()
       .then((data) => {
         console.log("EducationAndEmployment POST backend API was successful!");
-        navigate("/cyfms/criminal_history");
+        navigate("../criminal_history");
       })
       .catch((err) => {
         console.log("EducationAndEmployment POST backend API didn't work!");

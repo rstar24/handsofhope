@@ -59,7 +59,7 @@ const PresentConcerns = (): ReactElement => {
       .unwrap()
       .then(() => {
         console.log("PresentConcerns POST backend API was successful!");
-        navigate("/initial_contact/patient_care_information");
+        navigate("../patient_care_information");
       })
       .catch((err) => {
         console.log("PresentConcerns POST backend API didn't work!");

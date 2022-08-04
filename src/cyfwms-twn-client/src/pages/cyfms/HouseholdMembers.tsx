@@ -67,7 +67,7 @@ const HouseholdMembers = (): ReactElement => {
       .unwrap()
       .then(() => {
         console.log("HouseholdMembers POST backend API was successful!");
-        navigate("/cyfms/education_and_employment");
+        navigate("../education_and_employment");
       })
       .catch((err) => {
         console.log("HouseholdMembers POST backend API was successful!");

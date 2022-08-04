@@ -1,10 +1,11 @@
+import EditIcon from "../../../components/initialContact/EditIcon";
 import { doGet as doGetFileDetails } from "../../../features/initialContact/fileDetails/slice";
-import { doGet as doGetIncidentReport } from "../../../features/initialContact/fileDetails/slice";
+import { doGet as doGetIncidentReport } from "../../../features/initialContact/incidentReport/slice";
 import { doGet as doGetPatientCareInformation } from "../../../features/initialContact/patientCareInformation/slice";
 import { doGet as doGetPresentConcerns } from "../../../features/initialContact/presentConcerns/slice";
 import { doGet as doGetReferralInformation } from "../../../features/initialContact/referralInformation/slice";
+import { setView } from "../../../features/popupSlice";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
-import EditIcon from "../EditIcon";
 import {
   Box,
   Table,
@@ -18,16 +19,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 import type { Record } from "../../../features/initialContact/search/slice";
 import type { ReactElement } from "react";
-import { doGet } from "../../../features/initialContact/incidentReport/slice";
 
 const SearchResults = (): ReactElement => {
   const dispatch = useAppDispatch();
   const data = useAppSelector((state) => state.icSearch.data);
 
   const handleSearchView = (initialContactID: any) => {
+    dispatch(setView(true));
     dispatch(doGetFileDetails(initialContactID));
     dispatch(doGetReferralInformation(initialContactID));
-    dispatch(doGet(initialContactID));
+    dispatch(doGetIncidentReport(initialContactID));
     dispatch(doGetPresentConcerns(initialContactID));
     dispatch(doGetPatientCareInformation(initialContactID));
   };
@@ -57,13 +58,12 @@ const SearchResults = (): ReactElement => {
             >
               <TableCell>
                 <Link
-                  to={`view/${initialContact.fileDetailsId}`}
+                  to={`/initial_contact/view/${initialContact.fileDetailsId}`}
                   onClick={() => handleSearchView(initialContact.fileDetailsId)}
                 >
                   {initialContact.referenceId}
                 </Link>
               </TableCell>
-
               <TableCell>{initialContact.clientName}</TableCell>
               <TableCell>{initialContact.fileNumber}</TableCell>
               <TableCell>{initialContact.caseworker}</TableCell>

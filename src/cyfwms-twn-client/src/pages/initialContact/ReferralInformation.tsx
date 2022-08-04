@@ -59,7 +59,7 @@ const ReferralInformation = (): ReactElement => {
       .unwrap()
       .then(() => {
         console.log("ReferralInformation POST backend API was successful!");
-        navigate("/initial_contact/incident_report");
+        navigate("../incident_report");
       })
       .catch((err) => {
         console.log("ReferralInformation POST backend API didn't work!");

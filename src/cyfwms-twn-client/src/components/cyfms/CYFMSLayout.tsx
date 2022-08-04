@@ -30,28 +30,28 @@ const CYFMSLayout = (props: {
         <Box sx={{ flex: "1 1 0", height: 400, overflowY: "auto" }}>
           <NavBar
             tabs={[
-              { value: "Register", route: "/cyfms/register" },
-              { value: "Contact", route: "/cyfms/contact" },
+              { value: "Register", route: "../register" },
+              { value: "Contact", route: "../contact" },
               {
                 value: "Household Members",
-                route: "/cyfms/household_members",
+                route: "../household_members",
               },
               {
                 value: "Education and Employment",
-                route: "/cyfms/education_and_employment",
+                route: "../education_and_employment",
               },
-              { value: "Criminal History", route: "/cyfms/criminal_history" },
+              { value: "Criminal History", route: "../criminal_history" },
               {
                 value: "Family Physician(s)",
-                route: "/cyfms/family_physicians",
+                route: "../family_physicians",
               },
               {
                 value: "Counselor(s) / CFS Worker(s)",
-                route: "/cyfms/counselors",
+                route: "../counselors",
               },
               {
                 value: "Other Information",
-                route: "/cyfms/other_information",
+                route: "../other_information",
               },
             ]}
           />

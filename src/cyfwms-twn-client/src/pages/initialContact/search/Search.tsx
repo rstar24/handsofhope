@@ -1,8 +1,11 @@
 import Input from "../../../components/Input";
+import Popup from "../../../components/Popup";
 import AuthLayout from "../../../components/auth/layout/AuthLayout";
 import CYFMSDropdown from "../../../components/cyfms/CYFMSDropdown";
 import ICHeader from "../../../components/initialContact/ICHeader";
-import { doGet } from "../../../features/initialContact/search/slice";
+import Router from "../../../components/nestedRouters/InitialContact";
+import { doGetICStatus } from "../../../features/codetable/codetableSlice";
+import { doGet as doGetSearch } from "../../../features/initialContact/search/slice";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import SearchResults from "./SearchResults";
 import { Box, Button } from "@mui/material";
@@ -16,13 +19,13 @@ import type { FormEvent, ReactElement } from "react";
  */
 const Search = (): ReactElement => {
   const dispatch = useAppDispatch();
-  const [isShown, setIsShown] = useState(false);
-  const { referenceId } = useAppSelector(
-    (state) => (state as any).cyfmsRegister
+  const icstatus = useAppSelector(
+    (state) => state.codetable.initialContactStatus
   );
+  const [isShown, setIsShown] = useState(false);
 
   useEffect(() => {
-    // dispatch(doGetMaritalStatus());
+    dispatch(doGetICStatus());
   }, []);
 
   const submitHandler = (e: FormEvent) => {
@@ -38,7 +41,7 @@ const Search = (): ReactElement => {
       startingDate: form.startingDate.value || null,
       status: form.status.value || null,
     };
-    dispatch(doGet(formData))
+    dispatch(doGetSearch(formData))
       .unwrap()
       .then(() => {
         console.log("InitialContact Search POST backend API was successful!");
@@ -127,7 +130,9 @@ const Search = (): ReactElement => {
           />
           <CYFMSDropdown
             id="status"
-            optionsList={["", "In Progress", "Closed"]}
+            optionsList={Object.values(icstatus).map(
+              (status: any) => status.en
+            )}
             value="Status"
           />
           <Box
@@ -157,6 +162,7 @@ const Search = (): ReactElement => {
         </Box>
       </Box>
       {isShown && <SearchResults />}
+      <Popup children={<Router />} />
     </AuthLayout>
   );
 };

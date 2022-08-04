@@ -32,23 +32,23 @@ const ICLayout = (props: {
             tabs={[
               {
                 value: "File Details",
-                route: "/initial_contact/file_details",
+                route: "../file_details",
               },
               {
                 value: "Referral Information",
-                route: "/initial_contact/referral_information",
+                route: "../referral_information",
               },
               {
                 value: "Incident Report",
-                route: "/initial_contact/incident_report",
+                route: "../incident_report",
               },
               {
                 value: "Present Concerns",
-                route: "/initial_contact/present_concerns",
+                route: "../present_concerns",
               },
               {
                 value: "Patient Care Information",
-                route: "/initial_contact/patient_care_information",
+                route: "../patient_care_information",
               },
             ]}
           />

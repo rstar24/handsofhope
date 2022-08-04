@@ -67,7 +67,7 @@ const Counselors = (): ReactElement => {
       .unwrap()
       .then((data) => {
         console.log("Counselors POST backend API was successful!");
-        navigate("/cyfms/other_information");
+        navigate("../other_information");
       })
       .catch((err) => {
         console.log("Counselors POST backend API didn't work!");

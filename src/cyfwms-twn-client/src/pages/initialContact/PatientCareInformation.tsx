@@ -4,36 +4,34 @@ import ICDropdown from "../../components/initialContact/ICDropdown";
 import Inpatient from "../../components/initialContact/Inpatient";
 import Outpatient from "../../components/initialContact/Outpatient";
 import {
-  cleanState as cleanPatientCareInformationState,
   doGet,
   doPost,
 } from "../../features/initialContact/patientCareInformation/slice";
 import { uninitiate } from "../../features/initiatorSlice";
 import { hideTabs } from "../../features/navBarSlice";
+import { setOpen, setView } from "../../features/popupSlice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
-import { PopupContext } from "./InitialContact";
 import { Box } from "@mui/material";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import type { Data } from "../../features/initialContact/patientCareInformation/slice";
 import type { FormEvent, ReactElement } from "react";
-import { useNavigate } from "react-router";
 
 /**
  * The PatientCareInformation functional component.
  * @returns PatientCareInformation component skeleton.
  */
 const PatientCareInformation = (): ReactElement => {
-  const popupContext = useContext(PopupContext);
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const initialContactID = useAppSelector(
     (state) => state.icFileDetails.data.fileDetailsId
   );
-  console.log(initialContactID);
-  const { patient } = useAppSelector((state: any) => state.codetable);
+  const patient = useAppSelector((state) => state.codetable.patient);
+  const edit = useAppSelector((state) => state.popup.edit);
   const data = useAppSelector((state) => state.icPatientCareInformation.data);
 
-  const [typeOfPatient, setTypeOfPatient] = useState("");
+  const [typeOfPatient, setTypeOfPatient] = useState(data.typeOfPatient);
 
   useEffect(() => {
     dispatch(doGet(initialContactID))
@@ -92,10 +90,14 @@ const PatientCareInformation = (): ReactElement => {
       .unwrap()
       .then(() => {
         console.log("PatientCareInformation POST backend API was successful!");
-        popupContext.setOpen(false);
+        dispatch(setOpen(false));
         dispatch(hideTabs(null));
         dispatch(uninitiate(null));
-        navigate(`../search/view/${initialContactID}`);
+        if (!edit) {
+          dispatch(setView(true));
+          navigate("/initial_contact/view");
+        }
+        // navigate("/initial_contact/search/view/initialContactId");
       })
       .catch((err) => {
         console.log("PatientCareInformation POST backend API didn't work!");

@@ -1,25 +1,21 @@
-import React, { useContext } from "react";
-import IconButton from "@mui/material/IconButton";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../library/hooks";
-import { Box, Button, Modal } from "@mui/material";
-import { PopupContext } from "./CYFMS";
-import { doGet as doGetRegister } from "../../features/cyfms/register/slice";
-import { doGet as doGetContact } from "../../features/cyfms/contact/slice";
-import { doGet as doGetCounselors } from "../../features/cyfms/counselors/slice";
-import { doGet as doGetEducationAndEmployment } from "../../features/cyfms/educationAndEmployment/slice";
-import { doGet as doGetOtherInformation } from "../../features/cyfms/otherInformation/slice";
-import { doGet as doGetCriminalHistory } from "../../features/cyfms/criminalHistory/slice";
-import { doGet as doGetHouseholdMembers } from "../../features/cyfms/householdMembers/slice";
-import { doGet as doGetFamilyPhysicians } from "../../features/cyfms/familyPhysicians/slice";
 import {
   doGetGender,
   doGetMaritalStatus,
+  doGetEducation,
+  doGetTypeOfEmployee,
+  doGetRole,
 } from "../../features/codetable/codetableSlice";
-const options = ["Edit", "Delete"];
+import { initiate } from "../../features/initiatorSlice";
+import { setEdit, setOpen } from "../../features/popupSlice";
+import { unhideTabs } from "../../features/navBarSlice";
+import { doGet as doGetRegister } from "../../features/cyfms/register/slice";
+import { useAppDispatch } from "../../library/hooks";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import { Box, Button, IconButton, Modal, Menu, MenuItem } from "@mui/material";
+import React from "react";
+import { Link } from "react-router-dom";
+import type { ReactElement } from "react";
+
 const style = {
   position: "absolute" as "absolute",
   top: "50%",
@@ -35,11 +31,10 @@ const style = {
 };
 const ITEM_HEIGHT = 48;
 export const openPopup = true;
-export default function EditIcon(props: any) {
+
+const EditIcon = (props: any): ReactElement => {
   const dispatch = useAppDispatch();
-  const { open, setOpen } = useContext(PopupContext);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const navigate = useNavigate();
   const [openModel, setOpenModel] = React.useState(false);
   const openDropDown = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -48,24 +43,8 @@ export default function EditIcon(props: any) {
 
   // Close MoreHorIcon Popup
   const handleCloseDropDown = (event: React.MouseEvent<HTMLElement>) => {
-    console.log("current", props.value);
-
     if (event.currentTarget.tabIndex !== 0) {
       setOpenModel(true);
-    } else {
-      setOpen(true);
-      dispatch(doGetRegister(props.value));
-      dispatch(doGetGender());
-      dispatch(doGetMaritalStatus());
-      dispatch(doGetContact(props.value));
-      dispatch(doGetEducationAndEmployment(props.value));
-      dispatch(doGetOtherInformation(props.value));
-      dispatch(doGetCriminalHistory(props.value));
-      dispatch(doGetHouseholdMembers(props.value));
-      dispatch(doGetFamilyPhysicians(props.value));
-      dispatch(doGetCounselors(props.value)).then(() => {
-        navigate("/cyfms/register", { state: openPopup });
-      });
     }
     setAnchorEl(null);
   };
@@ -103,11 +82,32 @@ export default function EditIcon(props: any) {
           },
         }}
       >
-        {options.map((option) => (
-          <MenuItem key={option} onClick={handleCloseDropDown}>
-            {option}
-          </MenuItem>
-        ))}
+        <MenuItem onClick={handleCloseDropDown}>
+          <Link
+            to="register"
+            onClick={() => {
+              dispatch(doGetGender());
+              dispatch(doGetMaritalStatus());
+              dispatch(doGetEducation());
+              dispatch(doGetTypeOfEmployee());
+              dispatch(doGetRole());
+              dispatch(doGetRegister(props.value))
+                .unwrap()
+                .then(() => {
+                  dispatch(initiate(null));
+                  dispatch(unhideTabs(null));
+                  dispatch(setEdit(true));
+                  dispatch(setOpen(true));
+                })
+                .catch((err) => {
+                  console.log("Unable to edit!");
+                  console.log(err);
+                });
+            }}
+          >
+            Edit
+          </Link>
+        </MenuItem>
       </Menu>
       <Modal
         open={openModel}
@@ -134,4 +134,6 @@ export default function EditIcon(props: any) {
       </Modal>
     </div>
   );
-}
+};
+
+export default EditIcon;

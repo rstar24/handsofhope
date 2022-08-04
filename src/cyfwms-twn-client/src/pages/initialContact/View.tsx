@@ -1,15 +1,18 @@
-import AuthLayout from "../../../components/auth/layout/AuthLayout";
-import { useAppSelector } from "../../../library/hooks";
-import EditIcon from "../EditIcon";
-import ViewFileDetails from "./View/ViewFileDetails";
-import ViewHome from "./View/ViewHome";
-import ViewIncidentReport from "./View/ViewIncidentReport";
-import ViewPatientCareInformation from "./View/ViewPatientCareInformation";
-import ViewPresentConcerns from "./View/ViewPresentConcerns";
-import ViewReferralInformation from "./View/ViewReferralInformation";
+import Popup from "../../components/Popup";
+import AuthLayout from "../../components/auth/layout/AuthLayout";
+import ICHeader from "../../components/initialContact/ICHeader";
+import EditIcon from "../../components/initialContact/EditIcon";
+import Router from "../../components/nestedRouters/InitialContact";
+import { useAppSelector } from "../../library/hooks";
+import ViewFileDetails from "./search/View/ViewFileDetails";
+import ViewHome from "./search/View/ViewHome";
+import ViewIncidentReport from "./search/View/ViewIncidentReport";
+import ViewPatientCareInformation from "./search/View/ViewPatientCareInformation";
+import ViewPresentConcerns from "./search/View/ViewPresentConcerns";
+import ViewReferralInformation from "./search/View/ViewReferralInformation";
 import { Box, Tab, Tabs, Typography } from "@mui/material";
-import React, { ReactElement } from "react";
-import ICHeader from "../../../components/initialContact/ICHeader";
+import React from "react";
+import type { ReactElement } from "react";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -44,13 +47,15 @@ function tabPanelProps(index: number) {
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
-const ICSearchView = (): ReactElement => {
+
+const View = (): ReactElement => {
   const state = useAppSelector((state) => state);
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+
   return (
     <AuthLayout>
       <ICHeader />
@@ -81,7 +86,7 @@ const ICSearchView = (): ReactElement => {
           </Box>
           <Box>
             <Typography paddingRight={1}>
-              <EditIcon value={state.cyfmsRegister.data.participantId} />
+              <EditIcon value={state.icFileDetails.data.fileDetailsId} />
             </Typography>
           </Box>
         </Box>
@@ -140,8 +145,9 @@ const ICSearchView = (): ReactElement => {
           </TabPanel>
         </Box>{" "}
       </Box>
+      <Popup children={<Router />} />
     </AuthLayout>
   );
 };
 
-export default ICSearchView;
+export default View;

@@ -1,26 +1,32 @@
-import React, { ReactElement } from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import { Box, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../../library/hooks";
+import EditIcon from "../../../components/cyfms/EditIcon";
 import { doGet as doGetRegister } from "../../../features/cyfms/register/slice";
 import { doGet as doGetContact } from "../../../features/cyfms/contact/slice";
-import { doGet as doGetEducationAndEmployment } from "../../../features/cyfms/educationAndEmployment/slice";
-import { doGet as doGetOtherInformation } from "../../../features/cyfms/otherInformation/slice";
-import { doGet as doGetCriminalHistory } from "../../../features/cyfms/criminalHistory/slice";
-import { doGet as doGetHouseholdMembers } from "../../../features/cyfms/householdMembers/slice";
-import { doGet as doGetFamilyPhysicians } from "../../../features/cyfms/familyPhysicians/slice";
 import { doGet as doGetCounselors } from "../../../features/cyfms/counselors/slice";
-import EditIcon from "../EditIcon";
-const CYFMSSearchResult = (): ReactElement => {
+import { doGet as doGetCriminalHistory } from "../../../features/cyfms/criminalHistory/slice";
+import { doGet as doGetEducationAndEmployment } from "../../../features/cyfms/educationAndEmployment/slice";
+import { doGet as doGetFamilyPhysicians } from "../../../features/cyfms/familyPhysicians/slice";
+import { doGet as doGetHouseholdMembers } from "../../../features/cyfms/householdMembers/slice";
+import { doGet as doGetOtherInformation } from "../../../features/cyfms/otherInformation/slice";
+import { setView } from "../../../features/popupSlice";
+import { useAppDispatch, useAppSelector } from "../../../library/hooks";
+import React from "react";
+import {
+  Box,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+} from "@mui/material";
+import { Link } from "react-router-dom";
+import type { ReactElement } from "react";
+
+const SearchResults = (): ReactElement => {
   const dispatch = useAppDispatch();
   const searchData = useAppSelector((state) => (state as any).search.readUser);
 
   const handleSearchView = (id: any) => {
+    dispatch(setView(true));
     dispatch(doGetRegister(id));
     dispatch(doGetContact(id));
     dispatch(doGetEducationAndEmployment(id));
@@ -33,9 +39,6 @@ const CYFMSSearchResult = (): ReactElement => {
 
   return (
     <Box>
-      <Typography fontSize={20} fontWeight={800} color="red" paddingLeft={2}>
-        Total Results - {searchData.length}
-      </Typography>
       <Table sx={{ minWidth: 800 }} aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -49,7 +52,6 @@ const CYFMSSearchResult = (): ReactElement => {
             <TableCell>Action</TableCell>
           </TableRow>
         </TableHead>
-
         <TableBody>
           {searchData.map((i: any) => (
             <TableRow
@@ -58,7 +60,7 @@ const CYFMSSearchResult = (): ReactElement => {
             >
               <TableCell>
                 <Link
-                  to={`view/${i.participantId}`}
+                  to={`/cyfms/view/${i.participantId}`}
                   onClick={() => handleSearchView(i.participantId)}
                 >
                   {i.referenceId}
@@ -81,4 +83,4 @@ const CYFMSSearchResult = (): ReactElement => {
   );
 };
 
-export default CYFMSSearchResult;
+export default SearchResults;

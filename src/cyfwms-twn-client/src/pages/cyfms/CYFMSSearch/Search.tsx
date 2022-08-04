@@ -1,22 +1,26 @@
 import Input from "../../../components/Input";
+import Popup from "../../../components/Popup";
 import AuthLayout from "../../../components/auth/layout/AuthLayout";
 import CYFMSDropdown from "../../../components/cyfms/CYFMSDropdown";
 import CYFMSHeader from "../../../components/cyfms/CYFMSHeader";
+import Router from "../../../components/nestedRouters/CYFMS";
 import { doGetMaritalStatus } from "../../../features/codetable/codetableSlice";
 import { doGetSearch } from "../../../features/search/searchSlice";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
-import CYFMSSearchResult from "./CYFMSSearchResult";
+import SearchResults from "./SearchResults";
 import { Box, Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import type { FormEvent, ReactElement } from "react";
 
 /**
- * The CYFMSSearchPanel functional component.
- * @returns CYFMSSearchPanel component skeleton.
+ * The Search functional component.
+ * @returns Search component skeleton.
  */
-const CYFMSSearchPanel = (): ReactElement => {
+const Search = (): ReactElement => {
   const dispatch = useAppDispatch();
-  const { maritalstatus } = useAppSelector((state) => (state as any).codetable);
+  const maritalstatus = useAppSelector(
+    (state) => state.codetable.maritalstatus
+  );
   const [isShown, setIsShown] = useState<boolean>(false);
 
   useEffect(() => {
@@ -39,9 +43,13 @@ const CYFMSSearchPanel = (): ReactElement => {
     dispatch(doGetSearch({ readUser: searchUser }))
       .unwrap()
       .then(() => {
+        console.log("CYFMS Search POST backend API was successful!");
         setIsShown(true);
       })
-      .catch((err) => {});
+      .catch((err) => {
+        console.log("InitialContact Search POST backend API didn't work!");
+        console.log(err);
+      });
   };
 
   const hide = () => {
@@ -169,9 +177,10 @@ const CYFMSSearchPanel = (): ReactElement => {
           </Box>
         </Box>
       </Box>
-      {isShown && <CYFMSSearchResult />}
+      {isShown && <SearchResults />}
+      <Popup children={<Router />} />
     </AuthLayout>
   );
 };
 
-export default CYFMSSearchPanel;
+export default Search;

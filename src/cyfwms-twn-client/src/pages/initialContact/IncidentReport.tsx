@@ -62,7 +62,7 @@ const IncidentReport = (): ReactElement => {
       .unwrap()
       .then(() => {
         console.log("IncidentReport POST backend API was successful!");
-        navigate("/initial_contact/present_concerns");
+        navigate("../present_concerns");
       })
       .catch((err) => {
         console.log("IncidentReport POST backend API didn't work!");

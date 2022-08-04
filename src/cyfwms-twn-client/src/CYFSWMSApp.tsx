@@ -2,24 +2,22 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
-import { ThemeProvider } from "@mui/material/styles";
-import { Provider } from "react-redux";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { store } from "./library/store";
 import theme from "./library/theme";
-import CYFMS from "./pages/cyfms/CYFMS";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import NotFound404 from "./pages/NotFound404";
-import React, { StrictMode } from "react";
-import type { ReactElement } from "react";
+import CYFMS from "./pages/cyfms/CYFMS";
 import CYFMSSearch from "./pages/cyfms/CYFMSSearch/Search";
+import CYFMSView from "./pages/cyfms/View";
 import InitialContact from "./pages/initialContact/InitialContact";
-import ICSearch from "./pages/initialContact/search/Search";
-import CYFMSViewHome from "./pages/cyfms/CYFMSSearch/View/ViewHome";
-import ICViewHome from "./pages/initialContact/search/View/ViewHome";
-import CYFMSSearchView from "./pages/cyfms/CYFMSSearch/CYFMSSearchView";
-import ICSearchView from "./pages/initialContact/search/ICSearchView";
+import InitialContactSearch from "./pages/initialContact/search/Search";
+import InitialContactView from "./pages/initialContact/View";
+import { ThemeProvider } from "@mui/material/styles";
+import React, { StrictMode } from "react";
+import { Provider } from "react-redux";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import type { ReactElement } from "react";
 
 const CYFSWMSApp = (): ReactElement => {
   return (
@@ -33,18 +31,16 @@ const CYFSWMSApp = (): ReactElement => {
               <Route path="home" element={<Home />} />
               <Route path="login" element={<Login />} />
               <Route path="cyfms/*" element={<CYFMS />} />
-              <Route path="cyfms/search" element={<CYFMSSearch />} />
-              <Route path="cyfms/search/*" element={<CYFMSSearchView />} />
-              <Route path="cyfms/search/view" element={<CYFMSViewHome />} />
+              <Route path="cyfms/search/*" element={<CYFMSSearch />} />
+              <Route path="cyfms/view/*" element={<CYFMSView />} />
               <Route path="initial_contact/*" element={<InitialContact />} />
-              <Route path="initial_contact/search" element={<ICSearch />} />
               <Route
                 path="initial_contact/search/*"
-                element={<ICSearchView />}
+                element={<InitialContactSearch />}
               />
               <Route
-                path="initial_contact/search/view"
-                element={<ICViewHome />}
+                path="initial_contact/view/*"
+                element={<InitialContactView />}
               />
             </Routes>
           </BrowserRouter>

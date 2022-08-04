@@ -1,11 +1,7 @@
+import Popup from "../../components/Popup";
 import AuthLayout from "../../components/auth/layout/AuthLayout";
 import ICHeader from "../../components/initialContact/ICHeader";
-import ICPopup from "../../components/initialContact/ICPopup";
-import { Box, Button } from "@mui/material";
-import React, { createContext, useEffect } from "react";
-import { Link } from "react-router-dom";
-import type { ReactElement } from "react";
-import { useAppDispatch } from "../../library/hooks";
+import Router from "../../components/nestedRouters/InitialContact";
 import {
   doGetICMentalHealthOrSubstanceAbuse,
   doGetICPresentConcerns,
@@ -14,14 +10,12 @@ import {
   doGetICStatus,
   doGetICTypeOfPatient,
 } from "../../features/codetable/codetableSlice";
-
-export const PopupContext = createContext<{
-  open: boolean;
-  setOpen: (open: boolean) => void;
-}>({
-  open: false,
-  setOpen: (open) => {},
-});
+import { setOpen as setOpenPopup } from "../../features/popupSlice";
+import { useAppDispatch } from "../../library/hooks";
+import { Box, Button } from "@mui/material";
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+import type { ReactElement } from "react";
 
 /**
  * The InitialContact functional component.
@@ -29,9 +23,6 @@ export const PopupContext = createContext<{
  */
 const InitialContact = (): ReactElement => {
   const dispatch = useAppDispatch();
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
 
   useEffect(() => {
     // Load all the code tables:
@@ -42,68 +33,54 @@ const InitialContact = (): ReactElement => {
     dispatch(doGetICMentalHealthOrSubstanceAbuse());
     dispatch(doGetICPresentConcerns());
   }, []);
+
   return (
     <AuthLayout>
-      <PopupContext.Provider value={{ open: open, setOpen: setOpen }}>
-        <ICHeader />
+      <ICHeader />
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          py: "3rem",
+        }}
+      >
         <Box
           sx={{
             display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            py: "3rem",
+            flexDirection: "column",
+            maxWidth: 300,
+            rowGap: "1rem",
           }}
         >
-          <Box
+          <Button
+            component={Link}
+            to="/initial_contact/file_details"
             sx={{
-              display: "flex",
-              flexDirection: "column",
-              maxWidth: 300,
-              rowGap: "1rem",
+              background: "lightgrey",
+              color: "black",
+              border: "1px solid black",
+            }}
+            onClick={() => {
+              dispatch(setOpenPopup(true));
             }}
           >
-            <Button
-              component={Link}
-              to="/initial_contact/file_details"
-              sx={{
-                background: "lightgrey",
-                color: "black",
-                border: "1px solid black",
-              }}
-              onClick={() => {
-                handleOpen();
-                //registrationHandler();
-              }}
-            >
-              Add an Initial Contact File
-            </Button>
-            <Button
-              component={Link}
-              to="/initial_contact/search"
-              sx={{
-                background: "lightgrey",
-                color: "black",
-                border: "1px solid black",
-              }}
-              onClick={handleOpen}
-            >
-              Search for an Initial Contact File
-            </Button>
-          </Box>
+            Add an Initial Contact File
+          </Button>
+          <Button
+            component={Link}
+            to="/initial_contact/search"
+            sx={{
+              background: "lightgrey",
+              color: "black",
+              border: "1px solid black",
+            }}
+          >
+            Search for an Initial Contact File
+          </Button>
         </Box>
-        <ICPopup
-          open={open}
-          onClose={(event, reason) => {
-            switch (reason) {
-              case "backdropClick":
-                return;
-              case "escapeKeyDown":
-                handleClose();
-            }
-          }}
-          children={<></>}
-        />
-      </PopupContext.Provider>
+      </Box>
+      <Popup children={<Router />} />
     </AuthLayout>
   );
 };

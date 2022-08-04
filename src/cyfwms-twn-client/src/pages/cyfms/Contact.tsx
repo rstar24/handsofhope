@@ -53,7 +53,7 @@ const Contact = (): ReactElement => {
       .unwrap()
       .then(() => {
         console.log("Contact POST backend API was successful!");
-        navigate("/cyfms/household_members");
+        navigate("../household_members");
       })
       .catch((err) => {
         console.log("Contact POST backend API didn't work!");

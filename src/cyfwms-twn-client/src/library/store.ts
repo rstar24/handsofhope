@@ -15,6 +15,7 @@ import icReferralInformationReducer from "../features/initialContact/referralInf
 import icSearchReducer from "../features/initialContact/search/slice";
 import initiatorReducer from "../features/initiatorSlice";
 import loginReducer from "../features/login/loginSlice";
+import popupReducer from "../features/popupSlice";
 import searchReducer from "../features/search/searchSlice";
 import navBarReducer from "../features/navBarSlice";
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
@@ -22,6 +23,7 @@ import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 export const store = configureStore({
   reducer: {
     login: loginReducer,
+    popup: popupReducer,
     navBar: navBarReducer,
     initiator: initiatorReducer,
     codetable: codetableReducer,

@@ -4,10 +4,10 @@ import CYFMSTextArea from "../../components/cyfms/CYFMSTextArea";
 import { doGet, doPost } from "../../features/cyfms/otherInformation/slice";
 import { uninitiate } from "../../features/initiatorSlice";
 import { hideTabs } from "../../features/navBarSlice";
+import { setOpen, setView } from "../../features/popupSlice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
-import { PopupContext } from "./CYFMS";
 import { Box, Typography } from "@mui/material";
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import type { Data } from "../../features/cyfms/otherInformation/slice";
 import type { FormEvent, ReactElement } from "react";
@@ -18,11 +18,11 @@ import type { FormEvent, ReactElement } from "react";
  */
 const OtherInformation = (): ReactElement => {
   const navigate = useNavigate();
-  const popupContext = useContext(PopupContext);
   const dispatch = useAppDispatch();
   const participantID = useAppSelector(
     (state) => state.cyfmsRegister.data.participantId
   );
+  const edit = useAppSelector((state) => state.popup.edit);
   const data = useAppSelector((state) => state.cyfmsOtherInformation.data);
 
   useEffect(() => {
@@ -54,10 +54,13 @@ const OtherInformation = (): ReactElement => {
     dispatch(doPost(formData))
       .then(() => {
         console.log("otherInformation POST backend API was successful!");
-        popupContext.setOpen(false);
+        dispatch(setOpen(false));
         dispatch(hideTabs(null));
         dispatch(uninitiate(null));
-        navigate("../search/view/participantId");
+        if (!edit) {
+          dispatch(setView(true));
+          navigate("/cyfms/view");
+        }
       })
       .catch((err) => {
         console.log("otherInformation POST backend API was successful!");

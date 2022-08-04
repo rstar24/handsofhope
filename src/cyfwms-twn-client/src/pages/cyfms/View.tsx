@@ -1,21 +1,20 @@
-import React, { ReactElement } from "react";
-
-import { Box, Typography } from "@mui/material";
-
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import AuthLayout from "../../../components/auth/layout/AuthLayout";
-import CYFMSHeader from "../../../components/cyfms/CYFMSHeader";
-import ViewHome from "./View/ViewHome";
-import ViewContact from "./View/ViewContact";
-import ViewEducationAndEmployment from "./View/ViewEducationAndEmployment";
-import ViewOtherInformation from "./View/ViewOtherInformation";
-import { useAppSelector } from "../../../library/hooks";
-import ViewFamilyPhysician from "./View/ViewFamilyPhysician";
-import ViewHouseholdMembers from "./View/ViewHouseholdMembers";
-import ViewCouncelors from "./View/ViewCouncelors";
-import ViewCriminalHistory from "./View/ViewCriminalHistory";
-import EditIcon from "../EditIcon";
+import Popup from "../../components/Popup";
+import AuthLayout from "../../components/auth/layout/AuthLayout";
+import CYFMSHeader from "../../components/cyfms/CYFMSHeader";
+import EditIcon from "../../components/cyfms/EditIcon";
+import Router from "../../components/nestedRouters/CYFMS";
+import { useAppSelector } from "../../library/hooks";
+import ViewContact from "./CYFMSSearch/View/ViewContact";
+import ViewCouncelors from "./CYFMSSearch/View/ViewCouncelors";
+import ViewCriminalHistory from "./CYFMSSearch/View/ViewCriminalHistory";
+import ViewEducationAndEmployment from "./CYFMSSearch/View/ViewEducationAndEmployment";
+import ViewFamilyPhysician from "./CYFMSSearch/View/ViewFamilyPhysician";
+import ViewHome from "./CYFMSSearch/View/ViewHome";
+import ViewHouseholdMembers from "./CYFMSSearch/View/ViewHouseholdMembers";
+import ViewOtherInformation from "./CYFMSSearch/View/ViewOtherInformation";
+import { Box, Tab, Tabs, Typography } from "@mui/material";
+import React from "react";
+import type { ReactElement } from "react";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -50,17 +49,18 @@ function tabPanelProps(index: number) {
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
-const CYFMSSearchView = (): ReactElement => {
+
+const View = (): ReactElement => {
   const state = useAppSelector((state) => state);
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+
   return (
     <AuthLayout>
       <CYFMSHeader />
-
       <Box
         component="form"
         sx={{
@@ -189,8 +189,9 @@ const CYFMSSearchView = (): ReactElement => {
           </TabPanel>
         </Box>{" "}
       </Box>
+      <Popup children={<Router />} />
     </AuthLayout>
   );
 };
 
-export default CYFMSSearchView;
+export default View;

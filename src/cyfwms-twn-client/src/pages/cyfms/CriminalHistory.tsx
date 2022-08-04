@@ -76,7 +76,7 @@ const CriminalHistory = (): ReactElement => {
       .unwrap()
       .then(() => {
         console.log("criminalHistory POST backend API was successful!");
-        navigate("/cyfms/family_physicians");
+        navigate("../family_physicians");
       })
       .catch((err) => {
         console.log("criminalHistory POST backend API didn't work!");

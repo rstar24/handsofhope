@@ -67,7 +67,7 @@ const FamilyPhysicians = (): ReactElement => {
       .unwrap()
       .then((data) => {
         console.log("FamilyPhysicians POST backend API was successful!");
-        navigate("/cyfms/counselors");
+        navigate("../counselors");
       })
       .catch((err) => {
         console.log("FamilyPhysicians POST backend API didn't work!");

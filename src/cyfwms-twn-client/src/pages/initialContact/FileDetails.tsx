@@ -2,6 +2,7 @@ import {
   CYFSWMSNextButton,
   CYFSWMSSaveButton,
 } from "../../components/CYFSWMSButtons";
+import Input from "../../components/Input";
 import ICLayout from "../../components/initialContact/ICLayout";
 import ICInput from "../../components/initialContact/ICInput";
 import ICDropdown from "../../components/initialContact/ICDropdown";
@@ -19,7 +20,6 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import type { Data } from "../../features/initialContact/fileDetails/slice";
 import type { FormEvent, ReactElement } from "react";
-import Input from "../../components/Input";
 
 /**
  * The FileDetails functional component.
@@ -91,7 +91,7 @@ const FileDetails = (): ReactElement => {
   };
 
   const nextClickHandler = () => {
-    navigate("/initial_contact/referral_information");
+    navigate("../referral_information");
   };
 
   return (

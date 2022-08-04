@@ -69,7 +69,7 @@ const Register = (): ReactElement => {
   };
 
   const nextClickHandler = () => {
-    navigate("/cyfms/contact");
+    navigate("../contact");
   };
 
   return (
