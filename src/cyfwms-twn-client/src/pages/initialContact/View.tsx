@@ -107,7 +107,7 @@ const View = (): ReactElement => {
             }}
           >
             <Tabs
-              variant="scrollable"
+              variant="fullWidth"
               value={value}
               onChange={handleChange}
               aria-label="basic tabs example"
