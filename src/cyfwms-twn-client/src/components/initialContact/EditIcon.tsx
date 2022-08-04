@@ -10,6 +10,11 @@ import { initiate } from "../../features/initiatorSlice";
 import { setEdit, setOpen } from "../../features/popupSlice";
 import { unhideTabs } from "../../features/navBarSlice";
 import { doGet as doGetFileDetails } from "../../features/initialContact/fileDetails/slice";
+import { doGet as doGetReferralInformation } from "../../features/initialContact/referralInformation/slice";
+import { doGet as doGetIncidentReport } from "../../features/initialContact/incidentReport/slice";
+import { doGet as doGetPresentConcerns } from "../../features/initialContact/presentConcerns/slice";
+import { doGet as doGetPatientCareInformation } from "../../features/initialContact/patientCareInformation/slice";
+
 import { useAppDispatch } from "../../library/hooks";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { Box, Button, IconButton, Modal, Menu, MenuItem } from "@mui/material";
@@ -82,33 +87,38 @@ const EditIcon = (props: any): ReactElement => {
           },
         }}
       >
-        <MenuItem onClick={handleCloseDropDown}>
-          <Link
-            to="file_details"
-            onClick={() => {
-              dispatch(doGetICStatus());
-              dispatch(doGetICReferral());
-              dispatch(doGetICRisk());
-              dispatch(doGetICPresentConcerns());
-              dispatch(doGetICMentalHealthOrSubstanceAbuse());
-              dispatch(doGetICTypeOfPatient());
-              dispatch(doGetFileDetails(props.value))
-                .unwrap()
-                .then(() => {
-                  dispatch(initiate(null));
-                  dispatch(unhideTabs(null));
-                  dispatch(setEdit(true));
-                  dispatch(setOpen(true));
-                })
-                .catch((err) => {
-                  console.log("Unable to edit!");
-                  console.log(err);
-                });
-            }}
-          >
-            Edit
-          </Link>
+        <MenuItem
+          component={Link}
+          to="file_details"
+          onClick={(event: React.MouseEvent<HTMLElement>) => {
+            handleCloseDropDown(event);
+            dispatch(doGetICStatus());
+            dispatch(doGetICReferral());
+            dispatch(doGetICRisk());
+            dispatch(doGetICPresentConcerns());
+            dispatch(doGetICMentalHealthOrSubstanceAbuse());
+            dispatch(doGetICTypeOfPatient());
+            dispatch(doGetReferralInformation(props.value));
+            dispatch(doGetIncidentReport(props.value));
+            dispatch(doGetPresentConcerns(props.value));
+            dispatch(doGetPatientCareInformation(props.value));
+            dispatch(doGetFileDetails(props.value))
+              .unwrap()
+              .then(() => {
+                dispatch(initiate(null));
+                dispatch(unhideTabs(null));
+                dispatch(setEdit(true));
+                dispatch(setOpen(true));
+              })
+              .catch((err) => {
+                console.log("Unable to edit!");
+                console.log(err);
+              });
+          }}
+        >
+          Edit
         </MenuItem>
+        <MenuItem>Delete</MenuItem>
       </Menu>
       <Modal
         open={openModel}

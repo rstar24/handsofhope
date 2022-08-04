@@ -15,6 +15,13 @@ import { Box, Button, IconButton, Modal, Menu, MenuItem } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 import type { ReactElement } from "react";
+import { doGet } from "../../features/cyfms/contact/slice";
+import { doGet as doGetHouseholdMembers } from "../../features/cyfms/householdMembers/slice";
+import { doGet as doGetEducationAndEmployment } from "../../features/cyfms/educationAndEmployment/slice";
+import { doGet as doGetCriminalHistory } from "../../features/cyfms/criminalHistory/slice";
+import { doGet as doGetFamilyPhysicians } from "../../features/cyfms/familyPhysicians/slice";
+import { doGet as doGetCounselors } from "../../features/cyfms/counselors/slice";
+import { doGet as doGetOtherInformation } from "../../features/cyfms/otherInformation/slice";
 
 const style = {
   position: "absolute" as "absolute",
@@ -82,32 +89,40 @@ const EditIcon = (props: any): ReactElement => {
           },
         }}
       >
-        <MenuItem onClick={handleCloseDropDown}>
-          <Link
-            to="register"
-            onClick={() => {
-              dispatch(doGetGender());
-              dispatch(doGetMaritalStatus());
-              dispatch(doGetEducation());
-              dispatch(doGetTypeOfEmployee());
-              dispatch(doGetRole());
-              dispatch(doGetRegister(props.value))
-                .unwrap()
-                .then(() => {
-                  dispatch(initiate(null));
-                  dispatch(unhideTabs(null));
-                  dispatch(setEdit(true));
-                  dispatch(setOpen(true));
-                })
-                .catch((err) => {
-                  console.log("Unable to edit!");
-                  console.log(err);
-                });
-            }}
-          >
-            Edit
-          </Link>
+        <MenuItem
+          component={Link}
+          to="register"
+          onClick={(event: React.MouseEvent<HTMLElement>) => {
+            handleCloseDropDown(event);
+            dispatch(doGetGender());
+            dispatch(doGetMaritalStatus());
+            dispatch(doGetEducation());
+            dispatch(doGetTypeOfEmployee());
+            dispatch(doGetRole());
+            dispatch(doGet(props.value));
+            dispatch(doGetHouseholdMembers(props.value));
+            dispatch(doGetEducationAndEmployment(props.value));
+            dispatch(doGetCriminalHistory(props.value));
+            dispatch(doGetFamilyPhysicians(props.value));
+            dispatch(doGetCounselors(props.value));
+            dispatch(doGetOtherInformation(props.value));
+            dispatch(doGetRegister(props.value))
+              .unwrap()
+              .then(() => {
+                dispatch(initiate(null));
+                dispatch(unhideTabs(null));
+                dispatch(setEdit(true));
+                dispatch(setOpen(true));
+              })
+              .catch((err) => {
+                console.log("Unable to edit!");
+                console.log(err);
+              });
+          }}
+        >
+          Edit
         </MenuItem>
+        <MenuItem>Delete</MenuItem>
       </Menu>
       <Modal
         open={openModel}

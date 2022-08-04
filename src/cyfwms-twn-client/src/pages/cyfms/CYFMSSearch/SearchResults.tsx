@@ -17,6 +17,7 @@ import {
   TableCell,
   TableHead,
   TableRow,
+  Typography,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import type { ReactElement } from "react";
@@ -39,6 +40,9 @@ const SearchResults = (): ReactElement => {
 
   return (
     <Box>
+      <Typography fontSize={20} fontWeight={800} color="red" paddingLeft={2}>
+        Total Results - {searchData.length}
+      </Typography>
       <Table sx={{ minWidth: 800 }} aria-label="simple table">
         <TableHead>
           <TableRow>
