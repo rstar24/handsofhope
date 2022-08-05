@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.twn.cyfwms.participant.entity.CriminalHistoryRecord;
 import lombok.*;
 
-import javax.persistence.Column;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -38,4 +37,6 @@ public class CriminalHistoryDto{
     private LocalDate startDate;
     @Getter @Setter
     private LocalDate endDate;
+    @Getter @Setter
+    private String status;
 }

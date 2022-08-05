@@ -1,22 +1,23 @@
 package com.twn.cyfwms.participant.service;
 
 import com.twn.cyfwms.participant.dto.CounselorCFSWorkersDto;
-import com.twn.cyfwms.participant.dto.FamilyPhysicianDto;
-import com.twn.cyfwms.participant.dto.HouseholdMemberDto;
 import com.twn.cyfwms.participant.entity.CounselorCFSWorker;
-import com.twn.cyfwms.participant.entity.HouseholdMember;
+import com.twn.cyfwms.participant.entity.Participant;
 import com.twn.cyfwms.participant.repository.CounselorCFSWorkerRepository;
+import com.twn.cyfwms.participant.repository.ParticipantRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
@@ -27,6 +28,8 @@ public class CounselorCFSWorkerServiceImpl implements CounselorCFSWorkerService{
     CounselorCFSWorkerRepository cfsWorkerRepository;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    ParticipantRepository participantRepository;
     @Override
     public List<CounselorCFSWorkersDto> getAllCounselorCFSWorkers(Long participantId) {
         List<CounselorCFSWorkersDto> counselorCFSWorkersDtoList = new ArrayList<CounselorCFSWorkersDto>();
@@ -71,5 +74,37 @@ public class CounselorCFSWorkerServiceImpl implements CounselorCFSWorkerService{
             CounselorCFSWorkersDto.setCounselorCFSWorkerId(counselorCFSWorker.getCounselorCFSWorkerId());
         }
         return CounselorCFSWorkersDtoList;
+    }
+
+    @Override
+    public ResponseEntity CounselorCFSWorker(Long referenceId, Long recordNumber) {
+        if(referenceId != 0  && recordNumber>=0){
+            Optional<Participant> particpantDetailsOpt = participantRepository.findByReferenceId(referenceId);
+            Long participantId = particpantDetailsOpt.get().getParticipantId();
+            List<CounselorCFSWorker> counselorCFSWorkersOpt = cfsWorkerRepository.findByParticipantId(participantId);
+
+            if (!counselorCFSWorkersOpt.isEmpty()){
+                for (int i = 0; counselorCFSWorkersOpt.size() - 1 >= i; i++){
+                    if (counselorCFSWorkersOpt.size() > recordNumber){
+                        if (i == recordNumber){
+                            counselorCFSWorkersOpt.get(i).setStatus("INACTIVE");
+                            cfsWorkerRepository.save(counselorCFSWorkersOpt.get(i));
+                        }
+                    }
+                    else {
+                        throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
+                    }
+                }
+            }
+            else
+            {
+                throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
+            }
+        }
+        else
+        {
+            throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
+        }
+        return new ResponseEntity("Operation Successful", HttpStatus.OK);
     }
 }

@@ -10,4 +10,6 @@ import java.util.Optional;
 @Repository
 public interface ParticipantRepository extends JpaRepository<Participant, Long> {
     Optional<Participant> findTopByOrderByCreationDateTimeDesc();
+
+    Optional<Participant> findByReferenceId(Long referenceId);
 }

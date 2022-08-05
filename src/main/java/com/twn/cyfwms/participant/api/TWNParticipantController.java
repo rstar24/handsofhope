@@ -6,7 +6,10 @@ import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.xml.ws.Response;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -79,6 +82,13 @@ public class TWNParticipantController {
         return householdMemberService.saveAllHouseholdMembers(HouseholdMemberDtoList);
     }
 
+    @DeleteMapping("/removeAddMoreHouseholdMember/{referenceId}/{recordNumber}")
+    @ApiOperation("Remove Household Members")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity removeHouseholdMembers(@PathVariable("referenceId") Long referenceId, @PathVariable("recordNumber") Long recordNumber) {
+        return householdMemberService.removeHouseholdMembers(referenceId,recordNumber);
+    }
+
 
     @GetMapping(value = "/readCriminalHistory/{participantid}", produces = "application/json")
     @ApiOperation("Read Criminal History")
@@ -94,6 +104,14 @@ public class TWNParticipantController {
         return criminalHistoryService.saveCriminalHistory(criminalHistoryDto);
     }
 
+    @DeleteMapping("/removeAddMoreCriminalHistory/{referenceId}/{recordNumber}")
+    @ApiOperation("Remove Criminal History Record")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity criminalHistoryRecord(@PathVariable("referenceId") Long referenceId, @PathVariable("recordNumber") Long recordNumber) {
+        return criminalHistoryService.removeCriminalHistoryRecord(referenceId,recordNumber);
+    }
+
+
     @GetMapping(value = "/getAllFamilyPhysicians/{participantid}", produces = "application/json")
     @ApiOperation("Read All Family Physicians")
     @ResponseStatus(HttpStatus.OK)
@@ -108,6 +126,12 @@ public class TWNParticipantController {
         return familyPhysicianService.saveAllFamilyPhysicians(FamilyPhysicianDtoList);
     }
 
+    @DeleteMapping("/removeAddMoreFamilyPhysician/{referenceId}/{recordNumber}")
+    @ApiOperation("Remove Family Physicians")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity removeFamilyPhysician(@PathVariable("referenceId") Long referenceId, @PathVariable("recordNumber") Long recordNumber) {
+        return familyPhysicianService.removeFamilyPhysician(referenceId,recordNumber);
+    }
     @GetMapping(value = "/getAllCounselorCFSWorkers/{participantid}", produces = "application/json")
     @ApiOperation("Read All Counselor CFS Workers")
     @ResponseStatus(HttpStatus.OK)
@@ -120,6 +144,13 @@ public class TWNParticipantController {
     @ResponseStatus(HttpStatus.OK)
     public List<CounselorCFSWorkersDto> saveAllCounselorCFSWorkers(@RequestBody List<CounselorCFSWorkersDto> FamilyPhysicianDtoList) {
         return counselorCFSWorkerService.saveAllCounselorCFSWorkers(FamilyPhysicianDtoList);
+    }
+
+    @DeleteMapping("/removeAddMoreCounselorCFSWorker/{referenceId}/{recordNumber}")
+    @ApiOperation("Remove Counselor CFS Workers")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity removeCounselorCFSWorker(@PathVariable("referenceId") Long referenceId, @PathVariable("recordNumber") Long recordNumber) {
+        return counselorCFSWorkerService.CounselorCFSWorker(referenceId,recordNumber);
     }
 
     @GetMapping(value = "/readParticipantOtherInformation/{participantid}", produces = "application/json")
@@ -194,5 +225,6 @@ public class TWNParticipantController {
 
         return participantSearchService.search(participantSearchCriteriaDto);
     }
+
 
 }

@@ -2,15 +2,20 @@ package com.twn.cyfwms.participant.service;
 
 import com.twn.cyfwms.participant.dto.CriminalHistoryDto;
 import com.twn.cyfwms.participant.entity.CriminalHistory;
+import com.twn.cyfwms.participant.entity.Participant;
+import com.twn.cyfwms.participant.repository.CriminalHistoryRecordRepository;
 import com.twn.cyfwms.participant.repository.CriminalHistoryRepository;
+import com.twn.cyfwms.participant.repository.ParticipantRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-
 import java.time.LocalDate;
+import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
@@ -23,6 +28,11 @@ public class CriminalHistoryServiceImpl implements CriminalHistoryService{
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    ParticipantRepository participantRepository;
+
+    @Autowired
+    CriminalHistoryRecordRepository criminalHistoryRecordRepository;
 
     @Override
     public CriminalHistoryDto readCriminalHistory(Long participantId) {
@@ -71,8 +81,6 @@ public class CriminalHistoryServiceImpl implements CriminalHistoryService{
             for (int i=0;criminalHistory.getCriminalHistoryRecordList().size()-1>=i; i++ ){
                 criminalHistory.getCriminalHistoryRecordList().get(i).setStatus("ACTIVE");
 
-
-
             }
 
         }
@@ -97,5 +105,33 @@ public class CriminalHistoryServiceImpl implements CriminalHistoryService{
         }
 
         return criminalHistoryDto;
+    }
+
+    @Override
+    public ResponseEntity removeCriminalHistoryRecord(Long referenceId, Long recordNumber) {
+        CriminalHistoryDto criminalHistoryDto = new CriminalHistoryDto();
+        if(referenceId != 0  && recordNumber>=0) {
+            Optional<Participant> particpantDetailsOpt = participantRepository.findByReferenceId(referenceId);
+            Long participantId = particpantDetailsOpt.get().getParticipantId();
+             Optional<CriminalHistory> criminalHistoryOpt = Optional.ofNullable(criminalHistoryRepo.findByParticipantId(participantId));
+            if (criminalHistoryOpt.get() != null) {
+                modelMapper.map(criminalHistoryOpt.get(), criminalHistoryDto);
+                for (int i = 0; criminalHistoryOpt.get().getCriminalHistoryRecordList().size()-1 >=i; i++) {
+                    if (criminalHistoryOpt.get().getCriminalHistoryRecordList().size() > recordNumber) {
+                        if (i == recordNumber) {
+                            criminalHistoryDto.getCriminalHistoryRecordList().get(i).setStatus("INACTIVE");
+                            criminalHistoryRepo.save(criminalHistoryOpt.get());
+                        }
+                    } else {
+                        throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
+                    }
+                }
+
+            }
+        }
+        else {
+            throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
+        }
+        return  new ResponseEntity("Operation Successful",HttpStatus.OK);
     }
 }
