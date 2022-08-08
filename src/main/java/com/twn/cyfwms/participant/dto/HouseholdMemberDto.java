@@ -2,8 +2,6 @@ package com.twn.cyfwms.participant.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
-
-import javax.persistence.Column;
 import java.time.LocalDate;
 
 @Builder
@@ -12,23 +10,40 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class HouseholdMemberDto {
-    @Getter @Setter
+    @Getter
+    @Setter
     private Long participantId;
-    @Getter @Setter
+
+    @Getter
+    @Setter
     private Long householdMemberId;
-    @Getter @Setter
+
+    @Getter
+    @Setter
     private String name;
-    @Getter @Setter
+
+    @Getter
+    @Setter
     private String gender;
-    @Getter @Setter
+
+    @Getter
+    @Setter
     private LocalDate dateOfBirth;
-    @Getter @Setter
+
+    @Getter
+    @Setter
+    private String relationship;
+
+    @Getter
+    @Setter
     private String residing;
-    @Getter @Setter
+    /** TODO: Not being used. To be removed later.*/
+    @Getter
+    @Setter
     private LocalDate startDate;
-    @Getter @Setter
+
+    @Getter
+    @Setter
     private LocalDate endDate;
-
-
-
+    /** TODO: END */
 }

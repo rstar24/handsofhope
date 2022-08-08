@@ -9,6 +9,7 @@ export interface Record {
   name: string;
   gender: string;
   dateOfBirth: string;
+  relationship: string;
   residing: string;
 }
 
@@ -19,6 +20,7 @@ const emptyRecord = {
   name: "",
   gender: "",
   dateOfBirth: "",
+  relationship: "",
   residing: "",
 };
 

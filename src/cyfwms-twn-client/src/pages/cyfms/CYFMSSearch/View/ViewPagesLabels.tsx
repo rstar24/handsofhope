@@ -29,6 +29,7 @@ export const HouseholdLabel = [
   "Name",
   "Gender",
   "Date of Birth",
+  "Relationship",
   "Residing",
 ];
 export const FamilyPhysiciansLabel = [

@@ -6,6 +6,7 @@ import CYFMSTextArea from "../CYFMSTextArea";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { Box, IconButton, Typography } from "@mui/material";
 import React from "react";
+import type { Record } from "../../../features/cyfms/householdMembers/slice";
 import type {
   ComponentPropsWithoutRef,
   ElementType,
@@ -19,7 +20,7 @@ import type {
 export interface HouseholdMembersRecordProps
   extends ComponentPropsWithoutRef<ElementType> {
   /** Holds data within a record. */
-  record: any;
+  record: Record;
   /** Uniquely identifies a record. */
   recordNumber: number;
 }
@@ -102,7 +103,13 @@ export const HouseholdMembersRecord = (
             type="date"
           />
         </Box>
-        <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
+        <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+          <Input
+            autofill={props.record.relationship}
+            id={`record_${props.recordNumber}_Relationship`}
+            value="Relationship"
+          />
+        </Box>
       </Box>
       <CYFMSTextArea
         formLabelFlex="1 1 0"
