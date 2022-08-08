@@ -6,6 +6,7 @@ import {
   doGetEducation,
   doGetGender,
   doGetMaritalStatus,
+  doGetProvince,
   doGetRole,
   doGetTypeOfEmployee,
 } from "../../features/codetable/codetableSlice";
@@ -26,6 +27,7 @@ const CYFMS = (): ReactElement => {
   useEffect(() => {
     // Load all the code tables:
     dispatch(doGetGender());
+    dispatch(doGetProvince());
     dispatch(doGetMaritalStatus());
     dispatch(doGetRole());
     dispatch(doGetEducation());

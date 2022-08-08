@@ -3,6 +3,7 @@ import { AxiosResponse } from "axios";
 import {
   doGenderGetAPI,
   doGetMaritalStatusAPI,
+  doGetProvinceAPI,
   doGetRoleAPI,
   doGetEducationAPI,
   doGetTypeOfEmployeeAPI,
@@ -17,6 +18,7 @@ import {
 export interface CodeTableData {
   gender: {};
   maritalstatus: {};
+  province: {};
   role: {};
   education: {};
   typeOfEmployee: {};
@@ -48,6 +50,17 @@ export const doGetMaritalStatus = createAsyncThunk(
   "codetable/doGetMaritalStatus",
   async (_, { dispatch, getState }) => {
     const res: AxiosResponse = await doGetMaritalStatusAPI(
+      (getState() as any).login.jwtToken
+    );
+    // Becomes the `fulfilled` action payload:
+    return res.data;
+  }
+);
+
+export const doGetProvince = createAsyncThunk(
+  "codetable/doGetProvince",
+  async (_, { dispatch, getState }) => {
+    const res: AxiosResponse = await doGetProvinceAPI(
       (getState() as any).login.jwtToken
     );
     // Becomes the `fulfilled` action payload:
@@ -158,6 +171,7 @@ export const CodeTableSlice = createSlice({
   initialState: {
     gender: {},
     maritalstatus: {},
+    province: {},
     role: {},
     education: {},
     typeOfEmployee: {},
@@ -174,6 +188,7 @@ export const CodeTableSlice = createSlice({
     cleanCodetableState(state: any) {
       state.gender = {};
       state.maritalstatus = {};
+      state.province = {};
       state.role = {};
       state.education = {};
       state.typeOfEmployee = {};
@@ -219,6 +234,22 @@ export const CodeTableSlice = createSlice({
       state.status = "loading";
     });
     builder.addCase(doGetMaritalStatus.rejected, (state) => {
+      state.status = "failed";
+    });
+
+    //province
+    builder.addCase(doGetProvince.fulfilled, (state, action) => {
+      try {
+        state.province = action.payload.valuesMap;
+      } catch (err) {
+        console.log(err);
+      }
+      state.status = "success";
+    });
+    builder.addCase(doGetProvince.pending, (state) => {
+      state.status = "loading";
+    });
+    builder.addCase(doGetProvince.rejected, (state) => {
       state.status = "failed";
     });
 

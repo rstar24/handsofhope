@@ -24,6 +24,15 @@ export const doGetMaritalStatusAPI = async (
   return res;
 };
 
+export const doGetProvinceAPI = async (
+  jwtToken: string
+): Promise<AxiosResponse> => {
+  const res: AxiosResponse = await axiosInstance.get("province", {
+    headers: { Authorization: "Bearer " + jwtToken },
+  });
+  return res;
+};
+
 export const doGetRoleAPI = async (
   jwtToken: string
 ): Promise<AxiosResponse> => {

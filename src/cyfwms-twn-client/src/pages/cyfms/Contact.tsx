@@ -8,6 +8,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import type { Data } from "../../features/cyfms/contact/slice";
 import type { FormEvent, ReactElement } from "react";
+import CYFMSDropdown from "../../components/cyfms/CYFMSDropdown";
 
 /**
  * The Contact functional component.
@@ -19,6 +20,7 @@ const Contact = (): ReactElement => {
   const participantID = useAppSelector(
     (state) => state.cyfmsRegister.data.participantId
   );
+  const { province } = useAppSelector((state) => (state as any).codetable);
   const data = useAppSelector((state) => state.cyfmsContact.data);
 
   useEffect(() => {
@@ -99,12 +101,13 @@ const Contact = (): ReactElement => {
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <Input
+            <CYFMSDropdown
               autofill={data.province}
               id="province"
-              validationPattern={`^[a-zA-Z ]*$`}
-              validationTitle="Digits are not allowed!"
               value="Province"
+              optionsList={Object.values(province).map(
+                (province: any) => province.en
+              )}
             />
           </Box>
         </Box>
