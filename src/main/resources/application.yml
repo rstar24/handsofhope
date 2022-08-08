@@ -9,6 +9,7 @@ spring:
     username: admin1
     password: Password@123
 
+
   jpa:
     hibernate:
       ddl-auto: none
@@ -49,6 +50,50 @@ codetablevalues:
     DIVORCE:
       "en": "Divorced"
       "fr": "Divorcé"
+
+  province:
+    DEFAULT:
+      "en": "British Columbia"
+      "fr": "Colombie britannique"
+    ALBERTA:
+      "en": "Alberta"
+      "fr": "Alberta"
+    BRITISHCOLUMBIA:
+      "en": "British Columbia"
+      "fr": "Colombie britannique"
+    MANITOBA:
+      "en": "Manitoba"
+      "fr": "Manitoba"
+    NEWBRUNSWICK  :
+      "en": "New Brunswick"
+      "fr": "Nouveau-Brunswick"
+    NEWFOUNDLANDANDLABRADOR:    
+      "en": "Newfoundland and Labrador"
+      "fr": "Terre Neuve et Labrador" 
+    NORTHWESTTERRITORIES:   
+      "en": "Northwest Territories"
+      "fr": "Territoires du nord-ouest" 
+    NOVASCOTIA:   
+      "en": "Nova Scotia"
+      "fr": "Nouvelle Écosse" 
+    NUNAVUT:    
+      "en": "Nunavut"
+      "fr": "Nunavut"  
+    ONTARIO:    
+      "en": "Ontario"
+      "fr": "Ontario"  
+    PRINCEEDWAEDISLAND:
+      "en": "Prince Edward Island"
+      "fr": "Île du Prince Édouard"  
+    QUEBEC: 
+      "en": "Quebec"
+      "fr": "Québec" 
+    SASKATCHEWAN: 
+      "en": "Saskatchewan"
+      "fr": "Saskatchewan" 
+    YUKON:    
+      "en": "Yukon"
+      "fr": "Yukon" 
   role:
     DEFAULT:
       "en": ""

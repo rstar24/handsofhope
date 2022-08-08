@@ -27,6 +27,13 @@ public class DataReferenceServiceImpl implements DataReferenceService{
                 .valuesMap(dataReferenceHelper.getMaritalStatus())
                 .build();
 }
+public DataResponseDto getAllProvinceValue() {
+        return
+                DataResponseDto.builder()
+                .type(ResponseDataType.provin.name())
+                .valuesMap(dataReferenceHelper.getProvince())
+                .build();
+}
 
     public DataResponseDto getAllRoleValue() {
         return

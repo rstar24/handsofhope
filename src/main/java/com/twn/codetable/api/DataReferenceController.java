@@ -34,6 +34,13 @@ public class DataReferenceController {
 
         return dataReferenceService.getAllRoleValue();
     }
+    @GetMapping(value = "/province", produces = "application/json")
+    @ApiOperation("Get All Province Value")
+    @ResponseStatus(HttpStatus.OK)
+    public DataResponseDto getProvince() {
+
+        return dataReferenceService.getAllProvinceValue();
+    }
 
 
 

@@ -14,6 +14,7 @@ import java.util.Map;
 public class DataReferenceHelper {
     private Map<String,Map<String,String>> gender;
     private Map<String,Map<String,String>> maritalStatus;
+    private Map<String,Map<String,String>> Province;
     private Map<String,Map<String,String>> role;
     private Map<String,Map<String,String>> education;
     private Map<String,Map<String,String>> typeOfEmployee;

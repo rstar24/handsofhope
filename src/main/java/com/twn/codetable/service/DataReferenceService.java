@@ -7,6 +7,7 @@ public interface DataReferenceService {
     DataResponseDto getAllGenderTypes();
 
     DataResponseDto getAllMaritalStatusValue();
+    DataResponseDto getAllProvinceValue();
 
     DataResponseDto getAllRoleValue();
 
