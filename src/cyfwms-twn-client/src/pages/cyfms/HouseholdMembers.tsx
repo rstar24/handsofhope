@@ -60,6 +60,7 @@ const HouseholdMembers = (): ReactElement => {
         name: form[`record_${index + 1}_Name`].value,
         gender: form[`record_${index + 1}_Gender`].value,
         dateOfBirth: form[`record_${index + 1}_DateOfBirth`].value,
+        relationship: form[`record_${index + 1}_Relationship`].value,
         residing: form[`record_${index + 1}_Residing`].value,
       };
     }
@@ -90,6 +91,9 @@ const HouseholdMembers = (): ReactElement => {
         gender: flag ? form[`record_${recordsList.length}_Gender`].value : "",
         dateOfBirth: flag
           ? form[`record_${recordsList.length}_DateOfBirth`].value
+          : "",
+        relationship: flag
+          ? form[`record_${recordsList.length}_Relationship`].value
           : "",
         residing: flag
           ? form[`record_${recordsList.length}_Residing`].value
