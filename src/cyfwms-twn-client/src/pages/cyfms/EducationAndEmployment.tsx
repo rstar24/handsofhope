@@ -140,7 +140,7 @@ const EducationAndEmployment = (): ReactElement => {
                     disabled={state.disabledSchoolFields}
                     id="schoolName"
                     value="School"
-                    validationPattern={`^[a-zA-Z ]*$`}
+                    validationPattern={`^[a-zA-Z0-9 ]*$`}
                     validationTitle="Digits are not allowed!"
                   />
                 </Box>

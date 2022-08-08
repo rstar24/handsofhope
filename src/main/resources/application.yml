@@ -98,6 +98,9 @@ codetablevalues:
     PROGRESS:
       "en": "In Progress"
       "fr": "En Cours"
+    ACTIVE:
+      "en": "Active"
+      "fr": "Actif"  
     CLOSED:
       "en": "Closed"
       "fr": "Fermé"
