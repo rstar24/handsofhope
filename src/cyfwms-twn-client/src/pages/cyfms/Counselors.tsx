@@ -59,6 +59,8 @@ const Counselors = (): ReactElement => {
         counselorCFSWorkerId: recordsList[index].counselorCFSWorkerId,
         role: form[`record_${index + 1}_Role`].value,
         name: form[`record_${index + 1}_Name`].value,
+        startDate: form[`record_${index + 1}_StartDate`].value,
+        endDate: form[`record_${index + 1}_EndDate`].value,
         contactInformation:
           form[`record_${index + 1}_ContactInformation`].value,
       };
@@ -87,6 +89,10 @@ const Counselors = (): ReactElement => {
           : 0,
         role: flag ? form[`record_${recordsList.length}_Role`].value : "",
         name: flag ? form[`record_${recordsList.length}_Name`].value : "",
+        startDate: flag
+          ? form[`record_${recordsList.length}_StartDate`].value
+          : "",
+        endDate: flag ? form[`record_${recordsList.length}_EndDate`].value : "",
         contactInformation: flag
           ? form[`record_${recordsList.length}_ContactInformation`].value
           : "",

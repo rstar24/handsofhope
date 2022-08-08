@@ -8,6 +8,8 @@ export interface Record {
   counselorCFSWorkerId: number;
   role: string;
   name: string;
+  startDate: string;
+  endDate: string;
   contactInformation: string;
 }
 
@@ -17,6 +19,8 @@ const emptyRecord: Record = {
   counselorCFSWorkerId: 0,
   role: "",
   name: "",
+  startDate: "",
+  endDate: "",
   contactInformation: "",
 };
 

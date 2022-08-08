@@ -2,8 +2,6 @@ package com.twn.cyfwms.participant.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
-
-import javax.persistence.Column;
 import java.time.LocalDate;
 
 @Builder
@@ -19,16 +17,24 @@ public class CounselorCFSWorkersDto {
     @Getter
     @Setter
     private Long counselorCFSWorkerId;
-    @Getter @Setter
+
+    @Getter
+    @Setter
     private String role;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private String name;
 
-    @Getter @Setter
-    private String contactInformation;
-    @Getter @Setter
+    @Getter
+    @Setter
     private LocalDate startDate;
-    @Getter @Setter
+
+    @Getter
+    @Setter
     private LocalDate endDate;
+
+    @Getter
+    @Setter
+    private String contactInformation;
 }

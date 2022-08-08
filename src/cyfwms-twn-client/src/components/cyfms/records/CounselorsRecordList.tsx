@@ -95,6 +95,28 @@ export const CounselorsRecord = (
         </Box>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
       </Box>
+      <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
+        <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+          <Input
+            autofill={props.record.startDate}
+            id={`record_${props.recordNumber}_StartDate`}
+            maxDate={new Date().toISOString().substring(0, 10)}
+            minDate="1900-01-01"
+            value="Start Date"
+            type="date"
+          />
+        </Box>
+        <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+          <Input
+            autofill={props.record.endDate}
+            id={`record_${props.recordNumber}_EndDate`}
+            maxDate={new Date().toISOString().substring(0, 10)}
+            minDate="1900-01-01"
+            value="End Date"
+            type="date"
+          />
+        </Box>
+      </Box>
       <CYFMSTextArea
         formLabelFlex="1 1 0"
         outlinedInputFlex="5.1 1 0"
