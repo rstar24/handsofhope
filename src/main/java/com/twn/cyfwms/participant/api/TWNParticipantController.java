@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.ws.Response;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -39,6 +38,9 @@ public class TWNParticipantController {
     private FamilyPhysicianService familyPhysicianService;
     @Autowired
     private ParticipantSearchService participantSearchService;
+
+    @Autowired
+    private ReadAllOutputParticipantService readAllOutputParticipantService;
 
     @GetMapping(value = "/readParticipantIdentity/{participantid}", produces = "application/json")
     @ApiOperation("Read Identity")
@@ -220,11 +222,14 @@ public class TWNParticipantController {
 
        participantSearchCriteriaDto.setReferenceId(("null".equals(var.get("referenceId"))
             || var.get("referenceId") == null) ?null:Long.parseLong(var.get("referenceId")));
-
-
-
         return participantSearchService.search(participantSearchCriteriaDto);
     }
 
+    @GetMapping(value = "/readAllOutputParticipant/{referenceId}", produces = "application/json")
+    @ApiOperation("Read All Output Participant")
+    @ResponseStatus(HttpStatus.OK)
+    public ReadAllOutputParticipantDto readAllOutPutParticipant(@PathVariable("referenceId") Long referenceId) {
+        return readAllOutputParticipantService.readAllOutPutParticipant(referenceId);
+    }
 
 }
