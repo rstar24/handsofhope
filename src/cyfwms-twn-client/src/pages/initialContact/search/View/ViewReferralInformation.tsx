@@ -28,7 +28,7 @@ const ViewReferralInformation = () => {
                       {ReferralInformationLabels[k]}
                     </Typography>
                   </Box>
-                  <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+                  <Box sx={{ flexBasis: 0, flexGrow: 1 }} paddingRight={15}>
                     <Typography variant="h6" style={styles.values}>
                       {t[1]}
                     </Typography>

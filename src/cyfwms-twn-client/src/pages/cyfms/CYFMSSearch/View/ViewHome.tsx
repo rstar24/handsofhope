@@ -45,7 +45,7 @@ const ViewHome = () => {
     >
       <Box>
         <Typography variant="h5" fontWeight={1000} fontFamily="Helvetica Neue">
-          Person Details -
+          Person Details
         </Typography>
       </Box>
 

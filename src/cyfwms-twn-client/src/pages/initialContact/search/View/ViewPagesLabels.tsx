@@ -1,4 +1,14 @@
-export const FileDetailsLabels = [
+export const FileDetailsLabelsProgress = [
+  "File Details Id",
+  "Client Name",
+  "Caseworker",
+  "File Number",
+  "Starting Date",
+  "Status",
+  "Initial Contact Reference Id",
+];
+
+export const FileDetailsLabelsClosed = [
   "File Details Id",
   "Client Name",
   "Caseworker",
@@ -44,12 +54,12 @@ export const PresentConcernsLabels = [
 ];
 
 export const InpatientLabels = [
-  "Creation Date",
-  "Hospitalization Reasons",
-  "Hospitalization Record",
   "Inpatient Id",
+  "Hospitalization Record",
+  "Hospitalization Reasons",
+  "PatientCare Info Id",
+  "Creation Date",
   "Last Written",
-  "Patient Care Info Id",
 ];
 
 export const OutpatientLabels = [

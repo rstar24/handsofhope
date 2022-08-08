@@ -47,6 +47,7 @@ const CYFMSDropdown = (props: CYFMSDropdownPropsType): ReactElement => {
           backgroundColor: "#dfdada",
         }}
       >
+        <option disabled></option>
         {props.optionsList.map((item: any) => (
           <option key={item}>{item}</option>
         ))}

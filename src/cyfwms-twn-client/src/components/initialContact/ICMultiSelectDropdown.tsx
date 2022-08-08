@@ -28,8 +28,9 @@ const ICMultiSelectDropdown = (props: ICDropdownPropsType): ReactElement => {
   const theme = useTheme();
   var y = props.autofill.split(",");
   const val = y.filter((item: any, index: any) => y.indexOf(item) === index);
-
-  const [alcoholName, setAlcoholName] = React.useState<string[]>(val);
+  const removeEmptyString = val.filter((item: any) => item);
+  const [alcoholName, setAlcoholName] =
+    React.useState<string[]>(removeEmptyString);
 
   const handleChange = (event: SelectChangeEvent<typeof alcoholName>) => {
     const {
@@ -73,6 +74,10 @@ const ICMultiSelectDropdown = (props: ICDropdownPropsType): ReactElement => {
               onChange={handleChange}
               input={<OutlinedInput />}
               renderValue={(selected) => {
+                console.log("tyuio", selected);
+                if (selected.length === 1) {
+                  return selected.join("");
+                }
                 return selected.join(", ");
               }}
               sx={{
@@ -81,6 +86,7 @@ const ICMultiSelectDropdown = (props: ICDropdownPropsType): ReactElement => {
                 borderRadius: 0,
               }}
             >
+              <MenuItem disabled></MenuItem>
               {props.optionsList.map((name) => (
                 <MenuItem
                   key={name}

@@ -10,9 +10,11 @@ const ViewIncidentReport = () => {
     <Box paddingTop={1}>
       {Object.entries(data).map((t: any, k) => (
         <Box
-          maxHeight={30}
+          maxHeight={50}
           sx={{
             display: "flex",
+            justifySelf: "center",
+            alignItems: "center",
             paddingLeft: 8,
           }}
         >
@@ -31,7 +33,7 @@ const ViewIncidentReport = () => {
                         {IncidentReportLabels[k]}
                       </Typography>
                     </Box>
-                    <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+                    <Box sx={{ flexBasis: 0, flexGrow: 1 }} paddingRight={15}>
                       <Typography variant="h6" style={styles.values}>
                         {t[1]}
                       </Typography>

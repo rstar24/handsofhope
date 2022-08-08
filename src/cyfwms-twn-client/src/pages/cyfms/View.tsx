@@ -123,9 +123,16 @@ const View = (): ReactElement => {
             </Typography>
             <hr></hr>
             <Typography paddingTop={2}>
-              {state.cyfmsContact.data.addressLine1} ,
-              {state.cyfmsContact.data.city}, {state.cyfmsContact.data.province}{" "}
-              <></>
+              {state.cyfmsContact.data.addressLine1}
+              {state.cyfmsContact.data.addressLine1 &&
+              state.cyfmsContact.data.city
+                ? ","
+                : ""}
+              {state.cyfmsContact.data.city}
+              {state.cyfmsContact.data.province && state.cyfmsContact.data.city
+                ? ","
+                : ""}{" "}
+              {state.cyfmsContact.data.province}{" "}
             </Typography>
             <br />
             <Typography>{state.cyfmsRegister.data.gender} </Typography>

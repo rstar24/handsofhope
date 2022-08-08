@@ -9,7 +9,6 @@ spring:
     username: admin1
     password: Password@123
 
-
   jpa:
     hibernate:
       ddl-auto: none
@@ -24,9 +23,6 @@ jwt:
 
 codetablevalues:
   gender:
-    DEFAULT:
-      "en": ""
-      "fr": ""
     MALE:
       "en": "Male"
       "fr": "Mâle"
@@ -38,9 +34,6 @@ codetablevalues:
       "fr": "LGBTQ"
 
   maritalStatus:
-    DEFAULT:
-      "en": ""
-      "fr": ""
     MARRIED:
       "en": "Married"
       "fr": "Marié"
@@ -64,40 +57,37 @@ codetablevalues:
     MANITOBA:
       "en": "Manitoba"
       "fr": "Manitoba"
-    NEWBRUNSWICK  :
+    NEWBRUNSWICK:
       "en": "New Brunswick"
       "fr": "Nouveau-Brunswick"
-    NEWFOUNDLANDANDLABRADOR:    
+    NEWFOUNDLANDANDLABRADOR:
       "en": "Newfoundland and Labrador"
-      "fr": "Terre Neuve et Labrador" 
-    NORTHWESTTERRITORIES:   
+      "fr": "Terre Neuve et Labrador"
+    NORTHWESTTERRITORIES:
       "en": "Northwest Territories"
-      "fr": "Territoires du nord-ouest" 
-    NOVASCOTIA:   
+      "fr": "Territoires du nord-ouest"
+    NOVASCOTIA:
       "en": "Nova Scotia"
-      "fr": "Nouvelle Écosse" 
-    NUNAVUT:    
+      "fr": "Nouvelle Écosse"
+    NUNAVUT:
       "en": "Nunavut"
-      "fr": "Nunavut"  
-    ONTARIO:    
+      "fr": "Nunavut"
+    ONTARIO:
       "en": "Ontario"
-      "fr": "Ontario"  
+      "fr": "Ontario"
     PRINCEEDWAEDISLAND:
       "en": "Prince Edward Island"
-      "fr": "Île du Prince Édouard"  
-    QUEBEC: 
+      "fr": "Île du Prince Édouard"
+    QUEBEC:
       "en": "Quebec"
-      "fr": "Québec" 
-    SASKATCHEWAN: 
+      "fr": "Québec"
+    SASKATCHEWAN:
       "en": "Saskatchewan"
-      "fr": "Saskatchewan" 
-    YUKON:    
+      "fr": "Saskatchewan"
+    YUKON:
       "en": "Yukon"
-      "fr": "Yukon" 
+      "fr": "Yukon"
   role:
-    DEFAULT:
-      "en": ""
-      "fr": ""
     COUNSELOR:
       "en": "Counselor"
       "fr": "Conseiller"
@@ -106,9 +96,6 @@ codetablevalues:
       "fr": "CFS Ouvrier"
 
   education:
-    DEFAULT:
-      "en": ""
-      "fr": ""
     YES:
       "en": "Yes"
       "fr": "Oui"
@@ -120,9 +107,6 @@ codetablevalues:
       "fr": "Peut-être"
 
   typeOFEmployee:
-    DEFAULT:
-      "en": ""
-      "fr": ""
     FULLTIME:
       "en": "Full-Time"
       "fr": "Plein temps"
@@ -137,23 +121,17 @@ codetablevalues:
       "fr": "Recherche d'emploi"
 
   initialContactStatus:
-    DEFAULT:
-      "en": ""
-      "fr": ""
     PROGRESS:
       "en": "In Progress"
       "fr": "En Cours"
     ACTIVE:
       "en": "Active"
-      "fr": "Actif"  
+      "fr": "Actif"
     CLOSED:
       "en": "Closed"
       "fr": "Fermé"
 
   initialContactReferral:
-    DEFAULT:
-      "en": ""
-      "fr": ""
     YES:
       "en": "Yes"
       "fr": "Oui"
@@ -162,9 +140,6 @@ codetablevalues:
       "fr": "Non"
 
   presentConcerns:
-    DEFAULT:
-      "en": ""
-      "fr": ""
     HEALTH:
       "en": "Health"
       "fr": "Santé"
@@ -193,9 +168,6 @@ codetablevalues:
       "en": "Financial"
       "fr": "Financier"
   mentalHealthOrSubstanceAbuse:
-    DEFAULT:
-      "en": ""
-      "fr": ""
     ALCOHOL:
       "en": "Alcohol"
       "fr": "De l'alcool"
@@ -218,9 +190,6 @@ codetablevalues:
       "en": "Other"
       "fr": "Autre"
   typeOfPatient:
-    DEFAULT:
-      "en": ""
-      "fr": ""
     OUTPATIENT:
       "en": "Outpatient"
       "fr": "Ambulatoire"
@@ -229,9 +198,6 @@ codetablevalues:
       "fr": "Hospitalisé"
 
   risk:
-    DEFAULT:
-      "en": ""
-      "fr": ""
     LOW:
       "en": "Low"
       "fr": "Bas"

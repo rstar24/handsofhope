@@ -16,22 +16,31 @@ const ViewPatientCareInformation = () => {
           </Typography>
           {Object.entries(data.inpatient).map((t: any, k: any) => (
             <Box
-              maxHeight={30}
               sx={{
                 display: "flex",
                 paddingLeft: 8,
               }}
             >
-              <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                <Typography variant="h6" style={styles.keys}>
-                  {InpatientLabels[k]}
-                </Typography>
-              </Box>
-              <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                <Typography variant="h6" style={styles.values}>
-                  {t[1]}
-                </Typography>
-              </Box>
+              {t[1] === "" ? (
+                <></>
+              ) : (
+                <>
+                  {k !== 0 && k !== 3 && k !== 4 && k !== 5 && (
+                    <>
+                      <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+                        <Typography variant="h6" style={styles.keys}>
+                          {InpatientLabels[k]}
+                        </Typography>
+                      </Box>
+                      <Box sx={{ flexBasis: 0, flexGrow: 1 }} paddingRight={15}>
+                        <Typography variant="h6" style={styles.values}>
+                          {t[1]}
+                        </Typography>
+                      </Box>
+                    </>
+                  )}
+                </>
+              )}
             </Box>
           ))}
         </Box>
@@ -44,7 +53,6 @@ const ViewPatientCareInformation = () => {
           </Typography>
           {Object.entries(data.outpatient).map((t: any, k: any) => (
             <Box
-              maxHeight={30}
               sx={{
                 display: "flex",
                 paddingLeft: 8,
@@ -63,7 +71,10 @@ const ViewPatientCareInformation = () => {
                               {OutpatientLabels[k]}
                             </Typography>
                           </Box>
-                          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+                          <Box
+                            sx={{ flexBasis: 0, flexGrow: 1 }}
+                            paddingRight={15}
+                          >
                             <Typography variant="h6" style={styles.values}>
                               {t[1]}
                             </Typography>

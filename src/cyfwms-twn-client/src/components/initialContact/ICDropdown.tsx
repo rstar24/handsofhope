@@ -47,6 +47,7 @@ const ICDropdown = (props: ICDropdownPropsType): ReactElement => {
           backgroundColor: "#dfdada",
         }}
       >
+        <option disabled></option>
         {props.optionsList.map((item: any) => (
           <option key={item}>{item}</option>
         ))}

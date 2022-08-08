@@ -55,16 +55,17 @@ const Outpatient = (): ReactElement => {
           />
         </Box>
       </Box>
-      <Box>
+      <Box sx={{ display: "flex", flexWrap: "wrap" }}>
         <Box
           sx={{
-            display: "flex",
+            paddingLeft: 1,
+            flexBasis: 0,
             flexDirection: "column",
-            gap: "1rem 0",
+            flexGrow: 200,
           }}
         >
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <ICFullInput
+            <ICTextAreaMax
               autofill={data.reasonForTherapy}
               id="reasonForTherapy"
               value="Reasons"
@@ -72,9 +73,16 @@ const Outpatient = (): ReactElement => {
           </Box>
         </Box>
       </Box>
-      <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
-        <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-          <ICHalfInput
+      <Box sx={{ display: "flex", flexWrap: "wrap" }}>
+        <Box
+          sx={{
+            paddingLeft: 1,
+            flexBasis: 0,
+            flexDirection: "column",
+            flexGrow: 200,
+          }}
+        >
+          <ICTextAreaMax
             autofill={data.selfHelpGroup}
             id="selfHelpGroup"
             value="Any involvement in self help groups such as NA, AA, etc?"

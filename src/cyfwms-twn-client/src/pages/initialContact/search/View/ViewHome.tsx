@@ -5,7 +5,6 @@ import ViewReferralInformation from "./ViewReferralInformation";
 import ViewIncidentReport from "./ViewIncidentReport";
 import ViewPresentConcerns from "./ViewPresentConcerns";
 import ViewPatientCareInformation from "./ViewPatientCareInformation";
-import { FileDetailsLabels } from "./ViewPagesLabels";
 import ViewFileDetails from "./ViewFileDetails";
 
 export const styles = {
@@ -43,7 +42,7 @@ const ViewHome = () => {
     >
       <Box>
         <Typography variant="h5" fontWeight={1000} fontFamily="Helvetica Neue">
-          File Details -
+          File Details
         </Typography>
       </Box>
 
