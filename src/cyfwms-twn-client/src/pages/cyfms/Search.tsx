@@ -1,13 +1,13 @@
-import Input from "../../../components/Input";
-import Popup from "../../../components/Popup";
-import AuthLayout from "../../../components/auth/layout/AuthLayout";
-import CYFMSDropdown from "../../../components/cyfms/CYFMSDropdown";
-import CYFMSHeader from "../../../components/cyfms/CYFMSHeader";
-import Router from "../../../components/nestedRouters/CYFMS";
-import { doGetMaritalStatus } from "../../../features/codetable/codetableSlice";
-import { doGetSearch } from "../../../features/search/searchSlice";
-import { useAppDispatch, useAppSelector } from "../../../library/hooks";
-import SearchResults from "./SearchResults";
+import Input from "../../components/Input";
+import Popup from "../../components/Popup";
+import AuthLayout from "../../components/auth/layout/AuthLayout";
+import CYFMSDropdown from "../../components/cyfms/CYFMSDropdown";
+import CYFMSHeader from "../../components/cyfms/CYFMSHeader";
+import Results from "../../components/cyfms/search/Results";
+import Router from "../../components/nestedRouters/CYFMS";
+import { doGetMaritalStatus } from "../../features/codetable/codetableSlice";
+import { doGetSearch } from "../../features/search/searchSlice";
+import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { Box, Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import type { FormEvent, ReactElement } from "react";
@@ -177,7 +177,7 @@ const Search = (): ReactElement => {
           </Box>
         </Box>
       </Box>
-      {isShown && <SearchResults />}
+      {isShown && <Results />}
       <Popup children={<Router />} />
     </AuthLayout>
   );

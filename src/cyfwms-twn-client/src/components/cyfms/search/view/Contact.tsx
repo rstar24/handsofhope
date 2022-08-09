@@ -1,10 +1,12 @@
-import React, { useState } from "react";
-import { Box, Typography } from "@mui/material";
 import { useAppSelector } from "../../../../library/hooks";
-import { styles } from "./ViewHome";
-import { OtherInformationLabels } from "./ViewPagesLabels";
-const ViewOtherInformation = () => {
-  const data = useAppSelector((state) => state.cyfmsOtherInformation.data);
+import { ContactLabel } from "../../../../library/labels/cyfms";
+import { styles } from "./Home";
+import { Box, Typography } from "@mui/material";
+import React from "react";
+import type { ReactElement } from "react";
+
+const Contact = (): ReactElement => {
+  const data = useAppSelector((state) => state.cyfmsContact.data);
 
   return (
     <Box paddingTop={3}>
@@ -24,7 +26,7 @@ const ViewOtherInformation = () => {
                 <>
                   <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
                     <Typography variant="h6" style={styles.keys}>
-                      {OtherInformationLabels[k]}
+                      {ContactLabel[k]}
                     </Typography>
                   </Box>
                   <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
@@ -42,4 +44,4 @@ const ViewOtherInformation = () => {
   );
 };
 
-export default ViewOtherInformation;
+export default Contact;

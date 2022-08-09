@@ -1,4 +1,3 @@
-import EditIcon from "../../../components/cyfms/EditIcon";
 import { doGet as doGetRegister } from "../../../features/cyfms/register/slice";
 import { doGet as doGetContact } from "../../../features/cyfms/contact/slice";
 import { doGet as doGetCounselors } from "../../../features/cyfms/counselors/slice";
@@ -9,6 +8,7 @@ import { doGet as doGetHouseholdMembers } from "../../../features/cyfms/househol
 import { doGet as doGetOtherInformation } from "../../../features/cyfms/otherInformation/slice";
 import { setView } from "../../../features/popupSlice";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
+import EditIcon from "../EditIcon";
 import React from "react";
 import {
   Box,
@@ -22,7 +22,7 @@ import {
 import { Link } from "react-router-dom";
 import type { ReactElement } from "react";
 
-const SearchResults = (): ReactElement => {
+const Results = (): ReactElement => {
   const dispatch = useAppDispatch();
 
   const searchData = useAppSelector((state) => (state as any).search.readUser);
@@ -88,4 +88,4 @@ const SearchResults = (): ReactElement => {
   );
 };
 
-export default SearchResults;
+export default Results;

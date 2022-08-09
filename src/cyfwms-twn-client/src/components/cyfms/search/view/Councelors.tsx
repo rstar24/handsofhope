@@ -1,9 +1,11 @@
-import React from "react";
-import { Box, Typography } from "@mui/material";
 import { useAppSelector } from "../../../../library/hooks";
-import { styles } from "./ViewHome";
-import { CouncelorsLabel } from "./ViewPagesLabels";
-const ViewCouncelors = () => {
+import { CouncelorsLabel } from "../../../../library/labels/cyfms";
+import { styles } from "./Home";
+import { Box, Typography } from "@mui/material";
+import React from "react";
+import type { ReactElement } from "react";
+
+const Councelors = (): ReactElement => {
   const data = useAppSelector((state) => state.cyfmsCounselors.data);
 
   return (
@@ -54,4 +56,4 @@ const ViewCouncelors = () => {
   );
 };
 
-export default ViewCouncelors;
+export default Councelors;

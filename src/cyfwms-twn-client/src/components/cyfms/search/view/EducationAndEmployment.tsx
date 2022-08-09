@@ -1,10 +1,11 @@
-import React from "react";
-import { Box, Typography } from "@mui/material";
 import { useAppSelector } from "../../../../library/hooks";
-import { styles } from "./ViewHome";
-import { EducationAndEmploymentLabels } from "./ViewPagesLabels";
+import { EducationAndEmploymentLabels } from "../../../../library/labels/cyfms";
+import { styles } from "./Home";
+import { Box, Typography } from "@mui/material";
+import React from "react";
+import type { ReactElement } from "react";
 
-const ViewEducationAndEmployment = () => {
+const EducationAndEmployment = (): ReactElement => {
   const data = useAppSelector(
     (state) => state.cyfmsEducationAndEmployment.data
   );
@@ -45,4 +46,4 @@ const ViewEducationAndEmployment = () => {
   );
 };
 
-export default ViewEducationAndEmployment;
+export default EducationAndEmployment;

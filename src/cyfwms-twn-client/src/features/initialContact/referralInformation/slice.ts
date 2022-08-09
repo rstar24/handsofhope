@@ -7,7 +7,9 @@ export interface Data {
   fileDetailsId: number;
   referralInfoId: number;
   referral: string;
+  selfReferred: boolean;
   agencyName: string;
+  name: string;
   address: string;
   phone: string;
   email: string;
@@ -18,7 +20,9 @@ const emptyData: Data = {
   fileDetailsId: 0,
   referralInfoId: 0,
   referral: "",
+  selfReferred: false,
   agencyName: "",
+  name: "",
   address: "",
   phone: "",
   email: "",
@@ -59,6 +63,9 @@ export const referralInformationSlice = createSlice<
   name: "referralInformation",
   initialState: { data: emptyData, status: "failed" },
   reducers: {
+    flipSelfReferred(state) {
+      state.data.selfReferred = !state.data.selfReferred;
+    },
     cleanState(state) {
       state.data = emptyData;
       state.status = "none";
@@ -92,6 +99,7 @@ export const referralInformationSlice = createSlice<
   },
 });
 
-export const { cleanState } = referralInformationSlice.actions;
+export const { flipSelfReferred, cleanState } =
+  referralInformationSlice.actions;
 
 export default referralInformationSlice.reducer;

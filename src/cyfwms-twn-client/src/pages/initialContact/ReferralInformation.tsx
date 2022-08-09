@@ -3,11 +3,12 @@ import ICDropdown from "../../components/initialContact/ICDropdown";
 import ICInput from "../../components/initialContact/ICInput";
 import ICLayout from "../../components/initialContact/ICLayout";
 import {
+  flipSelfReferred,
   doGet,
   doPost,
 } from "../../features/initialContact/referralInformation/slice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
-import { Box } from "@mui/material";
+import { Box, Checkbox, FormControlLabel } from "@mui/material";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import type { Data } from "../../features/initialContact/referralInformation/slice";
@@ -50,7 +51,9 @@ const ReferralInformation = (): ReactElement => {
       fileDetailsId: initialContactID,
       referralInfoId: data.referralInfoId,
       referral: form.referral.value,
+      selfReferred: data.selfReferred,
       agencyName: form.agencyName.value,
+      name: form.naam.value,
       address: form.address.value,
       phone: form.phone.value,
       email: form.eMail.value,
@@ -94,7 +97,20 @@ const ReferralInformation = (): ReactElement => {
                     )}
                   />
                 </Box>
-                <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
+                <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={data.selfReferred}
+                        id="selfReferred"
+                        onChange={() => dispatch(flipSelfReferred(null))}
+                        disableRipple
+                      />
+                    }
+                    label="Self"
+                    labelPlacement="start"
+                  />
+                </Box>
               </Box>
               <Box
                 sx={{
@@ -112,11 +128,7 @@ const ReferralInformation = (): ReactElement => {
                   />
                 </Box>
                 <Box sx={{ flexBasis: 0, flexGrow: 0.5 }}>
-                  <ICInput
-                    autofill={data.address}
-                    id="address"
-                    value="Address"
-                  />
+                  <ICInput autofill={data.name} id="naam" value="Name" />
                 </Box>
               </Box>
             </Box>
@@ -127,10 +139,14 @@ const ReferralInformation = (): ReactElement => {
             >
               <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
                 <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                  <ICInput autofill={data.phone} id="phone" value="Phone" />
+                  <ICInput
+                    autofill={data.address}
+                    id="address"
+                    value="Address"
+                  />
                 </Box>
                 <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                  <ICInput autofill={data.email} id="eMail" value="Email" />
+                  <ICInput autofill={data.phone} id="phone" value="Phone" />
                 </Box>
               </Box>
               <Box
@@ -140,6 +156,9 @@ const ReferralInformation = (): ReactElement => {
                   gap: "0 1rem",
                 }}
               >
+                <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+                  <ICInput autofill={data.email} id="eMail" value="Email" />
+                </Box>
                 <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
               </Box>
             </Box>

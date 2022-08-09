@@ -1,13 +1,14 @@
-import React from "react";
-import { Box, Typography } from "@mui/material";
 import { useAppSelector } from "../../../../library/hooks";
-import { styles } from "./ViewHome";
 import {
   CriminalHistoryLabels,
   CriminalHistoryRecordLabels,
-} from "./ViewPagesLabels";
+} from "../../../../library/labels/cyfms";
+import { styles } from "./Home";
+import { Box, Typography } from "@mui/material";
+import React from "react";
+import type { ReactElement } from "react";
 
-const ViewCriminalHistory = () => {
+const CriminalHistory = (): ReactElement => {
   const data = useAppSelector((state) => state.cyfmsCriminalHistory.data);
 
   return (
@@ -104,4 +105,4 @@ const ViewCriminalHistory = () => {
   );
 };
 
-export default ViewCriminalHistory;
+export default CriminalHistory;

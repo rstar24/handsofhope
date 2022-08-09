@@ -3,7 +3,6 @@ package com.twn.cyfwms.initialContact.entity;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -33,8 +32,14 @@ public class InitialContactReferralInfo implements Serializable {
     @Getter @Setter @Column(name = "referral")
     private String referral;
 
+    @Getter @Setter @Column(name = "selfReferred")
+    private Boolean selfReferred;
+
     @Getter @Setter @Column(name = "agencyname")
     private String agencyName;
+
+    @Getter @Setter @Column(name = "name")
+    private String name;
 
     @Getter @Setter @Column(name = "address")
     private String address;
@@ -55,5 +60,4 @@ public class InitialContactReferralInfo implements Serializable {
     @UpdateTimestamp
     @Getter @Setter @Column(name = "lastwritten")
     private LocalDateTime lastWritten;
-
-    }
+}

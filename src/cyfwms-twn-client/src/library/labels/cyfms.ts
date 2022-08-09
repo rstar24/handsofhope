@@ -58,6 +58,8 @@ export const CouncelorsLabel = [
   "CounselorCFSWorkerId",
   "Role",
   "Name",
+  "Start Date",
+  "End Date",
   "Contact Information",
 ];
 

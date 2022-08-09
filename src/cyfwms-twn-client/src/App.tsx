@@ -8,7 +8,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import NotFound404 from "./pages/NotFound404";
 import CYFMS from "./pages/cyfms/CYFMS";
-import CYFMSSearch from "./pages/cyfms/CYFMSSearch/Search";
+import CYFMSSearch from "./pages/cyfms/Search";
 import CYFMSView from "./pages/cyfms/View";
 import InitialContact from "./pages/initialContact/InitialContact";
 import InitialContactSearch from "./pages/initialContact/search/Search";
@@ -19,7 +19,7 @@ import { Provider } from "react-redux";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import type { ReactElement } from "react";
 
-const CYFSWMSApp = (): ReactElement => {
+const App = (): ReactElement => {
   return (
     <StrictMode>
       <Provider store={store}>
@@ -50,4 +50,4 @@ const CYFSWMSApp = (): ReactElement => {
   );
 };
 
-export default CYFSWMSApp;
+export default App;

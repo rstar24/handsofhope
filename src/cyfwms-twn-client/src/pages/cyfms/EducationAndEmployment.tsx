@@ -77,7 +77,6 @@ const EducationAndEmployment = (): ReactElement => {
   // and other activities.
   const changeHandler = (e: FormEvent) => {
     const form: any = e.currentTarget;
-    console.log(form.school);
     if (form.attendingSchool.value === "Yes") {
       dispatch(enableSchoolFields(null));
     } else {

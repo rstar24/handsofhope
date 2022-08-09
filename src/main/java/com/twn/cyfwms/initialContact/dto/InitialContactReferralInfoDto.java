@@ -23,7 +23,15 @@ public class InitialContactReferralInfoDto {
 
     @Getter
     @Setter
+    private Boolean selfReferred;
+
+    @Getter
+    @Setter
     private String agencyName;
+
+    @Getter
+    @Setter
+    private String name;
 
     @Getter
     @Setter

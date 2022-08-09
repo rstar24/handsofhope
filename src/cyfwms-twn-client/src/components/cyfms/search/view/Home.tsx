@@ -1,14 +1,15 @@
+import { useAppSelector } from "../../../../library/hooks";
+import { RegisterLabels } from "../../../../library/labels/cyfms";
+import Contact from "./Contact";
+import Councelors from "./Councelors";
+import CriminalHistory from "./CriminalHistory";
+import EducationAndEmployment from "./EducationAndEmployment";
+import FamilyPhysician from "./FamilyPhysician";
+import HouseholdMembers from "./HouseholdMembers";
+import OtherInformation from "./OtherInformation";
 import { Box, Typography } from "@mui/material";
 import React from "react";
-import { useAppSelector } from "../../../../library/hooks";
-import ViewContact from "./ViewContact";
-import ViewCouncelors from "./ViewCouncelors";
-import ViewCriminalHistory from "./ViewCriminalHistory";
-import ViewEducationAndEmployment from "./ViewEducationAndEmployment";
-import ViewFamilyPhysician from "./ViewFamilyPhysician";
-import ViewHouseholdMembers from "./ViewHouseholdMembers";
-import ViewOtherInformation from "./ViewOtherInformation";
-import { RegisterLabels } from "./ViewPagesLabels";
+import type { ReactElement } from "react";
 
 export const styles = {
   header: {
@@ -31,7 +32,8 @@ export const styles = {
     fontSize: 16,
   },
 };
-const ViewHome = () => {
+
+const Home = (): ReactElement => {
   const state = useAppSelector((state) => state);
 
   return (
@@ -90,46 +92,46 @@ const ViewHome = () => {
         <Typography variant="h6" style={styles.header}>
           Contact
         </Typography>
-        <ViewContact />
+        <Contact />
       </Box>
       <Box>
         <Typography variant="h6" style={styles.header}>
           Household Members
         </Typography>
-        <ViewHouseholdMembers />
+        <HouseholdMembers />
       </Box>
       <Box>
         <Typography variant="h6" style={styles.header}>
           Education and Employment
         </Typography>
-        <ViewEducationAndEmployment />
+        <EducationAndEmployment />
       </Box>
       <Box>
         <Typography variant="h6" style={styles.header}>
           Criminal History
         </Typography>
-        <ViewCriminalHistory />
+        <CriminalHistory />
       </Box>
       <Box>
         <Typography variant="h6" style={styles.header}>
           Family Physician
         </Typography>
-        <ViewFamilyPhysician />
+        <FamilyPhysician />
       </Box>
       <Box>
         <Typography variant="h6" style={styles.header}>
           Counselor / CFS Worker
         </Typography>
-        <ViewCouncelors />
+        <Councelors />
       </Box>
       <Box>
         <Typography variant="h6" style={styles.header}>
           Other Information
         </Typography>
-        <ViewOtherInformation />
+        <OtherInformation />
       </Box>
     </Box>
   );
 };
 
-export default ViewHome;
+export default Home;

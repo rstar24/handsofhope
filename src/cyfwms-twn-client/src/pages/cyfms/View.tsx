@@ -3,15 +3,15 @@ import AuthLayout from "../../components/auth/layout/AuthLayout";
 import CYFMSHeader from "../../components/cyfms/CYFMSHeader";
 import EditIcon from "../../components/cyfms/EditIcon";
 import Router from "../../components/nestedRouters/CYFMS";
+import Contact from "../../components/cyfms/search/view/Contact";
+import Councelors from "../../components/cyfms/search/view/Councelors";
+import CriminalHistory from "../../components/cyfms/search/view/CriminalHistory";
+import EducationAndEmployment from "../../components/cyfms/search/view/EducationAndEmployment";
+import FamilyPhysician from "../../components/cyfms/search/view/FamilyPhysician";
+import Home from "../../components/cyfms/search/view/Home";
+import HouseholdMembers from "../../components/cyfms/search/view/HouseholdMembers";
+import OtherInformation from "../../components/cyfms/search/view/OtherInformation";
 import { useAppSelector } from "../../library/hooks";
-import ViewContact from "./CYFMSSearch/View/ViewContact";
-import ViewCouncelors from "./CYFMSSearch/View/ViewCouncelors";
-import ViewCriminalHistory from "./CYFMSSearch/View/ViewCriminalHistory";
-import ViewEducationAndEmployment from "./CYFMSSearch/View/ViewEducationAndEmployment";
-import ViewFamilyPhysician from "./CYFMSSearch/View/ViewFamilyPhysician";
-import ViewHome from "./CYFMSSearch/View/ViewHome";
-import ViewHouseholdMembers from "./CYFMSSearch/View/ViewHouseholdMembers";
-import ViewOtherInformation from "./CYFMSSearch/View/ViewOtherInformation";
 import { Box, Tab, Tabs, Typography } from "@mui/material";
 import React from "react";
 import type { ReactElement } from "react";
@@ -171,28 +171,28 @@ const View = (): ReactElement => {
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
-            <ViewHome />
+            <Home />
           </TabPanel>
           <TabPanel value={value} index={1}>
-            <ViewContact />
+            <Contact />
           </TabPanel>
           <TabPanel value={value} index={2}>
-            <ViewHouseholdMembers />
+            <HouseholdMembers />
           </TabPanel>
           <TabPanel value={value} index={3}>
-            <ViewEducationAndEmployment />
+            <EducationAndEmployment />
           </TabPanel>
           <TabPanel value={value} index={4}>
-            <ViewCriminalHistory />
+            <CriminalHistory />
           </TabPanel>
           <TabPanel value={value} index={5}>
-            <ViewFamilyPhysician />
+            <FamilyPhysician />
           </TabPanel>
           <TabPanel value={value} index={6}>
-            <ViewCouncelors />
+            <Councelors />
           </TabPanel>
           <TabPanel value={value} index={7}>
-            <ViewOtherInformation />
+            <OtherInformation />
           </TabPanel>
         </Box>{" "}
       </Box>

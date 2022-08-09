@@ -1,10 +1,12 @@
-import React from "react";
-import { Box, Typography } from "@mui/material";
 import { useAppSelector } from "../../../../library/hooks";
-import { styles } from "./ViewHome";
-import { FamilyPhysiciansLabel } from "./ViewPagesLabels";
-const ViewFamilyPhysician = () => {
-  const data = useAppSelector((state) => state.cyfmsFamilyPhysicians.data);
+import { HouseholdLabel } from "../../../../library/labels/cyfms";
+import { styles } from "./Home";
+import { Box, Typography } from "@mui/material";
+import React from "react";
+import type { ReactElement } from "react";
+
+const HouseholdMembers = (): ReactElement => {
+  const data = useAppSelector((state) => state.cyfmsHouseholdMembers.data);
 
   return (
     <Box paddingTop={1}>
@@ -12,13 +14,13 @@ const ViewFamilyPhysician = () => {
         <>
           {data.recordsList[0].participantId > 0 && (
             <Typography paddingTop={2} paddingLeft={4}>
-              Family Physician {Number(i) + 1}
+              Member {Number(i) + 1}
             </Typography>
           )}
           <Box>
-            {Object.entries(data.recordsList[i]).map((t: any, k) => (
+            {Object.entries(data.recordsList[i]).map((t: any, k: any) => (
               <Box
-                maxHeight={30}
+                maxHeight={28}
                 sx={{
                   display: "flex",
                   paddingLeft: 8,
@@ -32,7 +34,7 @@ const ViewFamilyPhysician = () => {
                       <>
                         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
                           <Typography variant="h6" style={styles.keys}>
-                            {FamilyPhysiciansLabel[k]}
+                            {HouseholdLabel[k]}
                           </Typography>
                         </Box>
 
@@ -54,4 +56,4 @@ const ViewFamilyPhysician = () => {
   );
 };
 
-export default ViewFamilyPhysician;
+export default HouseholdMembers;
