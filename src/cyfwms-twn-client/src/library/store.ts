@@ -17,6 +17,7 @@ import initiatorReducer from "../features/initiatorSlice";
 import loginReducer from "../features/login/loginSlice";
 import popupReducer from "../features/popupSlice";
 import searchReducer from "../features/search/searchSlice";
+import readAllRecordReducer from "../features/cyfms/getAllRecord/slice";
 import navBarReducer from "../features/navBarSlice";
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 
@@ -42,6 +43,7 @@ export const store = configureStore({
     icPatientCareInformation: icPatientCareInformationReducer,
     icSearch: icSearchReducer,
     search: searchReducer,
+    readAll: readAllRecordReducer,
   },
 });
 

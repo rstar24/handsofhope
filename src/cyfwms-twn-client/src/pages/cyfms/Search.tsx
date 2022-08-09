@@ -130,6 +130,7 @@ const Search = (): ReactElement => {
           />
           <CYFMSDropdown
             id="maritalStatus"
+            autofill={""}
             optionsList={Object.values(maritalstatus).map(
               (status: any) => status.en
             )}
