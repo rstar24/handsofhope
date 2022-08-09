@@ -8,7 +8,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.time.LocalDate;
 import java.util.Optional;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -50,8 +49,10 @@ public class InitialContactFileDetailsServiceImpl implements  InitialContactFile
             if (initialContactFileDetailOpt.isPresent()) {
                 InitialContactFileDetails initialContactFileDtls = initialContactFileDetailOpt.get();
                 initialContactFileDetails.setInitialcontactReferenceId(initialContactFileDtls.getInitialcontactReferenceId()+128L);
+                initialContactFileDetails.setFileNumber(initialContactFileDtls.getFileNumber()+1L);
             } else {
                initialContactFileDetails.setInitialcontactReferenceId(128L);
+               initialContactFileDetails.setFileNumber(1L);
             }
         } else {
             initialContactFileDetails=initialContactFileDetailsRepository.findById(initialContactFileDetailsDto.getFileDetailsId()).get();
@@ -59,6 +60,7 @@ public class InitialContactFileDetailsServiceImpl implements  InitialContactFile
         }
         initialContactFileDetails = initialContactFileDetailsRepository.save(initialContactFileDetails);
         initialContactFileDetailsDto.setFileDetailsId(initialContactFileDetails.getFileDetailsId());
+        initialContactFileDetailsDto.setFileNumber(initialContactFileDetails.getFileNumber());
         initialContactFileDetailsDto.setInitialContactReferenceId(initialContactFileDetails.getInitialcontactReferenceId());
         return initialContactFileDetailsDto;
     }
