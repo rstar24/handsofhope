@@ -2,15 +2,15 @@ import { useAppSelector } from "../../../../library/hooks";
 import {
   FileDetailsLabelsClosed,
   FileDetailsLabelsProgress,
-} from "./ViewPagesLabels";
-import { styles } from "./ViewHome";
+} from "../../../../library/labels/initialContact";
+import { styles } from "./Home";
 import { Box, Typography } from "@mui/material";
 import React from "react";
-import { DataArray } from "@mui/icons-material";
+import type { ReactElement } from "react";
 
-const ViewFileDetails = () => {
+const FileDetails = (): ReactElement => {
   const data = useAppSelector((state) => state.icFileDetails.data);
-  console.log("-----", Object.keys(data).length);
+
   return (
     <Box paddingTop={3}>
       {Object.entries(data).map((t: any, k: any) => (
@@ -70,4 +70,4 @@ const ViewFileDetails = () => {
   );
 };
 
-export default ViewFileDetails;
+export default FileDetails;

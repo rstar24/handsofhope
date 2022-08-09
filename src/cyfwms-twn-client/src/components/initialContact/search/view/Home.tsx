@@ -1,11 +1,11 @@
+import FileDetails from "./FileDetails";
+import IncidentReport from "./IncidentReport";
+import PatientCareInformation from "./PatientCareInformation";
+import PresentConcerns from "./PresentConcerns";
+import ReferralInformation from "./ReferralInformation";
 import { Box, Typography } from "@mui/material";
 import React from "react";
-import { useAppSelector } from "../../../../library/hooks";
-import ViewReferralInformation from "./ViewReferralInformation";
-import ViewIncidentReport from "./ViewIncidentReport";
-import ViewPresentConcerns from "./ViewPresentConcerns";
-import ViewPatientCareInformation from "./ViewPatientCareInformation";
-import ViewFileDetails from "./ViewFileDetails";
+import type { ReactElement } from "react";
 
 export const styles = {
   header: {
@@ -28,9 +28,8 @@ export const styles = {
     fontSize: 16,
   },
 };
-const ViewHome = () => {
-  const state = useAppSelector((state) => state);
 
+const Home = (): ReactElement => {
   return (
     <Box
       sx={{
@@ -50,34 +49,34 @@ const ViewHome = () => {
         <Typography variant="h6" style={styles.header}>
           File Detail
         </Typography>
-        <ViewFileDetails />
+        <FileDetails />
       </Box>
       <Box>
         <Typography variant="h6" style={styles.header}>
           Referral Information
         </Typography>
-        <ViewReferralInformation />
+        <ReferralInformation />
       </Box>
       <Box>
         <Typography variant="h6" style={styles.header}>
           Incident Report
         </Typography>
-        <ViewIncidentReport />
+        <IncidentReport />
       </Box>
       <Box>
         <Typography variant="h6" style={styles.header}>
           Present Concerns
         </Typography>
-        <ViewPresentConcerns />
+        <PresentConcerns />
       </Box>
       <Box>
         <Typography variant="h6" style={styles.header}>
           Patient Care Information
         </Typography>
-        <ViewPatientCareInformation />
+        <PatientCareInformation />
       </Box>
     </Box>
   );
 };
 
-export default ViewHome;
+export default Home;

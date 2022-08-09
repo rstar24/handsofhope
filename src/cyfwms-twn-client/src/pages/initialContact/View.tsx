@@ -4,12 +4,12 @@ import ICHeader from "../../components/initialContact/ICHeader";
 import EditIcon from "../../components/initialContact/EditIcon";
 import Router from "../../components/nestedRouters/InitialContact";
 import { useAppSelector } from "../../library/hooks";
-import ViewFileDetails from "./search/View/ViewFileDetails";
-import ViewHome from "./search/View/ViewHome";
-import ViewIncidentReport from "./search/View/ViewIncidentReport";
-import ViewPatientCareInformation from "./search/View/ViewPatientCareInformation";
-import ViewPresentConcerns from "./search/View/ViewPresentConcerns";
-import ViewReferralInformation from "./search/View/ViewReferralInformation";
+import FileDetails from "../../components/initialContact/search/view/FileDetails";
+import Home from "../../components/initialContact/search/view/Home";
+import IncidentReport from "../../components/initialContact/search/view/IncidentReport";
+import PatientCareInformation from "../../components/initialContact/search/view/PatientCareInformation";
+import PresentConcerns from "../../components/initialContact/search/view/PresentConcerns";
+import ReferralInformation from "../../components/initialContact/search/view/ReferralInformation";
 import { Box, Tab, Tabs, Typography } from "@mui/material";
 import React from "react";
 import type { ReactElement } from "react";
@@ -126,22 +126,22 @@ const View = (): ReactElement => {
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
-            <ViewHome />
+            <Home />
           </TabPanel>
           <TabPanel value={value} index={1}>
-            <ViewFileDetails />
+            <FileDetails />
           </TabPanel>
           <TabPanel value={value} index={2}>
-            <ViewReferralInformation />
+            <ReferralInformation />
           </TabPanel>
           <TabPanel value={value} index={3}>
-            <ViewIncidentReport />
+            <IncidentReport />
           </TabPanel>
           <TabPanel value={value} index={4}>
-            <ViewPresentConcerns />
+            <PresentConcerns />
           </TabPanel>
           <TabPanel value={value} index={5}>
-            <ViewPatientCareInformation />
+            <PatientCareInformation />
           </TabPanel>
         </Box>{" "}
       </Box>

@@ -1,4 +1,3 @@
-import EditIcon from "../../../components/initialContact/EditIcon";
 import { doGet as doGetFileDetails } from "../../../features/initialContact/fileDetails/slice";
 import { doGet as doGetIncidentReport } from "../../../features/initialContact/incidentReport/slice";
 import { doGet as doGetPatientCareInformation } from "../../../features/initialContact/patientCareInformation/slice";
@@ -6,6 +5,7 @@ import { doGet as doGetPresentConcerns } from "../../../features/initialContact/
 import { doGet as doGetReferralInformation } from "../../../features/initialContact/referralInformation/slice";
 import { setView } from "../../../features/popupSlice";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
+import EditIcon from "../EditIcon";
 import {
   Box,
   Table,
@@ -20,7 +20,7 @@ import { Link } from "react-router-dom";
 import type { Record } from "../../../features/initialContact/search/slice";
 import type { ReactElement } from "react";
 
-const SearchResults = (): ReactElement => {
+const Results = (): ReactElement => {
   const dispatch = useAppDispatch();
   const data = useAppSelector((state) => state.icSearch.data);
 
@@ -80,4 +80,4 @@ const SearchResults = (): ReactElement => {
   );
 };
 
-export default SearchResults;
+export default Results;

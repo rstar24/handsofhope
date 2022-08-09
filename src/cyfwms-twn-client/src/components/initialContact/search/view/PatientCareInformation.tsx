@@ -1,12 +1,16 @@
 import { useAppSelector } from "../../../../library/hooks";
-import { InpatientLabels, OutpatientLabels } from "./ViewPagesLabels";
-import { styles } from "./ViewHome";
+import {
+  InpatientLabels,
+  OutpatientLabels,
+} from "../../../../library/labels/initialContact";
+import { styles } from "./Home";
 import { Box, Typography } from "@mui/material";
 import React from "react";
+import type { ReactElement } from "react";
 
-const ViewPatientCareInformation = () => {
+const PatientCareInformation = (): ReactElement => {
   const data = useAppSelector((state) => state.icPatientCareInformation.data);
-  console.log(data);
+
   return (
     <>
       {data.typeOfPatient === "Inpatient" && (
@@ -93,4 +97,4 @@ const ViewPatientCareInformation = () => {
   );
 };
 
-export default ViewPatientCareInformation;
+export default PatientCareInformation;

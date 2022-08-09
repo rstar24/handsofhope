@@ -1,5 +1,3 @@
-import { useAppSelector } from "../../../../library/hooks";
-import { RegisterLabels } from "../../../../library/labels/cyfms";
 import Contact from "./Contact";
 import Councelors from "./Councelors";
 import CriminalHistory from "./CriminalHistory";
@@ -7,6 +5,7 @@ import EducationAndEmployment from "./EducationAndEmployment";
 import FamilyPhysician from "./FamilyPhysician";
 import HouseholdMembers from "./HouseholdMembers";
 import OtherInformation from "./OtherInformation";
+import Register from "./Register";
 import { Box, Typography } from "@mui/material";
 import React from "react";
 import type { ReactElement } from "react";
@@ -34,8 +33,6 @@ export const styles = {
 };
 
 const Home = (): ReactElement => {
-  const state = useAppSelector((state) => state);
-
   return (
     <Box
       sx={{
@@ -55,38 +52,7 @@ const Home = (): ReactElement => {
         <Typography variant="h6" style={styles.header}>
           Registration
         </Typography>
-        <Box paddingTop={3}>
-          {Object.entries(state.cyfmsRegister.data).map((t: any, k: any) => (
-            <Box
-              maxHeight={30}
-              sx={{
-                display: "flex",
-                paddingLeft: 8,
-              }}
-            >
-              {t[1] === "" ? (
-                <></>
-              ) : (
-                <>
-                  {k !== 0 && (
-                    <>
-                      <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                        <Typography variant="h6" style={styles.keys}>
-                          {RegisterLabels[k]}
-                        </Typography>
-                      </Box>
-                      <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                        <Typography variant="h6" style={styles.values}>
-                          {t[1]}
-                        </Typography>
-                      </Box>
-                    </>
-                  )}
-                </>
-              )}
-            </Box>
-          ))}
-        </Box>
+        <Register />
       </Box>
       <Box>
         <Typography variant="h6" style={styles.header}>

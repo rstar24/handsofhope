@@ -1,10 +1,11 @@
 import { useAppSelector } from "../../../../library/hooks";
-import { styles } from "./ViewHome";
-import { ReferralInformationLabels } from "./ViewPagesLabels";
+import { styles } from "./Home";
+import { ReferralInformationLabels } from "../../../../library/labels/initialContact";
 import { Box, Typography } from "@mui/material";
 import React from "react";
+import type { ReactElement } from "react";
 
-const ViewReferralInformation = () => {
+const ReferralInformation = (): ReactElement => {
   const data = useAppSelector((state) => state.icReferralInformation.data);
 
   return (
@@ -30,7 +31,11 @@ const ViewReferralInformation = () => {
                   </Box>
                   <Box sx={{ flexBasis: 0, flexGrow: 1 }} paddingRight={15}>
                     <Typography variant="h6" style={styles.values}>
-                      {t[1]}
+                      {(typeof t[1]).toString() === "boolean"
+                        ? t[1]
+                          ? "Yes"
+                          : "No"
+                        : t[1]}
                     </Typography>
                   </Box>
                 </>
@@ -43,4 +48,4 @@ const ViewReferralInformation = () => {
   );
 };
 
-export default ViewReferralInformation;
+export default ReferralInformation;

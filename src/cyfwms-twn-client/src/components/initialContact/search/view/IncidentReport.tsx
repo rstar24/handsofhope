@@ -1,11 +1,13 @@
 import { useAppSelector } from "../../../../library/hooks";
-import { IncidentReportLabels } from "./ViewPagesLabels";
-import { styles } from "./ViewHome";
+import { IncidentReportLabels } from "../../../../library/labels/initialContact";
+import { styles } from "./Home";
 import { Box, Typography } from "@mui/material";
 import React from "react";
+import type { ReactElement } from "react";
 
-const ViewIncidentReport = () => {
+const IncidentReport = (): ReactElement => {
   const data = useAppSelector((state) => state.icIncidentReport.data);
+
   return (
     <Box paddingTop={1}>
       {Object.entries(data).map((t: any, k) => (
@@ -49,4 +51,4 @@ const ViewIncidentReport = () => {
   );
 };
 
-export default ViewIncidentReport;
+export default IncidentReport;

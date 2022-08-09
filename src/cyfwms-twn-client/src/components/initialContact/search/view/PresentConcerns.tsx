@@ -1,10 +1,11 @@
 import { useAppSelector } from "../../../../library/hooks";
-import { styles } from "./ViewHome";
-import { PresentConcernsLabels } from "./ViewPagesLabels";
+import { styles } from "./Home";
+import { PresentConcernsLabels } from "../../../../library/labels/initialContact";
 import { Box, Typography } from "@mui/material";
 import React from "react";
+import type { ReactElement } from "react";
 
-const ViewPresentConcerns = () => {
+const PresentConcerns = (): ReactElement => {
   const data = useAppSelector((state) => state.icPresentConcerns.data);
 
   return (
@@ -42,4 +43,4 @@ const ViewPresentConcerns = () => {
   );
 };
 
-export default ViewPresentConcerns;
+export default PresentConcerns;

@@ -11,7 +11,7 @@ import CYFMS from "./pages/cyfms/CYFMS";
 import CYFMSSearch from "./pages/cyfms/Search";
 import CYFMSView from "./pages/cyfms/View";
 import InitialContact from "./pages/initialContact/InitialContact";
-import InitialContactSearch from "./pages/initialContact/search/Search";
+import InitialContactSearch from "./pages/initialContact/Search";
 import InitialContactView from "./pages/initialContact/View";
 import { ThemeProvider } from "@mui/material/styles";
 import React, { StrictMode } from "react";
