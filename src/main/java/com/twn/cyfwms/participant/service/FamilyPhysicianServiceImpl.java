@@ -28,7 +28,7 @@ public class FamilyPhysicianServiceImpl implements FamilyPhysicianService {
     @Autowired
     private FamilyPhysicianRepository  familyPhysicianRepository;
     @Autowired
-    private ModelMapper modelMapper;
+     ModelMapper modelMapper;
     @Autowired
     ParticipantRepository participantRepository;
     @Override
@@ -37,7 +37,13 @@ public class FamilyPhysicianServiceImpl implements FamilyPhysicianService {
         if(participantId != 0){
             List<FamilyPhysician> familyPhysicianList = familyPhysicianRepository.findByParticipantId(participantId);
             if(familyPhysicianList!=null) {
-                FamilyPhysicianDtoList = modelMapper.map(familyPhysicianList, new TypeToken<List<FamilyPhysicianDto>>() {}.getType());
+              List<FamilyPhysician> familyPhysicianActive=new ArrayList<>();
+               for (int i=0;i<familyPhysicianList.size();i++){
+                   if (!familyPhysicianList.get(i).getStatus().equalsIgnoreCase("INACTIVE")) {
+                       familyPhysicianActive.add(familyPhysicianList.get(i));
+                   }
+               }
+               FamilyPhysicianDtoList = modelMapper.map(familyPhysicianActive, new TypeToken<List<FamilyPhysicianDto>>() {}.getType());
                 for (int i=0;i<=FamilyPhysicianDtoList.size()-1;i++){
                     if (FamilyPhysicianDtoList.get(i).getStartDate()==null){
                         FamilyPhysicianDtoList.get(i).setStartDate(LocalDate.of(1,1,1));

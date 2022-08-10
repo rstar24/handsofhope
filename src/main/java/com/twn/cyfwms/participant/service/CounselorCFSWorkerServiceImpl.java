@@ -36,9 +36,14 @@ public class CounselorCFSWorkerServiceImpl implements CounselorCFSWorkerService{
         if(participantId != 0){
             List<CounselorCFSWorker> CounselorCFSWorkersList = cfsWorkerRepository.findByParticipantId(participantId);
             if(CounselorCFSWorkersList!=null) {
-                counselorCFSWorkersDtoList = modelMapper.map(CounselorCFSWorkersList, new TypeToken<List<CounselorCFSWorkersDto>>() {
+                List<CounselorCFSWorker> counselorCFSWorkersListActive=new ArrayList<>();
+                for (int i=0;i<CounselorCFSWorkersList.size();i++){
+                    if (!CounselorCFSWorkersList.get(i).getStatus().equalsIgnoreCase("INACTIVE")) {
+                        counselorCFSWorkersListActive.add(CounselorCFSWorkersList.get(i));
+                    }
+                }
+                counselorCFSWorkersDtoList = modelMapper.map(counselorCFSWorkersListActive, new TypeToken<List<CounselorCFSWorkersDto>>() {
                 }.getType());
-
                 for (int i=0;i<=counselorCFSWorkersDtoList.size()-1;i++){
                     if (counselorCFSWorkersDtoList.get(i).getStartDate()==null){
                         counselorCFSWorkersDtoList.get(i).setStartDate(LocalDate.of(1,1,1));
