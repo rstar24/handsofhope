@@ -1,3 +1,4 @@
+import "../../styles/App.css";
 import Popup from "../../components/Popup";
 import AuthLayout from "../../components/auth/layout/AuthLayout";
 import CYFMSHeader from "../../components/cyfms/CYFMSHeader";
@@ -8,9 +9,9 @@ import Councelors from "../../components/cyfms/search/view/Councelors";
 import CriminalHistory from "../../components/cyfms/search/view/CriminalHistory";
 import EducationAndEmployment from "../../components/cyfms/search/view/EducationAndEmployment";
 import FamilyPhysician from "../../components/cyfms/search/view/FamilyPhysician";
-import Home from "../../components/cyfms/search/view/Home";
 import HouseholdMembers from "../../components/cyfms/search/view/HouseholdMembers";
 import OtherInformation from "../../components/cyfms/search/view/OtherInformation";
+import Register from "../../components/cyfms/search/view/Register";
 import { useAppSelector } from "../../library/hooks";
 import { Box, Tab, Tabs, Typography } from "@mui/material";
 import React from "react";
@@ -43,6 +44,28 @@ function TabPanel(props: TabPanelProps) {
   );
 }
 
+export const styles = {
+  header: {
+    fontWeight: 1000,
+    backgroundColor: "#ededed",
+    px: "1rem",
+    boxShadow: `inset 1px 0px black,
+    inset -1px 0px black`,
+  },
+  keys: {
+    variant: "h6",
+    paddingLeft: "40%",
+    fontWeight: 600,
+    fontSize: 16,
+  },
+  values: {
+    variant: "h6",
+    paddingLeft: "40%",
+    fontWeight: 400,
+    fontSize: 16,
+  },
+};
+
 function tabPanelProps(index: number) {
   return {
     id: `simple-tab-${index}`,
@@ -56,145 +79,183 @@ const View = (): ReactElement => {
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
+    switch (newValue) {
+      case 0:
+        document.getElementById("register")?.scrollIntoView();
+        document.getElementById("register")?.focus();
+        break;
+      case 1:
+        document.getElementById("contact")?.scrollIntoView();
+        document.getElementById("contact")?.focus();
+        break;
+      case 2:
+        document.getElementById("householdMembers")?.scrollIntoView();
+        document.getElementById("householdMembers")?.focus();
+        break;
+      case 3:
+        document.getElementById("educationAndEmployment")?.scrollIntoView();
+        document.getElementById("educationAndEmployment")?.focus();
+        break;
+      case 4:
+        document.getElementById("criminalHistory")?.scrollIntoView();
+        document.getElementById("criminalHistory")?.focus();
+        break;
+      case 5:
+        document.getElementById("familyPhysicians")?.scrollIntoView();
+        document.getElementById("familyPhysicians")?.focus();
+        break;
+      case 6:
+        document.getElementById("counselors")?.scrollIntoView();
+        document.getElementById("counselors")?.focus();
+        break;
+      case 7:
+        document.getElementById("otherInformation")?.scrollIntoView();
+        document.getElementById("otherInformation")?.focus();
+        break;
+    }
   };
 
   return (
     <AuthLayout>
       <CYFMSHeader />
       <Box
-        component="form"
         sx={{
-          justifyContent: "center",
+          display: "flex",
+          background: "#d7d3d354",
         }}
       >
         <Box
-          component="form"
-          paddingLeft={2}
-          boxShadow={2}
+          sx={{ borderRadius: 0, flexBasis: 2, flexGrow: 1, p: 0 }}
+          component="img"
+          src="/img/profile1.png"
+          height={200}
+          width={200}
+        ></Box>
+        <Box
           sx={{
-            display: "flex",
-            textAlign: "center",
-            justifyContent: "space-between",
-            backgroundColor: "#ededed",
-            background: "#d7d3d354",
-            maxHeight: "10vh",
+            borderRadius: 0,
+            flexBasis: 0,
+            flexGrow: 3,
+            ml: 2,
+            paddingLeft: 5,
           }}
         >
-          <Box>
-            <Typography variant="h5" fontWeight={500} paddingTop={0.3}>
-              {state.cyfmsRegister.data.firstname} <></>
-              {state.cyfmsRegister.data.surname}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <Typography variant="h5" alignSelf="center">
+              {`${state.cyfmsRegister.data.firstname} ${state.cyfmsRegister.data.surname}`}
             </Typography>
-          </Box>
-          <Box>
-            <Typography paddingRight={1}>
+            <Typography>
               <EditIcon value={state.cyfmsRegister.data.participantId} />
             </Typography>
           </Box>
+          <hr />
+          <Typography paddingTop={2}>
+            {state.cyfmsContact.data.addressLine1}
+            {state.cyfmsContact.data.addressLine1 &&
+            state.cyfmsContact.data.city
+              ? ","
+              : ""}
+            {state.cyfmsContact.data.city}
+            {state.cyfmsContact.data.province && state.cyfmsContact.data.city
+              ? ","
+              : ""}{" "}
+            {state.cyfmsContact.data.province}{" "}
+          </Typography>
+          <br />
+          <Typography>{state.cyfmsRegister.data.gender} </Typography>
+          <br />
+          <Typography>
+            Born : {state.cyfmsRegister.data.dateOfBirth} <></>
+          </Typography>
         </Box>
-        <Box
-          sx={{
-            justifyContent: "center",
-            display: "flex",
-            flexDirection: "row",
-            background: "#d7d3d354",
-            maxHeight: "100vh",
-          }}
+      </Box>
+      <Box
+        sx={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          bgcolor: "background.paper",
+          boxShadow: `inset 1px 0 black,
+                      inset -1px 0 black`,
+        }}
+      >
+        <Tabs
+          variant="scrollable"
+          value={value}
+          onChange={handleChange}
+          aria-label="CYFMS view navigation tabs."
         >
-          <Box
-            sx={{ borderRadius: 0, flexBasis: 2, flexGrow: 1, p: 0 }}
-            component="img"
-            src="/img/profile1.png"
-            height={200}
-            width={200}
-          ></Box>
-          <Box
-            sx={{
-              borderRadius: 0,
-              flexBasis: 0,
-              flexGrow: 3,
-              ml: 2,
-              paddingLeft: 5,
-            }}
-          >
-            <Typography variant="h5" paddingTop={2}>
-              {state.cyfmsRegister.data.firstname} <></>
-              {state.cyfmsRegister.data.surname}
-            </Typography>
-            <hr></hr>
-            <Typography paddingTop={2}>
-              {state.cyfmsContact.data.addressLine1}
-              {state.cyfmsContact.data.addressLine1 &&
-              state.cyfmsContact.data.city
-                ? ","
-                : ""}
-              {state.cyfmsContact.data.city}
-              {state.cyfmsContact.data.province && state.cyfmsContact.data.city
-                ? ","
-                : ""}{" "}
-              {state.cyfmsContact.data.province}{" "}
-            </Typography>
-            <br />
-            <Typography>{state.cyfmsRegister.data.gender} </Typography>
-            <br />
-            <Typography>
-              Born : {state.cyfmsRegister.data.dateOfBirth} <></>
-            </Typography>
-          </Box>
-        </Box>
-        <Box sx={{ width: "100%" }}>
-          <Box
-            sx={{
-              borderBottom: 1,
-              borderColor: "divider",
-            }}
-          >
-            <Tabs
-              variant="scrollable"
-              value={value}
-              onChange={handleChange}
-              aria-label="basic tabs example"
-              sx={{
-                maxWidth: "100%",
-                minWidth: 100,
-                backgroundColor: "white",
-              }}
-            >
-              <Tab label="Home" {...tabPanelProps(0)} />
-              <Tab label="Contact" {...tabPanelProps(1)} />
-              <Tab label="Household Members" {...tabPanelProps(2)} />
-              <Tab label="Education and Employment" {...tabPanelProps(3)} />
-              <Tab label="Criminal History" {...tabPanelProps(4)} />
-              <Tab label="Family Physician" {...tabPanelProps(5)} />
-              <Tab label="Counselor/ CFS Worker" {...tabPanelProps(6)} />
-              <Tab label="Other Information" {...tabPanelProps(7)} />
-            </Tabs>
-          </Box>
-          <TabPanel value={value} index={0}>
-            <Home />
-          </TabPanel>
-          <TabPanel value={value} index={1}>
-            <Contact />
-          </TabPanel>
-          <TabPanel value={value} index={2}>
-            <HouseholdMembers />
-          </TabPanel>
-          <TabPanel value={value} index={3}>
-            <EducationAndEmployment />
-          </TabPanel>
-          <TabPanel value={value} index={4}>
-            <CriminalHistory />
-          </TabPanel>
-          <TabPanel value={value} index={5}>
-            <FamilyPhysician />
-          </TabPanel>
-          <TabPanel value={value} index={6}>
-            <Councelors />
-          </TabPanel>
-          <TabPanel value={value} index={7}>
-            <OtherInformation />
-          </TabPanel>
-        </Box>{" "}
+          <Tab label="Home" {...tabPanelProps(0)} />
+          <Tab label="Contact" {...tabPanelProps(1)} />
+          <Tab label="Household Members" {...tabPanelProps(2)} />
+          <Tab label="Education and Employment" {...tabPanelProps(3)} />
+          <Tab label="Criminal History" {...tabPanelProps(4)} />
+          <Tab label="Family Physician" {...tabPanelProps(5)} />
+          <Tab label="Counselor/ CFS Worker" {...tabPanelProps(6)} />
+          <Tab label="Other Information" {...tabPanelProps(7)} />
+        </Tabs>
+      </Box>
+      <Box
+        sx={{
+          flexDirection: "column",
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "0 1rem",
+        }}
+      >
+        <div id="register" className="highlight" tabIndex={0}>
+          <Typography variant="h6" sx={styles.header}>
+            Registration
+          </Typography>
+          <Register />
+        </div>
+        <div id="contact" className="highlight" tabIndex={1}>
+          <Typography variant="h6" sx={styles.header}>
+            Contact
+          </Typography>
+          <Contact />
+        </div>
+        <div id="householdMembers" className="highlight" tabIndex={2}>
+          <Typography variant="h6" sx={styles.header}>
+            Household Members
+          </Typography>
+          <HouseholdMembers />
+        </div>
+        <div id="educationAndEmployment" className="highlight" tabIndex={3}>
+          <Typography variant="h6" sx={styles.header}>
+            Education and Employment
+          </Typography>
+          <EducationAndEmployment />
+        </div>
+        <div id="criminalHistory" className="highlight" tabIndex={4}>
+          <Typography variant="h6" sx={styles.header}>
+            Criminal History
+          </Typography>
+          <CriminalHistory />
+        </div>
+        <div id="familyPhysicians" className="highlight" tabIndex={5}>
+          <Typography variant="h6" sx={styles.header}>
+            Family Physician
+          </Typography>
+          <FamilyPhysician />
+        </div>
+        <div id="counselors" className="highlight" tabIndex={6}>
+          <Typography variant="h6" sx={styles.header}>
+            Counselor / CFS Worker
+          </Typography>
+          <Councelors />
+        </div>
+        <div id="otherInformation" className="highlight" tabIndex={7}>
+          <Typography variant="h6" sx={styles.header}>
+            Other Information
+          </Typography>
+          <OtherInformation />
+        </div>
       </Box>
       <Popup children={<Router />} />
     </AuthLayout>

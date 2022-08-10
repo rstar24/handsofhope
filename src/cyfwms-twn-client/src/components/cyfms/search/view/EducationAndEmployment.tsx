@@ -1,6 +1,6 @@
 import { useAppSelector } from "../../../../library/hooks";
 import { EducationAndEmploymentLabels } from "../../../../library/labels/cyfms";
-import { styles } from "./Home";
+import { styles } from "../../../../pages/cyfms/View";
 import { Box, Typography } from "@mui/material";
 import React from "react";
 import type { ReactElement } from "react";

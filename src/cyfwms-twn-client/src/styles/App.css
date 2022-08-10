@@ -1,0 +1,22 @@
+@keyframes highlightAnimation {
+    0% {
+      border: initial;
+      background-color: initial;
+    }
+    50% {
+      border: "5px solid red";
+      background-color: lightgray;
+    }
+    100% {
+      border: initial;
+      background-color: initial;
+    }
+}
+
+.highlight {
+  border: "10px solid yellow"
+}
+
+.highlight:focus {
+  animation: highlightAnimation 3s ease-in-out;
+}
