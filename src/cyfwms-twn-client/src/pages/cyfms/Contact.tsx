@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import type { Data } from "../../features/cyfms/contact/slice";
 import type { FormEvent, ReactElement } from "react";
 import CYFMSDropdown from "../../components/cyfms/CYFMSDropdown";
+import CYFMSDropdownProvince from "../../components/cyfms/CYFMSDropdownProvince";
 
 /**
  * The Contact functional component.
@@ -101,7 +102,7 @@ const Contact = (): ReactElement => {
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CYFMSDropdown
+            <CYFMSDropdownProvince
               autofill={data.province}
               id="province"
               value="Province"
