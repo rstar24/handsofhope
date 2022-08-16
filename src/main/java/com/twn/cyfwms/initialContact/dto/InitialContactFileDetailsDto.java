@@ -38,8 +38,4 @@ public class InitialContactFileDetailsDto {
     @Getter
     @Setter
     private String status;
-
-    @Getter
-    @Setter
-    private Long initialContactReferenceId;
 }

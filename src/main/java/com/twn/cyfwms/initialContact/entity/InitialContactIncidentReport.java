@@ -41,9 +41,9 @@ public class InitialContactIncidentReport implements Serializable {
     private String incidentLocation;
     @Getter @Setter @Column(name = "risk")
     private String risk;
-    @Getter @Setter @Column(name = "actiontaken")
+    @Getter @Setter @Column(length=1000,name = "actiontaken")
     private String actionTaken;
-    @Getter @Setter @Column(name = "actionplan")
+    @Getter @Setter @Column(length=1000,name = "actionplan")
     private String actionPlan;
 
     @Getter @Setter @Column(name = "filedetailsid")

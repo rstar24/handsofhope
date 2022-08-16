@@ -33,13 +33,13 @@ public class InitialContactPresentConcerns implements Serializable {
     @Getter @Setter @Column(name = "selectpresentconcerns")
     private String selectPresentConcerns;
 
-    @Getter @Setter @Column(name = "situation")
+    @Getter @Setter @Column(length = 1000,name = "situation")
     private String situation;
 
     @Getter @Setter @Column(name = "substanceabuse")
     private String substanceAbuse;
 
-    @Getter @Setter @Column(name = "explainmentalhealth")
+    @Getter @Setter @Column(length = 1000,name = "explainmentalhealth")
     private String explainMentalHealth;
 
     @CreationTimestamp

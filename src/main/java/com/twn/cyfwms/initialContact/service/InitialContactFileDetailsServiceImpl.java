@@ -48,10 +48,8 @@ public class InitialContactFileDetailsServiceImpl implements  InitialContactFile
             Optional<InitialContactFileDetails> initialContactFileDetailOpt = initialContactFileDetailsRepository.findTopByOrderByCreationDateTimeDesc();
             if (initialContactFileDetailOpt.isPresent()) {
                 InitialContactFileDetails initialContactFileDtls = initialContactFileDetailOpt.get();
-                initialContactFileDetails.setInitialcontactReferenceId(initialContactFileDtls.getInitialcontactReferenceId()+128L);
                 initialContactFileDetails.setFileNumber(initialContactFileDtls.getFileNumber()+1L);
             } else {
-               initialContactFileDetails.setInitialcontactReferenceId(128L);
                initialContactFileDetails.setFileNumber(1L);
             }
         } else {
@@ -61,7 +59,6 @@ public class InitialContactFileDetailsServiceImpl implements  InitialContactFile
         initialContactFileDetails = initialContactFileDetailsRepository.save(initialContactFileDetails);
         initialContactFileDetailsDto.setFileDetailsId(initialContactFileDetails.getFileDetailsId());
         initialContactFileDetailsDto.setFileNumber(initialContactFileDetails.getFileNumber());
-        initialContactFileDetailsDto.setInitialContactReferenceId(initialContactFileDetails.getInitialcontactReferenceId());
         return initialContactFileDetailsDto;
     }
 }

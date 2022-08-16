@@ -56,10 +56,6 @@ public class InitialContactFileDetails implements Serializable {
     @Getter @Setter @Column(name = "lastwritten")
     private LocalDateTime lastwritten;
 
-//    @Id
-    @Getter @Setter @Column(name = "initialcontactreferenceid")
-    private Long initialcontactReferenceId;
-
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "filedetailsid", referencedColumnName = "filedetailsid")
     @Getter @Setter
