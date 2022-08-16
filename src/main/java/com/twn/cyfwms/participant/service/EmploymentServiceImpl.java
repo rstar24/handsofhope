@@ -9,9 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
@@ -25,12 +22,11 @@ public class EmploymentServiceImpl implements EmploymentService {
     @Override
     public EmploymentDto readEmployment(Long participantId) {
         EmploymentDto employmentDto = new EmploymentDto();
-        if(participantId != 0) {
-            Employment employment =
-                    employmentRepository.findByParticipantId(participantId);
-            if(employment!=null) {
+        if (participantId != 0) {
+            Employment employment = employmentRepository.findByParticipantId(participantId);
+            if (employment != null) {
                 modelMapper.map(employment, employmentDto);
-            }else{
+            } else {
                 throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
             }
         }
@@ -40,13 +36,12 @@ public class EmploymentServiceImpl implements EmploymentService {
     @Override
     public EmploymentDto saveEmployment(EmploymentDto employmentDto) {
         Employment employment = null;
-        if(employmentDto.getEmploymentId() == 0){
+        if (employmentDto.getEmploymentId() == 0) {
             employment = new Employment();
             modelMapper.map(employmentDto, employment);
             employment.setStatus("ACTIVE");
-        }else {
-            employment =
-                    employmentRepository.findById(employmentDto.getEmploymentId()).get();
+        } else {
+            employment = employmentRepository.findById(employmentDto.getEmploymentId()).get();
             modelMapper.map(employmentDto, employment);
         }
         employment = employmentRepository.save(employment);

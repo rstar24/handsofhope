@@ -3,8 +3,6 @@ package com.twn.cyfwms.participant.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
-import java.time.LocalDate;
-
 @Builder
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -14,24 +12,36 @@ public class EducationAndEmploymentCompositeDto {
     @Getter
     @Setter
     private Long educationId;
-    @Getter @Setter
+
+    @Getter
+    @Setter
     private String attendingSchool;
-    @Getter @Setter
+
+    @Getter
+    @Setter
     private String school;
-    @Getter @Setter
+
+    @Getter
+    @Setter
     private String grade;
-    @Getter @Setter
+
+    @Getter
+    @Setter
     private Long participantId;
-    @Getter @Setter
+
+    @Getter
+    @Setter
     private Long employmentId;
-    @Getter @Setter
+
+    @Getter
+    @Setter
     private String employed;
-    @Getter @Setter
+
+    @Getter
+    @Setter
     private String typeOfEmployment;
-    @Getter @Setter
+
+    @Getter
+    @Setter
     private String desiredProfession;
-    @Getter @Setter
-    private LocalDate startDate;
-    @Getter @Setter
-    private LocalDate endDate;
 }

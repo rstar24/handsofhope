@@ -4,7 +4,14 @@ import {
   CriminalHistoryRecordLabels,
 } from "../../../../library/labels/cyfms";
 import { styles } from "../../../../pages/cyfms/View";
-import { Box, Typography } from "@mui/material";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  Typography,
+} from "@mui/material";
 import React from "react";
 import type { ReactElement } from "react";
 
@@ -13,94 +20,90 @@ const CriminalHistory = (): ReactElement => {
 
   return (
     <>
-      <Box paddingTop={1}>
-        {Object.keys(data.criminalHistoryRecordList).map((i: any) => (
+      {Object.entries(data.criminalHistoryRecordList).map(
+        (t: any, index: number) => (
           <>
-            {data.criminalHistoryRecordList[0].criminalHistoryRecordId !==
-              0 && (
-              <Typography paddingTop={2} paddingLeft={4}>
-                Criminal History {Number(i) + 1}
-              </Typography>
-            )}
-            <Box>
-              {Object.entries(data.criminalHistoryRecordList[i]).map(
-                (t: any, k) => (
-                  <Box
-                    sx={{
-                      display: "flex",
-                      paddingLeft: 8,
-                    }}
-                  >
-                    {t[1] === "" || t[1] === "0001-01-01" ? (
-                      <></>
-                    ) : (
-                      <>
-                        {k !== 0 &&
-                          k !== 5 &&
-                          k !== 6 &&
-                          k !== 7 &&
-                          k !== 8 &&
-                          k !== 9 &&
-                          k !== 10 && (
-                            <>
-                              <Box sx={{ flexBasis: 0, flexGrow: 2 }}>
-                                <Typography variant="h6" style={styles.keys}>
-                                  {CriminalHistoryLabels[k]}
-                                </Typography>
-                              </Box>
-
-                              <Box sx={{ flexBasis: 0, flexGrow: 2 }}>
-                                <Typography variant="h6" style={styles.values}>
-                                  {t[1]}
-                                </Typography>
-                              </Box>
-                            </>
-                          )}
-                      </>
-                    )}
-                  </Box>
-                )
-              )}
-            </Box>
+            <Typography sx={styles.header}>Record: {index + 1}</Typography>
+            <TableContainer sx={{ p: "0.5rem" }}>
+              <Table
+                sx={{ minWidth: 650 }}
+                aria-label="criminal history record data table"
+              >
+                <TableBody sx={{ "& > tr > td": { border: 0, p: 0 } }}>
+                  {Object.entries(data.criminalHistoryRecordList[index]).map(
+                    (t: any, k: any) => {
+                      if (
+                        t[1] !== "" &&
+                        t[1] !== 0 &&
+                        CriminalHistoryRecordLabels[k] !== "Status" &&
+                        CriminalHistoryRecordLabels[k] !== "Creation Date" &&
+                        CriminalHistoryRecordLabels[k] !== "Last Written" &&
+                        CriminalHistoryRecordLabels[k] !==
+                          "CriminalHistoryId" &&
+                        CriminalHistoryRecordLabels[k] !==
+                          "CriminalHistoryRecordId"
+                      ) {
+                        return (
+                          <TableRow key={Math.random() * 1000}>
+                            <TableCell width="30%">
+                              <Typography style={styles.keys}>
+                                {CriminalHistoryRecordLabels[k]}
+                              </Typography>
+                            </TableCell>
+                            <TableCell width="70%">
+                              <Typography style={styles.values}>
+                                {t[1]}
+                              </Typography>
+                            </TableCell>
+                          </TableRow>
+                        );
+                      }
+                      return <></>;
+                    }
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
           </>
-        ))}
-      </Box>
-      <Box paddingTop={3}>
-        {Object.entries(data).map((t: any, k: any) => (
-          <Box
-            maxHeight={40}
-            sx={{
-              display: "flex",
-              paddingLeft: 8,
-            }}
-          >
-            {t[1] === "" || t[1] === "0001-01-01" || t[1] === false ? (
-              <></>
-            ) : (
-              <>
-                {k !== 0 && k !== 1 && k !== 2 && (
-                  <>
-                    <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                      <Typography variant="h6" style={styles.keys}>
-                        {CriminalHistoryRecordLabels[k]}
+        )
+      )}
+      <hr />
+      <TableContainer sx={{ p: "1rem" }}>
+        <Table sx={{ minWidth: 650 }} aria-label="criminal history data table">
+          <TableBody sx={{ "& > tr > td": { border: 0, p: 0 } }}>
+            {Object.entries(data).map((t: any, k: any) => {
+              if (
+                t[1] !== "" &&
+                t[1] !== 0 &&
+                t[1] !== false &&
+                CriminalHistoryLabels[k] !== "ParticipantId" &&
+                CriminalHistoryLabels[k] !== "CriminalHistoryId" &&
+                CriminalHistoryLabels[k] !== "CriminalHistoryRecordList"
+              ) {
+                return (
+                  <TableRow key={Math.random() * 1000}>
+                    <TableCell width="30%">
+                      <Typography style={styles.keys}>
+                        {CriminalHistoryLabels[k]}
                       </Typography>
-                    </Box>
-                    <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-                      <Typography variant="h6" style={styles.values}>
+                    </TableCell>
+                    <TableCell width="70%">
+                      <Typography style={styles.values}>
                         {(typeof t[1]).toString() === "boolean"
                           ? t[1]
                             ? "Yes"
                             : "No"
                           : t[1]}
                       </Typography>
-                    </Box>
-                  </>
-                )}
-              </>
-            )}
-          </Box>
-        ))}
-      </Box>
+                    </TableCell>
+                  </TableRow>
+                );
+              }
+              return <></>;
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </>
   );
 };

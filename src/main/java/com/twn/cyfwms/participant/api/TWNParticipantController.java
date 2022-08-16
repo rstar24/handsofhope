@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -19,23 +18,30 @@ import java.util.Map;
 @RequestMapping("/v1/participantservice")
 @CrossOrigin("*")
 public class TWNParticipantController {
-
     @Autowired
     private ParticipantService participantService;
+
     @Autowired
     private ParticipantOtherInformationService participantOtherInformationService;
+
     @Autowired
     private CounselorCFSWorkerService counselorCFSWorkerService;
+
     @Autowired
     private ParticipantContactService participantContactService;
+
     @Autowired
     private HouseholdMemberService householdMemberService;
+
     @Autowired
     private CriminalHistoryService criminalHistoryService;
+
     @Autowired
     private EducationAndEmploymentService educationAndEmploymentService;
+
     @Autowired
     private FamilyPhysicianService familyPhysicianService;
+
     @Autowired
     private ParticipantSearchService participantSearchService;
 
@@ -113,7 +119,6 @@ public class TWNParticipantController {
         return criminalHistoryService.removeCriminalHistoryRecord(referenceId,recordNumber);
     }
 
-
     @GetMapping(value = "/getAllFamilyPhysicians/{participantid}", produces = "application/json")
     @ApiOperation("Read All Family Physicians")
     @ResponseStatus(HttpStatus.OK)
@@ -183,7 +188,6 @@ public class TWNParticipantController {
         return educationAndEmploymentService.saveEducationAndEmployment(educationAndEmploymentCompositeDto);
     }
 
-
     @GetMapping(value = {"/searchParticipants/{referenceId}/{firstname}/{middleName}/{surname}/{dateOfBirth}/{maritalStatus}/{city}/{phoneNumber}"},produces = "application/json")
     @ApiOperation("Search Participants")
     @ResponseStatus(HttpStatus.OK)
@@ -231,5 +235,4 @@ public class TWNParticipantController {
     public ReadAllOutputParticipantDto readAllOutPutParticipant(@PathVariable("referenceId") Long referenceId) {
         return readAllOutputParticipantService.readAllOutPutParticipant(referenceId);
     }
-
 }

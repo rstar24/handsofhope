@@ -37,13 +37,4 @@ public class HouseholdMemberDto {
     @Getter
     @Setter
     private String residing;
-    /** TODO: Not being used. To be removed later.*/
-    @Getter
-    @Setter
-    private LocalDate startDate;
-
-    @Getter
-    @Setter
-    private LocalDate endDate;
-    /** TODO: END */
 }

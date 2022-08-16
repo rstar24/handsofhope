@@ -9,9 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
@@ -19,26 +16,19 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 public class ParticipantContactServiceImpl implements ParticipantContactService {
     @Autowired
     private ParticipantContactRepository participantContactRepository;
+
     @Autowired
     private ModelMapper modelMapper;
 
     @Override
     public ParticipantContactDto readParticipantContact(Long participantId) {
         ParticipantContactDto participantContactDto = new ParticipantContactDto();
-        if(participantId != 0) {
-            ParticipantContact participantContact =
-                    participantContactRepository.findByParticipantId(participantId);
-            if(participantContact!=null) {
+        if (participantId != 0) {
+            ParticipantContact participantContact = participantContactRepository.findByParticipantId(participantId);
+            if (participantContact != null) {
                 modelMapper.map(participantContact, participantContactDto);
-                if (participantContactDto.getStartDate()==null){
-                    participantContactDto.setStartDate(LocalDate.of(1,1,1));
-                }
-                if (participantContactDto.getEndDate()==null){
-                    participantContactDto.setEndDate(LocalDate.of(1,1,1));
-                }
-            }else{
+            } else {
                 throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
-
             }
         }
         return participantContactDto;
@@ -47,18 +37,16 @@ public class ParticipantContactServiceImpl implements ParticipantContactService 
     @Override
     public ParticipantContactDto saveParticipantContact(ParticipantContactDto participantContactDto) {
         ParticipantContact participantContact = null;
-        if(participantContactDto.getParticipantContactId() == 0){
+        if (participantContactDto.getParticipantContactId() == 0) {
             participantContact = new ParticipantContact();
             modelMapper.map(participantContactDto, participantContact);
             participantContact.setStatus("ACTIVE");
-        }else {
-            participantContact =
-                    participantContactRepository.findById(participantContactDto.getParticipantContactId()).get();
+        } else {
+            participantContact = participantContactRepository.findById(participantContactDto.getParticipantContactId()).get();
             modelMapper.map(participantContactDto, participantContact);
         }
         participantContact = participantContactRepository.save(participantContact);
         participantContactDto.setParticipantContactId(participantContact.getParticipantContactId());
         return participantContactDto;
     }
-
 }

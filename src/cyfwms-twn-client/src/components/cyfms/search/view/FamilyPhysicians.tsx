@@ -1,5 +1,5 @@
 import { useAppSelector } from "../../../../library/hooks";
-import { HouseholdMemberLabels } from "../../../../library/labels/cyfms";
+import { FamilyPhysicianLabels } from "../../../../library/labels/cyfms";
 import { styles } from "../../../../pages/cyfms/View";
 import {
   Table,
@@ -12,9 +12,9 @@ import {
 import React from "react";
 import type { ReactElement } from "react";
 
-const HouseholdMembers = (): ReactElement => {
+const FamilyPhysicians = (): ReactElement => {
   const recordsList = useAppSelector(
-    (state) => state.cyfmsHouseholdMembers.data.recordsList
+    (state) => state.cyfmsFamilyPhysicians.data.recordsList
   );
 
   return (
@@ -22,26 +22,27 @@ const HouseholdMembers = (): ReactElement => {
       {Object.entries(recordsList).map((t: any, index: number) => (
         <>
           <Typography sx={styles.header}>
-            Household Member: {index + 1}
+            Family Physician: {index + 1}
           </Typography>
           <TableContainer sx={{ p: "1rem" }}>
             <Table
               sx={{ minWidth: 650 }}
-              aria-label="household member data table"
+              aria-label="family physician data table"
             >
               <TableBody sx={{ "& > tr > td": { border: 0, p: 0 } }}>
                 {Object.entries(recordsList[index]).map((t: any, k: any) => {
                   if (
                     t[1] !== "" &&
                     t[1] !== 0 &&
-                    HouseholdMemberLabels[k] !== "ParticipantId" &&
-                    HouseholdMemberLabels[k] !== "HouseholdMemberId"
+                    t[1] !== null &&
+                    FamilyPhysicianLabels[k] !== "ParticipantId" &&
+                    FamilyPhysicianLabels[k] !== "FamilyPhysicianId"
                   ) {
                     return (
                       <TableRow key={Math.random() * 1000}>
                         <TableCell width="30%">
                           <Typography style={styles.keys}>
-                            {HouseholdMemberLabels[k]}
+                            {FamilyPhysicianLabels[k]}
                           </Typography>
                         </TableCell>
                         <TableCell width="70%">
@@ -61,4 +62,4 @@ const HouseholdMembers = (): ReactElement => {
   );
 };
 
-export default HouseholdMembers;
+export default FamilyPhysicians;

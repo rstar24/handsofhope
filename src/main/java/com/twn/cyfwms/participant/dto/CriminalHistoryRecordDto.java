@@ -28,9 +28,4 @@ public class CriminalHistoryRecordDto{
 
     @Getter @Setter
     private Long criminalHistoryId;
-    @Getter @Setter
-    private LocalDate startDate;
-    @Getter @Setter
-    private LocalDate endDate;
-
 }

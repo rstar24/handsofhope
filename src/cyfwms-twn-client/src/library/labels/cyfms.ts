@@ -9,7 +9,7 @@ export const RegisterLabels = [
   "Reference Id",
 ];
 
-export const ContactLabel = [
+export const ContactLabels = [
   "ParticipantId",
   "ParticipantContactId",
   "Address Line 1",
@@ -23,8 +23,8 @@ export const ContactLabel = [
   "Email Address",
 ];
 
-export const HouseholdLabel = [
-  "ParticipantID",
+export const HouseholdMemberLabels = [
+  "ParticipantId",
   "HouseholdMemberId",
   "Name",
   "Gender",
@@ -32,7 +32,8 @@ export const HouseholdLabel = [
   "Relationship",
   "Residing",
 ];
-export const FamilyPhysiciansLabel = [
+
+export const FamilyPhysicianLabels = [
   "ParticipantId",
   "FamilyPhysicianId",
   "Name",
@@ -42,18 +43,18 @@ export const FamilyPhysiciansLabel = [
 ];
 
 export const EducationAndEmploymentLabels = [
-  "Education Id",
+  "EducationId",
   "Attending School",
   "School",
   "Grade",
-  "participantId",
-  "employmentId",
+  "ParticipantId",
+  "EmploymentId",
   "Employed",
   "Type of Employment",
   "Desired Profession",
 ];
 
-export const CouncelorsLabel = [
+export const CounselorLabels = [
   "ParticipantId",
   "CounselorCFSWorkerId",
   "Role",
@@ -65,7 +66,7 @@ export const CouncelorsLabel = [
 
 export const OtherInformationLabels = [
   "ParticipantOtherInfoId",
-  "Participant Id",
+  "ParticipantId",
   "Strengths",
   "Weaknesses",
   "Skills",
@@ -73,21 +74,19 @@ export const OtherInformationLabels = [
   "Effective Coping Skills",
 ];
 
-export const CriminalHistoryLabels = [
-  "Criminal History Record Id",
+export const CriminalHistoryRecordLabels = [
+  "CriminalHistoryRecordId",
   "Arrest Date",
   "Charges",
   "Conviction",
   "Sentence",
   "Status",
   "Creation Date",
-  "Start Date",
-  "End Date",
   "Last Written",
-  "Criminal History Id",
+  "CriminalHistoryId",
 ];
 
-export const CriminalHistoryRecordLabels = [
+export const CriminalHistoryLabels = [
   "ParticipantId",
   "CriminalHistoryId",
   "CriminalHistoryRecordList",

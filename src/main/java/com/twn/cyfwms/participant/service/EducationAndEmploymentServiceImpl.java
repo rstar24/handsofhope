@@ -13,9 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
@@ -23,37 +20,33 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 public class EducationAndEmploymentServiceImpl implements EducationAndEmploymentService {
     @Autowired
     private EducationRepository educationRepository;
+
     @Autowired
     EmploymentRepository employmentRepository;
+
     @Autowired
     EmploymentService employmentService;
+
     @Autowired
     EducationService educationService;
+
     @Autowired
     private ModelMapper modelMapper;
 
     @Override
     public EducationAndEmploymentCompositeDto readEducationAndEmployment(Long participantId) {
         EducationAndEmploymentCompositeDto educationAndEmploymentCompositeDto = new EducationAndEmploymentCompositeDto();
-        if(participantId != 0) {
-            Education education =
-                    educationRepository.findByParticipantId(participantId);
-            if(education!=null) {
+        if (participantId != 0) {
+            Education education = educationRepository.findByParticipantId(participantId);
+            if (education != null) {
                 modelMapper.map(education, educationAndEmploymentCompositeDto);
-            }else{
+            } else {
                 throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
             }
-            Employment employment= employmentRepository.findByParticipantId(participantId);
-            if(employment!=null) {
+            Employment employment = employmentRepository.findByParticipantId(participantId);
+            if (employment != null) {
                 modelMapper.map(employment, educationAndEmploymentCompositeDto);
-                if(educationAndEmploymentCompositeDto.getStartDate()==null){
-                    educationAndEmploymentCompositeDto.setStartDate(LocalDate.of(1,1,1));
-                }
-                if (educationAndEmploymentCompositeDto.getEndDate()==null){
-                    educationAndEmploymentCompositeDto.setEndDate(LocalDate.of(1,1,1));
-                }
-
-            }else{
+            } else {
                 throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
             }
         }
@@ -62,16 +55,12 @@ public class EducationAndEmploymentServiceImpl implements EducationAndEmployment
 
     @Override
     public EducationAndEmploymentCompositeDto saveEducationAndEmployment(EducationAndEmploymentCompositeDto educationAndEmploymentCompositeDto) {
-
-           EducationDto educationDto=new EducationDto();
-           modelMapper.map(educationAndEmploymentCompositeDto,educationDto);
-           educationService.saveEducation(educationDto);
-
-        EmploymentDto employmentDto=new EmploymentDto();
+        EducationDto educationDto = new EducationDto();
+        modelMapper.map(educationAndEmploymentCompositeDto,educationDto);
+        educationService.saveEducation(educationDto);
+        EmploymentDto employmentDto = new EmploymentDto();
         modelMapper.map(educationAndEmploymentCompositeDto,employmentDto);
         employmentService.saveEmployment(employmentDto);
-
         return educationAndEmploymentCompositeDto;
     }
-
 }

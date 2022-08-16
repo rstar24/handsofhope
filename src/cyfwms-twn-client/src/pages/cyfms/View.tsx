@@ -5,10 +5,10 @@ import CYFMSHeader from "../../components/cyfms/CYFMSHeader";
 import EditIcon from "../../components/cyfms/EditIcon";
 import Router from "../../components/nestedRouters/CYFMS";
 import Contact from "../../components/cyfms/search/view/Contact";
-import Councelors from "../../components/cyfms/search/view/Councelors";
+import Counselors from "../../components/cyfms/search/view/Counselors";
 import CriminalHistory from "../../components/cyfms/search/view/CriminalHistory";
 import EducationAndEmployment from "../../components/cyfms/search/view/EducationAndEmployment";
-import FamilyPhysician from "../../components/cyfms/search/view/FamilyPhysician";
+import FamilyPhysicians from "../../components/cyfms/search/view/FamilyPhysicians";
 import HouseholdMembers from "../../components/cyfms/search/view/HouseholdMembers";
 import OtherInformation from "../../components/cyfms/search/view/OtherInformation";
 import Register from "../../components/cyfms/search/view/Register";
@@ -45,6 +45,9 @@ function TabPanel(props: TabPanelProps) {
 }
 
 export const styles = {
+  panel: {
+    padding: "1rem 0",
+  },
   header: {
     fontWeight: 1000,
     backgroundColor: "#ededed",
@@ -54,13 +57,11 @@ export const styles = {
   },
   keys: {
     variant: "h6",
-    paddingLeft: "40%",
     fontWeight: 600,
     fontSize: 16,
   },
   values: {
     variant: "h6",
-    paddingLeft: "40%",
     fontWeight: 400,
     fontSize: 16,
   },
@@ -190,7 +191,7 @@ const View = (): ReactElement => {
           onChange={handleChange}
           aria-label="CYFMS view navigation tabs."
         >
-          <Tab label="Home" {...tabPanelProps(0)} />
+          <Tab label="Registration" {...tabPanelProps(0)} />
           <Tab label="Contact" {...tabPanelProps(1)} />
           <Tab label="Household Members" {...tabPanelProps(2)} />
           <Tab label="Education and Employment" {...tabPanelProps(3)} />
@@ -205,7 +206,6 @@ const View = (): ReactElement => {
           flexDirection: "column",
           display: "flex",
           flexWrap: "wrap",
-          gap: "0 1rem",
         }}
       >
         <div id="register" className="highlight" tabIndex={0}>
@@ -242,13 +242,13 @@ const View = (): ReactElement => {
           <Typography variant="h6" sx={styles.header}>
             Family Physician
           </Typography>
-          <FamilyPhysician />
+          <FamilyPhysicians />
         </div>
         <div id="counselors" className="highlight" tabIndex={6}>
           <Typography variant="h6" sx={styles.header}>
             Counselor / CFS Worker
           </Typography>
-          <Councelors />
+          <Counselors />
         </div>
         <div id="otherInformation" className="highlight" tabIndex={7}>
           <Typography variant="h6" sx={styles.header}>

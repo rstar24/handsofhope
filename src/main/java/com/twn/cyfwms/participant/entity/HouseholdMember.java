@@ -42,12 +42,6 @@ public class HouseholdMember implements Serializable {
     @CreationTimestamp
     @Getter @Setter @Column(name = "creationdate")
     private LocalDate creationDate;
-    /** TODO: Not being used. To be removed later.*/
-    @Getter @Setter @Column(name = "startate")
-    private LocalDate startDate;
-    @Getter @Setter @Column(name = "enddate")
-    private LocalDate endDate;
-    /** TODO: END */
     @UpdateTimestamp
     @Getter @Setter @Column(name = "lastwritten")
     private LocalDateTime lastwritten;

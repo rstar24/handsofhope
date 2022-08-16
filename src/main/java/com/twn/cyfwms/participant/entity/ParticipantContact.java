@@ -51,10 +51,6 @@ public class ParticipantContact implements Serializable {
     @CreationTimestamp
     @Getter @Setter @Column(name = "creationdate")
     private LocalDate creationDate;
-    @Getter @Setter @Column(name = "startate")
-    private LocalDate startDate;
-    @Getter @Setter @Column(name = "enddate")
-    private LocalDate endDate;
     @UpdateTimestamp
     @Getter @Setter @Column(name = "lastwritten")
     private LocalDateTime lastwritten;

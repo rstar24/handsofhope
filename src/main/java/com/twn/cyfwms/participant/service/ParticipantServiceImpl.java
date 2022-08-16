@@ -54,9 +54,9 @@ public class ParticipantServiceImpl implements ParticipantService {
             participant.setType("CYFM");
             participant.setStatus("ACTIVE");
             Optional<Participant> particpantDetailsOpt = participantRepository.findTopByOrderByCreationDateTimeDesc();
-            if(particpantDetailsOpt.isPresent()){
+            if (particpantDetailsOpt.isPresent()) {
                 Participant participantDtls = particpantDetailsOpt.get();
-                participant.setReferenceId(participantDtls.getReferenceId()+128L);
+                participant.setReferenceId(participantDtls.getReferenceId() + 128L);
             } else {
                 participant.setReferenceId(128L);
             }
