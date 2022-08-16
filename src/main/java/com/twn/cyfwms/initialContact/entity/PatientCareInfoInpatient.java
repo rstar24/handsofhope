@@ -28,10 +28,10 @@ public class PatientCareInfoInpatient {
     )
     private Long inpatientId;
 
-    @Getter @Setter @Column(name = "hospitalizationrecord")
+    @Getter @Setter @Column(length = 1000,name = "hospitalizationrecord")
     private String hospitalizationRecord;
 
-    @Getter @Setter @Column(name = "hospitalizationreasons")
+    @Getter @Setter @Column(length = 1000,name = "hospitalizationreasons")
     private String hospitalizationReasons;
 
     @Getter @Setter @Column(name = "patientcareinfoid")

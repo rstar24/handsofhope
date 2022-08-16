@@ -28,7 +28,7 @@ public class PatientCareInfoOutpatient {
     )
     private Long outpatientId;
 
-    @Getter @Setter @Column(name = "therapyorcounseling")
+    @Getter @Setter @Column(length = 1000,name = "therapyorcounseling")
     private String therapyOrCounseling;
 
     @Getter @Setter @Column(name = "therapytimeperiod")
@@ -37,10 +37,10 @@ public class PatientCareInfoOutpatient {
     @Getter @Setter @Column(name = "therapylocation")
     private String therapyLocation;
 
-    @Getter @Setter @Column(name = "reasonfortherapy")
+    @Getter @Setter @Column(length = 1000,name = "reasonfortherapy")
     private String reasonForTherapy;
 
-    @Getter @Setter @Column(name = "selfhelpgroup")
+    @Getter @Setter @Column(length = 1000,name = "selfhelpgroup")
     private String selfHelpGroup;
 
     @Getter @Setter @Column(name = "selfhelpgroupperiod")
