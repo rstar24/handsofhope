@@ -16,6 +16,16 @@ const Councelors = (): ReactElement => {
   const recordsList = useAppSelector(
     (state) => state.cyfmsCounselors.data.recordsList
   );
+  console.log(recordsList);
+  if (
+    recordsList[0].role === "" &&
+    recordsList[0].name === "" &&
+    recordsList[0].startDate !== "0001-01-01" &&
+    recordsList[0].endDate !== "0001-01-01" &&
+    recordsList[0].contactInformation === ""
+  ) {
+    return <></>;
+  }
 
   return (
     <>
@@ -24,6 +34,7 @@ const Councelors = (): ReactElement => {
           <Typography sx={{ px: "1rem", fontWeight: "bold" }}>
             Counselor: {index + 1}
           </Typography>
+
           <TableContainer
             sx={{ display: "flex", justifyContent: "center", p: "1rem" }}
           >

@@ -17,6 +17,14 @@ const FamilyPhysicians = (): ReactElement => {
     (state) => state.cyfmsFamilyPhysicians.data.recordsList
   );
 
+  if (
+    recordsList[0].name === "" &&
+    recordsList[0].phone === "" &&
+    recordsList[0].cell === "" &&
+    recordsList[0].listOfMedication === ""
+  ) {
+    return <></>;
+  }
   return (
     <>
       {Object.entries(recordsList).map((t: any, index: number) => (
@@ -24,6 +32,7 @@ const FamilyPhysicians = (): ReactElement => {
           <Typography sx={{ px: "1rem", fontWeight: "bold" }}>
             Family Physician: {index + 1}
           </Typography>
+
           <TableContainer
             sx={{ display: "flex", justifyContent: "center", p: "1rem" }}
           >

@@ -16,6 +16,14 @@ const HouseholdMembers = (): ReactElement => {
   const recordsList = useAppSelector(
     (state) => state.cyfmsHouseholdMembers.data.recordsList
   );
+  if (
+    recordsList[0].name === "" &&
+    recordsList[0].dateOfBirth !== "0001-01-01" &&
+    recordsList[0].gender === "" &&
+    recordsList[0].residing === ""
+  ) {
+    return <></>;
+  }
 
   return (
     <>
@@ -24,6 +32,7 @@ const HouseholdMembers = (): ReactElement => {
           <Typography sx={{ px: "1rem", fontWeight: "bold" }}>
             Household Member: {index + 1}
           </Typography>
+
           <TableContainer
             sx={{ display: "flex", justifyContent: "center", p: "1rem" }}
           >
