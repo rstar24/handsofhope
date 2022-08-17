@@ -1,5 +1,4 @@
 package com.twn.cyfwms.initialContact.api;
-
 import com.twn.cyfwms.initialContact.dto.*;
 import com.twn.cyfwms.initialContact.service.*;
 import io.swagger.annotations.ApiOperation;
@@ -7,12 +6,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
-
 @RestController
 @AllArgsConstructor
 @RequestMapping("/v1/initialcontactservice")
@@ -31,6 +28,10 @@ public class TWNInitialContactController {
     InitialContactReferralInfoService initialContactReferralInfoService;
     @Autowired
     InitialContactSearchService initialContactSearchService;
+    @Autowired
+    InitialContactContactNotesService initialContactContactNotesService;
+    @Autowired
+    InitialContactContactNotesSearchService initialContactContactNotesSearchService;
 
     @GetMapping(value = "/readAllFileDetails/{filedetailsid}", produces = "application/json")
     @ApiOperation("Read Identity")
@@ -130,9 +131,55 @@ public class TWNInitialContactController {
         initialContactSearchCriteriaDto.setStatus(
                 ("null".equals(var.get("status"))
                         || var.get("status") == null) ?null:var.get("status"));
-
-
         return initialContactSearchService.search(initialContactSearchCriteriaDto);
     }
 
+    @GetMapping(value = "/readAllContactNotes/{filedetailsid}", produces = "application/json")
+    @ApiOperation("Read Identity")
+    @ResponseStatus(HttpStatus.OK)
+    public InitialContactContactNotesDto readAllContactNotes(@PathVariable("filedetailsid") Long fileDetailsID) {
+        return initialContactContactNotesService.readAllContactNotes(fileDetailsID);
+    }
+
+    @PutMapping(value = "/saveAllContactNotes", produces = "application/json")
+    @ApiOperation("Save or Update Identity")
+    @ResponseStatus(HttpStatus.OK)
+    public InitialContactContactNotesDto saveAllContactNotes(@RequestBody InitialContactContactNotesDto initialContactContactNotesDto) {
+        return initialContactContactNotesService.saveAllContactNotes(initialContactContactNotesDto);
+    }
+    @GetMapping(value = {"/searchInitialContactsContactNotes/{name}/{worker}/{contactMethod}/{needAddress}/{summary}/{result}/{nextStep}/{casePlanProgress}/{additionalInformation}"},produces = "application/json")
+    @ApiOperation("Search InitialContact")
+    @ResponseStatus(HttpStatus.OK)
+    public List<InitialContactContactNotesSearchResultsDto> searchInitialContactContactNotes(@PathVariable Map<String, String> var)
+    {
+        InitialContactContactNotesSearchCriteriaDto initialContactContactNotesSearchCriteriaDto=new InitialContactContactNotesSearchCriteriaDto();
+        initialContactContactNotesSearchCriteriaDto.setName(
+                ("null".equals(var.get("name"))
+                        || var.get("name") == null) ?null:var.get("name"));
+        initialContactContactNotesSearchCriteriaDto.setWorker(
+                ("null".equals(var.get("worker"))
+                        || var.get("worker") == null) ?null:var.get("worker"));
+        initialContactContactNotesSearchCriteriaDto.setContactMethod(
+                ("null".equals(var.get("contactMethod"))
+                        || var.get("contactMethod") == null) ?null:var.get("contactMethod"));
+        initialContactContactNotesSearchCriteriaDto.setNeedAddress(
+                ("null".equals(var.get("needAddress"))
+                        || var.get("needAddress") == null) ?null:var.get("needAddress"));
+        initialContactContactNotesSearchCriteriaDto.setSummary(
+                ("null".equals(var.get("summary"))
+                        || var.get("summary") == null) ?null:var.get("summary"));
+        initialContactContactNotesSearchCriteriaDto.setResult(
+                ("null".equals(var.get("result"))
+                        || var.get("result") == null) ?null:var.get("result"));
+        initialContactContactNotesSearchCriteriaDto.setNextStep(
+                ("null".equals(var.get("nextStep"))
+                        || var.get("nextStep") == null) ?null:var.get("nextStep"));
+        initialContactContactNotesSearchCriteriaDto.setCasePlanProgress(
+                ("null".equals(var.get("casePlanProgress"))
+                        || var.get("casePlanProgress") == null) ?null:var.get("casePlanProgress"));
+        initialContactContactNotesSearchCriteriaDto.setAdditionalInformation(
+                ("null".equals(var.get("additionalInformation"))
+                        || var.get("additionalInformation") == null) ?null:var.get("additionalInformation"));
+        return initialContactContactNotesSearchService.search(initialContactContactNotesSearchCriteriaDto);
+    }
 }
