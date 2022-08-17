@@ -9,7 +9,6 @@ import { doGet as doGetOtherInformation } from "../../../features/cyfms/otherInf
 import { setView } from "../../../features/popupSlice";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import EditIcon from "../EditIcon";
-import React from "react";
 import {
   Box,
   Table,
@@ -19,13 +18,14 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
+import React from "react";
 import { Link } from "react-router-dom";
+import type { Record } from "../../../features/cyfms/search/slice";
 import type { ReactElement } from "react";
 
 const Results = (): ReactElement => {
   const dispatch = useAppDispatch();
-
-  const searchData = useAppSelector((state) => (state as any).search.readUser);
+  const data = useAppSelector((state) => state.cyfmsSearch.data);
 
   const handleSearchView = (id: any) => {
     dispatch(setView(true));
@@ -42,7 +42,7 @@ const Results = (): ReactElement => {
   return (
     <Box>
       <Typography fontSize={20} fontWeight={800} color="red" paddingLeft={2}>
-        Total Results - {searchData.length}
+        Total Results - {data.length}
       </Typography>
       <Table sx={{ minWidth: 800 }} aria-label="simple table">
         <TableHead>
@@ -58,27 +58,30 @@ const Results = (): ReactElement => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {searchData.map((i: any) => (
+          {data.map((participant: Record) => (
             <TableRow
-              key={i}
+              key={Math.random() * 1000}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell>
                 <Link
-                  to={`/cyfms/view/${i.participantId}`}
-                  onClick={() => handleSearchView(i.participantId)}
+                  to={`/cyfms/view/${participant.participantId}`}
+                  onClick={() => {
+                    console.log(participant);
+                    handleSearchView(participant.participantId);
+                  }}
                 >
-                  {i.referenceId}
+                  {participant.referenceId}
                 </Link>
               </TableCell>
-              <TableCell>{i.firstname}</TableCell>
-              <TableCell>{i.middleName}</TableCell>
-              <TableCell>{i.surname}</TableCell>
-              <TableCell>{i.dateOfBirth}</TableCell>
-              <TableCell>{i.city}</TableCell>
-              <TableCell>{i.workPhone}</TableCell>
+              <TableCell>{participant.firstname}</TableCell>
+              <TableCell>{participant.middleName}</TableCell>
+              <TableCell>{participant.surname}</TableCell>
+              <TableCell>{participant.dateOfBirth}</TableCell>
+              <TableCell>{participant.city}</TableCell>
+              <TableCell>{participant.workPhone}</TableCell>
               <TableCell>
-                <EditIcon value={i.participantId} />
+                <EditIcon value={participant.participantId} />
               </TableCell>
             </TableRow>
           ))}

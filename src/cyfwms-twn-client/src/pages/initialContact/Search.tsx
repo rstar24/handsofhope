@@ -3,11 +3,11 @@ import Popup from "../../components/Popup";
 import AuthLayout from "../../components/auth/layout/AuthLayout";
 import CYFMSDropdown from "../../components/cyfms/CYFMSDropdown";
 import ICHeader from "../../components/initialContact/ICHeader";
+import Results from "../../components/initialContact/search/Results";
 import Router from "../../components/nestedRouters/InitialContact";
 import { doGetICStatus } from "../../features/codetable/codetableSlice";
 import { doGet as doGetSearch } from "../../features/initialContact/search/slice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
-import Results from "../../components/initialContact/search/Results";
 import { Box, Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import type { Record } from "../../features/initialContact/search/slice";
@@ -31,7 +31,6 @@ const Search = (): ReactElement => {
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
     const form: any = e.currentTarget;
-    console.log(form.clientName.value);
     const formData: Record = {
       fileDetailsId: null,
       referenceId: form.refreferenceId.value || null,

@@ -7,7 +7,7 @@ import { cleanState as cleanFamilyPhysiciansState } from "../../../features/cyfm
 import { cleanState as cleanHouseholdMembersState } from "../../../features/cyfms/householdMembers/slice";
 import { cleanState as cleanOtherInformationState } from "../../../features/cyfms/otherInformation/slice";
 import { cleanState as cleanRegisterState } from "../../../features/cyfms/register/slice";
-import { cleanSearchState } from "../../../features/search/searchSlice";
+import { cleanState as cleanCYFMSSearchState } from "../../../features/cyfms/search/slice";
 import { cleanState as cleanFileDetailsState } from "../../../features/initialContact/fileDetails/slice";
 import { cleanState as cleanReferralInformationState } from "../../../features/initialContact/referralInformation/slice";
 import { cleanState as cleanIncidentReportState } from "../../../features/initialContact/incidentReport/slice";
@@ -61,7 +61,7 @@ export default function Navbar() {
     dispatch(cleanFamilyPhysiciansState(null));
     dispatch(cleanCounselorsState(null));
     dispatch(cleanOtherInformationState(null));
-    dispatch(cleanSearchState());
+    dispatch(cleanCYFMSSearchState(null));
     // InitialContact
     dispatch(cleanFileDetailsState(null));
     dispatch(cleanReferralInformationState(null));

@@ -7,6 +7,7 @@ import cyfmsHouseholdMembersReducer from "../features/cyfms/householdMembers/sli
 import cyfmsOtherInformationReducer from "../features/cyfms/otherInformation/slice";
 import cyfmsRegisterReducer from "../features/cyfms/register/slice";
 import cyfmsCounselorsReducer from "../features/cyfms/counselors/slice";
+import cyfmsSearchReducer from "../features/cyfms/search/slice";
 import icFileDetailsReducer from "../features/initialContact/fileDetails/slice";
 import icIncidentReportReducer from "../features/initialContact/incidentReport/slice";
 import icPresentConcernsReducer from "../features/initialContact/presentConcerns/slice";
@@ -16,7 +17,6 @@ import icSearchReducer from "../features/initialContact/search/slice";
 import initiatorReducer from "../features/initiatorSlice";
 import loginReducer from "../features/login/loginSlice";
 import popupReducer from "../features/popupSlice";
-import searchReducer from "../features/search/searchSlice";
 import readAllRecordReducer from "../features/cyfms/getAllRecord/slice";
 import navBarReducer from "../features/navBarSlice";
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
@@ -36,13 +36,13 @@ export const store = configureStore({
     cyfmsFamilyPhysicians: cyfmsFamilyPhysiciansReducer,
     cyfmsCounselors: cyfmsCounselorsReducer,
     cyfmsOtherInformation: cyfmsOtherInformationReducer,
+    cyfmsSearch: cyfmsSearchReducer,
     icFileDetails: icFileDetailsReducer,
     icIncidentReport: icIncidentReportReducer,
     icReferralInformation: icReferralInformationReducer,
     icPresentConcerns: icPresentConcernsReducer,
     icPatientCareInformation: icPatientCareInformationReducer,
     icSearch: icSearchReducer,
-    search: searchReducer,
     readAll: readAllRecordReducer,
   },
 });
