@@ -31,8 +31,4 @@ public class InitialContactSearchCriteriaDto {
     @Setter
     private String typeOfPatient;
 
-    @Getter
-    @Setter
-    private Long referenceId;
-
 }

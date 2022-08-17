@@ -102,7 +102,7 @@ public class TWNInitialContactController {
         return initialContactReferralInfoService.saveAllReferralInfo(initialContactReferralInfoDto);
     }
 
-    @GetMapping(value = {"/searchInitialContacts/{referenceId}/{clientname}/{fileNumber}/{caseworker}/{startingDate}/{status}"},produces = "application/json")
+    @GetMapping(value = {"/searchInitialContacts/{clientname}/{fileNumber}/{caseworker}/{startingDate}/{status}"},produces = "application/json")
     @ApiOperation("Search InitialContact")
     @ResponseStatus(HttpStatus.OK)
     public List<InitialContactSearchResultsDto> searchInitialContact(@PathVariable Map<String, String> var)
@@ -130,10 +130,6 @@ public class TWNInitialContactController {
         initialContactSearchCriteriaDto.setStatus(
                 ("null".equals(var.get("status"))
                         || var.get("status") == null) ?null:var.get("status"));
-
-
-        initialContactSearchCriteriaDto.setReferenceId(("null".equals(var.get("referenceId"))
-                || var.get("referenceId") == null) ?null:Long.parseLong(var.get("referenceId")));
 
 
         return initialContactSearchService.search(initialContactSearchCriteriaDto);
