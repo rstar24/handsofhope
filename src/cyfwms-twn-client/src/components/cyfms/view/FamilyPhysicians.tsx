@@ -1,6 +1,6 @@
-import { useAppSelector } from "../../../../library/hooks";
-import { FamilyPhysicianLabels } from "../../../../library/labels/cyfms";
-import { styles } from "../../../../pages/cyfms/View";
+import { useAppSelector } from "../../../library/hooks";
+import { FamilyPhysicianLabels } from "../../../library/labels/cyfms";
+import { styles } from "../../../pages/cyfms/View";
 import {
   Table,
   TableBody,
@@ -21,12 +21,14 @@ const FamilyPhysicians = (): ReactElement => {
     <>
       {Object.entries(recordsList).map((t: any, index: number) => (
         <>
-          <Typography sx={styles.header}>
+          <Typography sx={{ px: "1rem", fontWeight: "bold" }}>
             Family Physician: {index + 1}
           </Typography>
-          <TableContainer sx={{ p: "1rem" }}>
+          <TableContainer
+            sx={{ display: "flex", justifyContent: "center", p: "1rem" }}
+          >
             <Table
-              sx={{ minWidth: 650 }}
+              sx={{ maxWidth: 900 }}
               aria-label="family physician data table"
             >
               <TableBody sx={{ "& > tr > td": { border: 0, p: 0 } }}>
@@ -40,12 +42,18 @@ const FamilyPhysicians = (): ReactElement => {
                   ) {
                     return (
                       <TableRow key={Math.random() * 1000}>
-                        <TableCell width="30%">
-                          <Typography style={styles.keys}>
-                            {FamilyPhysicianLabels[k]}
-                          </Typography>
+                        <TableCell
+                          sx={{
+                            display: "flex",
+                            width: "50%",
+                            alignContent: "start",
+                            fontWeight: "bold",
+                            fontSize: "1rem",
+                          }}
+                        >
+                          {FamilyPhysicianLabels[k]}
                         </TableCell>
-                        <TableCell width="70%">
+                        <TableCell width="50%">
                           <Typography style={styles.values}>{t[1]}</Typography>
                         </TableCell>
                       </TableRow>

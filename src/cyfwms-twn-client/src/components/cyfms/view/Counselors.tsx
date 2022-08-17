@@ -1,6 +1,6 @@
-import { useAppSelector } from "../../../../library/hooks";
-import { CounselorLabels } from "../../../../library/labels/cyfms";
-import { styles } from "../../../../pages/cyfms/View";
+import { useAppSelector } from "../../../library/hooks";
+import { CounselorLabels } from "../../../library/labels/cyfms";
+import { styles } from "../../../pages/cyfms/View";
 import {
   Table,
   TableBody,
@@ -21,12 +21,14 @@ const Councelors = (): ReactElement => {
     <>
       {Object.entries(recordsList).map((t: any, index: number) => (
         <>
-          <Typography sx={styles.header}>
-            Family Physician: {index + 1}
+          <Typography sx={{ px: "1rem", fontWeight: "bold" }}>
+            Counselor: {index + 1}
           </Typography>
-          <TableContainer sx={{ p: "1rem" }}>
+          <TableContainer
+            sx={{ display: "flex", justifyContent: "center", p: "1rem" }}
+          >
             <Table
-              sx={{ minWidth: 650 }}
+              sx={{ maxWidth: 900 }}
               aria-label="counselor or CFS worker data table"
             >
               <TableBody sx={{ "& > tr > td": { border: 0, p: 0 } }}>
@@ -39,12 +41,18 @@ const Councelors = (): ReactElement => {
                   ) {
                     return (
                       <TableRow key={Math.random() * 1000}>
-                        <TableCell width="30%">
-                          <Typography style={styles.keys}>
-                            {CounselorLabels[k]}
-                          </Typography>
+                        <TableCell
+                          sx={{
+                            display: "flex",
+                            width: "50%",
+                            alignContent: "start",
+                            fontWeight: "bold",
+                            fontSize: "1rem",
+                          }}
+                        >
+                          {CounselorLabels[k]}
                         </TableCell>
-                        <TableCell width="70%">
+                        <TableCell width="50%">
                           <Typography style={styles.values}>{t[1]}</Typography>
                         </TableCell>
                       </TableRow>

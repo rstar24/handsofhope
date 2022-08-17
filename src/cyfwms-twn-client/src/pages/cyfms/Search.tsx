@@ -6,10 +6,11 @@ import CYFMSHeader from "../../components/cyfms/CYFMSHeader";
 import Results from "../../components/cyfms/search/Results";
 import Router from "../../components/nestedRouters/CYFMS";
 import { doGetMaritalStatus } from "../../features/codetable/codetableSlice";
-import { doGetSearch } from "../../features/search/searchSlice";
+import { doGet as doGetSearch } from "../../features/cyfms/search/slice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { Box, Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import type { Record } from "../../features/cyfms/search/slice";
 import type { FormEvent, ReactElement } from "react";
 
 /**
@@ -29,18 +30,19 @@ const Search = (): ReactElement => {
 
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
-    const data: any = e.currentTarget;
-    const searchUser = {
-      referenceId: data.referenceId.value || null,
-      firstname: data.firstName.value || null,
-      surname: data.lastName.value || null,
-      middleName: data.middleName.value || null,
-      dateOfBirth: data.dateOfBirth.value || null,
-      maritalStatus: data.maritalStatus.value || null,
-      city: data.city.value || null,
-      phoneNumber: data.phoneNo.value || null,
+    const form: any = e.currentTarget;
+    const formData: Record = {
+      participantId: null,
+      referenceId: form.referenceId.value || null,
+      firstname: form.firstName.value || null,
+      surname: form.lastName.value || null,
+      middleName: form.middleName.value || null,
+      dateOfBirth: form.dateOfBirth.value || null,
+      maritalStatus: form.maritalStatus.value || null,
+      city: form.city.value || null,
+      workPhone: form.phoneNo.value || null,
     };
-    dispatch(doGetSearch({ readUser: searchUser }))
+    dispatch(doGetSearch(formData))
       .unwrap()
       .then(() => {
         console.log("CYFMS Search POST backend API was successful!");
@@ -84,7 +86,6 @@ const Search = (): ReactElement => {
             Search for a Child, Youth, or Family Member
           </Button>
         </Box>
-
         <Box
           component="form"
           sx={{

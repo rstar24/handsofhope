@@ -1,6 +1,6 @@
-import { useAppSelector } from "../../../../library/hooks";
-import { OtherInformationLabels } from "../../../../library/labels/cyfms";
-import { styles } from "../../../../pages/cyfms/View";
+import { useAppSelector } from "../../../library/hooks";
+import { OtherInformationLabels } from "../../../library/labels/cyfms";
+import { styles } from "../../../pages/cyfms/View";
 import {
   Table,
   TableBody,
@@ -16,8 +16,10 @@ const OtherInformation = (): ReactElement => {
   const data = useAppSelector((state) => state.cyfmsOtherInformation.data);
 
   return (
-    <TableContainer sx={{ p: "1rem" }}>
-      <Table sx={{ minWidth: 650 }} aria-label="other information data table">
+    <TableContainer
+      sx={{ display: "flex", justifyContent: "center", p: "1rem" }}
+    >
+      <Table sx={{ maxWidth: 900 }} aria-label="other information data table">
         <TableBody sx={{ "& > tr > td": { border: 0, p: 0 } }}>
           {Object.entries(data).map((t: any, k: any) => {
             if (
@@ -28,12 +30,18 @@ const OtherInformation = (): ReactElement => {
             ) {
               return (
                 <TableRow key={Math.random() * 1000}>
-                  <TableCell width="30%">
-                    <Typography style={styles.keys}>
-                      {OtherInformationLabels[k]}
-                    </Typography>
+                  <TableCell
+                    sx={{
+                      display: "flex",
+                      width: "50%",
+                      alignContent: "start",
+                      fontWeight: "bold",
+                      fontSize: "1rem",
+                    }}
+                  >
+                    {OtherInformationLabels[k]}
                   </TableCell>
-                  <TableCell width="70%">
+                  <TableCell width="50%">
                     <Typography style={styles.values}>{t[1]}</Typography>
                   </TableCell>
                 </TableRow>

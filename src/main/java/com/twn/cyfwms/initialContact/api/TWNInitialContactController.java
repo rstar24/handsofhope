@@ -31,8 +31,6 @@ public class TWNInitialContactController {
     InitialContactReferralInfoService initialContactReferralInfoService;
     @Autowired
     InitialContactSearchService initialContactSearchService;
-    @Autowired
-    InitialContactContactNotesService initialContactContactNotesService;
 
     @GetMapping(value = "/readAllFileDetails/{filedetailsid}", produces = "application/json")
     @ApiOperation("Read Identity")
@@ -135,20 +133,6 @@ public class TWNInitialContactController {
 
 
         return initialContactSearchService.search(initialContactSearchCriteriaDto);
-    }
-
-    @GetMapping(value = "/readAllContactNotes/{filedetailsid}", produces = "application/json")
-    @ApiOperation("Read Identity")
-    @ResponseStatus(HttpStatus.OK)
-    public InitialContactContactNotesDto readAllContactNotes(@PathVariable("filedetailsid") Long fileDetailsID) {
-        return initialContactContactNotesService.readAllContactNotes(fileDetailsID);
-    }
-
-    @PutMapping(value = "/saveAllContactNotes", produces = "application/json")
-    @ApiOperation("Save or Update Identity")
-    @ResponseStatus(HttpStatus.OK)
-    public InitialContactContactNotesDto saveAllContactNotes(@RequestBody InitialContactContactNotesDto initialContactContactNotesDto) {
-        return initialContactContactNotesService.saveAllContactNotes(initialContactContactNotesDto);
     }
 
 }
