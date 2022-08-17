@@ -1,9 +1,9 @@
-import { useAppSelector } from "../../../../library/hooks";
+import { useAppSelector } from "../../../library/hooks";
 import {
   CriminalHistoryLabels,
   CriminalHistoryRecordLabels,
-} from "../../../../library/labels/cyfms";
-import { styles } from "../../../../pages/cyfms/View";
+} from "../../../library/labels/cyfms";
+import { styles } from "../../../pages/cyfms/View";
 import {
   Table,
   TableBody,
@@ -23,10 +23,14 @@ const CriminalHistory = (): ReactElement => {
       {Object.entries(data.criminalHistoryRecordList).map(
         (t: any, index: number) => (
           <>
-            <Typography sx={styles.header}>Record: {index + 1}</Typography>
-            <TableContainer sx={{ p: "0.5rem" }}>
+            <Typography sx={{ px: "1rem", fontWeight: "bold" }}>
+              Record: {index + 1}
+            </Typography>
+            <TableContainer
+              sx={{ display: "flex", justifyContent: "center", p: "0.5rem" }}
+            >
               <Table
-                sx={{ minWidth: 650 }}
+                sx={{ maxWidth: 900 }}
                 aria-label="criminal history record data table"
               >
                 <TableBody sx={{ "& > tr > td": { border: 0, p: 0 } }}>
@@ -45,12 +49,18 @@ const CriminalHistory = (): ReactElement => {
                       ) {
                         return (
                           <TableRow key={Math.random() * 1000}>
-                            <TableCell width="30%">
-                              <Typography style={styles.keys}>
-                                {CriminalHistoryRecordLabels[k]}
-                              </Typography>
+                            <TableCell
+                              sx={{
+                                display: "flex",
+                                width: "50%",
+                                alignContent: "start",
+                                fontWeight: "bold",
+                                fontSize: "1rem",
+                              }}
+                            >
+                              {CriminalHistoryRecordLabels[k]}
                             </TableCell>
-                            <TableCell width="70%">
+                            <TableCell width="50%">
                               <Typography style={styles.values}>
                                 {t[1]}
                               </Typography>
@@ -67,9 +77,10 @@ const CriminalHistory = (): ReactElement => {
           </>
         )
       )}
-      <hr />
-      <TableContainer sx={{ p: "1rem" }}>
-        <Table sx={{ minWidth: 650 }} aria-label="criminal history data table">
+      <TableContainer
+        sx={{ display: "flex", justifyContent: "center", p: "1rem" }}
+      >
+        <Table sx={{ maxWidth: 900 }} aria-label="criminal history data table">
           <TableBody sx={{ "& > tr > td": { border: 0, p: 0 } }}>
             {Object.entries(data).map((t: any, k: any) => {
               if (
@@ -82,12 +93,18 @@ const CriminalHistory = (): ReactElement => {
               ) {
                 return (
                   <TableRow key={Math.random() * 1000}>
-                    <TableCell width="30%">
-                      <Typography style={styles.keys}>
-                        {CriminalHistoryLabels[k]}
-                      </Typography>
+                    <TableCell
+                      sx={{
+                        display: "flex",
+                        width: "50%",
+                        alignContent: "start",
+                        fontWeight: "bold",
+                        fontSize: "1rem",
+                      }}
+                    >
+                      {CriminalHistoryLabels[k]}
                     </TableCell>
-                    <TableCell width="70%">
+                    <TableCell width="50%">
                       <Typography style={styles.values}>
                         {(typeof t[1]).toString() === "boolean"
                           ? t[1]

@@ -3,15 +3,15 @@ import Popup from "../../components/Popup";
 import AuthLayout from "../../components/auth/layout/AuthLayout";
 import CYFMSHeader from "../../components/cyfms/CYFMSHeader";
 import EditIcon from "../../components/cyfms/EditIcon";
+import Contact from "../../components/cyfms/view/Contact";
+import Counselors from "../../components/cyfms/view/Counselors";
+import CriminalHistory from "../../components/cyfms/view/CriminalHistory";
+import EducationAndEmployment from "../../components/cyfms/view/EducationAndEmployment";
+import FamilyPhysicians from "../../components/cyfms/view/FamilyPhysicians";
+import HouseholdMembers from "../../components/cyfms/view/HouseholdMembers";
+import OtherInformation from "../../components/cyfms/view/OtherInformation";
+import Register from "../../components/cyfms/view/Register";
 import Router from "../../components/nestedRouters/CYFMS";
-import Contact from "../../components/cyfms/search/view/Contact";
-import Counselors from "../../components/cyfms/search/view/Counselors";
-import CriminalHistory from "../../components/cyfms/search/view/CriminalHistory";
-import EducationAndEmployment from "../../components/cyfms/search/view/EducationAndEmployment";
-import FamilyPhysicians from "../../components/cyfms/search/view/FamilyPhysicians";
-import HouseholdMembers from "../../components/cyfms/search/view/HouseholdMembers";
-import OtherInformation from "../../components/cyfms/search/view/OtherInformation";
-import Register from "../../components/cyfms/search/view/Register";
 import { useAppSelector } from "../../library/hooks";
 import { Box, Tab, Tabs, Typography } from "@mui/material";
 import React from "react";
@@ -201,62 +201,54 @@ const View = (): ReactElement => {
           <Tab label="Other Information" {...tabPanelProps(7)} />
         </Tabs>
       </Box>
-      <Box
-        sx={{
-          flexDirection: "column",
-          display: "flex",
-          flexWrap: "wrap",
-        }}
-      >
-        <div id="register" className="highlight" tabIndex={0}>
-          <Typography variant="h6" sx={styles.header}>
-            Registration
-          </Typography>
-          <Register />
-        </div>
-        <div id="contact" className="highlight" tabIndex={1}>
-          <Typography variant="h6" sx={styles.header}>
-            Contact
-          </Typography>
-          <Contact />
-        </div>
-        <div id="householdMembers" className="highlight" tabIndex={2}>
-          <Typography variant="h6" sx={styles.header}>
-            Household Members
-          </Typography>
-          <HouseholdMembers />
-        </div>
-        <div id="educationAndEmployment" className="highlight" tabIndex={3}>
-          <Typography variant="h6" sx={styles.header}>
-            Education and Employment
-          </Typography>
-          <EducationAndEmployment />
-        </div>
-        <div id="criminalHistory" className="highlight" tabIndex={4}>
-          <Typography variant="h6" sx={styles.header}>
-            Criminal History
-          </Typography>
-          <CriminalHistory />
-        </div>
-        <div id="familyPhysicians" className="highlight" tabIndex={5}>
-          <Typography variant="h6" sx={styles.header}>
-            Family Physician
-          </Typography>
-          <FamilyPhysicians />
-        </div>
-        <div id="counselors" className="highlight" tabIndex={6}>
-          <Typography variant="h6" sx={styles.header}>
-            Counselor / CFS Worker
-          </Typography>
-          <Counselors />
-        </div>
-        <div id="otherInformation" className="highlight" tabIndex={7}>
-          <Typography variant="h6" sx={styles.header}>
-            Other Information
-          </Typography>
-          <OtherInformation />
-        </div>
-      </Box>
+      <div id="register" className="highlight" tabIndex={0}>
+        <Typography variant="h6" sx={styles.header}>
+          Registration
+        </Typography>
+        <Register />
+      </div>
+      <div id="contact" className="highlight" tabIndex={1}>
+        <Typography variant="h6" sx={styles.header}>
+          Contact
+        </Typography>
+        <Contact />
+      </div>
+      <div id="householdMembers" className="highlight" tabIndex={2}>
+        <Typography variant="h6" sx={styles.header}>
+          Household Members
+        </Typography>
+        <HouseholdMembers />
+      </div>
+      <div id="educationAndEmployment" className="highlight" tabIndex={3}>
+        <Typography variant="h6" sx={styles.header}>
+          Education and Employment
+        </Typography>
+        <EducationAndEmployment />
+      </div>
+      <div id="criminalHistory" className="highlight" tabIndex={4}>
+        <Typography variant="h6" sx={styles.header}>
+          Criminal History
+        </Typography>
+        <CriminalHistory />
+      </div>
+      <div id="familyPhysicians" className="highlight" tabIndex={5}>
+        <Typography variant="h6" sx={styles.header}>
+          Family Physician
+        </Typography>
+        <FamilyPhysicians />
+      </div>
+      <div id="counselors" className="highlight" tabIndex={6}>
+        <Typography variant="h6" sx={styles.header}>
+          Counselor / CFS Worker
+        </Typography>
+        <Counselors />
+      </div>
+      <div id="otherInformation" className="highlight" tabIndex={7}>
+        <Typography variant="h6" sx={styles.header}>
+          Other Information
+        </Typography>
+        <OtherInformation />
+      </div>
       <Popup children={<Router />} />
     </AuthLayout>
   );
