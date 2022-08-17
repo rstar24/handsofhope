@@ -31,6 +31,8 @@ public class TWNInitialContactController {
     InitialContactReferralInfoService initialContactReferralInfoService;
     @Autowired
     InitialContactSearchService initialContactSearchService;
+    @Autowired
+    InitialContactContactNotesService initialContactContactNotesService;
 
     @GetMapping(value = "/readAllFileDetails/{filedetailsid}", produces = "application/json")
     @ApiOperation("Read Identity")
@@ -102,7 +104,7 @@ public class TWNInitialContactController {
         return initialContactReferralInfoService.saveAllReferralInfo(initialContactReferralInfoDto);
     }
 
-    @GetMapping(value = {"/searchInitialContacts/{referenceId}/{clientname}/{fileNumber}/{caseworker}/{startingDate}/{status}"},produces = "application/json")
+    @GetMapping(value = {"/searchInitialContacts/{clientname}/{fileNumber}/{caseworker}/{startingDate}/{status}"},produces = "application/json")
     @ApiOperation("Search InitialContact")
     @ResponseStatus(HttpStatus.OK)
     public List<InitialContactSearchResultsDto> searchInitialContact(@PathVariable Map<String, String> var)
@@ -132,10 +134,21 @@ public class TWNInitialContactController {
                         || var.get("status") == null) ?null:var.get("status"));
 
 
-        initialContactSearchCriteriaDto.setReferenceId(("null".equals(var.get("referenceId"))
-                || var.get("referenceId") == null) ?null:Long.parseLong(var.get("referenceId")));
-
-
         return initialContactSearchService.search(initialContactSearchCriteriaDto);
     }
+
+    @GetMapping(value = "/readAllContactNotes/{filedetailsid}", produces = "application/json")
+    @ApiOperation("Read Identity")
+    @ResponseStatus(HttpStatus.OK)
+    public InitialContactContactNotesDto readAllContactNotes(@PathVariable("filedetailsid") Long fileDetailsID) {
+        return initialContactContactNotesService.readAllContactNotes(fileDetailsID);
+    }
+
+    @PutMapping(value = "/saveAllContactNotes", produces = "application/json")
+    @ApiOperation("Save or Update Identity")
+    @ResponseStatus(HttpStatus.OK)
+    public InitialContactContactNotesDto saveAllContactNotes(@RequestBody InitialContactContactNotesDto initialContactContactNotesDto) {
+        return initialContactContactNotesService.saveAllContactNotes(initialContactContactNotesDto);
+    }
+
 }

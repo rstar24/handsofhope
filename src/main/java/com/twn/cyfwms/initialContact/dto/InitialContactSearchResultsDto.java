@@ -15,9 +15,7 @@ public class InitialContactSearchResultsDto {
     @Setter
 
     private Long fileDetailsId;
-    @Getter
-    @Setter
-    private Long referenceId;
+
     @Getter
     @Setter
     private String clientName;
@@ -47,7 +45,7 @@ public class InitialContactSearchResultsDto {
     private Long totalCount;
 
 
-    public InitialContactSearchResultsDto(Long fileDetailsId,Long referenceId,String clientName, Long fileNumber,String caseworker,LocalDate startingDate,String status, String typeOfPatient  ) {
+    public InitialContactSearchResultsDto(Long fileDetailsId,String clientName, Long fileNumber,String caseworker,LocalDate startingDate,String status, String typeOfPatient  ) {
         this.fileDetailsId=fileDetailsId;
         this.clientName = clientName;
         this.fileNumber = fileNumber;
@@ -55,7 +53,6 @@ public class InitialContactSearchResultsDto {
         this.startingDate=startingDate;
         this.status=status;
         this.typeOfPatient=typeOfPatient;
-        this.referenceId=referenceId;
     }
 
 

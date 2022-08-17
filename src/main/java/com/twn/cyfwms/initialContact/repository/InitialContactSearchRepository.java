@@ -22,7 +22,6 @@ public class InitialContactSearchRepository {
                 (rs, rowNum) ->
                         new InitialContactSearchResultsDto(
                                 rs.getLong("filedetailsid"),
-                                rs.getLong("initialcontactreferenceid"),
                                 rs.getString("clientname"),
                                 rs.getLong("filenumber"),
                                  rs.getString("caseworker"),
@@ -36,7 +35,7 @@ public class InitialContactSearchRepository {
 
     private StringBuffer createSearchQuery(InitialContactSearchCriteriaDto searchCriteria, List<Object> argsObjectList) {
         StringBuffer  querySBuff = new StringBuffer();
-        querySBuff.append("select p.filedetailsid, p.clientname,p.initialcontactreferenceid, p.fileNumber,p.caseworker,p.startingDate,p.status ,p2.typeofpatient ");
+        querySBuff.append("select p.filedetailsid, p.clientname, p.fileNumber,p.caseworker,p.startingDate,p.status ,p2.typeofpatient ");
         querySBuff.append("from initialcontactfiledetails p left join initialcontactpatientcareinfo p2 on p.filedetailsid = p2.filedetailsid where 1=1");
             String clientName=searchCriteria.getClientName();
             if (clientName!=null && !clientName.trim().isEmpty()){
@@ -79,11 +78,6 @@ public class InitialContactSearchRepository {
                 argsObjectList.add(status + "%");
 
             }
-          Long referenceId = searchCriteria.getReferenceId();
-          if (referenceId != null) {
-              querySBuff.append(" AND p.initialcontactreferenceid = ?");
-              argsObjectList.add(referenceId);
-          }
 
           String typeOfPatient=searchCriteria.getTypeOfPatient();
           if (typeOfPatient!=null && !typeOfPatient.trim().isEmpty()){
