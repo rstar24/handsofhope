@@ -1,29 +1,18 @@
-export const FileDetailsLabelsProgress = [
-  "File Details Id",
-  "Client Name",
-  "Caseworker",
-  "File Number",
-  "Starting Date",
-  "Status",
-  "Initial Contact Reference Id",
-];
-
-export const FileDetailsLabelsClosed = [
-  "File Details Id",
+export const FileDetailsLabels = [
+  "FileDetailsId",
   "Client Name",
   "Caseworker",
   "File Number",
   "Starting Date",
   "Date Closed",
   "Status",
-  "Initial Contact Reference Id",
 ];
 
 export const ReferralInformationLabels = [
-  "File Details Id",
-  "Referral Info Id",
+  "FileDetailsId",
+  "ReferralInfoId",
   "Referral",
-  "Self",
+  "Self Referral",
   "Agency Name",
   "Name",
   "Address",
@@ -32,8 +21,8 @@ export const ReferralInformationLabels = [
 ];
 
 export const IncidentReportLabels = [
-  "File Details Id",
-  "Incident Report Id",
+  "FileDetailsId",
+  "IncidentReportId",
   "Date of Report",
   "Reported By",
   "Parties Involved",
@@ -47,8 +36,8 @@ export const IncidentReportLabels = [
 ];
 
 export const PresentConcernsLabels = [
-  "File Details Id",
-  "Present Concerns Id",
+  "FileDetailsId",
+  "PresentConcernsId",
   "Select Present Concerns",
   "Situation",
   "Substance Abuse",
@@ -56,16 +45,16 @@ export const PresentConcernsLabels = [
 ];
 
 export const InpatientLabels = [
-  "Inpatient Id",
+  "InpatientId",
   "Hospitalization Record",
   "Hospitalization Reasons",
-  "PatientCare Info Id",
+  "PatientCareInfoId",
   "Creation Date",
   "Last Written",
 ];
 
 export const OutpatientLabels = [
-  "Outpatient Id",
+  "OutpatientId",
   "Therapy or Counseling",
   "Therapy Time Period",
   "Therapy Location",
@@ -73,7 +62,7 @@ export const OutpatientLabels = [
   "Self Help Group",
   "Self Help Group Period",
   "Self Help Group Location",
-  "Patient Care Info Id",
+  "PatientCareInfoId",
   "Creation Date",
   "Last Written",
 ];

@@ -3,10 +3,8 @@ package com.twn.cyfwms.initialContact.repository;
 import com.twn.cyfwms.initialContact.dto.InitialContactSearchCriteriaDto;
 import com.twn.cyfwms.initialContact.dto.InitialContactSearchResultsDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -92,5 +90,4 @@ public class InitialContactSearchRepository {
           }
         return querySBuff;
     }
-
 }

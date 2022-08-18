@@ -10,7 +10,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class InitialContactFileDetailsDto {
-
     @Getter
     @Setter
     private Long fileDetailsId;

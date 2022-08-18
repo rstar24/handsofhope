@@ -122,7 +122,7 @@ const View = (): ReactElement => {
       <Box
         sx={{
           display: "flex",
-          background: "#d7d3d354",
+          backgroundColor: "#d7d3d354",
         }}
       >
         <Box
@@ -189,7 +189,7 @@ const View = (): ReactElement => {
           variant="scrollable"
           value={value}
           onChange={handleChange}
-          aria-label="CYFMS view navigation tabs."
+          aria-label="CYFMS view navigation tabs"
         >
           <Tab label="Registration" {...tabPanelProps(0)} />
           <Tab label="Contact" {...tabPanelProps(1)} />

@@ -15,7 +15,7 @@ import {
 import { initiate } from "../../features/initiatorSlice";
 import { unhideTabs } from "../../features/navBarSlice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import type { Data } from "../../features/initialContact/fileDetails/slice";
@@ -54,7 +54,6 @@ const FileDetails = (): ReactElement => {
     e.preventDefault();
     const form: any = e.currentTarget;
     const formData: Data = {
-      initialContactReferenceId: state.data.initialContactReferenceId,
       fileDetailsId: state.data.fileDetailsId,
       fileNumber: form.fileNumber.value,
       clientName: form.clientName.value,
@@ -106,18 +105,13 @@ const FileDetails = (): ReactElement => {
         onSubmit={submitHandler}
         onChange={changeHandler}
       >
-        {state.data.initialContactReferenceId !== 0 && (
-          <Typography paddingLeft={1}>
-            Reference ID: {state.data.initialContactReferenceId}
-          </Typography>
-        )}
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <ICInput
               autofill={state.data.fileNumber}
               id="fileNumber"
+              disabled
               value="File No."
-              required
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>

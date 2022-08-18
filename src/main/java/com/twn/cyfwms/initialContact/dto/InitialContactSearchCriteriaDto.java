@@ -2,7 +2,6 @@ package com.twn.cyfwms.initialContact.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
-
 import java.time.LocalDate;
 
 @Builder
@@ -14,15 +13,19 @@ public class InitialContactSearchCriteriaDto {
     @Getter
     @Setter
     private String clientName;
+
     @Getter
     @Setter
     private Long fileNumber;
+
     @Getter
     @Setter
     private String caseworker;
+
     @Getter
     @Setter
     private LocalDate startingDate;
+
     @Getter
     @Setter
     private String status;
@@ -30,5 +33,4 @@ public class InitialContactSearchCriteriaDto {
     @Getter
     @Setter
     private String typeOfPatient;
-
 }

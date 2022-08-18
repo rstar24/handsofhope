@@ -2,7 +2,6 @@ package com.twn.cyfwms.initialContact.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
-
 import java.time.LocalDate;
 
 @Builder
@@ -13,7 +12,6 @@ import java.time.LocalDate;
 public class InitialContactSearchResultsDto {
     @Getter
     @Setter
-
     private Long fileDetailsId;
 
     @Getter
@@ -44,16 +42,13 @@ public class InitialContactSearchResultsDto {
     @Setter
     private Long totalCount;
 
-
-    public InitialContactSearchResultsDto(Long fileDetailsId,String clientName, Long fileNumber,String caseworker,LocalDate startingDate,String status, String typeOfPatient  ) {
-        this.fileDetailsId=fileDetailsId;
+    public InitialContactSearchResultsDto(Long fileDetailsId, String clientName, Long fileNumber, String caseworker, LocalDate startingDate, String status, String typeOfPatient) {
+        this.fileDetailsId = fileDetailsId;
         this.clientName = clientName;
         this.fileNumber = fileNumber;
-        this.caseworker=caseworker;
-        this.startingDate=startingDate;
-        this.status=status;
-        this.typeOfPatient=typeOfPatient;
+        this.caseworker = caseworker;
+        this.startingDate = startingDate;
+        this.status = status;
+        this.typeOfPatient = typeOfPatient;
     }
-
-
 }

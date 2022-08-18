@@ -5,7 +5,6 @@ import type { AxiosResponse } from "axios";
 
 export interface Record {
   fileDetailsId: number | null;
-  referenceId: number | null;
   clientName: string | null;
   fileNumber: string | 0;
   caseworker: string | null;

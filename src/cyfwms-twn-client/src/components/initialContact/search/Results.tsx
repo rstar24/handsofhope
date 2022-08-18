@@ -41,9 +41,8 @@ const Results = (): ReactElement => {
       <Table sx={{ minWidth: 800 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Reference Id</TableCell>
-            <TableCell>Client Name</TableCell>
             <TableCell>File Number</TableCell>
+            <TableCell>Client Name</TableCell>
             <TableCell>Caseworker</TableCell>
             <TableCell>Start Date</TableCell>
             <TableCell>Status</TableCell>
@@ -61,11 +60,10 @@ const Results = (): ReactElement => {
                   to={`/initial_contact/view/${initialContact.fileDetailsId}`}
                   onClick={() => handleSearchView(initialContact.fileDetailsId)}
                 >
-                  {initialContact.referenceId}
+                  {initialContact.fileNumber}
                 </Link>
               </TableCell>
               <TableCell>{initialContact.clientName}</TableCell>
-              <TableCell>{initialContact.fileNumber}</TableCell>
               <TableCell>{initialContact.caseworker}</TableCell>
               <TableCell>{initialContact.startingDate}</TableCell>
               <TableCell>{initialContact.status}</TableCell>

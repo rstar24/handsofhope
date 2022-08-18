@@ -1,15 +1,15 @@
+import "../../styles/App.css";
 import Popup from "../../components/Popup";
 import AuthLayout from "../../components/auth/layout/AuthLayout";
 import ICHeader from "../../components/initialContact/ICHeader";
 import EditIcon from "../../components/initialContact/EditIcon";
+import FileDetails from "../../components/initialContact/view/FileDetails";
+import IncidentReport from "../../components/initialContact/view/IncidentReport";
+import PatientCareInformation from "../../components/initialContact/view/PatientCareInformation";
+import PresentConcerns from "../../components/initialContact/view/PresentConcerns";
+import ReferralInformation from "../../components/initialContact/view/ReferralInformation";
 import Router from "../../components/nestedRouters/InitialContact";
 import { useAppSelector } from "../../library/hooks";
-import FileDetails from "../../components/initialContact/search/view/FileDetails";
-import Home from "../../components/initialContact/search/view/Home";
-import IncidentReport from "../../components/initialContact/search/view/IncidentReport";
-import PatientCareInformation from "../../components/initialContact/search/view/PatientCareInformation";
-import PresentConcerns from "../../components/initialContact/search/view/PresentConcerns";
-import ReferralInformation from "../../components/initialContact/search/view/ReferralInformation";
 import { Box, Tab, Tabs, Typography } from "@mui/material";
 import React from "react";
 import type { ReactElement } from "react";
@@ -41,6 +41,26 @@ function TabPanel(props: TabPanelProps) {
   );
 }
 
+export const styles = {
+  header: {
+    fontWeight: 1000,
+    backgroundColor: "#ededed",
+    px: "1rem",
+    boxShadow: `inset 1px 0px black,
+    inset -1px 0px black`,
+  },
+  keys: {
+    variant: "h6",
+    fontWeight: 600,
+    fontSize: 16,
+  },
+  values: {
+    variant: "h6",
+    fontWeight: 400,
+    fontSize: 16,
+  },
+};
+
 function tabPanelProps(index: number) {
   return {
     id: `simple-tab-${index}`,
@@ -54,97 +74,101 @@ const View = (): ReactElement => {
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
+    switch (newValue) {
+      case 0:
+        document.getElementById("fileDetails")?.scrollIntoView();
+        document.getElementById("fileDetails")?.focus();
+        break;
+      case 1:
+        document.getElementById("referralInformation")?.scrollIntoView();
+        document.getElementById("referralInformation")?.focus();
+        break;
+      case 2:
+        document.getElementById("incidentReport")?.scrollIntoView();
+        document.getElementById("incidentReport")?.focus();
+        break;
+      case 3:
+        document.getElementById("presentConcerns")?.scrollIntoView();
+        document.getElementById("presentConcerns")?.focus();
+        break;
+      case 4:
+        document.getElementById("patientCareInformation")?.scrollIntoView();
+        document.getElementById("patientCareInformation")?.focus();
+        break;
+    }
   };
 
   return (
     <AuthLayout>
       <ICHeader />
       <Box
-        component="form"
         sx={{
-          justifyContent: "center",
+          display: "flex",
+          justifyContent: "space-between",
+          backgroundColor: "#d7d3d354",
+          px: "1rem",
         }}
       >
-        <Box
-          component="form"
-          paddingLeft={2}
-          boxShadow={2}
-          sx={{
-            display: "flex",
-            textAlign: "center",
-            justifyContent: "space-between",
-            backgroundColor: "#ededed",
-            background: "#d7d3d354",
-            maxHeight: "10vh",
-          }}
-        >
-          <Box>
-            <Typography variant="h6" fontWeight={500} paddingTop={0.3}>
-              Reference ID -{" "}
-              {state.icFileDetails.data.initialContactReferenceId} <></>
-            </Typography>
-          </Box>
-          <Box>
-            <Typography paddingRight={1}>
-              <EditIcon value={state.icFileDetails.data.fileDetailsId} />
-            </Typography>
-          </Box>
-        </Box>
-        <Box
-          sx={{
-            justifyContent: "center",
-            display: "flex",
-            flexDirection: "row",
-            background: "#d7d3d354",
-            maxHeight: "100vh",
-          }}
-        ></Box>
-        <Box sx={{ width: "100%" }}>
-          <Box
-            sx={{
-              borderBottom: 1,
-              borderColor: "divider",
-            }}
-          >
-            <Tabs
-              variant="fullWidth"
-              value={value}
-              onChange={handleChange}
-              aria-label="basic tabs example"
-              sx={{
-                maxWidth: "100%",
-                minWidth: 100,
-                backgroundColor: "white",
-              }}
-            >
-              <Tab label="Home" {...tabPanelProps(0)} />
-              <Tab label="File Details" {...tabPanelProps(1)} />
-              <Tab label="Referral Information" {...tabPanelProps(2)} />
-              <Tab label="Incident Report" {...tabPanelProps(3)} />
-              <Tab label="Present Concerns" {...tabPanelProps(4)} />
-              <Tab label="Patient Care Information" {...tabPanelProps(5)} />
-            </Tabs>
-          </Box>
-          <TabPanel value={value} index={0}>
-            <Home />
-          </TabPanel>
-          <TabPanel value={value} index={1}>
-            <FileDetails />
-          </TabPanel>
-          <TabPanel value={value} index={2}>
-            <ReferralInformation />
-          </TabPanel>
-          <TabPanel value={value} index={3}>
-            <IncidentReport />
-          </TabPanel>
-          <TabPanel value={value} index={4}>
-            <PresentConcerns />
-          </TabPanel>
-          <TabPanel value={value} index={5}>
-            <PatientCareInformation />
-          </TabPanel>
-        </Box>{" "}
+        <Typography variant="h5" alignSelf="center">
+          File Number: {state.icFileDetails.data.fileNumber}
+        </Typography>
+        <Typography>
+          <EditIcon value={state.icFileDetails.data.fileDetailsId} />
+        </Typography>
       </Box>
+      <Box
+        sx={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          bgcolor: "background.paper",
+          boxShadow: `inset 1px 0 black,
+                      inset -1px 0 black`,
+        }}
+      >
+        <Tabs
+          variant="scrollable"
+          value={value}
+          onChange={handleChange}
+          aria-label="InitialContact view navigation tabs"
+        >
+          <Tab label="File Details" {...tabPanelProps(0)} />
+          <Tab label="Referral Information" {...tabPanelProps(1)} />
+          <Tab label="Incident Report" {...tabPanelProps(2)} />
+          <Tab label="Present Concerns" {...tabPanelProps(3)} />
+          <Tab label="Patient Care Information" {...tabPanelProps(4)} />
+        </Tabs>
+      </Box>
+      <div id="fileDetails" className="highlight" tabIndex={0}>
+        <Typography variant="h6" sx={styles.header}>
+          File Details
+        </Typography>
+        <FileDetails />
+      </div>
+      <div id="referralInformation" className="highlight" tabIndex={1}>
+        <Typography variant="h6" sx={styles.header}>
+          Referral Information
+        </Typography>
+        <ReferralInformation />
+      </div>
+      <div id="incidentReport" className="highlight" tabIndex={2}>
+        <Typography variant="h6" sx={styles.header}>
+          Incident Report
+        </Typography>
+        <IncidentReport />
+      </div>
+      <div id="presentConcerns" className="highlight" tabIndex={3}>
+        <Typography variant="h6" sx={styles.header}>
+          Present Concerns
+        </Typography>
+        <PresentConcerns />
+      </div>
+      <div id="patientCareInformation" className="highlight" tabIndex={5}>
+        <Typography variant="h6" sx={styles.header}>
+          Patient Care Information
+        </Typography>
+        <PatientCareInformation />
+      </div>
       <Popup children={<Router />} />
     </AuthLayout>
   );
