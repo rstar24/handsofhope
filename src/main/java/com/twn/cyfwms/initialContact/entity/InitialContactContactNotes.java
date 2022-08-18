@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Data
 @AllArgsConstructor
@@ -35,6 +36,12 @@ public class InitialContactContactNotes implements Serializable {
 
     @Getter @Setter @Column(name = "worker")
     private String worker;
+
+    @Getter @Setter @Column(name = "date")
+    private LocalDate date;
+
+    @Getter @Setter @Column(name = "time")
+    private LocalTime time;
 
     @CreationTimestamp
     @Getter @Setter @Column(name = "creationdate")

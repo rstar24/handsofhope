@@ -1,6 +1,8 @@
 package com.twn.cyfwms.initialContact.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
 @Builder
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -21,6 +23,14 @@ public class InitialContactContactNotesDto {
     @Getter
     @Setter
     private String worker;
+
+    @Getter
+    @Setter
+    private LocalDate date;
+
+    @Getter
+    @Setter
+    private LocalTime time;
 
     @Getter
     @Setter
