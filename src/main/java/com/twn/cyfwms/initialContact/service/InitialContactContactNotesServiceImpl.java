@@ -3,11 +3,14 @@ import com.twn.cyfwms.initialContact.dto.InitialContactContactNotesDto;
 import com.twn.cyfwms.initialContact.entity.InitialContactContactNotes;
 import com.twn.cyfwms.initialContact.repository.InitialContactContactNotesRepository;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 @Service
 public class InitialContactContactNotesServiceImpl implements InitialContactContactNotesService{
@@ -16,41 +19,47 @@ public class InitialContactContactNotesServiceImpl implements InitialContactCont
     @Autowired
     private InitialContactContactNotesRepository initialContactContactNotesRepository;
     @Override
-    public InitialContactContactNotesDto saveAllContactNotes(InitialContactContactNotesDto initialContactContactNotesDto) {
-        InitialContactContactNotes initialContactContactNotes = null;
-        if (initialContactContactNotesDto.getContactNotesId() == 0) {
-            initialContactContactNotes = new InitialContactContactNotes();
-            modelMapper.map(initialContactContactNotesDto, initialContactContactNotes);
-
-        } else {
-            initialContactContactNotes=initialContactContactNotesRepository.findById(initialContactContactNotesDto.getContactNotesId()).get();
-            modelMapper.map(initialContactContactNotesDto, initialContactContactNotes);
+    public List<InitialContactContactNotesDto> saveAllContactNotes(List<InitialContactContactNotesDto> InitialContactContactNotesDtoList) {
+        for (com.twn.cyfwms.initialContact.dto.InitialContactContactNotesDto initialContactContactNotesDto: InitialContactContactNotesDtoList) {
+            InitialContactContactNotes initialContactContactNotes = null;
+            if (initialContactContactNotesDto.getContactNotesId() == 0) {
+                initialContactContactNotes = new InitialContactContactNotes();
+                modelMapper.map(initialContactContactNotesDto, initialContactContactNotes);
+                initialContactContactNotes.setStatus("ACTIVE");
+            } else {
+                initialContactContactNotes = initialContactContactNotesRepository.findById(initialContactContactNotesDto.getContactNotesId()).get();
+                modelMapper.map(initialContactContactNotesDto,initialContactContactNotes);
+            }
+            initialContactContactNotes = initialContactContactNotesRepository.save(initialContactContactNotes);
+            initialContactContactNotesDto.setContactNotesId(initialContactContactNotes.getContactNotesId());
         }
-        initialContactContactNotes = initialContactContactNotesRepository.save(initialContactContactNotes);
-        initialContactContactNotesDto.setFileDetailsId(initialContactContactNotes.getFileDetailsId());
-
-        return initialContactContactNotesDto;
+        return InitialContactContactNotesDtoList;
     }
-
     @Override
-    public InitialContactContactNotesDto readAllContactNotes(Long fileDetailsID) {
-
+    public List<InitialContactContactNotesDto> readAllContactNotes(Long fileDetailsID) {
+        List<InitialContactContactNotesDto> InitialContactContactNotesDtoList = new ArrayList<InitialContactContactNotesDto>();
         if (fileDetailsID != 0) {
-            InitialContactContactNotesDto initialContactContactNotesDto = new InitialContactContactNotesDto();
-            InitialContactContactNotes initialContactContactNotes = initialContactContactNotesRepository.findByFileDetailsId(fileDetailsID);
-            if (initialContactContactNotes != null) {
-                modelMapper.map(initialContactContactNotes, initialContactContactNotesDto);
-                if (initialContactContactNotesDto.getDate()==null){
-                    initialContactContactNotesDto.setDate(LocalDate.of(1,1,1));
+            List<InitialContactContactNotes> InitialContactContactNotesList = initialContactContactNotesRepository.findByFileDetailsId(fileDetailsID);
+            if (InitialContactContactNotesList != null) {
+                List<InitialContactContactNotes> InitialContactContactNotesActive = new ArrayList<>();
+                for (int i = 0; i < InitialContactContactNotesList.size(); ++i) {
+                    if (!InitialContactContactNotesList.get(i).getStatus().equalsIgnoreCase("INACTIVE")) {
+                        InitialContactContactNotesActive.add(InitialContactContactNotesList.get(i));
+                    }
                 }
-                if (initialContactContactNotesDto.getTime()==null){
-                    initialContactContactNotesDto.setTime(LocalTime.of(1,1,1));
+                InitialContactContactNotesDtoList = modelMapper.map(InitialContactContactNotesActive, new TypeToken<List<InitialContactContactNotesDto>>() {}.getType());
+                for (int i = 0;i < InitialContactContactNotesDtoList.size(); ++i) {
+                    if (InitialContactContactNotesDtoList.get(i).getDate() == null) {
+                        InitialContactContactNotesDtoList.get(i).setDate(LocalDate.of(1,1,1));
+                    }
+                    if (InitialContactContactNotesDtoList.get(i).getTime() == null) {
+                        InitialContactContactNotesDtoList.get(i).setTime(LocalTime.of(1,1,1));
+                    }
                 }
             } else {
                 throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
             }
-            return initialContactContactNotesDto;
         }
-        throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
+        return InitialContactContactNotesDtoList;
     }
 }

@@ -72,6 +72,9 @@ public class InitialContactContactNotes implements Serializable {
     @Getter @Setter @Column(length = 1000,name = "additionalinformation")
     private String additionalInformation;
 
+    @Getter @Setter @Column(name = "status")
+    private String status;
+
     @Getter @Setter @Column(name = "filedetailsid")
     private Long fileDetailsId;
 
