@@ -13,6 +13,7 @@ import icIncidentReportReducer from "../features/initialContact/incidentReport/s
 import icPresentConcernsReducer from "../features/initialContact/presentConcerns/slice";
 import icPatientCareInformationReducer from "../features/initialContact/patientCareInformation/slice";
 import icReferralInformationReducer from "../features/initialContact/referralInformation/slice";
+import icContactNotesReducer from "../features/initialContact/contactNotes/slice";
 import icSearchReducer from "../features/initialContact/search/slice";
 import initiatorReducer from "../features/initiatorSlice";
 import loginReducer from "../features/login/loginSlice";
@@ -42,6 +43,7 @@ export const store = configureStore({
     icReferralInformation: icReferralInformationReducer,
     icPresentConcerns: icPresentConcernsReducer,
     icPatientCareInformation: icPatientCareInformationReducer,
+    icContactNotes: icContactNotesReducer,
     icSearch: icSearchReducer,
     readAll: readAllRecordReducer,
   },

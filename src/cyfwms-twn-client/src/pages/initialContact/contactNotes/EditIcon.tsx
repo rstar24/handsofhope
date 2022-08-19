@@ -1,21 +1,3 @@
-import {
-  doGetICStatus,
-  doGetICReferral,
-  doGetICRisk,
-  doGetICPresentConcerns,
-  doGetICMentalHealthOrSubstanceAbuse,
-  doGetICTypeOfPatient,
-} from "../../features/codetable/codetableSlice";
-import { initiate } from "../../features/initiatorSlice";
-import { setEdit, setOpen } from "../../features/popupSlice";
-import { unhideTabs } from "../../features/navBarSlice";
-import { doGet as doGetFileDetails } from "../../features/initialContact/fileDetails/slice";
-import { doGet as doGetReferralInformation } from "../../features/initialContact/referralInformation/slice";
-import { doGet as doGetIncidentReport } from "../../features/initialContact/incidentReport/slice";
-import { doGet as doGetPresentConcerns } from "../../features/initialContact/presentConcerns/slice";
-import { doGet as doGetPatientCareInformation } from "../../features/initialContact/patientCareInformation/slice";
-
-import { useAppDispatch } from "../../library/hooks";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { Box, Button, IconButton, Modal, Menu, MenuItem } from "@mui/material";
 import React from "react";
@@ -37,8 +19,7 @@ const style = {
 const ITEM_HEIGHT = 48;
 export const openPopup = true;
 
-const EditIcon = (props: any): ReactElement => {
-  const dispatch = useAppDispatch();
+const EditIcon = ({ setDisabled, setAddNew }: any): ReactElement => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [openModel, setOpenModel] = React.useState(false);
   const openDropDown = Boolean(anchorEl);
@@ -48,7 +29,7 @@ const EditIcon = (props: any): ReactElement => {
 
   // Close MoreHorIcon Popup
   const handleCloseDropDown = (event: React.MouseEvent<HTMLElement>) => {
-    if (event.currentTarget.tabIndex !== 0) {
+    if (event.currentTarget.tabIndex === -1) {
       setOpenModel(true);
     }
     setAnchorEl(null);
@@ -56,6 +37,11 @@ const EditIcon = (props: any): ReactElement => {
 
   const handleCloseModel = () => {
     setOpenModel(false);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+    setAddNew(false);
   };
 
   return (
@@ -83,42 +69,28 @@ const EditIcon = (props: any): ReactElement => {
         PaperProps={{
           style: {
             maxHeight: ITEM_HEIGHT * 4.5,
-            width: "20ch",
+            width: "15ch",
           },
         }}
       >
         <MenuItem
           component={Link}
-          to="file_details"
+          to=""
           onClick={(event: React.MouseEvent<HTMLElement>) => {
+            setDisabled(false);
             handleCloseDropDown(event);
-            dispatch(doGetICStatus());
-            dispatch(doGetICReferral());
-            dispatch(doGetICRisk());
-            dispatch(doGetICPresentConcerns());
-            dispatch(doGetICMentalHealthOrSubstanceAbuse());
-            dispatch(doGetICTypeOfPatient());
-            dispatch(doGetReferralInformation(props.value));
-            dispatch(doGetIncidentReport(props.value));
-            dispatch(doGetPatientCareInformation(props.value));
-            dispatch(doGetPresentConcerns(props.value));
-            dispatch(doGetFileDetails(props.value))
-              .unwrap()
-              .then(() => {
-                dispatch(initiate(null));
-                dispatch(unhideTabs(null));
-                dispatch(setEdit(true));
-                dispatch(setOpen(true));
-              })
-              .catch((err) => {
-                console.log("Unable to edit!");
-                console.log(err);
-              });
           }}
         >
           Edit
         </MenuItem>
-        <MenuItem onClick={handleCloseDropDown}>Delete</MenuItem>
+        <MenuItem
+          onClick={(event: React.MouseEvent<HTMLElement>) => {
+            handleCloseDropDown(event);
+          }}
+        >
+          Delete
+        </MenuItem>
+        <MenuItem onClick={handleClose}>Close</MenuItem>
       </Menu>
       <Modal
         open={openModel}
