@@ -12,6 +12,6 @@ public class InitialContactContactNotesSearchService {
     @Autowired
     InitialContactContactNotesSearchRepository initialContactContactNotesSearchRepository;
     public List<InitialContactContactNotesSearchResultsDto> search(InitialContactContactNotesSearchCriteriaDto initialContactContactNotesSearchCriteriaDto) {
-        return  initialContactContactNotesSearchRepository.searchInitialContactsContactNotes(initialContactContactNotesSearchCriteriaDto);
+        return initialContactContactNotesSearchRepository.searchInitialContactsContactNotes(initialContactContactNotesSearchCriteriaDto);
     }
 }

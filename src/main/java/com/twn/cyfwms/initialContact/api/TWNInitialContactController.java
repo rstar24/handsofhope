@@ -147,39 +147,16 @@ public class TWNInitialContactController {
     public InitialContactContactNotesDto saveAllContactNotes(@RequestBody InitialContactContactNotesDto initialContactContactNotesDto) {
         return initialContactContactNotesService.saveAllContactNotes(initialContactContactNotesDto);
     }
-    @GetMapping(value = {"/searchInitialContactsContactNotes/{name}/{worker}/{contactMethod}/{needAddress}/{summary}/{result}/{nextStep}/{casePlanProgress}/{additionalInformation}"},produces = "application/json")
+    @GetMapping(value = {"/searchContactNotes/{data}"},produces = "application/json")
     @ApiOperation("Search InitialContact")
     @ResponseStatus(HttpStatus.OK)
-    public List<InitialContactContactNotesSearchResultsDto> searchInitialContactContactNotes(@PathVariable Map<String, String> var)
+    public List<InitialContactContactNotesSearchResultsDto> searchIntialContactContactNotes(@PathVariable Map<String, String> var)
     {
-        InitialContactContactNotesSearchCriteriaDto initialContactContactNotesSearchCriteriaDto=new InitialContactContactNotesSearchCriteriaDto();
-        initialContactContactNotesSearchCriteriaDto.setName(
-                ("null".equals(var.get("name"))
-                        || var.get("name") == null) ?null:var.get("name"));
-        initialContactContactNotesSearchCriteriaDto.setWorker(
-                ("null".equals(var.get("worker"))
-                        || var.get("worker") == null) ?null:var.get("worker"));
-        initialContactContactNotesSearchCriteriaDto.setContactMethod(
-                ("null".equals(var.get("contactMethod"))
-                        || var.get("contactMethod") == null) ?null:var.get("contactMethod"));
-        initialContactContactNotesSearchCriteriaDto.setNeedAddress(
-                ("null".equals(var.get("needAddress"))
-                        || var.get("needAddress") == null) ?null:var.get("needAddress"));
-        initialContactContactNotesSearchCriteriaDto.setSummary(
-                ("null".equals(var.get("summary"))
-                        || var.get("summary") == null) ?null:var.get("summary"));
-        initialContactContactNotesSearchCriteriaDto.setResult(
-                ("null".equals(var.get("result"))
-                        || var.get("result") == null) ?null:var.get("result"));
-        initialContactContactNotesSearchCriteriaDto.setNextStep(
-                ("null".equals(var.get("nextStep"))
-                        || var.get("nextStep") == null) ?null:var.get("nextStep"));
-        initialContactContactNotesSearchCriteriaDto.setCasePlanProgress(
-                ("null".equals(var.get("casePlanProgress"))
-                        || var.get("casePlanProgress") == null) ?null:var.get("casePlanProgress"));
-        initialContactContactNotesSearchCriteriaDto.setAdditionalInformation(
-                ("null".equals(var.get("additionalInformation"))
-                        || var.get("additionalInformation") == null) ?null:var.get("additionalInformation"));
-        return initialContactContactNotesSearchService.search(initialContactContactNotesSearchCriteriaDto);
+        InitialContactContactNotesSearchCriteriaDto contactNotesSearchCriteriaDto=new InitialContactContactNotesSearchCriteriaDto();
+
+        contactNotesSearchCriteriaDto.setData(
+                ("null".equals(var.get("data"))
+                        || var.get("data") == null) ?null:var.get("data"));
+        return initialContactContactNotesSearchService.search(contactNotesSearchCriteriaDto);
     }
 }

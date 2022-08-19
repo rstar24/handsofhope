@@ -1,6 +1,8 @@
 package com.twn.cyfwms.initialContact.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
 @Builder
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -17,6 +19,15 @@ public class InitialContactContactNotesSearchResultsDto {
     @Getter
     @Setter
     private String worker;
+
+    @Getter
+    @Setter
+    private LocalDate date;
+
+    @Getter
+    @Setter
+    private LocalTime time;
+
 
     @Getter
     @Setter
@@ -46,10 +57,12 @@ public class InitialContactContactNotesSearchResultsDto {
     @Setter
     private String additionalInformation;
 
-    public InitialContactContactNotesSearchResultsDto(Long fileDetailsId,String name,String worker,String contactMethod,String needAddress,String summary,String result,String nextStep,String casePlanProgress,String additionalInformation ) {
+    public InitialContactContactNotesSearchResultsDto(Long fileDetailsId,String name,String worker,LocalDate date,LocalTime time,String contactMethod,String needAddress,String summary,String result,String nextStep,String casePlanProgress,String additionalInformation ) {
         this.fileDetailsId=fileDetailsId;
         this.name=name;
         this.worker=worker;
+        this.date=date;
+        this.time=time;
         this.contactMethod = contactMethod;
         this.needAddress=needAddress;
         this.summary=summary;
