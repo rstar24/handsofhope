@@ -18,6 +18,7 @@ public class InitialContactContactNotesSearchRepository {
         return jdbcTemplate.query(querySBuff.toString(),argsObjectList.toArray(),
                 (rs, rowNum) ->
                         new InitialContactContactNotesSearchResultsDto(
+                                rs.getLong("contactnotesid"),
                                 rs.getLong("filedetailsid"),
                                 rs.getString("name"),
                                 rs.getString("worker"),
@@ -36,7 +37,7 @@ public class InitialContactContactNotesSearchRepository {
     private StringBuffer createSearchQuery(InitialContactContactNotesSearchCriteriaDto searchCriteria, List<Object> argsObjectList) {
         StringBuffer  querySBuff = new StringBuffer();
         String data=searchCriteria.getData();
-            querySBuff.append("select p.filedetailsid, p.name ,p.worker ,p.date , p.time,p.contactmethod ,p.needaddress ,p.summary ,p.result ,p.nextstep ,p.caseplanprogress ,p.additionalinformation ");
+            querySBuff.append("select p.contactnotesid ,p.filedetailsid, p.name ,p.worker ,p.date , p.time,p.contactmethod ,p.needaddress ,p.summary ,p.result ,p.nextstep ,p.caseplanprogress ,p.additionalinformation ");
             querySBuff.append("from initialcontactcontactnotes p left join initialcontactfiledetails p2 on p.filedetailsid = p2.filedetailsid where 1=1");
         if (data!=null && !data.trim().isEmpty()) {
             data = data.trim()

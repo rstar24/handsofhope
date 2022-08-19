@@ -10,6 +10,10 @@ import java.time.LocalTime;
 public class InitialContactContactNotesSearchResultsDto {
     @Getter
     @Setter
+    private Long contactNotesId;
+
+    @Getter
+    @Setter
     private Long fileDetailsId;
 
     @Getter
@@ -57,7 +61,8 @@ public class InitialContactContactNotesSearchResultsDto {
     @Setter
     private String additionalInformation;
 
-    public InitialContactContactNotesSearchResultsDto(Long fileDetailsId,String name,String worker,LocalDate date,LocalTime time,String contactMethod,String needAddress,String summary,String result,String nextStep,String casePlanProgress,String additionalInformation ) {
+    public InitialContactContactNotesSearchResultsDto(Long contactNotesId,Long fileDetailsId,String name,String worker,LocalDate date,LocalTime time,String contactMethod,String needAddress,String summary,String result,String nextStep,String casePlanProgress,String additionalInformation ) {
+        this.contactNotesId=contactNotesId;
         this.fileDetailsId=fileDetailsId;
         this.name=name;
         this.worker=worker;
