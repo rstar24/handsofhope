@@ -133,17 +133,17 @@ public class TWNInitialContactController {
                         || var.get("status") == null) ?null:var.get("status"));
         return initialContactSearchService.search(initialContactSearchCriteriaDto);
     }
-    @GetMapping(value = "/readAllContactNotes/{filedetailsid}", produces = "application/json")
+    @GetMapping(value = "/readAllContactNotes/{contactNotesId}", produces = "application/json")
     @ApiOperation("Read Identitys")
     @ResponseStatus(HttpStatus.OK)
-    public List<InitialContactContactNotesDto> readAllContactNotes(@PathVariable("filedetailsid") Long fileDetailsID) {
-        return initialContactContactNotesService.readAllContactNotes(fileDetailsID);
+    public InitialContactContactNotesDto readAllContactNotes(@PathVariable("contactNotesId") Long contactNotesId) {
+        return initialContactContactNotesService.readAllContactNotes(contactNotesId);
     }
     @PutMapping(value = "/saveAllContactNotes", produces = "application/json")
     @ApiOperation("Save or Update Identity")
     @ResponseStatus(HttpStatus.OK)
-    public List<InitialContactContactNotesDto> saveAllContactNotes(@RequestBody List<InitialContactContactNotesDto> InitialContactContactNotesDtoList) {
-        return initialContactContactNotesService.saveAllContactNotes(InitialContactContactNotesDtoList);
+    public InitialContactContactNotesDto saveAllContactNotes(@RequestBody InitialContactContactNotesDto initialContactContactNotesDto) {
+        return initialContactContactNotesService.saveAllContactNotes(initialContactContactNotesDto);
     }
     @GetMapping(value = {"/searchContactNotes/{data}"},produces = "application/json")
     @ApiOperation("Search InitialContact")
