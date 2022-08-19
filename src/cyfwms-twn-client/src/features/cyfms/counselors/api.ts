@@ -4,12 +4,12 @@ import type { AxiosResponse } from "axios";
 
 export const doGetAPI = async (
   participantID: number,
-  jwtToken: string
+  token: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.get(
     `participantservice/getAllCounselorCFSWorkers/${participantID}`,
     {
-      headers: { Authorization: "Bearer " + jwtToken },
+      headers: { Authorization: "Bearer " + token },
     }
   );
   return res;
@@ -17,13 +17,13 @@ export const doGetAPI = async (
 
 export const doPostAPI = async (
   recordsList: Record[],
-  jwtToken: string
+  token: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.put(
     "participantservice/saveAllCounselorCFSWorkers/",
     recordsList,
     {
-      headers: { Authorization: "Bearer " + jwtToken },
+      headers: { Authorization: "Bearer " + token },
     }
   );
   return res;

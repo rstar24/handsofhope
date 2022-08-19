@@ -1,21 +1,15 @@
-import axios from "axios";
-import type { AxiosResponse } from "axios";
+import axiosInstance from "../../../library/axiosInstance";
 import { GetAllData } from "./slice";
-
-const axiosInstance = axios.create({
-  baseURL: `${
-    process.env.REACT_APP_REST_API || "http://localhost:9088"
-  }/v1/participantservice/`,
-});
+import type { AxiosResponse } from "axios";
 
 export const doGetAllRecordAPI = async (
   data: GetAllData,
-  jwtToken: string
+  token: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.get(
-    `readAllOutputParticipant/${data}`,
+    `participantservice/readAllOutputParticipant/${data}`,
     {
-      headers: { Authorization: "Bearer " + jwtToken },
+      headers: { Authorization: "Bearer " + token },
     }
   );
   return res;

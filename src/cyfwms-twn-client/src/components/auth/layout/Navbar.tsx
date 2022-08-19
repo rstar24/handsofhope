@@ -1,4 +1,4 @@
-import { cleanCodetableState } from "../../../features/codetable/codetableSlice";
+import { cleanCodetableState } from "../../../features/codetable/slice";
 import { cleanState as cleanContactState } from "../../../features/cyfms/contact/slice";
 import { cleanState as cleanCounselorsState } from "../../../features/cyfms/counselors/slice";
 import { cleanState as cleanCriminalHistoryState } from "../../../features/cyfms/criminalHistory/slice";
@@ -14,7 +14,7 @@ import { cleanState as cleanIncidentReportState } from "../../../features/initia
 import { cleanState as cleanPresentConcernsState } from "../../../features/initialContact/presentConcerns/slice";
 import { cleanState as cleanPatientCareInformationState } from "../../../features/initialContact/patientCareInformation/slice";
 import { cleanState as cleanInitialContactSearchState } from "../../../features/initialContact/search/slice";
-import { onLogout } from "../../../features/login/loginSlice";
+import { cleanState as cleanLoginState } from "../../../features/login/slice";
 import { useAppDispatch } from "../../../library/hooks";
 import { Box, Tab } from "@mui/material";
 import React from "react";
@@ -78,8 +78,7 @@ export default function Navbar() {
   };
 
   const handleLogout = () => {
-    sessionStorage.removeItem("token");
-    dispatch(onLogout());
+    dispatch(cleanLoginState(null));
     handleClean();
     navigate("/login");
   };

@@ -3,22 +3,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { SliceCaseReducers } from "@reduxjs/toolkit";
 import type { AxiosResponse } from "axios";
 
-export interface Record {
-  fileDetailsId: number;
-  contactNotesId: number;
-  name: string;
-  worker: string;
-  date: string;
-  time: string;
-  contactMethod: string;
-  needAddress: string;
-  summary: string;
-  result: string;
-  nextStep: string;
-  casePlanProgress: string;
-  additionalInformation: string;
-}
-
 export interface Data {
   fileDetailsId: number;
   contactNotesId: number;
@@ -53,7 +37,7 @@ const emptyData: Data = {
 };
 
 export interface State {
-  record: Record[];
+  record: Data[];
   data: Data;
   status: "failed" | "none" | "loading" | "success";
 }
@@ -62,10 +46,7 @@ export const doGet = createAsyncThunk<Data, number>(
   "contactNotes/doGet",
   async (filedetailsid, { getState }) => {
     const store: any = getState();
-    const res: AxiosResponse = await doGetAPI(
-      filedetailsid,
-      store.login.jwtToken
-    );
+    const res: AxiosResponse = await doGetAPI(filedetailsid, store.login.token);
     // Becomes the `fulfilled` action payload:
     return res.data;
   }
@@ -75,26 +56,23 @@ export const doPost = createAsyncThunk<Data, Data>(
   "contactNotes/doPost",
   async (formData: Data, { getState }) => {
     const store: any = getState();
-    const res: AxiosResponse = await doPostAPI(formData, store.login.jwtToken);
+    const res: AxiosResponse = await doPostAPI(formData, store.login.token);
     // Becomes the `fulfilled` action payload:
     return res.data;
   }
 );
 
-export const doSearch = createAsyncThunk<Record[], any>(
+export const doSearch = createAsyncThunk<Data[], any>(
   "contactNotes/doSearch",
   async (formData, { getState }) => {
     const store: any = getState();
-    const res: AxiosResponse = await doSearchAPI(
-      formData,
-      store.login.jwtToken
-    );
+    const res: AxiosResponse = await doSearchAPI(formData, store.login.token);
     // Becomes the `fulfilled` action payload:
     return res.data;
   }
 );
 
-export const fileDetailsSlice = createSlice<State, SliceCaseReducers<State>>({
+export const contactNotesSlice = createSlice<State, SliceCaseReducers<State>>({
   name: "contactNotes",
   initialState: {
     record: [],
@@ -133,7 +111,6 @@ export const fileDetailsSlice = createSlice<State, SliceCaseReducers<State>>({
       .addCase(doPost.rejected, (state) => {
         state.status = "failed";
       });
-
     builder
       .addCase(doSearch.fulfilled, (state, action) => {
         state.record = action.payload;
@@ -148,6 +125,6 @@ export const fileDetailsSlice = createSlice<State, SliceCaseReducers<State>>({
   },
 });
 
-export const { cleanState } = fileDetailsSlice.actions;
+export const { cleanState } = contactNotesSlice.actions;
 
-export default fileDetailsSlice.reducer;
+export default contactNotesSlice.reducer;

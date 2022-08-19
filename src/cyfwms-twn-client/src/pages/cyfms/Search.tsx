@@ -5,7 +5,7 @@ import CYFMSDropdown from "../../components/cyfms/CYFMSDropdown";
 import CYFMSHeader from "../../components/cyfms/CYFMSHeader";
 import Results from "../../components/cyfms/search/Results";
 import Router from "../../components/nestedRouters/CYFMS";
-import { doGetMaritalStatus } from "../../features/codetable/codetableSlice";
+import { doGetMaritalStatus } from "../../features/codetable/slice";
 import { doGet as doGetSearch } from "../../features/cyfms/search/slice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { Box, Button } from "@mui/material";

@@ -5,7 +5,7 @@ import {
   doGetICPresentConcerns,
   doGetICMentalHealthOrSubstanceAbuse,
   doGetICTypeOfPatient,
-} from "../../features/codetable/codetableSlice";
+} from "../../features/codetable/slice";
 import { initiate } from "../../features/initiatorSlice";
 import { setEdit, setOpen } from "../../features/popupSlice";
 import { unhideTabs } from "../../features/navBarSlice";
@@ -14,7 +14,6 @@ import { doGet as doGetReferralInformation } from "../../features/initialContact
 import { doGet as doGetIncidentReport } from "../../features/initialContact/incidentReport/slice";
 import { doGet as doGetPresentConcerns } from "../../features/initialContact/presentConcerns/slice";
 import { doGet as doGetPatientCareInformation } from "../../features/initialContact/patientCareInformation/slice";
-
 import { useAppDispatch } from "../../library/hooks";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { Box, Button, IconButton, Modal, Menu, MenuItem } from "@mui/material";

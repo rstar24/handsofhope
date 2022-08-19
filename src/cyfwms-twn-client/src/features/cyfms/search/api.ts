@@ -4,12 +4,12 @@ import type { AxiosResponse } from "axios";
 
 export const doGetAPI = async (
   data: Record,
-  jwtToken: string
+  token: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.get(
     `participantservice/searchParticipants/${data.referenceId}/${data.firstname}/${data.middleName}/${data.surname}/${data.dateOfBirth}/${data.maritalStatus}/${data.city}/${data.workPhone}`,
     {
-      headers: { Authorization: "Bearer " + jwtToken },
+      headers: { Authorization: "Bearer " + token },
     }
   );
   return res;

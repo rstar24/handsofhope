@@ -13,7 +13,7 @@ import {
   doGetInitialContactTypeOfPatientAPI,
   doGetICMentalHealthOrSubstanceAbuseAPI,
   doGetICPresentConcernsAPI,
-} from "./codetableAPI";
+} from "./api";
 
 export interface CodeTableData {
   gender: {};

@@ -9,7 +9,7 @@ import {
   doGetProvince,
   doGetRole,
   doGetTypeOfEmployee,
-} from "../../features/codetable/codetableSlice";
+} from "../../features/codetable/slice";
 import { setOpen as setOpenPopup } from "../../features/popupSlice";
 import { useAppDispatch } from "../../library/hooks";
 import { Box, Button } from "@mui/material";

@@ -45,7 +45,7 @@ export const doGet = createAsyncThunk<Data, number>(
     const store: any = getState();
     const res: AxiosResponse = await doGetAPI(
       initialContactID,
-      store.login.jwtToken
+      store.login.token
     );
     // Becomes the `fulfilled` action payload:
     return res.data;
@@ -56,7 +56,7 @@ export const doPost = createAsyncThunk<Data, Data>(
   "incidentReport/doPost",
   async (formData: Data, { getState }) => {
     const store: any = getState();
-    const res: AxiosResponse = await doPostAPI(formData, store.login.jwtToken);
+    const res: AxiosResponse = await doPostAPI(formData, store.login.token);
     // Becomes the `fulfilled` action payload:
     return res.data;
   }

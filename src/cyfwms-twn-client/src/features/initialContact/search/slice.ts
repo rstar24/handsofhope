@@ -21,7 +21,7 @@ export const doGet = createAsyncThunk<Record[], Record>(
   "search/doGet",
   async (formData, { getState }) => {
     const store: any = getState();
-    const res: AxiosResponse = await doGetAPI(formData, store.login.jwtToken);
+    const res: AxiosResponse = await doGetAPI(formData, store.login.token);
     // Becomes the `fulfilled` action payload:
     return res.data;
   }

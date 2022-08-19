@@ -1,15 +1,10 @@
-import axios, { AxiosResponse } from "axios";
-
-const axiosInstance = axios.create({
-  baseURL: `${
-    process.env.REACT_APP_REST_API || "http://localhost:9088"
-  }/v1/dataservice/`,
-});
+import axiosInstance from "../../library/axiosInstance";
+import type { AxiosResponse } from "axios";
 
 export const doGenderGetAPI = async (
   jwtToken: string
 ): Promise<AxiosResponse> => {
-  const res: AxiosResponse = await axiosInstance.get("gender", {
+  const res: AxiosResponse = await axiosInstance.get("dataservice/gender", {
     headers: { Authorization: "Bearer " + jwtToken },
   });
   return res;
@@ -18,16 +13,19 @@ export const doGenderGetAPI = async (
 export const doGetMaritalStatusAPI = async (
   jwtToken: string
 ): Promise<AxiosResponse> => {
-  const res: AxiosResponse = await axiosInstance.get("maritalstatus", {
-    headers: { Authorization: "Bearer " + jwtToken },
-  });
+  const res: AxiosResponse = await axiosInstance.get(
+    "dataservice/maritalstatus",
+    {
+      headers: { Authorization: "Bearer " + jwtToken },
+    }
+  );
   return res;
 };
 
 export const doGetProvinceAPI = async (
   jwtToken: string
 ): Promise<AxiosResponse> => {
-  const res: AxiosResponse = await axiosInstance.get("province", {
+  const res: AxiosResponse = await axiosInstance.get("dataservice/province", {
     headers: { Authorization: "Bearer " + jwtToken },
   });
   return res;
@@ -36,7 +34,7 @@ export const doGetProvinceAPI = async (
 export const doGetRoleAPI = async (
   jwtToken: string
 ): Promise<AxiosResponse> => {
-  const res: AxiosResponse = await axiosInstance.get("role", {
+  const res: AxiosResponse = await axiosInstance.get("dataservice/role", {
     headers: { Authorization: "Bearer " + jwtToken },
   });
   return res;
@@ -45,7 +43,7 @@ export const doGetRoleAPI = async (
 export const doGetEducationAPI = async (
   jwtToken: string
 ): Promise<AxiosResponse> => {
-  const res: AxiosResponse = await axiosInstance.get("education", {
+  const res: AxiosResponse = await axiosInstance.get("dataservice/education", {
     headers: { Authorization: "Bearer " + jwtToken },
   });
   return res;
@@ -54,9 +52,12 @@ export const doGetEducationAPI = async (
 export const doGetTypeOfEmployeeAPI = async (
   jwtToken: string
 ): Promise<AxiosResponse> => {
-  const res: AxiosResponse = await axiosInstance.get("typeofemployee", {
-    headers: { Authorization: "Bearer " + jwtToken },
-  });
+  const res: AxiosResponse = await axiosInstance.get(
+    "dataservice/typeofemployee",
+    {
+      headers: { Authorization: "Bearer " + jwtToken },
+    }
+  );
   return res;
 };
 
@@ -65,9 +66,12 @@ export const doGetTypeOfEmployeeAPI = async (
 export const doGetInitialContactStatusAPI = async (
   jwtToken: string
 ): Promise<AxiosResponse> => {
-  const res: AxiosResponse = await axiosInstance.get("initialContactStatus", {
-    headers: { Authorization: "Bearer " + jwtToken },
-  });
+  const res: AxiosResponse = await axiosInstance.get(
+    "dataservice/initialContactStatus",
+    {
+      headers: { Authorization: "Bearer " + jwtToken },
+    }
+  );
   return res;
 };
 
@@ -75,9 +79,12 @@ export const doGetInitialContactStatusAPI = async (
 export const doGetInitialContactReferralAPI = async (
   jwtToken: string
 ): Promise<AxiosResponse> => {
-  const res: AxiosResponse = await axiosInstance.get("initialContactReferral", {
-    headers: { Authorization: "Bearer " + jwtToken },
-  });
+  const res: AxiosResponse = await axiosInstance.get(
+    "dataservice/initialContactReferral",
+    {
+      headers: { Authorization: "Bearer " + jwtToken },
+    }
+  );
   return res;
 };
 
@@ -85,7 +92,7 @@ export const doGetInitialContactReferralAPI = async (
 export const doGetInitialContactRiskAPI = async (
   jwtToken: string
 ): Promise<AxiosResponse> => {
-  const res: AxiosResponse = await axiosInstance.get("risk", {
+  const res: AxiosResponse = await axiosInstance.get("dataservice/risk", {
     headers: { Authorization: "Bearer " + jwtToken },
   });
   return res;
@@ -95,9 +102,12 @@ export const doGetInitialContactRiskAPI = async (
 export const doGetInitialContactTypeOfPatientAPI = async (
   jwtToken: string
 ): Promise<AxiosResponse> => {
-  const res: AxiosResponse = await axiosInstance.get("typeOfPatient", {
-    headers: { Authorization: "Bearer " + jwtToken },
-  });
+  const res: AxiosResponse = await axiosInstance.get(
+    "dataservice/typeOfPatient",
+    {
+      headers: { Authorization: "Bearer " + jwtToken },
+    }
+  );
   return res;
 };
 
@@ -106,7 +116,7 @@ export const doGetICMentalHealthOrSubstanceAbuseAPI = async (
   jwtToken: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.get(
-    "mentalHealthOrSubstanceAbuse",
+    "dataservice/mentalHealthOrSubstanceAbuse",
     {
       headers: { Authorization: "Bearer " + jwtToken },
     }
@@ -118,8 +128,11 @@ export const doGetICMentalHealthOrSubstanceAbuseAPI = async (
 export const doGetICPresentConcernsAPI = async (
   jwtToken: string
 ): Promise<AxiosResponse> => {
-  const res: AxiosResponse = await axiosInstance.get("presentConcerns", {
-    headers: { Authorization: "Bearer " + jwtToken },
-  });
+  const res: AxiosResponse = await axiosInstance.get(
+    "dataservice/presentConcerns",
+    {
+      headers: { Authorization: "Bearer " + jwtToken },
+    }
+  );
   return res;
 };
