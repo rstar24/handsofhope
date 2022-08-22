@@ -8,7 +8,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ICLayout from "../../../components/initialContact/ICLayout";
 import SearchIcon from "@mui/icons-material/Search";
 import ContactNotesForm from "./ContactNotesForm";
@@ -20,6 +20,7 @@ import {
   doSearch,
 } from "../../../features/initialContact/contactNotes/slice";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
+import { doGetICContactMethod } from "../../../features/codetable/slice";
 
 function ContactNotes(props: any) {
   const dispatch = useAppDispatch();
@@ -27,7 +28,11 @@ function ContactNotes(props: any) {
   const [disabled, setDisabled] = useState(false);
   const [value, setValue] = useState(null);
   const data = useAppSelector((state) => state.icContactNotes.record);
+  const codetable = useAppSelector((state) => state.codetable.contactMethod);
 
+  useEffect(() => {
+    dispatch(doGetICContactMethod());
+  }, []);
   const handleAddNew = () => {
     dispatch(cleanState(null));
     setDisabled(false);

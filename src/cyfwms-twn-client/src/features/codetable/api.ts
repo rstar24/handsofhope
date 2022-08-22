@@ -136,3 +136,16 @@ export const doGetICPresentConcernsAPI = async (
   );
   return res;
 };
+
+//Initial Contact ContactMethod
+export const doGetICContactMethodAPI = async (
+  jwtToken: string
+): Promise<AxiosResponse> => {
+  const res: AxiosResponse = await axiosInstance.get(
+    "dataservice/contactMethod",
+    {
+      headers: { Authorization: "Bearer " + jwtToken },
+    }
+  );
+  return res;
+};

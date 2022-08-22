@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AxiosResponse } from "axios";
+import { RootState } from "../../library/store";
 import {
   doGenderGetAPI,
   doGetMaritalStatusAPI,
@@ -13,6 +14,7 @@ import {
   doGetInitialContactTypeOfPatientAPI,
   doGetICMentalHealthOrSubstanceAbuseAPI,
   doGetICPresentConcernsAPI,
+  doGetICContactMethodAPI,
 } from "./api";
 
 export interface CodeTableData {
@@ -28,6 +30,7 @@ export interface CodeTableData {
   patient: {};
   mentalHealthOrSubstanceAbuse: {};
   presentConcerns: {};
+  contactMethod: {};
 }
 
 export interface CodeTableState {
@@ -39,7 +42,7 @@ export const doGetGender = createAsyncThunk(
   "codetable/doGetGender",
   async (_, { dispatch, getState }) => {
     const res: AxiosResponse = await doGenderGetAPI(
-      (getState() as any).login.jwtToken
+      (getState() as RootState).login.token
     );
     // Becomes the `fulfilled` action payload:
     return res.data;
@@ -50,7 +53,7 @@ export const doGetMaritalStatus = createAsyncThunk(
   "codetable/doGetMaritalStatus",
   async (_, { dispatch, getState }) => {
     const res: AxiosResponse = await doGetMaritalStatusAPI(
-      (getState() as any).login.jwtToken
+      (getState() as RootState).login.token
     );
     // Becomes the `fulfilled` action payload:
     return res.data;
@@ -61,7 +64,7 @@ export const doGetProvince = createAsyncThunk(
   "codetable/doGetProvince",
   async (_, { dispatch, getState }) => {
     const res: AxiosResponse = await doGetProvinceAPI(
-      (getState() as any).login.jwtToken
+      (getState() as RootState).login.token
     );
     // Becomes the `fulfilled` action payload:
     return res.data;
@@ -72,7 +75,7 @@ export const doGetRole = createAsyncThunk(
   "codetable/doGetRole",
   async (_, { dispatch, getState }) => {
     const res: AxiosResponse = await doGetRoleAPI(
-      (getState() as any).login.jwtToken
+      (getState() as RootState).login.token
     );
     // Becomes the `fulfilled` action payload:
     return res.data;
@@ -83,7 +86,7 @@ export const doGetEducation = createAsyncThunk(
   "codetable/doGetEducation",
   async (_, { dispatch, getState }) => {
     const res: AxiosResponse = await doGetEducationAPI(
-      (getState() as any).login.jwtToken
+      (getState() as RootState).login.token
     );
     // Becomes the `fulfilled` action payload:
     return res.data;
@@ -94,7 +97,7 @@ export const doGetTypeOfEmployee = createAsyncThunk(
   "codetable/doGetTypeOfEmployee",
   async (_, { dispatch, getState }) => {
     const res: AxiosResponse = await doGetTypeOfEmployeeAPI(
-      (getState() as any).login.jwtToken
+      (getState() as RootState).login.token
     );
     // Becomes the `fulfilled` action payload:
     return res.data;
@@ -105,7 +108,7 @@ export const doGetICStatus = createAsyncThunk(
   "codetable/doGetICStatus",
   async (_, { dispatch, getState }) => {
     const res: AxiosResponse = await doGetInitialContactStatusAPI(
-      (getState() as any).login.jwtToken
+      (getState() as RootState).login.token
     );
     // Becomes the `fulfilled` action payload:
     return res.data;
@@ -116,7 +119,7 @@ export const doGetICReferral = createAsyncThunk(
   "codetable/doGetICReferral",
   async (_, { dispatch, getState }) => {
     const res: AxiosResponse = await doGetInitialContactReferralAPI(
-      (getState() as any).login.jwtToken
+      (getState() as RootState).login.token
     );
     // Becomes the `fulfilled` action payload:
     return res.data;
@@ -127,7 +130,7 @@ export const doGetICRisk = createAsyncThunk(
   "codetable/doGetICRisk",
   async (_, { dispatch, getState }) => {
     const res: AxiosResponse = await doGetInitialContactRiskAPI(
-      (getState() as any).login.jwtToken
+      (getState() as RootState).login.token
     );
     // Becomes the `fulfilled` action payload:
     return res.data;
@@ -138,7 +141,7 @@ export const doGetICTypeOfPatient = createAsyncThunk(
   "codetable/doGetICTypeOfPatient",
   async (_, { dispatch, getState }) => {
     const res: AxiosResponse = await doGetInitialContactTypeOfPatientAPI(
-      (getState() as any).login.jwtToken
+      (getState() as RootState).login.token
     );
     // Becomes the `fulfilled` action payload:
     return res.data;
@@ -148,7 +151,7 @@ export const doGetICMentalHealthOrSubstanceAbuse = createAsyncThunk(
   "codetable/doGetICMentalHealthOrSubstanceAbuse",
   async (_, { dispatch, getState }) => {
     const res: AxiosResponse = await doGetICMentalHealthOrSubstanceAbuseAPI(
-      (getState() as any).login.jwtToken
+      (getState() as RootState).login.token
     );
     // Becomes the `fulfilled` action payload:
     return res.data;
@@ -159,13 +162,23 @@ export const doGetICPresentConcerns = createAsyncThunk(
   "codetable/doGetICPresentConcerns",
   async (_, { dispatch, getState }) => {
     const res: AxiosResponse = await doGetICPresentConcernsAPI(
-      (getState() as any).login.jwtToken
+      (getState() as RootState).login.token
     );
     // Becomes the `fulfilled` action payload:
     return res.data;
   }
 );
 
+export const doGetICContactMethod = createAsyncThunk(
+  "codetable/doGetICContactMethod",
+  async (_, { dispatch, getState }) => {
+    const res: AxiosResponse = await doGetICContactMethodAPI(
+      (getState() as RootState).login.token
+    );
+    // Becomes the `fulfilled` action payload:
+    return res.data;
+  }
+);
 export const CodeTableSlice = createSlice({
   name: "codetable",
   initialState: {
@@ -181,6 +194,7 @@ export const CodeTableSlice = createSlice({
     patient: {},
     mentalHealthOrSubstanceAbuse: {},
     presentConcerns: {},
+    contactMethod: {},
     jwtToken: "",
     status: "failed",
   },
@@ -198,6 +212,7 @@ export const CodeTableSlice = createSlice({
       state.patient = {};
       state.mentalHealthOrSubstanceAbuse = {};
       state.presentConcerns = {};
+      state.contactMethod = {};
       state.jwtToken = "";
       state.status = "failed";
     },
@@ -398,6 +413,21 @@ export const CodeTableSlice = createSlice({
       state.status = "loading";
     });
     builder.addCase(doGetICPresentConcerns.rejected, (state) => {
+      state.status = "failed";
+    });
+    //Initial Contact Contact-Method
+    builder.addCase(doGetICContactMethod.fulfilled, (state, action) => {
+      try {
+        state.contactMethod = action.payload.valuesMap;
+      } catch (err) {
+        console.log(err);
+      }
+      state.status = "success";
+    });
+    builder.addCase(doGetICContactMethod.pending, (state) => {
+      state.status = "loading";
+    });
+    builder.addCase(doGetICContactMethod.rejected, (state) => {
       state.status = "failed";
     });
   },

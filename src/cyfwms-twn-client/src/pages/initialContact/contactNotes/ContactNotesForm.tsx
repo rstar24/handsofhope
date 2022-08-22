@@ -16,6 +16,7 @@ const ContactNotesForm = ({ setAddNew, setDisabled, disabled }: any) => {
   const fileDetailsId = useAppSelector(
     (state) => state.icFileDetails.data.fileDetailsId
   );
+  const { contactMethod } = useAppSelector((state: any) => state.codetable);
   const data = useAppSelector((state) => state.icContactNotes.data);
 
   const submitHandler = (e: FormEvent) => {
@@ -112,7 +113,10 @@ const ContactNotesForm = ({ setAddNew, setDisabled, disabled }: any) => {
           <ICDropdown
             id="contactMethod"
             value="Contact Method"
-            optionsList={["Visit", "abc"]}
+            autofill={data.contactMethod}
+            optionsList={Object.values(contactMethod).map(
+              (status: any) => status.en
+            )}
             disabled={disabled}
           />
         </Box>
