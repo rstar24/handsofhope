@@ -13,6 +13,7 @@ public enum ResponseDataType {
     mentalHealthOrSubstanceAbuse,
     typeOfPatient,
     risk,
+    contactMethod,
     patientStatusReason,
     relation,
     cpakGroupType,

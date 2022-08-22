@@ -102,5 +102,11 @@ public class DataReferenceController {
 
         return dataReferenceService.getAllRiskValue();
     }
+    @GetMapping(value = "/contactMethod", produces = "application/json")
+    @ApiOperation("Get All Contact Method Value")
+    @ResponseStatus(HttpStatus.OK)
+    public DataResponseDto getAllContactMethodValue() {
 
+        return dataReferenceService.getAllContactMethodValue();
+    }
 }

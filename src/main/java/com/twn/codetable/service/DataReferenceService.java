@@ -21,5 +21,5 @@ public interface DataReferenceService {
     DataResponseDto getAllMentalHealthOrSubstanceAbuseValue();
     DataResponseDto getAllTypeOfPatientValue();
     DataResponseDto getAllRiskValue();
-
+    DataResponseDto getAllContactMethodValue();
 }

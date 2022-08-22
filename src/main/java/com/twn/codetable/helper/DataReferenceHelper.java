@@ -24,6 +24,7 @@ public class DataReferenceHelper {
     private Map<String,Map<String,String>> mentalHealthOrSubstanceAbuse;
     private Map<String,Map<String,String>> typeOfPatient;
     private Map<String,Map<String,String>> risk;
+    private Map<String,Map<String,String>> contactMethod;
 
 
 }

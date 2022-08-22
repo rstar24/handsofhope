@@ -114,5 +114,12 @@ public DataResponseDto getAllProvinceValue() {
                         .build();
     }
 
+    @Override
+    public DataResponseDto getAllContactMethodValue() {
+        return  DataResponseDto.builder()
+                .type(ResponseDataType.contactMethod.name())
+                .valuesMap(dataReferenceHelper.getContactMethod())
+                .build();
+    }
 
 }
