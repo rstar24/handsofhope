@@ -24,10 +24,27 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>Child, Youth, and Family Services Wellness Management System</title>
+    <link rel="stylesheet" href="%PUBLIC_URL%/preload.css" />
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <div id="preload" class="preload">
+      <img src="%PUBLIC_URL%/img/loadingLogo.svg" />
+      <h1>L<span>O</span>A<span>D</span>I<span>N</span>G</h1>
+    </div>
+    <div id="root" class="hide"></div>
+    <!--
+      Preload
+    -->
+    <script type="text/javascript">
+      const preload = document.getElementById("preload");
+      const root = document.getElementById("root");
+      window.addEventListener("load", (e) => {
+        preload.classList.add("hide")
+        preload.classList.remove("preload");
+        root.classList.remove("hide");
+      });
+    </script>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.

@@ -4,7 +4,7 @@ import {
   doGetEducation,
   doGetTypeOfEmployee,
   doGetRole,
-} from "../../features/codetable/codetableSlice";
+} from "../../features/codetable/slice";
 import { initiate } from "../../features/initiatorSlice";
 import { setEdit, setOpen } from "../../features/popupSlice";
 import { unhideTabs } from "../../features/navBarSlice";

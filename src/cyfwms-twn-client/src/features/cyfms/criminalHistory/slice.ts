@@ -50,10 +50,7 @@ export const doGet = createAsyncThunk<Data, number>(
   "criminalhistory/doGet",
   async (participantID, { getState }) => {
     const store: any = getState();
-    const res: AxiosResponse = await doGetAPI(
-      participantID,
-      store.login.jwtToken
-    );
+    const res: AxiosResponse = await doGetAPI(participantID, store.login.token);
     // Becomes the `fulfilled` action payload:
     return res.data;
   }
@@ -63,7 +60,7 @@ export const doPost = createAsyncThunk<Data, Data>(
   "criminalHistory/doPost",
   async (formData, { getState }) => {
     const store: any = getState();
-    const res: AxiosResponse = await doPostAPI(formData, store.login.jwtToken);
+    const res: AxiosResponse = await doPostAPI(formData, store.login.token);
     // Becomes the `fulfilled` action payload:
     return res.data;
   }

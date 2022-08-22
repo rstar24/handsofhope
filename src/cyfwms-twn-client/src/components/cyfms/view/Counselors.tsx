@@ -16,7 +16,7 @@ const Councelors = (): ReactElement => {
   const recordsList = useAppSelector(
     (state) => state.cyfmsCounselors.data.recordsList
   );
-  console.log(recordsList);
+
   if (
     recordsList[0].role === "" &&
     recordsList[0].name === "" &&

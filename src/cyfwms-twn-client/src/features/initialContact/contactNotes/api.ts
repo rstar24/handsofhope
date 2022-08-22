@@ -1,13 +1,13 @@
 import axiosInstance from "../../../library/axiosInstance";
-import type { Record } from "./slice";
+import type { Data } from "./slice";
 import type { AxiosResponse } from "axios";
 
 export const doGetAPI = async (
-  participantID: number,
+  fileDetailsId: number,
   token: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.get(
-    `participantservice/getAllHouseholdMembers/${participantID}`,
+    "initialcontactservice/readAllContactNotes/" + fileDetailsId,
     {
       headers: { Authorization: "Bearer " + token },
     }
@@ -16,12 +16,25 @@ export const doGetAPI = async (
 };
 
 export const doPostAPI = async (
-  recordsList: Record[],
+  formData: Data,
   token: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.put(
-    "participantservice/saveAllHouseholdMembers/",
-    recordsList,
+    "initialcontactservice/saveAllContactNotes",
+    formData,
+    {
+      headers: { Authorization: "Bearer " + token },
+    }
+  );
+  return res;
+};
+
+export const doSearchAPI = async (
+  data: any,
+  token: string
+): Promise<AxiosResponse> => {
+  const res: AxiosResponse = await axiosInstance.get(
+    `initialcontactservice/searchContactNotes/${data}`,
     {
       headers: { Authorization: "Bearer " + token },
     }

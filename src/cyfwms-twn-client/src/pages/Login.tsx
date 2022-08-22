@@ -1,6 +1,6 @@
 import Input from "../components/Input";
 import Layout from "../components/layout/Layout";
-import { doLogin } from "../features/login/loginSlice";
+import { doPost } from "../features/login/slice";
 import { useAppDispatch, useAppSelector } from "../library/hooks";
 import {
   Backdrop,
@@ -11,7 +11,11 @@ import {
   Typography,
   Link as MUILink,
 } from "@mui/material";
-import { useNavigate, Link as ReactRouterLink } from "react-router-dom";
+import {
+  Link as ReactRouterLink,
+  Navigate,
+  useNavigate,
+} from "react-router-dom";
 import React, { useState } from "react";
 import type { FormEvent, ReactElement } from "react";
 
@@ -33,18 +37,23 @@ const style = {
  */
 const Login = (): ReactElement => {
   const navigate = useNavigate();
-  const data = useAppSelector((state) => (state as any).login);
+  const state = useAppSelector((state) => state.login);
   const dispatch = useAppDispatch();
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  // Redirect to `Home` if already logged in!
+  if (state.isLoggedIn) {
+    return <Navigate to="/home" />;
+  }
+
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
     const data: any = e.currentTarget;
     dispatch(
-      doLogin({
+      doPost({
         username: data.userName.value,
         password: data.passWord.value,
       })

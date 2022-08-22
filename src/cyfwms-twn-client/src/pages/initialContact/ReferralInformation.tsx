@@ -107,7 +107,7 @@ const ReferralInformation = (): ReactElement => {
                         disableRipple
                       />
                     }
-                    label="Self Refferal"
+                    label="Self Referral"
                     sx={{ ml: 1 }}
                     labelPlacement="start"
                   />

@@ -4,12 +4,12 @@ import type { AxiosResponse } from "axios";
 
 export const doGetAPI = async (
   initialContactID: number,
-  jwtToken: string
+  token: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.get(
     `initialcontactservice/readAllPresentConcerns/${initialContactID}`,
     {
-      headers: { Authorization: "Bearer " + jwtToken },
+      headers: { Authorization: "Bearer " + token },
     }
   );
   return res;
@@ -17,13 +17,13 @@ export const doGetAPI = async (
 
 export const doPostAPI = async (
   formData: Data,
-  jwtToken: string
+  token: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.put(
     "initialcontactservice/saveAllPresentConcerns",
     formData,
     {
-      headers: { Authorization: "Bearer " + jwtToken },
+      headers: { Authorization: "Bearer " + token },
     }
   );
   return res;

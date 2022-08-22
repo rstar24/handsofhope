@@ -1,67 +1,59 @@
-import { doGetAPI, doPostAPI } from "./api";
+import { doGetAPI, doPostAPI, doSearchAPI } from "./api";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { SliceCaseReducers } from "@reduxjs/toolkit";
 import type { AxiosResponse } from "axios";
 
 export interface Data {
   fileDetailsId: number;
-  patientCareInfoId: number;
-  typeOfPatient: string;
-  outpatient: {
-    therapyOrCounseling: string;
-    therapyTimePeriod: string;
-    therapyLocation: string;
-    reasonForTherapy: string;
-    selfHelpGroup: string;
-    selfHelpGroupPeriod: string;
-    selfHelpGroupLocation: string;
-  };
-  inpatient: {
-    hospitalizationRecord: string;
-    hospitalizationReasons: string;
-  };
+  contactNotesId: number;
+  name: string;
+  worker: string;
+  date: string;
+  time: string;
+  contactMethod: string;
+  needAddress: string;
+  summary: string;
+  result: string;
+  nextStep: string;
+  casePlanProgress: string;
+  additionalInformation: string;
 }
 
 // Empty Data
 const emptyData: Data = {
   fileDetailsId: 0,
-  patientCareInfoId: 0,
-  typeOfPatient: "",
-  outpatient: {
-    therapyOrCounseling: "",
-    therapyTimePeriod: "",
-    therapyLocation: "",
-    reasonForTherapy: "",
-    selfHelpGroup: "",
-    selfHelpGroupPeriod: "",
-    selfHelpGroupLocation: "",
-  },
-  inpatient: {
-    hospitalizationRecord: "",
-    hospitalizationReasons: "",
-  },
+  contactNotesId: 0,
+  name: "",
+  worker: "",
+  date: "",
+  time: "",
+  contactMethod: "",
+  needAddress: "",
+  summary: "",
+  result: "",
+  nextStep: "",
+  casePlanProgress: "",
+  additionalInformation: "",
 };
 
 export interface State {
+  record: Data[];
   data: Data;
   status: "failed" | "none" | "loading" | "success";
 }
 
 export const doGet = createAsyncThunk<Data, number>(
-  "patientCareInformation/doGet",
-  async (initialContactID, { getState }) => {
+  "contactNotes/doGet",
+  async (filedetailsid, { getState }) => {
     const store: any = getState();
-    const res: AxiosResponse = await doGetAPI(
-      initialContactID,
-      store.login.token
-    );
+    const res: AxiosResponse = await doGetAPI(filedetailsid, store.login.token);
     // Becomes the `fulfilled` action payload:
     return res.data;
   }
 );
 
 export const doPost = createAsyncThunk<Data, Data>(
-  "patientCareInformation/doPost",
+  "contactNotes/doPost",
   async (formData: Data, { getState }) => {
     const store: any = getState();
     const res: AxiosResponse = await doPostAPI(formData, store.login.token);
@@ -70,15 +62,27 @@ export const doPost = createAsyncThunk<Data, Data>(
   }
 );
 
-export const patientCareInformationSlice = createSlice<
-  State,
-  SliceCaseReducers<State>
->({
-  name: "patientCareInformation",
-  initialState: { data: emptyData, status: "failed" },
+export const doSearch = createAsyncThunk<Data[], any>(
+  "contactNotes/doSearch",
+  async (formData, { getState }) => {
+    const store: any = getState();
+    const res: AxiosResponse = await doSearchAPI(formData, store.login.token);
+    // Becomes the `fulfilled` action payload:
+    return res.data;
+  }
+);
+
+export const contactNotesSlice = createSlice<State, SliceCaseReducers<State>>({
+  name: "contactNotes",
+  initialState: {
+    record: [],
+    data: emptyData,
+    status: "failed",
+  },
   reducers: {
     cleanState(state) {
       state.data = emptyData;
+      state.record = [];
       state.status = "none";
     },
   },
@@ -107,9 +111,20 @@ export const patientCareInformationSlice = createSlice<
       .addCase(doPost.rejected, (state) => {
         state.status = "failed";
       });
+    builder
+      .addCase(doSearch.fulfilled, (state, action) => {
+        state.record = action.payload;
+        state.status = "success";
+      })
+      .addCase(doSearch.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(doSearch.rejected, (state) => {
+        state.status = "failed";
+      });
   },
 });
 
-export const { cleanState } = patientCareInformationSlice.actions;
+export const { cleanState } = contactNotesSlice.actions;
 
-export default patientCareInformationSlice.reducer;
+export default contactNotesSlice.reducer;

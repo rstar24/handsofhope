@@ -16,7 +16,7 @@ export const doGetAllRecord = createAsyncThunk(
   async (data: GetAllData, { dispatch, getState }) => {
     const res: AxiosResponse = await doGetAllRecordAPI(
       data,
-      (getState() as any).login.jwtToken
+      (getState() as any).login.token
     );
     // Becomes the `fulfilled` action payload:
     return res.data;

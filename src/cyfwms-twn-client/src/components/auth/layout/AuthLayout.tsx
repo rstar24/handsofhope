@@ -1,14 +1,10 @@
 import { Box } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "../../../library/hooks";
+import { useAppSelector } from "../../../library/hooks";
 import Footer from "../../layout/Footer";
 import Header from "./AuthHeader";
-import React, { useEffect } from "react";
-import type { ReactElement, ReactNode } from "react";
+import React from "react";
 import { Navigate } from "react-router-dom";
-import {
-  setIsLoggedInTrue,
-  setIsLoggedInFalse,
-} from "../../../features/login/loginSlice";
+import type { ReactElement, ReactNode } from "react";
 
 /**
  * The `AuthLayout` functional component makes sure
@@ -25,26 +21,12 @@ import {
 const AuthLayout = (props: {
   children: ReactNode | ReactNode[];
 }): ReactElement => {
-  const dispatch = useAppDispatch();
-  // Select login state from store:
-  const isLoggedIn: boolean = useAppSelector((state) => {
-    return state.login.isLoggedIn;
-  });
+  const state = useAppSelector((state) => state.login);
 
-  useEffect(() => {
-    if (sessionStorage.getItem("token") != null) {
-      dispatch(setIsLoggedInTrue());
-      console.log(sessionStorage.getItem("token"));
-    } else {
-      dispatch(setIsLoggedInFalse());
-      // <Navigate to="/login" />;
-    }
-  }, []);
+  if (!state.isLoggedIn) {
+    return <Navigate to="/login" />;
+  }
 
-  // If not logged-in, then redirect:
-  // if (!isLoggedIn) {
-  //   return <Navigate to="/login" />;
-  // }
   return (
     <Box
       sx={{
