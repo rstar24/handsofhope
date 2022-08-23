@@ -15,7 +15,7 @@ import {
 import { initiate } from "../../features/initiatorSlice";
 import { unhideTabs } from "../../features/navBarSlice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
-import { Box } from "@mui/material";
+import { Box, OutlinedInput } from "@mui/material";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import type { Data } from "../../features/initialContact/fileDetails/slice";
@@ -55,7 +55,7 @@ const FileDetails = (): ReactElement => {
     const form: any = e.currentTarget;
     const formData: Data = {
       fileDetailsId: state.data.fileDetailsId,
-      fileNumber: form.fileNumber.value,
+      fileNumber: state.data.fileDetailsId | 0,
       clientName: form.clientName.value,
       startingDate: form.startingDate.value,
       caseworker: form.caseWorker.value,
@@ -107,12 +107,24 @@ const FileDetails = (): ReactElement => {
       >
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <ICInput
-              autofill={state.data.fileNumber}
-              id="fileNumber"
-              disabled
-              value="File No."
-            />
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                flexWrap: "wrap",
+              }}
+            >
+              <Box sx={{ p: 1, flexBasis: 0, flexGrow: 1, color: "black" }}>
+                File No.
+              </Box>
+              <OutlinedInput
+                size="small"
+                sx={{ borderRadius: 0, flexBasis: 0, flexGrow: 2, ml: -1 }}
+                defaultValue={state.data.fileNumber}
+                value={state.data.fileNumber}
+                style={{ backgroundColor: "#dfdada" }}
+              />
+            </Box>
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <ICInput

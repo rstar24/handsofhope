@@ -11,20 +11,26 @@ import {
   doGetTypeOfEmployee,
 } from "../../features/codetable/slice";
 import { setOpen as setOpenPopup } from "../../features/popupSlice";
-import { useAppDispatch } from "../../library/hooks";
+import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { Box, Button } from "@mui/material";
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import type { ReactElement } from "react";
-
+import { useLocation } from "react-router-dom";
+import { setOpen } from "../../features/popupSlice";
 /**
  * The CYFMS functional component.
  * @returns CYFMS component skeleton.
  */
 const CYFMS = (): ReactElement => {
   const dispatch = useAppDispatch();
+  const location = useLocation();
+  const state = useAppSelector((state) => state.popup.open);
 
   useEffect(() => {
+    if (location.pathname === "/cyfms" || location.pathname === "/cyfms/") {
+      dispatch(setOpen(false));
+    }
     // Load all the code tables:
     dispatch(doGetGender());
     dispatch(doGetProvince());

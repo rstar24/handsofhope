@@ -19,6 +19,7 @@ import { Box, IconButton, Modal } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import React from "react";
 import type { ReactElement, ReactNode } from "react";
+import { useNavigate } from "react-router";
 
 /**
  * The Popup functional component.
@@ -34,24 +35,31 @@ import type { ReactElement, ReactNode } from "react";
  */
 const Popup = (props: { children: ReactNode | ReactNode[] }): ReactElement => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const state = useAppSelector((state) => state.popup);
+  const fileDetailsId = useAppSelector(
+    (state) => state.icFileDetails.data.fileDetailsId
+  );
+  const participantId = useAppSelector(
+    (state) => state.cyfmsRegister.data.participantId
+  );
 
   const cleanStore = () => {
     // CYFMS
-    dispatch(cleanRegisterState(null));
-    dispatch(cleanContactState(null));
-    dispatch(cleanHouseholdMembersState(null));
-    dispatch(cleanEducationAndEmploymentState(null));
-    dispatch(cleanCriminalHistoryState(null));
-    dispatch(cleanFamilyPhysiciansState(null));
-    dispatch(cleanCounselorsState(null));
-    dispatch(cleanOtherInformationState(null));
+    // dispatch(cleanRegisterState(null));
+    // dispatch(cleanContactState(null));
+    // dispatch(cleanHouseholdMembersState(null));
+    // dispatch(cleanEducationAndEmploymentState(null));
+    // dispatch(cleanCriminalHistoryState(null));
+    // dispatch(cleanFamilyPhysiciansState(null));
+    // dispatch(cleanCounselorsState(null));
+    // dispatch(cleanOtherInformationState(null));
     // Initial Contact
-    dispatch(cleanFileDetailsState(null));
-    dispatch(cleanReferralInformationState(null));
-    dispatch(cleanIncidentReportState(null));
-    dispatch(cleanPresentConcernsState(null));
-    dispatch(cleanPatientCareInformationState(null));
+    // dispatch(cleanFileDetailsState(null));
+    // dispatch(cleanReferralInformationState(null));
+    // dispatch(cleanIncidentReportState(null));
+    // dispatch(cleanPresentConcernsState(null));
+    // dispatch(cleanPatientCareInformationState(null));
   };
 
   return (
@@ -94,6 +102,12 @@ const Popup = (props: { children: ReactNode | ReactNode[] }): ReactElement => {
             dispatch(hideTabs(null));
             if (!state.view) {
               cleanStore();
+            }
+            if (fileDetailsId !== 0 || participantId !== 0) {
+              navigate("./view");
+            }
+            if (fileDetailsId === 0 && participantId === 0) {
+              navigate("./");
             }
           }}
           sx={{ position: "absolute", right: 0 }}

@@ -46,8 +46,8 @@ export const PresentConcernsLabels = [
 
 export const InpatientLabels = [
   "InpatientId",
-  "Hospitalization Record",
-  "Hospitalization Reasons",
+  "Have you been in a hospital or residential treatment center for personal problems or alcohol/drug problems? Why?",
+  "Reasons",
   "PatientCareInfoId",
   "Creation Date",
   "Last Written",

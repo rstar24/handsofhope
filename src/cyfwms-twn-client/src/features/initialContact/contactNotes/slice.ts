@@ -1,4 +1,4 @@
-import { doGetAPI, doPostAPI, doSearchAPI } from "./api";
+import { doGetAPI, doPostAPI, doRemoveAPI, doSearchAPI } from "./api";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { SliceCaseReducers } from "@reduxjs/toolkit";
 import type { AxiosResponse } from "axios";
@@ -62,6 +62,16 @@ export const doPost = createAsyncThunk<Data, Data>(
   }
 );
 
+export const doRemove = createAsyncThunk<Data, number>(
+  "contactNotes/doRemove",
+  async (formData, { getState }) => {
+    const store: any = getState();
+    const res: AxiosResponse = await doRemoveAPI(formData, store.login.token);
+    // Becomes the `fulfilled` action payload:
+    return res.data;
+  }
+);
+
 export const doSearch = createAsyncThunk<Data[], any>(
   "contactNotes/doSearch",
   async (formData, { getState }) => {
@@ -120,6 +130,16 @@ export const contactNotesSlice = createSlice<State, SliceCaseReducers<State>>({
         state.status = "loading";
       })
       .addCase(doSearch.rejected, (state) => {
+        state.status = "failed";
+      });
+    builder
+      .addCase(doRemove.fulfilled, (state, action) => {
+        state.status = "success";
+      })
+      .addCase(doRemove.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(doRemove.rejected, (state) => {
         state.status = "failed";
       });
   },

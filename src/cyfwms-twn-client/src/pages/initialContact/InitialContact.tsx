@@ -16,6 +16,20 @@ import { Box, Button } from "@mui/material";
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import type { ReactElement } from "react";
+import { cleanState as cleanContactState } from "../../features/cyfms/contact/slice";
+import { cleanState as cleanCounselorsState } from "../../features/cyfms/counselors/slice";
+import { cleanState as cleanCriminalHistoryState } from "../../features/cyfms/criminalHistory/slice";
+import { cleanState as cleanEducationAndEmploymentState } from "../../features/cyfms/educationAndEmployment/slice";
+import { cleanState as cleanFamilyPhysiciansState } from "../../features/cyfms/familyPhysicians/slice";
+import { cleanState as cleanHouseholdMembersState } from "../../features/cyfms/householdMembers/slice";
+import { cleanState as cleanOtherInformationState } from "../../features/cyfms/otherInformation/slice";
+import { cleanState as cleanRegisterState } from "../../features/cyfms/register/slice";
+import { cleanState as cleanFileDetailsState } from "../../features/initialContact/fileDetails/slice";
+import { cleanState as cleanIncidentReportState } from "../../features/initialContact/incidentReport/slice";
+import { cleanState as cleanPatientCareInformationState } from "../../features/initialContact/patientCareInformation/slice";
+import { cleanState as cleanPresentConcernsState } from "../../features/initialContact/presentConcerns/slice";
+import { cleanState as cleanReferralInformationState } from "../../features/initialContact/referralInformation/slice";
+import { cleanState } from "../../features/login/slice";
 
 /**
  * The InitialContact functional component.
@@ -33,6 +47,23 @@ const InitialContact = (): ReactElement => {
     dispatch(doGetICMentalHealthOrSubstanceAbuse());
     dispatch(doGetICPresentConcerns());
   }, []);
+  const cleanStore = () => {
+    // CYFMS
+    dispatch(cleanRegisterState(null));
+    dispatch(cleanContactState(null));
+    dispatch(cleanHouseholdMembersState(null));
+    dispatch(cleanEducationAndEmploymentState(null));
+    dispatch(cleanCriminalHistoryState(null));
+    dispatch(cleanFamilyPhysiciansState(null));
+    dispatch(cleanCounselorsState(null));
+    dispatch(cleanOtherInformationState(null));
+    // Initial Contact
+    dispatch(cleanFileDetailsState(null));
+    dispatch(cleanReferralInformationState(null));
+    dispatch(cleanIncidentReportState(null));
+    dispatch(cleanPresentConcernsState(null));
+    dispatch(cleanPatientCareInformationState(null));
+  };
 
   return (
     <AuthLayout>
@@ -62,6 +93,7 @@ const InitialContact = (): ReactElement => {
               border: "1px solid black",
             }}
             onClick={() => {
+              cleanStore();
               dispatch(setOpenPopup(true));
             }}
           >

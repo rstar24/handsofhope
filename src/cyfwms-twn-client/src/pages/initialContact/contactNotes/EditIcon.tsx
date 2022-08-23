@@ -3,6 +3,8 @@ import { Box, Button, IconButton, Modal, Menu, MenuItem } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 import type { ReactElement } from "react";
+import { useAppDispatch } from "../../../library/hooks";
+import { doRemove } from "../../../features/initialContact/contactNotes/slice";
 
 const style = {
   position: "absolute" as "absolute",
@@ -19,14 +21,15 @@ const style = {
 const ITEM_HEIGHT = 48;
 export const openPopup = true;
 
-const EditIcon = ({ setDisabled, setAddNew }: any): ReactElement => {
+const EditIcon = ({ setDisabled, setAddNew, contactId }: any): ReactElement => {
+  const dispatch = useAppDispatch();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [openModel, setOpenModel] = React.useState(false);
   const openDropDown = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
-
+  console.log("contact iD", contactId);
   // Close MoreHorIcon Popup
   const handleCloseDropDown = (event: React.MouseEvent<HTMLElement>) => {
     if (event.currentTarget.tabIndex === -1) {
@@ -42,6 +45,10 @@ const EditIcon = ({ setDisabled, setAddNew }: any): ReactElement => {
   const handleClose = () => {
     setAnchorEl(null);
     setAddNew(false);
+  };
+
+  const handleDelete = () => {
+    dispatch(doRemove(contactId)).then(() => setOpenModel(false));
   };
 
   return (
@@ -110,7 +117,7 @@ const EditIcon = ({ setDisabled, setAddNew }: any): ReactElement => {
             Are you sure ? You want to delete ?
           </p>
           <Box paddingLeft={7}>
-            <Button>Yes</Button>
+            <Button onClick={handleDelete}>Yes</Button>
             <Button onClick={handleCloseModel}>No</Button>
           </Box>
         </Box>

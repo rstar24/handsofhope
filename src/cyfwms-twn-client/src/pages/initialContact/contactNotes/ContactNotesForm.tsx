@@ -65,7 +65,11 @@ const ContactNotesForm = ({ setAddNew, setDisabled, disabled }: any) => {
             justifyContent: "flex-end",
           }}
         >
-          <EditIcon setDisabled={setDisabled} setAddNew={setAddNew} />
+          <EditIcon
+            setDisabled={setDisabled}
+            setAddNew={setAddNew}
+            contactId={data.contactNotesId}
+          />
         </Box>
       )}
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>

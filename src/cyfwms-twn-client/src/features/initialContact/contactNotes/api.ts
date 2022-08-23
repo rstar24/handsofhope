@@ -28,6 +28,18 @@ export const doPostAPI = async (
   );
   return res;
 };
+export const doRemoveAPI = async (
+  data: number,
+  token: string
+): Promise<AxiosResponse> => {
+  const res: AxiosResponse = await axiosInstance.delete(
+    `initialcontactservice/removeContactNotes/${data}`,
+    {
+      headers: { Authorization: "Bearer " + token },
+    }
+  );
+  return res;
+};
 
 export const doSearchAPI = async (
   data: any,
