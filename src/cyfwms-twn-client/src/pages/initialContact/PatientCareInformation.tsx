@@ -7,9 +7,6 @@ import {
   doGet,
   doPost,
 } from "../../features/initialContact/patientCareInformation/slice";
-import { uninitiate } from "../../features/initiatorSlice";
-import { hideTabs } from "../../features/navBarSlice";
-import { setOpen, setView } from "../../features/popupSlice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -28,9 +25,7 @@ const PatientCareInformation = (): ReactElement => {
     (state) => state.icFileDetails.data.fileDetailsId
   );
   const patient = useAppSelector((state) => state.codetable.patient);
-  const edit = useAppSelector((state) => state.popup.edit);
   const data = useAppSelector((state) => state.icPatientCareInformation.data);
-
   const [typeOfPatient, setTypeOfPatient] = useState(data.typeOfPatient);
 
   useEffect(() => {
@@ -90,14 +85,7 @@ const PatientCareInformation = (): ReactElement => {
       .unwrap()
       .then(() => {
         console.log("PatientCareInformation POST backend API was successful!");
-        dispatch(setOpen(false));
-        dispatch(hideTabs(null));
-        dispatch(uninitiate(null));
-        if (!edit) {
-          dispatch(setView(true));
-          navigate("/initial_contact/view");
-        }
-        // navigate("/initial_contact/search/view/initialContactId");
+        navigate("../contact_notes");
       })
       .catch((err) => {
         console.log("PatientCareInformation POST backend API didn't work!");
