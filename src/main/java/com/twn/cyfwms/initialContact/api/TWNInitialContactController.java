@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -156,5 +157,11 @@ public class TWNInitialContactController {
                 ("null".equals(var.get("data"))
                         || var.get("data") == null) ?null:var.get("data"));
         return initialContactContactNotesSearchService.search(contactNotesSearchCriteriaDto);
+    }
+    @DeleteMapping("/removeContactNotes/{contactNotesId}")
+    @ApiOperation("Remove Contact Notes")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity removeContactNotes(@PathVariable("contactNotesId") Long contactNotesId) {
+        return initialContactContactNotesService.removeContactNotes(contactNotesId);
     }
 }

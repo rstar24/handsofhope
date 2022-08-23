@@ -40,7 +40,7 @@ public class PatientCareInfoOutpatient {
     @Getter @Setter @Column(length = 1000,name = "reasonfortherapy")
     private String reasonForTherapy;
 
-    @Getter @Setter @Column(length = 1000,name = "selfhelpgroup")
+    @Getter @Setter @Column(name = "selfhelpgroup")
     private String selfHelpGroup;
 
     @Getter @Setter @Column(name = "selfhelpgroupperiod")

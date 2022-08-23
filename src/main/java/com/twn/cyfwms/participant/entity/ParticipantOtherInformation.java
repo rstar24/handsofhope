@@ -26,15 +26,15 @@ public class ParticipantOtherInformation implements Serializable {
             generator = "participantOtherInfoIdGenerator"
     )
     private Long participantOtherInfoId;
-    @Getter @Setter @Column(name = "strength")
+    @Getter @Setter @Column(length = 1000,name = "strength")
     private String strength;
-    @Getter @Setter @Column(name = "weakness")
+    @Getter @Setter @Column(length = 1000,name = "weakness")
     private String weakness;
-    @Getter @Setter @Column(name = "skills")
+    @Getter @Setter @Column(length = 1000,name = "skills")
     private String skills;
-    @Getter @Setter @Column(name = "experiences")
+    @Getter @Setter @Column(length = 1000,name = "experiences")
     private String experiences;
-    @Getter @Setter @Column(name = "effectivecopingskills")
+    @Getter @Setter @Column(length = 1000,name = "effectivecopingskills")
     private String effectiveCopingSkills;
     @Getter @Setter @Column(name = "status")
     private String status;
