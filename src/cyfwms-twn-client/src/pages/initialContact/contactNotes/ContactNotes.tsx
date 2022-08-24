@@ -26,9 +26,8 @@ function ContactNotes(props: any) {
   const dispatch = useAppDispatch();
   const [addNew, setAddNew] = useState(false);
   const [disabled, setDisabled] = useState(false);
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState("");
   const data = useAppSelector((state) => state.icContactNotes.record);
-  const codetable = useAppSelector((state) => state.codetable.contactMethod);
 
   useEffect(() => {
     dispatch(doGetICContactMethod());
@@ -47,16 +46,14 @@ function ContactNotes(props: any) {
       });
   };
   const handleSearchIcon = (e: any) => {
-    console.log("value", value);
     dispatch(doSearch(value || null))
       .unwrap()
       .catch((err) => {});
   };
   const handleChange = (e: any) => {
     setValue(e.target.value);
-
-    //setValue(e.currentTarget.search.value);
   };
+
   return (
     <ICLayout>
       {addNew === false && (
@@ -66,8 +63,6 @@ function ContactNotes(props: any) {
             flexDirection: "column",
             gap: "1rem 0",
           }}
-          // onSubmit={submitHandler}
-          // onChange={changeHandler}
         >
           <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
             <Box sx={{ paddingLeft: "8px", flexBasis: 0, flexGrow: 2 }}>
@@ -78,7 +73,7 @@ function ContactNotes(props: any) {
                 size="small"
                 onChange={(e) => handleChange(e)}
                 sx={{ borderRadius: 0, flexBasis: 0, flexGrow: 2, ml: -1 }}
-                type="search"
+                type="text"
                 endAdornment={
                   <SearchIcon onClick={(e) => handleSearchIcon(e)} />
                 }
@@ -88,7 +83,7 @@ function ContactNotes(props: any) {
               <Button
                 variant="contained"
                 onClick={() => {
-                  dispatch(cleanState(null));
+                  setValue("");
                 }}
               >
                 Clear Search
@@ -195,6 +190,7 @@ function ContactNotes(props: any) {
           setAddNew={setAddNew}
           setDisabled={setDisabled}
           disabled={disabled}
+          targetValue={value}
         />
       )}
     </ICLayout>

@@ -4,7 +4,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import type { ReactElement } from "react";
 import { useAppDispatch } from "../../../library/hooks";
-import { doRemove } from "../../../features/initialContact/contactNotes/slice";
+import {
+  doRemove,
+  doSearch,
+} from "../../../features/initialContact/contactNotes/slice";
 
 const style = {
   position: "absolute" as "absolute",
@@ -21,7 +24,12 @@ const style = {
 const ITEM_HEIGHT = 48;
 export const openPopup = true;
 
-const EditIcon = ({ setDisabled, setAddNew, contactId }: any): ReactElement => {
+const EditIcon = ({
+  setDisabled,
+  setAddNew,
+  contactId,
+  targetValue,
+}: any): ReactElement => {
   const dispatch = useAppDispatch();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [openModel, setOpenModel] = React.useState(false);
@@ -29,7 +37,7 @@ const EditIcon = ({ setDisabled, setAddNew, contactId }: any): ReactElement => {
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  console.log("contact iD", contactId);
+
   // Close MoreHorIcon Popup
   const handleCloseDropDown = (event: React.MouseEvent<HTMLElement>) => {
     if (event.currentTarget.tabIndex === -1) {
@@ -48,7 +56,10 @@ const EditIcon = ({ setDisabled, setAddNew, contactId }: any): ReactElement => {
   };
 
   const handleDelete = () => {
-    dispatch(doRemove(contactId)).then(() => setOpenModel(false));
+    dispatch(doRemove(contactId))
+      .then(() => setOpenModel(false))
+      .then(() => dispatch(doSearch(targetValue || null)));
+    setAddNew(false);
   };
 
   return (

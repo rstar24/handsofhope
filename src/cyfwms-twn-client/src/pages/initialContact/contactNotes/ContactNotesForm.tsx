@@ -11,7 +11,12 @@ import {
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import EditIcon from "./EditIcon";
 
-const ContactNotesForm = ({ setAddNew, setDisabled, disabled }: any) => {
+const ContactNotesForm = ({
+  setAddNew,
+  setDisabled,
+  disabled,
+  targetValue,
+}: any) => {
   const dispatch = useAppDispatch();
   const fileDetailsId = useAppSelector(
     (state) => state.icFileDetails.data.fileDetailsId
@@ -69,6 +74,7 @@ const ContactNotesForm = ({ setAddNew, setDisabled, disabled }: any) => {
             setDisabled={setDisabled}
             setAddNew={setAddNew}
             contactId={data.contactNotesId}
+            targetValue={targetValue}
           />
         </Box>
       )}
@@ -77,6 +83,7 @@ const ContactNotesForm = ({ setAddNew, setDisabled, disabled }: any) => {
           <ICInput
             id="name"
             value="Name"
+            required
             autofill={data.name}
             disabled={disabled}
           />
@@ -85,6 +92,7 @@ const ContactNotesForm = ({ setAddNew, setDisabled, disabled }: any) => {
           <ICInput
             id="worker"
             value="Worker"
+            required
             autofill={data.worker}
             disabled={disabled}
           />
@@ -96,6 +104,7 @@ const ContactNotesForm = ({ setAddNew, setDisabled, disabled }: any) => {
             id="date"
             value="Date"
             type="date"
+            required
             disabled={disabled}
             autofill={data.date}
             maxDate={new Date().toISOString().substring(0, 10)}
