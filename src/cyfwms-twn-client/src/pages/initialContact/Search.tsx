@@ -7,6 +7,7 @@ import Results from "../../components/initialContact/search/Results";
 import Router from "../../components/nestedRouters/InitialContact";
 import { doGetICStatus } from "../../features/codetable/slice";
 import { doGet as doGetSearch } from "../../features/initialContact/search/slice";
+import { onKeyDown } from "../../library/app";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { Box, Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -91,6 +92,7 @@ const Search = (): ReactElement => {
             gap: "0.5rem 0",
           }}
           onSubmit={submitHandler}
+          onKeyDown={onKeyDown}
         >
           <Input
             id="clientName"

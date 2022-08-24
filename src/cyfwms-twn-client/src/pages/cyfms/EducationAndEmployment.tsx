@@ -10,6 +10,7 @@ import {
   doGet,
   doPost,
 } from "../../features/cyfms/educationAndEmployment/slice";
+import { onKeyDown } from "../../library/app";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { Box, Typography } from "@mui/material";
 import React, { useEffect } from "react";
@@ -103,6 +104,7 @@ const EducationAndEmployment = (): ReactElement => {
         }}
         onSubmit={submitHandler}
         onChange={changeHandler}
+        onKeyDown={onKeyDown}
       >
         <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem 0" }}>
           <Box>

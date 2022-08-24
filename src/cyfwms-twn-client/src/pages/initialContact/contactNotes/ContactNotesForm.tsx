@@ -8,6 +8,7 @@ import {
   Data,
   doPost,
 } from "../../../features/initialContact/contactNotes/slice";
+import { onKeyDown } from "../../../library/app";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import EditIcon from "./EditIcon";
 
@@ -62,6 +63,7 @@ const ContactNotesForm = ({
         gap: "1rem 0",
       }}
       onSubmit={submitHandler}
+      onKeyDown={onKeyDown}
     >
       {disabled && (
         <Box

@@ -7,6 +7,7 @@ import {
   doGet,
   doPost,
 } from "../../features/initialContact/patientCareInformation/slice";
+import { onKeyDown } from "../../library/app";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -118,6 +119,7 @@ const PatientCareInformation = (): ReactElement => {
         }}
         onSubmit={submitHandler}
         onChange={changeHandler}
+        onKeyDown={onKeyDown}
       >
         <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem 0" }}>
           <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>

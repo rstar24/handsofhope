@@ -9,6 +9,7 @@ import {
   doGet,
   doPost,
 } from "../../features/cyfms/counselors/slice";
+import { onKeyDown } from "../../library/app";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { Box } from "@mui/material";
 import { useEffect, useRef } from "react";
@@ -111,6 +112,7 @@ const Counselors = (): ReactElement => {
         }}
         onSubmit={submitHandler}
         ref={formRef}
+        onKeyDown={onKeyDown}
       >
         <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem 0" }}>
           {CounselorsRecordList(recordsList)}

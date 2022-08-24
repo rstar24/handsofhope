@@ -13,6 +13,7 @@ import {
   doGet,
   doPost,
 } from "../../features/cyfms/criminalHistory/slice";
+import { onKeyDown } from "../../library/app";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { Box, Checkbox, FormControlLabel, FormGroup } from "@mui/material";
 import React, { useEffect, useRef } from "react";
@@ -111,6 +112,7 @@ const CriminalHistory = (): ReactElement => {
         }}
         onSubmit={submitHandler}
         ref={formRef}
+        onKeyDown={onKeyDown}
       >
         <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem 0" }}>
           {CriminalHistoryRecordList(data.criminalHistoryRecordList)}

@@ -38,7 +38,7 @@ export const IncidentReportLabels = [
 export const PresentConcernsLabels = [
   "FileDetailsId",
   "PresentConcernsId",
-  "Select Present Concerns",
+  "Present Concerns",
   "Situation",
   "Substance Abuse",
   "Explain Mental Health",

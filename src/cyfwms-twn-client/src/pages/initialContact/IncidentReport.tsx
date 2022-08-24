@@ -7,6 +7,7 @@ import {
   doGet,
   doPost,
 } from "../../features/initialContact/incidentReport/slice";
+import { onKeyDown } from "../../library/app";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { Box } from "@mui/material";
 import React, { useEffect } from "react";
@@ -80,6 +81,7 @@ const IncidentReport = (): ReactElement => {
           gap: "1rem 0",
         }}
         onSubmit={submitHandler}
+        onKeyDown={onKeyDown}
       >
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>

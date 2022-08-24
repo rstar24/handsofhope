@@ -8,6 +8,7 @@ import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
 import { doGet, doPost } from "../../features/cyfms/register/slice";
 import { initiate } from "../../features/initiatorSlice";
 import { unhideTabs } from "../../features/navBarSlice";
+import { onKeyDown } from "../../library/app";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { Box, Typography } from "@mui/material";
 import React, { useEffect } from "react";
@@ -85,6 +86,7 @@ const Register = (): ReactElement => {
           "> div > div": { flex: "1 1 0" },
         }}
         onSubmit={submitHandler}
+        onKeyDown={onKeyDown}
       >
         {state.data.referenceId !== 0 && (
           <Typography paddingLeft={1}>

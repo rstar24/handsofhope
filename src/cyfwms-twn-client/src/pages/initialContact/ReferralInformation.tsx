@@ -7,6 +7,7 @@ import {
   doGet,
   doPost,
 } from "../../features/initialContact/referralInformation/slice";
+import { onKeyDown } from "../../library/app";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { Box, Checkbox, FormControlLabel } from "@mui/material";
 import React, { useEffect } from "react";
@@ -80,6 +81,7 @@ const ReferralInformation = (): ReactElement => {
           gap: "1rem 0",
         }}
         onSubmit={submitHandler}
+        onKeyDown={onKeyDown}
       >
         <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem 0" }}>
           <Box>

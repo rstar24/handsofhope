@@ -6,6 +6,7 @@ import {
   doGet,
   doPost,
 } from "../../features/initialContact/presentConcerns/slice";
+import { onKeyDown } from "../../library/app";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { Box } from "@mui/material";
 import React, { useEffect } from "react";
@@ -77,6 +78,7 @@ const PresentConcerns = (): ReactElement => {
           gap: "1rem 0",
         }}
         onSubmit={submitHandler}
+        onKeyDown={onKeyDown}
       >
         <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem 0" }}>
           <Box>

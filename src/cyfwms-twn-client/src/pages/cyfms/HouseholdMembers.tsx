@@ -9,6 +9,7 @@ import {
   doGet,
   doPost,
 } from "../../features/cyfms/householdMembers/slice";
+import { onKeyDown } from "../../library/app";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { Box } from "@mui/material";
 import React, { useEffect, useRef } from "react";
@@ -113,6 +114,7 @@ const HouseholdMembers = (): ReactElement => {
         }}
         onSubmit={submitHandler}
         ref={formRef}
+        onKeyDown={onKeyDown}
       >
         <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem 0" }}>
           {HouseholdMembersRecordList(recordsList)}

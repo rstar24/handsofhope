@@ -5,6 +5,7 @@ import { doGet, doPost } from "../../features/cyfms/otherInformation/slice";
 import { uninitiate } from "../../features/initiatorSlice";
 import { hideTabs } from "../../features/navBarSlice";
 import { setOpen, setView } from "../../features/popupSlice";
+import { onKeyDown } from "../../library/app";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { Box, Typography } from "@mui/material";
 import React, { useEffect } from "react";
@@ -78,6 +79,7 @@ const OtherInformation = (): ReactElement => {
           gap: "1rem 0",
         }}
         onSubmit={submitHandler}
+        onKeyDown={onKeyDown}
       >
         <Typography variant="body1" color="primary">
           Other Information

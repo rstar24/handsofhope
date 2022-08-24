@@ -14,6 +14,7 @@ import {
 } from "../../features/initialContact/fileDetails/slice";
 import { initiate } from "../../features/initiatorSlice";
 import { unhideTabs } from "../../features/navBarSlice";
+import { onKeyDown } from "../../library/app";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { Box, OutlinedInput } from "@mui/material";
 import React, { useEffect } from "react";
@@ -104,6 +105,7 @@ const FileDetails = (): ReactElement => {
         }}
         onSubmit={submitHandler}
         onChange={changeHandler}
+        onKeyDown={onKeyDown}
       >
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
