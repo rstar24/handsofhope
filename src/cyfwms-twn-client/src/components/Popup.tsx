@@ -12,14 +12,14 @@ import { cleanState as cleanPatientCareInformationState } from "../features/init
 import { cleanState as cleanPresentConcernsState } from "../features/initialContact/presentConcerns/slice";
 import { cleanState as cleanReferralInformationState } from "../features/initialContact/referralInformation/slice";
 import { uninitiate } from "../features/initiatorSlice";
-import { hideTabs } from "../features/navBarSlice";
-import { setEdit, setOpen } from "../features/popupSlice";
+import { hideTabs, unhideTabs } from "../features/navBarSlice";
+import { setEdit, setOpen, setView } from "../features/popupSlice";
 import { useAppDispatch, useAppSelector } from "../library/hooks";
 import { Box, IconButton, Modal } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import React from "react";
+import React, { useEffect } from "react";
 import type { ReactElement, ReactNode } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useNavigationType } from "react-router";
 
 /**
  * The Popup functional component.
@@ -36,6 +36,7 @@ import { useNavigate } from "react-router";
 const Popup = (props: { children: ReactNode | ReactNode[] }): ReactElement => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const navigationAction = useNavigationType();
   const state = useAppSelector((state) => state.popup);
   const fileDetailsId = useAppSelector(
     (state) => state.icFileDetails.data.fileDetailsId
@@ -44,6 +45,15 @@ const Popup = (props: { children: ReactNode | ReactNode[] }): ReactElement => {
     (state) => state.cyfmsRegister.data.participantId
   );
 
+  useEffect(() => {
+    if (navigationAction === "POP") {
+      console.log("popup close");
+      dispatch(setOpen(false));
+      dispatch(hideTabs(null));
+      dispatch(uninitiate(null));
+      dispatch(setView(false));
+    }
+  }, [navigationAction]);
   const cleanStore = () => {
     // CYFMS
     // dispatch(cleanRegisterState(null));
