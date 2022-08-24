@@ -2,7 +2,8 @@ package com.twn.codetable.service;
 
 import com.twn.codetable.constants.ResponseDataType;
 import com.twn.codetable.dto.DataResponseDto;
-import com.twn.codetable.helper.DataReferenceHelper;
+import com.twn.codetable.helper.DataReferenceParticipant;
+import com.twn.codetable.helper.DataReferenceInitialcontact;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,12 +11,13 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class DataReferenceServiceImpl implements DataReferenceService{
 
-    private DataReferenceHelper dataReferenceHelper;
+    private DataReferenceParticipant dataReferenceParticipant;
+    private DataReferenceInitialcontact dataReferenceInitilcontact;
 
     public DataResponseDto getAllGenderTypes() {
         return DataResponseDto.builder()
                 .type(ResponseDataType.gender.name())
-                .valuesMap(dataReferenceHelper.getGender())
+                .valuesMap(dataReferenceParticipant.getGender())
                 .build();
     }
 
@@ -24,14 +26,14 @@ public class DataReferenceServiceImpl implements DataReferenceService{
         return
                 DataResponseDto.builder()
                 .type(ResponseDataType.maritalStatus.name())
-                .valuesMap(dataReferenceHelper.getMaritalStatus())
+                .valuesMap(dataReferenceParticipant.getMaritalStatus())
                 .build();
 }
 public DataResponseDto getAllProvinceValue() {
         return
                 DataResponseDto.builder()
                 .type(ResponseDataType.provin.name())
-                .valuesMap(dataReferenceHelper.getProvince())
+                .valuesMap(dataReferenceParticipant.getProvince())
                 .build();
 }
 
@@ -39,7 +41,7 @@ public DataResponseDto getAllProvinceValue() {
         return
                 DataResponseDto.builder()
                         .type(ResponseDataType.role.name())
-                        .valuesMap(dataReferenceHelper.getRole())
+                        .valuesMap(dataReferenceParticipant.getRole())
                         .build();
     }
 
@@ -48,7 +50,7 @@ public DataResponseDto getAllProvinceValue() {
         return
                 DataResponseDto.builder()
                         .type(ResponseDataType.education.name())
-                        .valuesMap(dataReferenceHelper.getEducation())
+                        .valuesMap(dataReferenceParticipant.getEducation())
                         .build();
     }
 
@@ -56,7 +58,7 @@ public DataResponseDto getAllProvinceValue() {
         return
                 DataResponseDto.builder()
                         .type(ResponseDataType.typeOfEmployee.name())
-                        .valuesMap(dataReferenceHelper.getTypeOfEmployee())
+                        .valuesMap(dataReferenceParticipant.getTypeOfEmployee())
                         .build();
     }
 
@@ -65,7 +67,7 @@ public DataResponseDto getAllProvinceValue() {
         return
                 DataResponseDto.builder()
                         .type(ResponseDataType.initialContactStatus.name())
-                        .valuesMap(dataReferenceHelper.getInitialContactStatus())
+                        .valuesMap(dataReferenceInitilcontact.getInitialContactStatus())
                         .build();
     }
 
@@ -74,7 +76,7 @@ public DataResponseDto getAllProvinceValue() {
         return
                 DataResponseDto.builder()
                         .type(ResponseDataType.initialContactReferral.name())
-                        .valuesMap(dataReferenceHelper.getInitialContactReferral())
+                        .valuesMap(dataReferenceInitilcontact.getInitialContactReferral())
                         .build();
     }
 
@@ -83,7 +85,7 @@ public DataResponseDto getAllProvinceValue() {
         return
                 DataResponseDto.builder()
                         .type(ResponseDataType.presentConcerns.name())
-                        .valuesMap(dataReferenceHelper.getPresentConcerns())
+                        .valuesMap(dataReferenceInitilcontact.getPresentConcerns())
                         .build();
     }
 
@@ -92,7 +94,7 @@ public DataResponseDto getAllProvinceValue() {
         return
                 DataResponseDto.builder()
                         .type(ResponseDataType.mentalHealthOrSubstanceAbuse.name())
-                        .valuesMap(dataReferenceHelper.getMentalHealthOrSubstanceAbuse())
+                        .valuesMap(dataReferenceInitilcontact.getMentalHealthOrSubstanceAbuse())
                         .build();
     }
 
@@ -101,7 +103,7 @@ public DataResponseDto getAllProvinceValue() {
         return
                 DataResponseDto.builder()
                         .type(ResponseDataType.typeOfPatient.name())
-                        .valuesMap(dataReferenceHelper.getTypeOfPatient())
+                        .valuesMap(dataReferenceInitilcontact.getTypeOfPatient())
                         .build();
     }
 
@@ -110,7 +112,7 @@ public DataResponseDto getAllProvinceValue() {
         return
                 DataResponseDto.builder()
                         .type(ResponseDataType.risk.name())
-                        .valuesMap(dataReferenceHelper.getRisk())
+                        .valuesMap(dataReferenceInitilcontact.getRisk())
                         .build();
     }
 
@@ -118,7 +120,7 @@ public DataResponseDto getAllProvinceValue() {
     public DataResponseDto getAllContactMethodValue() {
         return  DataResponseDto.builder()
                 .type(ResponseDataType.contactMethod.name())
-                .valuesMap(dataReferenceHelper.getContactMethod())
+                .valuesMap(dataReferenceInitilcontact.getContactMethod())
                 .build();
     }
 
