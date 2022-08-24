@@ -1,6 +1,5 @@
 import { useAppSelector } from "../../../library/hooks";
 import { PresentConcernsLabels } from "../../../library/labels/initialContact";
-import { styles } from "../../../pages/initialContact/View";
 import {
   Table,
   TableBody,
@@ -42,7 +41,7 @@ const PresentConcerns = (): ReactElement => {
                     {PresentConcernsLabels[k]}
                   </TableCell>
                   <TableCell width="50%">
-                    <Typography variant="h6" style={styles.values}>
+                    <Typography component="p" sx={{ whiteSpace: "pre-wrap" }}>
                       {t[1]}
                     </Typography>
                   </TableCell>

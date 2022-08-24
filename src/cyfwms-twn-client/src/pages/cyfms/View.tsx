@@ -60,11 +60,6 @@ export const styles = {
     fontWeight: 600,
     fontSize: 16,
   },
-  values: {
-    variant: "h6",
-    fontWeight: 400,
-    fontSize: 16,
-  },
 };
 
 function tabPanelProps(index: number) {

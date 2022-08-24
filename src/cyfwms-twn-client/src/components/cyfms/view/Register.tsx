@@ -1,6 +1,5 @@
 import { useAppSelector } from "../../../library/hooks";
 import { RegisterLabels } from "../../../library/labels/cyfms";
-import { styles } from "../../../pages/cyfms/View";
 import {
   Table,
   TableBody,
@@ -41,7 +40,9 @@ const Register = (): ReactElement => {
                     {RegisterLabels[k]}
                   </TableCell>
                   <TableCell width="50%">
-                    <Typography style={styles.values}>{t[1]}</Typography>
+                    <Typography component="p" sx={{ whiteSpace: "pre-wrap" }}>
+                      {t[1]}
+                    </Typography>
                   </TableCell>
                 </TableRow>
               );

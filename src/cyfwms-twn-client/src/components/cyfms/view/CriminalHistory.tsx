@@ -3,7 +3,6 @@ import {
   CriminalHistoryLabels,
   CriminalHistoryRecordLabels,
 } from "../../../library/labels/cyfms";
-import { styles } from "../../../pages/cyfms/View";
 import {
   Table,
   TableBody,
@@ -18,10 +17,10 @@ import type { ReactElement } from "react";
 const CriminalHistory = (): ReactElement => {
   const data = useAppSelector((state) => state.cyfmsCriminalHistory.data);
   if (
-    data.criminalHistoryRecordList[0].charges == "" &&
-    data.criminalHistoryRecordList[0].conviction == "" &&
+    data.criminalHistoryRecordList[0].charges === "" &&
+    data.criminalHistoryRecordList[0].conviction === "" &&
     data.criminalHistoryRecordList[0].arrestDate !== "0001-01-01" &&
-    data.criminalHistoryRecordList[0].sentence == ""
+    data.criminalHistoryRecordList[0].sentence === ""
   ) {
     return <></>;
   }
@@ -72,7 +71,10 @@ const CriminalHistory = (): ReactElement => {
                               {CriminalHistoryRecordLabels[k]}
                             </TableCell>
                             <TableCell width="50%">
-                              <Typography style={styles.values}>
+                              <Typography
+                                component="p"
+                                sx={{ whiteSpace: "pre-wrap" }}
+                              >
                                 {t[1]}
                               </Typography>
                             </TableCell>
@@ -116,7 +118,7 @@ const CriminalHistory = (): ReactElement => {
                       {CriminalHistoryLabels[k]}
                     </TableCell>
                     <TableCell width="50%">
-                      <Typography style={styles.values}>
+                      <Typography component="p" sx={{ whiteSpace: "pre-wrap" }}>
                         {(typeof t[1]).toString() === "boolean"
                           ? t[1]
                             ? "Yes"

@@ -1,6 +1,5 @@
 import { useAppSelector } from "../../../library/hooks";
 import { ReferralInformationLabels } from "../../../library/labels/initialContact";
-import { styles } from "../../../pages/initialContact/View";
 import {
   Table,
   TableBody,
@@ -43,7 +42,7 @@ const ReferralInformation = (): ReactElement => {
                     {ReferralInformationLabels[k]}
                   </TableCell>
                   <TableCell width="50%">
-                    <Typography variant="h6" style={styles.values}>
+                    <Typography component="p" sx={{ whiteSpace: "pre-wrap" }}>
                       {(typeof t[1]).toString() === "boolean"
                         ? t[1]
                           ? "Yes"
