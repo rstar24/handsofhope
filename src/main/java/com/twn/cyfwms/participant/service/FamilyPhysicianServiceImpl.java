@@ -2,9 +2,7 @@ package com.twn.cyfwms.participant.service;
 
 import com.twn.cyfwms.participant.dto.FamilyPhysicianDto;
 import com.twn.cyfwms.participant.entity.FamilyPhysician;
-import com.twn.cyfwms.participant.entity.Participant;
 import com.twn.cyfwms.participant.repository.FamilyPhysicianRepository;
-import com.twn.cyfwms.participant.repository.ParticipantRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -15,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
@@ -28,22 +25,13 @@ public class FamilyPhysicianServiceImpl implements FamilyPhysicianService {
     @Autowired
     ModelMapper modelMapper;
 
-    @Autowired
-    ParticipantRepository participantRepository;
-
     @Override
     public List<FamilyPhysicianDto> getAllFamilyPhysicians(Long participantId) {
         List<FamilyPhysicianDto> FamilyPhysicianDtoList = new ArrayList<FamilyPhysicianDto>();
         if(participantId != 0){
             List<FamilyPhysician> familyPhysicianList = familyPhysicianRepository.findByParticipantId(participantId);
             if(familyPhysicianList!=null) {
-              List<FamilyPhysician> familyPhysicianActive=new ArrayList<>();
-               for (int i=0;i<familyPhysicianList.size();i++){
-                   if (!familyPhysicianList.get(i).getStatus().equalsIgnoreCase("INACTIVE")) {
-                       familyPhysicianActive.add(familyPhysicianList.get(i));
-                   }
-               }
-               FamilyPhysicianDtoList = modelMapper.map(familyPhysicianActive, new TypeToken<List<FamilyPhysicianDto>>() {}.getType());
+               FamilyPhysicianDtoList = modelMapper.map(familyPhysicianList, new TypeToken<List<FamilyPhysicianDto>>() {}.getType());
             }else{
                 throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
             }
@@ -70,28 +58,16 @@ public class FamilyPhysicianServiceImpl implements FamilyPhysicianService {
     }
 
     @Override
-    public ResponseEntity removeFamilyPhysician(Long referenceId, Long recordNumber) {
-        if (referenceId != 0  && recordNumber >= 0) {
-            Optional<Participant> particpantDetailsOpt = participantRepository.findByReferenceId(referenceId);
-            Long participantId = particpantDetailsOpt.get().getParticipantId();
-            List<FamilyPhysician> familyPhysicianOpt = familyPhysicianRepository.findByParticipantId(participantId);
+    public ResponseEntity removeFamilyPhysician(Long familyPhysicianId) {
+            List<FamilyPhysician> familyPhysicianOpt = familyPhysicianRepository.findByFamilyPhysicianId(familyPhysicianId);
             if (!familyPhysicianOpt.isEmpty()) {
-                for (int i = 0; familyPhysicianOpt.size() - 1 >= i; i++){
-                    if (familyPhysicianOpt.size() > recordNumber){
-                        if (i == recordNumber){
-                            familyPhysicianOpt.get(i).setStatus("INACTIVE");
-                            familyPhysicianRepository.save(familyPhysicianOpt.get(i));
-                        }
-                    } else {
-                        throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
-                    }
+                for (int i = 0; i <familyPhysicianOpt.size(); ++i) {
+                    familyPhysicianOpt.get(i).setStatus("INACTIVE");
+                    familyPhysicianRepository.save(familyPhysicianOpt.get(i));
                 }
             } else {
                 throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
             }
-        } else {
-            throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
-        }
         return new ResponseEntity("Operation Successful", HttpStatus.OK);
     }
 }

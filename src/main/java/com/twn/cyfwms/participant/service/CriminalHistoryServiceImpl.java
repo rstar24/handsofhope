@@ -3,10 +3,8 @@ package com.twn.cyfwms.participant.service;
 import com.twn.cyfwms.participant.dto.CriminalHistoryDto;
 import com.twn.cyfwms.participant.entity.CriminalHistory;
 import com.twn.cyfwms.participant.entity.CriminalHistoryRecord;
-import com.twn.cyfwms.participant.entity.Participant;
 import com.twn.cyfwms.participant.repository.CriminalHistoryRecordRepository;
 import com.twn.cyfwms.participant.repository.CriminalHistoryRepository;
-import com.twn.cyfwms.participant.repository.ParticipantRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +15,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
@@ -26,13 +22,8 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 public class CriminalHistoryServiceImpl implements CriminalHistoryService{
     @Autowired
     private CriminalHistoryRepository criminalHistoryRepo;
-
     @Autowired
     private ModelMapper modelMapper;
-
-    @Autowired
-    ParticipantRepository participantRepository;
-
     @Autowired
     CriminalHistoryRecordRepository criminalHistoryRecordRepository;
 
@@ -52,7 +43,7 @@ public class CriminalHistoryServiceImpl implements CriminalHistoryService{
                 modelMapper.map(criminalHistory, criminalHistoryDto);
                 for (int i = 0; i < criminalHistory.getCriminalHistoryRecordList().size(); ++i) {
                     if (criminalHistoryDto.getCriminalHistoryRecordList().get(i).getArrestDate() == null) {
-                        criminalHistoryDto.getCriminalHistoryRecordList().get(i).setArrestDate(LocalDate.of(0, 0, 0));
+                        criminalHistoryDto.getCriminalHistoryRecordList().get(i).setArrestDate(LocalDate.of(1, 1, 1));
                     }
                 }
             } else {
@@ -84,28 +75,14 @@ public class CriminalHistoryServiceImpl implements CriminalHistoryService{
         }
         return criminalHistoryDto;
     }
-
     @Override
-    public ResponseEntity removeCriminalHistoryRecord(Long referenceId, Long recordNumber) {
-        CriminalHistoryDto criminalHistoryDto = new CriminalHistoryDto();
-        if (referenceId != 0  && recordNumber >= 0) {
-            Optional<Participant> particpantDetailsOpt = participantRepository.findByReferenceId(referenceId);
-            Long participantId = particpantDetailsOpt.get().getParticipantId();
-             Optional<CriminalHistory> criminalHistoryOpt = Optional.ofNullable(criminalHistoryRepo.findByParticipantId(participantId));
-            if (criminalHistoryOpt.get() != null) {
-                modelMapper.map(criminalHistoryOpt.get(), criminalHistoryDto);
-                for (int i = 0; i < criminalHistoryOpt.get().getCriminalHistoryRecordList().size(); ++i) {
-                    if (criminalHistoryOpt.get().getCriminalHistoryRecordList().size() > recordNumber) {
-                        if (i == recordNumber) {
-                            criminalHistoryDto.getCriminalHistoryRecordList().get(i).setStatus("INACTIVE");
-                            criminalHistoryRepo.save(criminalHistoryOpt.get());
-                        }
-                    } else {
-                        throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
-                    }
-                }
-            }
-        } else {
+    public ResponseEntity removeCriminalHistoryRecord(Long criminalHistoryRecordId) {
+        CriminalHistoryRecord criminalHistoryRecord = criminalHistoryRecordRepository.findByCriminalHistoryRecordId(criminalHistoryRecordId);
+        if (criminalHistoryRecord != null){
+            criminalHistoryRecord.setStatus("INACTIVE");
+            criminalHistoryRecordRepository.save(criminalHistoryRecord);
+        }
+        else{
             throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
         }
         return  new ResponseEntity("Operation Successful",HttpStatus.OK);

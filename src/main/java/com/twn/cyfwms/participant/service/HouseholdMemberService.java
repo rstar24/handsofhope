@@ -7,10 +7,8 @@ import java.util.List;
 
 public interface HouseholdMemberService {
     List<HouseholdMemberDto> getAllHouseholdMembers(Long participantId);
-
     List<HouseholdMemberDto> saveAllHouseholdMembers(List<HouseholdMemberDto> HouseholdMemberDtoList);
-
-    ResponseEntity removeHouseholdMembers(Long referenceId, Long recordNumber);
+    ResponseEntity removeHouseholdMembers(Long householdMemberId);
 
 
 }

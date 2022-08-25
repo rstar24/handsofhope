@@ -90,11 +90,11 @@ public class TWNParticipantController {
         return householdMemberService.saveAllHouseholdMembers(HouseholdMemberDtoList);
     }
 
-    @DeleteMapping("/removeAddMoreHouseholdMember/{referenceId}/{recordNumber}")
+    @DeleteMapping("/removeAddMoreHouseholdMember/{householdMemberId}")
     @ApiOperation("Remove Household Members")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity removeHouseholdMembers(@PathVariable("referenceId") Long referenceId, @PathVariable("recordNumber") Long recordNumber) {
-        return householdMemberService.removeHouseholdMembers(referenceId,recordNumber);
+    public ResponseEntity removeHouseholdMembers(@PathVariable("householdMemberId") Long householdMemberId) {
+        return householdMemberService.removeHouseholdMembers(householdMemberId);
     }
 
 
@@ -112,11 +112,11 @@ public class TWNParticipantController {
         return criminalHistoryService.saveCriminalHistory(criminalHistoryDto);
     }
 
-    @DeleteMapping("/removeAddMoreCriminalHistory/{referenceId}/{recordNumber}")
+    @DeleteMapping("/removeAddMoreCriminalHistory/{criminalhistoryrecordid}")
     @ApiOperation("Remove Criminal History Record")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity criminalHistoryRecord(@PathVariable("referenceId") Long referenceId, @PathVariable("recordNumber") Long recordNumber) {
-        return criminalHistoryService.removeCriminalHistoryRecord(referenceId,recordNumber);
+    public ResponseEntity criminalHistoryRecord( @PathVariable("criminalhistoryrecordid") Long criminalHistoryRecordId) {
+        return criminalHistoryService.removeCriminalHistoryRecord(criminalHistoryRecordId);
     }
 
     @GetMapping(value = "/getAllFamilyPhysicians/{participantid}", produces = "application/json")
@@ -133,11 +133,11 @@ public class TWNParticipantController {
         return familyPhysicianService.saveAllFamilyPhysicians(FamilyPhysicianDtoList);
     }
 
-    @DeleteMapping("/removeAddMoreFamilyPhysician/{referenceId}/{recordNumber}")
+    @DeleteMapping("/removeAddMoreFamilyPhysician/{familyPhysicianId}")
     @ApiOperation("Remove Family Physicians")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity removeFamilyPhysician(@PathVariable("referenceId") Long referenceId, @PathVariable("recordNumber") Long recordNumber) {
-        return familyPhysicianService.removeFamilyPhysician(referenceId,recordNumber);
+    public ResponseEntity removeFamilyPhysician(@PathVariable("familyPhysicianId") Long familyPhysicianId) {
+        return familyPhysicianService.removeFamilyPhysician(familyPhysicianId);
     }
     @GetMapping(value = "/getAllCounselorCFSWorkers/{participantid}", produces = "application/json")
     @ApiOperation("Read All Counselor CFS Workers")
@@ -153,11 +153,11 @@ public class TWNParticipantController {
         return counselorCFSWorkerService.saveAllCounselorCFSWorkers(FamilyPhysicianDtoList);
     }
 
-    @DeleteMapping("/removeAddMoreCounselorCFSWorker/{referenceId}/{recordNumber}")
+    @DeleteMapping("/removeAddMoreCounselorCFSWorker/{counselorcfsworkerid}")
     @ApiOperation("Remove Counselor CFS Workers")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity removeCounselorCFSWorker(@PathVariable("referenceId") Long referenceId, @PathVariable("recordNumber") Long recordNumber) {
-        return counselorCFSWorkerService.CounselorCFSWorker(referenceId,recordNumber);
+    public ResponseEntity removeCounselorCFSWorker(@PathVariable("counselorcfsworkerid") Long counselorCFSWorkerId) {
+        return counselorCFSWorkerService.CounselorCFSWorker(counselorCFSWorkerId);
     }
 
     @GetMapping(value = "/readParticipantOtherInformation/{participantid}", produces = "application/json")
