@@ -36,7 +36,7 @@ const FileDetails = (): ReactElement => {
     (state: any) => state.initiator.isInitiated
   );
   const state = useAppSelector((state) => state.icFileDetails);
-
+  const edit = useAppSelector((state) => state.popup.edit);
   useEffect(() => {
     dispatch(doGet(state.data.fileDetailsId))
       .unwrap()
@@ -69,6 +69,9 @@ const FileDetails = (): ReactElement => {
         console.log("FileDetails POST backend API was successful!");
         dispatch(unhideTabs(null));
         dispatch(initiate(null));
+        if (edit) {
+          nextClickHandler();
+        }
       })
       .catch((err) => {
         console.log("FileDetails POST backend API didn't work!");
@@ -182,7 +185,17 @@ const FileDetails = (): ReactElement => {
         </Box>
         <Box sx={{ display: "flex", justifyContent: "right" }}>
           {isInitiated ? (
-            <CYFSWMSNextButton onClick={nextClickHandler} />
+            <>
+              {edit ? (
+                <>
+                  <CYFSWMSSaveButton />
+                </>
+              ) : (
+                <>
+                  <CYFSWMSNextButton onClick={nextClickHandler} />
+                </>
+              )}
+            </>
           ) : (
             <CYFSWMSSaveButton />
           )}
