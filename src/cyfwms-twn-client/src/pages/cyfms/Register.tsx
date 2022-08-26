@@ -28,6 +28,7 @@ const Register = (): ReactElement => {
   );
   const isInitiated = useAppSelector((state) => state.initiator.isInitiated);
   const state = useAppSelector((state) => state.cyfmsRegister);
+  const edit = useAppSelector((state) => state.popup.edit);
 
   useEffect(() => {
     dispatch(doGet(state.data.participantId))
@@ -62,6 +63,9 @@ const Register = (): ReactElement => {
         console.log("Register POST backend API was successful!");
         dispatch(unhideTabs(null));
         dispatch(initiate(null));
+        if (edit) {
+          nextClickHandler();
+        }
       })
       .catch((err) => {
         console.log("Unable to register.");
@@ -162,7 +166,17 @@ const Register = (): ReactElement => {
         </Box>
         <Box sx={{ justifyContent: "right" }}>
           {isInitiated ? (
-            <CYFSWMSNextButton onClick={nextClickHandler} />
+            <>
+              {edit ? (
+                <>
+                  <CYFSWMSSaveButton />
+                </>
+              ) : (
+                <>
+                  <CYFSWMSNextButton onClick={nextClickHandler} />
+                </>
+              )}
+            </>
           ) : (
             <CYFSWMSSaveButton />
           )}

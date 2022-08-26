@@ -7,6 +7,7 @@ import ICTextArea from "../../../components/initialContact/ICTextArea";
 import {
   Data,
   doPost,
+  doSearch,
 } from "../../../features/initialContact/contactNotes/slice";
 import { onKeyDown } from "../../../library/app";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
@@ -47,6 +48,7 @@ const ContactNotesForm = ({
       .unwrap()
       .then(() => {
         console.log("PresentConcerns POST backend API was successful!");
+        dispatch(doSearch(null));
         setAddNew(false);
       })
       .catch((err) => {
