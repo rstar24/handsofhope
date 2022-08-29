@@ -46,17 +46,17 @@ public class InitialContactContactNotesSearchRepository {
                         .replace("_", "!_")
                         .replace("[", "![");
                 querySBuff.append(" AND (p.name LIKE ?  OR p.worker LIKE ?  OR p.date LIKE ?  OR p.time LIKE ?  OR p.contactmethod LIKE ?  OR p.needaddress LIKE ?  OR p.summary LIKE ?  OR p.result LIKE ?  OR p.nextstep LIKE ?  OR p.caseplanprogress LIKE ? OR p.additionalinformation LIKE ? ) ");
-                argsObjectList.add(data + "%");
-                argsObjectList.add(data + "%");
-                argsObjectList.add(data + "%");
-                argsObjectList.add(data + "%");
-                argsObjectList.add(data + "%");
-                argsObjectList.add(data + "%");
-                argsObjectList.add(data + "%");
-                argsObjectList.add(data + "%");
-                argsObjectList.add(data + "%");
-                argsObjectList.add(data + "%");
-                argsObjectList.add(data + "%");
+                argsObjectList.add("%" +data + "%");
+                argsObjectList.add("%" +data + "%");
+                argsObjectList.add("%" +data + "%");
+                argsObjectList.add("%" +data + "%");
+                argsObjectList.add("%" +data + "%");
+                argsObjectList.add("%" +data + "%");
+                argsObjectList.add("%" +data + "%");
+                argsObjectList.add("%" +data + "%");
+                argsObjectList.add("%" +data + "%");
+                argsObjectList.add("%" +data + "%");
+                argsObjectList.add("%" +data + "%");
             }
         return querySBuff;
     }
