@@ -45,7 +45,7 @@ public class InitialContactFileDetailsServiceImpl implements  InitialContactFile
         if (initialContactFileDetailsDto.getFileDetailsId() == 0) {
             initialContactFileDetails = new InitialContactFileDetails();
             modelMapper.map(initialContactFileDetailsDto, initialContactFileDetails);
-            Optional<InitialContactFileDetails> initialContactFileDetailOpt = initialContactFileDetailsRepository.findTopByOrderByCreationDateTimeDesc();
+            Optional<InitialContactFileDetails> initialContactFileDetailOpt = initialContactFileDetailsRepository.findTopByOrderByFileNumberDesc();
             if (initialContactFileDetailOpt.isPresent()) {
                 InitialContactFileDetails initialContactFileDtls = initialContactFileDetailOpt.get();
                 initialContactFileDetails.setFileNumber(initialContactFileDtls.getFileNumber()+1L);

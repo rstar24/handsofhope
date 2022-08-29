@@ -7,5 +7,5 @@ import java.util.Optional;
 
 @Repository
 public interface InitialContactFileDetailsRepository extends JpaRepository<InitialContactFileDetails, Long> {
-    Optional<InitialContactFileDetails> findTopByOrderByCreationDateTimeDesc();
+    Optional<InitialContactFileDetails> findTopByOrderByFileNumberDesc();
 }
