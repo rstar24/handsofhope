@@ -124,6 +124,7 @@ const FileDetails = (): ReactElement => {
               </Box>
               <OutlinedInput
                 size="small"
+                readOnly={true}
                 sx={{ borderRadius: 0, flexBasis: 0, flexGrow: 2, ml: -1 }}
                 defaultValue={state.data.fileNumber}
                 value={state.data.fileNumber}

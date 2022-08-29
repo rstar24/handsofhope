@@ -35,6 +35,7 @@ const ICTextArea = (
         rows={props.row_no}
         multiline={true}
         name={props.name}
+        readOnly={props.readOnly}
         sx={{
           backgroundColor: "#dfdada",
           borderRadius: 0,

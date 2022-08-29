@@ -89,7 +89,7 @@ const ContactNotesForm = ({
             value="Name"
             required
             autofill={data.name}
-            disabled={disabled}
+            readOnly={disabled}
           />
         </Box>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
@@ -98,7 +98,7 @@ const ContactNotesForm = ({
             value="Worker"
             required
             autofill={data.worker}
-            disabled={disabled}
+            readOnly={disabled}
           />
         </Box>
       </Box>
@@ -109,7 +109,7 @@ const ContactNotesForm = ({
             value="Date"
             type="date"
             required
-            disabled={disabled}
+            readOnly={disabled}
             autofill={data.date}
             maxDate={new Date().toISOString().substring(0, 10)}
             minDate="1900-01-01"
@@ -121,7 +121,7 @@ const ContactNotesForm = ({
             value="Time"
             type="time"
             autofill={data.time}
-            disabled={disabled}
+            readOnly={disabled}
           />
         </Box>
       </Box>
@@ -134,7 +134,6 @@ const ContactNotesForm = ({
             optionsList={Object.values(contactMethod).map(
               (status: any) => status.en
             )}
-            disabled={disabled}
           />
         </Box>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
@@ -144,37 +143,37 @@ const ContactNotesForm = ({
         id="address"
         value="Need(s) Addressed"
         autofill={data.needAddress}
-        disabled={disabled}
+        readOnly={disabled}
       />
       <ICTextArea
         id="summary"
         value="Summary"
         autofill={data.summary}
-        disabled={disabled}
+        readOnly={disabled}
       />
       <ICTextArea
         id="result"
         value="Results"
         autofill={data.result}
-        disabled={disabled}
+        readOnly={disabled}
       />
       <ICTextArea
         id="nextStep"
         value="Next Step(s)"
         autofill={data.nextStep}
-        disabled={disabled}
+        readOnly={disabled}
       />
       <ICTextArea
         id="progress"
         value="Progress towards Case Plan"
         autofill={data.casePlanProgress}
-        disabled={disabled}
+        readOnly={disabled}
       />
       <ICTextArea
         id="information"
         value="Additional Information"
         autofill={data.additionalInformation}
-        disabled={disabled}
+        readOnly={disabled}
       />
       <Box sx={{ display: "flex", justifyContent: "right" }}>
         <CYFSWMSNextButton disabled={disabled} />

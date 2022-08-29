@@ -37,6 +37,7 @@ const ICInput = (
       </FormLabel>
       <OutlinedInput
         id={props.id}
+        readOnly={props.readOnly}
         name={props.name}
         sx={{ borderRadius: 0, flexBasis: 0, flexGrow: 2, ml: -1 }}
         inputProps={{ min: props.minDate, max: props.maxDate, sx: { p: 1 } }}
