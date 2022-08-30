@@ -18,7 +18,7 @@ public class CriminalHistoryDto{
     private Long criminalHistoryId;
 
     @Getter @Setter
-    private List<CriminalHistoryRecord> criminalHistoryRecordList;
+    private List<CriminalHistoryRecordDto> criminalHistoryRecordList;
 
     @Getter @Setter
     private boolean probation;

@@ -59,18 +59,17 @@ public class CriminalHistoryServiceImpl implements CriminalHistoryService{
         if (criminalHistoryDto.getCriminalHistoryId() == 0) {
             criminalHistory = new CriminalHistory();
             modelMapper.map(criminalHistoryDto, criminalHistory);
-            for (int i = 0; i < criminalHistory.getCriminalHistoryRecordList().size(); ++i) {
-                criminalHistory.getCriminalHistoryRecordList().get(i).setStatus("ACTIVE");
-            }
         } else {
             criminalHistory = criminalHistoryRepo.findById(criminalHistoryDto.getCriminalHistoryId()).get();
-            modelMapper.map(criminalHistoryDto, criminalHistory);
+            modelMapper.map(criminalHistoryDto,criminalHistory);
+        }
+        for (int i = 0; i < criminalHistory.getCriminalHistoryRecordList().size(); ++i) {
+            criminalHistory.getCriminalHistoryRecordList().get(i).setStatus("ACTIVE");
         }
         criminalHistory = criminalHistoryRepo.save(criminalHistory);
         criminalHistoryDto.setCriminalHistoryId(criminalHistory.getCriminalHistoryId());
         for (int i = 0; i < criminalHistory.getCriminalHistoryRecordList().size(); ++i) {
             criminalHistoryDto.getCriminalHistoryRecordList().get(i).setCriminalHistoryRecordId(criminalHistory.getCriminalHistoryRecordList().get(i).getCriminalHistoryRecordId());
-            criminalHistory.getCriminalHistoryRecordList().get(i).setCriminalHistoryId(criminalHistoryDto.getCriminalHistoryId());
             criminalHistoryDto.getCriminalHistoryRecordList().get(i).setCriminalHistoryId(criminalHistory.getCriminalHistoryRecordList().get(i).getCriminalHistoryId());
         }
         return criminalHistoryDto;
