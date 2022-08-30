@@ -5,6 +5,7 @@ import Header from "./AuthHeader";
 import React from "react";
 import { Navigate } from "react-router-dom";
 import type { ReactElement, ReactNode } from "react";
+import SessionTimer from "../../SessionTimer";
 
 /**
  * The `AuthLayout` functional component makes sure
@@ -40,6 +41,7 @@ const AuthLayout = (props: {
       <Header />
       {props.children}
       <Footer />
+      <SessionTimer />
     </Box>
   );
 };

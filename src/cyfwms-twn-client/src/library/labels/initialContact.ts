@@ -3,7 +3,7 @@ export const FileDetailsLabels = [
   "Client Name",
   "Caseworker",
   "File Number",
-  "Starting Date",
+  "Date",
   "Date Closed",
   "Status",
 ];
