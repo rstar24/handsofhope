@@ -33,6 +33,7 @@ const ICTextAreaMax = (
       <OutlinedInput
         id={props.id}
         name={props.name}
+        multiline={props.multi}
         sx={{
           backgroundColor: "#dfdada",
           borderRadius: 0,

@@ -5,7 +5,7 @@ import type {
   ReactElement,
   ComponentPropsWithoutRef,
 } from "react";
-
+import "../../styles/App.css";
 export interface ICDropdownPropsType
   extends ComponentPropsWithoutRef<ElementType> {
   optionsList: any[];
@@ -19,7 +19,6 @@ export interface ICDropdownPropsType
 const ICDropdown = (props: ICDropdownPropsType): ReactElement => {
   return (
     <FormControl
-      disabled={props.disabled}
       sx={{
         display: "flex",
         flexDirection: "row",
@@ -34,6 +33,7 @@ const ICDropdown = (props: ICDropdownPropsType): ReactElement => {
         {props.value}
       </FormLabel>
       <select
+        className="disabled"
         disabled={props.disabled}
         name={props.id}
         id={props.id}

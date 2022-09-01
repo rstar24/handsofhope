@@ -15,3 +15,15 @@
 .highlight:focus {
   animation: highlightAnimation 3s ease-in-out;
 }
+
+.disabled{
+  border-width: 1px;
+  color: rgb(0, 0, 0);
+  opacity: 1;
+}
+
+
+
+
+
+

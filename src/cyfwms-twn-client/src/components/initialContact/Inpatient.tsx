@@ -47,6 +47,7 @@ const Inpatient = (): ReactElement => {
           autofill={data.hospitalizationReasons}
           id="hospitalizationReasons"
           value="Reasons"
+          multi="true"
         />
       </Box>
     </Box>

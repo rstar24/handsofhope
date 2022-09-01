@@ -131,6 +131,7 @@ const ContactNotesForm = ({
             id="contactMethod"
             value="Contact Method"
             autofill={data.contactMethod}
+            disabled={disabled}
             optionsList={Object.values(contactMethod).map(
               (status: any) => status.en
             )}

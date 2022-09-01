@@ -69,6 +69,7 @@ const Outpatient = (): ReactElement => {
               autofill={data.reasonForTherapy}
               id="reasonForTherapy"
               value="Reasons"
+              multi="true"
             />
           </Box>
         </Box>
