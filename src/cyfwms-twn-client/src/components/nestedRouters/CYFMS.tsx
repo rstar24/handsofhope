@@ -1,11 +1,11 @@
-import CYFMSFamilyPhysicians from "../../pages/cyfms/FamilyPhysicians";
-import CYFMSContact from "../../pages/cyfms/Contact";
-import CYFMSCriminalHistory from "../../pages/cyfms/CriminalHistory";
-import CYFMSCounselors from "../../pages/cyfms/Counselors";
-import CYFMSEducationAndEmployment from "../../pages/cyfms/EducationAndEmployment";
-import CYFMSHouseholdMembers from "../../pages/cyfms/HouseholdMembers";
-import CYFMSOtherInformation from "../../pages/cyfms/OtherInformation";
-import CYFMSRegister from "../../pages/cyfms/Register";
+import CYFMSFamilyPhysicians from "../../pages/cyfms/familyPhysicians/FamilyPhysicians";
+import CYFMSContact from "../../pages/cyfms/contact/Contact";
+import CYFMSCriminalHistory from "../../pages/cyfms/criminalHistory/CriminalHistory";
+import CYFMSCounselors from "../../pages/cyfms/counselors/Counselors";
+import CYFMSEducationAndEmployment from "../../pages/cyfms/educationAndEmployment/EducationAndEmployment";
+import CYFMSHouseholdMembers from "../../pages/cyfms/householdMembers/HouseholdMembers";
+import CYFMSOtherInformation from "../../pages/cyfms/otherInformation/OtherInformation";
+import CYFMSRegister from "../../pages/cyfms/register/Register";
 import { Route, Routes } from "react-router-dom";
 import React from "react";
 

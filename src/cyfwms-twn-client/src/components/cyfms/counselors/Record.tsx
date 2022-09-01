@@ -1,47 +1,27 @@
-import { removeRecordNumber } from "../../../features/cyfms/counselors/slice";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import Input from "../../Input";
 import CYFMSDropdown from "../CYFMSDropdown";
 import CYFMSTextArea from "../CYFMSTextArea";
+import { handleRemoveRecord } from "./record";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { Box, IconButton, Typography } from "@mui/material";
 import React from "react";
-import type {
-  ComponentPropsWithoutRef,
-  ElementType,
-  ReactElement,
-} from "react";
+import type { Record as RecordT } from "../../../features/cyfms/counselors/slice";
+import type { ReactElement } from "react";
 
 /**
- * A custom props data type for the props passed
- * to the `CounselorsRecord` component.
+ * Record for counselor.
+ * @example
+ * ```jsx
+ * <Record record={} number={} />
+ * ```
  */
-export interface CounselorsRecordProps
-  extends ComponentPropsWithoutRef<ElementType> {
-  /** Holds data within a record. */
-  record: any;
-  /** Uniquely identifies a record. */
-  recordNumber: number;
-}
-
-/**
- * The CounselorsRecord functional component.
- * @param props Must contain the `recordNumber` prop.
- * @returns CounselorsRecord component skeleton.
- */
-export const CounselorsRecord = (
-  props: CounselorsRecordProps
-): ReactElement => {
+const Record = (props: AppRecordProps<RecordT>): ReactElement => {
   const dispatch = useAppDispatch();
-  const role = useAppSelector((state: any) => state.codetable.role);
-
-  const removeRecord = () => {
-    dispatch(removeRecordNumber(props.recordNumber));
-  };
+  const role = useAppSelector((state) => state.codetable.role);
 
   return (
     <Box
-      key={`record_${props.recordNumber}`}
       sx={{
         display: "flex",
         flexDirection: "column",
@@ -60,14 +40,21 @@ export const CounselorsRecord = (
         }}
       >
         <Typography color="primary" sx={{ flexGrow: 1 }}>
-          Counselor / CFS Worker: {props.recordNumber}
+          Counselor / CFS Worker: {props.number}
         </Typography>
         <IconButton
           aria-label="delete record"
           size="medium"
           color="primary"
           sx={{ p: 0 }}
-          onClick={() => removeRecord()}
+          onClick={(event) =>
+            handleRemoveRecord(
+              event,
+              dispatch,
+              props.record.counselorCFSWorkerId,
+              props.number
+            )
+          }
         >
           <CancelIcon fontSize="medium" />
         </IconButton>
@@ -76,7 +63,7 @@ export const CounselorsRecord = (
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
           <CYFMSDropdown
             autofill={props.record.role}
-            id={`record_${props.recordNumber}_Role`}
+            id={`record_${props.number}_Role`}
             value="Role"
             optionsList={Object.values(role).map((role: any) => role.en)}
           />
@@ -87,7 +74,7 @@ export const CounselorsRecord = (
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
           <Input
             autofill={props.record.name}
-            id={`record_${props.recordNumber}_Name`}
+            id={`record_${props.number}_Name`}
             validationPattern={`^[a-zA-Z ]*$`}
             validationTitle="Digits are not allowed!"
             value="Name"
@@ -99,7 +86,7 @@ export const CounselorsRecord = (
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
           <Input
             autofill={props.record.startDate}
-            id={`record_${props.recordNumber}_StartDate`}
+            id={`record_${props.number}_StartDate`}
             maxDate={new Date().toISOString().substring(0, 10)}
             minDate="1900-01-01"
             value="Start Date"
@@ -109,7 +96,7 @@ export const CounselorsRecord = (
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
           <Input
             autofill={props.record.endDate}
-            id={`record_${props.recordNumber}_EndDate`}
+            id={`record_${props.number}_EndDate`}
             maxDate={new Date().toISOString().substring(0, 10)}
             minDate="1900-01-01"
             value="End Date"
@@ -121,21 +108,11 @@ export const CounselorsRecord = (
         formLabelFlex="1 1 0"
         outlinedInputFlex="5.1 1 0"
         autofill={props.record.contactInformation}
-        id={`record_${props.recordNumber}_ContactInformation`}
+        id={`record_${props.number}_ContactInformation`}
         value="Contact Information"
       />
     </Box>
   );
 };
 
-const CounselorsRecordList = (recordList: any): ReactElement[] => {
-  let res: ReactElement[] = new Array(recordList.length);
-  for (let index = 0; index < recordList.length; ++index) {
-    res.push(
-      <CounselorsRecord record={recordList[index]} recordNumber={index + 1} />
-    );
-  }
-  return res;
-};
-
-export default CounselorsRecordList;
+export default Record;

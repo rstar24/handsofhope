@@ -15,13 +15,16 @@ const HouseholdMembers = (): ReactElement => {
   const recordsList = useAppSelector(
     (state) => state.cyfmsHouseholdMembers.data.recordsList
   );
-  if (
-    recordsList[0].name === "" &&
-    recordsList[0].dateOfBirth !== "0001-01-01" &&
-    recordsList[0].gender === "" &&
-    recordsList[0].residing === ""
-  ) {
-    return <></>;
+
+  if (recordsList.length > 0) {
+    if (
+      recordsList[0].name === "" &&
+      recordsList[0].dateOfBirth !== "0001-01-01" &&
+      recordsList[0].gender === "" &&
+      recordsList[0].residing === ""
+    ) {
+      return <></>;
+    }
   }
 
   return (

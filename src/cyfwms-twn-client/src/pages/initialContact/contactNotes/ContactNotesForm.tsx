@@ -1,5 +1,3 @@
-import { Box } from "@mui/material";
-import React, { FormEvent } from "react";
 import { CYFSWMSNextButton } from "../../../components/CYFSWMSButtons";
 import ICDropdown from "../../../components/initialContact/ICDropdown";
 import ICInput from "../../../components/initialContact/ICInput";
@@ -12,6 +10,9 @@ import {
 import { onKeyDown } from "../../../library/app";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import EditIcon from "./EditIcon";
+import { Box } from "@mui/material";
+import React from "react";
+import type { FormEvent } from "react";
 
 const ContactNotesForm = ({
   setAddNew,
@@ -20,19 +21,19 @@ const ContactNotesForm = ({
   targetValue,
 }: any) => {
   const dispatch = useAppDispatch();
-  const fileDetailsId = useAppSelector(
+  const initialContactID = useAppSelector(
     (state) => state.icFileDetails.data.fileDetailsId
   );
-  const { contactMethod } = useAppSelector((state: any) => state.codetable);
+  const { contactMethod } = useAppSelector((state) => state.codetable);
   const data = useAppSelector((state) => state.icContactNotes.data);
 
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
-    const form: any = e.currentTarget;
+    const form = e.currentTarget as HTMLFormElement;
     const formData: Data = {
-      fileDetailsId: fileDetailsId,
+      fileDetailsId: initialContactID,
       contactNotesId: data.contactNotesId,
-      name: form.name.value,
+      name: form.naam.value,
       worker: form.worker.value,
       date: form.date.value,
       time: form.time.value,
@@ -85,7 +86,7 @@ const ContactNotesForm = ({
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
           <ICInput
-            id="name"
+            id="naam"
             value="Name"
             required
             autofill={data.name}

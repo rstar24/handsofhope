@@ -1,5 +1,6 @@
-import { doGetAPI, doPostAPI } from "./api";
+import { doDeleteAPI, doGetAPI, doPostAPI } from "./api";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import type { RootState } from "../../../library/store";
 import type { SliceCaseReducers } from "@reduxjs/toolkit";
 import type { AxiosResponse } from "axios";
 
@@ -14,7 +15,7 @@ export interface Record {
 }
 
 //Empty Record
-const emptyRecord = {
+const emptyRecord: Record = {
   participantId: 0,
   householdMemberId: 0,
   name: "",
@@ -41,7 +42,7 @@ export interface State {
 export const doGet = createAsyncThunk<Record[], number>(
   "householdMembers/doGet",
   async (participantID, { getState }) => {
-    const store: any = getState();
+    const store = getState() as RootState;
     const res: AxiosResponse = await doGetAPI(participantID, store.login.token);
     // Becomes the `fulfilled` action payload:
     return res.data;
@@ -51,9 +52,22 @@ export const doGet = createAsyncThunk<Record[], number>(
 export const doPost = createAsyncThunk<Record[], Data>(
   "householdMembers/doPost",
   async (formData, { getState }) => {
-    const store: any = getState();
+    const store = getState() as RootState;
     const res: AxiosResponse = await doPostAPI(
       formData.recordsList,
+      store.login.token
+    );
+    // Becomes the `fulfilled` action payload:
+    return res.data;
+  }
+);
+
+export const doDelete = createAsyncThunk<any, number>(
+  "householdMembers/doDelete",
+  async (householdMemberID, { getState }) => {
+    const store = getState() as RootState;
+    const res: AxiosResponse = await doDeleteAPI(
+      householdMemberID,
       store.login.token
     );
     // Becomes the `fulfilled` action payload:
@@ -77,7 +91,7 @@ export const householdMembersSlice = createSlice<
       state.data.recordsList.splice(action.payload - 1, 1);
     },
     cleanState(state) {
-      state.data.recordsList = [emptyRecord];
+      state.data = emptyData;
       state.status = "failed";
     },
   },
@@ -87,7 +101,7 @@ export const householdMembersSlice = createSlice<
     builder
       .addCase(doGet.fulfilled, (state, action) => {
         if (action.payload.length === 0) {
-          state.data.recordsList = [emptyRecord];
+          state.data = emptyData;
         } else {
           state.data.recordsList = action.payload;
         }
@@ -108,6 +122,16 @@ export const householdMembersSlice = createSlice<
         state.status = "loading";
       })
       .addCase(doPost.rejected, (state) => {
+        state.status = "failed";
+      });
+    builder
+      .addCase(doDelete.fulfilled, (state, action) => {
+        state.status = "success";
+      })
+      .addCase(doDelete.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(doDelete.rejected, (state) => {
         state.status = "failed";
       });
   },

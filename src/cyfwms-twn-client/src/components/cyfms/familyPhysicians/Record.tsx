@@ -1,45 +1,25 @@
-import { removeRecordNumber } from "../../../features/cyfms/familyPhysicians/slice";
 import { useAppDispatch } from "../../../library/hooks";
 import Input from "../../Input";
 import CYFMSTextArea from "../CYFMSTextArea";
+import { handleRemoveRecord } from "./record";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { Box, IconButton, Typography } from "@mui/material";
 import React from "react";
-import type {
-  ComponentPropsWithoutRef,
-  ElementType,
-  ReactElement,
-} from "react";
+import type { Record as RecordT } from "../../../features/cyfms/familyPhysicians/slice";
+import type { ReactElement } from "react";
 
 /**
- * A custom props data type for the props passed
- * to the `FamilyPhysiciansRecord` component.
+ * Record for family physician.
+ * @example
+ * ```jsx
+ * <Record record={} number={} />
+ * ```
  */
-export interface FamilyPhysiciansRecordProps
-  extends ComponentPropsWithoutRef<ElementType> {
-  /** Holds data within a record. */
-  record: any;
-  /** Uniquely identifies a record. */
-  recordNumber: number;
-}
-
-/**
- * The FamilyPhysiciansRecord functional component.
- * @param props Must contain the `recordNumber` prop.
- * @returns FamilyPhysiciansRecord component skeleton.
- */
-export const FamilyPhysiciansRecord = (
-  props: FamilyPhysiciansRecordProps
-): ReactElement => {
+const Record = (props: AppRecordProps<RecordT>): ReactElement => {
   const dispatch = useAppDispatch();
-
-  const removeRecord = () => {
-    dispatch(removeRecordNumber(props.recordNumber));
-  };
 
   return (
     <Box
-      key={`record_${props.recordNumber}`}
       sx={{
         display: "flex",
         flexDirection: "column",
@@ -52,14 +32,21 @@ export const FamilyPhysiciansRecord = (
     >
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
         <Typography color="primary" sx={{ flexGrow: 1 }}>
-          Family Physician: {props.recordNumber}
+          Family Physician: {props.number}
         </Typography>
         <IconButton
           aria-label="delete record"
           size="medium"
           color="primary"
           sx={{ p: 0 }}
-          onClick={() => removeRecord()}
+          onClick={(event) =>
+            handleRemoveRecord(
+              event,
+              dispatch,
+              props.record.familyPhysicianId,
+              props.number
+            )
+          }
         >
           <CancelIcon fontSize="medium" />
         </IconButton>
@@ -77,7 +64,7 @@ export const FamilyPhysiciansRecord = (
             <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
               <Input
                 autofill={props.record.name}
-                id={`record_${props.recordNumber}_Name`}
+                id={`record_${props.number}_Name`}
                 validationPattern={`^[a-zA-Z ]*$`}
                 validationTitle="Digits are not allowed!"
                 value="Name"
@@ -86,7 +73,7 @@ export const FamilyPhysiciansRecord = (
             <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
               <Input
                 autofill={props.record.phone}
-                id={`record_${props.recordNumber}_Phone`}
+                id={`record_${props.number}_Phone`}
                 validationPattern={`^[^a-zA-Z]*$`}
                 validationTitle="Alphabets are not allowed!"
                 value="Phone"
@@ -97,7 +84,7 @@ export const FamilyPhysiciansRecord = (
             <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
               <Input
                 autofill={props.record.cell}
-                id={`record_${props.recordNumber}_Cell`}
+                id={`record_${props.number}_Cell`}
                 validationPattern={`^[^a-zA-Z]*$`}
                 validationTitle="Alphabets are not allowed!"
                 value="Cell"
@@ -110,7 +97,7 @@ export const FamilyPhysiciansRecord = (
               formLabelFlex="1 1 0"
               outlinedInputFlex="5.05 1 0"
               autofill={props.record.listOfMedication}
-              id={`record_${props.recordNumber}_ListOfMedication`}
+              id={`record_${props.number}_ListOfMedication`}
               value="List of Medication"
             />
           </Box>
@@ -121,17 +108,4 @@ export const FamilyPhysiciansRecord = (
   );
 };
 
-const FamilyPhysiciansRecordList = (recordList: any): ReactElement[] => {
-  let res: ReactElement[] = new Array(recordList.length);
-  for (let index = 0; index < recordList.length; ++index) {
-    res.push(
-      <FamilyPhysiciansRecord
-        record={recordList[index]}
-        recordNumber={index + 1}
-      />
-    );
-  }
-  return res;
-};
-
-export default FamilyPhysiciansRecordList;
+export default Record;

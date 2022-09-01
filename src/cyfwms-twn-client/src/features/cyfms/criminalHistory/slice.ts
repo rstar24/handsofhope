@@ -1,10 +1,12 @@
-import { doGetAPI, doPostAPI } from "./api";
+import { doDeleteAPI, doGetAPI, doPostAPI } from "./api";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import type { RootState } from "../../../library/store";
 import type { SliceCaseReducers } from "@reduxjs/toolkit";
 import type { AxiosResponse } from "axios";
 
 export interface Record {
   criminalHistoryRecordId: number;
+  criminalHistoryId?: number;
   arrestDate: string;
   charges: string;
   conviction: string;
@@ -14,6 +16,7 @@ export interface Record {
 // Empty Record
 const emptyRecord: Record = {
   criminalHistoryRecordId: 0,
+  criminalHistoryId: 0,
   arrestDate: "",
   charges: "",
   conviction: "",
@@ -47,9 +50,9 @@ export interface State {
 }
 
 export const doGet = createAsyncThunk<Data, number>(
-  "criminalhistory/doGet",
+  "criminalHistory/doGet",
   async (participantID, { getState }) => {
-    const store: any = getState();
+    const store = getState() as RootState;
     const res: AxiosResponse = await doGetAPI(participantID, store.login.token);
     // Becomes the `fulfilled` action payload:
     return res.data;
@@ -59,8 +62,18 @@ export const doGet = createAsyncThunk<Data, number>(
 export const doPost = createAsyncThunk<Data, Data>(
   "criminalHistory/doPost",
   async (formData, { getState }) => {
-    const store: any = getState();
+    const store = getState() as RootState;
     const res: AxiosResponse = await doPostAPI(formData, store.login.token);
+    // Becomes the `fulfilled` action payload:
+    return res.data;
+  }
+);
+
+export const doDelete = createAsyncThunk<any, number>(
+  "criminalHistory/doDelete",
+  async (recordID, { getState }) => {
+    const store = getState() as RootState;
+    const res: AxiosResponse = await doDeleteAPI(recordID, store.login.token);
     // Becomes the `fulfilled` action payload:
     return res.data;
   }
@@ -98,6 +111,9 @@ export const criminalHistorySlice = createSlice<
     builder
       .addCase(doGet.fulfilled, (state, action) => {
         state.data = action.payload;
+        if (state.data.criminalHistoryRecordList.length === 0) {
+          state.data.criminalHistoryRecordList = [emptyRecord];
+        }
         state.status = "success";
       })
       .addCase(doGet.pending, (state) => {
@@ -115,6 +131,16 @@ export const criminalHistorySlice = createSlice<
         state.status = "loading";
       })
       .addCase(doPost.rejected, (state) => {
+        state.status = "failed";
+      });
+    builder
+      .addCase(doDelete.fulfilled, (state, action) => {
+        state.status = "success";
+      })
+      .addCase(doDelete.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(doDelete.rejected, (state) => {
         state.status = "failed";
       });
   },

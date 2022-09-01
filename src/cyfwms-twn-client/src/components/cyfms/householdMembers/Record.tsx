@@ -1,48 +1,27 @@
-import { removeRecordNumber } from "../../../features/cyfms/householdMembers/slice";
-import { useAppSelector, useAppDispatch } from "../../../library/hooks";
+import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import Input from "../../Input";
 import CYFMSDropdown from "../CYFMSDropdown";
 import CYFMSTextArea from "../CYFMSTextArea";
+import { handleRemoveRecord } from "./record";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { Box, IconButton, Typography } from "@mui/material";
 import React from "react";
-import type { Record } from "../../../features/cyfms/householdMembers/slice";
-import type {
-  ComponentPropsWithoutRef,
-  ElementType,
-  ReactElement,
-} from "react";
+import type { Record as RecordT } from "../../../features/cyfms/householdMembers/slice";
+import type { ReactElement } from "react";
 
 /**
- * A custom props data type for the props passed
- * to the `HouseholdMembersRecord` component.
+ * Record for counselor.
+ * @example
+ * ```jsx
+ * <Record record={} number={} />
+ * ```
  */
-export interface HouseholdMembersRecordProps
-  extends ComponentPropsWithoutRef<ElementType> {
-  /** Holds data within a record. */
-  record: Record;
-  /** Uniquely identifies a record. */
-  recordNumber: number;
-}
-
-/**
- * The HouseholdMembersRecord functional component.
- * @param props Must contain the `recordNumber` prop.
- * @returns HouseholdMembersRecord component skeleton.
- */
-export const HouseholdMembersRecord = (
-  props: HouseholdMembersRecordProps
-): ReactElement => {
+const Record = (props: AppRecordProps<RecordT>): ReactElement => {
   const dispatch = useAppDispatch();
-  const gender = useAppSelector((state: any) => state.codetable.gender);
-
-  const removeRecord = () => {
-    dispatch(removeRecordNumber(props.recordNumber));
-  };
+  const gender = useAppSelector((state) => state.codetable.gender);
 
   return (
     <Box
-      key={`record_${props.recordNumber}`}
       sx={{
         display: "flex",
         flexDirection: "column",
@@ -61,14 +40,21 @@ export const HouseholdMembersRecord = (
         }}
       >
         <Typography color="primary" sx={{ flexGrow: 1 }}>
-          Member {props.recordNumber}
+          Household Member: {props.number}
         </Typography>
         <IconButton
           aria-label="delete record"
           size="medium"
           color="primary"
           sx={{ p: 0 }}
-          onClick={() => removeRecord()}
+          onClick={(event) =>
+            handleRemoveRecord(
+              event,
+              dispatch,
+              props.record.householdMemberId,
+              props.number
+            )
+          }
         >
           <CancelIcon fontSize="medium" />
         </IconButton>
@@ -77,7 +63,7 @@ export const HouseholdMembersRecord = (
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
           <Input
             autofill={props.record.name}
-            id={`record_${props.recordNumber}_Name`}
+            id={`record_${props.number}_Name`}
             validationPattern={`^[a-zA-Z ]*$`}
             validationTitle="Digits are not allowed!"
             value="Name"
@@ -86,7 +72,7 @@ export const HouseholdMembersRecord = (
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
           <CYFMSDropdown
             autofill={props.record.gender}
-            id={`record_${props.recordNumber}_Gender`}
+            id={`record_${props.number}_Gender`}
             optionsList={Object.values(gender).map((gender: any) => gender.en)}
             value="Gender"
           />
@@ -96,7 +82,7 @@ export const HouseholdMembersRecord = (
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
           <Input
             autofill={props.record.dateOfBirth}
-            id={`record_${props.recordNumber}_DateOfBirth`}
+            id={`record_${props.number}_DateOfBirth`}
             maxDate={new Date().toISOString().substring(0, 10)}
             minDate="1900-01-01"
             value="Date of Birth"
@@ -106,7 +92,7 @@ export const HouseholdMembersRecord = (
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
           <Input
             autofill={props.record.relationship}
-            id={`record_${props.recordNumber}_Relationship`}
+            id={`record_${props.number}_Relationship`}
             value="Relationship"
           />
         </Box>
@@ -115,24 +101,11 @@ export const HouseholdMembersRecord = (
         formLabelFlex="1 1 0"
         outlinedInputFlex="5.05 1 0"
         autofill={props.record.residing}
-        id={`record_${props.recordNumber}_Residing`}
+        id={`record_${props.number}_Residing`}
         value="Residing"
       />
     </Box>
   );
 };
 
-const HouseholdMembersRecordList = (recordList: any): ReactElement[] => {
-  let res: ReactElement[] = new Array(recordList.length);
-  for (let index = 0; index < recordList.length; ++index) {
-    res.push(
-      <HouseholdMembersRecord
-        record={recordList[index]}
-        recordNumber={index + 1}
-      />
-    );
-  }
-  return res;
-};
-
-export default HouseholdMembersRecordList;
+export default Record;

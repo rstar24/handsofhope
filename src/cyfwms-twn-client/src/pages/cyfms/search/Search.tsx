@@ -1,17 +1,15 @@
-import Input from "../../components/Input";
-import Popup from "../../components/Popup";
-import AuthLayout from "../../components/auth/layout/AuthLayout";
-import CYFMSDropdown from "../../components/cyfms/CYFMSDropdown";
-import CYFMSHeader from "../../components/cyfms/CYFMSHeader";
-import Results from "../../components/cyfms/search/Results";
-import Router from "../../components/nestedRouters/CYFMS";
-import { doGetMaritalStatus } from "../../features/codetable/slice";
-import { doGet as doGetSearch } from "../../features/cyfms/search/slice";
-import { onKeyDown } from "../../library/app";
-import { useAppDispatch, useAppSelector } from "../../library/hooks";
+import Input from "../../../components/Input";
+import Popup from "../../../components/Popup";
+import AuthLayout from "../../../components/auth/layout/AuthLayout";
+import CYFMSDropdown from "../../../components/cyfms/CYFMSDropdown";
+import CYFMSHeader from "../../../components/cyfms/CYFMSHeader";
+import Results from "../../../components/cyfms/search/Results";
+import Router from "../../../components/nestedRouters/CYFMS";
+import { onKeyDown } from "../../../library/app";
+import { useAppDispatch, useAppSelector } from "../../../library/hooks";
+import { handleEffect, handleSubmit } from "./search";
 import { Box, Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import type { Record } from "../../features/cyfms/search/slice";
 import type { FormEvent, ReactElement } from "react";
 
 /**
@@ -25,35 +23,7 @@ const Search = (): ReactElement => {
   );
   const [isShown, setIsShown] = useState<boolean>(false);
 
-  useEffect(() => {
-    dispatch(doGetMaritalStatus());
-  }, []);
-
-  const submitHandler = (e: FormEvent) => {
-    e.preventDefault();
-    const form: any = e.currentTarget;
-    const formData: Record = {
-      participantId: null,
-      referenceId: form.referenceId.value || null,
-      firstname: form.firstName.value || null,
-      surname: form.lastName.value || null,
-      middleName: form.middleName.value || null,
-      dateOfBirth: form.dateOfBirth.value || null,
-      maritalStatus: form.maritalStatus.value || null,
-      city: form.city.value || null,
-      workPhone: form.phoneNo.value || null,
-    };
-    dispatch(doGetSearch(formData))
-      .unwrap()
-      .then(() => {
-        console.log("CYFMS Search POST backend API was successful!");
-        setIsShown(true);
-      })
-      .catch((err) => {
-        console.log("InitialContact Search POST backend API didn't work!");
-        console.log(err);
-      });
-  };
+  useEffect(() => handleEffect(dispatch), []);
 
   const hide = () => {
     setIsShown(false);
@@ -94,7 +64,9 @@ const Search = (): ReactElement => {
             flexDirection: "column",
             gap: "0.5rem 0",
           }}
-          onSubmit={submitHandler}
+          onSubmit={(event: FormEvent<HTMLFormElement>) =>
+            handleSubmit(event, dispatch, setIsShown)
+          }
           onKeyDown={onKeyDown}
         >
           <Input

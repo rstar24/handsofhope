@@ -1,5 +1,6 @@
 import { doGetAPI } from "./api";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import type { RootState } from "../../../library/store";
 import type { SliceCaseReducers } from "@reduxjs/toolkit";
 import type { AxiosResponse } from "axios";
 
@@ -23,7 +24,7 @@ export interface State {
 export const doGet = createAsyncThunk<Record[], Record>(
   "search/doGet",
   async (formData, { getState }) => {
-    const store: any = getState();
+    const store = getState() as RootState;
     const res: AxiosResponse = await doGetAPI(formData, store.login.token);
     // Becomes the `fulfilled` action payload:
     return res.data;

@@ -16,14 +16,17 @@ const FamilyPhysicians = (): ReactElement => {
     (state) => state.cyfmsFamilyPhysicians.data.recordsList
   );
 
-  if (
-    recordsList[0].name === "" &&
-    recordsList[0].phone === "" &&
-    recordsList[0].cell === "" &&
-    recordsList[0].listOfMedication === ""
-  ) {
-    return <></>;
+  if (recordsList.length > 0) {
+    if (
+      recordsList[0].name === "" &&
+      recordsList[0].phone === "" &&
+      recordsList[0].cell === "" &&
+      recordsList[0].listOfMedication === ""
+    ) {
+      return <></>;
+    }
   }
+
   return (
     <>
       {Object.entries(recordsList).map((t: any, index: number) => (

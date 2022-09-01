@@ -1,5 +1,6 @@
 import { doGetAPI, doPostAPI } from "./api";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import type { RootState } from "../../../library/store";
 import type { SliceCaseReducers } from "@reduxjs/toolkit";
 import type { AxiosResponse } from "axios";
 
@@ -32,7 +33,7 @@ export interface State {
 export const doGet = createAsyncThunk<Data, number>(
   "otherInformation/doGet",
   async (participantID, { getState }) => {
-    const store: any = getState();
+    const store = getState() as RootState;
     const res: AxiosResponse = await doGetAPI(participantID, store.login.token);
     // Becomes the `fulfilled` action payload:
     return res.data;
@@ -42,7 +43,7 @@ export const doGet = createAsyncThunk<Data, number>(
 export const doPost = createAsyncThunk<Data, Data>(
   "otherInformation/doPost",
   async (formData, { getState }) => {
-    const store: any = getState();
+    const store = getState() as RootState;
     const res: AxiosResponse = await doPostAPI(formData, store.login.token);
     // Becomes the `fulfilled` action payload:
     return res.data;

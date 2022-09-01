@@ -1,5 +1,6 @@
-import { doGetAPI, doPostAPI } from "./api";
+import { doDeleteAPI, doGetAPI, doPostAPI } from "./api";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import type { RootState } from "../../../library/store";
 import type { SliceCaseReducers } from "@reduxjs/toolkit";
 import type { AxiosResponse } from "axios";
 
@@ -41,7 +42,7 @@ export interface State {
 export const doGet = createAsyncThunk<Record[], number>(
   "counselors/doGet",
   async (participantID, { getState }) => {
-    const store: any = getState();
+    const store = getState() as RootState;
     const res: AxiosResponse = await doGetAPI(participantID, store.login.token);
     // Becomes the `fulfilled` action payload:
     return res.data;
@@ -51,9 +52,22 @@ export const doGet = createAsyncThunk<Record[], number>(
 export const doPost = createAsyncThunk<Record[], Data>(
   "counselors/doPost",
   async (formData, { getState }) => {
-    const store: any = getState();
+    const store = getState() as RootState;
     const res: AxiosResponse = await doPostAPI(
       formData.recordsList,
+      store.login.token
+    );
+    // Becomes the `fulfilled` action payload:
+    return res.data;
+  }
+);
+
+export const doDelete = createAsyncThunk<any, number>(
+  "counselors/doDelete",
+  async (counselorID, { getState }) => {
+    const store = getState() as RootState;
+    const res: AxiosResponse = await doDeleteAPI(
+      counselorID,
       store.login.token
     );
     // Becomes the `fulfilled` action payload:
@@ -105,6 +119,16 @@ export const counselorsSlice = createSlice<State, SliceCaseReducers<State>>({
         state.status = "loading";
       })
       .addCase(doPost.rejected, (state) => {
+        state.status = "failed";
+      });
+    builder
+      .addCase(doDelete.fulfilled, (state, action) => {
+        state.status = "success";
+      })
+      .addCase(doDelete.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(doDelete.rejected, (state) => {
         state.status = "failed";
       });
   },

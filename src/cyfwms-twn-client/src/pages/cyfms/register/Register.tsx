@@ -1,19 +1,16 @@
 import {
   CYFSWMSNextButton,
   CYFSWMSSaveButton,
-} from "../../components/CYFSWMSButtons";
-import Input from "../../components/Input";
-import CYFMSDropdown from "../../components/cyfms/CYFMSDropdown";
-import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
-import { doGet, doPost } from "../../features/cyfms/register/slice";
-import { initiate } from "../../features/initiatorSlice";
-import { unhideTabs } from "../../features/navBarSlice";
-import { onKeyDown } from "../../library/app";
-import { useAppDispatch, useAppSelector } from "../../library/hooks";
+} from "../../../components/CYFSWMSButtons";
+import Input from "../../../components/Input";
+import CYFMSDropdown from "../../../components/cyfms/CYFMSDropdown";
+import CYFMSLayout from "../../../components/cyfms/CYFMSLayout";
+import { onKeyDown } from "../../../library/app";
+import { useAppDispatch, useAppSelector } from "../../../library/hooks";
+import { handleEffect, handleSubmit } from "./register";
 import { Box, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import type { Data } from "../../features/cyfms/register/slice";
 import type { FormEvent, ReactElement } from "react";
 
 /**
@@ -23,55 +20,12 @@ import type { FormEvent, ReactElement } from "react";
 const Register = (): ReactElement => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { gender, maritalstatus } = useAppSelector(
-    (state) => (state as any).codetable
-  );
+  const { gender, maritalstatus } = useAppSelector((state) => state.codetable);
   const isInitiated = useAppSelector((state) => state.initiator.isInitiated);
   const state = useAppSelector((state) => state.cyfmsRegister);
   const edit = useAppSelector((state) => state.popup.edit);
 
-  useEffect(() => {
-    dispatch(doGet(state.data.participantId))
-      .unwrap()
-      .then((data) => {
-        console.log("Register GET backend API was successful!");
-      })
-      .catch((err) => {
-        console.log("Register GET backend API didn't work!");
-        console.log(err);
-      });
-  }, []);
-
-  // Handles the form data submission and other
-  // activities.
-  const submitHandler = (e: FormEvent) => {
-    e.preventDefault();
-    const form: any = e.currentTarget;
-    const formData: Data = {
-      referenceId: state.data.referenceId,
-      participantId: state.data.participantId,
-      firstname: form.firstName.value,
-      middleName: form.middleName.value,
-      surname: form.lastName.value,
-      dateOfBirth: form.dateOfBirth.value,
-      gender: form.gender.value,
-      maritalStatus: form.maritalStatus.value,
-    };
-    dispatch(doPost(formData))
-      .unwrap()
-      .then(() => {
-        console.log("Register POST backend API was successful!");
-        dispatch(unhideTabs(null));
-        dispatch(initiate(null));
-        if (edit) {
-          nextClickHandler();
-        }
-      })
-      .catch((err) => {
-        console.log("Unable to register.");
-        console.log(err);
-      });
-  };
+  useEffect(() => handleEffect(dispatch, state.data.participantId), []);
 
   const nextClickHandler = () => {
     navigate("../contact");
@@ -89,7 +43,9 @@ const Register = (): ReactElement => {
           "> div": { display: "flex", gap: "0 1rem" },
           "> div > div": { flex: "1 1 0" },
         }}
-        onSubmit={submitHandler}
+        onSubmit={(event: FormEvent<HTMLFormElement>) =>
+          handleSubmit(event, navigate, dispatch, state.data, edit, isInitiated)
+        }
         onKeyDown={onKeyDown}
       >
         {state.data.referenceId !== 0 && (

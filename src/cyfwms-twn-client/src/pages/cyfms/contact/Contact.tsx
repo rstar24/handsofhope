@@ -1,16 +1,15 @@
-import { CYFSWMSNextButton } from "../../components/CYFSWMSButtons";
-import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
-import Input from "../../components/Input";
-import { doGet, doPost } from "../../features/cyfms/contact/slice";
-import { onKeyDown } from "../../library/app";
-import { useAppDispatch, useAppSelector } from "../../library/hooks";
+import { CYFSWMSNextButton } from "../../../components/CYFSWMSButtons";
+import Input from "../../../components/Input";
+import CYFMSDropdown from "../../../components/cyfms/CYFMSDropdown";
+import CYFMSDropdownProvince from "../../../components/cyfms/CYFMSDropdownProvince";
+import CYFMSLayout from "../../../components/cyfms/CYFMSLayout";
+import { onKeyDown } from "../../../library/app";
+import { useAppDispatch, useAppSelector } from "../../../library/hooks";
+import { handleEffect, handleSubmit } from "./contact";
 import { Box } from "@mui/material";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import type { Data } from "../../features/cyfms/contact/slice";
 import type { FormEvent, ReactElement } from "react";
-import CYFMSDropdown from "../../components/cyfms/CYFMSDropdown";
-import CYFMSDropdownProvince from "../../components/cyfms/CYFMSDropdownProvince";
 
 /**
  * The Contact functional component.
@@ -25,45 +24,7 @@ const Contact = (): ReactElement => {
   const { province } = useAppSelector((state) => (state as any).codetable);
   const data = useAppSelector((state) => state.cyfmsContact.data);
 
-  useEffect(() => {
-    dispatch(doGet(participantID))
-      .unwrap()
-      .then((data) => {
-        console.log("Contact GET backend API worked successfully");
-      })
-      .catch((err) => {
-        console.log("Contact GET backend API didn't work");
-        console.log(err);
-      });
-  }, []);
-
-  const submitHandler = (e: FormEvent) => {
-    e.preventDefault();
-    const form: any = e.currentTarget;
-    const formData: Data = {
-      participantId: participantID,
-      participantContactId: data.participantContactId,
-      addressLine1: form.addressLine1.value,
-      addressLine2: form.addressLine2.value,
-      city: form.city.value,
-      province: form.province.value,
-      postalCode: form.postalCode.value,
-      homePhone: form.homePhone.value,
-      workPhone: form.workPhone.value,
-      cellPhone: form.cellPhone.value,
-      emailAddress: form.emailAddress.value,
-    };
-    dispatch(doPost(formData))
-      .unwrap()
-      .then(() => {
-        console.log("Contact POST backend API was successful!");
-        navigate("../household_members");
-      })
-      .catch((err) => {
-        console.log("Contact POST backend API didn't work!");
-        console.log(err);
-      });
-  };
+  useEffect(() => handleEffect(dispatch, participantID), []);
 
   return (
     <CYFMSLayout>
@@ -74,7 +35,9 @@ const Contact = (): ReactElement => {
           flexDirection: "column",
           gap: "1rem 0",
         }}
-        onSubmit={submitHandler}
+        onSubmit={(event: FormEvent<HTMLFormElement>) =>
+          handleSubmit(event, navigate, dispatch, participantID, data)
+        }
         onKeyDown={onKeyDown}
       >
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>

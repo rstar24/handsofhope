@@ -1,16 +1,12 @@
-import { CYFSWMSSaveButton } from "../../components/CYFSWMSButtons";
-import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
-import CYFMSTextArea from "../../components/cyfms/CYFMSTextArea";
-import { doGet, doPost } from "../../features/cyfms/otherInformation/slice";
-import { uninitiate } from "../../features/initiatorSlice";
-import { hideTabs } from "../../features/navBarSlice";
-import { setOpen, setView } from "../../features/popupSlice";
-import { onKeyDown } from "../../library/app";
-import { useAppDispatch, useAppSelector } from "../../library/hooks";
+import { CYFSWMSSaveButton } from "../../../components/CYFSWMSButtons";
+import CYFMSLayout from "../../../components/cyfms/CYFMSLayout";
+import CYFMSTextArea from "../../../components/cyfms/CYFMSTextArea";
+import { onKeyDown } from "../../../library/app";
+import { useAppDispatch, useAppSelector } from "../../../library/hooks";
+import { handleEffect, handleSubmit } from "./otherInformation";
 import { Box, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import type { Data } from "../../features/cyfms/otherInformation/slice";
 import type { FormEvent, ReactElement } from "react";
 
 /**
@@ -26,48 +22,7 @@ const OtherInformation = (): ReactElement => {
   const edit = useAppSelector((state) => state.popup.edit);
   const data = useAppSelector((state) => state.cyfmsOtherInformation.data);
 
-  useEffect(() => {
-    dispatch(doGet(participantID))
-      .unwrap()
-      .then((data) => {
-        console.log("OtherInformation GET backend API was successful!");
-      })
-      .catch((err) => {
-        console.log("OtherInformation GET backend API didn't work!");
-        console.log(err);
-      });
-  }, []);
-
-  // Handles the form data submission and other
-  // activities.
-  const submitHandler = (e: FormEvent) => {
-    e.preventDefault();
-    const form: any = e.currentTarget;
-    const formData: Data = {
-      participantId: participantID,
-      participantOtherInfoId: data.participantOtherInfoId,
-      strength: form.strengths.value,
-      weakness: form.weaknesses.value,
-      skills: form.skills.value,
-      experiences: form.experiences.value,
-      effectiveCopingSkills: form.effectiveCopingSkills.value,
-    };
-    dispatch(doPost(formData))
-      .then(() => {
-        console.log("otherInformation POST backend API was successful!");
-        dispatch(setOpen(false));
-        dispatch(hideTabs(null));
-        dispatch(uninitiate(null));
-        if (!edit) {
-          dispatch(setView(true));
-          navigate("/cyfms/view");
-        }
-      })
-      .catch((err) => {
-        console.log("otherInformation POST backend API was successful!");
-        console.log(err);
-      });
-  };
+  useEffect(() => handleEffect(dispatch, participantID), []);
 
   return (
     <CYFMSLayout>
@@ -78,7 +33,9 @@ const OtherInformation = (): ReactElement => {
           flexDirection: "column",
           gap: "1rem 0",
         }}
-        onSubmit={submitHandler}
+        onSubmit={(event: FormEvent<HTMLFormElement>) =>
+          handleSubmit(event, navigate, dispatch, participantID, data, edit)
+        }
         onKeyDown={onKeyDown}
       >
         <Typography variant="body1" color="primary">

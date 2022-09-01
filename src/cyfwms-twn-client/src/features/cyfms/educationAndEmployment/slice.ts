@@ -1,5 +1,6 @@
 import { doGetAPI, doPostAPI } from "./api";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import type { RootState } from "../../../library/store";
 import type { SliceCaseReducers } from "@reduxjs/toolkit";
 import type { AxiosResponse } from "axios";
 
@@ -38,7 +39,7 @@ export interface State {
 export const doGet = createAsyncThunk<Data, number>(
   "educationAndEmployment/doGet",
   async (participantID, { getState }) => {
-    const store: any = getState();
+    const store = getState() as RootState;
     const res: AxiosResponse = await doGetAPI(participantID, store.login.token);
     // Becomes the `fulfilled` action payload:
     return res.data;
@@ -48,7 +49,7 @@ export const doGet = createAsyncThunk<Data, number>(
 export const doPost = createAsyncThunk<Data, Data>(
   "educationAndEmployment/doPost",
   async (formData, { getState }) => {
-    const store: any = getState();
+    const store = getState() as RootState;
     const res: AxiosResponse = await doPostAPI(formData, store.login.token);
     // Becomes the `fulfilled` action payload:
     return res.data;
@@ -67,17 +68,11 @@ export const educationAndEmploymentSlice = createSlice<
     status: "none",
   },
   reducers: {
-    disableSchoolFields(state) {
-      state.disabledSchoolFields = true;
+    setSchoolFieldsDisabled(state, action) {
+      state.disabledSchoolFields = action.payload;
     },
-    enableSchoolFields(state) {
-      state.disabledSchoolFields = false;
-    },
-    disableDesiredProfession(state) {
-      state.disabledDesiredProfession = true;
-    },
-    enableDesiredProfession(state) {
-      state.disabledDesiredProfession = false;
+    setDesiredProfessionDisabled(state, action) {
+      state.disabledDesiredProfession = action.payload;
     },
     cleanState(state) {
       state.disabledSchoolFields = true;
@@ -103,6 +98,12 @@ export const educationAndEmploymentSlice = createSlice<
     builder
       .addCase(doPost.fulfilled, (state, action) => {
         state.data = action.payload;
+        if (state.data.attendingSchool === "Yes") {
+          state.disabledSchoolFields = false;
+        }
+        if (state.data.typeOfEmployment === "Job Search") {
+          state.disabledDesiredProfession = false;
+        }
         state.status = "success";
       })
       .addCase(doPost.pending, (state) => {
@@ -115,10 +116,8 @@ export const educationAndEmploymentSlice = createSlice<
 });
 
 export const {
-  disableSchoolFields,
-  enableSchoolFields,
-  disableDesiredProfession,
-  enableDesiredProfession,
+  setSchoolFieldsDisabled,
+  setDesiredProfessionDisabled,
   cleanState,
 } = educationAndEmploymentSlice.actions;
 

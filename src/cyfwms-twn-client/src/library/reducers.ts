@@ -1,4 +1,5 @@
 import codetableReducer from "../features/codetable/slice";
+import cyfmsAllReducer from "../features/cyfms/all/slice";
 import cyfmsContactReducer from "../features/cyfms/contact/slice";
 import cyfmsCriminalHistoryReducer from "../features/cyfms/criminalHistory/slice";
 import cyfmsEducationAndEmploymentReducer from "../features/cyfms/educationAndEmployment/slice";
@@ -18,7 +19,6 @@ import icSearchReducer from "../features/initialContact/search/slice";
 import initiatorReducer from "../features/initiatorSlice";
 import loginReducer from "../features/login/slice";
 import popupReducer from "../features/popupSlice";
-import readAllRecordReducer from "../features/cyfms/getAllRecord/slice";
 import navBarReducer from "../features/navBarSlice";
 
 const rootReducer = {
@@ -36,6 +36,7 @@ const rootReducer = {
   cyfmsCounselors: cyfmsCounselorsReducer,
   cyfmsOtherInformation: cyfmsOtherInformationReducer,
   cyfmsSearch: cyfmsSearchReducer,
+  cyfmsAll: cyfmsAllReducer,
   icFileDetails: icFileDetailsReducer,
   icIncidentReport: icIncidentReportReducer,
   icReferralInformation: icReferralInformationReducer,
@@ -43,7 +44,6 @@ const rootReducer = {
   icPatientCareInformation: icPatientCareInformationReducer,
   icContactNotes: icContactNotesReducer,
   icSearch: icSearchReducer,
-  readAll: readAllRecordReducer,
 };
 
 export default rootReducer;

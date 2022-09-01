@@ -1,13 +1,12 @@
 import axiosInstance from "../../../library/axiosInstance";
-import { GetAllData } from "./slice";
 import type { AxiosResponse } from "axios";
 
-export const doGetAllRecordAPI = async (
-  data: GetAllData,
+export const doGetAllAPI = async (
+  referenceID: number,
   token: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.get(
-    `participantservice/readAllOutputParticipant/${data}`,
+    `participantservice/readAllOutputParticipant/${referenceID}`,
     {
       headers: { Authorization: "Bearer " + token },
     }

@@ -28,3 +28,16 @@ export const doPostAPI = async (
   );
   return res;
 };
+
+export const doDeleteAPI = async (
+  counselorID: number,
+  token: string
+): Promise<AxiosResponse> => {
+  const res: AxiosResponse = await axiosInstance.delete(
+    `participantservice/removeAddMoreCounselorCFSWorker/${counselorID}`,
+    {
+      headers: { Authorization: "Bearer " + token },
+    }
+  );
+  return res;
+};

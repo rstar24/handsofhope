@@ -16,14 +16,16 @@ const Councelors = (): ReactElement => {
     (state) => state.cyfmsCounselors.data.recordsList
   );
 
-  if (
-    recordsList[0].role === "" &&
-    recordsList[0].name === "" &&
-    recordsList[0].startDate !== "0001-01-01" &&
-    recordsList[0].endDate !== "0001-01-01" &&
-    recordsList[0].contactInformation === ""
-  ) {
-    return <></>;
+  if (recordsList.length > 0) {
+    if (
+      recordsList[0].role === "" &&
+      recordsList[0].name === "" &&
+      recordsList[0].startDate !== "0001-01-01" &&
+      recordsList[0].endDate !== "0001-01-01" &&
+      recordsList[0].contactInformation === ""
+    ) {
+      return <></>;
+    }
   }
 
   return (

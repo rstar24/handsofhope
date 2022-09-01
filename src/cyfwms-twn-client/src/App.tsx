@@ -8,7 +8,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import NotFound404 from "./pages/NotFound404";
 import CYFMS from "./pages/cyfms/CYFMS";
-import CYFMSSearch from "./pages/cyfms/Search";
+import CYFMSSearch from "./pages/cyfms/search/Search";
 import CYFMSView from "./pages/cyfms/View";
 import InitialContact from "./pages/initialContact/InitialContact";
 import InitialContactSearch from "./pages/initialContact/Search";

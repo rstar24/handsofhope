@@ -1,17 +1,14 @@
-import { CYFSWMSNextButton } from "../../components/CYFSWMSButtons";
-import Input from "../../components/Input";
-import CYFMSLayout from "../../components/cyfms/CYFMSLayout";
-import CYFMSDropdown from "../../components/cyfms/CYFMSDropdown";
+import { CYFSWMSNextButton } from "../../../components/CYFSWMSButtons";
+import Input from "../../../components/Input";
+import CYFMSDropdown from "../../../components/cyfms/CYFMSDropdown";
+import CYFMSLayout from "../../../components/cyfms/CYFMSLayout";
+import { onKeyDown } from "../../../library/app";
+import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import {
-  enableDesiredProfession,
-  enableSchoolFields,
-  disableDesiredProfession,
-  disableSchoolFields,
-  doGet,
-  doPost,
-} from "../../features/cyfms/educationAndEmployment/slice";
-import { onKeyDown } from "../../library/app";
-import { useAppDispatch, useAppSelector } from "../../library/hooks";
+  handleChange,
+  handleEffect,
+  handleSubmit,
+} from "./educationAndEmployment";
 import { Box, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -28,70 +25,11 @@ const EducationAndEmployment = (): ReactElement => {
     (state) => state.cyfmsRegister.data.participantId
   );
   const { education, typeOfEmployee } = useAppSelector(
-    (state) => (state as any).codetable
+    (state) => state.codetable
   );
   const state = useAppSelector((state) => state.cyfmsEducationAndEmployment);
 
-  useEffect(() => {
-    dispatch(doGet(participantID))
-      .unwrap()
-      .then((data) => {
-        console.log(
-          "EducationAndEmployment GET backend API worked successfully"
-        );
-      })
-      .catch((err) => {
-        console.log("EducationAndEmployment GET backend API didn't work");
-        console.log(err);
-      });
-  }, []);
-
-  // Handles the form data submission and other
-  // activities.
-  const submitHandler = (e: FormEvent) => {
-    e.preventDefault();
-    const form: any = e.currentTarget;
-    const formData = {
-      participantId: participantID,
-      educationId: state.data.educationId,
-      employmentId: state.data.employmentId,
-      attendingSchool: form.attendingSchool.value,
-      school: form.schoolName.value,
-      grade: form.schoolGrade.value,
-      employed: form.employed.value,
-      typeOfEmployment: form.typeOfEmployment.value,
-      desiredProfession: form.desiredProfession.value,
-    };
-    dispatch(doPost(formData))
-      .unwrap()
-      .then((data) => {
-        console.log("EducationAndEmployment POST backend API was successful!");
-        navigate("../criminal_history");
-      })
-      .catch((err) => {
-        console.log("EducationAndEmployment POST backend API didn't work!");
-        console.log(err);
-      });
-  };
-
-  // Handles the form fields' value changes
-  // and other activities.
-  const changeHandler = (e: FormEvent) => {
-    const form: any = e.currentTarget;
-    if (form.attendingSchool.value === "Yes") {
-      dispatch(enableSchoolFields(null));
-    } else {
-      form.schoolName.value = "";
-      form.schoolGrade.value = "";
-      dispatch(disableSchoolFields(null));
-    }
-    if (form.typeOfEmployment.value === "Job Search") {
-      dispatch(enableDesiredProfession(null));
-    } else {
-      form.desiredProfession.value = "";
-      dispatch(disableDesiredProfession(null));
-    }
-  };
+  useEffect(() => handleEffect(dispatch, participantID), []);
 
   return (
     <CYFMSLayout>
@@ -102,8 +40,12 @@ const EducationAndEmployment = (): ReactElement => {
           flexDirection: "column",
           gap: "1rem 0",
         }}
-        onSubmit={submitHandler}
-        onChange={changeHandler}
+        onSubmit={(event: FormEvent<HTMLFormElement>) =>
+          handleSubmit(event, navigate, dispatch, participantID, state.data)
+        }
+        onChange={(event: FormEvent<HTMLFormElement>) =>
+          handleChange(event, dispatch)
+        }
         onKeyDown={onKeyDown}
       >
         <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem 0" }}>

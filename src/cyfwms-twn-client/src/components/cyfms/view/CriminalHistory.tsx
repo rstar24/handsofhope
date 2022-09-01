@@ -16,14 +16,18 @@ import type { ReactElement } from "react";
 
 const CriminalHistory = (): ReactElement => {
   const data = useAppSelector((state) => state.cyfmsCriminalHistory.data);
-  if (
-    data.criminalHistoryRecordList[0].charges === "" &&
-    data.criminalHistoryRecordList[0].conviction === "" &&
-    data.criminalHistoryRecordList[0].arrestDate !== "0001-01-01" &&
-    data.criminalHistoryRecordList[0].sentence === ""
-  ) {
-    return <></>;
+
+  if (data.criminalHistoryRecordList.length > 0) {
+    if (
+      data.criminalHistoryRecordList[0].charges === "" &&
+      data.criminalHistoryRecordList[0].conviction === "" &&
+      data.criminalHistoryRecordList[0].arrestDate !== "0001-01-01" &&
+      data.criminalHistoryRecordList[0].sentence === ""
+    ) {
+      return <></>;
+    }
   }
+
   return (
     <>
       {Object.entries(data.criminalHistoryRecordList).map(

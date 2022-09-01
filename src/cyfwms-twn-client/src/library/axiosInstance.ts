@@ -22,7 +22,6 @@ axiosInstance.interceptors.response.use(
   function (err) {
     const data: any = store.getState();
     const { dispatch } = store;
-    console.log("before", data.login.isLoggedIn);
     const token: any = jwtDecode(data.login.token);
     if (token.exp < Date.now() / 1000) {
       dispatch(setLoginFalse(false));

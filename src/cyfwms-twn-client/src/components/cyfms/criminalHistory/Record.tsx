@@ -1,45 +1,25 @@
-import { removeRecordNumber } from "../../../features/cyfms/criminalHistory/slice";
 import { useAppDispatch } from "../../../library/hooks";
 import Input from "../../Input";
 import CYFMSTextArea from "../CYFMSTextArea";
+import { handleRemoveRecord } from "./record";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { Box, IconButton, Typography } from "@mui/material";
 import React from "react";
-import type {
-  ComponentPropsWithoutRef,
-  ElementType,
-  ReactElement,
-} from "react";
+import type { Record as RecordT } from "../../../features/cyfms/criminalHistory/slice";
+import type { ReactElement } from "react";
 
 /**
- * A custom props data type for the props passed
- * to the `CriminalHistoryRecord` component.
+ * Record for criminal history.
+ * @example
+ * ```jsx
+ * <Record record={} number={} />
+ * ```
  */
-export interface CriminalHistoryRecordProps
-  extends ComponentPropsWithoutRef<ElementType> {
-  /** Holds data within a record. */
-  record: any;
-  /** Uniquely identifies a record. */
-  recordNumber: number;
-}
-
-/**
- * The CriminalHistoryRecord functional component.
- * @param props Must contain the `recordNumber` prop.
- * @returns HouseholdMembersRecord component skeleton.
- */
-export const CriminalHistoryRecord = (
-  props: CriminalHistoryRecordProps
-): ReactElement => {
+const Record = (props: AppRecordProps<RecordT>): ReactElement => {
   const dispatch = useAppDispatch();
-
-  const removeRecord = () => {
-    dispatch(removeRecordNumber(props.recordNumber));
-  };
 
   return (
     <Box
-      key={`record_${props.recordNumber}`}
       sx={{
         display: "flex",
         flexDirection: "column",
@@ -53,14 +33,21 @@ export const CriminalHistoryRecord = (
       <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem 0" }}>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Typography color="primary" sx={{ flexGrow: 1 }}>
-            Record {props.recordNumber}
+            Record {props.number}
           </Typography>
           <IconButton
             aria-label="delete record"
             size="medium"
             color="primary"
             sx={{ p: 0 }}
-            onClick={() => removeRecord()}
+            onClick={(event) =>
+              handleRemoveRecord(
+                event,
+                dispatch,
+                props.record.criminalHistoryRecordId,
+                props.number
+              )
+            }
           >
             <CancelIcon fontSize="medium" />
           </IconButton>
@@ -69,7 +56,7 @@ export const CriminalHistoryRecord = (
           <Box sx={{ flexBasis: "0", flexGrow: 1 }}>
             <Input
               autofill={props.record.arrestDate}
-              id={`record_${props.recordNumber}_ArrestDate`}
+              id={`record_${props.number}_ArrestDate`}
               maxDate={new Date().toISOString().substring(0, 10)}
               minDate="1900-01-01"
               value="Arrest Date"
@@ -82,21 +69,21 @@ export const CriminalHistoryRecord = (
           formLabelFlex="1 1 0"
           outlinedInputFlex="5.05 1 0"
           autofill={props.record.charges}
-          id={`record_${props.recordNumber}_Charges`}
+          id={`record_${props.number}_Charges`}
           value="Charges"
         />
         <CYFMSTextArea
           formLabelFlex="1 1 0"
           outlinedInputFlex="5.05 1 0"
           autofill={props.record.conviction}
-          id={`record_${props.recordNumber}_Conviction`}
+          id={`record_${props.number}_Conviction`}
           value="Conviction"
         />
         <CYFMSTextArea
           formLabelFlex="1 1 0"
           outlinedInputFlex="5.05 1 0"
           autofill={props.record.sentence}
-          id={`record_${props.recordNumber}_Sentence`}
+          id={`record_${props.number}_Sentence`}
           value="Sentence"
         />
       </Box>
@@ -104,17 +91,4 @@ export const CriminalHistoryRecord = (
   );
 };
 
-const CriminalHistoryRecordList = (recordList: any): ReactElement[] => {
-  let res: ReactElement[] = new Array(recordList.length);
-  for (let index = 0; index < recordList.length; ++index) {
-    res.push(
-      <CriminalHistoryRecord
-        record={recordList[index]}
-        recordNumber={index + 1}
-      />
-    );
-  }
-  return res;
-};
-
-export default CriminalHistoryRecordList;
+export default Record;
