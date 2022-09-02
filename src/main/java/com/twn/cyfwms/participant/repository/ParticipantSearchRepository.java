@@ -5,15 +5,10 @@ import com.twn.cyfwms.participant.dto.ParticipantSearchResultsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Repository
 public class ParticipantSearchRepository {
@@ -48,7 +43,7 @@ public class ParticipantSearchRepository {
 
         StringBuffer  querySBuff = new StringBuffer();
         querySBuff.append("select p.participantid, p.firstname, p.middlename, p.surname, p.maritalstatus,  p.dateofbirth, p2.city, p2.homephone, p2.cellphone, p2.workphone, p.referenceid ");
-        querySBuff.append("from participant p left join participantcontact p2 on p.participantid = p2.participantid where 1=1");
+        querySBuff.append("from participant p left join participantcontact p2 on p.participantid = p2.participantid where p.status='ACTIVE'");
 
            String firstName = searchCriteria.getFirstname();
            if (firstName != null && !firstName.trim().isEmpty()) {

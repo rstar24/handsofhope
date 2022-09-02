@@ -47,6 +47,12 @@ public class TWNInitialContactController {
     public InitialContactFileDetailsDto saveAllFileDetails(@RequestBody InitialContactFileDetailsDto initialContactFileDetailsDto) {
         return initialContactFileDetailsService.saveAllFileDetails(initialContactFileDetailsDto);
     }
+    @DeleteMapping("/removeInitialContactFileDetails/{fileNumber}")
+    @ApiOperation("Remove Participant")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity removeInitialContactFileDetails(@PathVariable("fileNumber") Long fileNumber) {
+        return initialContactFileDetailsService.removeInitialContactFileDetails(fileNumber);
+    }
 
     @GetMapping(value = "/readAllIncidentReports/{filedetailsid}", produces = "application/json")
     @ApiOperation("Read Identity")

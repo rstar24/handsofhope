@@ -109,15 +109,18 @@ public class ReadAllOutputParticipantServiceImpl implements ReadAllOutputPartici
                     readAllOutputParticipantDto.setCounselorCFSWorker(counselorCFSWorkerRecordList);
                     for (int i = 0; i < readAllOutputParticipantDto.getCounselorCFSWorker().size(); ++i) {
                         if (readAllOutputParticipantDto.getCounselorCFSWorker().get(i).getStartDate() == null) {
-                            readAllOutputParticipantDto.getCounselorCFSWorker().get(i).setStartDate(LocalDate.of(0, 0, 0));
+                            readAllOutputParticipantDto.getCounselorCFSWorker().get(i).setStartDate(LocalDate.of(1, 1, 1));
                         }
                         if (readAllOutputParticipantDto.getCounselorCFSWorker().get(i).getEndDate() == null) {
-                            readAllOutputParticipantDto.getCounselorCFSWorker().get(i).setEndDate(LocalDate.of(0, 0, 0));
+                            readAllOutputParticipantDto.getCounselorCFSWorker().get(i).setEndDate(LocalDate.of(1, 1, 1));
                         }
                     }
                     if (!participantOtherInformationOpt.getStatus().equalsIgnoreCase("INACTIVE")) {
                         readAllOutputParticipantDto.setParticipantOtherInfo(participantOtherInformationOpt);
                     }
+                }
+                else{
+                    throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
                 }
             } else {
                 throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");

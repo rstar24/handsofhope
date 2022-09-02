@@ -34,7 +34,7 @@ public class InitialContactSearchRepository {
     private StringBuffer createSearchQuery(InitialContactSearchCriteriaDto searchCriteria, List<Object> argsObjectList) {
         StringBuffer  querySBuff = new StringBuffer();
         querySBuff.append("select p.filedetailsid, p.clientname, p.fileNumber,p.caseworker,p.startingDate,p.status ,p2.typeofpatient ");
-        querySBuff.append("from initialcontactfiledetails p left join initialcontactpatientcareinfo p2 on p.filedetailsid = p2.filedetailsid where 1=1");
+        querySBuff.append("from initialcontactfiledetails p left join initialcontactpatientcareinfo p2 on p.filedetailsid = p2.filedetailsid where p.status='ACTIVE'");
             String clientName=searchCriteria.getClientName();
             if (clientName!=null && !clientName.trim().isEmpty()){
                 clientName=clientName.trim()

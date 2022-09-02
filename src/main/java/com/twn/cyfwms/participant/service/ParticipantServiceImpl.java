@@ -6,8 +6,11 @@ import com.twn.cyfwms.participant.repository.ParticipantRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
 import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -27,7 +30,13 @@ public class ParticipantServiceImpl implements ParticipantService {
             ParticipantIdentityDto participantIdentityResponseDto = new ParticipantIdentityDto();
             Participant participant = readParticipant(participantId);
             if (participant != null) {
-                modelMapper.map(participant, participantIdentityResponseDto);
+                if (!participant.getStatus().equals("INACTIVE")){
+                    modelMapper.map(participant, participantIdentityResponseDto);
+                }
+                else {
+                    throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
+                }
+
             } else {
                 throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
             }
@@ -68,5 +77,19 @@ public class ParticipantServiceImpl implements ParticipantService {
         ParticipantIdentityDto.setParticipantId(participant.getParticipantId());
         ParticipantIdentityDto.setReferenceId(participant.getReferenceId());
         return ParticipantIdentityDto;
+    }
+
+    @Override
+    public ResponseEntity removeParticipant(Long referenceId) {
+        Optional<Participant> participantOpt = participantRepository.findByReferenceId(referenceId);
+        Long participantId=participantOpt.get().getParticipantId();
+        Participant participant = participantRepository.findByParticipantId(participantId);
+        if (participant !=null){
+            participant.setStatus("INACTIVE");
+            participantRepository.save(participant);
+        } else {
+            throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
+        }
+        return new ResponseEntity( HttpStatus.OK);
     }
 }

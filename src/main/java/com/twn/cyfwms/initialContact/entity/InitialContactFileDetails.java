@@ -47,6 +47,9 @@ public class InitialContactFileDetails implements Serializable {
     @Getter @Setter @Column(name = "status")
     private String status;
 
+    @Getter @Setter @Column(name = "statusofdeletion")
+    private String statusOfDeletion;
+
     @CreationTimestamp
     @Getter @Setter @Column(name = "creationdate")
     private LocalDateTime creationDateTime;

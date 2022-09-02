@@ -6,6 +6,8 @@ import com.twn.cyfwms.initialContact.repository.InitialContactFileDetailsReposit
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import java.time.LocalDate;
@@ -27,7 +29,12 @@ public class InitialContactFileDetailsServiceImpl implements  InitialContactFile
             InitialContactFileDetailsDto initialContactFileDetailsDto = new InitialContactFileDetailsDto();
             InitialContactFileDetails initialContactFileDetails = initialContactFileDetailsRepository.findById(fileDetailsID).get();
             if (initialContactFileDetails != null) {
-                modelMapper.map(initialContactFileDetails, initialContactFileDetailsDto);
+                if (!initialContactFileDetails.getStatus().equals("INACTIVE")){
+                    modelMapper.map(initialContactFileDetails, initialContactFileDetailsDto);
+                }
+                else {
+                    throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
+                }
                 if (initialContactFileDetailsDto.getDateClosed()==null){
                     initialContactFileDetailsDto.setDateClosed(LocalDate.of(1,1,1));
                 }
@@ -45,6 +52,7 @@ public class InitialContactFileDetailsServiceImpl implements  InitialContactFile
         if (initialContactFileDetailsDto.getFileDetailsId() == 0) {
             initialContactFileDetails = new InitialContactFileDetails();
             modelMapper.map(initialContactFileDetailsDto, initialContactFileDetails);
+            initialContactFileDetails.setStatusOfDeletion("ACTIVE");
             Optional<InitialContactFileDetails> initialContactFileDetailOpt = initialContactFileDetailsRepository.findTopByOrderByFileNumberDesc();
             if (initialContactFileDetailOpt.isPresent()) {
                 InitialContactFileDetails initialContactFileDtls = initialContactFileDetailOpt.get();
@@ -60,5 +68,19 @@ public class InitialContactFileDetailsServiceImpl implements  InitialContactFile
         initialContactFileDetailsDto.setFileDetailsId(initialContactFileDetails.getFileDetailsId());
         initialContactFileDetailsDto.setFileNumber(initialContactFileDetails.getFileNumber());
         return initialContactFileDetailsDto;
+    }
+
+    @Override
+    public ResponseEntity removeInitialContactFileDetails(Long fileNumber) {
+        Optional<InitialContactFileDetails> initialContactFileDetailsOpt = initialContactFileDetailsRepository.findByFileNumber(fileNumber);
+        Long fileDetailsId=initialContactFileDetailsOpt.get().getFileDetailsId();
+        InitialContactFileDetails initialContactFileDetails = initialContactFileDetailsRepository.findByFileDetailsId(fileDetailsId);
+        if (initialContactFileDetails !=null){
+            initialContactFileDetails.setStatus("INACTIVE");
+            initialContactFileDetailsRepository.save(initialContactFileDetails);
+        } else {
+            throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
+        }
+        return new ResponseEntity( HttpStatus.OK);
     }
 }

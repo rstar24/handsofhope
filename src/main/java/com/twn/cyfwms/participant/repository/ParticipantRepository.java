@@ -12,4 +12,5 @@ public interface ParticipantRepository extends JpaRepository<Participant, Long> 
     Optional<Participant> findTopByOrderByCreationDateTimeDesc();
 
     Optional<Participant> findByReferenceId(Long referenceId);
+    Participant findByParticipantId(Long participantId);
 }
