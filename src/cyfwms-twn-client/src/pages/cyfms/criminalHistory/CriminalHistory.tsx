@@ -12,7 +12,7 @@ import {
 } from "../../../features/cyfms/criminalHistory/slice";
 import { onKeyDown } from "../../../library/app";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
-import { handleEffect, handleAddMore, handleSubmit } from "./criminalHistory";
+import { handleEffect, handleAddMore, handleSubmit } from "./criminalHistory_";
 import { Box, Checkbox, FormControlLabel, FormGroup } from "@mui/material";
 import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";

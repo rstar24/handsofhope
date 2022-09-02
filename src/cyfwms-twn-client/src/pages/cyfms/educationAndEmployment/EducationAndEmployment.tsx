@@ -8,7 +8,7 @@ import {
   handleChange,
   handleEffect,
   handleSubmit,
-} from "./educationAndEmployment";
+} from "./educationAndEmployment_";
 import { Box, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";

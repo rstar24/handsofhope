@@ -5,7 +5,7 @@ import CYFMSDropdownProvince from "../../../components/cyfms/CYFMSDropdownProvin
 import CYFMSLayout from "../../../components/cyfms/CYFMSLayout";
 import { onKeyDown } from "../../../library/app";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
-import { handleEffect, handleSubmit } from "./contact";
+import { handleEffect, handleSubmit } from "./contact_";
 import { Box } from "@mui/material";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";

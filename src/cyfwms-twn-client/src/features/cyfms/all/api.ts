@@ -1,7 +1,7 @@
 import axiosInstance from "../../../library/axiosInstance";
 import type { AxiosResponse } from "axios";
 
-export const doGetAllAPI = async (
+export const doGetAPI = async (
   referenceID: number,
   token: string
 ): Promise<AxiosResponse> => {

@@ -1,7 +1,7 @@
 import type { KeyboardEventHandler } from "react";
 
 /**
- * START: Prevent form submission upon hitting "Enter" key
+ * Prevent form submission upon hitting "Enter" key
  * with the exception of "Submit" button.
  */
 export const onKeyDown: KeyboardEventHandler<HTMLFormElement> = (e) => {
@@ -11,10 +11,12 @@ export const onKeyDown: KeyboardEventHandler<HTMLFormElement> = (e) => {
     n.closest("form")
       ?.querySelectorAll("input,button,a")
       .forEach((node, index, nodes) => {
-        if (index !== nodes.length - 1) {
-          if (node.isEqualNode(n)) {
-            (nodes[index + 1] as HTMLElement).focus();
-          }
+        /* Skip the "Submit" button node
+         * as it is the last one. */
+        if (index !== nodes.length - 1) return;
+        /* Focus next node. */
+        if (node.isEqualNode(n)) {
+          (nodes[index + 1] as HTMLElement).focus();
         }
       });
   }

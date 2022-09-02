@@ -3,7 +3,7 @@ import CYFMSLayout from "../../../components/cyfms/CYFMSLayout";
 import CYFMSTextArea from "../../../components/cyfms/CYFMSTextArea";
 import { onKeyDown } from "../../../library/app";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
-import { handleEffect, handleSubmit } from "./otherInformation";
+import { handleEffect, handleSubmit } from "./otherInformation_";
 import { Box, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";

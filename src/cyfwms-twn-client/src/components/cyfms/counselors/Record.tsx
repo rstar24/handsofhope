@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import Input from "../../Input";
 import CYFMSDropdown from "../CYFMSDropdown";
 import CYFMSTextArea from "../CYFMSTextArea";
-import { handleRemoveRecord } from "./record";
+import { handleRemoveRecord } from "./record_";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { Box, IconButton, Typography } from "@mui/material";
 import React from "react";
