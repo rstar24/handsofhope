@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import type { ReactElement } from "react";
 import { useIdleTimer } from "react-idle-timer";
 import { Button, Modal, Typography } from "@mui/material";
-import { Box } from "@mui/system";
+import { Box } from "@mui/material";
 
 import { useDispatch } from "react-redux";
 import { setLoginFalse } from "../features/login/slice";

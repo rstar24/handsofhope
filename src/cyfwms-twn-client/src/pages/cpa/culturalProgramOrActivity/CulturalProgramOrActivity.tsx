@@ -85,14 +85,14 @@ const CulturalProgramOrActivity = (): ReactElement => {
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+            <CPAInput id="total_participation" value="Total Participation" />
+          </Box>
+          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CPAInput
               //autofill={data.incidentLocation}
               id="total_cost"
               value="Total Cost"
             />
-          </Box>
-          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CPAInput id="total_participation" value="Total Participation" />
           </Box>
         </Box>
         <CPATextArea
@@ -103,7 +103,7 @@ const CulturalProgramOrActivity = (): ReactElement => {
         <CPATextArea
           //autofill={data.actionPlan}
           id="participation_details"
-          value="Cost/Participation Details"
+          value="Participation / Cost Details"
         />
         <CPATextArea
           //autofill={data.actionTaken}
