@@ -19,6 +19,7 @@ import { Provider } from "react-redux";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
 import type { ReactElement } from "react";
+import CPA from "./pages/cpa/CPA";
 
 const App = (): ReactElement => {
   return (
@@ -44,6 +45,7 @@ const App = (): ReactElement => {
                   path="initial_contact/view/*"
                   element={<InitialContactView />}
                 />
+                <Route path="cpa/*" element={<CPA />} />
               </Routes>
             </BrowserRouter>
           </ThemeProvider>
