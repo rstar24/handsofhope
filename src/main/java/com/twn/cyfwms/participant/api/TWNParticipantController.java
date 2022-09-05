@@ -1,13 +1,18 @@
 package com.twn.cyfwms.participant.api;
 
 import com.twn.cyfwms.participant.dto.*;
+import com.twn.cyfwms.participant.entity.ParticipantImage;
 import com.twn.cyfwms.participant.service.*;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -47,6 +52,9 @@ public class TWNParticipantController {
 
     @Autowired
     private ReadAllOutputParticipantService readAllOutputParticipantService;
+
+    @Autowired
+    private ImageService imageService;
 
     @GetMapping(value = "/readParticipantIdentity/{participantid}", produces = "application/json")
     @ApiOperation("Read Identity")
@@ -242,4 +250,30 @@ public class TWNParticipantController {
     public ReadAllOutputParticipantDto readAllOutPutParticipant(@PathVariable("referenceId") Long referenceId) {
         return readAllOutputParticipantService.readAllOutPutParticipant(referenceId);
     }
+    @PostMapping("/upload")
+    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("participantId") String participantId) {
+        String message = "";
+        try {
+            imageService.uploadImage(file,participantId);
+
+            message = "Uploaded the file successfully: " + file.getOriginalFilename();
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
+        } catch (Exception e) {
+            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
+        }
+    }
+
+    @GetMapping("/files/{id}")
+    public ResponseEntity<byte[]> getFile(@PathVariable Long id) {
+        ParticipantImage fileDB = imageService.getFile(id);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDB.getName() + "\"")
+                        .contentType(MediaType.valueOf(fileDB.getType()))
+                .body(fileDB.getImage());
+    }
+
+
+
 }

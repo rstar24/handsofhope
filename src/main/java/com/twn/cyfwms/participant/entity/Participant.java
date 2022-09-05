@@ -85,6 +85,11 @@ public class Participant implements Serializable {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "participantid", referencedColumnName = "participantid")
     @Getter @Setter
+    private ParticipantImage participantImage;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "participantid", referencedColumnName = "participantid")
+    @Getter @Setter
     private Employment employment;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

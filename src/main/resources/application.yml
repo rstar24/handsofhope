@@ -12,6 +12,10 @@ spring:
     include:
       - participant
       - initialContact
+  servlet:
+    multipart:
+      max-file-size: 2MB
+      max-request-size: 2MB
 
   jpa:
     hibernate:
