@@ -4,6 +4,9 @@ import { Box } from "@mui/material";
 import CPALayout from "../../../components/cpa/CPALayout";
 import CPATextArea from "../../../components/cpa/CPATextArea";
 import { CYFSWMSNextButton } from "../../../components/CYFSWMSButtons";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { unhideTabs } from "../../../features/navBarSlice";
 /**
  * The CulturalProgramOrActivity functional component.
  * @returns CulturalProgramOrActivity component skeleton.
@@ -11,8 +14,12 @@ import { CYFSWMSNextButton } from "../../../components/CYFSWMSButtons";
 const CulturalProgramOrActivity = (): ReactElement => {
   // Handles the form data submission and other
   // activities.
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
+    dispatch(unhideTabs(null));
+    navigate("../participant");
   };
 
   return (
@@ -24,7 +31,7 @@ const CulturalProgramOrActivity = (): ReactElement => {
           flexDirection: "column",
           gap: "1rem 0",
         }}
-        //onSubmit={submitHandler}
+        onSubmit={submitHandler}
         //onKeyDown={onKeyDown}
       >
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>

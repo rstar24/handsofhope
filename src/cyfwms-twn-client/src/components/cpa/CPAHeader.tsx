@@ -10,7 +10,7 @@ const CPAHeader = (): ReactElement => {
   return (
     <Box sx={{ display: "flex", alignItems: "center" }}>
       <Box component="img" src="/img/halfMoon.svg" height={75} width={75} />
-      <Typography component="h2">“Cultural Programs and Activities</Typography>
+      <Typography component="h2">Cultural Programs and Activities</Typography>
     </Box>
   );
 };

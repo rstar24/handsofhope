@@ -37,11 +37,11 @@ const CPALayout = (props: {
               },
               {
                 value: "Participants",
-                route: "../participants",
+                route: "../participant",
               },
               {
                 value: "Attachments",
-                route: "../attachments",
+                route: "../attachment",
               },
             ]}
           />
