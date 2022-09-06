@@ -33,6 +33,8 @@ public class TWNInitialContactController {
     InitialContactContactNotesService initialContactContactNotesService;
     @Autowired
     InitialContactContactNotesSearchService initialContactContactNotesSearchService;
+    @Autowired
+    InitialContactClientSearchService initialContactClientSearchService;
 
     @GetMapping(value = "/readAllFileDetails/{filedetailsid}", produces = "application/json")
     @ApiOperation("Read Identity")
@@ -155,7 +157,7 @@ public class TWNInitialContactController {
     @GetMapping(value = {"/searchContactNotes/{data}"},produces = "application/json")
     @ApiOperation("Search InitialContact")
     @ResponseStatus(HttpStatus.OK)
-    public List<InitialContactContactNotesSearchResultsDto> searchIntialContactContactNotes(@PathVariable Map<String, String> var)
+    public List<InitialContactContactNotesSearchResultsDto> searchInitialContactContactNotes(@PathVariable Map<String, String> var)
     {
         InitialContactContactNotesSearchCriteriaDto contactNotesSearchCriteriaDto=new InitialContactContactNotesSearchCriteriaDto();
 
@@ -169,5 +171,17 @@ public class TWNInitialContactController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity removeContactNotes(@PathVariable("contactNotesId") Long contactNotesId) {
         return initialContactContactNotesService.removeContactNotes(contactNotesId);
+    }
+
+    @GetMapping(value = {"/InitialContactsClientSearch/{data}"},produces = "application/json")
+    @ApiOperation("Search icClientSearch")
+    @ResponseStatus(HttpStatus.OK)
+    public List<InitialContactClientSearchResultsDto> searchInitialContactClient(@PathVariable Map<String, String> var)
+    {
+        InitialContactClientSearchCriteriaDto initialContactClientSearchCriteriaDto=new InitialContactClientSearchCriteriaDto();
+        initialContactClientSearchCriteriaDto.setData(
+                ("null".equals(var.get("data"))
+                        || var.get("data") == null) ?null:var.get("data"));
+        return initialContactClientSearchService.searchData(initialContactClientSearchCriteriaDto);
     }
 }
