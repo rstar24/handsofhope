@@ -1,23 +1,17 @@
 package com.twn.cyfwms.CulturalProgram.entity;
-
 import lombok.*;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "culturalprogandact")
 public class CulturalProgAndAct implements Serializable {
-
-    @Id
-    @Getter
-    @Setter
+    @Id @Getter @Setter
     @Column(name = "culturalprogramid", updatable = false, nullable = false)
     @SequenceGenerator(
             name = "CulturalProgramIdGenerator",
@@ -38,18 +32,18 @@ public class CulturalProgAndAct implements Serializable {
     @Getter @Setter @Column(name = "status")
     private String  status;
     @Getter @Setter @Column(name = "caseworker")
-    private String     caseworker;
+    private String  caseworker;
     @Getter @Setter @Column(name = "startdate")
-    private LocalDate   startDate;
+    private LocalDate startDate;
     @Getter @Setter @Column(name = "enddate")
-    private LocalDate   endDate;
+    private LocalDate endDate;
     @Getter @Setter @Column(name = "totalcost")
     private String totalCost;
     @Getter @Setter @Column(name = "totalparticipation")
     private String totalParticipation;
     @Getter @Setter @Column(name = "sessiondetails" ,length = 1000)
     private String sessionDetails;
-    @Getter @Setter @Column(name = "costprparticipationdetails",length = 1000)
+    @Getter @Setter @Column(name = "costorparticipationdetails",length = 1000)
     private String costOrParticipationDetails;
     @Getter @Setter @Column(name = "outcomes" ,length = 1000)
     private String outcomes;

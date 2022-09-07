@@ -1,9 +1,9 @@
 package com.twn.cyfwms.CulturalProgram.api;
-import com.twn.cyfwms.CulturalProgram.dto.CulturalProgAndActDto;
-import com.twn.cyfwms.CulturalProgram.dto.CulturalProgramSearchCriteriaDto;
-import com.twn.cyfwms.CulturalProgram.dto.CultureProgramSearchResultsDto;
+import com.twn.cyfwms.CulturalProgram.dto.*;
+import com.twn.cyfwms.CulturalProgram.service.CulturalProgAndActSearchService;
 import com.twn.cyfwms.CulturalProgram.service.CulturalProgAndActService;
-import com.twn.cyfwms.CulturalProgram.service.CulturalProgramSearchService;
+import com.twn.cyfwms.CulturalProgram.service.ParticipantCulturalProgSearchService;
+import com.twn.cyfwms.CulturalProgram.service.ParticipantCulturalProgService;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,30 +13,50 @@ import java.util.List;
 import java.util.Map;
 @RestController
 @AllArgsConstructor
-@RequestMapping("/v1/culturalprogramservice")
+@RequestMapping("/v1/culturalprogandactservice")
 @CrossOrigin("*")
 public class TWNCulturalProgramController {
     @Autowired
-    CulturalProgramSearchService culturalProgramSearchService;
-
+    ParticipantCulturalProgSearchService participantCulturalProgSearchService;
+    @Autowired
+    CulturalProgAndActSearchService culturalProgAndActSearchService;
     @Autowired
     private CulturalProgAndActService culturalProgAndActService;
-
-    @GetMapping(value = {"/culturalProgramSearch/{data}"},produces = "application/json")
-    @ApiOperation("Search culturalProgram")
-    @ResponseStatus(HttpStatus.OK)
-    public List<CultureProgramSearchResultsDto> searchCulturalProgram(@PathVariable Map<String, String> var)
-    {
-        CulturalProgramSearchCriteriaDto culturalProgramSearchCriteriaDto=new CulturalProgramSearchCriteriaDto();
-        culturalProgramSearchCriteriaDto.setData(
-                ("null".equals(var.get("data"))
-                        || var.get("data") == null) ?null:var.get("data"));
-        return culturalProgramSearchService.search(culturalProgramSearchCriteriaDto);
-    }
-    @PutMapping(value = "/saveculturalprogram", produces = "application/json")
+    @Autowired
+    private ParticipantCulturalProgService participantCulturalProgService;
+    @PutMapping(value = "/saveCulturalProgAndAct", produces = "application/json")
     @ApiOperation("Save or Update cultural program")
     @ResponseStatus(HttpStatus.OK)
     public CulturalProgAndActDto saveCulturalProgramIdentity(@RequestBody CulturalProgAndActDto culturalProgAndActDto) {
-        return culturalProgAndActService.saveculturalProgramIdentity(culturalProgAndActDto);
+        return culturalProgAndActService.saveCulturalProgramIdentity(culturalProgAndActDto);
+    }
+
+    @GetMapping(value = {"/culturalProgAndActSearch/{data}"},produces = "application/json")
+    @ApiOperation("Search CulturalProgAndAct")
+    @ResponseStatus(HttpStatus.OK)
+    public List<CultureProgAndActSearchResultsDto> searchCulturalProgAndAct(@PathVariable Map<String, String> var)
+    {
+        CulturalProgAndActSearchCriteriaDto culturalProgAndActSearchCriteriaDto =new CulturalProgAndActSearchCriteriaDto();
+        culturalProgAndActSearchCriteriaDto.setData(
+                ("null".equals(var.get("data"))
+                        || var.get("data") == null) ?null:var.get("data"));
+        return culturalProgAndActSearchService.searchCulturalProgAndAct(culturalProgAndActSearchCriteriaDto);
+    }
+    @GetMapping(value = {"/participantCulturalProgSearch/{data}"},produces = "application/json")
+    @ApiOperation("Search culturalProgram")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ParticipantCultureProgSearchResultsDto> searchCulturalProgram(@PathVariable Map<String, String> var)
+    {
+        CulturalProgAndActSearchCriteriaDto culturalProgAndActSearchCriteriaDto =new CulturalProgAndActSearchCriteriaDto();
+        culturalProgAndActSearchCriteriaDto.setData(
+                ("null".equals(var.get("data"))
+                        || var.get("data") == null) ?null:var.get("data"));
+        return participantCulturalProgSearchService.search(culturalProgAndActSearchCriteriaDto);
+    }
+    @PutMapping(value = "/saveParticipantCulturalProg", produces = "application/json")
+    @ApiOperation("Save or Update cultural program")
+    @ResponseStatus(HttpStatus.OK)
+    public ParticipantCulturalProgDto saveParticipantCulturalProg(@RequestBody ParticipantCulturalProgDto participantCulturalProgDto) {
+        return participantCulturalProgService.saveParticipantCulturalProg(participantCulturalProgDto);
     }
 }

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface CulturalProgramRepository extends JpaRepository<CulturalProgAndAct, Long> {
-    CulturalProgAndAct findByCulturalProgramId(Long culturalProgramId);
+public interface CulturalProgAndActRepository extends JpaRepository<CulturalProgAndAct, Long> {
     Optional<CulturalProgAndAct> findTopByOrderByReferenceIdDesc();
+    Optional<CulturalProgAndAct> findByCulturalProgramId(Long culturalProgramId);
 }

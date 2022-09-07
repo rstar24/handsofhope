@@ -1,24 +1,21 @@
 package com.twn.cyfwms.CulturalProgram.repository;
-
-import com.twn.cyfwms.CulturalProgram.dto.CulturalProgramSearchCriteriaDto;
-import com.twn.cyfwms.CulturalProgram.dto.CultureProgramSearchResultsDto;
-import com.twn.cyfwms.initialContact.dto.InitialContactClientSearchResultsDto;
+import com.twn.cyfwms.CulturalProgram.dto.CulturalProgAndActSearchCriteriaDto;
+import com.twn.cyfwms.CulturalProgram.dto.ParticipantCultureProgSearchResultsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-
 import java.util.ArrayList;
 import java.util.List;
 @Repository
-public class CultureProgramSearchRepository {
+public class ParticipantCultureProgSearchRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    public List<CultureProgramSearchResultsDto> search(CulturalProgramSearchCriteriaDto culturalProgramSearchCriteriaDto) {
+    public List<ParticipantCultureProgSearchResultsDto> search(CulturalProgAndActSearchCriteriaDto culturalProgAndActSearchCriteriaDto) {
         List<Object> argsObjectList = new ArrayList<>();
-        StringBuffer querySBuff = createSearchQuery(culturalProgramSearchCriteriaDto, argsObjectList);
+        StringBuffer querySBuff = createSearchQuery(culturalProgAndActSearchCriteriaDto, argsObjectList);
         return jdbcTemplate.query(querySBuff.toString(),argsObjectList.toArray(),
                 (rs, rowNum) ->
-                        new CultureProgramSearchResultsDto(
+                        new ParticipantCultureProgSearchResultsDto(
                                 rs.getLong("participantId"),
                                 rs.getString("firstname"),
                                 rs.getString("surname")
@@ -26,7 +23,7 @@ public class CultureProgramSearchRepository {
         );
     }
 
-    private StringBuffer createSearchQuery(CulturalProgramSearchCriteriaDto searchCriteria, List<Object> argsObjectList) {
+    private StringBuffer createSearchQuery(CulturalProgAndActSearchCriteriaDto searchCriteria, List<Object> argsObjectList) {
         StringBuffer  querySBuff = new StringBuffer();
         String data=searchCriteria.getData();
         querySBuff.append("select p.firstname ,p.surname , p.participantid ");

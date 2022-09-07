@@ -1,42 +1,39 @@
 package com.twn.cyfwms.CulturalProgram.dto;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import java.time.LocalDate;
-
 @Builder
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @AllArgsConstructor
 @NoArgsConstructor
 public class CulturalProgAndActDto {
-
     @Getter @Setter
-    private Long CulturalProgramId;
+    private Long culturalProgramId;
     @Getter @Setter
     private Long referenceId;
     @Getter @Setter
-    private String Name;
+    private String name;
     @Getter @Setter
-    private String Type;
+    private String type;
     @Getter @Setter
-    private String  Status;
+    private String status;
     @Getter @Setter
-    private String  Caseworker;
+    private String caseworker;
     @Getter @Setter
-    private LocalDate StartDate;
+    private LocalDate startDate;
     @Getter @Setter
-    private LocalDate EndDate;
+    private LocalDate endDate;
     @Getter @Setter
-    private String TotalCost;
+    private String totalCost;
     @Getter @Setter
-    private String TotalParticipation;
+    private String totalParticipation;
     @Getter @Setter
-    private String SessionDetails;
+    private String sessionDetails;
     @Getter @Setter
-    private String CostOrParticipationDetails;
+    private String costOrParticipationDetails;
     @Getter @Setter
-    private String Outcomes;
+    private String outcomes;
     @Getter @Setter
-    private String Notes;
+    private String notes;
 }
