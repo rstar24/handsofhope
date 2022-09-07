@@ -5,6 +5,8 @@ import com.twn.cyfwms.CulturalProgram.repository.ParticipantCulturalProgReposito
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 @Service
 public class ParticipantCulturalProgServiceImpl implements ParticipantCulturalProgService {
     @Autowired
@@ -24,6 +26,20 @@ public class ParticipantCulturalProgServiceImpl implements ParticipantCulturalPr
         }
         participant = participantCulturalProgRepository.save(participant);
         participantCulturalProgDto.setParticipantCulturalProId(participant.getParticipantCulturalProId());
+        return participantCulturalProgDto;
+    }
+
+    @Override
+    public ParticipantCulturalProgDto readParticipantCulturalAndAct(Long participantCulturalProId) {
+        ParticipantCulturalProgDto participantCulturalProgDto = new ParticipantCulturalProgDto();
+        if (participantCulturalProId != 0) {
+            ParticipantCulturalProgAndAct participantCulturalProgAndAct = participantCulturalProgRepository.findByparticipantCulturalProId(participantCulturalProId);
+            if (participantCulturalProgAndAct != null) {
+                modelMapper.map(participantCulturalProgAndAct, participantCulturalProgDto);
+            } else {
+                throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
+            }
+        }
         return participantCulturalProgDto;
     }
 }

@@ -1,4 +1,5 @@
 package com.twn.cyfwms.CulturalProgram.service;
+
 import com.twn.cyfwms.CulturalProgram.dto.CulturalProgAndActDto;
 import com.twn.cyfwms.CulturalProgram.entity.CulturalProgAndAct;
 import com.twn.cyfwms.CulturalProgram.repository.CulturalProgAndActRepository;
@@ -6,7 +7,9 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 import java.util.Optional;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 @Service
 @AllArgsConstructor
 public class CulturalProgAndActServiceImpl implements CulturalProgAndActService {
@@ -48,4 +51,25 @@ public class CulturalProgAndActServiceImpl implements CulturalProgAndActService 
         culturalProgAndActDto.setReferenceId(culturalProgAndAct.getReferenceId());
         return culturalProgAndActDto;
     }
+    @Override
+    public CulturalProgAndActDto readCulturalProgAndAct(Long culturalProgramId) {
+        if (culturalProgramId != 0) {
+            CulturalProgAndActDto culturalProgAndActDto = new CulturalProgAndActDto();
+            CulturalProgAndAct culturalProgAndAct = readCulturalProgram(culturalProgramId);
+            if (culturalProgAndAct != null) {
+                if (!culturalProgAndAct.getDeletionOfStatus().equals("INACTIVE")){
+                    modelMapper.map(culturalProgAndAct, culturalProgAndActDto);
+                }
+                else {
+                    throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
+                }
+
+            } else {
+                throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
+            }
+            return culturalProgAndActDto;
+        }
+        throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
+    }
+
 }

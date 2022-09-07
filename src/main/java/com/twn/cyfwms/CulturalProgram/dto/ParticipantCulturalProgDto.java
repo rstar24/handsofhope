@@ -10,6 +10,8 @@ public class ParticipantCulturalProgDto {
     @Getter @Setter
     private Long participantCulturalProId;
     @Getter @Setter
+    private Long culturalProgramId;
+    @Getter @Setter
     private Long participantId;
     @Getter @Setter
     private String role;

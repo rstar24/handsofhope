@@ -11,15 +11,15 @@ public class ParticipantCulturalProgAndAct implements Serializable {
     @Id
     @Getter
     @Setter
-    @Column(name = "participantculturalprogramid", updatable = false, nullable = false)
+    @Column(name = "participantculturalprogid", updatable = false, nullable = false)
     @SequenceGenerator(
-            name = "participantculturalprogramidgenerator",
-            sequenceName = "participantculturalprogramidgenerator",
+            name = "participantculturalprogidgenerator",
+            sequenceName = "participantculturalprogidgenerator",
             allocationSize = 100
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "participantculturalprogramidgenerator"
+            generator = "participantculturalprogidgenerator"
     )
    private Long participantCulturalProId;
     @Getter @Setter @Column(name = "role")

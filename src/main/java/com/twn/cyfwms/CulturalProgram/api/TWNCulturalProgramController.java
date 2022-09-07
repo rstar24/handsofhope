@@ -24,6 +24,14 @@ public class TWNCulturalProgramController {
     private CulturalProgAndActService culturalProgAndActService;
     @Autowired
     private ParticipantCulturalProgService participantCulturalProgService;
+
+    @GetMapping(value = "/readCulturalProgAndAct/{culturalprogramid}", produces = "application/json")
+    @ApiOperation("Read CulturalProgAndAct")
+    @ResponseStatus(HttpStatus.OK)
+    public CulturalProgAndActDto readCulturalProgAndAct(@PathVariable("culturalprogramid") Long culturalProgramId) {
+        return culturalProgAndActService.readCulturalProgAndAct(culturalProgramId);
+    }
+
     @PutMapping(value = "/saveCulturalProgAndAct", produces = "application/json")
     @ApiOperation("Save or Update cultural program")
     @ResponseStatus(HttpStatus.OK)
@@ -42,6 +50,14 @@ public class TWNCulturalProgramController {
                         || var.get("data") == null) ?null:var.get("data"));
         return culturalProgAndActSearchService.searchCulturalProgAndAct(culturalProgAndActSearchCriteriaDto);
     }
+
+    @GetMapping(value = "/readParticipantsCulturalAndAct/{participantculturalprogid}", produces = "application/json")
+    @ApiOperation("Read participantsCulturalAndAct")
+    @ResponseStatus(HttpStatus.OK)
+    public ParticipantCulturalProgDto readParticipantCulturalAndAct(@PathVariable("participantculturalprogid") Long participantCulturalProId) {
+        return participantCulturalProgService.readParticipantCulturalAndAct(participantCulturalProId);
+    }
+
     @GetMapping(value = {"/participantCulturalProgSearch/{data}"},produces = "application/json")
     @ApiOperation("Search culturalProgram")
     @ResponseStatus(HttpStatus.OK)
