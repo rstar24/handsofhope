@@ -56,5 +56,4 @@ public class CulturalProgAndAct implements Serializable {
     @UpdateTimestamp
     @Getter @Setter @Column(name = "lastwritten")
     private LocalDateTime lastWritten;
-
 }

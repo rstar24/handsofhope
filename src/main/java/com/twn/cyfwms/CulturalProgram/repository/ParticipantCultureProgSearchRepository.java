@@ -10,7 +10,7 @@ import java.util.List;
 public class ParticipantCultureProgSearchRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    public List<ParticipantCultureProgSearchResultsDto> search(CulturalProgAndActSearchCriteriaDto culturalProgAndActSearchCriteriaDto) {
+    public List<ParticipantCultureProgSearchResultsDto> searchParticipantCulturalProgAndAct(CulturalProgAndActSearchCriteriaDto culturalProgAndActSearchCriteriaDto) {
         List<Object> argsObjectList = new ArrayList<>();
         StringBuffer querySBuff = createSearchQuery(culturalProgAndActSearchCriteriaDto, argsObjectList);
         return jdbcTemplate.query(querySBuff.toString(),argsObjectList.toArray(),
