@@ -1,6 +1,8 @@
 package com.twn.cyfwms.CulturalProgram.api;
+import com.twn.cyfwms.CulturalProgram.dto.CulturalProgAndActDto;
 import com.twn.cyfwms.CulturalProgram.dto.CulturalProgramSearchCriteriaDto;
 import com.twn.cyfwms.CulturalProgram.dto.CultureProgramSearchResultsDto;
+import com.twn.cyfwms.CulturalProgram.service.CulturalProgAndActService;
 import com.twn.cyfwms.CulturalProgram.service.CulturalProgramSearchService;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -16,6 +18,10 @@ import java.util.Map;
 public class TWNCulturalProgramController {
     @Autowired
     CulturalProgramSearchService culturalProgramSearchService;
+
+    @Autowired
+    private CulturalProgAndActService culturalProgAndActService;
+
     @GetMapping(value = {"/culturalProgramSearch/{data}"},produces = "application/json")
     @ApiOperation("Search culturalProgram")
     @ResponseStatus(HttpStatus.OK)
@@ -26,5 +32,11 @@ public class TWNCulturalProgramController {
                 ("null".equals(var.get("data"))
                         || var.get("data") == null) ?null:var.get("data"));
         return culturalProgramSearchService.search(culturalProgramSearchCriteriaDto);
+    }
+    @PutMapping(value = "/saveculturalprogram", produces = "application/json")
+    @ApiOperation("Save or Update cultural program")
+    @ResponseStatus(HttpStatus.OK)
+    public CulturalProgAndActDto saveCulturalProgramIdentity(@RequestBody CulturalProgAndActDto culturalProgAndActDto) {
+        return culturalProgAndActService.saveculturalProgramIdentity(culturalProgAndActDto);
     }
 }
