@@ -2,6 +2,7 @@ package com.twn.codetable.service;
 
 import com.twn.codetable.constants.ResponseDataType;
 import com.twn.codetable.dto.DataResponseDto;
+import com.twn.codetable.helper.DataRefCluturalProgAndAct;
 import com.twn.codetable.helper.DataReferenceParticipant;
 import com.twn.codetable.helper.DataReferenceInitialcontact;
 import lombok.AllArgsConstructor;
@@ -13,6 +14,7 @@ public class DataReferenceServiceImpl implements DataReferenceService{
 
     private DataReferenceParticipant dataReferenceParticipant;
     private DataReferenceInitialcontact dataReferenceInitilcontact;
+    private DataRefCluturalProgAndAct   dataRefCluturalProgAndAct;
 
     public DataResponseDto getAllGenderTypes() {
         return DataResponseDto.builder()
@@ -121,6 +123,22 @@ public DataResponseDto getAllProvinceValue() {
         return  DataResponseDto.builder()
                 .type(ResponseDataType.contactMethod.name())
                 .valuesMap(dataReferenceInitilcontact.getContactMethod())
+                .build();
+    }
+
+    @Override
+    public DataResponseDto getAllCulturalTypeValue() {
+        return  DataResponseDto.builder()
+                .type(ResponseDataType.cluturalType.name())
+                .valuesMap(dataRefCluturalProgAndAct.getCulturalType())
+                .build();
+    }
+
+    @Override
+    public DataResponseDto getAllCulturalStatusValue() {
+        return  DataResponseDto.builder()
+                .type(ResponseDataType.culturalStatus.name())
+                .valuesMap(dataRefCluturalProgAndAct.getCulturalStatus())
                 .build();
     }
 

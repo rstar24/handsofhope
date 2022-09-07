@@ -12,6 +12,7 @@ spring:
     include:
       - participant
       - initialContact
+      - culturalProgAndAct
   servlet:
     multipart:
       max-file-size: 2MB

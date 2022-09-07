@@ -22,4 +22,6 @@ public interface DataReferenceService {
     DataResponseDto getAllTypeOfPatientValue();
     DataResponseDto getAllRiskValue();
     DataResponseDto getAllContactMethodValue();
+    DataResponseDto getAllCulturalTypeValue();
+    DataResponseDto getAllCulturalStatusValue();
 }

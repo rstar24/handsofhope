@@ -109,4 +109,18 @@ public class DataReferenceController {
 
         return dataReferenceService.getAllContactMethodValue();
     }
+    @GetMapping(value = "/culturaltype", produces = "application/json")
+    @ApiOperation("Get All Contact Method Value")
+    @ResponseStatus(HttpStatus.OK)
+    public DataResponseDto getAllCulturalTypeValue() {
+
+        return dataReferenceService.getAllCulturalTypeValue();
+    }
+    @GetMapping(value = "/culturalstatus", produces = "application/json")
+    @ApiOperation("Get All Contact Method Value")
+    @ResponseStatus(HttpStatus.OK)
+    public DataResponseDto getAllCulturalStatusValue() {
+
+        return dataReferenceService.getAllCulturalStatusValue();
+    }
 }
