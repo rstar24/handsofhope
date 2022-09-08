@@ -56,4 +56,9 @@ public class CulturalProgAndAct implements Serializable {
     @UpdateTimestamp
     @Getter @Setter @Column(name = "lastwritten")
     private LocalDateTime lastWritten;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "culturalprogramid", referencedColumnName = "culturalprogramid")
+    @Getter @Setter
+    private CulturalProgImage culturalProgImage;
 }

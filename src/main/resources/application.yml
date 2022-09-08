@@ -15,8 +15,8 @@ spring:
       - culturalProgAndAct
   servlet:
     multipart:
-      max-file-size: 2MB
-      max-request-size: 2MB
+      max-file-size: 10MB
+      max-request-size: 10MB
 
   jpa:
     hibernate:
