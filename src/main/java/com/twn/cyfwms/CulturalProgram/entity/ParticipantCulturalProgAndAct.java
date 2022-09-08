@@ -26,6 +26,8 @@ public class ParticipantCulturalProgAndAct implements Serializable {
     private String role ;
     @Getter @Setter @Column(name = "notes",length = 1000)
     private String notes;
+    @Getter @Setter @Column(name = "status")
+    private String status;
     @Getter @Setter @Column(name = "participantid")
     private Long participantId;
     @Getter @Setter @Column(name = "culturalprogramid")

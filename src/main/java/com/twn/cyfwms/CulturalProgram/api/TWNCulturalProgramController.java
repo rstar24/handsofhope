@@ -3,7 +3,6 @@ import com.twn.cyfwms.CulturalProgram.dto.*;
 import com.twn.cyfwms.CulturalProgram.entity.CulturalProgImage;
 import com.twn.cyfwms.CulturalProgram.service.*;
 import com.twn.cyfwms.participant.api.ResponseMessage;
-import com.twn.cyfwms.participant.entity.ParticipantImage;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 @RestController
@@ -46,17 +46,47 @@ public class TWNCulturalProgramController {
         return culturalProgAndActService.saveCulturalProgramIdentity(culturalProgAndActDto);
     }
 
-    @GetMapping(value = {"/culturalProgAndActSearch/{data}"},produces = "application/json")
-    @ApiOperation("Search CulturalProgAndAct")
+    @GetMapping(value = {"/culturalProgAndActSearch/{referenceId}/{name}/{type}/{caseworker}/{startDate}/{status}"},produces = "application/json")
+    @ApiOperation("Search culturalProgAndAct")
     @ResponseStatus(HttpStatus.OK)
     public List<CultureProgAndActSearchResultsDto> searchCulturalProgAndAct(@PathVariable Map<String, String> var)
     {
-        CulturalProgAndActSearchCriteriaDto culturalProgAndActSearchCriteriaDto =new CulturalProgAndActSearchCriteriaDto();
-        culturalProgAndActSearchCriteriaDto.setData(
-                ("null".equals(var.get("data"))
-                        || var.get("data") == null) ?null:var.get("data"));
-        return culturalProgAndActSearchService.searchCulturalProgAndAct(culturalProgAndActSearchCriteriaDto);
+        CulturalProgAndActSearchDto culturalProgAndActSearchDto = new CulturalProgAndActSearchDto();
+        culturalProgAndActSearchDto.setReferenceId(("null".equals(var.get("referenceId"))
+                || var.get("referenceId") == null) ?null:Long.parseLong(var.get("referenceId")));
+        culturalProgAndActSearchDto.setName(
+                ("null".equals(var.get("name"))
+                        || var.get("name") == null) ?null:var.get("name"));
+
+        culturalProgAndActSearchDto.setType(
+                ("null".equals(var.get("type"))
+                        || var.get("type") == null) ?null:var.get("type"));
+
+        culturalProgAndActSearchDto.setCaseworker(
+                ("null".equals(var.get("caseworker"))
+                        || var.get("caseworker") == null) ?null:var.get("caseworker"));
+
+        LocalDate dateTime=null;
+        if(!"null".equals(var.get("startDate"))) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            dateTime = LocalDate.parse(var.get("startDate"), formatter);
+        }
+        culturalProgAndActSearchDto.setStartDate(dateTime);
+
+        culturalProgAndActSearchDto.setStatus(
+                ("null".equals(var.get("status"))
+                        || var.get("status") == null) ?null:var.get("status"));
+        return culturalProgAndActSearchService.searchCulturalProgAndAct(culturalProgAndActSearchDto);
     }
+
+    @DeleteMapping("/removeCulturalProgAndAct/{culturalprogramid}")
+    @ApiOperation("Remove CulturalProgAndAct")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity removeCulturalProgAndAct(@PathVariable("culturalprogramid") Long culturalProgramId) {
+        return culturalProgAndActService.removeCulturalProgAndAct(culturalProgramId);
+    }
+
+
 
     @GetMapping(value = "/readParticipantsCulturalAndAct/{participantculturalprogid}", produces = "application/json")
     @ApiOperation("Read participantsCulturalAndAct")
@@ -72,6 +102,13 @@ public class TWNCulturalProgramController {
         return participantCulturalProgService.saveParticipantCulturalProg(participantCulturalProgDto);
     }
 
+    @DeleteMapping("/removeParticipantCulturalProg/{participantculturalprogid}")
+    @ApiOperation("Remove ParticipantCulturalProg")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity removeParticipantCulturalProg(@PathVariable("participantculturalprogid") Long participantCulturalProId) {
+        return participantCulturalProgService.removeParticipantCulturalProg(participantCulturalProId);
+    }
+
     @GetMapping(value = {"/participantCulturalProgSearch/{data}"},produces = "application/json")
     @ApiOperation("Search culturalProgram")
     @ResponseStatus(HttpStatus.OK)
@@ -83,7 +120,6 @@ public class TWNCulturalProgramController {
                         || var.get("data") == null) ?null:var.get("data"));
         return participantCulturalProgSearchService.searchParticipantCulturalProgAndAct(participantCulturalSearchDto);
     }
-
     @PostMapping("/upload")
     public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("culturalProgImageId") String culturalProgImageId) {
         String message = "";
@@ -106,5 +142,4 @@ public class TWNCulturalProgramController {
                 .contentType(MediaType.valueOf(fileDB.getType()))
                 .body(fileDB.getFile());
     }
-
 }

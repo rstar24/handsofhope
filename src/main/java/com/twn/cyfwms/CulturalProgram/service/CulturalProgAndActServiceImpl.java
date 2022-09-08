@@ -1,11 +1,12 @@
 package com.twn.cyfwms.CulturalProgram.service;
-
 import com.twn.cyfwms.CulturalProgram.dto.CulturalProgAndActDto;
 import com.twn.cyfwms.CulturalProgram.entity.CulturalProgAndAct;
 import com.twn.cyfwms.CulturalProgram.repository.CulturalProgAndActRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import java.util.Optional;
@@ -57,19 +58,30 @@ public class CulturalProgAndActServiceImpl implements CulturalProgAndActService 
             CulturalProgAndActDto culturalProgAndActDto = new CulturalProgAndActDto();
             CulturalProgAndAct culturalProgAndAct = readCulturalProgram(culturalProgramId);
             if (culturalProgAndAct != null) {
-                if (!culturalProgAndAct.getDeletionOfStatus().equals("INACTIVE")){
                     modelMapper.map(culturalProgAndAct, culturalProgAndActDto);
-                }
-                else {
-                    throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
-                }
-
             } else {
                 throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
             }
             return culturalProgAndActDto;
         }
         throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
+    }
+
+    @Override
+    public ResponseEntity removeCulturalProgAndAct(Long culturalProgramId) {
+        if (culturalProgramId != 0 ) {
+            CulturalProgAndAct culturalProgAndAct = culturalProgAndActRepository.findByculturalProgramId(culturalProgramId);
+            if (culturalProgAndAct!=null){
+                culturalProgAndAct.setDeletionOfStatus("INACTIVE");
+                culturalProgAndActRepository.save(culturalProgAndAct);
+            }
+            else {
+                throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
+            }
+        } else {
+            throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
+        }
+        return new ResponseEntity( HttpStatus.OK);
     }
 
 }

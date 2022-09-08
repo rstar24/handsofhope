@@ -60,5 +60,10 @@ public class CulturalProgAndAct implements Serializable {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "culturalprogramid", referencedColumnName = "culturalprogramid")
     @Getter @Setter
+    private ParticipantCulturalProgAndAct participantCulturalProgAndAct;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "culturalprogramid", referencedColumnName = "culturalprogramid")
+    @Getter @Setter
     private CulturalProgImage culturalProgImage;
 }
