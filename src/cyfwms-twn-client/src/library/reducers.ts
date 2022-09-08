@@ -20,7 +20,7 @@ import initiatorReducer from "../features/initiatorSlice";
 import loginReducer from "../features/login/slice";
 import popupReducer from "../features/popupSlice";
 import navBarReducer from "../features/navBarSlice";
-
+import cpaReducer from "../features/cpa/culturalProgramActivity/slice";
 const rootReducer = {
   login: loginReducer,
   popup: popupReducer,
@@ -44,6 +44,7 @@ const rootReducer = {
   icPatientCareInformation: icPatientCareInformationReducer,
   icContactNotes: icContactNotesReducer,
   icSearch: icSearchReducer,
+  cpa: cpaReducer,
 };
 
 export default rootReducer;

@@ -6,11 +6,12 @@ import ICTextArea from "../../../components/initialContact/ICTextArea";
 import { onKeyDown } from "../../../library/app";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import EditIcon from "./EditIcon";
-import { Box, FormLabel, OutlinedInput } from "@mui/material";
-import React from "react";
+import { Box, FormControl, FormLabel, OutlinedInput } from "@mui/material";
+import React, { useState } from "react";
 import type { FormEvent } from "react";
 
 import SearchIcon from "@mui/icons-material/Search";
+import SearchClientName from "../../../components/cyfms/searchClient/SearchClientName";
 
 const ParticipantForm = ({
   setAddNew,
@@ -20,9 +21,12 @@ const ParticipantForm = ({
 }: any) => {
   const { contactMethod } = useAppSelector((state) => state.codetable);
   const data = useAppSelector((state) => state.icContactNotes.data);
-
+  const [click, setClick] = useState(false);
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
+  };
+  const handleSearch = () => {
+    setClick(true);
   };
   return (
     <Box
@@ -51,34 +55,30 @@ const ParticipantForm = ({
         </Box>
       )}
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
-        <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
-      </Box>
-      <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-        <Box
-          sx={{ paddingLeft: "8px", flexBasis: 0, flexGrow: 1, gap: "0 1rem" }}
-        >
-          <FormLabel sx={{ flexBasis: 0, flexGrow: 2, color: "black" }}>
-            Participant
-          </FormLabel>{" "}
-        </Box>
-        <Box sx={{ paddingLeft: "3px", flexBasis: 0, flexGrow: 4 }}>
-          <OutlinedInput
-            id="search"
-            value=""
-            placeholder="search..."
-            size="small"
+        <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+          <FormControl
             sx={{
-              borderRadius: 0,
-              flexBasis: 0,
-              flexGrow: 4,
-              ml: -1,
-              backgroundColor: "#dfdada",
+              display: "flex",
+              flexDirection: "row",
+              flexWrap: "wrap",
             }}
-            type="text"
-            endAdornment={<SearchIcon />}
-          />
+          >
+            <FormLabel sx={{ p: 1, flexBasis: 0, flexGrow: 1, color: "black" }}>
+              Participant
+            </FormLabel>
+            <OutlinedInput
+              sx={{
+                borderRadius: 0,
+                flexBasis: 0,
+                flexGrow: 2,
+              }}
+              size="small"
+              //value={clientName}
+              style={{ backgroundColor: "#dfdada" }}
+              endAdornment={<SearchIcon onClick={handleSearch} />}
+            />
+          </FormControl>
         </Box>
-
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
       </Box>
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
@@ -105,6 +105,7 @@ const ParticipantForm = ({
       <Box sx={{ display: "flex", justifyContent: "right" }}>
         <CYFSWMSNextButton disabled={disabled} />
       </Box>
+      {click && <SearchClientName click={click} setClick={setClick} />}
     </Box>
   );
 };

@@ -1,41 +1,55 @@
 import { doGetAPI, doPostAPI } from "./api";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { RootState } from "../../../library/store";
 import type { SliceCaseReducers } from "@reduxjs/toolkit";
 import type { AxiosResponse } from "axios";
 
 export interface Data {
-  fileDetailsId: number;
-  fileNumber: number;
-  clientName: string;
-  startingDate: string;
-  caseworker: string;
+  culturalProgramId: 0;
+  referenceId: number;
+  name: string;
+  type: string;
   status: string;
-  dateClosed: string;
+  caseworker: string;
+  startDate: string;
+  endDate: string;
+  totalCost: number;
+  totalParticipation: number;
+  sessionDetails: string;
+  costOrParticipationDetails: string;
+  outcomes: string;
+  notes: string;
 }
 
 // Empty Data
 const emptyData: Data = {
-  fileDetailsId: 0,
-  fileNumber: 0,
-  clientName: "",
-  startingDate: "",
-  caseworker: "",
+  culturalProgramId: 0,
+  referenceId: 0,
+  name: "",
+  type: "",
   status: "",
-  dateClosed: "",
+  caseworker: "",
+  startDate: "",
+  endDate: "",
+  totalCost: 0,
+  totalParticipation: 0,
+  sessionDetails: "",
+  costOrParticipationDetails: "",
+  outcomes: "",
+  notes: "",
 };
 
 export interface State {
   data: Data;
-  disabledClosingDate: boolean;
   status: "failed" | "none" | "loading" | "success";
 }
 
 export const doGet = createAsyncThunk<Data, number>(
-  "fileDetails/doGet",
-  async (initialContactID, { getState }) => {
-    const store: any = getState();
+  "cpa/doGet",
+  async (culturalProgramId, { getState }) => {
+    const store = getState() as RootState;
     const res: AxiosResponse = await doGetAPI(
-      initialContactID,
+      culturalProgramId,
       store.login.token
     );
     // Becomes the `fulfilled` action payload:
@@ -44,36 +58,22 @@ export const doGet = createAsyncThunk<Data, number>(
 );
 
 export const doPost = createAsyncThunk<Data, Data>(
-  "fileDetails/doPost",
+  "cpa/doPost",
   async (formData: Data, { getState }) => {
-    const store: any = getState();
+    const store = getState() as RootState;
     const res: AxiosResponse = await doPostAPI(formData, store.login.token);
     // Becomes the `fulfilled` action payload:
     return res.data;
   }
 );
 
-export const fileDetailsSlice = createSlice<State, SliceCaseReducers<State>>({
-  name: "fileDetails",
-  initialState: {
-    data: emptyData,
-    disabledClosingDate: true,
-    status: "failed",
-  },
+export const registerSlice = createSlice<State, SliceCaseReducers<State>>({
+  name: "cpa",
+  initialState: { data: emptyData, status: "none" },
   reducers: {
-    disableClosingDate(state) {
-      state.disabledClosingDate = true;
-    },
-    enableClosingDate(state) {
-      state.disabledClosingDate = false;
-    },
     cleanState(state) {
-      state.disabledClosingDate = true;
       state.data = emptyData;
       state.status = "none";
-    },
-    setName(state, action) {
-      state.data.clientName = action.payload;
     },
   },
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -104,7 +104,6 @@ export const fileDetailsSlice = createSlice<State, SliceCaseReducers<State>>({
   },
 });
 
-export const { disableClosingDate, enableClosingDate, cleanState, setName } =
-  fileDetailsSlice.actions;
+export const { cleanState } = registerSlice.actions;
 
-export default fileDetailsSlice.reducer;
+export default registerSlice.reducer;

@@ -16,12 +16,14 @@ import { initiate } from "../../features/initiatorSlice";
 import { unhideTabs } from "../../features/navBarSlice";
 import { onKeyDown } from "../../library/app";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
-import { Box, OutlinedInput } from "@mui/material";
-import React, { useEffect } from "react";
+import { Box, FormControl, FormLabel, OutlinedInput } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { Data } from "../../features/initialContact/fileDetails/slice";
 import type { FormEvent, ReactElement } from "react";
-
+import SearchIcon from "@mui/icons-material/Search";
+import { handleAddMore } from "../cyfms/familyPhysicians/familyPhysicians_";
+import SearchClientName from "../../components/cyfms/searchClient/SearchClientName";
 /**
  * The FileDetails functional component.
  * @returns FileDetails component skeleton.
@@ -37,6 +39,8 @@ const FileDetails = (): ReactElement => {
   );
   const state = useAppSelector((state) => state.icFileDetails);
   const edit = useAppSelector((state) => state.popup.edit);
+  const { clientName } = useAppSelector((state) => state.icFileDetails.data);
+  const [click, setClick] = useState(false);
   useEffect(() => {
     dispatch(doGet(state.data.fileDetailsId))
       .unwrap()
@@ -97,6 +101,11 @@ const FileDetails = (): ReactElement => {
     navigate("../referral_information");
   };
 
+  const handleSearch = () => {
+    console.log("click search");
+    setClick(true);
+  };
+
   return (
     <ICLayout>
       <Box
@@ -133,11 +142,30 @@ const FileDetails = (): ReactElement => {
             </Box>
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <ICInput
-              autofill={state.data.clientName}
-              id="clientName"
-              value="Client Name"
-            />
+            <FormControl
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                flexWrap: "wrap",
+              }}
+            >
+              <FormLabel
+                sx={{ p: 1, flexBasis: 0, flexGrow: 1, color: "black" }}
+              >
+                Client Name
+              </FormLabel>
+              <OutlinedInput
+                sx={{
+                  borderRadius: 0,
+                  flexBasis: 0,
+                  flexGrow: 2,
+                }}
+                size="small"
+                value={clientName}
+                style={{ backgroundColor: "#dfdada" }}
+                endAdornment={<SearchIcon onClick={handleSearch} />}
+              />
+            </FormControl>
           </Box>
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
@@ -202,6 +230,7 @@ const FileDetails = (): ReactElement => {
           )}
         </Box>
       </Box>
+      {click && <SearchClientName click={click} setClick={setClick} />}
     </ICLayout>
   );
 };

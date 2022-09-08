@@ -1,24 +1,88 @@
-import { FormEvent, ReactElement } from "react";
+import { FormEvent, ReactElement, useEffect } from "react";
 import CPAInput from "../../../components/cpa/CPAInput";
 import { Box } from "@mui/material";
 import CPALayout from "../../../components/cpa/CPALayout";
 import CPATextArea from "../../../components/cpa/CPATextArea";
-import { CYFSWMSNextButton } from "../../../components/CYFSWMSButtons";
+import {
+  CYFSWMSNextButton,
+  CYFSWMSSaveButton,
+} from "../../../components/CYFSWMSButtons";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+
 import { unhideTabs } from "../../../features/navBarSlice";
+import { initiate } from "../../../features/initiatorSlice";
+import { useAppDispatch, useAppSelector } from "../../../library/hooks";
+import {
+  Data,
+  doGet,
+  doPost,
+} from "../../../features/cpa/culturalProgramActivity/slice";
 /**
  * The CulturalProgramOrActivity functional component.
  * @returns CulturalProgramOrActivity component skeleton.
  */
 const CulturalProgramOrActivity = (): ReactElement => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { initialContactStatus } = useAppSelector(
+    (state: any) => state.codetable
+  );
+  const isInitiated = useAppSelector(
+    (state: any) => state.initiator.isInitiated
+  );
+  const state = useAppSelector((state) => state.cpa);
+  const edit = useAppSelector((state) => state.popup.edit);
+
+  useEffect(() => {
+    dispatch(doGet(state.data.culturalProgramId))
+      .unwrap()
+      .then((data) => {
+        console.log("CPA GET backend API was successful!");
+      })
+      .catch((err) => {
+        console.log("CPA GET backend API didn't work!");
+        console.log(err);
+      });
+  }, []);
+
   // Handles the form data submission and other
   // activities.
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
-    dispatch(unhideTabs(null));
+    const form: any = e.currentTarget;
+    const formData: Data = {
+      culturalProgramId: 0,
+      referenceId: 0,
+      name: form.name.value,
+      type: form.type.value,
+      status: form.status.value,
+      caseworker: form.caseworker.value,
+      startDate: form.startDate.value,
+      endDate: form.endDate.value,
+      totalCost: form.totalCost.value,
+      totalParticipation: form.totalParticipation.value,
+      sessionDetails: form.sessionDetails.value,
+      costOrParticipationDetails: form.costOrParticipationDetails.value,
+      outcomes: form.outcomes.value,
+      notes: form.notes.value,
+    };
+    dispatch(doPost(formData))
+      .unwrap()
+      .then(() => {
+        console.log("FileDetails POST backend API was successful!");
+        dispatch(unhideTabs(null));
+        dispatch(initiate(null));
+        if (edit) {
+          nextClickHandler();
+        }
+      })
+      .catch((err) => {
+        console.log("FileDetails POST backend API didn't work!");
+        console.log(err);
+      });
+  };
+
+  const nextClickHandler = () => {
     navigate("../participant");
   };
 
@@ -32,13 +96,14 @@ const CulturalProgramOrActivity = (): ReactElement => {
           gap: "1rem 0",
         }}
         onSubmit={submitHandler}
+        //onChange={changeHandler}
         //onKeyDown={onKeyDown}
       >
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CPAInput
-              //autofill={data.dateOfReport}
-              id="reference_id"
+              autofill={state.data.referenceId}
+              id="referenceId"
               value="Reference Id"
               type="text"
             />
@@ -47,31 +112,19 @@ const CulturalProgramOrActivity = (): ReactElement => {
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CPAInput
-              //autofill={data.partiesInvolved}
-              id="name"
-              value="Name"
-            />
+            <CPAInput autofill={state.data.name} id="name" value="Name" />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CPAInput
-              //autofill={data.witnesses}
-              id="type"
-              value="Type"
-            />
+            <CPAInput autofill={state.data.type} id="type" value="Type" />
           </Box>
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CPAInput
-              //autofill={data.incidentDate}
-              id="status"
-              value="Status"
-            />
+            <CPAInput autofill={state.data.status} id="status" value="Status" />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CPAInput
-              //autofill={data.incidentTime}
+              autofill={state.data.caseworker}
               id="caseworker"
               value="Caseworker"
             />
@@ -80,50 +133,68 @@ const CulturalProgramOrActivity = (): ReactElement => {
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CPAInput
-              //autofill={data.incidentLocation}
-              id="start_date"
+              autofill={state.data.startDate}
+              id="startDate"
               value="Start Date"
               type="Date"
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CPAInput id="end_date" value="End Date" />
+            <CPAInput
+              autofill={state.data.endDate}
+              id="endDate"
+              value="End Date"
+            />
           </Box>
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CPAInput id="total_participation" value="Total Participation" />
+            <CPAInput
+              autofill={state.data.totalParticipation}
+              id="totalParticipation"
+              value="Total Participation"
+            />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CPAInput
-              //autofill={data.incidentLocation}
-              id="total_cost"
+              autofill={state.data.totalCost}
+              id="totalCost"
               value="Total Cost"
             />
           </Box>
         </Box>
         <CPATextArea
-          //autofill={data.actionTaken}
-          id="session_details"
+          autofill={state.data.sessionDetails}
+          id="sessionDetails"
           value="Session Details"
         />
         <CPATextArea
-          //autofill={data.actionPlan}
-          id="participation_details"
+          autofill={state.data.costOrParticipationDetails}
+          id="costOrParticipationDetails"
           value="Participation / Cost Details"
         />
         <CPATextArea
-          //autofill={data.actionTaken}
+          autofill={state.data.costOrParticipationDetails}
           id="outcomes"
           value="Outcomes"
         />
-        <CPATextArea
-          //autofill={data.actionPlan}
-          id="notes"
-          value="Notes"
-        />
+        <CPATextArea autofill={state.data.notes} id="notes" value="Notes" />
         <Box sx={{ display: "flex", justifyContent: "right" }}>
-          <CYFSWMSNextButton />
+          {isInitiated ? (
+            <>
+              {edit ? (
+                <>
+                  <CYFSWMSSaveButton />
+                </>
+              ) : (
+                <>
+                  <CYFSWMSNextButton onClick={nextClickHandler} />
+                </>
+              )}
+            </>
+          ) : (
+            <CYFSWMSSaveButton />
+          )}
         </Box>
       </Box>
     </CPALayout>
