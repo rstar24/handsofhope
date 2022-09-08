@@ -254,9 +254,13 @@ public class TWNParticipantController {
     public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("participantId") String participantId) {
         String message = "";
         try {
-            imageService.uploadImage(file,participantId);
-
-            message = "Uploaded the file successfully: " + file.getOriginalFilename();
+           ParticipantImage participantImage= imageService.uploadImage(file,participantId);
+            if(participantImage.getImage()==null){
+                message = "enter valid format: " + file.getOriginalFilename();
+            }
+            else {
+                message="file upload successfull";
+            }
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
         } catch (Exception e) {
             message = "Could not upload the file: " + file.getOriginalFilename() + "!";

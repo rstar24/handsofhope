@@ -4,6 +4,7 @@ import com.twn.cyfwms.participant.entity.ParticipantImage;
 import com.twn.cyfwms.participant.repository.ImageRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,14 +21,16 @@ public class ImageServiceImpl implements ImageService{
 
     @Override
     public ParticipantImage uploadImage(MultipartFile file, String participantId) throws IOException {
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-//        ParticipantImage ParticipantImage = new ParticipantImage(fileName, file.getContentType(), file.getBytes());
-          ParticipantImage ParticipantImage = new ParticipantImage();
-          ParticipantImage.setName(fileName);
-          ParticipantImage.setType(file.getContentType());
-          ParticipantImage.setImage(file.getBytes());
-          ParticipantImage.setParticipantId(Long.parseLong(participantId));
-        return imageRepository.save(ParticipantImage);
+        ParticipantImage ParticipantImage = new ParticipantImage();
+        if(file.getContentType().equals("image/png") || file.getContentType().equals("image/jpg") || file.getContentType().equals("image/jpeg")){
+            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+            ParticipantImage.setName(fileName);
+            ParticipantImage.setType(file.getContentType());
+            ParticipantImage.setImage(file.getBytes());
+            ParticipantImage.setParticipantId(Long.parseLong(participantId));
+            imageRepository.save(ParticipantImage);
+        }
+        return ParticipantImage;
     }
     @Override
     public ParticipantImage getFile(Long id) {
