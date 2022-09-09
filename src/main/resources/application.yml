@@ -17,8 +17,8 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
-
   jpa:
+    defer-datasource-initialization: true
     hibernate:
       ddl-auto: none
       naming:
@@ -27,6 +27,9 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+  sql:
+    init:
+      platform: mysql
+      mode: always
 jwt:
   secret: gigatorb
-
