@@ -40,7 +40,6 @@ public class ParticipantOtherInformationServiceImpl implements ParticipantOtherI
         if (participantOtherInformationServiceDto.getParticipantOtherInfoId() == 0) {
             participantOtherInformation = new ParticipantOtherInformation();
             modelMapper.map(participantOtherInformationServiceDto, participantOtherInformation);
-            participantOtherInformation.setStatus("ACTIVE");
         } else {
             participantOtherInformation = participantOtherInformationRepository.findById(participantOtherInformationServiceDto.getParticipantOtherInfoId()).get();
             modelMapper.map(participantOtherInformationServiceDto, participantOtherInformation);

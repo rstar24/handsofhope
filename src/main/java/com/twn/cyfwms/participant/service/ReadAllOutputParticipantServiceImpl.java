@@ -115,9 +115,7 @@ public class ReadAllOutputParticipantServiceImpl implements ReadAllOutputPartici
                             readAllOutputParticipantDto.getCounselorCFSWorker().get(i).setEndDate(LocalDate.of(1, 1, 1));
                         }
                     }
-                    if (!participantOtherInformationOpt.getStatus().equalsIgnoreCase("INACTIVE")) {
-                        readAllOutputParticipantDto.setParticipantOtherInfo(participantOtherInformationOpt);
-                    }
+                    readAllOutputParticipantDto.setParticipantOtherInfo(participantOtherInformationOpt);
                 }
                 else{
                     throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");

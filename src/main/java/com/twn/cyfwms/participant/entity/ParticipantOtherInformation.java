@@ -36,8 +36,6 @@ public class ParticipantOtherInformation implements Serializable {
     private String experiences;
     @Getter @Setter @Column(length = 1000,name = "effectivecopingskills")
     private String effectiveCopingSkills;
-    @Getter @Setter @Column(name = "status")
-    private String status;
     @CreationTimestamp
     @Getter @Setter @Column(name = "creationdate")
     private LocalDate creationDate;
