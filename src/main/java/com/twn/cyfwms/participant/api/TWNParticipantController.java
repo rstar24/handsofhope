@@ -54,6 +54,9 @@ public class TWNParticipantController {
     private ReadAllOutputParticipantService readAllOutputParticipantService;
 
     @Autowired
+    private LabelService labelService;
+
+    @Autowired
     private ImageService imageService;
 
     @GetMapping(value = "/readParticipantIdentity/{participantid}", produces = "application/json")
@@ -243,6 +246,13 @@ public class TWNParticipantController {
             || var.get("referenceId") == null) ?null:Long.parseLong(var.get("referenceId")));
         return participantSearchService.search(participantSearchCriteriaDto);
     }
+
+  @ApiOperation("Read CYFMS view page label.")
+  @GetMapping(value = "/readCyfmsLabels", produces = "application/json")
+  @ResponseStatus(HttpStatus.OK)
+  public LabelsDTO readCyfmsLabels() {
+    return labelService.readLabels();
+  }
 
     @GetMapping(value = "/readAllOutputParticipant/{referenceId}", produces = "application/json")
     @ApiOperation("Read All Output Participant")
