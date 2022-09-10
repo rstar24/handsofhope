@@ -34,8 +34,6 @@ public class Employment implements Serializable {
     @Getter @Setter @Column(name = "desiredprofession")
     private String desiredProfession;
 
-    @Getter @Setter @Column(name = "status")
-    private String status;
     @CreationTimestamp
     @Getter @Setter @Column(name = "creationdate")
     private LocalDate creationDate;

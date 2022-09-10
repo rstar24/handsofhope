@@ -32,8 +32,6 @@ public class Education implements Serializable {
     private String school;
     @Getter @Setter @Column(name = "grade")
     private String grade;
-    @Getter @Setter @Column(name = "status")
-    private String status;
     @CreationTimestamp
     @Getter @Setter @Column(name = "creationdate")
     private LocalDate creationDate;

@@ -39,7 +39,6 @@ public class EmploymentServiceImpl implements EmploymentService {
         if (employmentDto.getEmploymentId() == 0) {
             employment = new Employment();
             modelMapper.map(employmentDto, employment);
-            employment.setStatus("ACTIVE");
         } else {
             employment = employmentRepository.findById(employmentDto.getEmploymentId()).get();
             modelMapper.map(employmentDto, employment);

@@ -40,7 +40,6 @@ public class EducationServiceImpl  implements EducationService{
         if (educationDto.getEducationId() == 0) {
             education = new Education();
             modelMapper.map(educationDto, education);
-            education.setStatus("ACTIVE");
         } else {
             education = educationRepository.findById(educationDto.getEducationId()).get();
             modelMapper.map(educationDto, education);

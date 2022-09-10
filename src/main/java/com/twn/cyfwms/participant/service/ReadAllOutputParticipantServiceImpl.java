@@ -70,12 +70,8 @@ public class ReadAllOutputParticipantServiceImpl implements ReadAllOutputPartici
                             readAllOutputParticipantDto.getHouseholdMember().get(i).setDateOfBirth(LocalDate.of(0, 0, 0));
                         }
                     }
-                    if (!educationOpt.getStatus().equalsIgnoreCase("INACTIVE")) {
-                        modelMapper.map(educationOpt, readAllOutputParticipantDto);
-                    }
-                    if (!employmentOpt.getStatus().equalsIgnoreCase("INACTIVE")) {
-                        modelMapper.map(employmentOpt, readAllOutputParticipantDto);
-                    }
+                    modelMapper.map(educationOpt, readAllOutputParticipantDto);
+                    modelMapper.map(employmentOpt, readAllOutputParticipantDto);
                     List<CriminalHistoryRecord> criminalHistoryRecordList = new ArrayList<>();
                     for (int i = 0; i < criminalHistoryOpt.get().getCriminalHistoryRecordList().size(); ++i) {
                         if (!criminalHistoryOpt.get().getCriminalHistoryRecordList().get(i).getStatus().equalsIgnoreCase("INACTIVE")) {
