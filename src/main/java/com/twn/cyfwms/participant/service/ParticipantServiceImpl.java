@@ -1,22 +1,24 @@
 package com.twn.cyfwms.participant.service;
 
-import com.twn.cyfwms.participant.dto.ParticipantIdentityDto;
-import com.twn.cyfwms.participant.entity.Participant;
-import com.twn.cyfwms.participant.repository.ParticipantRepository;
-import lombok.AllArgsConstructor;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.OK;
+
+import java.util.Optional;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Optional;
+import com.twn.cyfwms.participant.dto.ParticipantIdentityDto;
+import com.twn.cyfwms.participant.entity.Participant;
+import com.twn.cyfwms.participant.repository.ParticipantRepository;
 
-import static org.springframework.http.HttpStatus.NOT_FOUND;
+import lombok.AllArgsConstructor;
 
-@Service
 @AllArgsConstructor
+@Service
 public class ParticipantServiceImpl implements ParticipantService {
     @Autowired
     private ParticipantRepository participantRepository;
@@ -80,16 +82,13 @@ public class ParticipantServiceImpl implements ParticipantService {
     }
 
     @Override
-    public ResponseEntity removeParticipant(Long referenceId) {
-        Optional<Participant> participantOpt = participantRepository.findByReferenceId(referenceId);
-        Long participantId=participantOpt.get().getParticipantId();
-        Participant participant = participantRepository.findByParticipantId(participantId);
-        if (participant !=null){
-            participant.setStatus("INACTIVE");
-            participantRepository.save(participant);
-        } else {
-            throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
+    public ResponseEntity<String> removeParticipant(Long referenceId) {
+        Optional<Participant> p = participantRepository.findByReferenceId(referenceId);
+        if (p.isEmpty() || p.get().getStatus().equalsIgnoreCase("INACTIVE")) {
+            return new ResponseEntity<String>("Participant not found!", NOT_FOUND);
         }
-        return new ResponseEntity( HttpStatus.OK);
+        p.get().setStatus("INACTIVE");
+        participantRepository.save(p.get());
+        return new ResponseEntity<String>(OK);
     }
 }

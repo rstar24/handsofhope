@@ -5,23 +5,49 @@ import {
   doGetTypeOfEmployee,
   doGetRole,
 } from "../../features/codetable/slice";
+import { doDelete } from "../../features/cyfms/all/slice";
+import {
+  doGet as doGetContact,
+  cleanState as cleanContact,
+} from "../../features/cyfms/contact/slice";
+import {
+  doGet as doGetHouseholdMembers,
+  cleanState as cleanHouseholdMembers,
+} from "../../features/cyfms/householdMembers/slice";
+import {
+  doGet as doGetEducationAndEmployment,
+  cleanState as cleanEducationAndEmployment,
+} from "../../features/cyfms/educationAndEmployment/slice";
+import {
+  doGet as doGetCriminalHistory,
+  cleanState as cleanCriminalHistory,
+} from "../../features/cyfms/criminalHistory/slice";
+import {
+  doGet as doGetFamilyPhysicians,
+  cleanState as cleanFamilyPhysicians,
+} from "../../features/cyfms/familyPhysicians/slice";
+import {
+  doGet as doGetCounselors,
+  cleanState as cleanCounselors,
+} from "../../features/cyfms/counselors/slice";
+import {
+  doGet as doGetOtherInformation,
+  cleanState as cleanOtherInformation,
+} from "../../features/cyfms/otherInformation/slice";
+import {
+  doGet as doGetRegister,
+  cleanState as cleanRegister,
+} from "../../features/cyfms/register/slice";
+import { spliceRecord } from "../../features/cyfms/search/slice";
 import { initiate } from "../../features/initiatorSlice";
 import { setEdit, setOpen } from "../../features/popupSlice";
 import { unhideTabs } from "../../features/navBarSlice";
-import { doGet as doGetRegister } from "../../features/cyfms/register/slice";
 import { useAppDispatch } from "../../library/hooks";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { Box, Button, IconButton, Modal, Menu, MenuItem } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 import type { ReactElement } from "react";
-import { doGet } from "../../features/cyfms/contact/slice";
-import { doGet as doGetHouseholdMembers } from "../../features/cyfms/householdMembers/slice";
-import { doGet as doGetEducationAndEmployment } from "../../features/cyfms/educationAndEmployment/slice";
-import { doGet as doGetCriminalHistory } from "../../features/cyfms/criminalHistory/slice";
-import { doGet as doGetFamilyPhysicians } from "../../features/cyfms/familyPhysicians/slice";
-import { doGet as doGetCounselors } from "../../features/cyfms/counselors/slice";
-import { doGet as doGetOtherInformation } from "../../features/cyfms/otherInformation/slice";
 
 const style = {
   position: "absolute" as "absolute",
@@ -99,7 +125,7 @@ const EditIcon = (props: any): ReactElement => {
             dispatch(doGetEducation());
             dispatch(doGetTypeOfEmployee());
             dispatch(doGetRole());
-            dispatch(doGet(props.value));
+            dispatch(doGetContact(props.value));
             dispatch(doGetHouseholdMembers(props.value));
             dispatch(doGetEducationAndEmployment(props.value));
             dispatch(doGetCriminalHistory(props.value));
@@ -122,7 +148,16 @@ const EditIcon = (props: any): ReactElement => {
         >
           Edit
         </MenuItem>
-        <MenuItem>Delete</MenuItem>
+        <MenuItem
+          to="#"
+          component={Link}
+          onClick={(event: React.MouseEvent<HTMLElement>) => {
+            event.preventDefault();
+            handleCloseDropDown(event);
+          }}
+        >
+          Delete
+        </MenuItem>
       </Menu>
       <Modal
         open={openModel}
@@ -138,11 +173,32 @@ const EditIcon = (props: any): ReactElement => {
         aria-describedby="parent-modal-description"
       >
         <Box sx={{ ...style, width: 400, paddingLeft: "5%" }}>
-          <p id="parent-modal-description">
-            Are you sure ? You want to delete ?
-          </p>
+          <p id="parent-modal-description">Are you sure you want to delete?</p>
           <Box paddingLeft={7}>
-            <Button>Yes</Button>
+            <Button
+              onClick={(e) => {
+                e.preventDefault();
+                dispatch(doDelete(props.referenceID))
+                  .unwrap()
+                  .then(() => {
+                    dispatch(spliceRecord(props.referenceID));
+                    setOpenModel(false);
+                    dispatch(cleanOtherInformation(null));
+                    dispatch(cleanCounselors(null));
+                    dispatch(cleanFamilyPhysicians(null));
+                    dispatch(cleanCriminalHistory(null));
+                    dispatch(cleanEducationAndEmployment(null));
+                    dispatch(cleanHouseholdMembers(null));
+                    dispatch(cleanContact(null));
+                    dispatch(cleanRegister(null));
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  });
+              }}
+            >
+              Yes
+            </Button>
             <Button onClick={handleCloseModel}>No</Button>
           </Box>
         </Box>

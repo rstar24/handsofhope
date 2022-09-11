@@ -146,7 +146,10 @@ const View = (): ReactElement => {
               {`${state.cyfmsRegister.data.firstname} ${state.cyfmsRegister.data.surname}`}
             </Typography>
             <Typography>
-              <EditIcon value={state.cyfmsRegister.data.participantId} />
+              <EditIcon
+                value={state.cyfmsRegister.data.participantId}
+                referenceID={state.cyfmsRegister.data.referenceId || 0}
+              />
             </Typography>
           </Box>
           <hr />

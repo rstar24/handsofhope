@@ -81,7 +81,10 @@ const Results = (): ReactElement => {
               <TableCell>{participant.city}</TableCell>
               <TableCell>{participant.workPhone}</TableCell>
               <TableCell>
-                <EditIcon value={participant.participantId} />
+                <EditIcon
+                  value={participant.participantId}
+                  referenceID={participant.referenceId || 0}
+                />
               </TableCell>
             </TableRow>
           ))}

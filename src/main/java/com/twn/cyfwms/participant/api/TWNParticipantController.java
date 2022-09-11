@@ -72,13 +72,12 @@ public class TWNParticipantController {
     public ParticipantIdentityDto saveParticipantIdentity(@RequestBody ParticipantIdentityDto participantRequestDto) {
         return participantService.saveParticipantIdentity(participantRequestDto);
     }
+
     @DeleteMapping("/removeParticipant/{referenceId}")
     @ApiOperation("Remove Participant")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity removeParticipant(@PathVariable("referenceId") Long referenceId) {
+    public ResponseEntity<String> removeParticipant(@PathVariable("referenceId") Long referenceId) {
         return participantService.removeParticipant(referenceId);
     }
-
 
     @GetMapping(value = "/readParticipantContact/{participantid}", produces = "application/json")
     @ApiOperation("Read Contact")
