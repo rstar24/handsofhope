@@ -6,5 +6,5 @@ import org.springframework.http.ResponseEntity;
 public interface InitialContactFileDetailsService {
     InitialContactFileDetailsDto readAllFileDetails(Long fileDetailsID );
     InitialContactFileDetailsDto saveAllFileDetails(InitialContactFileDetailsDto initialContactFileDetailsDto);
-    ResponseEntity removeInitialContactFileDetails(Long fileNumber);
+    ResponseEntity<String> remove(Long fileNumber);
 }
