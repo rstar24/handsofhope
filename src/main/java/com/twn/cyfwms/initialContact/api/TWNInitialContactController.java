@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 @RestController
@@ -48,12 +46,6 @@ public class TWNInitialContactController {
     @ResponseStatus(HttpStatus.OK)
     public InitialContactFileDetailsDto saveAllFileDetails(@RequestBody InitialContactFileDetailsDto initialContactFileDetailsDto) {
         return initialContactFileDetailsService.saveAllFileDetails(initialContactFileDetailsDto);
-    }
-    @DeleteMapping("/removeInitialContactFileDetails/{fileNumber}")
-    @ApiOperation("Remove Participant")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity removeInitialContactFileDetails(@PathVariable("fileNumber") Long fileNumber) {
-        return initialContactFileDetailsService.removeInitialContactFileDetails(fileNumber);
     }
 
     @GetMapping(value = "/readAllIncidentReports/{filedetailsid}", produces = "application/json")
@@ -112,36 +104,6 @@ public class TWNInitialContactController {
         return initialContactReferralInfoService.saveAllReferralInfo(initialContactReferralInfoDto);
     }
 
-    @GetMapping(value = {"/searchInitialContacts/{clientname}/{fileNumber}/{caseworker}/{startingDate}/{status}"},produces = "application/json")
-    @ApiOperation("Search InitialContact")
-    @ResponseStatus(HttpStatus.OK)
-    public List<InitialContactSearchResultsDto> searchInitialContact(@PathVariable Map<String, String> var)
-    {
-        InitialContactSearchCriteriaDto initialContactSearchCriteriaDto=new InitialContactSearchCriteriaDto();
-        initialContactSearchCriteriaDto.setClientName(
-                ("null".equals(var.get("clientname"))
-                        || var.get("clientname") == null) ?null:var.get("clientname"));
-
-
-        initialContactSearchCriteriaDto.setFileNumber(("null".equals(var.get("fileNumber"))
-                || var.get("fileNumber") == null) ?null:Long.parseLong(var.get("fileNumber")));
-
-        initialContactSearchCriteriaDto.setCaseworker(
-                ("null".equals(var.get("caseworker"))
-                        || var.get("caseworker") == null) ?null:var.get("caseworker")
-        );
-        LocalDate dateTime=null;
-
-        if(!"null".equals(var.get("startingDate"))) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            dateTime = LocalDate.parse(var.get("startingDate"), formatter);
-        }
-        initialContactSearchCriteriaDto.setStartingDate(dateTime);
-        initialContactSearchCriteriaDto.setStatus(
-                ("null".equals(var.get("status"))
-                        || var.get("status") == null) ?null:var.get("status"));
-        return initialContactSearchService.search(initialContactSearchCriteriaDto);
-    }
     @GetMapping(value = "/readAllContactNotes/{contactNotesId}", produces = "application/json")
     @ApiOperation("Read Identitys")
     @ResponseStatus(HttpStatus.OK)

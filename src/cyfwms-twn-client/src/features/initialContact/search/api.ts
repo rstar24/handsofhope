@@ -7,7 +7,7 @@ export const doGetAPI = async (
   token: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.get(
-    `initialcontactservice/searchInitialContacts/${data.clientName}/${data.fileNumber}/${data.caseworker}/${data.startingDate}/${data.status}`,
+    `initialcontactservice/search/${data.clientName}/${data.fileNumber}/${data.caseworker}/${data.startingDate}/${data.status}`,
     {
       headers: { Authorization: "Bearer " + token },
     }

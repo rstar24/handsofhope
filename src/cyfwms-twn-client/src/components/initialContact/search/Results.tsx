@@ -68,7 +68,10 @@ const Results = (): ReactElement => {
               <TableCell>{initialContact.startingDate}</TableCell>
               <TableCell>{initialContact.status}</TableCell>
               <TableCell>
-                <EditIcon value={initialContact.fileDetailsId} />
+                <EditIcon
+                  value={initialContact.fileDetailsId}
+                  fileNumber={initialContact.fileNumber || 0}
+                />
               </TableCell>
             </TableRow>
           ))}

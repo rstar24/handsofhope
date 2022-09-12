@@ -1,35 +1,39 @@
 package com.twn.cyfwms.initialContact.service;
 
-import com.twn.cyfwms.initialContact.dto.InitialContactFileDetailsDto;
-import com.twn.cyfwms.initialContact.entity.InitialContactFileDetails;
-import com.twn.cyfwms.initialContact.repository.InitialContactFileDetailsRepository;
-import lombok.AllArgsConstructor;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.OK;
+
+import java.time.LocalDate;
+import java.util.Optional;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import java.time.LocalDate;
-import java.util.Optional;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
+
+import com.twn.cyfwms.initialContact.dto.InitialContactFileDetailsDto;
+import com.twn.cyfwms.initialContact.entity.InitialContactFileDetails;
+import com.twn.cyfwms.initialContact.repository.InitialContactFileDetailsRepository;
+
+import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
 public class InitialContactFileDetailsServiceImpl implements  InitialContactFileDetailsService{
     @Autowired
     private ModelMapper modelMapper;
-    @Autowired
-    private InitialContactFileDetailsRepository initialContactFileDetailsRepository;
 
+    @Autowired
+    private InitialContactFileDetailsRepository fileDetailsRepo;
 
     @Override
     public InitialContactFileDetailsDto readAllFileDetails(Long fileDetailsID) {
         if (fileDetailsID != 0) {
             InitialContactFileDetailsDto initialContactFileDetailsDto = new InitialContactFileDetailsDto();
-            InitialContactFileDetails initialContactFileDetails = initialContactFileDetailsRepository.findById(fileDetailsID).get();
+            InitialContactFileDetails initialContactFileDetails = fileDetailsRepo.findById(fileDetailsID).get();
             if (initialContactFileDetails != null) {
-                if (!initialContactFileDetails.getStatus().equals("INACTIVE")){
+                if (!initialContactFileDetails.getStatusOfDeletion().equals("INACTIVE")){
                     modelMapper.map(initialContactFileDetails, initialContactFileDetailsDto);
                 }
                 else {
@@ -53,7 +57,7 @@ public class InitialContactFileDetailsServiceImpl implements  InitialContactFile
             initialContactFileDetails = new InitialContactFileDetails();
             modelMapper.map(initialContactFileDetailsDto, initialContactFileDetails);
             initialContactFileDetails.setStatusOfDeletion("ACTIVE");
-            Optional<InitialContactFileDetails> initialContactFileDetailOpt = initialContactFileDetailsRepository.findTopByOrderByFileNumberDesc();
+            Optional<InitialContactFileDetails> initialContactFileDetailOpt = fileDetailsRepo.findTopByOrderByFileNumberDesc();
             if (initialContactFileDetailOpt.isPresent()) {
                 InitialContactFileDetails initialContactFileDtls = initialContactFileDetailOpt.get();
                 initialContactFileDetails.setFileNumber(initialContactFileDtls.getFileNumber()+1L);
@@ -61,26 +65,23 @@ public class InitialContactFileDetailsServiceImpl implements  InitialContactFile
                initialContactFileDetails.setFileNumber(1L);
             }
         } else {
-            initialContactFileDetails=initialContactFileDetailsRepository.findById(initialContactFileDetailsDto.getFileDetailsId()).get();
+            initialContactFileDetails=fileDetailsRepo.findById(initialContactFileDetailsDto.getFileDetailsId()).get();
             modelMapper.map(initialContactFileDetailsDto, initialContactFileDetails);
         }
-        initialContactFileDetails = initialContactFileDetailsRepository.save(initialContactFileDetails);
+        initialContactFileDetails = fileDetailsRepo.save(initialContactFileDetails);
         initialContactFileDetailsDto.setFileDetailsId(initialContactFileDetails.getFileDetailsId());
         initialContactFileDetailsDto.setFileNumber(initialContactFileDetails.getFileNumber());
         return initialContactFileDetailsDto;
     }
 
     @Override
-    public ResponseEntity removeInitialContactFileDetails(Long fileNumber) {
-        Optional<InitialContactFileDetails> initialContactFileDetailsOpt = initialContactFileDetailsRepository.findByFileNumber(fileNumber);
-        Long fileDetailsId=initialContactFileDetailsOpt.get().getFileDetailsId();
-        InitialContactFileDetails initialContactFileDetails = initialContactFileDetailsRepository.findByFileDetailsId(fileDetailsId);
-        if (initialContactFileDetails !=null){
-            initialContactFileDetails.setStatus("INACTIVE");
-            initialContactFileDetailsRepository.save(initialContactFileDetails);
-        } else {
-            throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
+    public ResponseEntity<String> remove(Long fileNumber) {
+        Optional<InitialContactFileDetails> ic = fileDetailsRepo.findByFileNumber(fileNumber);
+        if (!ic.isPresent() || ic.get().getStatusOfDeletion().equalsIgnoreCase("INACTIVE")) {
+            return new ResponseEntity<String>("Initial Contact not found!", NOT_FOUND);
         }
-        return new ResponseEntity( HttpStatus.OK);
+        ic.get().setStatusOfDeletion("INACTIVE");
+        fileDetailsRepo.save(ic.get());
+        return new ResponseEntity<String>(OK);
     }
 }
