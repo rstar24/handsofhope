@@ -15,11 +15,11 @@ public class ReadAllOutputInitialContactDto {
     private InitialContactIncidentReportDto incidentReport;
 
     @Getter @Setter
-    private InitialContactPatientCareInfoDto patientCareInformation;
+    private InitialContactPatientCareInfoDto patientCareInfo;
 
     @Getter @Setter
     private InitialContactPresentConcernsDto presentConcerns;
 
     @Getter @Setter
-    private InitialContactReferralInfoDto referralInformation;
+    private InitialContactReferralInfoDto referralInfo;
 }
