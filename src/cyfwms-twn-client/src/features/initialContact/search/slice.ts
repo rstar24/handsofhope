@@ -34,6 +34,15 @@ export const searchSlice = createSlice<State, SliceCaseReducers<State>>({
     status: "none",
   },
   reducers: {
+    /** Removes one record from data matching the given file number. */
+    spliceRecord(state, action) {
+      // Find index of the matching record in data.
+      const index = state.data.findIndex(
+        (element: Record) => element.fileNumber === action.payload
+      );
+      // Remove it.
+      state.data.splice(index, 1);
+    },
     cleanState(state) {
       state.data = [];
       state.status = "none";
@@ -56,6 +65,6 @@ export const searchSlice = createSlice<State, SliceCaseReducers<State>>({
   },
 });
 
-export const { cleanState } = searchSlice.actions;
+export const { spliceRecord, cleanState } = searchSlice.actions;
 
 export default searchSlice.reducer;

@@ -108,7 +108,10 @@ const View = (): ReactElement => {
           File Number: {state.icFileDetails.data.fileNumber}
         </Typography>
         <Typography>
-          <EditIcon value={state.icFileDetails.data.fileDetailsId} />
+          <EditIcon
+            value={state.icFileDetails.data.fileDetailsId}
+            fileNumber={state.icFileDetails.data.fileNumber || 0}
+          />
         </Typography>
       </Box>
       <Box

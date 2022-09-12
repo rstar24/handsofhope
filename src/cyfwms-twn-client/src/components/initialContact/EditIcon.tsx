@@ -6,14 +6,31 @@ import {
   doGetICMentalHealthOrSubstanceAbuse,
   doGetICTypeOfPatient,
 } from "../../features/codetable/slice";
+import { doDelete } from "../../features/initialContact/all/slice";
 import { initiate } from "../../features/initiatorSlice";
 import { setEdit, setOpen } from "../../features/popupSlice";
 import { unhideTabs } from "../../features/navBarSlice";
-import { doGet as doGetFileDetails } from "../../features/initialContact/fileDetails/slice";
-import { doGet as doGetReferralInformation } from "../../features/initialContact/referralInformation/slice";
-import { doGet as doGetIncidentReport } from "../../features/initialContact/incidentReport/slice";
-import { doGet as doGetPresentConcerns } from "../../features/initialContact/presentConcerns/slice";
-import { doGet as doGetPatientCareInformation } from "../../features/initialContact/patientCareInformation/slice";
+import {
+  doGet as doGetFileDetails,
+  cleanState as cleanFileDetails,
+} from "../../features/initialContact/fileDetails/slice";
+import {
+  doGet as doGetReferralInformation,
+  cleanState as cleanGetReferralInformation,
+} from "../../features/initialContact/referralInformation/slice";
+import {
+  doGet as doGetIncidentReport,
+  cleanState as cleanIncidentReport,
+} from "../../features/initialContact/incidentReport/slice";
+import {
+  doGet as doGetPresentConcerns,
+  cleanState as cleanPresentConcerns,
+} from "../../features/initialContact/presentConcerns/slice";
+import {
+  doGet as doGetPatientCareInformation,
+  cleanState as cleanPatientCareInformation,
+} from "../../features/initialContact/patientCareInformation/slice";
+import { spliceRecord } from "../../features/initialContact/search/slice";
 import { useAppDispatch } from "../../library/hooks";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { Box, Button, IconButton, Modal, Menu, MenuItem } from "@mui/material";
@@ -117,7 +134,16 @@ const EditIcon = (props: any): ReactElement => {
         >
           Edit
         </MenuItem>
-        <MenuItem onClick={handleCloseDropDown}>Delete</MenuItem>
+        <MenuItem
+          to="#"
+          component={Link}
+          onClick={(event: React.MouseEvent<HTMLElement>) => {
+            event.preventDefault();
+            handleCloseDropDown(event);
+          }}
+        >
+          Delete
+        </MenuItem>
       </Menu>
       <Modal
         open={openModel}
@@ -137,7 +163,27 @@ const EditIcon = (props: any): ReactElement => {
             Are you sure ? You want to delete ?
           </p>
           <Box paddingLeft={7}>
-            <Button>Yes</Button>
+            <Button
+              onClick={(e) => {
+                e.preventDefault();
+                dispatch(doDelete(props.fileNumber))
+                  .unwrap()
+                  .then(() => {
+                    dispatch(spliceRecord(props.fileNumber));
+                    setOpenModel(false);
+                    dispatch(cleanFileDetails(null));
+                    dispatch(cleanGetReferralInformation(null));
+                    dispatch(cleanIncidentReport(null));
+                    dispatch(cleanPresentConcerns(null));
+                    dispatch(cleanPatientCareInformation(null));
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  });
+              }}
+            >
+              Yes
+            </Button>
             <Button onClick={handleCloseModel}>No</Button>
           </Box>
         </Box>
