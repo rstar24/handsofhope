@@ -29,7 +29,7 @@ public class InitialContactFileDetailsServiceImpl implements  InitialContactFile
             InitialContactFileDetailsDto initialContactFileDetailsDto = new InitialContactFileDetailsDto();
             InitialContactFileDetails initialContactFileDetails = initialContactFileDetailsRepository.findById(fileDetailsID).get();
             if (initialContactFileDetails != null) {
-                if (!initialContactFileDetails.getStatus().equals("INACTIVE")){
+                if (!initialContactFileDetails.getStatusOfDeletion().equals("INACTIVE")){
                     modelMapper.map(initialContactFileDetails, initialContactFileDetailsDto);
                 }
                 else {
@@ -81,6 +81,6 @@ public class InitialContactFileDetailsServiceImpl implements  InitialContactFile
         } else {
             throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
         }
-        return new ResponseEntity( HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }
