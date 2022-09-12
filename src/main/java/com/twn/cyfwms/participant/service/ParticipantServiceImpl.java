@@ -84,7 +84,7 @@ public class ParticipantServiceImpl implements ParticipantService {
     @Override
     public ResponseEntity<String> removeParticipant(Long referenceId) {
         Optional<Participant> p = participantRepository.findByReferenceId(referenceId);
-        if (p.isEmpty() || p.get().getStatus().equalsIgnoreCase("INACTIVE")) {
+        if (!p.isPresent() || p.get().getStatus().equalsIgnoreCase("INACTIVE")) {
             return new ResponseEntity<String>("Participant not found!", NOT_FOUND);
         }
         p.get().setStatus("INACTIVE");
