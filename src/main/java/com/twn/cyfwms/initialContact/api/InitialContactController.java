@@ -1,23 +1,24 @@
 package com.twn.cyfwms.initialContact.api;
 
-import static org.springframework.http.HttpStatus.OK;
+import com.twn.cyfwms.initialContact.dto.InitialContactSearchCriteriaDto;
+import com.twn.cyfwms.initialContact.dto.InitialContactSearchResultsDto;
+import com.twn.cyfwms.initialContact.dto.ReadAllOutputInitialContactDto;
+import com.twn.cyfwms.initialContact.service.InitialContactFileDetailsService;
+import com.twn.cyfwms.initialContact.service.InitialContactSearchService;
+import com.twn.cyfwms.initialContact.service.ReadAllInitialContactService;
+import io.swagger.annotations.ApiOperation;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import com.twn.cyfwms.initialContact.dto.InitialContactSearchCriteriaDto;
-import com.twn.cyfwms.initialContact.dto.InitialContactSearchResultsDto;
-import com.twn.cyfwms.initialContact.service.InitialContactFileDetailsService;
-import com.twn.cyfwms.initialContact.service.InitialContactSearchService;
-
-import io.swagger.annotations.ApiOperation;
-import lombok.AllArgsConstructor;
+import static org.springframework.http.HttpStatus.OK;
 
 @AllArgsConstructor
 @RestController
@@ -26,9 +27,10 @@ import lombok.AllArgsConstructor;
 public class InitialContactController {
   @Autowired
   InitialContactFileDetailsService fileDetailsService;
-
   @Autowired
   InitialContactSearchService searchService;
+  @Autowired
+  ReadAllInitialContactService readAllInitialContactService;
 
   @ApiOperation("Search Initial Contact(s)")
   @GetMapping(value = {"/search/{clientname}/{fileNumber}/{caseworker}/{startingDate}/{status}"}, produces = "application/json")
@@ -61,4 +63,11 @@ public class InitialContactController {
   public ResponseEntity<String> remove(@PathVariable("fileNumber") Long fileNumber) {
     return fileDetailsService.remove(fileNumber);
   }
+
+    @GetMapping(value = "/readAll/{fileNumber}", produces = "application/json")
+    @ApiOperation("Read All Output InitialContact")
+    @ResponseStatus(HttpStatus.OK)
+    public ReadAllOutputInitialContactDto readAllOutPutInitialContact(@PathVariable("fileNumber") Long fileNumber) {
+        return readAllInitialContactService.readAllOutPutInitialContact(fileNumber);
+    }
 }

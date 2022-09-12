@@ -2,6 +2,7 @@ package com.twn.cyfwms.initialContact.repository;
 
 import com.twn.cyfwms.initialContact.entity.InitialContactFileDetails;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -10,6 +11,7 @@ import java.util.Optional;
 public interface InitialContactFileDetailsRepository extends JpaRepository<InitialContactFileDetails, Long> {
     Optional<InitialContactFileDetails> findTopByOrderByFileNumberDesc();
 
+   @Query(value = "select * from initialcontactfiledetails i where i.statusofdeletion='ACTIVE' AND fileNumber=?",nativeQuery = true)
     Optional<InitialContactFileDetails> findByFileNumber(Long fileNumber);
 
     InitialContactFileDetails findByFileDetailsId(Long fileDetailsId);
