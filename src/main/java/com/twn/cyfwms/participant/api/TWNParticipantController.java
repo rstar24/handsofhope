@@ -1,6 +1,7 @@
 package com.twn.cyfwms.participant.api;
 
 import com.twn.cyfwms.participant.dto.*;
+import com.twn.cyfwms.participant.entity.Participant;
 import com.twn.cyfwms.participant.entity.ParticipantImage;
 import com.twn.cyfwms.participant.service.*;
 import io.swagger.annotations.ApiOperation;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -69,8 +71,8 @@ public class TWNParticipantController {
     @PutMapping(value = "/saveParticipantIdentity", produces = "application/json")
     @ApiOperation("Save or Update Identity")
     @ResponseStatus(HttpStatus.OK)
-    public ParticipantIdentityDto saveParticipantIdentity(@RequestBody ParticipantIdentityDto participantRequestDto) {
-        return participantService.saveParticipantIdentity(participantRequestDto);
+    public ParticipantIdentityDto saveParticipantIdentity(@RequestParam("participantDto")String participantIdentityDto,@RequestParam("image")MultipartFile file) throws IOException {
+        return participantService.saveParticipantIdentity(participantIdentityDto,file);
     }
 
     @DeleteMapping("/removeParticipant/{referenceId}")
@@ -259,31 +261,14 @@ public class TWNParticipantController {
     public ReadAllOutputParticipantDto readAllOutPutParticipant(@PathVariable("referenceId") Long referenceId) {
         return readAllOutputParticipantService.readAllOutPutParticipant(referenceId);
     }
-    @PostMapping("/upload")
-    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("participantId") String participantId) {
-        String message = "";
-        try {
-           ParticipantImage participantImage= imageService.uploadImage(file,participantId);
-            if(participantImage.getImage()==null){
-                message = "enter valid format: " + file.getOriginalFilename();
-            }
-            else {
-                message="file upload successfull";
-            }
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
-        } catch (Exception e) {
-            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
-        }
-    }
 
     @GetMapping("/files/{id}")
     public ResponseEntity<byte[]> getFile(@PathVariable Long id) {
         ParticipantImage fileDB = imageService.getFile(id);
 
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDB.getName() + "\"")
-                        .contentType(MediaType.valueOf(fileDB.getType()))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDB.getParticipantImageName() + "\"")
+                        .contentType(MediaType.valueOf(fileDB.getParticipantImageType()))
                 .body(fileDB.getImage());
     }
 

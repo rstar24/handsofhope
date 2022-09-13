@@ -3,6 +3,8 @@ package com.twn.cyfwms.participant.entity;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -29,19 +31,19 @@ public class ParticipantImage {
     private Long participantimageId;
 
 
-    @Getter @Setter @Column(name="name")
-    private String name;
+    @Getter @Setter @Column(name="participantImageName")
+    private String participantImageName;
 
     @Lob
     @Getter @Setter @Column(name="image")
     private byte[] image;
 
-    @CreationTimestamp
+    @UpdateTimestamp
     @Getter @Setter @Column(name="uplodedDateTime")
     private LocalDateTime uplodedDateTime;
 
     @Getter @Setter @Column(name = "type")
-    private String type;
+    private String participantImageType;
 
     @Getter @Setter @Column(name = "participantid")
     private Long participantId;

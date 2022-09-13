@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class ImageDto {
+public class ParticipantImageDto {
     @Getter
     @Setter
     private long participantimageId;
@@ -14,7 +14,7 @@ public class ImageDto {
     private byte[] image;
     @Getter
     @Setter
-    private String name;
+    private String participantImageName;
     @Getter
     @Setter
     private long participantId;

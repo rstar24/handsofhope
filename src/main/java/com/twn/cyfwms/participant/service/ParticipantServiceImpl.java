@@ -1,19 +1,27 @@
 package com.twn.cyfwms.participant.service;
-
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.OK;
-
 import java.util.Optional;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.twn.cyfwms.participant.dto.ParticipantImageDto;
+import com.twn.cyfwms.participant.dto.ParticipantIdentityDto;
+import com.twn.cyfwms.participant.entity.Participant;
+import com.twn.cyfwms.participant.entity.ParticipantImage;
+import com.twn.cyfwms.participant.repository.ImageRepository;
+import com.twn.cyfwms.participant.repository.ParticipantRepository;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
-
 import com.twn.cyfwms.participant.dto.ParticipantIdentityDto;
 import com.twn.cyfwms.participant.entity.Participant;
 import com.twn.cyfwms.participant.repository.ParticipantRepository;
+import java.io.IOException;
+import java.util.Optional;
 
 import lombok.AllArgsConstructor;
 
@@ -22,6 +30,8 @@ import lombok.AllArgsConstructor;
 public class ParticipantServiceImpl implements ParticipantService {
     @Autowired
     private ParticipantRepository participantRepository;
+    @Autowired
+    private ImageRepository imageRepository;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -34,6 +44,7 @@ public class ParticipantServiceImpl implements ParticipantService {
             if (participant != null) {
                 if (!participant.getStatus().equals("INACTIVE")){
                     modelMapper.map(participant, participantIdentityResponseDto);
+
                 }
                 else {
                     throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
@@ -55,13 +66,34 @@ public class ParticipantServiceImpl implements ParticipantService {
         }
         return participant;
     }
+    private ParticipantImage readParticipantImage(Long participantId){
+        ParticipantImage participantImage= new ParticipantImage();
+        Optional<ParticipantImage> participantOpt=imageRepository.findByParticipantId(participantId);
+        if(participantOpt.isPresent()){
+            participantImage= participantOpt.get();
+
+        }
+        return participantImage;
+    }
 
     @Override
-    public ParticipantIdentityDto saveParticipantIdentity(ParticipantIdentityDto ParticipantIdentityDto) {
+    public ParticipantIdentityDto saveParticipantIdentity(String participantDto, MultipartFile file) throws IOException {
+        int f=0;
+        ParticipantIdentityDto participantIdentityDto  = new ObjectMapper().readValue(participantDto,ParticipantIdentityDto.class);
+        ParticipantImageDto imageDto = new ParticipantImageDto();
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        ParticipantImage participantImage =new ParticipantImage();
+        imageDto.setParticipantImageName(fileName);
+        imageDto.setType(file.getContentType());
+        imageDto.setImage(file.getBytes());
+
+
         Participant participant = null;
-        if (ParticipantIdentityDto.getParticipantId() == 0) {
+
+        if (participantIdentityDto.getParticipantId() == 0 && (file.getContentType().equals("image/png") || file.getContentType().equals("image/jpg") || file.getContentType().equals("image/jpeg"))) {
             participant = new Participant();
-            modelMapper.map(ParticipantIdentityDto, participant);
+            modelMapper.map(participantIdentityDto, participant);
+            modelMapper.map(imageDto,participantImage);
             participant.setType("CYFM");
             participant.setStatus("ACTIVE");
             Optional<Participant> particpantDetailsOpt = participantRepository.findTopByOrderByCreationDateTimeDesc();
@@ -72,13 +104,24 @@ public class ParticipantServiceImpl implements ParticipantService {
                 participant.setReferenceId(128L);
             }
         } else {
-            participant = readParticipant(ParticipantIdentityDto.getParticipantId());
-            modelMapper.map(ParticipantIdentityDto, participant);
+
+            participant = readParticipant(participantIdentityDto.getParticipantId());
+            modelMapper.map(participantIdentityDto, participant);
+
+            participantImage = readParticipantImage(participantIdentityDto.getParticipantId());
+            imageDto.setParticipantId(participantIdentityDto.getParticipantId());
+            imageDto.setParticipantimageId(participantIdentityDto.getParticipantimageId());
+            modelMapper.map(imageDto,participantImage);
         }
         participant = participantRepository.save(participant);
-        ParticipantIdentityDto.setParticipantId(participant.getParticipantId());
-        ParticipantIdentityDto.setReferenceId(participant.getReferenceId());
-        return ParticipantIdentityDto;
+        participantIdentityDto.setParticipantId(participant.getParticipantId());
+        participantImage.setParticipantId(participantIdentityDto.getParticipantId());
+        System.out.println(participantIdentityDto.getParticipantId());
+        imageRepository.save(participantImage);
+        participantIdentityDto.setReferenceId(participant.getReferenceId());
+        participantIdentityDto.setParticipantImageName(imageDto.getParticipantImageName());
+        participantIdentityDto.setPaticipantImageType(imageDto.getType());
+        return participantIdentityDto;
     }
 
     @Override

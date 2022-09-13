@@ -2,7 +2,6 @@ package com.twn.cyfwms.CulturalProgram.service;
 
 import com.twn.cyfwms.CulturalProgram.entity.CulturalProgImage;
 import com.twn.cyfwms.CulturalProgram.repository.CulturalProgImageRepository;
-import com.twn.cyfwms.participant.entity.ParticipantImage;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,14 +17,17 @@ public class CulturalProgImageServiceImpl implements CulturalProgImageService{
 
     @Override
     public CulturalProgImage uploadImage(MultipartFile file, String culturalProgImageId) throws IOException {
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-//        ParticipantImage ParticipantImage = new ParticipantImage(fileName, file.getContentType(), file.getBytes());
         CulturalProgImage culturalProgImage = new CulturalProgImage();
-        culturalProgImage.setName(fileName);
-        culturalProgImage.setType(file.getContentType());
-        culturalProgImage.setFile(file.getBytes());
-        culturalProgImage.setCulturalProgramId(Long.parseLong(culturalProgImageId));
-        return culturalProgImageRepository.save(culturalProgImage);
+        if(file.getContentType().equals("image/jpg") || file.getContentType().equals("image/png")||file.getContentType().equals("image/jpeg") ||file.getContentType().equals("image/gif")||file.getContentType().equals("image/bmp")||file.getContentType().equals("application/pdf")
+       ||file.getContentType().equals("application/vnd.ms-excel")||file.getContentType().equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document")){
+            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+            culturalProgImage.setName(fileName);
+            culturalProgImage.setType(file.getContentType());
+            culturalProgImage.setFile(file.getBytes());
+            culturalProgImage.setCulturalProgramId(Long.parseLong(culturalProgImageId));
+            culturalProgImageRepository.save(culturalProgImage);
+       }
+        return culturalProgImage;
     }
 
     @Override
