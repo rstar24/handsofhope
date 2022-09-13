@@ -8,6 +8,6 @@ import java.io.IOException;
 
 public interface CulturalProgImageService {
 
-    CulturalProgImage uploadImage(MultipartFile file, String culturalProgImageId) throws IOException;
+    CulturalProgImage uploadImage(MultipartFile file, String culturalDto) throws IOException;
     CulturalProgImage getFile(Long id);
 }

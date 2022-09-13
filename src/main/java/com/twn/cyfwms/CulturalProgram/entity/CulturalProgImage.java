@@ -47,4 +47,7 @@ public class CulturalProgImage {
 
     @Getter @Setter @Column(name = "culturalprogramid")
     private Long culturalProgramId;
+
+    @Getter @Setter @Column(name = "imageType")
+    private String imageType;
 }
