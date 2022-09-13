@@ -2,6 +2,8 @@ import Popup from "../../components/Popup";
 import AuthLayout from "../../components/auth/layout/AuthLayout";
 import Router from "../../components/nestedRouters/CPA";
 import {
+  doGetCPACulturalStatus,
+  doGetCPACulturalType,
   doGetEducation,
   doGetGender,
   doGetMaritalStatus,
@@ -34,12 +36,8 @@ const CPA = (): ReactElement => {
       dispatch(setOpen(false));
     }
     // Load all the code tables:
-    dispatch(doGetGender());
-    dispatch(doGetProvince());
-    dispatch(doGetMaritalStatus());
-    dispatch(doGetRole());
-    dispatch(doGetEducation());
-    dispatch(doGetTypeOfEmployee());
+    dispatch(doGetCPACulturalType());
+    dispatch(doGetCPACulturalStatus());
   }, []);
 
   const cleanStore = () => {

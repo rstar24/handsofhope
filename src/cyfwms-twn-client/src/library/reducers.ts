@@ -20,6 +20,7 @@ import initiatorReducer from "../features/initiatorSlice";
 import loginReducer from "../features/login/slice";
 import popupReducer from "../features/popupSlice";
 import navBarReducer from "../features/navBarSlice";
+import cpaSearchReducer from "../features/cpa/search/slice";
 import cpaReducer from "../features/cpa/culturalProgramActivity/slice";
 import cpaParticipantReducer from "../features/cpa/participant/slice";
 const rootReducer = {
@@ -46,6 +47,7 @@ const rootReducer = {
   icContactNotes: icContactNotesReducer,
   icSearch: icSearchReducer,
   cpa: cpaReducer,
+  cpaSearch: cpaSearchReducer,
   cpaParticipant: cpaParticipantReducer,
 };
 
