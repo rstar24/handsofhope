@@ -1,10 +1,8 @@
 package com.twn.cyfwms.participant.service;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-import static org.springframework.http.HttpStatus.OK;
-import java.util.Optional;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.twn.cyfwms.participant.dto.ParticipantImageDto;
 import com.twn.cyfwms.participant.dto.ParticipantIdentityDto;
+import com.twn.cyfwms.participant.dto.ParticipantImageDto;
 import com.twn.cyfwms.participant.entity.Participant;
 import com.twn.cyfwms.participant.entity.ParticipantImage;
 import com.twn.cyfwms.participant.repository.ImageRepository;
@@ -17,13 +15,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
-import com.twn.cyfwms.participant.dto.ParticipantIdentityDto;
-import com.twn.cyfwms.participant.entity.Participant;
-import com.twn.cyfwms.participant.repository.ParticipantRepository;
+
 import java.io.IOException;
 import java.util.Optional;
 
-import lombok.AllArgsConstructor;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.OK;
 
 @AllArgsConstructor
 @Service
@@ -90,10 +87,12 @@ public class ParticipantServiceImpl implements ParticipantService {
 
         Participant participant = null;
 
-        if (participantIdentityDto.getParticipantId() == 0 && (file.getContentType().equals("image/png") || file.getContentType().equals("image/jpg") || file.getContentType().equals("image/jpeg"))) {
+        if (participantIdentityDto.getParticipantId() ==0) {
             participant = new Participant();
             modelMapper.map(participantIdentityDto, participant);
-            modelMapper.map(imageDto,participantImage);
+            if(file.getContentType().equals("image/png") || file.getContentType().equals("image/jpg") || file.getContentType().equals("image/jpeg")){
+                modelMapper.map(imageDto,participantImage);
+            }
             participant.setType("CYFM");
             participant.setStatus("ACTIVE");
             Optional<Participant> particpantDetailsOpt = participantRepository.findTopByOrderByCreationDateTimeDesc();
