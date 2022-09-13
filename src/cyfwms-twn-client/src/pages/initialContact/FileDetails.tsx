@@ -24,6 +24,7 @@ import type { FormEvent, ReactElement } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import { handleAddMore } from "../cyfms/familyPhysicians/familyPhysicians_";
 import SearchClientName from "../../components/cyfms/searchClient/SearchClientName";
+
 /**
  * The FileDetails functional component.
  * @returns FileDetails component skeleton.
@@ -34,12 +35,13 @@ const FileDetails = (): ReactElement => {
   const { initialContactStatus } = useAppSelector(
     (state: any) => state.codetable
   );
+
   const isInitiated = useAppSelector(
     (state: any) => state.initiator.isInitiated
   );
   const state = useAppSelector((state) => state.icFileDetails);
   const edit = useAppSelector((state) => state.popup.edit);
-  const { clientName } = useAppSelector((state) => state.icFileDetails.data);
+
   const [click, setClick] = useState(false);
   useEffect(() => {
     dispatch(doGet(state.data.fileDetailsId))
@@ -61,7 +63,7 @@ const FileDetails = (): ReactElement => {
     const formData: Data = {
       fileDetailsId: state.data.fileDetailsId,
       fileNumber: state.data.fileDetailsId | 0,
-      clientName: form.clientName.value,
+      clientName: state.id,
       startingDate: form.startingDate.value,
       caseworker: form.caseWorker.value,
       status: form.status.value,
@@ -161,7 +163,7 @@ const FileDetails = (): ReactElement => {
                   flexGrow: 2,
                 }}
                 size="small"
-                value={clientName}
+                value={state.cyfmsClientName}
                 style={{ backgroundColor: "#dfdada" }}
                 endAdornment={<SearchIcon onClick={handleSearch} />}
               />
@@ -230,7 +232,13 @@ const FileDetails = (): ReactElement => {
           )}
         </Box>
       </Box>
-      {click && <SearchClientName click={click} setClick={setClick} />}
+      {click && (
+        <SearchClientName
+          click={click}
+          setClick={setClick}
+          moduleName="initialContact"
+        />
+      )}
     </ICLayout>
   );
 };

@@ -1,14 +1,15 @@
 import { Box, Button, IconButton, Modal } from "@mui/material";
 import React, { useState } from "react";
-import type { ReactElement } from "react";
 import CYFMSDropdown from "../CYFMSDropdown";
 import Input from "../../Input";
 import CloseIcon from "@mui/icons-material/Close";
 import CYFMSHeader from "../CYFMSHeader";
 import ClientResults from "./ClientResults";
-import { useAppSelector } from "../../../library/hooks";
-
+import { useAppDispatch, useAppSelector } from "../../../library/hooks";
+import type { ReactElement } from "react";
+import { doGet, Record } from "../../../features/cyfms/search/slice";
 const SearchClientName = ({
+  moduleName,
   setDisabled,
   setAddNew,
   contactId,
@@ -16,8 +17,7 @@ const SearchClientName = ({
   click,
   setClick,
 }: any): ReactElement => {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
+  const dispatch = useAppDispatch();
   const [show, setShown] = useState(false);
   const { maritalstatus } = useAppSelector((state) => state.codetable);
   const handleClose = () => {
@@ -28,6 +28,30 @@ const SearchClientName = ({
     setShown(false);
   };
 
+  const handleSubmit: AppFormEventHandler<HTMLFormElement> = (event) => {
+    event.preventDefault();
+    setShown(true);
+    const formData: Record = {
+      participantId: null,
+      referenceId: event.currentTarget.referenceId.value || null,
+      firstname: event.currentTarget.firstName.value || null,
+      surname: event.currentTarget.lastName.value || null,
+      middleName: event.currentTarget.middleName.value || null,
+      dateOfBirth: event.currentTarget.dateOfBirth.value || null,
+      maritalStatus: event.currentTarget.maritalStatus.value || null,
+      city: event.currentTarget.city.value || null,
+      workPhone: event.currentTarget.phoneNo.value || null,
+    };
+    dispatch(doGet(formData))
+      .unwrap()
+      .then(() => {
+        console.log("CYFMS Search POST backend API was successful!");
+      })
+      .catch((err) => {
+        console.log("InitialContact Search POST backend API didn't work!");
+        console.log(err);
+      });
+  };
   return (
     <div>
       <Modal
@@ -100,9 +124,7 @@ const SearchClientName = ({
                 flexDirection: "column",
                 gap: "0.5rem 0",
               }}
-              // onSubmit={() => {
-              //   setShown(true);
-              // }}
+              onSubmit={handleSubmit}
             >
               <Input
                 id="referenceId"
@@ -178,7 +200,7 @@ const SearchClientName = ({
                     gap: "0 1rem",
                   }}
                 >
-                  <Button variant="contained" onClick={() => setShown(true)}>
+                  <Button variant="contained" type="submit">
                     Search
                   </Button>
                   <Button variant="contained" type="reset" onClick={hide}>
@@ -188,7 +210,9 @@ const SearchClientName = ({
               </Box>
             </Box>
           </Box>
-          {show && <ClientResults setClick={setClick} />}
+          {show && (
+            <ClientResults setClick={setClick} moduleName={moduleName} />
+          )}
         </Box>
       </Modal>
     </div>

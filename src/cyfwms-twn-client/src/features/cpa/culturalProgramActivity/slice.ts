@@ -67,7 +67,7 @@ export const doPost = createAsyncThunk<Data, Data>(
   }
 );
 
-export const registerSlice = createSlice<State, SliceCaseReducers<State>>({
+export const cpaSlice = createSlice<State, SliceCaseReducers<State>>({
   name: "cpa",
   initialState: { data: emptyData, status: "none" },
   reducers: {
@@ -104,6 +104,6 @@ export const registerSlice = createSlice<State, SliceCaseReducers<State>>({
   },
 });
 
-export const { cleanState } = registerSlice.actions;
+export const { cleanState } = cpaSlice.actions;
 
-export default registerSlice.reducer;
+export default cpaSlice.reducer;

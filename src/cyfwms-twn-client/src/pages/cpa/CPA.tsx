@@ -18,6 +18,8 @@ import type { ReactElement } from "react";
 import { useLocation } from "react-router-dom";
 import { setOpen } from "../../features/popupSlice";
 import CPAHeader from "../../components/cpa/CPAHeader";
+import { cleanState as cleanCulturalProgramActivity } from "../../features/cpa/culturalProgramActivity/slice";
+
 /**
  * The CPA functional component.
  * @returns CPA component skeleton.
@@ -40,6 +42,9 @@ const CPA = (): ReactElement => {
     dispatch(doGetTypeOfEmployee());
   }, []);
 
+  const cleanStore = () => {
+    dispatch(cleanCulturalProgramActivity(null));
+  };
   return (
     <AuthLayout>
       <CPAHeader />
@@ -68,6 +73,7 @@ const CPA = (): ReactElement => {
               border: "1px solid black",
             }}
             onClick={() => {
+              cleanStore();
               dispatch(setOpenPopup(true));
             }}
           >

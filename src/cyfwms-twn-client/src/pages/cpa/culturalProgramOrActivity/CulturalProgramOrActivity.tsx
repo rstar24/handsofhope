@@ -96,7 +96,6 @@ const CulturalProgramOrActivity = (): ReactElement => {
           gap: "1rem 0",
         }}
         onSubmit={submitHandler}
-        //onChange={changeHandler}
         //onKeyDown={onKeyDown}
       >
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
