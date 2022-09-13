@@ -6,6 +6,8 @@ import static org.springframework.http.HttpStatus.OK;
 import java.time.LocalDate;
 import java.util.Optional;
 
+import com.twn.cyfwms.participant.entity.Participant;
+import com.twn.cyfwms.participant.repository.ParticipantRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,8 @@ public class InitialContactFileDetailsServiceImpl implements  InitialContactFile
 
     @Autowired
     private InitialContactFileDetailsRepository fileDetailsRepo;
+    @Autowired
+    private ParticipantRepository participantRepository;
 
     @Override
     public InitialContactFileDetailsDto readAllFileDetails(Long fileDetailsID) {
@@ -35,6 +39,8 @@ public class InitialContactFileDetailsServiceImpl implements  InitialContactFile
             if (initialContactFileDetails != null) {
                 if (!initialContactFileDetails.getStatusOfDeletion().equals("INACTIVE")){
                     modelMapper.map(initialContactFileDetails, initialContactFileDetailsDto);
+                   Participant participant=participantRepository.findByParticipantId(Long.parseLong(initialContactFileDetailsDto.getClientName()));
+                   initialContactFileDetailsDto.setClientName(participant.getFirstname()+" "+participant.getSurname());
                 }
                 else {
                     throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
