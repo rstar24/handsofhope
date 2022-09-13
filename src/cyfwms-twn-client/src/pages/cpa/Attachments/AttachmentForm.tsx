@@ -10,7 +10,7 @@ import {
 import { onKeyDown } from "../../../library/app";
 
 import { Box, Button, FormLabel, OutlinedInput } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import type { FormEvent } from "react";
 import CPAInputForm from "../../../components/cpa/CPAInputForm";
 import EditIcon from "../Participants/EditIcon";
@@ -21,6 +21,9 @@ const AttachmentForm = ({
   disabled,
   targetValue,
 }: any) => {
+  const [fileName, setFileName] = useState("");
+
+  const myFile = fileName.replace(/^.*[\\\/]/, "");
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
   };
@@ -64,15 +67,24 @@ const AttachmentForm = ({
 
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-          <Button variant="contained" component="label">
-            {" "}
-            <input type="file" hidden />
-            Upload File
-          </Button>
+          <Box sx={{ display: "flex", alignitems: "left" }}>
+            <Button variant="contained" component="label">
+              <input
+                type="file"
+                id="uploadFileId"
+                hidden
+                onChange={(e) => {
+                  setFileName(e.currentTarget.value);
+                }}
+              />
+              Upload File
+            </Button>
+          </Box>
         </Box>
+
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
       </Box>
-
+      <h6>{myFile}</h6>
       <Box sx={{ display: "flex", justifyContent: "right" }}>
         <CYFSWMSNextButton disabled={disabled} />
       </Box>

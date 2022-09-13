@@ -149,3 +149,27 @@ export const doGetICContactMethodAPI = async (
   );
   return res;
 };
+//  Cultural program activity cultural type codetable
+export const doGetCPACulturalTypeAPI = async (
+  jwtToken: string
+): Promise<AxiosResponse> => {
+  const res: AxiosResponse = await axiosInstance.get(
+    "dataservice/culturaltype",
+    {
+      headers: { Authorization: "Bearer " + jwtToken },
+    }
+  );
+  return res;
+};
+//Cultural program activity cultural Status codetable
+export const doGetCPACulturalStatusAPI = async (
+  jwtToken: string
+): Promise<AxiosResponse> => {
+  const res: AxiosResponse = await axiosInstance.get(
+    "dataservice/culturalstatus",
+    {
+      headers: { Authorization: "Bearer " + jwtToken },
+    }
+  );
+  return res;
+};

@@ -2,6 +2,8 @@ import Popup from "../../components/Popup";
 import AuthLayout from "../../components/auth/layout/AuthLayout";
 import Router from "../../components/nestedRouters/CPA";
 import {
+  doGetCPACulturalStatus,
+  doGetCPACulturalType,
   doGetEducation,
   doGetGender,
   doGetMaritalStatus,
@@ -18,6 +20,8 @@ import type { ReactElement } from "react";
 import { useLocation } from "react-router-dom";
 import { setOpen } from "../../features/popupSlice";
 import CPAHeader from "../../components/cpa/CPAHeader";
+import { cleanState as cleanCulturalProgramActivity } from "../../features/cpa/culturalProgramActivity/slice";
+
 /**
  * The CPA functional component.
  * @returns CPA component skeleton.
@@ -32,14 +36,13 @@ const CPA = (): ReactElement => {
       dispatch(setOpen(false));
     }
     // Load all the code tables:
-    dispatch(doGetGender());
-    dispatch(doGetProvince());
-    dispatch(doGetMaritalStatus());
-    dispatch(doGetRole());
-    dispatch(doGetEducation());
-    dispatch(doGetTypeOfEmployee());
+    dispatch(doGetCPACulturalType());
+    dispatch(doGetCPACulturalStatus());
   }, []);
 
+  const cleanStore = () => {
+    dispatch(cleanCulturalProgramActivity(null));
+  };
   return (
     <AuthLayout>
       <CPAHeader />
@@ -68,6 +71,7 @@ const CPA = (): ReactElement => {
               border: "1px solid black",
             }}
             onClick={() => {
+              cleanStore();
               dispatch(setOpenPopup(true));
             }}
           >

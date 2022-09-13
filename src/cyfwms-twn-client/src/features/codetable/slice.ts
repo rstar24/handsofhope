@@ -15,6 +15,8 @@ import {
   doGetICMentalHealthOrSubstanceAbuseAPI,
   doGetICPresentConcernsAPI,
   doGetICContactMethodAPI,
+  doGetCPACulturalTypeAPI,
+  doGetCPACulturalStatusAPI,
 } from "./api";
 
 export interface CodeTableData {
@@ -31,6 +33,8 @@ export interface CodeTableData {
   mentalHealthOrSubstanceAbuse: {};
   presentConcerns: {};
   contactMethod: {};
+  culturalType: {};
+  culturalStatus: {};
 }
 
 export interface CodeTableState {
@@ -179,6 +183,29 @@ export const doGetICContactMethod = createAsyncThunk(
     return res.data;
   }
 );
+// Cpa cultural program Activity cultural type
+export const doGetCPACulturalType = createAsyncThunk(
+  "codetable/doGetCPACulturalType",
+  async (_, { dispatch, getState }) => {
+    const res: AxiosResponse = await doGetCPACulturalTypeAPI(
+      (getState() as RootState).login.token
+    );
+    // Becomes the `fulfilled` action payload:
+    return res.data;
+  }
+);
+//Cpa cultiral program Activity cultural status
+export const doGetCPACulturalStatus = createAsyncThunk(
+  "codetable/doGetCPACulturalStatus",
+  async (_, { dispatch, getState }) => {
+    const res: AxiosResponse = await doGetCPACulturalStatusAPI(
+      (getState() as RootState).login.token
+    );
+    // Becomes the `fulfilled` action payload:
+    console.log("sdasfasfsf", res);
+    return res.data;
+  }
+);
 export const CodeTableSlice = createSlice({
   name: "codetable",
   initialState: {
@@ -195,6 +222,8 @@ export const CodeTableSlice = createSlice({
     mentalHealthOrSubstanceAbuse: {},
     presentConcerns: {},
     contactMethod: {},
+    culturalType: {},
+    culturalStatus: {},
     jwtToken: "",
     status: "failed",
   },
@@ -213,6 +242,8 @@ export const CodeTableSlice = createSlice({
       state.mentalHealthOrSubstanceAbuse = {};
       state.presentConcerns = {};
       state.contactMethod = {};
+      state.culturalType = {};
+      state.culturalStatus = {};
       state.jwtToken = "";
       state.status = "failed";
     },
@@ -428,6 +459,38 @@ export const CodeTableSlice = createSlice({
       state.status = "loading";
     });
     builder.addCase(doGetICContactMethod.rejected, (state) => {
+      state.status = "failed";
+    });
+
+    //Cpa Status
+    builder.addCase(doGetCPACulturalStatus.fulfilled, (state, action) => {
+      try {
+        state.culturalStatus = action.payload.valuesMap;
+      } catch (err) {
+        console.log(err);
+      }
+      state.status = "success";
+    });
+    builder.addCase(doGetCPACulturalStatus.pending, (state) => {
+      state.status = "loading";
+    });
+    builder.addCase(doGetCPACulturalStatus.rejected, (state) => {
+      state.status = "failed";
+    });
+
+    //Cpa Type
+    builder.addCase(doGetCPACulturalType.fulfilled, (state, action) => {
+      try {
+        state.culturalType = action.payload.valuesMap;
+      } catch (err) {
+        console.log(err);
+      }
+      state.status = "success";
+    });
+    builder.addCase(doGetCPACulturalType.pending, (state) => {
+      state.status = "loading";
+    });
+    builder.addCase(doGetCPACulturalType.rejected, (state) => {
       state.status = "failed";
     });
   },

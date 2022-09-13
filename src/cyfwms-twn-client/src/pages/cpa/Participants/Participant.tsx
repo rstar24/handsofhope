@@ -11,26 +11,24 @@ import React, { useEffect, useState } from "react";
 
 import { Link } from "react-router-dom";
 
-import {
-  cleanState,
-  doGet,
-  doSearch,
-} from "../../../features/initialContact/contactNotes/slice";
+import { cleanState } from "../../../features/cpa/participant/slice";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
-import { doGetICContactMethod } from "../../../features/codetable/slice";
 import CPALayout from "../../../components/cpa/CPALayout";
 import ParticipantForm from "./ParticipantForm";
+import { doGet, doSearch } from "../../../features/cpa/participant/slice";
 
 function Participant(props: any) {
   const dispatch = useAppDispatch();
   const [addNew, setAddNew] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [value, setValue] = useState("");
-  const data = useAppSelector((state) => state.icContactNotes.record);
+  const data = useAppSelector((state) => state.cpaParticipant.record);
 
   useEffect(() => {
-    dispatch(doGetICContactMethod());
-  }, []);
+    dispatch(doSearch(null))
+      .unwrap()
+      .catch((err) => {});
+  }, [addNew]);
   const handleAddNew = () => {
     dispatch(cleanState(null));
     setDisabled(false);
@@ -43,14 +41,6 @@ function Participant(props: any) {
         setDisabled(true);
         setAddNew(true);
       });
-  };
-  const handleSearchIcon = (e: any) => {
-    dispatch(doSearch(value || null))
-      .unwrap()
-      .catch((err) => {});
-  };
-  const handleChange = (e: any) => {
-    setValue(e.target.value);
   };
 
   return (
@@ -106,49 +96,48 @@ function Participant(props: any) {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  <TableRow
-                    sx={{
-                      "&:last-child td, &:last-child th": { border: 0 },
-                    }}
-                  >
-                    <TableCell
-                      sx={{ color: "black" }}
-                      align="center"
-                      size="small"
+                  {data.map((val: any) => (
+                    <TableRow
+                      sx={{
+                        "&:last-child td, &:last-child th": { border: 0 },
+                      }}
                     >
-                      <Link
-                        to="../participant"
-                        onClick={() => {
-                          setDisabled(true);
-                          setAddNew(true);
-                        }}
+                      <TableCell
+                        sx={{ color: "black" }}
+                        align="center"
+                        size="small"
                       >
-                        Select
-                      </Link>
-                    </TableCell>
+                        <Link
+                          to="../participant"
+                          onClick={() => handleSelected(val.participant)}
+                        >
+                          {val.participantId}
+                        </Link>
+                      </TableCell>
 
-                    <TableCell
-                      sx={{ color: "black" }}
-                      align="center"
-                      size="small"
-                    >
-                      Shubham
-                    </TableCell>
-                    <TableCell
-                      sx={{ color: "black" }}
-                      align="center"
-                      size="small"
-                    >
-                      Employee
-                    </TableCell>
-                  </TableRow>
+                      <TableCell
+                        sx={{ color: "black" }}
+                        align="center"
+                        size="small"
+                      >
+                        {val.firstname}
+                      </TableCell>
+                      <TableCell
+                        sx={{ color: "black" }}
+                        align="center"
+                        size="small"
+                      >
+                        {val.surname}
+                      </TableCell>
+                    </TableRow>
+                  ))}
                 </TableBody>
               </Table>
             </Box>
           </Box>
         </Box>
       )}
-      {addNew == true && (
+      {addNew === true && (
         <ParticipantForm
           setAddNew={setAddNew}
           setDisabled={setDisabled}

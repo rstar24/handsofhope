@@ -124,9 +124,15 @@ public class TWNCulturalProgramController {
     public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("culturalProgImageId") String culturalProgImageId) {
         String message = "";
         try {
-            culturalProgImageService.uploadImage(file,culturalProgImageId);
+            CulturalProgImage culturalProgImage=culturalProgImageService.uploadImage(file,culturalProgImageId);
+            if(culturalProgImage.getFile()==null)
+            {
+                message = "please enter valid format: " + file.getOriginalFilename();
+            }
+            else {
+                message = "Uploaded the file successfully: " + file.getOriginalFilename();
+            }
 
-            message = "Uploaded the file successfully: " + file.getOriginalFilename();
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
         } catch (Exception e) {
             message = "Could not upload the file: " + file.getOriginalFilename() + "!";
@@ -136,10 +142,10 @@ public class TWNCulturalProgramController {
     @GetMapping("/files/{id}")
     public ResponseEntity<byte[]> getFile(@PathVariable Long id) {
         CulturalProgImage fileDB = culturalProgImageService.getFile(id);
-
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDB.getName() + "\"")
                 .contentType(MediaType.valueOf(fileDB.getType()))
                 .body(fileDB.getFile());
     }
+
 }

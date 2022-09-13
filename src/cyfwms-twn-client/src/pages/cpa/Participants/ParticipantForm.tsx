@@ -12,22 +12,49 @@ import type { FormEvent } from "react";
 
 import SearchIcon from "@mui/icons-material/Search";
 import SearchClientName from "../../../components/cyfms/searchClient/SearchClientName";
-
+import CPAInput from "../../../components/cpa/CPAInput";
+import { Data } from "../../../features/cpa/participant/slice";
+import { doPost } from "../../../features/cpa/participant/slice";
 const ParticipantForm = ({
   setAddNew,
   setDisabled,
   disabled,
   targetValue,
 }: any) => {
-  const { contactMethod } = useAppSelector((state) => state.codetable);
-  const data = useAppSelector((state) => state.icContactNotes.data);
+  const dispatch = useAppDispatch();
+  const data = useAppSelector((state) => state.cpaParticipant.data);
+  const { clientName } = useAppSelector((state) => state.cpaParticipant);
+  const { id } = useAppSelector((state) => state.cpaParticipant);
   const [click, setClick] = useState(false);
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
+    if (!click) {
+      const form = e.currentTarget as HTMLFormElement;
+      const formData: Data = {
+        participantCulturalProId: 0,
+        culturalProgramId: 0,
+        participantId: id,
+        role: form.role.value,
+        notes: form.notes.value,
+      };
+      dispatch(doPost(formData))
+        .unwrap()
+        .then(() => {
+          console.log("CPA Participant POST backend API was successful!");
+          setAddNew(false);
+        })
+        .catch((err: any) => {
+          console.log("CPA Participant POST backend API didn't work!");
+          console.log(err);
+        });
+    }
   };
   const handleSearch = () => {
-    setClick(true);
+    if (!disabled) {
+      setClick(true);
+    }
   };
+  console.log(clientName);
   return (
     <Box
       component="form"
@@ -37,7 +64,7 @@ const ParticipantForm = ({
         gap: "1rem 0",
       }}
       onSubmit={submitHandler}
-      onKeyDown={onKeyDown}
+      //onKeyDown={onKeyDown}
     >
       {disabled && (
         <Box
@@ -49,7 +76,7 @@ const ParticipantForm = ({
           <EditIcon
             setDisabled={setDisabled}
             setAddNew={setAddNew}
-            contactId={data.contactNotesId}
+            //contactId={data.}
             targetValue={targetValue}
           />
         </Box>
@@ -73,7 +100,8 @@ const ParticipantForm = ({
                 flexGrow: 2,
               }}
               size="small"
-              //value={clientName}
+              readOnly={disabled}
+              value={clientName}
               style={{ backgroundColor: "#dfdada" }}
               endAdornment={<SearchIcon onClick={handleSearch} />}
             />
@@ -83,14 +111,12 @@ const ParticipantForm = ({
       </Box>
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-          <ICDropdown
+          <CPAInput
+            autofill={data.role}
             id="role"
             value="Role"
-            autofill={data.contactMethod}
-            disabled={disabled}
-            optionsList={Object.values(contactMethod).map(
-              (status: any) => status.en
-            )}
+            type="text"
+            readOnly={disabled}
           />
         </Box>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
@@ -99,13 +125,19 @@ const ParticipantForm = ({
       <ICTextArea
         id="notes"
         value="Notes"
-        autofill={data.summary}
+        autofill={data.notes}
         readOnly={disabled}
       />
       <Box sx={{ display: "flex", justifyContent: "right" }}>
         <CYFSWMSNextButton disabled={disabled} />
       </Box>
-      {click && <SearchClientName click={click} setClick={setClick} />}
+      {click && (
+        <SearchClientName
+          click={click}
+          setClick={setClick}
+          moduleName="cpaParticipant"
+        />
+      )}
     </Box>
   );
 };

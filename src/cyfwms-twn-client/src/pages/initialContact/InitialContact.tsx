@@ -29,7 +29,6 @@ import { cleanState as cleanIncidentReportState } from "../../features/initialCo
 import { cleanState as cleanPatientCareInformationState } from "../../features/initialContact/patientCareInformation/slice";
 import { cleanState as cleanPresentConcernsState } from "../../features/initialContact/presentConcerns/slice";
 import { cleanState as cleanReferralInformationState } from "../../features/initialContact/referralInformation/slice";
-import { cleanState } from "../../features/login/slice";
 
 /**
  * The InitialContact functional component.

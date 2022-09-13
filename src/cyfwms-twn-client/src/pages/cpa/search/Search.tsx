@@ -2,7 +2,7 @@ import Input from "../../../components/Input";
 import Popup from "../../../components/Popup";
 import AuthLayout from "../../../components/auth/layout/AuthLayout";
 import CYFMSDropdown from "../../../components/cyfms/CYFMSDropdown";
-import CYFMSHeader from "../../../components/cyfms/CYFMSHeader";
+
 import Results from "../../../components/cyfms/search/Results";
 import Router from "../../../components/nestedRouters/CYFMS";
 import { onKeyDown } from "../../../library/app";
@@ -12,12 +12,51 @@ import { Box, Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import type { FormEvent, ReactElement } from "react";
 import CPAHeader from "../../../components/cpa/CPAHeader";
+import { Record, doGet } from "../../../features/cpa/search/slice";
+import { handleEffect, handleSubmit } from "./search_";
+import { doGetCPACulturalType } from "../../../features/codetable/slice";
+import CPASearchResult from "../../../components/cpa/CPASearchResult";
 
 /**
  * The Search functional component.
  * @returns Search component skeleton.
  */
 const Search = (): ReactElement => {
+  const dispatch = useAppDispatch();
+  const { culturalType, culturalStatus } = useAppSelector(
+    (state) => state.codetable
+  );
+
+  const [isShown, setIsShown] = useState(false);
+
+  const submitHandler = (e: FormEvent) => {
+    e.preventDefault();
+
+    const form: any = e.currentTarget;
+    const formData: Record = {
+      CulturalProgramId: null,
+      referenceId: form.referenceId.value || null,
+      name: form.name.value || null,
+      caseworker: form.caseworker.value || null,
+      type: form.type.value || null,
+      startDate: form.startDate.value || null,
+      status: form.status.value || null,
+    };
+    dispatch(doGet(formData))
+      .unwrap()
+      .then(() => {
+        console.log("InitialContact Search POST backend API was successful!");
+        setIsShown(true);
+      })
+      .catch((err) => {
+        console.log("InitialContact Search POST backend API didn't work!");
+        console.log(err);
+      });
+    console.log("submit ");
+  };
+  const hide = () => {
+    setIsShown(false);
+  };
   return (
     <AuthLayout>
       <CPAHeader />
@@ -53,11 +92,10 @@ const Search = (): ReactElement => {
             flexDirection: "column",
             gap: "0.5rem 0",
           }}
-          //   onSubmit={(event: FormEvent<HTMLFormElement>) =>
-          //     handleSubmit(event, dispatch, setIsShown)
-          //   }
-          //   onKeyDown={onKeyDown}
-          //
+          onSubmit={(event: FormEvent<HTMLFormElement>) =>
+            handleSubmit(event, dispatch, setIsShown)
+          }
+          onKeyDown={onKeyDown}
         >
           <Input
             id="referenceId"
@@ -66,33 +104,36 @@ const Search = (): ReactElement => {
             value="Reference Id"
           />
           <Input
-            id="Name"
+            id="name"
             minChars={2}
             validationPattern={`^[a-zA-Z ]*$`}
             validationTitle="Digits are not allowed!"
             value="Name"
           />
           <CYFMSDropdown
-            id="Type"
+            autofill={""}
+            id="type"
+            optionsList={Object.values(culturalType).map(
+              (type: any) => type.en
+            )}
             value="Type"
-            optionsList={["Program", "Activity"]}
           />
           <Input
-            id="Caseworker"
+            id="caseworker"
             minChars={2}
             validationPattern={`^[a-zA-Z ]*$`}
             validationTitle="Digits are not allowed!"
             value="Caseworker"
           />
-          <Input id="dateOfBirth" type="date" value="Date " />
+          <Input id="startDate" type="date" value="Date " />
 
-          <Input
+          <CYFMSDropdown
+            autofill={""}
             id="status"
-            minChars={2}
-            validationPattern={`^[^a-zA-Z]*$`}
-            validationTitle="Alphabets are not allowed!"
             value="Status"
-            name="status"
+            optionsList={Object.values(culturalStatus).map(
+              (type: any) => type.en
+            )}
           />
 
           <Box
@@ -121,7 +162,7 @@ const Search = (): ReactElement => {
           </Box>
         </Box>
       </Box>
-      {/* {isShown && <Results />} */}
+      {isShown && <CPASearchResult />}
       <Popup children={<Router />} />
     </AuthLayout>
   );

@@ -30,8 +30,10 @@ function ContactNotes(props: any) {
   const data = useAppSelector((state) => state.icContactNotes.record);
 
   useEffect(() => {
-    dispatch(doGetICContactMethod());
-  }, []);
+    dispatch(doSearch(null))
+      .unwrap()
+      .catch((err) => {});
+  }, [addNew]);
   const handleAddNew = () => {
     dispatch(cleanState(null));
     setDisabled(false);

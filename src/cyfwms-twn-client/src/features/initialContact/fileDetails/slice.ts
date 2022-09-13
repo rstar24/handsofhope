@@ -6,7 +6,7 @@ import type { AxiosResponse } from "axios";
 export interface Data {
   fileDetailsId: number;
   fileNumber: number;
-  clientName: string;
+  clientName: number;
   startingDate: string;
   caseworker: string;
   status: string;
@@ -17,7 +17,7 @@ export interface Data {
 const emptyData: Data = {
   fileDetailsId: 0,
   fileNumber: 0,
-  clientName: "",
+  clientName: 0,
   startingDate: "",
   caseworker: "",
   status: "",
@@ -25,6 +25,8 @@ const emptyData: Data = {
 };
 
 export interface State {
+  cyfmsClientName: string;
+  id: number;
   data: Data;
   disabledClosingDate: boolean;
   status: "failed" | "none" | "loading" | "success";
@@ -56,6 +58,8 @@ export const doPost = createAsyncThunk<Data, Data>(
 export const fileDetailsSlice = createSlice<State, SliceCaseReducers<State>>({
   name: "fileDetails",
   initialState: {
+    cyfmsClientName: "",
+    id: 0,
     data: emptyData,
     disabledClosingDate: true,
     status: "failed",
@@ -71,9 +75,18 @@ export const fileDetailsSlice = createSlice<State, SliceCaseReducers<State>>({
       state.disabledClosingDate = true;
       state.data = emptyData;
       state.status = "none";
+      state.cyfmsClientName = "";
+      state.id = 0;
     },
     setName(state, action) {
       state.data.clientName = action.payload;
+    },
+
+    setCyfmsClientName(state, action) {
+      state.cyfmsClientName = action.payload;
+    },
+    setCyfmsId(state, action) {
+      state.id = action.payload;
     },
   },
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -104,7 +117,13 @@ export const fileDetailsSlice = createSlice<State, SliceCaseReducers<State>>({
   },
 });
 
-export const { disableClosingDate, enableClosingDate, cleanState, setName } =
-  fileDetailsSlice.actions;
+export const {
+  disableClosingDate,
+  enableClosingDate,
+  cleanState,
+  setName,
+  setCyfmsClientName,
+  setCyfmsId,
+} = fileDetailsSlice.actions;
 
 export default fileDetailsSlice.reducer;
