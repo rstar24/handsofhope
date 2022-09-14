@@ -7,6 +7,7 @@ import AuthLayout from "../../components/auth/layout/AuthLayout";
 import { Box, Typography } from "@mui/material";
 import CPA from "../../components/cpa/view/CPA";
 import Router from "../../components/nestedRouters/CPA";
+import EditIcon from "../../components/cpa/EditIcon";
 export const styles = {
   header: {
     fontWeight: 1000,
@@ -24,8 +25,6 @@ export const styles = {
 
 const View = (): ReactElement => {
   const state = useAppSelector((state) => state);
-  const [value, setValue] = useState(0);
-
   return (
     <AuthLayout>
       <CPAHeader />
@@ -38,10 +37,10 @@ const View = (): ReactElement => {
         }}
       >
         <Typography variant="h5" alignSelf="center">
-          File Number: "1234"
+          Cultural Program ID: {state.cpa.data.culturalProgramId}
         </Typography>
         <Typography>
-          {/* <EditIcon value={state.icFileDetails.data.fileDetailsId} /> */}
+          <EditIcon value={state.cpa.data.culturalProgramId} />
         </Typography>
       </Box>
       <Box
@@ -55,9 +54,6 @@ const View = (): ReactElement => {
         }}
       ></Box>
       <div id="fileDetails" className="highlight" tabIndex={0}>
-        <Typography variant="h6" sx={styles.header}>
-          Cultural Program or Activity
-        </Typography>
         <CPA />
       </div>
 

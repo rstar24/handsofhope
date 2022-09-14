@@ -51,8 +51,8 @@ const CulturalProgramOrActivity = (): ReactElement => {
     e.preventDefault();
     const form: any = e.currentTarget;
     const formData: Data = {
-      culturalProgramId: 0,
-      referenceId: 0,
+      culturalProgramId: state.data.culturalProgramId,
+      referenceId: state.data.culturalProgramId || 0,
       name: form.name.value,
       type: form.type.value,
       status: form.status.value,
@@ -143,6 +143,7 @@ const CulturalProgramOrActivity = (): ReactElement => {
               autofill={state.data.endDate}
               id="endDate"
               value="End Date"
+              type="Date"
             />
           </Box>
         </Box>

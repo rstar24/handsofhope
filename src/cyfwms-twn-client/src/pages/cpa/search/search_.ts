@@ -25,7 +25,7 @@ export const handleSubmit: AppFormEventHandler<HTMLFormElement> = (
 ) => {
   event.preventDefault();
   const formData: Record = {
-    CulturalProgramId: null,
+    culturalProgramId: null,
     referenceId: event.currentTarget.referenceId.value || null,
     name: event.currentTarget.name.value || null,
     caseworker: event.currentTarget.caseworker.value || null,

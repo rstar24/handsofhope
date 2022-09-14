@@ -29,7 +29,7 @@ const CPASearchResult = (): ReactElement => {
   return (
     <Box>
       <Typography fontSize={20} fontWeight={800} color="red" paddingLeft={2}>
-        {/* Total Results - {data.lengt} */}
+        Total Results - {data.length}
       </Typography>
       <Table sx={{ minWidth: 800 }} aria-label="simple table">
         <TableHead>
@@ -51,10 +51,9 @@ const CPASearchResult = (): ReactElement => {
             >
               <TableCell>
                 <Link
-                  to={`/cyfms/view/${participant.referenceId}`}
+                  to={`/cpa/view/${participant.culturalProgramId}`}
                   onClick={() => {
-                    console.log(participant);
-                    handleSearchView(participant.referenceId);
+                    handleSearchView(participant.culturalProgramId);
                   }}
                 >
                   {participant.referenceId}
@@ -67,10 +66,7 @@ const CPASearchResult = (): ReactElement => {
               <TableCell>{participant.status}</TableCell>
 
               <TableCell>
-                <EditIcon
-                  value={participant.referenceId}
-                  referenceID={participant.referenceId || 0}
-                />
+                <EditIcon value={participant.culturalProgramId} />
               </TableCell>
             </TableRow>
           ))}

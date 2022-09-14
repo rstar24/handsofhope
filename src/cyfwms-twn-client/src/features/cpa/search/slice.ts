@@ -5,7 +5,7 @@ import type { SliceCaseReducers } from "@reduxjs/toolkit";
 import type { AxiosResponse } from "axios";
 
 export interface Record {
-  CulturalProgramId: number | null;
+  culturalProgramId: number | null;
   referenceId: number | null;
   name: string | null;
   type: string | null;
@@ -37,6 +37,15 @@ export const searchSlice = createSlice<State, SliceCaseReducers<State>>({
     status: "none",
   },
   reducers: {
+    /** Removes one record from data matching the given file number. */
+    spliceRecord(state, action) {
+      // Find index of the matching record in data.
+      const index = state.data.findIndex(
+        (element: Record) => element.culturalProgramId === action.payload
+      );
+      // Remove it.
+      state.data.splice(index, 1);
+    },
     cleanState(state) {
       state.data = [];
       state.status = "none";
@@ -59,6 +68,6 @@ export const searchSlice = createSlice<State, SliceCaseReducers<State>>({
   },
 });
 
-export const { cleanState } = searchSlice.actions;
+export const { cleanState, spliceRecord } = searchSlice.actions;
 
 export default searchSlice.reducer;

@@ -4,10 +4,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import type { ReactElement } from "react";
 import { useAppDispatch } from "../../../library/hooks";
-import {
-  doRemove,
-  doSearch,
-} from "../../../features/initialContact/contactNotes/slice";
+import { doRemove, doSearch } from "../../../features/cpa/participant/slice";
 
 const style = {
   position: "absolute" as "absolute",
@@ -27,8 +24,7 @@ export const openPopup = true;
 const EditIcon = ({
   setDisabled,
   setAddNew,
-  contactId,
-  targetValue,
+  culturalProgramId,
 }: any): ReactElement => {
   const dispatch = useAppDispatch();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -56,9 +52,9 @@ const EditIcon = ({
   };
 
   const handleDelete = () => {
-    dispatch(doRemove(contactId))
+    dispatch(doRemove(culturalProgramId))
       .then(() => setOpenModel(false))
-      .then(() => dispatch(doSearch(targetValue || null)));
+      .then(() => dispatch(doSearch(null)));
     setAddNew(false);
   };
 

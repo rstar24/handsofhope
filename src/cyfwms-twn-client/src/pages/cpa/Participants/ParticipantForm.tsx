@@ -15,15 +15,11 @@ import SearchClientName from "../../../components/cyfms/searchClient/SearchClien
 import CPAInput from "../../../components/cpa/CPAInput";
 import { Data } from "../../../features/cpa/participant/slice";
 import { doPost } from "../../../features/cpa/participant/slice";
-const ParticipantForm = ({
-  setAddNew,
-  setDisabled,
-  disabled,
-  targetValue,
-}: any) => {
+const ParticipantForm = ({ setAddNew, setDisabled, disabled }: any) => {
   const dispatch = useAppDispatch();
   const data = useAppSelector((state) => state.cpaParticipant.data);
-  const { clientName } = useAppSelector((state) => state.cpaParticipant);
+  const { culturalProgramId } = useAppSelector((state) => state.cpa.data);
+  const state = useAppSelector((state) => state.cpaParticipant);
   const { id } = useAppSelector((state) => state.cpaParticipant);
   const [click, setClick] = useState(false);
   const submitHandler = (e: FormEvent) => {
@@ -31,9 +27,9 @@ const ParticipantForm = ({
     if (!click) {
       const form = e.currentTarget as HTMLFormElement;
       const formData: Data = {
-        participantCulturalProId: 0,
-        culturalProgramId: 0,
-        participantId: id,
+        participantCulturalProId: data.participantCulturalProId || 0,
+        culturalProgramId: culturalProgramId,
+        participant: id,
         role: form.role.value,
         notes: form.notes.value,
       };
@@ -54,7 +50,7 @@ const ParticipantForm = ({
       setClick(true);
     }
   };
-  console.log(clientName);
+
   return (
     <Box
       component="form"
@@ -76,8 +72,7 @@ const ParticipantForm = ({
           <EditIcon
             setDisabled={setDisabled}
             setAddNew={setAddNew}
-            //contactId={data.}
-            targetValue={targetValue}
+            culturalProgramId={state.data.participantCulturalProId}
           />
         </Box>
       )}
@@ -101,7 +96,7 @@ const ParticipantForm = ({
               }}
               size="small"
               readOnly={disabled}
-              value={clientName}
+              value={state.clientName}
               style={{ backgroundColor: "#dfdada" }}
               endAdornment={<SearchIcon onClick={handleSearch} />}
             />

@@ -23,7 +23,7 @@ function Participant(props: any) {
   const [disabled, setDisabled] = useState(false);
   const [value, setValue] = useState("");
   const data = useAppSelector((state) => state.cpaParticipant.record);
-
+  console.log("dataaaaaaa--", data);
   useEffect(() => {
     dispatch(doSearch(null))
       .unwrap()
@@ -91,7 +91,7 @@ function Participant(props: any) {
                       align="center"
                       size="small"
                     >
-                      Roll
+                      Role
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -109,9 +109,11 @@ function Participant(props: any) {
                       >
                         <Link
                           to="../participant"
-                          onClick={() => handleSelected(val.participant)}
+                          onClick={() =>
+                            handleSelected(val.participantCulturalProId)
+                          }
                         >
-                          {val.participantId}
+                          Select
                         </Link>
                       </TableCell>
 
@@ -120,14 +122,15 @@ function Participant(props: any) {
                         align="center"
                         size="small"
                       >
-                        {val.firstname}
+                        {" "}
+                        {val.participant}
                       </TableCell>
                       <TableCell
                         sx={{ color: "black" }}
                         align="center"
                         size="small"
                       >
-                        {val.surname}
+                        {val.notes}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -142,7 +145,6 @@ function Participant(props: any) {
           setAddNew={setAddNew}
           setDisabled={setDisabled}
           disabled={disabled}
-          targetValue={value}
         />
       )}
     </CPALayout>

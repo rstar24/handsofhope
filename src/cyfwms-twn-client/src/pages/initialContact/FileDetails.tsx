@@ -163,7 +163,7 @@ const FileDetails = (): ReactElement => {
                   flexGrow: 2,
                 }}
                 size="small"
-                value={state.cyfmsClientName}
+                value={state.cyfmsClientName || state.data.clientName}
                 style={{ backgroundColor: "#dfdada" }}
                 endAdornment={<SearchIcon onClick={handleSearch} />}
               />

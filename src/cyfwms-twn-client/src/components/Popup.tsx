@@ -44,6 +44,9 @@ const Popup = (props: { children: ReactNode | ReactNode[] }): ReactElement => {
   const participantId = useAppSelector(
     (state) => state.cyfmsRegister.data.participantId
   );
+  const culturalProgramId = useAppSelector(
+    (state) => state.cpa.data.culturalProgramId
+  );
 
   useEffect(() => {
     if (navigationAction === "POP") {
@@ -113,10 +116,18 @@ const Popup = (props: { children: ReactNode | ReactNode[] }): ReactElement => {
             if (!state.view) {
               cleanStore();
             }
-            if (fileDetailsId !== 0 || participantId !== 0) {
+            if (
+              fileDetailsId !== 0 ||
+              participantId !== 0 ||
+              culturalProgramId !== 0
+            ) {
               navigate("./view");
             }
-            if (fileDetailsId === 0 && participantId === 0) {
+            if (
+              fileDetailsId === 0 &&
+              participantId === 0 &&
+              culturalProgramId === 0
+            ) {
               navigate("./");
             }
           }}

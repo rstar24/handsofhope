@@ -22,6 +22,7 @@ import type { ReactElement } from "react";
 import CPA from "./pages/cpa/CPA";
 import Participant from "./pages/cpa/Participants/Participant";
 import Search from "./pages/cpa/search/Search";
+import View from "./pages/cpa/View";
 
 const App = (): ReactElement => {
   return (
@@ -49,6 +50,7 @@ const App = (): ReactElement => {
                 />
                 <Route path="cpa/*" element={<CPA />} />
                 <Route path="cpa/search/*" element={<Search />} />
+                <Route path="cpa/view/*" element={<View />} />
               </Routes>
             </BrowserRouter>
           </ThemeProvider>

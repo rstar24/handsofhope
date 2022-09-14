@@ -35,7 +35,7 @@ export const doRemoveAPI = async (
   token: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.delete(
-    `culturalprogandactservice/removeContactNotes/${data}`,
+    `culturalprogandactservice/removeParticipantCulturalProg/${data}`,
     {
       headers: { Authorization: "Bearer " + token },
     }

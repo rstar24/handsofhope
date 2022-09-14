@@ -6,7 +6,7 @@ import type { AxiosResponse } from "axios";
 export interface Data {
   participantCulturalProId: number;
   culturalProgramId: number;
-  participantId: number;
+  participant: any;
   role: string;
   notes: string;
 }
@@ -15,7 +15,7 @@ export interface Data {
 const emptyData: Data = {
   participantCulturalProId: 0,
   culturalProgramId: 0,
-  participantId: 0,
+  participant: null,
   role: "",
   notes: "",
 };

@@ -1,21 +1,16 @@
 import Input from "../../../components/Input";
 import Popup from "../../../components/Popup";
 import AuthLayout from "../../../components/auth/layout/AuthLayout";
-import CYFMSDropdown from "../../../components/cyfms/CYFMSDropdown";
-
-import Results from "../../../components/cyfms/search/Results";
 import Router from "../../../components/nestedRouters/CYFMS";
 import { onKeyDown } from "../../../library/app";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
-// import { handleEffect, handleSubmit } from "./search_";
 import { Box, Button } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import type { FormEvent, ReactElement } from "react";
 import CPAHeader from "../../../components/cpa/CPAHeader";
-import { Record, doGet } from "../../../features/cpa/search/slice";
-import { handleEffect, handleSubmit } from "./search_";
-import { doGetCPACulturalType } from "../../../features/codetable/slice";
+import { handleSubmit } from "./search_";
 import CPASearchResult from "../../../components/cpa/CPASearchResult";
+import CPADropdown from "../../../components/cpa/CPADropdown";
 
 /**
  * The Search functional component.
@@ -29,31 +24,6 @@ const Search = (): ReactElement => {
 
   const [isShown, setIsShown] = useState(false);
 
-  const submitHandler = (e: FormEvent) => {
-    e.preventDefault();
-
-    const form: any = e.currentTarget;
-    const formData: Record = {
-      CulturalProgramId: null,
-      referenceId: form.referenceId.value || null,
-      name: form.name.value || null,
-      caseworker: form.caseworker.value || null,
-      type: form.type.value || null,
-      startDate: form.startDate.value || null,
-      status: form.status.value || null,
-    };
-    dispatch(doGet(formData))
-      .unwrap()
-      .then(() => {
-        console.log("InitialContact Search POST backend API was successful!");
-        setIsShown(true);
-      })
-      .catch((err) => {
-        console.log("InitialContact Search POST backend API didn't work!");
-        console.log(err);
-      });
-    console.log("submit ");
-  };
   const hide = () => {
     setIsShown(false);
   };
@@ -110,7 +80,7 @@ const Search = (): ReactElement => {
             validationTitle="Digits are not allowed!"
             value="Name"
           />
-          <CYFMSDropdown
+          <CPADropdown
             autofill={""}
             id="type"
             optionsList={Object.values(culturalType).map(
@@ -127,7 +97,7 @@ const Search = (): ReactElement => {
           />
           <Input id="startDate" type="date" value="Date " />
 
-          <CYFMSDropdown
+          <CPADropdown
             autofill={""}
             id="status"
             value="Status"

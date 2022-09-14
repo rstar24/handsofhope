@@ -1,44 +1,3 @@
-import {
-  doGetGender,
-  doGetMaritalStatus,
-  doGetEducation,
-  doGetTypeOfEmployee,
-  doGetRole,
-} from "../../features/codetable/slice";
-import { doDelete } from "../../features/cyfms/all/slice";
-import {
-  doGet as doGetContact,
-  cleanState as cleanContact,
-} from "../../features/cyfms/contact/slice";
-import {
-  doGet as doGetHouseholdMembers,
-  cleanState as cleanHouseholdMembers,
-} from "../../features/cyfms/householdMembers/slice";
-import {
-  doGet as doGetEducationAndEmployment,
-  cleanState as cleanEducationAndEmployment,
-} from "../../features/cyfms/educationAndEmployment/slice";
-import {
-  doGet as doGetCriminalHistory,
-  cleanState as cleanCriminalHistory,
-} from "../../features/cyfms/criminalHistory/slice";
-import {
-  doGet as doGetFamilyPhysicians,
-  cleanState as cleanFamilyPhysicians,
-} from "../../features/cyfms/familyPhysicians/slice";
-import {
-  doGet as doGetCounselors,
-  cleanState as cleanCounselors,
-} from "../../features/cyfms/counselors/slice";
-import {
-  doGet as doGetOtherInformation,
-  cleanState as cleanOtherInformation,
-} from "../../features/cyfms/otherInformation/slice";
-import {
-  doGet as doGetRegister,
-  cleanState as cleanRegister,
-} from "../../features/cyfms/register/slice";
-import { spliceRecord } from "../../features/cyfms/search/slice";
 import { initiate } from "../../features/initiatorSlice";
 import { setEdit, setOpen } from "../../features/popupSlice";
 import { unhideTabs } from "../../features/navBarSlice";
@@ -48,6 +7,10 @@ import { Box, Button, IconButton, Modal, Menu, MenuItem } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 import type { ReactElement } from "react";
+import { cleanState } from "../../features/cpa/participant/slice";
+import { doGet } from "../../features/cpa/culturalProgramActivity/slice";
+import { doDelete } from "../../features/cpa/all/slice";
+import { spliceRecord } from "../../features/cpa/search/slice";
 
 const style = {
   position: "absolute" as "absolute",
@@ -117,22 +80,11 @@ const EditIcon = (props: any): ReactElement => {
       >
         <MenuItem
           component={Link}
-          to="register"
+          to="cultural_program_activity"
           onClick={(event: React.MouseEvent<HTMLElement>) => {
             handleCloseDropDown(event);
-            dispatch(doGetGender());
-            dispatch(doGetMaritalStatus());
-            dispatch(doGetEducation());
-            dispatch(doGetTypeOfEmployee());
-            dispatch(doGetRole());
-            dispatch(doGetContact(props.value));
-            dispatch(doGetHouseholdMembers(props.value));
-            dispatch(doGetEducationAndEmployment(props.value));
-            dispatch(doGetCriminalHistory(props.value));
-            dispatch(doGetCounselors(props.value));
-            dispatch(doGetFamilyPhysicians(props.value));
-            dispatch(doGetOtherInformation(props.value));
-            dispatch(doGetRegister(props.value))
+
+            dispatch(doGet(props.value))
               .unwrap()
               .then(() => {
                 dispatch(initiate(null));
@@ -178,19 +130,13 @@ const EditIcon = (props: any): ReactElement => {
             <Button
               onClick={(e) => {
                 e.preventDefault();
-                dispatch(doDelete(props.referenceID))
+                dispatch(doDelete(props.value))
                   .unwrap()
                   .then(() => {
                     dispatch(spliceRecord(props.referenceID));
                     setOpenModel(false);
-                    dispatch(cleanOtherInformation(null));
-                    dispatch(cleanCounselors(null));
-                    dispatch(cleanFamilyPhysicians(null));
-                    dispatch(cleanCriminalHistory(null));
-                    dispatch(cleanEducationAndEmployment(null));
-                    dispatch(cleanHouseholdMembers(null));
-                    dispatch(cleanContact(null));
-                    dispatch(cleanRegister(null));
+                    dispatch(cleanState(null));
+                    dispatch(cleanState(null));
                   })
                   .catch((err) => {
                     console.log(err);

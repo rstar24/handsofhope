@@ -13,8 +13,8 @@ export interface Data {
   caseworker: string;
   startDate: string;
   endDate: string;
-  totalCost: number;
-  totalParticipation: number;
+  totalCost: any;
+  totalParticipation: any;
   sessionDetails: string;
   costOrParticipationDetails: string;
   outcomes: string;
@@ -31,8 +31,8 @@ const emptyData: Data = {
   caseworker: "",
   startDate: "",
   endDate: "",
-  totalCost: 0,
-  totalParticipation: 0,
+  totalCost: "",
+  totalParticipation: "",
   sessionDetails: "",
   costOrParticipationDetails: "",
   outcomes: "",
