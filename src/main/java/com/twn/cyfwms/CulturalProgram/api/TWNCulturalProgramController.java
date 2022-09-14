@@ -122,7 +122,7 @@ public class TWNCulturalProgramController {
         return participantCulturalProgSearchService.searchParticipantCulturalProgAndAct(participantCulturalSearchDto);
     }
     @PutMapping("/upload")
-    public  CulturalProgImage uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("culturalDto") String culturalDto) throws IOException {
+    public  CulturalProgImage uploadFile(@RequestParam(value = "file",required = false) MultipartFile file, @RequestParam("culturalDto") String culturalDto) throws IOException {
 
             CulturalProgImage culturalProgImage=culturalProgImageService.uploadImage(file,culturalDto);
      return culturalProgImage;
@@ -130,6 +130,7 @@ public class TWNCulturalProgramController {
     @GetMapping("/files/{id}")
     public ResponseEntity<byte[]> getFile(@PathVariable Long id) {
         CulturalProgImage fileDB = culturalProgImageService.getFile(id);
+        System.out.println(fileDB.getStatus());
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDB.getName() + "\"")
                 .contentType(MediaType.valueOf(fileDB.getCulturalImageType()))

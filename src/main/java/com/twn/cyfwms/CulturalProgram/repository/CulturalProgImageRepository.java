@@ -9,6 +9,7 @@ import java.util.Optional;
 
 @Repository
 public interface CulturalProgImageRepository extends JpaRepository<CulturalProgImage, Long> {
+
     Optional<CulturalProgImage> findByCulturalProgramId(Long id);
 
 }

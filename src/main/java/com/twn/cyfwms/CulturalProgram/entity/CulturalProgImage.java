@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -39,8 +40,8 @@ public class CulturalProgImage {
     private byte[] culturamImagefile;
 
     @CreationTimestamp
-    @Getter @Setter @Column(name="uplodedDateTime")
-    private LocalDateTime uplodedDateTime;
+    @Getter @Setter @Column(name="creationdatedime")
+    private LocalDateTime creationDateTime;
 
     @Getter @Setter @Column(name = "type")
     private String type;
@@ -50,4 +51,11 @@ public class CulturalProgImage {
 
     @Getter @Setter @Column(name = "culturamimagetype")
     private String culturalImageType;
+
+    @Getter @Setter @Column(name="status")
+    private  String status;
+
+    @UpdateTimestamp
+    @Getter @Setter @Column(name="updatedatedime")
+    private LocalDateTime updateDateTime;
 }
