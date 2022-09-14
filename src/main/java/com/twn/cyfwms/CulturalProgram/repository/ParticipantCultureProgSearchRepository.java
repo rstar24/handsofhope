@@ -18,8 +18,8 @@ public class ParticipantCultureProgSearchRepository {
                                 rs.getLong("participantculturalprogid"),
                                 rs.getLong("culturalProgramId"),
                                 rs.getString("fullName"),
-                                rs.getString("notes"),
-                        rs.getString("role")
+                                rs.getString("role"),
+                        rs.getString("notes")
                         )
 
         );
@@ -28,7 +28,7 @@ public class ParticipantCultureProgSearchRepository {
     private StringBuffer createSearchQuery(CulturalProgAndActSearchCriteriaDto searchCriteria, List<Object> argsObjectList) {
         StringBuffer  querySBuff = new StringBuffer();
         String data=searchCriteria.getData();
-        querySBuff.append("select p.participantculturalprogid ,p.culturalprogramid , CONCAT(firstname,' ', surname) AS fullName, p.notes,p.role ");
+        querySBuff.append("select p.participantculturalprogid ,p.culturalprogramid , CONCAT(firstname,' ', surname) AS fullName, p.role,p.notes ");
         querySBuff.append("from participantculturalprogram p  left join participant p2 on p.participantid = p2.participantid where  p.status='ACTIVE'");
         if (data != null && !data.trim().isEmpty()) {
             data = data.trim()

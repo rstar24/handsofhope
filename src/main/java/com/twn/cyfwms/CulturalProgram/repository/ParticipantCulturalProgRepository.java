@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface ParticipantCulturalProgRepository extends JpaRepository<ParticipantCulturalProgAndAct,Long> {
     @Query(value = "select * from participantculturalprogram  where participantculturalprogid=? AND status='ACTIVE'",nativeQuery = true)
     ParticipantCulturalProgAndAct findByparticipantCulturalProId(Long participantCulturalProId);
+
+    ParticipantCulturalProgAndAct findByculturalProgramId(Long culturalProgramId);
 }

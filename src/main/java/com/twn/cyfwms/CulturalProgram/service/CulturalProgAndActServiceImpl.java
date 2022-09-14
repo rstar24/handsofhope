@@ -1,7 +1,11 @@
 package com.twn.cyfwms.CulturalProgram.service;
 import com.twn.cyfwms.CulturalProgram.dto.CulturalProgAndActDto;
 import com.twn.cyfwms.CulturalProgram.entity.CulturalProgAndAct;
+import com.twn.cyfwms.CulturalProgram.entity.CulturalProgImage;
+import com.twn.cyfwms.CulturalProgram.entity.ParticipantCulturalProgAndAct;
 import com.twn.cyfwms.CulturalProgram.repository.CulturalProgAndActRepository;
+import com.twn.cyfwms.CulturalProgram.repository.CulturalProgImageRepository;
+import com.twn.cyfwms.CulturalProgram.repository.ParticipantCulturalProgRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +23,10 @@ public class CulturalProgAndActServiceImpl implements CulturalProgAndActService 
     private CulturalProgAndActRepository culturalProgAndActRepository;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private ParticipantCulturalProgRepository participantCulturalProgRepository;
+    @Autowired
+    private CulturalProgImageRepository culturalProgImageRepository;
 
     private CulturalProgAndAct readCulturalProgram(Long culturalProgramId) {
         CulturalProgAndAct culturalProgAndAct = null;
@@ -78,6 +86,16 @@ public class CulturalProgAndActServiceImpl implements CulturalProgAndActService 
             else {
                 throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
             }
+            ParticipantCulturalProgAndAct participantCulturalProgAndAct=participantCulturalProgRepository.findByculturalProgramId(culturalProgramId);
+            if (participantCulturalProgAndAct!=null){
+              participantCulturalProgAndAct.setStatus("INACTIVE");
+              participantCulturalProgRepository.save(participantCulturalProgAndAct);
+           }
+            Optional<CulturalProgImage> culturalProgImage=culturalProgImageRepository.findByCulturalProgramId(culturalProgramId);
+             if (culturalProgImage!=null){
+                culturalProgImage.get().setStatus("INACTIVE");
+                 culturalProgImageRepository.save(culturalProgImage.get());
+             }
         } else {
             throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
         }

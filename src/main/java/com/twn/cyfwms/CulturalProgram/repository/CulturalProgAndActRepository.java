@@ -9,5 +9,6 @@ public interface CulturalProgAndActRepository extends JpaRepository<CulturalProg
     Optional<CulturalProgAndAct> findTopByOrderByReferenceIdDesc();
     @Query(value = "select * from culturalprogandact c where c.culturalProgramId=? AND c.deletionofstatus='ACTIVE'",nativeQuery = true)
     Optional<CulturalProgAndAct> findByCulturalProgramId(Long culturalProgramId);
+    @Query(value = "select * from culturalprogandact c where c.culturalProgramId=? AND c.deletionofstatus='ACTIVE'",nativeQuery = true)
     CulturalProgAndAct findByculturalProgramId(Long culturalProgramId);
 }
