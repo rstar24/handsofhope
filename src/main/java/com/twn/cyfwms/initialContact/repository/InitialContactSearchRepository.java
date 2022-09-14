@@ -20,21 +20,19 @@ public class InitialContactSearchRepository {
                 (rs, rowNum) ->
                         new InitialContactSearchResultsDto(
                                 rs.getLong("filedetailsid"),
-                                rs.getString("clientname"),
+                                rs.getString("fullName"),
                                 rs.getLong("filenumber"),
-                                 rs.getString("caseworker"),
+                                rs.getString("caseworker"),
                                 rs.getDate("startingDate")!=null?rs.getDate("startingDate").toLocalDate(): LocalDate.of(1,1,1),
-                                rs.getString("status"),
-                             rs.getString("typeofpatient")
-
+                                rs.getString("status")
                         )
                 );
     }
 
     private StringBuffer createSearchQuery(InitialContactSearchCriteriaDto searchCriteria, List<Object> argsObjectList) {
         StringBuffer  querySBuff = new StringBuffer();
-        querySBuff.append("select p.filedetailsid, p.clientname, p.fileNumber,p.caseworker,p.startingDate,p.status ,p2.typeofpatient ");
-        querySBuff.append("from initialcontactfiledetails p left join initialcontactpatientcareinfo p2 on p.filedetailsid = p2.filedetailsid where p.statusofdeletion='ACTIVE'");
+        querySBuff.append("select p.filedetailsid, CONCAT(firstname,' ', surname) AS fullName, p.fileNumber,p.caseworker,p.startingDate,p.status ");
+        querySBuff.append("from initialcontactfiledetails p left join participant p2 on p.clientname = p2.participantid where p.statusofdeletion='ACTIVE'");
             String clientName=searchCriteria.getClientName();
             if (clientName!=null && !clientName.trim().isEmpty()){
                 clientName=clientName.trim()
@@ -76,18 +74,6 @@ public class InitialContactSearchRepository {
                 argsObjectList.add(status + "%");
 
             }
-
-          String typeOfPatient=searchCriteria.getTypeOfPatient();
-          if (typeOfPatient!=null && !typeOfPatient.trim().isEmpty()){
-              typeOfPatient=typeOfPatient.trim()
-                      .replace("!", "!!")
-                      .replace("%", "!%")
-                      .replace("_", "!_")
-                      .replace("[", "![");
-              querySBuff.append(" AND p2.typeofpatient LIKE ?");
-              argsObjectList.add(typeOfPatient + "%");
-
-          }
         return querySBuff;
     }
 }

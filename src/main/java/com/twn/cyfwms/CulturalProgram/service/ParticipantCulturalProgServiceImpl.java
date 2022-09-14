@@ -2,6 +2,8 @@ package com.twn.cyfwms.CulturalProgram.service;
 import com.twn.cyfwms.CulturalProgram.dto.ParticipantCulturalProgDto;
 import com.twn.cyfwms.CulturalProgram.entity.ParticipantCulturalProgAndAct;
 import com.twn.cyfwms.CulturalProgram.repository.ParticipantCulturalProgRepository;
+import com.twn.cyfwms.participant.entity.Participant;
+import com.twn.cyfwms.participant.repository.ParticipantRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,8 @@ public class ParticipantCulturalProgServiceImpl implements ParticipantCulturalPr
     private ParticipantCulturalProgRepository participantCulturalProgRepository;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private ParticipantRepository participantRepository;
     @Override
     public ParticipantCulturalProgDto saveParticipantCulturalProg(ParticipantCulturalProgDto participantCulturalProgDto) {
         ParticipantCulturalProgAndAct participantCulturalProgAndAct = null;
@@ -38,6 +42,8 @@ public class ParticipantCulturalProgServiceImpl implements ParticipantCulturalPr
             ParticipantCulturalProgAndAct participantCulturalProgAndAct = participantCulturalProgRepository.findByparticipantCulturalProId(participantCulturalProId);
             if (participantCulturalProgAndAct != null) {
                 modelMapper.map(participantCulturalProgAndAct, participantCulturalProgDto);
+                Participant participant=participantRepository.findByParticipantId(Long.parseLong(participantCulturalProgDto.getParticipant()));
+                participantCulturalProgDto.setParticipant(participant.getFirstname()+" "+participant.getSurname());
             } else {
                 throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
             }

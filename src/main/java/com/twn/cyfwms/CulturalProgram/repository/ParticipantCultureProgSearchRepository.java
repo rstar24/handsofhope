@@ -14,37 +14,32 @@ public class ParticipantCultureProgSearchRepository {
         List<Object> argsObjectList = new ArrayList<>();
         StringBuffer querySBuff = createSearchQuery(culturalProgAndActSearchCriteriaDto, argsObjectList);
         return jdbcTemplate.query(querySBuff.toString(),argsObjectList.toArray(),
-                (rs, rowNum) ->
-                        new ParticipantCultureProgSearchResultsDto(
-                                rs.getLong("participantId"),
-                                rs.getString("firstname"),
-                                rs.getString("surname")
+                (rs, rowNum) ->  new ParticipantCultureProgSearchResultsDto(
+                                rs.getLong("participantculturalprogid"),
+                                rs.getLong("culturalProgramId"),
+                                rs.getString("fullName"),
+                                rs.getString("notes"),
+                        rs.getString("role")
                         )
+
         );
     }
 
     private StringBuffer createSearchQuery(CulturalProgAndActSearchCriteriaDto searchCriteria, List<Object> argsObjectList) {
         StringBuffer  querySBuff = new StringBuffer();
         String data=searchCriteria.getData();
-        querySBuff.append("select p.firstname ,p.surname , p.participantid ");
-        querySBuff.append("from participant p left join participantcontact p2 on p.participantid = p2.participantid where  p.status='ACTIVE'");
+        querySBuff.append("select p.participantculturalprogid ,p.culturalprogramid , CONCAT(firstname,' ', surname) AS fullName, p.notes,p.role ");
+        querySBuff.append("from participantculturalprogram p  left join participant p2 on p.participantid = p2.participantid where  p.status='ACTIVE'");
         if (data != null && !data.trim().isEmpty()) {
             data = data.trim()
                     .replace("!", "!!")
                     .replace("%", "!%")
                     .replace("_", "!_")
                     .replace("[", "![");
-            querySBuff.append(" AND (p.referenceid =? OR p.dateofbirth LIKE ? OR p.firstname LIKE ? OR p.surname LIKE ?  OR p.middlename LIKE ? OR p.maritalstatus LIKE ? OR p2.homephone LIKE ? OR p2.cellphone LIKE ? OR p2.workphone LIKE ? OR p2.city LIKE ?) ");
-            argsObjectList.add(data);
+            querySBuff.append(" AND (participantculturalprogid=? OR p.notes LIKE ? OR p.role LIKE ? ) ");
             argsObjectList.add(data);
             argsObjectList.add("%" +data + "%");
             argsObjectList.add("%" +data + "%");
-            argsObjectList.add("%" +data + "%");
-            argsObjectList.add("%" +data + "%");
-            argsObjectList.add(data);
-            argsObjectList.add(data);
-            argsObjectList.add(data);
-            argsObjectList.add("%"+data +"%");
         }
         return querySBuff;
     }

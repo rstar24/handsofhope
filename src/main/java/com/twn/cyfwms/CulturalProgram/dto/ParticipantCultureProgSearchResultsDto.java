@@ -6,16 +6,23 @@ import lombok.*;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
 public class ParticipantCultureProgSearchResultsDto {
-    @Getter @Setter
-    private Long participantId;
-    @Getter @Setter
-    private String firstname;
-    @Getter @Setter
-    private String surname;
 
-    public ParticipantCultureProgSearchResultsDto(Long participantId, String firstname, String surname) {
-        this.participantId = participantId;
-        this.firstname = firstname;
-        this.surname = surname;
+    @Getter @Setter
+    private Long participantCulturalProId;
+    @Getter @Setter
+    private Long culturalProgramId;
+    @Getter @Setter
+    private String participant;
+    @Getter @Setter
+    private String role;
+    @Getter @Setter
+    private String notes;
+
+    public ParticipantCultureProgSearchResultsDto(Long participantCulturalProId, Long culturalProgramId, String participant, String role, String notes) {
+        this.participantCulturalProId = participantCulturalProId;
+        this.culturalProgramId = culturalProgramId;
+        this.participant = participant;
+        this.role = role;
+        this.notes = notes;
     }
 }

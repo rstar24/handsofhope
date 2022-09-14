@@ -16,15 +16,17 @@ public class InitialContactClientSearchRepository {
         return jdbcTemplate.query(querySBuff.toString(),argsObjectList.toArray(),
                 (rs, rowNum) ->
                         new InitialContactClientSearchResultsDto(
+                                rs.getLong("participantid"),
                                 rs.getString("firstname"),
-                                rs.getString("surname")
+                                rs.getString("surname"),
+                                rs.getLong("referenceid")
                         )
         );
     }
     private StringBuffer createSearchQuery(InitialContactClientSearchCriteriaDto searchCriteria, List<Object> argsObjectList) {
         StringBuffer  querySBuff = new StringBuffer();
         String data=searchCriteria.getData();
-        querySBuff.append("select p.firstname ,p.surname ");
+        querySBuff.append("select p.participantid ,p.firstname ,p.surname, p.referenceid ");
         querySBuff.append("from participant p left join participantcontact p2 on p.participantid = p2.participantid where  p.status='ACTIVE'");
         if (data != null && !data.trim().isEmpty()) {
             data = data.trim()

@@ -7,7 +7,6 @@ import java.time.LocalDate;
 @Builder
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@AllArgsConstructor
 @NoArgsConstructor
 public class InitialContactSearchResultsDto {
     @Getter
@@ -34,21 +33,13 @@ public class InitialContactSearchResultsDto {
     @Setter
     private String status;
 
-    @Getter
-    @Setter
-    private String typeOfPatient;
 
-    @Getter
-    @Setter
-    private Long totalCount;
-
-    public InitialContactSearchResultsDto(Long fileDetailsId, String clientName, Long fileNumber, String caseworker, LocalDate startingDate, String status, String typeOfPatient) {
+    public InitialContactSearchResultsDto(Long fileDetailsId, String clientName, Long fileNumber, String caseworker, LocalDate startingDate, String status) {
         this.fileDetailsId = fileDetailsId;
         this.clientName = clientName;
         this.fileNumber = fileNumber;
         this.caseworker = caseworker;
         this.startingDate = startingDate;
         this.status = status;
-        this.typeOfPatient = typeOfPatient;
     }
 }

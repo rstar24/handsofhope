@@ -29,7 +29,7 @@ public class ParticipantCulturalProgAndAct implements Serializable {
     @Getter @Setter @Column(name = "status")
     private String status;
     @Getter @Setter @Column(name = "participantid")
-    private Long participantId;
+    private String  participant;
     @Getter @Setter @Column(name = "culturalprogramid")
     private Long culturalProgramId;
 }

@@ -6,14 +6,19 @@ import lombok.*;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
 public class InitialContactClientSearchResultsDto {
-    @Getter
-    @Setter
+    @Getter @Setter
+    private Long participantId;
+    @Getter @Setter
     private String firstname;
     @Getter @Setter
     private String surname;
+    @Getter @Setter
+    private Long referenceId;
 
-    public InitialContactClientSearchResultsDto(String firstname, String surname) {
+    public InitialContactClientSearchResultsDto(Long participantId, String firstname, String surname, Long referenceId) {
+        this.participantId = participantId;
         this.firstname = firstname;
         this.surname = surname;
+        this.referenceId = referenceId;
     }
 }
