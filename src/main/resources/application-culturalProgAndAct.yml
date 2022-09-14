@@ -1,8 +1,8 @@
 culturalprogandact:
   culturalType:
     PROGRAM:
-      "en": "program"
-      "fr": "programme"
+      "en": "Program"
+      "fr": "Programme"
     ACTIVITY:
       "en": "Activity"
       "fr": "Activité"
