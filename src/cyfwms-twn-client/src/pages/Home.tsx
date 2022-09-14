@@ -14,33 +14,28 @@ import type { ReactElement, ReactNode } from "react";
 interface IconType {
   value: string;
   route: string;
-  src: string;
 }
 
 const icons: IconType[] = [
   {
     value: "Child, Youth, and Family Members",
     route: "/cyfms",
-    src: "/img/heartInCircle.svg",
   },
   {
     value: "Initial Contacts",
     route: "/initial_contact",
-    src: "/img/flower.svg",
   },
   {
     value: "Wellness Journey",
     route: "/wellness_journey",
-    src: "/img/fishes.svg",
   },
   {
     value: "Cultural Programs and Activities",
     route: "/cpa",
-    src: "/img/halfMoon.svg",
   },
-  { value: "Caregivers", route: "/caregivers", src: "/img/home.svg" },
-  { value: "Reports", route: "/reports", src: "/img/mountains.svg" },
-  { value: "Notifications", route: "/notifications", src: "/img/feather.svg" },
+  { value: "Caregivers", route: "/caregivers" },
+  { value: "Reports", route: "/reports" },
+  { value: "Notifications", route: "/notifications" },
 ];
 
 const RenderIcons = (icons: IconType[]): ReactNode[] => {
@@ -57,7 +52,7 @@ const RenderIcons = (icons: IconType[]): ReactNode[] => {
             <CardMedia
               component="img"
               height="100px"
-              image={icons[index].src}
+              image={"/img/logo-encircled.svg"}
               alt=""
             />
             <CardContent>
