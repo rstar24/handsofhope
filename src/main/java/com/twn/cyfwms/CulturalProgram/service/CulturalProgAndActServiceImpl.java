@@ -92,7 +92,7 @@ public class CulturalProgAndActServiceImpl implements CulturalProgAndActService 
               participantCulturalProgRepository.save(participantCulturalProgAndAct);
            }
             Optional<CulturalProgImage> culturalProgImage=culturalProgImageRepository.findByCulturalProgramId(culturalProgramId);
-             if (culturalProgImage!=null){
+             if (culturalProgImage.isPresent()){
                 culturalProgImage.get().setStatus("INACTIVE");
                  culturalProgImageRepository.save(culturalProgImage.get());
              }

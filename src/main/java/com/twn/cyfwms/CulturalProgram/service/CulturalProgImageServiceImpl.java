@@ -7,11 +7,16 @@ import com.twn.cyfwms.CulturalProgram.repository.CulturalProgImageRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.util.Optional;
+
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
 @AllArgsConstructor
@@ -69,5 +74,22 @@ public class CulturalProgImageServiceImpl implements CulturalProgImageService{
     public CulturalProgImage getFile(Long id) {
 
         return culturalProgImageRepository.findByCulturalProgramId(id).get();
+    }
+
+    @Override
+    public ResponseEntity removeCulturalProgImage(Long culturalProgImageId) {
+        if (culturalProgImageId != 0 ) {
+            CulturalProgImage culturalProgImage = culturalProgImageRepository.findByculturalProgImageId(culturalProgImageId);
+            if (culturalProgImage!=null){
+                culturalProgImage.setStatus("INACTIVE");
+                culturalProgImageRepository.save(culturalProgImage);
+            }
+            else {
+                throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
+            }
+        } else {
+            throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
+        }
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

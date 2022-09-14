@@ -137,4 +137,11 @@ public class TWNCulturalProgramController {
                 .body(fileDB.getCulturamImagefile());
     }
 
+    @DeleteMapping("/removeCulturalProgImage/{culturalprogimageid}")
+    @ApiOperation("Remove CulturalProgImage")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity removeCulturalProgImage(@PathVariable("culturalprogimageid") Long culturalProgImageId) {
+        return culturalProgImageService.removeCulturalProgImage(culturalProgImageId);
+    }
+
 }

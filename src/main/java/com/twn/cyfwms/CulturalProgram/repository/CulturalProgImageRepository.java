@@ -12,5 +12,6 @@ import java.util.Optional;
 public interface CulturalProgImageRepository extends JpaRepository<CulturalProgImage, Long> {
     @Query(value = "select * from culturalimage c where c.culturalprogramid=? AND c.status='ACTIVE'",nativeQuery = true)
     Optional<CulturalProgImage> findByCulturalProgramId(Long id);
-
+    @Query(value = "select * from culturalimage c where c.culturalprogimageid=? AND c.status='ACTIVE'",nativeQuery = true)
+    CulturalProgImage findByculturalProgImageId(Long culturalProgImageId);
 }
