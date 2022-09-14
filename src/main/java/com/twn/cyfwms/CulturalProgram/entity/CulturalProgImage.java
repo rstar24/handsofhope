@@ -11,7 +11,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="culturalImage")
+@Table(name="culturalimage")
 @AllArgsConstructor
 @NoArgsConstructor
 public class CulturalProgImage {
@@ -35,8 +35,8 @@ public class CulturalProgImage {
     private String name;
 
     @Lob
-    @Getter @Setter @Column(name="file")
-    private byte[] file;
+    @Getter @Setter @Column(name="culturamimagefile")
+    private byte[] culturamImagefile;
 
     @CreationTimestamp
     @Getter @Setter @Column(name="uplodedDateTime")
@@ -48,6 +48,6 @@ public class CulturalProgImage {
     @Getter @Setter @Column(name = "culturalprogramid")
     private Long culturalProgramId;
 
-    @Getter @Setter @Column(name = "imageType")
-    private String imageType;
+    @Getter @Setter @Column(name = "culturamimagetype")
+    private String culturalImageType;
 }

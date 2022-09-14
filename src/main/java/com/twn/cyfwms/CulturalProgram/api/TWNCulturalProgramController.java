@@ -132,8 +132,8 @@ public class TWNCulturalProgramController {
         CulturalProgImage fileDB = culturalProgImageService.getFile(id);
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDB.getName() + "\"")
-                .contentType(MediaType.valueOf(fileDB.getImageType()))
-                .body(fileDB.getFile());
+                .contentType(MediaType.valueOf(fileDB.getCulturalImageType()))
+                .body(fileDB.getCulturamImagefile());
     }
 
 }
