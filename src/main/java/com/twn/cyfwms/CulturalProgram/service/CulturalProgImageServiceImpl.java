@@ -6,6 +6,7 @@ import com.twn.cyfwms.CulturalProgram.entity.CulturalProgImage;
 import com.twn.cyfwms.CulturalProgram.repository.CulturalProgImageRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -92,4 +95,20 @@ public class CulturalProgImageServiceImpl implements CulturalProgImageService{
         }
         return new ResponseEntity(HttpStatus.OK);
     }
+
+    @Override
+    public List<CulturalProgImageDto> getAllFiles(Long culturalProgramId) {
+        List<CulturalProgImageDto> counselorCFSWorkersDtoList = new ArrayList<CulturalProgImageDto>();
+        if (culturalProgramId != 0) {
+            List<CulturalProgImage> CounselorCFSWorkersList = culturalProgImageRepository.findByculturalProgramId(culturalProgramId);
+            if (CounselorCFSWorkersList != null) {
+                counselorCFSWorkersDtoList = modelMapper.map(CounselorCFSWorkersList, new TypeToken<List<CulturalProgImageDto>>() {}.getType());
+            }
+            else {
+                throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
+           }
+        }
+        return counselorCFSWorkersDtoList;
+    }
+
 }

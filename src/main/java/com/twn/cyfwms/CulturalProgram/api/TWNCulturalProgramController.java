@@ -1,4 +1,5 @@
 package com.twn.cyfwms.CulturalProgram.api;
+
 import com.twn.cyfwms.CulturalProgram.dto.*;
 import com.twn.cyfwms.CulturalProgram.entity.CulturalProgImage;
 import com.twn.cyfwms.CulturalProgram.service.*;
@@ -127,15 +128,27 @@ public class TWNCulturalProgramController {
             CulturalProgImage culturalProgImage=culturalProgImageService.uploadImage(file,culturalDto);
      return culturalProgImage;
     }
+
     @GetMapping("/files/{id}")
     public ResponseEntity<byte[]> getFile(@PathVariable Long id) {
         CulturalProgImage fileDB = culturalProgImageService.getFile(id);
-        System.out.println(fileDB.getStatus());
+
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDB.getName() + "\"")
                 .contentType(MediaType.valueOf(fileDB.getCulturalImageType()))
                 .body(fileDB.getCulturamImagefile());
     }
+
+    @GetMapping(value = "/getAllFiles/{culturalprogramid}", produces = "application/json")
+    @ApiOperation("Read All Files")
+    @ResponseStatus(HttpStatus.OK)
+    public List<CulturalProgImageDto> getAllFiles(@PathVariable("culturalprogramid") Long culturalProgramId) {
+        return culturalProgImageService.getAllFiles(culturalProgramId);
+    }
+
+
+
+
 
     @DeleteMapping("/removeCulturalProgImage/{culturalprogimageid}")
     @ApiOperation("Remove CulturalProgImage")

@@ -1,10 +1,13 @@
 package com.twn.cyfwms.CulturalProgram.entity;
+import com.twn.cyfwms.participant.entity.CounselorCFSWorker;
 import lombok.*;
 import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -62,8 +65,8 @@ public class CulturalProgAndAct implements Serializable {
     @Getter @Setter
     private ParticipantCulturalProgAndAct participantCulturalProgAndAct;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "culturalprogramid", referencedColumnName = "culturalprogramid")
     @Getter @Setter
-    private CulturalProgImage culturalProgImage;
+    private List<CulturalProgImage> culturalProgImage;
 }
