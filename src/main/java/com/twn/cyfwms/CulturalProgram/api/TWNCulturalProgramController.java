@@ -2,7 +2,6 @@ package com.twn.cyfwms.CulturalProgram.api;
 import com.twn.cyfwms.CulturalProgram.dto.*;
 import com.twn.cyfwms.CulturalProgram.entity.CulturalProgImage;
 import com.twn.cyfwms.CulturalProgram.service.*;
-import com.twn.cyfwms.participant.api.ResponseMessage;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +11,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -120,31 +121,18 @@ public class TWNCulturalProgramController {
                         || var.get("data") == null) ?null:var.get("data"));
         return participantCulturalProgSearchService.searchParticipantCulturalProgAndAct(participantCulturalSearchDto);
     }
-    @PostMapping("/upload")
-    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("culturalProgImageId") String culturalProgImageId) {
-        String message = "";
-        try {
-            CulturalProgImage culturalProgImage=culturalProgImageService.uploadImage(file,culturalProgImageId);
-            if(culturalProgImage.getFile()==null)
-            {
-                message = "please enter valid format: " + file.getOriginalFilename();
-            }
-            else {
-                message = "Uploaded the file successfully: " + file.getOriginalFilename();
-            }
+    @PutMapping("/upload")
+    public  CulturalProgImage uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("culturalDto") String culturalDto) throws IOException {
 
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
-        } catch (Exception e) {
-            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
-        }
+            CulturalProgImage culturalProgImage=culturalProgImageService.uploadImage(file,culturalDto);
+     return culturalProgImage;
     }
     @GetMapping("/files/{id}")
     public ResponseEntity<byte[]> getFile(@PathVariable Long id) {
         CulturalProgImage fileDB = culturalProgImageService.getFile(id);
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDB.getName() + "\"")
-                .contentType(MediaType.valueOf(fileDB.getType()))
+                .contentType(MediaType.valueOf(fileDB.getImageType()))
                 .body(fileDB.getFile());
     }
 

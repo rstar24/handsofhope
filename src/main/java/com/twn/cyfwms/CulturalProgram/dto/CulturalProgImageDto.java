@@ -28,4 +28,7 @@ public class CulturalProgImageDto {
     @Getter
     @Setter
     private LocalDateTime uplodedDatedTime;
+    @Getter
+    @Setter
+    private String imageType;
 }

@@ -8,10 +8,17 @@ import type { ReactElement } from "react";
  */
 const CYFMSHeader = (): ReactElement => {
   return (
-    <Box sx={{ display: "flex", alignItems: "center" }}>
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        gap: "0 0.5rem",
+        p: "0.5rem",
+      }}
+    >
       <Box
         component="img"
-        src="/img/heartInCircle.svg"
+        src="/img/logo-encircled.png"
         height={75}
         width={75}
       />

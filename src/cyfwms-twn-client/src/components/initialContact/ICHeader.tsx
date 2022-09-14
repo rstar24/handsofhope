@@ -8,8 +8,20 @@ import type { ReactElement } from "react";
  */
 const ICHeader = (): ReactElement => {
   return (
-    <Box sx={{ display: "flex", alignItems: "center" }}>
-      <Box component="img" src="/img/flower.svg" height={75} width={75} />
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        gap: "0 0.5rem",
+        p: "0.5rem",
+      }}
+    >
+      <Box
+        component="img"
+        src="/img/logo-encircled.png"
+        height={75}
+        width={75}
+      />
       <Typography component="h2">Initial Contact</Typography>
     </Box>
   );
