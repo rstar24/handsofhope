@@ -71,8 +71,8 @@ public class TWNParticipantController {
     @PutMapping(value = "/saveParticipantIdentity", produces = "application/json")
     @ApiOperation("Save or Update Identity")
     @ResponseStatus(HttpStatus.OK)
-    public ParticipantIdentityDto saveParticipantIdentity(@RequestParam("participantDto")String participantIdentityDto,@RequestParam("image")MultipartFile file) throws IOException {
-        return participantService.saveParticipantIdentity(participantIdentityDto,file);
+    public ParticipantIdentityDto saveParticipantIdentity(@RequestBody ParticipantIdentityDto participantIdentityDto){
+        return participantService.saveParticipantIdentity(participantIdentityDto);
     }
 
     @DeleteMapping("/removeParticipant/{referenceId}")

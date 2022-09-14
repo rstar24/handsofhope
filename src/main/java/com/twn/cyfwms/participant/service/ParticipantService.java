@@ -8,6 +8,6 @@ import java.io.IOException;
 
 public interface ParticipantService {
     ParticipantIdentityDto readParticipantIdentity(Long participantId);
-    ParticipantIdentityDto saveParticipantIdentity(String participantIdentityDto, MultipartFile file) throws IOException;
+    ParticipantIdentityDto saveParticipantIdentity(ParticipantIdentityDto participantIdentityDto);
     ResponseEntity<String> removeParticipant(Long referenceId);
 }

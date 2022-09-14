@@ -74,25 +74,13 @@ public class ParticipantServiceImpl implements ParticipantService {
     }
 
     @Override
-    public ParticipantIdentityDto saveParticipantIdentity(String participantDto, MultipartFile file) throws IOException {
-        int f=0;
-        ParticipantIdentityDto participantIdentityDto  = new ObjectMapper().readValue(participantDto,ParticipantIdentityDto.class);
-        ParticipantImageDto imageDto = new ParticipantImageDto();
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        ParticipantImage participantImage =new ParticipantImage();
-        imageDto.setParticipantImageName(fileName);
-        imageDto.setType(file.getContentType());
-        imageDto.setImage(file.getBytes());
-
-
+    public ParticipantIdentityDto saveParticipantIdentity(ParticipantIdentityDto participantIdentityDto) {
         Participant participant = null;
 
         if (participantIdentityDto.getParticipantId() ==0) {
             participant = new Participant();
             modelMapper.map(participantIdentityDto, participant);
-            if(file.getContentType().equals("image/png") || file.getContentType().equals("image/jpg") || file.getContentType().equals("image/jpeg")){
-                modelMapper.map(imageDto,participantImage);
-            }
+
             participant.setType("CYFM");
             participant.setStatus("ACTIVE");
             Optional<Participant> particpantDetailsOpt = participantRepository.findTopByOrderByCreationDateTimeDesc();
@@ -107,19 +95,12 @@ public class ParticipantServiceImpl implements ParticipantService {
             participant = readParticipant(participantIdentityDto.getParticipantId());
             modelMapper.map(participantIdentityDto, participant);
 
-            participantImage = readParticipantImage(participantIdentityDto.getParticipantId());
-            imageDto.setParticipantId(participantIdentityDto.getParticipantId());
-            imageDto.setParticipantimageId(participantIdentityDto.getParticipantimageId());
-            modelMapper.map(imageDto,participantImage);
+
         }
         participant = participantRepository.save(participant);
         participantIdentityDto.setParticipantId(participant.getParticipantId());
-        participantImage.setParticipantId(participantIdentityDto.getParticipantId());
-        System.out.println(participantIdentityDto.getParticipantId());
-        imageRepository.save(participantImage);
         participantIdentityDto.setReferenceId(participant.getReferenceId());
-        participantIdentityDto.setParticipantImageName(imageDto.getParticipantImageName());
-        participantIdentityDto.setPaticipantImageType(imageDto.getType());
+
         return participantIdentityDto;
     }
 
