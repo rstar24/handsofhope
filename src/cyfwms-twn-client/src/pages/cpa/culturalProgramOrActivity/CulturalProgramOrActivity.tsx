@@ -15,6 +15,7 @@ import {
   doPost,
 } from "../../../features/cpa/culturalProgramActivity/slice";
 import { setOpen } from "../../../features/popupSlice";
+import CPADropdown from "../../../components/cpa/CPADropdown";
 /**
  * The CulturalProgramOrActivity functional component.
  * @returns CulturalProgramOrActivity component skeleton.
@@ -30,7 +31,9 @@ const CulturalProgramOrActivity = (): ReactElement => {
   );
   const state = useAppSelector((state) => state.cpa);
   const edit = useAppSelector((state) => state.popup.edit);
-
+  const { culturalType, culturalStatus } = useAppSelector(
+    (state) => state.codetable
+  );
   useEffect(() => {
     dispatch(doGet(state.data.culturalProgramId))
       .unwrap()
@@ -123,21 +126,43 @@ const CulturalProgramOrActivity = (): ReactElement => {
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CPAInput autofill={state.data.name} id="name" value="Name" />
+            <CPAInput
+              autofill={state.data.name}
+              id="name"
+              value="Name"
+              required
+            />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CPAInput autofill={state.data.type} id="type" value="Type" />
+            <CPADropdown
+              autofill={state.data.type}
+              id="type"
+              value="Type"
+              optionsList={Object.values(culturalType).map(
+                (type: any) => type.en
+              )}
+              required
+            />
           </Box>
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CPAInput autofill={state.data.status} id="status" value="Status" />
+            <CPADropdown
+              autofill={state.data.status}
+              id="status"
+              value="Status"
+              optionsList={Object.values(culturalStatus).map(
+                (type: any) => type.en
+              )}
+              required
+            />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <CPAInput
               autofill={state.data.caseworker}
               id="caseworker"
               value="Caseworker"
+              required
             />
           </Box>
         </Box>
@@ -148,6 +173,7 @@ const CulturalProgramOrActivity = (): ReactElement => {
               id="startDate"
               value="Start Date"
               type="Date"
+              required
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
