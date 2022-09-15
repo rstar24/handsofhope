@@ -33,15 +33,15 @@ const CPALayout = (props: {
             tabs={[
               {
                 value: "Cultural Program Or Activity",
-                route: "../cultural_program_activity",
+                route: "../add_cpa",
               },
               {
                 value: "Participants",
-                route: "../participant",
+                route: "../participants",
               },
               {
                 value: "Attachments",
-                route: "../attachment",
+                route: "../attachments",
               },
             ]}
           />

@@ -61,7 +61,7 @@ const CPA = (): ReactElement => {
         >
           <Button
             component={Link}
-            to="/cpa/cultural_program_activity"
+            to="/cpa/add_cpa"
             sx={{
               background: "lightgrey",
               color: "black",
