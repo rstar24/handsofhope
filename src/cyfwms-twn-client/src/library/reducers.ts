@@ -20,9 +20,11 @@ import initiatorReducer from "../features/initiatorSlice";
 import loginReducer from "../features/login/slice";
 import popupReducer from "../features/popupSlice";
 import navBarReducer from "../features/navBarSlice";
+import cpaAttachmentsReducer from "../features/cpa/attachments/slice";
 import cpaSearchReducer from "../features/cpa/search/slice";
 import cpaReducer from "../features/cpa/culturalProgramActivity/slice";
 import cpaParticipantReducer from "../features/cpa/participant/slice";
+
 const rootReducer = {
   login: loginReducer,
   popup: popupReducer,
@@ -49,6 +51,7 @@ const rootReducer = {
   cpa: cpaReducer,
   cpaSearch: cpaSearchReducer,
   cpaParticipant: cpaParticipantReducer,
+  cpaAttachments: cpaAttachmentsReducer,
 };
 
 export default rootReducer;

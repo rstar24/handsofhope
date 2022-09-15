@@ -80,7 +80,7 @@ const EditIcon = (props: any): ReactElement => {
       >
         <MenuItem
           component={Link}
-          to="cultural_program_activity"
+          to="add_cpa"
           onClick={(event: React.MouseEvent<HTMLElement>) => {
             handleCloseDropDown(event);
 

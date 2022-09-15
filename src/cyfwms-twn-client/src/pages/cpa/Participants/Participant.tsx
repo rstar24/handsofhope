@@ -108,7 +108,7 @@ function Participant(props: any) {
                         size="small"
                       >
                         <Link
-                          to="../participant"
+                          to="../participants"
                           onClick={() =>
                             handleSelected(val.participantCulturalProId)
                           }
