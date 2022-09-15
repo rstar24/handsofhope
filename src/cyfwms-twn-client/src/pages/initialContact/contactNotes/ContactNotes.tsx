@@ -28,13 +28,14 @@ function ContactNotes(props: any) {
   const [disabled, setDisabled] = useState(false);
   const [value, setValue] = useState("");
   const data = useAppSelector((state) => state.icContactNotes.record);
+  const state = useAppSelector((state) => state.icFileDetails.data);
 
   useEffect(() => {
     dispatch(doGetICContactMethod());
-    dispatch(doSearch(null))
+    dispatch(doSearch(state.fileNumber))
       .unwrap()
       .catch((err) => {});
-  }, [addNew]);
+  }, []);
   const handleAddNew = () => {
     dispatch(cleanState(null));
     setDisabled(false);

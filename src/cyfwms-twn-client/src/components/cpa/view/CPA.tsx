@@ -18,10 +18,12 @@ const CPA = (): ReactElement => {
       sx={{ display: "flex", justifyContent: "center", p: "1rem" }}
     >
       <Table sx={{ maxWidth: 900 }} aria-label="contact data table">
-        {Object.keys(data).length === 12 && (
-          <TableBody sx={{ "& > tr > td": { border: 0, p: 0 } }}>
+        {Object.keys(data).length === 13 && (
+          <TableBody
+            sx={{ "& > tr > td": { border: 0, p: 0, paddingLeft: 15 } }}
+          >
             {Object.entries(data).map((t: any, k: any) => {
-              if (k !== 0 && k !== 1) {
+              if (k !== 0 && k !== 1 && t[1] !== "") {
                 return (
                   <TableRow key={Math.random() * 1000}>
                     <TableCell

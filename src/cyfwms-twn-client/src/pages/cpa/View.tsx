@@ -37,7 +37,7 @@ const View = (): ReactElement => {
         }}
       >
         <Typography variant="h5" alignSelf="center">
-          Cultural Program ID: {state.cpa.data.culturalProgramId}
+          Reference Id: {state.cpa.data.referenceId}
         </Typography>
         <Typography>
           <EditIcon value={state.cpa.data.culturalProgramId} />

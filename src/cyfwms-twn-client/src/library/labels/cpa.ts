@@ -5,6 +5,7 @@ export const CPALabel = [
   "Type",
   "Status",
   "Caseworker",
+  "Start Date",
   "Total Cost",
   "Total Participation",
   "Session Details",
