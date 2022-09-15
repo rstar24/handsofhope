@@ -40,7 +40,9 @@ public class InitialContactFileDetailsServiceImpl implements  InitialContactFile
                 if (!initialContactFileDetails.getStatusOfDeletion().equals("INACTIVE")){
                     modelMapper.map(initialContactFileDetails, initialContactFileDetailsDto);
                    Participant participant=participantRepository.findByParticipantId(Long.parseLong(initialContactFileDetailsDto.getClientName()));
-                   initialContactFileDetailsDto.setClientName(participant.getFirstname()+" "+participant.getSurname());
+                  if (!initialContactFileDetails.getClientName().equals("0")) {
+                      initialContactFileDetailsDto.setClientName(participant.getFirstname() + " " + participant.getSurname());
+                  }
                 }
                 else {
                     throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
