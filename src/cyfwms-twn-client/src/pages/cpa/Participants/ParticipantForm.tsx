@@ -96,7 +96,7 @@ const ParticipantForm = ({ setAddNew, setDisabled, disabled }: any) => {
               }}
               size="small"
               readOnly={disabled}
-              value={state.clientName}
+              value={state.clientName || data.participant}
               style={{ backgroundColor: "#dfdada" }}
               endAdornment={<SearchIcon onClick={handleSearch} />}
             />

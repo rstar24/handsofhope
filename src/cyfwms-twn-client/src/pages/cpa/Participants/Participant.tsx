@@ -23,7 +23,7 @@ function Participant(props: any) {
   const [disabled, setDisabled] = useState(false);
   const [value, setValue] = useState("");
   const data = useAppSelector((state) => state.cpaParticipant.record);
-  console.log("dataaaaaaa--", data);
+
   useEffect(() => {
     dispatch(doSearch(null))
       .unwrap()
@@ -130,7 +130,7 @@ function Participant(props: any) {
                         align="center"
                         size="small"
                       >
-                        {val.notes}
+                        {val.role}
                       </TableCell>
                     </TableRow>
                   ))}

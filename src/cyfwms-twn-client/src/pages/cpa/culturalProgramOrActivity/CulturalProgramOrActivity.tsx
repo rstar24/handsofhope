@@ -1,12 +1,9 @@
 import { FormEvent, ReactElement, useEffect } from "react";
 import CPAInput from "../../../components/cpa/CPAInput";
-import { Box } from "@mui/material";
+import { Box, Button, OutlinedInput } from "@mui/material";
 import CPALayout from "../../../components/cpa/CPALayout";
 import CPATextArea from "../../../components/cpa/CPATextArea";
-import {
-  CYFSWMSNextButton,
-  CYFSWMSSaveButton,
-} from "../../../components/CYFSWMSButtons";
+import { CYFSWMSSaveButton } from "../../../components/CYFSWMSButtons";
 import { useNavigate } from "react-router-dom";
 
 import { unhideTabs } from "../../../features/navBarSlice";
@@ -17,6 +14,7 @@ import {
   doGet,
   doPost,
 } from "../../../features/cpa/culturalProgramActivity/slice";
+import { setOpen } from "../../../features/popupSlice";
 /**
  * The CulturalProgramOrActivity functional component.
  * @returns CulturalProgramOrActivity component skeleton.
@@ -52,7 +50,7 @@ const CulturalProgramOrActivity = (): ReactElement => {
     const form: any = e.currentTarget;
     const formData: Data = {
       culturalProgramId: state.data.culturalProgramId,
-      referenceId: state.data.culturalProgramId || 0,
+      referenceId: state.data.referenceId | 0,
       name: form.name.value,
       type: form.type.value,
       status: form.status.value,
@@ -83,7 +81,8 @@ const CulturalProgramOrActivity = (): ReactElement => {
   };
 
   const nextClickHandler = () => {
-    navigate("../participant");
+    dispatch(setOpen(false));
+    navigate("/cpa/view");
   };
 
   return (
@@ -100,12 +99,25 @@ const CulturalProgramOrActivity = (): ReactElement => {
       >
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CPAInput
-              autofill={state.data.referenceId}
-              id="referenceId"
-              value="Reference Id"
-              type="text"
-            />
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                flexWrap: "wrap",
+              }}
+            >
+              <Box sx={{ p: 1, flexBasis: 0, flexGrow: 1, color: "black" }}>
+                Reference ID
+              </Box>
+              <OutlinedInput
+                size="small"
+                readOnly={true}
+                sx={{ borderRadius: 0, flexBasis: 0, flexGrow: 2, ml: -1 }}
+                defaultValue={state.data.referenceId}
+                value={state.data.referenceId}
+                style={{ backgroundColor: "#dfdada" }}
+              />
+            </Box>
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
         </Box>
@@ -188,7 +200,13 @@ const CulturalProgramOrActivity = (): ReactElement => {
                 </>
               ) : (
                 <>
-                  <CYFSWMSNextButton onClick={nextClickHandler} />
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    onClick={nextClickHandler}
+                  >
+                    View
+                  </Button>
                 </>
               )}
             </>
