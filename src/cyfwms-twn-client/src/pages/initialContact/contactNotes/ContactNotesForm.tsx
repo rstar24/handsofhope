@@ -21,9 +21,7 @@ const ContactNotesForm = ({
   targetValue,
 }: any) => {
   const dispatch = useAppDispatch();
-  const initialContactID = useAppSelector(
-    (state) => state.icFileDetails.data.fileDetailsId
-  );
+  const state = useAppSelector((state) => state.icFileDetails);
   const { contactMethod } = useAppSelector((state) => state.codetable);
   const data = useAppSelector((state) => state.icContactNotes.data);
 
@@ -31,7 +29,7 @@ const ContactNotesForm = ({
     e.preventDefault();
     const form = e.currentTarget as HTMLFormElement;
     const formData: Data = {
-      fileDetailsId: initialContactID,
+      fileDetailsId: state.data.fileDetailsId,
       contactNotesId: data.contactNotesId,
       name: form.naam.value,
       worker: form.worker.value,
@@ -49,7 +47,7 @@ const ContactNotesForm = ({
       .unwrap()
       .then(() => {
         console.log("PresentConcerns POST backend API was successful!");
-        dispatch(doSearch(null));
+        dispatch(doSearch(state.data.fileDetailsId));
         setAddNew(false);
       })
       .catch((err) => {

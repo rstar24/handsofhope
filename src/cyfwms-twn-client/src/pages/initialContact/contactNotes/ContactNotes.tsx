@@ -32,7 +32,7 @@ function ContactNotes(props: any) {
 
   useEffect(() => {
     dispatch(doGetICContactMethod());
-    dispatch(doSearch(state.fileNumber))
+    dispatch(doSearch(state.fileDetailsId))
       .unwrap()
       .catch((err) => {});
   }, []);

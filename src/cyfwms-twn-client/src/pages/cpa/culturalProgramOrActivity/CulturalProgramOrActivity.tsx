@@ -3,18 +3,22 @@ import CPAInput from "../../../components/cpa/CPAInput";
 import { Box, Button, OutlinedInput } from "@mui/material";
 import CPALayout from "../../../components/cpa/CPALayout";
 import CPATextArea from "../../../components/cpa/CPATextArea";
-import { CYFSWMSSaveButton } from "../../../components/CYFSWMSButtons";
+import {
+  CYFSWMSNextButton,
+  CYFSWMSSaveButton,
+  CYFSWMSViewButton,
+} from "../../../components/CYFSWMSButtons";
 import { useNavigate } from "react-router-dom";
 
-import { unhideTabs } from "../../../features/navBarSlice";
-import { initiate } from "../../../features/initiatorSlice";
+import { hideTabs, unhideTabs } from "../../../features/navBarSlice";
+import { initiate, uninitiate } from "../../../features/initiatorSlice";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import {
   Data,
   doGet,
   doPost,
 } from "../../../features/cpa/culturalProgramActivity/slice";
-import { setOpen } from "../../../features/popupSlice";
+import { setOpen, setView } from "../../../features/popupSlice";
 import CPADropdown from "../../../components/cpa/CPADropdown";
 /**
  * The CulturalProgramOrActivity functional component.
@@ -85,7 +89,12 @@ const CulturalProgramOrActivity = (): ReactElement => {
 
   const nextClickHandler = () => {
     dispatch(setOpen(false));
-    navigate("/cpa/view");
+    dispatch(hideTabs(null));
+    dispatch(uninitiate(null));
+    if (!edit) {
+      dispatch(setView(true));
+      navigate("/cpa/view");
+    }
   };
 
   return (
@@ -226,13 +235,7 @@ const CulturalProgramOrActivity = (): ReactElement => {
                 </>
               ) : (
                 <>
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    onClick={nextClickHandler}
-                  >
-                    View
-                  </Button>
+                  <CYFSWMSViewButton onClick={nextClickHandler} />
                 </>
               )}
             </>

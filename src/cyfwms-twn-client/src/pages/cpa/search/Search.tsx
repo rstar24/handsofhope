@@ -1,7 +1,7 @@
 import Input from "../../../components/Input";
 import Popup from "../../../components/Popup";
 import AuthLayout from "../../../components/auth/layout/AuthLayout";
-import Router from "../../../components/nestedRouters/CYFMS";
+import Router from "../../../components/nestedRouters/CPA";
 import { onKeyDown } from "../../../library/app";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import { Box, Button } from "@mui/material";
@@ -125,7 +125,7 @@ const Search = (): ReactElement => {
               <Button variant="contained" type="submit">
                 Search
               </Button>
-              <Button variant="contained" type="reset">
+              <Button variant="contained" type="reset" onClick={hide}>
                 Reset
               </Button>
             </Box>

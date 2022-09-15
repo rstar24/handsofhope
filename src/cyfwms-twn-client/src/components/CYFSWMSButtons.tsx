@@ -48,3 +48,13 @@ export const CYFSWMSSaveButton = (): ReactElement => {
     </Button>
   );
 };
+
+export const CYFSWMSViewButton = (
+  props: ComponentPropsWithoutRef<ElementType>
+): ReactElement => {
+  return (
+    <Button type="submit" variant="contained" {...props}>
+      View
+    </Button>
+  );
+};

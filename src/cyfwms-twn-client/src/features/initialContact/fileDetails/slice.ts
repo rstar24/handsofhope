@@ -6,7 +6,7 @@ import type { AxiosResponse } from "axios";
 export interface Data {
   fileDetailsId: number;
   fileNumber: number;
-  clientName: number;
+  clientName: any;
   startingDate: string;
   caseworker: string;
   status: string;
@@ -17,7 +17,7 @@ export interface Data {
 const emptyData: Data = {
   fileDetailsId: 0,
   fileNumber: 0,
-  clientName: 0,
+  clientName: "",
   startingDate: "",
   caseworker: "",
   status: "",

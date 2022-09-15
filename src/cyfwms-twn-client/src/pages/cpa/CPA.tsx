@@ -4,12 +4,6 @@ import Router from "../../components/nestedRouters/CPA";
 import {
   doGetCPACulturalStatus,
   doGetCPACulturalType,
-  doGetEducation,
-  doGetGender,
-  doGetMaritalStatus,
-  doGetProvince,
-  doGetRole,
-  doGetTypeOfEmployee,
 } from "../../features/codetable/slice";
 import { setOpen as setOpenPopup } from "../../features/popupSlice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
@@ -21,6 +15,8 @@ import { useLocation } from "react-router-dom";
 import { setOpen } from "../../features/popupSlice";
 import CPAHeader from "../../components/cpa/CPAHeader";
 import { cleanState as cleanCulturalProgramActivity } from "../../features/cpa/culturalProgramActivity/slice";
+import { cleanState as cleanParticipant } from "../../features/cpa/participant/slice";
+import { hideTabs } from "../../features/navBarSlice";
 
 /**
  * The CPA functional component.
@@ -42,6 +38,7 @@ const CPA = (): ReactElement => {
 
   const cleanStore = () => {
     dispatch(cleanCulturalProgramActivity(null));
+    dispatch(cleanParticipant(null));
   };
   return (
     <AuthLayout>

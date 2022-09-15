@@ -15,6 +15,8 @@ import { cleanState as cleanPresentConcernsState } from "../../../features/initi
 import { cleanState as cleanPatientCareInformationState } from "../../../features/initialContact/patientCareInformation/slice";
 import { cleanState as cleanInitialContactSearchState } from "../../../features/initialContact/search/slice";
 import { cleanState as cleanLoginState } from "../../../features/login/slice";
+import { cleanState as cleanCulturalProgramActivity } from "../../../features/cpa/culturalProgramActivity/slice";
+import { cleanState as cleanCPAParticipant } from "../../../features/cpa/participant/slice";
 import { useAppDispatch } from "../../../library/hooks";
 import { Box, Tab } from "@mui/material";
 import React from "react";
@@ -69,6 +71,10 @@ export default function Navbar() {
     dispatch(cleanPresentConcernsState(null));
     dispatch(cleanPatientCareInformationState(null));
     dispatch(cleanInitialContactSearchState(null));
+
+    //CPA
+    dispatch(cleanCulturalProgramActivity(null));
+    dispatch(cleanCPAParticipant(null));
   };
 
   const handleHome = () => {
