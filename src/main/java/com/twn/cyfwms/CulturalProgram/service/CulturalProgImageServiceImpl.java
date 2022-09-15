@@ -98,17 +98,17 @@ public class CulturalProgImageServiceImpl implements CulturalProgImageService{
 
     @Override
     public List<CulturalProgImageDto> getAllFiles(Long culturalProgramId) {
-        List<CulturalProgImageDto> counselorCFSWorkersDtoList = new ArrayList<CulturalProgImageDto>();
+        List<CulturalProgImageDto> culturalProgImageDtoList = new ArrayList<CulturalProgImageDto>();
         if (culturalProgramId != 0) {
-            List<CulturalProgImage> CounselorCFSWorkersList = culturalProgImageRepository.findByculturalProgramId(culturalProgramId);
-            if (CounselorCFSWorkersList != null) {
-                counselorCFSWorkersDtoList = modelMapper.map(CounselorCFSWorkersList, new TypeToken<List<CulturalProgImageDto>>() {}.getType());
+            List<CulturalProgImage> CulturalProgImageList = culturalProgImageRepository.findByculturalProgramId(culturalProgramId);
+            if (CulturalProgImageList != null) {
+                culturalProgImageDtoList = modelMapper.map(CulturalProgImageList, new TypeToken<List<CulturalProgImageDto>>() {}.getType());
             }
             else {
                 throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
            }
         }
-        return counselorCFSWorkersDtoList;
+        return culturalProgImageDtoList;
     }
 
 }

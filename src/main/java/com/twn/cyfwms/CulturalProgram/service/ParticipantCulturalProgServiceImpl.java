@@ -43,7 +43,9 @@ public class ParticipantCulturalProgServiceImpl implements ParticipantCulturalPr
             if (participantCulturalProgAndAct != null) {
                 modelMapper.map(participantCulturalProgAndAct, participantCulturalProgDto);
                 Participant participant=participantRepository.findByParticipantId(Long.parseLong(participantCulturalProgDto.getParticipant()));
-                participantCulturalProgDto.setParticipant(participant.getFirstname()+" "+participant.getSurname());
+             if (!participantCulturalProgAndAct.getParticipant().equals("0")) {
+                 participantCulturalProgDto.setParticipant(participant.getFirstname() + " " + participant.getSurname());
+             }
             } else {
                 throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
             }

@@ -146,10 +146,6 @@ public class TWNCulturalProgramController {
         return culturalProgImageService.getAllFiles(culturalProgramId);
     }
 
-
-
-
-
     @DeleteMapping("/removeCulturalProgImage/{culturalprogimageid}")
     @ApiOperation("Remove CulturalProgImage")
     @ResponseStatus(HttpStatus.OK)
