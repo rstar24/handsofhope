@@ -30,7 +30,7 @@ public class InitialContactContactNotesServiceImpl implements InitialContactCont
             modelMapper.map(initialContactContactNotesDto, initialContactContactNotes);
         }
         initialContactContactNotes = initialContactContactNotesRepository.save(initialContactContactNotes);
-        initialContactContactNotesDto.setFileDetailsId(initialContactContactNotes.getContactNotesId());
+        initialContactContactNotesDto.setContactNotesId(initialContactContactNotes.getContactNotesId());
         return initialContactContactNotesDto;
     }
     @Override
