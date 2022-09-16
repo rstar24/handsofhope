@@ -68,10 +68,6 @@ const ClientResults = ({ setClick, moduleName }: any): ReactElement => {
               <TableCell>{participant.firstname}</TableCell>
               <TableCell>{participant.surname}</TableCell>
               <TableCell>{participant.city}</TableCell>
-
-              <TableCell>
-                <EditIcon />
-              </TableCell>
             </TableRow>
           ))}
         </TableBody>

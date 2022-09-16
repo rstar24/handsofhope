@@ -30,13 +30,13 @@ public class InitialContactIncidentReportServiceImpl implements InitialContactIn
             if (initialContactIncidentReport != null) {
                 modelMapper.map(initialContactIncidentReport, initialContactIncidentReportDto);
                 if (initialContactIncidentReportDto.getDateOfReport() == null) {
-                    initialContactIncidentReportDto.setDateOfReport(LocalDate.of(0,0,0));
+                    initialContactIncidentReportDto.setDateOfReport(LocalDate.of(1,1,1));
                 }
                 if (initialContactIncidentReportDto.getIncidentDate() == null) {
-                    initialContactIncidentReportDto.setIncidentDate(LocalDate.of(0,0,0));
+                    initialContactIncidentReportDto.setIncidentDate(LocalDate.of(1,1,1));
                 }
                 if (initialContactIncidentReportDto.getIncidentTime() == null) {
-                    initialContactIncidentReportDto.setIncidentTime(LocalTime.of(0,0,0));
+                    initialContactIncidentReportDto.setIncidentTime(LocalTime.of(1,1,1));
                 }
             } else {
                 throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");

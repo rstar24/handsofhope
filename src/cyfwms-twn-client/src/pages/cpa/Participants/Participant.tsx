@@ -23,9 +23,10 @@ function Participant(props: any) {
   const [disabled, setDisabled] = useState(false);
   const [value, setValue] = useState("");
   const data = useAppSelector((state) => state.cpaParticipant.record);
+  const state = useAppSelector((state) => state.cpa.data);
 
   useEffect(() => {
-    dispatch(doSearch(null))
+    dispatch(doSearch(state.culturalProgramId))
       .unwrap()
       .catch((err) => {});
   }, [addNew]);
@@ -108,7 +109,7 @@ function Participant(props: any) {
                         size="small"
                       >
                         <Link
-                          to="../participant"
+                          to="../participants"
                           onClick={() =>
                             handleSelected(val.participantCulturalProId)
                           }
