@@ -66,6 +66,10 @@ const CYFMS = (): ReactElement => {
               background: "lightgrey",
               color: "black",
               border: "1px solid black",
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
+              textAlign: "center",
             }}
             onClick={() => {
               dispatch(setOpenPopup(true));
@@ -80,6 +84,10 @@ const CYFMS = (): ReactElement => {
               background: "lightgrey",
               color: "black",
               border: "1px solid black",
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
+              textAlign: "center",
             }}
           >
             Search for a Child, Youth, or Family Member

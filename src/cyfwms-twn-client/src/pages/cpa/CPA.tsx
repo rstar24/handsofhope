@@ -66,6 +66,7 @@ const CPA = (): ReactElement => {
               background: "lightgrey",
               color: "black",
               border: "1px solid black",
+              height: "63px",
             }}
             onClick={() => {
               cleanStore();
@@ -81,6 +82,10 @@ const CPA = (): ReactElement => {
               background: "lightgrey",
               color: "black",
               border: "1px solid black",
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
+              textAlign: "center",
             }}
           >
             Search for a Cultural Program or Activity
