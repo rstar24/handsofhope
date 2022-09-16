@@ -36,7 +36,7 @@ public class ParticipantCultureProgSearchRepository {
                     .replace("%", "!%")
                     .replace("_", "!_")
                     .replace("[", "![");
-            querySBuff.append(" AND (participantculturalprogid=? OR p.notes LIKE ? OR p.role LIKE ? ) ");
+            querySBuff.append(" AND (culturalprogramid=? OR p.notes LIKE ? OR p.role LIKE ? ) ");
             argsObjectList.add(data);
             argsObjectList.add("%" +data + "%");
             argsObjectList.add("%" +data + "%");
