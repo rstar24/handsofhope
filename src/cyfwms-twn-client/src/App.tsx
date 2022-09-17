@@ -7,6 +7,9 @@ import theme from "./library/theme";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import NotFound404 from "./pages/NotFound404";
+import CPA from "./pages/cpa/CPA";
+import Search from "./pages/cpa/search/Search";
+import View from "./pages/cpa/View";
 import CYFMS from "./pages/cyfms/CYFMS";
 import CYFMSSearch from "./pages/cyfms/search/Search";
 import CYFMSView from "./pages/cyfms/View";
@@ -19,10 +22,6 @@ import { Provider } from "react-redux";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
 import type { ReactElement } from "react";
-import CPA from "./pages/cpa/CPA";
-import Participant from "./pages/cpa/Participants/Participant";
-import Search from "./pages/cpa/search/Search";
-import View from "./pages/cpa/View";
 
 const App = (): ReactElement => {
   return (

@@ -1,5 +1,5 @@
 import Attachments from "../../pages/cpa/attachments/Attachments";
-import AttachmentsHandler from "../../pages/cpa/attachments/HandleAttachment";
+import Handle from "../../pages/cpa/attachments/Handle";
 import CulturalProgramOrActivity from "../../pages/cpa/culturalProgramOrActivity/CulturalProgramOrActivity";
 import Participants from "../../pages/cpa/Participants/Participant";
 import React from "react";
@@ -12,7 +12,7 @@ const CPA = (): ReactElement => {
       <Route path="add_cpa" element={<CulturalProgramOrActivity />} />
       <Route path="participants" element={<Participants />} />
       <Route path="attachments" element={<Attachments />} />
-      <Route path="attachments/handle" element={<AttachmentsHandler />} />
+      <Route path="attachments/handle" element={<Handle />} />
     </Routes>
   );
 };
