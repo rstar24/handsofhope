@@ -21,12 +21,11 @@ const IncidentReport = (): ReactElement => {
         <TableBody sx={{ "& > tr > td": { border: 0, p: 0 } }}>
           {Object.entries(data).map((t: any, k) => {
             if (
+              k !== 0 &&
+              k !== 1 &&
               t[1] !== "" &&
-              t[1] !== "0001-01-01" &&
               t[1] !== "01:01:01" &&
-              t[1] !== 0 &&
-              IncidentReportLabels[k] !== "FileDetailsId" &&
-              IncidentReportLabels[k] !== "IncidentReportId"
+              t[1] !== "0001-01-01"
             ) {
               return (
                 <TableRow key={Math.random() * 1000}>
@@ -39,7 +38,13 @@ const IncidentReport = (): ReactElement => {
                       fontSize: "1rem",
                     }}
                   >
-                    {IncidentReportLabels[k]}
+                    {t[0]
+                      //insert a space before all caps
+                      .replace(/([A-Z])/g, " $1")
+                      // uppercase the first character
+                      .replace(/^./, function (str: String) {
+                        return str.toUpperCase();
+                      })}
                   </TableCell>
                   <TableCell width="50%">
                     <Typography component="p" sx={{ whiteSpace: "pre-wrap" }}>

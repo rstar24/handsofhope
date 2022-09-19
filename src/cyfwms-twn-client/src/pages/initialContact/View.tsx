@@ -13,6 +13,7 @@ import { useAppSelector } from "../../library/hooks";
 import { Box, Tab, Tabs, Typography } from "@mui/material";
 import React from "react";
 import type { ReactElement } from "react";
+import ContactNotes from "../../components/initialContact/view/ContactNotes";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -166,6 +167,12 @@ const View = (): ReactElement => {
           Patient Care Information
         </Typography>
         <PatientCareInformation />
+      </div>
+      <div id="incidentReport" className="highlight" tabIndex={2}>
+        <Typography variant="h6" sx={styles.header}>
+          Contact Notes
+        </Typography>
+        <ContactNotes />
       </div>
       <Popup children={<Router />} />
     </AuthLayout>

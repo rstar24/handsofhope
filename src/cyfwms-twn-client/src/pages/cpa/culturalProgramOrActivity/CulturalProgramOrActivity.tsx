@@ -77,9 +77,11 @@ const CulturalProgramOrActivity = (): ReactElement => {
         console.log("FileDetails POST backend API was successful!");
         dispatch(unhideTabs(null));
         dispatch(initiate(null));
-        if (edit) {
-          nextClickHandler();
-        }
+        dispatch(setOpen(false));
+        dispatch(hideTabs(null));
+        dispatch(uninitiate(null));
+        dispatch(setView(true));
+        navigate("/cpa/view");
       })
       .catch((err) => {
         console.log("FileDetails POST backend API didn't work!");
@@ -229,13 +231,9 @@ const CulturalProgramOrActivity = (): ReactElement => {
         <Box sx={{ display: "flex", justifyContent: "right" }}>
           {isInitiated ? (
             <>
-              {edit ? (
+              {edit && (
                 <>
-                  <CYFSWMSSaveButton />
-                </>
-              ) : (
-                <>
-                  <CYFSWMSViewButton onClick={nextClickHandler} />
+                  <CYFSWMSNextButton onClick={nextClickHandler} />
                 </>
               )}
             </>

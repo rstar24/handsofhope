@@ -52,7 +52,7 @@ const Search = (): ReactElement => {
               mb: "auto",
             }}
           >
-            Search for a Cultural Program or activity
+            Search for a Cultural Program or Activity
           </Button>
         </Box>
         <Box
