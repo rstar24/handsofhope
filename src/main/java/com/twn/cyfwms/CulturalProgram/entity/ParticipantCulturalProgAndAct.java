@@ -1,7 +1,9 @@
 package com.twn.cyfwms.CulturalProgram.entity;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,6 +30,9 @@ public class ParticipantCulturalProgAndAct implements Serializable {
     private String notes;
     @Getter @Setter @Column(name = "status")
     private String status;
+    @CreationTimestamp
+    @Getter @Setter @Column(name = "creationdatetime")
+    private LocalDateTime creationDateTime;
     @Getter @Setter @Column(name = "participantid")
     private String  participant;
     @Getter @Setter @Column(name = "culturalprogramid")

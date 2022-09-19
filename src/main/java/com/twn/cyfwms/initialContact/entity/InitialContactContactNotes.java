@@ -44,8 +44,8 @@ public class InitialContactContactNotes implements Serializable {
     private LocalTime time;
 
     @CreationTimestamp
-    @Getter @Setter @Column(name = "creationdate")
-    private LocalDate creationDate;
+    @Getter @Setter @Column(name = "creationdatetime")
+    private LocalDateTime creationDateTime;
 
     @UpdateTimestamp
     @Getter @Setter @Column(name = "lastwritten")
