@@ -79,27 +79,26 @@ public class ParticipantServiceImpl implements ParticipantService {
     @Override
     public ParticipantIdentityDto saveParticipantIdentity(Map<String,String> params, MultipartFile multipartFile) throws IOException {
 
-        Long participantId = Long.parseLong(params.get("participantid"));
-        Long imageId = Long.parseLong(params.get("participantimageid"));
-        String date = params.get("date");
+        Long participantId = Long.parseLong(params.get("participantId"));
+        Long imageId = Long.parseLong(params.get("participantImageId"));
+        String date = params.get("dateOfBirth");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate dateTime = LocalDate.parse(date, formatter);
         ParticipantIdentityDto participantIdentityDto = new ParticipantIdentityDto();
         participantIdentityDto.setParticipantId(participantId);
-        participantIdentityDto.setFirstname(params.get("firstname"));
-        participantIdentityDto.setMiddleName(params.get("middlename"));
-        participantIdentityDto.setSurname(params.get("surname"));
+        participantIdentityDto.setFirstname(params.get("firstName"));
+        participantIdentityDto.setMiddleName(params.get("middleName"));
+        participantIdentityDto.setSurname(params.get("lastName"));
         participantIdentityDto.setDateOfBirth(dateTime);
         participantIdentityDto.setGender(params.get("gender"));
-        participantIdentityDto.setMaritalStatus(params.get("maritalstatus"));
-       // participantIdentityDto.setParticipantimageId(imageId);
+        participantIdentityDto.setMaritalStatus(params.get("maritalStatus"));
         ParticipantImageDto participantImageDto = new ParticipantImageDto();
         if(multipartFile!=null){
             String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
             participantImageDto.setParticipantimageId(imageId);
             participantImageDto.setImage(multipartFile.getBytes());
             participantImageDto.setParticipantImageName(multipartFile.getOriginalFilename());
-            participantImageDto.setParticipantId(Long.parseLong(params.get("participantid")));
+            participantImageDto.setParticipantId(participantId);
             participantImageDto.setType(multipartFile.getContentType());
 
         }

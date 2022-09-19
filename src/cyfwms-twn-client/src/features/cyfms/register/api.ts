@@ -16,14 +16,17 @@ export const doGetAPI = async (
 };
 
 export const doPostAPI = async (
-  formData: Data,
+  formData: FormData,
   token: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.put(
     "participantservice/saveParticipantIdentity/",
     formData,
     {
-      headers: { Authorization: "Bearer " + token },
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "multipart/form-data",
+      },
     }
   );
   return res;

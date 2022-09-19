@@ -8,10 +8,10 @@ import CYFMSLayout from "../../../components/cyfms/CYFMSLayout";
 import { onKeyDown } from "../../../library/app";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import { handleEffect, handleSubmit } from "./register_";
-import { Box, Typography } from "@mui/material";
-import React, { useEffect } from "react";
+import { Box, Button, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import type { FormEvent, ReactElement } from "react";
+import type { ChangeEventHandler, FormEvent, ReactElement } from "react";
 
 /**
  * The Register functional component.
@@ -24,8 +24,13 @@ const Register = (): ReactElement => {
   const isInitiated = useAppSelector((state) => state.initiator.isInitiated);
   const state = useAppSelector((state) => state.cyfmsRegister);
   const edit = useAppSelector((state) => state.popup.edit);
+  const [fileName, setFileName] = useState<string>("");
 
   useEffect(() => handleEffect(dispatch, state.data.participantId), []);
+
+  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setFileName(e.currentTarget.value.replace(/^.*[\\/]/, ""));
+  };
 
   const nextClickHandler = () => {
     navigate("../contact");
@@ -53,8 +58,8 @@ const Register = (): ReactElement => {
             Reference ID : {state.data.referenceId}
           </Typography>
         )}
-        <Box>
-          <Box>
+        <div>
+          <div>
             <Input
               autofill={state.data.firstname}
               id="firstName"
@@ -63,8 +68,8 @@ const Register = (): ReactElement => {
               validationTitle="Digits are not allowed!"
               required
             />
-          </Box>
-          <Box>
+          </div>
+          <div>
             <Input
               autofill={state.data.middleName}
               id="middleName"
@@ -72,10 +77,10 @@ const Register = (): ReactElement => {
               validationPattern={`^[a-zA-Z ]*$`}
               validationTitle="Digits are not allowed!"
             />
-          </Box>
-        </Box>
-        <Box>
-          <Box>
+          </div>
+        </div>
+        <div>
+          <div>
             <Input
               autofill={state.data.surname}
               id="lastName"
@@ -84,8 +89,8 @@ const Register = (): ReactElement => {
               validationTitle="Digits are not allowed!"
               required
             />
-          </Box>
-          <Box>
+          </div>
+          <div>
             <Input
               autofill={state.data.dateOfBirth}
               id="dateOfBirth"
@@ -95,10 +100,10 @@ const Register = (): ReactElement => {
               value="Date of Birth"
               required
             />
-          </Box>
-        </Box>
-        <Box>
-          <Box>
+          </div>
+        </div>
+        <div>
+          <div>
             <CYFMSDropdown
               autofill={state.data.gender}
               id="gender"
@@ -108,8 +113,8 @@ const Register = (): ReactElement => {
               value="Gender"
               required
             />
-          </Box>
-          <Box>
+          </div>
+          <div>
             <CYFMSDropdown
               autofill={state.data.maritalStatus}
               id="maritalStatus"
@@ -118,8 +123,27 @@ const Register = (): ReactElement => {
               )}
               value="Marital Status"
             />
-          </Box>
-        </Box>
+          </div>
+        </div>
+        <div>
+          <div>
+            <Button
+              variant="contained"
+              component="label"
+              sx={{ m: "0rem 1rem 0rem 0.5rem" }}
+            >
+              Upload
+              <input
+                hidden
+                name="imageFile"
+                type="file"
+                onChange={handleChange}
+              />
+            </Button>
+            {fileName}
+          </div>
+          <div></div>
+        </div>
         <Box sx={{ justifyContent: "right" }}>
           {isInitiated ? (
             <>

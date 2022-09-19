@@ -13,6 +13,7 @@ export interface Data {
   gender: string;
   maritalStatus: string;
   referenceId: number;
+  participantImageId: number;
 }
 
 // Empty Data
@@ -25,6 +26,7 @@ const emptyData: Data = {
   gender: "",
   maritalStatus: "",
   referenceId: 0,
+  participantImageId: 0,
 };
 
 export interface State {
@@ -42,9 +44,9 @@ export const doGet = createAsyncThunk<Data, number>(
   }
 );
 
-export const doPost = createAsyncThunk<Data, Data>(
+export const doPost = createAsyncThunk<Data, FormData>(
   "register/doPost",
-  async (formData: Data, { getState }) => {
+  async (formData, { getState }) => {
     const store = getState() as RootState;
     const res: AxiosResponse = await doPostAPI(formData, store.login.token);
     // Becomes the `fulfilled` action payload:
