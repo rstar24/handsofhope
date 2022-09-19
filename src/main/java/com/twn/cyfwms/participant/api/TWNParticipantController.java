@@ -71,8 +71,9 @@ public class TWNParticipantController {
     @PutMapping(value = "/saveParticipantIdentity", produces = "application/json")
     @ApiOperation("Save or Update Identity")
     @ResponseStatus(HttpStatus.OK)
-    public ParticipantIdentityDto saveParticipantIdentity(@RequestBody ParticipantIdentityDto participantIdentityDto){
-        return participantService.saveParticipantIdentity(participantIdentityDto);
+    public ParticipantIdentityDto saveParticipantIdentity(@RequestParam Map<String,String>params,@RequestParam(value="image",required = false)MultipartFile multipartFile) throws IOException {
+        return participantService.saveParticipantIdentity(params,multipartFile);
+
     }
 
     @DeleteMapping("/removeParticipant/{referenceId}")
@@ -263,13 +264,13 @@ public class TWNParticipantController {
     }
 
     @GetMapping("/files/{id}")
-    public ResponseEntity<byte[]> getFile(@PathVariable Long id) {
-        ParticipantImage fileDB = imageService.getFile(id);
+    public ParticipantImage getFile(@PathVariable Long id) {
+         return imageService.getFile(id);
 
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDB.getParticipantImageName() + "\"")
-                        .contentType(MediaType.valueOf(fileDB.getParticipantImageType()))
-                .body(fileDB.getImage());
+//        return ResponseEntity.ok()
+//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDB.getParticipantImageName() + "\"")
+//                        .contentType(MediaType.valueOf(fileDB.getParticipantImageType()))
+//                .body(fileDB.getImage());
     }
 
 

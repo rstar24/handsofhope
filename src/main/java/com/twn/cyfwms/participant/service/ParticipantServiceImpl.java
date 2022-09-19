@@ -1,6 +1,5 @@
 package com.twn.cyfwms.participant.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.twn.cyfwms.participant.dto.ParticipantIdentityDto;
 import com.twn.cyfwms.participant.dto.ParticipantImageDto;
 import com.twn.cyfwms.participant.entity.Participant;
@@ -17,6 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -63,9 +65,10 @@ public class ParticipantServiceImpl implements ParticipantService {
         }
         return participant;
     }
-    private ParticipantImage readParticipantImage(Long participantId){
+    private ParticipantImage readParticipantImage(Long participantid){
         ParticipantImage participantImage= new ParticipantImage();
-        Optional<ParticipantImage> participantOpt=imageRepository.findByParticipantId(participantId);
+        Optional<ParticipantImage> participantOpt=imageRepository.findByParticipantId(participantid);
+
         if(participantOpt.isPresent()){
             participantImage= participantOpt.get();
 
@@ -74,13 +77,46 @@ public class ParticipantServiceImpl implements ParticipantService {
     }
 
     @Override
-    public ParticipantIdentityDto saveParticipantIdentity(ParticipantIdentityDto participantIdentityDto) {
+    public ParticipantIdentityDto saveParticipantIdentity(Map<String,String> params, MultipartFile multipartFile) throws IOException {
+
+        Long participantId = Long.parseLong(params.get("participantid"));
+        Long imageId = Long.parseLong(params.get("participantimageid"));
+        String date = params.get("date");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate dateTime = LocalDate.parse(date, formatter);
+        ParticipantIdentityDto participantIdentityDto = new ParticipantIdentityDto();
+        participantIdentityDto.setParticipantId(participantId);
+        participantIdentityDto.setFirstname(params.get("firstname"));
+        participantIdentityDto.setMiddleName(params.get("middlename"));
+        participantIdentityDto.setSurname(params.get("surname"));
+        participantIdentityDto.setDateOfBirth(dateTime);
+        participantIdentityDto.setGender(params.get("gender"));
+        participantIdentityDto.setMaritalStatus(params.get("maritalstatus"));
+       // participantIdentityDto.setParticipantimageId(imageId);
+        ParticipantImageDto participantImageDto = new ParticipantImageDto();
+        if(multipartFile!=null){
+            String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+            participantImageDto.setParticipantimageId(imageId);
+            participantImageDto.setImage(multipartFile.getBytes());
+            participantImageDto.setParticipantImageName(multipartFile.getOriginalFilename());
+            participantImageDto.setParticipantId(Long.parseLong(params.get("participantid")));
+            participantImageDto.setType(multipartFile.getContentType());
+
+        }
+
+        ParticipantImage participantImage = new ParticipantImage();
         Participant participant = null;
 
         if (participantIdentityDto.getParticipantId() ==0) {
             participant = new Participant();
             modelMapper.map(participantIdentityDto, participant);
-
+            if(multipartFile!=null)
+            {
+           if( multipartFile.getContentType().equals("image/jpg")||multipartFile.getContentType().equals("image/png")||multipartFile.getContentType().equals("image/jpeg"))
+           {
+               modelMapper.map(participantImageDto,participantImage);
+            }
+            }
             participant.setType("CYFM");
             participant.setStatus("ACTIVE");
             Optional<Participant> particpantDetailsOpt = participantRepository.findTopByOrderByCreationDateTimeDesc();
@@ -90,15 +126,23 @@ public class ParticipantServiceImpl implements ParticipantService {
             } else {
                 participant.setReferenceId(128L);
             }
-        } else {
+        }
+        else {
 
             participant = readParticipant(participantIdentityDto.getParticipantId());
             modelMapper.map(participantIdentityDto, participant);
-
-
+            if(multipartFile!=null){
+                participantImage = readParticipantImage(participantIdentityDto.getParticipantId());
+                participantImage.setParticipantId(participantIdentityDto.getParticipantId());
+                modelMapper.map(participantImageDto,participantImage);
+            }
         }
         participant = participantRepository.save(participant);
         participantIdentityDto.setParticipantId(participant.getParticipantId());
+        if(multipartFile!=null){
+            participantImage.setParticipantId(participantIdentityDto.getParticipantId());
+            imageRepository.save(participantImage);
+        }
         participantIdentityDto.setReferenceId(participant.getReferenceId());
 
         return participantIdentityDto;
