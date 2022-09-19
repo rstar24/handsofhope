@@ -19,7 +19,7 @@ public class ParticipantCultureProgSearchRepository {
                                 rs.getLong("culturalProgramId"),
                                 rs.getString("fullName"),
                                 rs.getString("role"),
-                        rs.getString("notes")
+                                rs.getString("notes")
                         )
 
         );
@@ -36,7 +36,7 @@ public class ParticipantCultureProgSearchRepository {
                     .replace("%", "!%")
                     .replace("_", "!_")
                     .replace("[", "![");
-            querySBuff.append(" AND (culturalprogramid=? OR p.notes LIKE ? OR p.role LIKE ? ) ");
+            querySBuff.append(" AND (culturalprogramid=? OR p.notes LIKE ? OR p.role LIKE ? )ORDER BY p.creationdatetime desc ");
             argsObjectList.add(data);
             argsObjectList.add("%" +data + "%");
             argsObjectList.add("%" +data + "%");

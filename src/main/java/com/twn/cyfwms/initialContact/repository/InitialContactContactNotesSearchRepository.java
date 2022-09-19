@@ -45,7 +45,7 @@ public class InitialContactContactNotesSearchRepository {
                         .replace("%", "!%")
                         .replace("_", "!_")
                         .replace("[", "![");
-                querySBuff.append(" AND (p.filedetailsid=? OR p.name LIKE ?  OR p.worker LIKE ?  OR p.date LIKE ?  OR p.time LIKE ?  OR p.contactmethod LIKE ?  OR p.needaddress LIKE ?  OR p.summary LIKE ?  OR p.result LIKE ?  OR p.nextstep LIKE ?  OR p.caseplanprogress LIKE ? OR p.additionalinformation LIKE ? ) ");
+                querySBuff.append(" AND (p.filedetailsid=? OR p.name LIKE ?  OR p.worker LIKE ?  OR p.date LIKE ?  OR p.time LIKE ?  OR p.contactmethod LIKE ?  OR p.needaddress LIKE ?  OR p.summary LIKE ?  OR p.result LIKE ?  OR p.nextstep LIKE ?  OR p.caseplanprogress LIKE ? OR p.additionalinformation LIKE ?) ORDER BY p.creationdatetime desc ");
                 argsObjectList.add(data);
                 argsObjectList.add("%" +data + "%");
                 argsObjectList.add("%" +data + "%");

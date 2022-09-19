@@ -14,6 +14,6 @@ public interface CulturalProgImageRepository extends JpaRepository<CulturalProgI
     Optional<CulturalProgImage> findByCulturalProgramId(Long id);
     @Query(value = "select * from culturalimage c where c.culturalprogimageid=? AND c.status='ACTIVE'",nativeQuery = true)
     CulturalProgImage findByculturalProgImageId(Long culturalProgImageId);
-    @Query(value = "select * from culturalimage c where c.culturalprogramid=? AND c.status='ACTIVE'",nativeQuery = true)
+    @Query(value = "select * from culturalimage c where c.culturalprogramid=? AND c.status='ACTIVE' order by c.creationdatedime desc",nativeQuery = true)
     List<CulturalProgImage> findByculturalProgramId(Long culturalProgramId);
 }
