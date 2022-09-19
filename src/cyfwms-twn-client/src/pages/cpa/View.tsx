@@ -8,6 +8,7 @@ import { Box, Typography } from "@mui/material";
 import CPA from "../../components/cpa/view/CPA";
 import Router from "../../components/nestedRouters/CPA";
 import EditIcon from "../../components/cpa/EditIcon";
+import Participant from "../../components/cpa/view/Participant";
 export const styles = {
   header: {
     fontWeight: 1000,
@@ -53,8 +54,14 @@ const View = (): ReactElement => {
                       inset -1px 0 black`,
         }}
       ></Box>
-      <div id="fileDetails" className="highlight" tabIndex={0}>
+      <div id="CPA" className="highlight" tabIndex={0}>
         <CPA />
+      </div>
+      <div id="participant" className="highlight" tabIndex={2}>
+        <Typography variant="h6" sx={styles.header}>
+          Participant
+        </Typography>
+        <Participant />
       </div>
 
       <Popup children={<Router />} />
