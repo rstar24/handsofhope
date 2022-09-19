@@ -18,6 +18,8 @@ import org.springframework.web.server.ResponseStatusException;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -37,12 +39,20 @@ public class ParticipantServiceImpl implements ParticipantService {
 
     @Override
     public ParticipantIdentityDto readParticipantIdentity(Long participantId) {
+
         if (participantId != 0) {
             ParticipantIdentityDto participantIdentityResponseDto = new ParticipantIdentityDto();
             Participant participant = readParticipant(participantId);
+            ParticipantImage participantImage = readParticipantImage(participantId);
+            System.out.println(participantImage);
             if (participant != null) {
                 if (!participant.getStatus().equals("INACTIVE")){
                     modelMapper.map(participant, participantIdentityResponseDto);
+                    ParticipantImageDto participantImageDto=new ParticipantImageDto();
+                    participantImageDto.setParticipantimageId(participantImage.getParticipantimageId());
+                    participantImageDto.setParticipantId(participantImage.getParticipantId());
+                    participantIdentityResponseDto.setParticipantImageDto(participantImageDto);
+
 
                 }
                 else {
@@ -143,6 +153,7 @@ public class ParticipantServiceImpl implements ParticipantService {
             imageRepository.save(participantImage);
         }
         participantIdentityDto.setReferenceId(participant.getReferenceId());
+
 
         return participantIdentityDto;
     }

@@ -26,5 +26,8 @@ public class ParticipantIdentityDto {
     private String maritalStatus;
     @Getter @Setter
     private Long referenceId;
-
+//    @Getter @Setter
+//    private Long participantImageId;
+    @Getter @Setter
+    private ParticipantImageDto participantImageDto;
 }
