@@ -41,7 +41,8 @@ public class InitialContactFileDetailsServiceImpl implements  InitialContactFile
                     modelMapper.map(initialContactFileDetails, initialContactFileDetailsDto);
                    Participant participant=participantRepository.findByParticipantId(Long.parseLong(initialContactFileDetailsDto.getClientName()));
                   if (!initialContactFileDetails.getClientName().equals("0")) {
-                      initialContactFileDetailsDto.setClientName(participant.getFirstname() + " " + participant.getSurname());
+                      initialContactFileDetailsDto.setClientName(participant.getFirstname() + " " + participant.getSurname() +" "+participant.getParticipantId());
+                      initialContactFileDetailsDto.setParticipantId(participant.getParticipantId());
                   }
                 }
                 else {

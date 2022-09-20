@@ -26,8 +26,13 @@ public class ParticipantIdentityDto {
     private String maritalStatus;
     @Getter @Setter
     private Long referenceId;
-//    @Getter @Setter
-//    private Long participantImageId;
     @Getter @Setter
-    private ParticipantImageDto participantImageDto;
+    private Long participantImageId;
+    @Getter @Setter
+    private String participantImageType;
+    @Getter @Setter
+    private String participantImageName;
+    @Getter @Setter
+    private byte[] image;
+
 }

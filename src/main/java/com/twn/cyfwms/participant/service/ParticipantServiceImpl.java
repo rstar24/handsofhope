@@ -11,18 +11,13 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.OK;
 
@@ -44,21 +39,23 @@ public class ParticipantServiceImpl implements ParticipantService {
             ParticipantIdentityDto participantIdentityResponseDto = new ParticipantIdentityDto();
             Participant participant = readParticipant(participantId);
             ParticipantImage participantImage = readParticipantImage(participantId);
-            System.out.println(participantImage);
             if (participant != null) {
                 if (!participant.getStatus().equals("INACTIVE")){
-                    modelMapper.map(participant, participantIdentityResponseDto);
-                    ParticipantImageDto participantImageDto=new ParticipantImageDto();
-                    participantImageDto.setParticipantimageId(participantImage.getParticipantimageId());
-                    participantImageDto.setParticipantId(participantImage.getParticipantId());
-                    participantIdentityResponseDto.setParticipantImageDto(participantImageDto);
-
-
+                   participantIdentityResponseDto.setReferenceId(participant.getReferenceId());
+                   participantIdentityResponseDto.setFirstname(participant.getFirstname());
+                   participantIdentityResponseDto.setMiddleName(participant.getMiddleName());
+                   participantIdentityResponseDto.setSurname(participant.getSurname());
+                   participantIdentityResponseDto.setDateOfBirth(participant.getDateOfBirth());
+                   participantIdentityResponseDto.setMaritalStatus(participant.getMaritalStatus());
+                   participantIdentityResponseDto.setGender(participant.getGender());
+                   participantIdentityResponseDto.setParticipantImageId(participantImage.getParticipantimageId());
+                   participantIdentityResponseDto.setParticipantImageName(participantImage.getParticipantImageName());
+                   participantIdentityResponseDto.setParticipantImageType(participantImage.getParticipantImageType());
+                   participantIdentityResponseDto.setImage(participantImage.getImage());
                 }
                 else {
                     throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
                 }
-
             } else {
                 throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
             }
@@ -104,15 +101,12 @@ public class ParticipantServiceImpl implements ParticipantService {
         participantIdentityDto.setMaritalStatus(params.get("maritalStatus"));
         ParticipantImageDto participantImageDto = new ParticipantImageDto();
         if(multipartFile!=null){
-            String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
             participantImageDto.setParticipantimageId(imageId);
             participantImageDto.setImage(multipartFile.getBytes());
             participantImageDto.setParticipantImageName(multipartFile.getOriginalFilename());
             participantImageDto.setParticipantId(participantId);
             participantImageDto.setType(multipartFile.getContentType());
-
         }
-
         ParticipantImage participantImage = new ParticipantImage();
         Participant participant = null;
 
@@ -137,9 +131,14 @@ public class ParticipantServiceImpl implements ParticipantService {
             }
         }
         else {
-
             participant = readParticipant(participantIdentityDto.getParticipantId());
-            modelMapper.map(participantIdentityDto, participant);
+            participant.setFirstname(participantIdentityDto.getFirstname());
+            participant.setMiddleName(participantIdentityDto.getMiddleName());
+            participant.setDateOfBirth(participantIdentityDto.getDateOfBirth());
+            participant.setSurname(participantIdentityDto.getSurname());
+            participant.setGender(participantIdentityDto.getGender());
+            participant.setMaritalStatus(participantIdentityDto.getMaritalStatus());
+
             if(multipartFile!=null){
                 participantImage = readParticipantImage(participantIdentityDto.getParticipantId());
                 participantImage.setParticipantId(participantIdentityDto.getParticipantId());
@@ -150,10 +149,10 @@ public class ParticipantServiceImpl implements ParticipantService {
         participantIdentityDto.setParticipantId(participant.getParticipantId());
         if(multipartFile!=null){
             participantImage.setParticipantId(participantIdentityDto.getParticipantId());
-            imageRepository.save(participantImage);
+            participantImage= imageRepository.save(participantImage);
         }
         participantIdentityDto.setReferenceId(participant.getReferenceId());
-
+        participantIdentityDto.setParticipantImageId(participantImage.getParticipantimageId());
 
         return participantIdentityDto;
     }
