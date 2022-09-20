@@ -1,27 +1,22 @@
 import { CYFSWMSNextButton } from "../../../components/CYFSWMSButtons";
-import EditIcon from "../../../components/cpa/attachments/EditIcon";
 import CPALayout from "../../../components/cpa/CPALayout";
 import Input from "../../../components/Input";
 import { doPost } from "../../../features/cpa/attachments/slice";
 import { onKeyDown } from "../../../library/app";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import { Box, Button } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import type { ChangeEventHandler, FormEventHandler } from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import type { ChangeEventHandler, FormEventHandler, ReactElement } from "react";
 
-const AttachmentHandler = () => {
-  const location = useLocation();
+/**
+ * Form to submit/add one more document to attachments.
+ */
+const Add = (): ReactElement => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const cpaId = useAppSelector((state) => state.cpa.data.culturalProgramId);
-  const data: any = (location.state as any)?.data;
-  const [mode, setMode] = useState<string>((location.state as any)?.mode);
   const [fileName, setFileName] = useState<string>("");
-
-  // useEffect(() => {
-  //   setMode();
-  // }, [mode]);
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setFileName(e.currentTarget.value.replace(/^.*[\\/]/, ""));
@@ -29,15 +24,17 @@ const AttachmentHandler = () => {
 
   const submitHandler: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    const attachment: any = {
-      culturalDto: JSON.stringify({
+    const attachment = new FormData();
+    attachment.append(
+      "culturalDto",
+      JSON.stringify({
         culturalProgramId: cpaId,
         culturalProgImageId: 0,
         name: e.currentTarget.attachmentName.value,
         type: e.currentTarget.attachmentType.value,
-      }),
-      file: e.currentTarget.attachment.value,
-    };
+      })
+    );
+    attachment.append("file", e.currentTarget.attachment.files[0]);
     dispatch(doPost(attachment))
       .unwrap()
       .then((data) => {
@@ -60,32 +57,12 @@ const AttachmentHandler = () => {
         onSubmit={submitHandler}
         onKeyDown={onKeyDown}
       >
-        {mode === "view" && (
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "flex-end",
-            }}
-          >
-            <EditIcon data={data} />
-          </Box>
-        )}
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <Input
-              id="attachmentName"
-              value="Name"
-              autofill={mode === "view" ? data.name : ""}
-              disabled={mode === "view" ? true : false}
-            />
+            <Input id="attachmentName" value="Name" />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <Input
-              id="attachmentType"
-              value="Type"
-              autofill={mode === "view" ? data.type : ""}
-              disabled={mode === "view" ? true : false}
-            />
+            <Input id="attachmentType" value="Type" />
           </Box>
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
@@ -97,11 +74,7 @@ const AttachmentHandler = () => {
                 alignItems: "center",
               }}
             >
-              <Button
-                variant="contained"
-                component="label"
-                disabled={mode === "view" || mode === "edit" ? true : false}
-              >
+              <Button variant="contained" component="label">
                 Upload
                 <input
                   hidden
@@ -115,11 +88,11 @@ const AttachmentHandler = () => {
           </Box>
         </Box>
         <Box sx={{ display: "flex", justifyContent: "right" }}>
-          <CYFSWMSNextButton disabled={mode === "view" ? true : false} />
+          <CYFSWMSNextButton />
         </Box>
       </Box>
     </CPALayout>
   );
 };
 
-export default AttachmentHandler;
+export default Add;

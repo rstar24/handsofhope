@@ -1,4 +1,4 @@
-import Attachment from "../../../components/cpa/attachments/Attachment";
+import AttachmentList from "../../../components/cpa/attachments/AttachmentList";
 import CPALayout from "../../../components/cpa/CPALayout";
 import { doGet } from "../../../features/cpa/attachments/slice";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
@@ -20,7 +20,7 @@ import type { ReactElement } from "react";
 const Attachments = (): ReactElement => {
   const dispatch = useAppDispatch();
   const cpaId = useAppSelector((state) => state.cpa.data.culturalProgramId);
-  const data = useAppSelector((state) => state.cpaAttachments.data);
+  const state = useAppSelector((state) => state.cpaAttachments);
 
   useEffect(() => {
     dispatch(doGet(cpaId))
@@ -50,8 +50,7 @@ const Attachments = (): ReactElement => {
           >
             <Button
               component={Link}
-              state={{ mode: "add" }}
-              to="../attachments/handle"
+              to="../attachments/add"
               variant="contained"
             >
               Add New
@@ -87,9 +86,7 @@ const Attachments = (): ReactElement => {
                     "& > tr": { border: 0 },
                   }}
                 >
-                  {data.map((a, i) => (
-                    <Attachment {...a} index={i} />
-                  ))}
+                  <AttachmentList list={state.data} />
                 </TableBody>
               </Table>
             </TableContainer>

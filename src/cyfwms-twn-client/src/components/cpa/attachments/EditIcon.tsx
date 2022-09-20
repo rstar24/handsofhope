@@ -1,5 +1,6 @@
-import { doDelete, setMode } from "../../../features/cpa/attachments/slice";
-import { useAppDispatch } from "../../../library/hooks";
+import { selected } from "../../../contexts/cpa/attachments";
+import { doDelete } from "../../../features/cpa/attachments/slice";
+import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import React from "react";
@@ -8,11 +9,13 @@ import type { MouseEventHandler, ReactElement } from "react";
 
 const ITEM_HEIGHT = 48;
 
-const EditIcon = (props: any): ReactElement => {
+const EditIcon = (): ReactElement => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const data = useAppSelector((state) => state.cpaAttachments.data);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const openDropDown = Boolean(anchorEl);
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -24,12 +27,12 @@ const EditIcon = (props: any): ReactElement => {
 
   const handleEdit: MouseEventHandler<HTMLElement> = (event) => {
     handleCloseDropDown(event);
-    dispatch(setMode("edit"));
+    navigate("../attachments/edit");
   };
 
   const handleDelete: MouseEventHandler<HTMLElement> = (event) => {
     event.preventDefault();
-    dispatch(doDelete(props.data.culturalProgImageId))
+    dispatch(doDelete(data[selected.value].culturalProgImageId))
       .unwrap()
       .then(() => {
         navigate("../attachments");

@@ -21,7 +21,6 @@ const emptyRecord: Record = {
 
 export interface State {
   data: Record[];
-  mode: "add" | "view" | "edit";
   status: "failed" | "none" | "loading" | "success";
 }
 
@@ -35,7 +34,7 @@ export const doGet = createAsyncThunk<Record[], number>(
   }
 );
 
-export const doPost = createAsyncThunk<Record[], Record>(
+export const doPost = createAsyncThunk<Record[], FormData>(
   "attachments/doPost",
   async (attachment, { getState }) => {
     const store = getState() as RootState;
@@ -59,19 +58,14 @@ export const attachmentsSlice = createSlice<State, SliceCaseReducers<State>>({
   name: "attachments",
   initialState: {
     data: [],
-    mode: "add",
     status: "none",
   },
   reducers: {
     add(state, action) {
       state.data.push(emptyRecord);
     },
-    setMode(state, action) {
-      state.mode = action.payload;
-    },
     clean(state) {
       state.data = [];
-      state.mode = "add";
       state.status = "none";
     },
   },
@@ -112,6 +106,6 @@ export const attachmentsSlice = createSlice<State, SliceCaseReducers<State>>({
   },
 });
 
-export const { add, setMode, clean } = attachmentsSlice.actions;
+export const { add, clean } = attachmentsSlice.actions;
 
 export default attachmentsSlice.reducer;
