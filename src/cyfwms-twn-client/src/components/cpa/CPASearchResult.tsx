@@ -16,6 +16,7 @@ import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import { doGet } from "../../features/cpa/culturalProgramActivity/slice";
 import { setView } from "../../features/popupSlice";
 import EditIcon from "./EditIcon";
+import { doSearch } from "../../features/cpa/participant/slice";
 
 const CPASearchResult = (): ReactElement => {
   const dispatch = useAppDispatch();
@@ -24,8 +25,8 @@ const CPASearchResult = (): ReactElement => {
   const handleSearchView = (id: any) => {
     dispatch(setView(true));
     dispatch(doGet(id));
+    dispatch(doSearch(id));
   };
-  console.log("sss", data);
   return (
     <Box>
       <Typography fontSize={20} fontWeight={800} color="red" paddingLeft={2}>

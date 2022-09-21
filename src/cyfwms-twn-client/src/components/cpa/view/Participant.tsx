@@ -1,4 +1,4 @@
-import { useAppSelector } from "../../../library/hooks";
+import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 
 import {
   Table,
@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import type { ReactElement } from "react";
+import { ReactElement } from "react";
 
 const Participant = (): ReactElement => {
   const recordsList = useAppSelector((state) => state.cpaParticipant.record);

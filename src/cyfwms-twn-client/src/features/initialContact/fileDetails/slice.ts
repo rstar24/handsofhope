@@ -13,6 +13,30 @@ export interface Data {
   dateClosed: string;
 }
 
+//get api
+export interface GetData {
+  fileDetailsId: number;
+  fileNumber: number;
+  clientName: any;
+  startingDate: string;
+  caseworker: string;
+  status: string;
+  dateClosed: string;
+  participantId: number;
+}
+
+// empty data for get APi
+const emptyGetData: GetData = {
+  fileDetailsId: 0,
+  fileNumber: 0,
+  clientName: "",
+  startingDate: "",
+  caseworker: "",
+  status: "",
+  dateClosed: "",
+  participantId: 0,
+};
+
 // Empty Data
 const emptyData: Data = {
   fileDetailsId: 0,
@@ -28,11 +52,12 @@ export interface State {
   cyfmsClientName: string;
   id: number;
   data: Data;
+  getData: GetData;
   disabledClosingDate: boolean;
   status: "failed" | "none" | "loading" | "success";
 }
 
-export const doGet = createAsyncThunk<Data, number>(
+export const doGet = createAsyncThunk<GetData, number>(
   "fileDetails/doGet",
   async (initialContactID, { getState }) => {
     const store: any = getState();
@@ -61,6 +86,7 @@ export const fileDetailsSlice = createSlice<State, SliceCaseReducers<State>>({
     cyfmsClientName: "",
     id: 0,
     data: emptyData,
+    getData: emptyGetData,
     disabledClosingDate: true,
     status: "failed",
   },
@@ -74,6 +100,7 @@ export const fileDetailsSlice = createSlice<State, SliceCaseReducers<State>>({
     cleanState(state) {
       state.disabledClosingDate = true;
       state.data = emptyData;
+      state.getData = emptyGetData;
       state.status = "none";
       state.cyfmsClientName = "";
       state.id = 0;
@@ -84,9 +111,11 @@ export const fileDetailsSlice = createSlice<State, SliceCaseReducers<State>>({
 
     setCyfmsClientName(state, action) {
       state.cyfmsClientName = action.payload;
+      state.getData.clientName = action.payload;
     },
     setCyfmsId(state, action) {
       state.id = action.payload;
+      state.getData.participantId = action.payload;
     },
   },
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -94,7 +123,8 @@ export const fileDetailsSlice = createSlice<State, SliceCaseReducers<State>>({
   extraReducers: (builder) => {
     builder
       .addCase(doGet.fulfilled, (state, action) => {
-        state.data = action.payload;
+        state.getData = action.payload;
+        state.id = action.payload.participantId;
         state.status = "success";
       })
       .addCase(doGet.pending, (state) => {
@@ -106,6 +136,13 @@ export const fileDetailsSlice = createSlice<State, SliceCaseReducers<State>>({
     builder
       .addCase(doPost.fulfilled, (state, action) => {
         state.data = action.payload;
+        state.getData.caseworker = action.payload.caseworker;
+        //state.getData.clientName = action.payload.clientName;
+        state.getData.dateClosed = action.payload.dateClosed;
+        state.getData.fileDetailsId = action.payload.fileDetailsId;
+        state.getData.fileNumber = action.payload.fileNumber;
+        state.getData.startingDate = action.payload.startingDate;
+        state.getData.status = action.payload.status;
         state.status = "success";
       })
       .addCase(doPost.pending, (state) => {

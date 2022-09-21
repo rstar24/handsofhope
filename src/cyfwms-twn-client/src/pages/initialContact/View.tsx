@@ -91,6 +91,10 @@ const View = (): ReactElement => {
         document.getElementById("patientCareInformation")?.scrollIntoView();
         document.getElementById("patientCareInformation")?.focus();
         break;
+      case 5:
+        document.getElementById("contactNotes")?.scrollIntoView();
+        document.getElementById("contactNotes")?.focus();
+        break;
     }
   };
 
@@ -106,12 +110,12 @@ const View = (): ReactElement => {
         }}
       >
         <Typography variant="h5" alignSelf="center">
-          File Number: {state.icFileDetails.data.fileNumber}
+          File Number: {state.icFileDetails.getData.fileNumber}
         </Typography>
         <Typography>
           <EditIcon
-            value={state.icFileDetails.data.fileDetailsId}
-            fileNumber={state.icFileDetails.data.fileNumber || 0}
+            value={state.icFileDetails.getData.fileDetailsId}
+            fileNumber={state.icFileDetails.getData.fileNumber || 0}
           />
         </Typography>
       </Box>
@@ -136,6 +140,7 @@ const View = (): ReactElement => {
           <Tab label="Incident Report" {...tabPanelProps(2)} />
           <Tab label="Present Concerns" {...tabPanelProps(3)} />
           <Tab label="Patient Care Information" {...tabPanelProps(4)} />
+          <Tab label="Contact Notes" {...tabPanelProps(5)} />
         </Tabs>
       </Box>
       <div id="fileDetails" className="highlight" tabIndex={0}>
@@ -168,7 +173,7 @@ const View = (): ReactElement => {
         </Typography>
         <PatientCareInformation />
       </div>
-      <div id="incidentReport" className="highlight" tabIndex={2}>
+      <div id="contactNotes" className="highlight" tabIndex={2}>
         <Typography variant="h6" sx={styles.header}>
           Contact Notes
         </Typography>

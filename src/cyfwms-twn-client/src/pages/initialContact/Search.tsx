@@ -94,13 +94,7 @@ const Search = (): ReactElement => {
           onSubmit={submitHandler}
           onKeyDown={onKeyDown}
         >
-          <Input
-            id="clientName"
-            minChars={2}
-            validationPattern={`^[a-zA-Z ]*$`}
-            validationTitle="Digits are not allowed!"
-            value="Client Name"
-          />
+          <Input id="clientName" value="Client Name" />
           <Input
             id="fileNumber"
             minChars={1}

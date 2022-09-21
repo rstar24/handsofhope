@@ -3,6 +3,7 @@ import { doGet as doGetIncidentReport } from "../../../features/initialContact/i
 import { doGet as doGetPatientCareInformation } from "../../../features/initialContact/patientCareInformation/slice";
 import { doGet as doGetPresentConcerns } from "../../../features/initialContact/presentConcerns/slice";
 import { doGet as doGetReferralInformation } from "../../../features/initialContact/referralInformation/slice";
+
 import { setView } from "../../../features/popupSlice";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import EditIcon from "../EditIcon";
@@ -19,6 +20,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import type { Record } from "../../../features/initialContact/search/slice";
 import type { ReactElement } from "react";
+import { doSearch } from "../../../features/initialContact/contactNotes/slice";
 
 const Results = (): ReactElement => {
   const dispatch = useAppDispatch();
@@ -31,6 +33,7 @@ const Results = (): ReactElement => {
     dispatch(doGetIncidentReport(initialContactID));
     dispatch(doGetPresentConcerns(initialContactID));
     dispatch(doGetPatientCareInformation(initialContactID));
+    dispatch(doSearch(initialContactID));
   };
 
   return (

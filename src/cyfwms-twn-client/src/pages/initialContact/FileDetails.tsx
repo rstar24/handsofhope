@@ -61,9 +61,9 @@ const FileDetails = (): ReactElement => {
     e.preventDefault();
     const form: any = e.currentTarget;
     const formData: Data = {
-      fileDetailsId: state.data.fileDetailsId,
-      fileNumber: state.data.fileDetailsId | 0,
-      clientName: state.id,
+      fileDetailsId: state.getData.fileDetailsId,
+      fileNumber: state.getData.fileDetailsId | 0,
+      clientName: state.getData.participantId,
       startingDate: form.startingDate.value,
       caseworker: form.caseWorker.value,
       status: form.status.value,
@@ -138,7 +138,7 @@ const FileDetails = (): ReactElement => {
                 readOnly={true}
                 sx={{ borderRadius: 0, flexBasis: 0, flexGrow: 2, ml: -1 }}
                 defaultValue={state.data.fileNumber}
-                value={state.data.fileNumber}
+                value={state.getData.fileNumber}
                 style={{ backgroundColor: "#dfdada" }}
               />
             </Box>
@@ -163,7 +163,7 @@ const FileDetails = (): ReactElement => {
                   flexGrow: 2,
                 }}
                 size="small"
-                value={state.cyfmsClientName || state.data.clientName}
+                value={state.getData.clientName}
                 style={{ backgroundColor: "#dfdada" }}
                 endAdornment={<SearchIcon onClick={handleSearch} />}
               />
@@ -173,7 +173,7 @@ const FileDetails = (): ReactElement => {
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <ICInput
-              autofill={state.data.startingDate}
+              autofill={state.getData.startingDate}
               id="startingDate"
               value="Date"
               maxDate={new Date().toISOString().substring(0, 10)}
@@ -184,7 +184,7 @@ const FileDetails = (): ReactElement => {
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <ICInput
-              autofill={state.data.caseworker}
+              autofill={state.getData.caseworker}
               id="caseWorker"
               value="Case Worker"
               required
@@ -194,7 +194,7 @@ const FileDetails = (): ReactElement => {
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <ICDropdown
-              autofill={state.data.status}
+              autofill={state.getData.status}
               id="status"
               optionsList={Object.values(initialContactStatus).map(
                 (status: any) => status.en
@@ -204,7 +204,7 @@ const FileDetails = (): ReactElement => {
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <Input
-              autofill={state.data.dateClosed}
+              autofill={state.getData.dateClosed}
               disabled={state.disabledClosingDate}
               id="closingDate"
               maxDate={new Date().toISOString().substring(0, 10)}

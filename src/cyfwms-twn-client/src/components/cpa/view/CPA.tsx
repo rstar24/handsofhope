@@ -20,7 +20,7 @@ const CPA = (): ReactElement => {
       <Table sx={{ maxWidth: 900 }} aria-label="contact data table">
         {Object.keys(data).length === 13 && (
           <TableBody
-            sx={{ "& > tr > td": { border: 0, p: 0, paddingLeft: 15 } }}
+            sx={{ "& > tr > td": { border: 0, p: 0, paddingLeft: 5 } }}
           >
             {Object.entries(data).map((t: any, k: any) => {
               if (k !== 0 && k !== 1 && t[1] !== "") {
@@ -35,7 +35,12 @@ const CPA = (): ReactElement => {
                         fontSize: "1rem",
                       }}
                     >
-                      {CPALabel[k]}
+                      {t[0]
+                        .replace(/([A-Z])/g, " $1")
+                        // uppercase the first character
+                        .replace(/^./, function (str: String) {
+                          return str.toUpperCase();
+                        })}
                     </TableCell>
                     <TableCell width="50%">
                       <Typography component="p" sx={{ whiteSpace: "pre-wrap" }}>
