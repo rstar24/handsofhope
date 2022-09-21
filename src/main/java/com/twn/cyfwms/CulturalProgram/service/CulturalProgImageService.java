@@ -11,7 +11,7 @@ import java.util.List;
 public interface CulturalProgImageService {
 
     CulturalProgImage uploadImage(MultipartFile file, String culturalDto) throws IOException;
-    CulturalProgImage getFile(Long id);
+    CulturalProgImageDto getOneFile(Long id);
 
     ResponseEntity removeCulturalProgImage(Long culturalProgImageId);
 

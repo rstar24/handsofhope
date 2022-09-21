@@ -122,21 +122,20 @@ public class TWNCulturalProgramController {
                         || var.get("data") == null) ?null:var.get("data"));
         return participantCulturalProgSearchService.searchParticipantCulturalProgAndAct(participantCulturalSearchDto);
     }
-    @PutMapping("/upload")
+    @PutMapping("/filesAttechment")
     public  CulturalProgImage uploadFile(@RequestParam(value = "file",required = false) MultipartFile file, @RequestParam("culturalDto") String culturalDto) throws IOException {
-
-            CulturalProgImage culturalProgImage=culturalProgImageService.uploadImage(file,culturalDto);
+        CulturalProgImage culturalProgImage=culturalProgImageService.uploadImage(file,culturalDto);
      return culturalProgImage;
     }
 
-    @GetMapping("/files/{id}")
-    public ResponseEntity<byte[]> getFile(@PathVariable Long id) {
-        CulturalProgImage fileDB = culturalProgImageService.getFile(id);
+    @GetMapping("/getOneFile/{id}")
+    public CulturalProgImageDto getFile(@PathVariable Long id) {
+        return culturalProgImageService.getOneFile(id);
 
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDB.getName() + "\"")
-                .contentType(MediaType.valueOf(fileDB.getCulturalImageType()))
-                .body(fileDB.getCulturamImagefile());
+//        return ResponseEntity.ok()
+//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDB.getName() + "\"")
+//                .contentType(MediaType.valueOf(fileDB.getCulturalImageType()))
+//                .body(fileDB.getCulturamImagefile());
     }
 
     @GetMapping(value = "/getAllFiles/{culturalprogramid}", produces = "application/json")

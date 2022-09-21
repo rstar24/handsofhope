@@ -78,9 +78,16 @@ public class CulturalProgImageServiceImpl implements CulturalProgImageService{
     }
 
     @Override
-    public CulturalProgImage getFile(Long id) {
-
-        return culturalProgImageRepository.findByCulturalProgramId(id).get();
+    public CulturalProgImageDto getOneFile(Long id) {
+        CulturalProgImageDto culturalProgImageDto = new CulturalProgImageDto();
+        CulturalProgImage culturalProgImage= culturalProgImageRepository.findByCulturalProgramId(id).get();
+        culturalProgImageDto.setCulturalProgImageId(culturalProgImage.getCulturalProgImageId());
+        culturalProgImageDto.setCulturalProgramId(culturalProgImage.getCulturalProgramId());
+        culturalProgImageDto.setType(culturalProgImage.getType());
+        culturalProgImageDto.setName(culturalProgImage.getName());
+        culturalProgImageDto.setImageType(culturalProgImage.getCulturalImageType());
+        culturalProgImageDto.setFile(culturalProgImage.getCulturamImagefile());
+        return culturalProgImageDto;
     }
 
     @Override
