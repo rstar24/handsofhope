@@ -38,15 +38,15 @@ export const handleSubmit: AppFormEventHandler<HTMLFormElement> = (
 ) => {
   event.preventDefault();
   const formData = new FormData();
-  formData.append("referenceId", data.referenceId.toString());
-  formData.append("participantId", data.participantId.toString());
+  formData.append("referenceId", String(data.referenceId));
+  formData.append("participantId", String(data.participantId));
   formData.append("firstName", event.currentTarget.firstName.value);
   formData.append("middleName", event.currentTarget.middleName.value);
   formData.append("lastName", event.currentTarget.lastName.value);
   formData.append("dateOfBirth", event.currentTarget.dateOfBirth.value);
   formData.append("gender", event.currentTarget.gender.value);
   formData.append("maritalStatus", event.currentTarget.maritalStatus.value);
-  formData.append("participantImageId", data.participantImageId.toString());
+  formData.append("participantImageId", String(data.participantImageId));
   formData.append("image", event.currentTarget.imageFile.files[0]);
   dispatch(doPost(formData))
     .unwrap()

@@ -160,6 +160,7 @@ public class ParticipantServiceImpl implements ParticipantService {
         participantIdentityDto.setParticipantImageId(participantImage.getParticipantimageId());
         participantIdentityDto.setType(participantImage.getParticipantImageType());
         participantIdentityDto.setParticipantImageName(participantImage.getParticipantImageName());
+        participantIdentityDto.setImage(participantImage.getImage());
 
 
         return participantIdentityDto;
