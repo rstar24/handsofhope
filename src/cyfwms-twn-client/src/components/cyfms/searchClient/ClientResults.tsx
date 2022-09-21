@@ -46,7 +46,7 @@ const ClientResults = ({ setClick, moduleName }: any): ReactElement => {
       <Table sx={{ minWidth: 800 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Participant ID</TableCell>
+            <TableCell>Reference ID</TableCell>
             <TableCell>First Name</TableCell>
             <TableCell>Middle Name</TableCell>
             <TableCell>Last Name</TableCell>
@@ -63,7 +63,7 @@ const ClientResults = ({ setClick, moduleName }: any): ReactElement => {
                   handleCellClick(participant);
                 }}
               >
-                {participant.participantId}
+                {participant.referenceId}
               </TableCell>
               <TableCell>{participant.firstname}</TableCell>
               <TableCell>{participant.surname}</TableCell>
