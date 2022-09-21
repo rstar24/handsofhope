@@ -30,7 +30,11 @@ public class ParticipantIdentityDto {
     private Long participantImageId;
     @Getter @Setter
     private String participantImageType;
-    @Getter @Setter
+    @Getter
+    @Setter
+    private String type;
+    @Getter
+    @Setter
     private String participantImageName;
     @Getter @Setter
     private byte[] image;

@@ -46,12 +46,6 @@ public class CulturalProgImageServiceImpl implements CulturalProgImageService{
         CulturalProgImageDto culturalprogimagedto = new CulturalProgImageDto();
         culturalprogimagedto.setName(culturalProgImageDto.getName());
         culturalprogimagedto.setType(culturalProgImageDto.getType());
-        if(file!=null){
-            culturalprogimagedto.setImageType(file.getContentType());
-            culturalprogimagedto.setFile(file.getBytes());
-        }
-
-
         culturalprogimagedto.setCulturalProgramId(culturalProgImageDto.getCulturalProgramId());
         CulturalProgImage culturalProgImage = new CulturalProgImage();
 
@@ -63,12 +57,22 @@ public class CulturalProgImageServiceImpl implements CulturalProgImageService{
         else{
             culturalProgImage = readCulturalImage( culturalProgImageDto.getCulturalProgramId());
             culturalprogimagedto.setCulturalProgImageId(culturalProgImageDto.getCulturalProgImageId());
+            if(file==null){
+                culturalprogimagedto.setImageType(culturalProgImage.getCulturalImageType());
+               // culturalprogimagedto.setFile(culturalProgImage.getCulturamImagefile());
+
+            }
+
             modelMapper.map(culturalprogimagedto,culturalProgImage);
         }
         if(file!=null){
-            culturalProgImage.setCulturamImagefile(file.getBytes());
-        }
+            if(file.getContentType().equals("image/png")||file.getContentType().equals("image/jpg")||file.getContentType().equals("image/jpeg")||file.getContentType().equals("application/pdf")||file.getContentType().equals("application/vnd.ms-excel")||file.getContentType().equals("image/bmp")||file.getContentType().equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document"))
+            {
+                culturalProgImage.setCulturamImagefile(file.getBytes());
+                culturalProgImage.setCulturalImageType(file.getContentType());
+            }
 
+        }
         culturalProgImage = culturalProgImageRepository.save(culturalProgImage);
         return culturalProgImage;
     }

@@ -18,8 +18,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.Optional;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-import static org.springframework.http.HttpStatus.OK;
+
+import static org.springframework.http.HttpStatus.*;
 
 @AllArgsConstructor
 @Service
@@ -41,17 +41,18 @@ public class ParticipantServiceImpl implements ParticipantService {
             ParticipantImage participantImage = readParticipantImage(participantId);
             if (participant != null) {
                 if (!participant.getStatus().equals("INACTIVE")){
-                   participantIdentityResponseDto.setReferenceId(participant.getReferenceId());
+                   participantIdentityResponseDto.setParticipantId(participant.getParticipantId());
                    participantIdentityResponseDto.setFirstname(participant.getFirstname());
                    participantIdentityResponseDto.setMiddleName(participant.getMiddleName());
                    participantIdentityResponseDto.setSurname(participant.getSurname());
                    participantIdentityResponseDto.setDateOfBirth(participant.getDateOfBirth());
-                   participantIdentityResponseDto.setMaritalStatus(participant.getMaritalStatus());
                    participantIdentityResponseDto.setGender(participant.getGender());
+                   participantIdentityResponseDto.setMaritalStatus(participant.getMaritalStatus());
                    participantIdentityResponseDto.setParticipantImageId(participantImage.getParticipantimageId());
                    participantIdentityResponseDto.setParticipantImageName(participantImage.getParticipantImageName());
-                   participantIdentityResponseDto.setParticipantImageType(participantImage.getParticipantImageType());
+                   participantIdentityResponseDto.setType(participantImage.getParticipantImageType());
                    participantIdentityResponseDto.setImage(participantImage.getImage());
+
                 }
                 else {
                     throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
@@ -115,10 +116,8 @@ public class ParticipantServiceImpl implements ParticipantService {
             modelMapper.map(participantIdentityDto, participant);
             if(multipartFile!=null)
             {
-           if( multipartFile.getContentType().equals("image/jpg")||multipartFile.getContentType().equals("image/png")||multipartFile.getContentType().equals("image/jpeg"))
-           {
                modelMapper.map(participantImageDto,participantImage);
-            }
+
             }
             participant.setType("CYFM");
             participant.setStatus("ACTIVE");
@@ -132,13 +131,13 @@ public class ParticipantServiceImpl implements ParticipantService {
         }
         else {
             participant = readParticipant(participantIdentityDto.getParticipantId());
+            participant.setParticipantId(participantIdentityDto.getParticipantId());
             participant.setFirstname(participantIdentityDto.getFirstname());
             participant.setMiddleName(participantIdentityDto.getMiddleName());
-            participant.setDateOfBirth(participantIdentityDto.getDateOfBirth());
             participant.setSurname(participantIdentityDto.getSurname());
             participant.setGender(participantIdentityDto.getGender());
+            participant.setDateOfBirth(participantIdentityDto.getDateOfBirth());
             participant.setMaritalStatus(participantIdentityDto.getMaritalStatus());
-
             if(multipartFile!=null){
                 participantImage = readParticipantImage(participantIdentityDto.getParticipantId());
                 participantImage.setParticipantId(participantIdentityDto.getParticipantId());
@@ -147,12 +146,21 @@ public class ParticipantServiceImpl implements ParticipantService {
         }
         participant = participantRepository.save(participant);
         participantIdentityDto.setParticipantId(participant.getParticipantId());
-        if(multipartFile!=null){
-            participantImage.setParticipantId(participantIdentityDto.getParticipantId());
-            participantImage= imageRepository.save(participantImage);
+        if(multipartFile!=null) {
+            if (multipartFile.getContentType().equals("image/jpg") || multipartFile.getContentType().equals("image/png") || multipartFile.getContentType().equals("image/jpeg")) {
+                participantImage.setParticipantId(participantIdentityDto.getParticipantId());
+                participantImage = imageRepository.save(participantImage);
+            }
+            else {
+                throw new ResponseStatusException(INTERNAL_SERVER_ERROR,"JPG PNG and JPEG content type are allowed");
+            }
+
         }
         participantIdentityDto.setReferenceId(participant.getReferenceId());
         participantIdentityDto.setParticipantImageId(participantImage.getParticipantimageId());
+        participantIdentityDto.setType(participantImage.getParticipantImageType());
+        participantIdentityDto.setParticipantImageName(participantImage.getParticipantImageName());
+
 
         return participantIdentityDto;
     }
