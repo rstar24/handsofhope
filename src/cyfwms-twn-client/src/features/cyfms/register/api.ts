@@ -1,5 +1,4 @@
 import axiosInstance from "../../../library/axiosInstance";
-import type { Data } from "./slice";
 import type { AxiosResponse } from "axios";
 
 export const doGetAPI = async (

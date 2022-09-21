@@ -121,10 +121,14 @@ const View = (): ReactElement => {
         }}
       >
         <Box
-          sx={{ borderRadius: 0, flexBasis: 2, flexGrow: 1, p: 0 }}
+          sx={{
+            borderRadius: "50%",
+            flexBasis: 2,
+            flexGrow: 1,
+            p: "1rem 0 1rem 1rem",
+          }}
           component="img"
-          src="/img/profile1.png"
-          height={200}
+          src={`data:${state.cyfmsRegister.data.type};base64,${state.cyfmsRegister.data.image}`}
           width={200}
         ></Box>
         <Box

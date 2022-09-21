@@ -20,11 +20,15 @@ import type { ChangeEventHandler, FormEvent, ReactElement } from "react";
 const Register = (): ReactElement => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
   const { gender, maritalstatus } = useAppSelector((state) => state.codetable);
   const isInitiated = useAppSelector((state) => state.initiator.isInitiated);
   const state = useAppSelector((state) => state.cyfmsRegister);
   const edit = useAppSelector((state) => state.popup.edit);
-  const [fileName, setFileName] = useState<string>("");
+
+  const [fileName, setFileName] = useState<string>(
+    state.data.participantImageName
+  );
 
   useEffect(() => handleEffect(dispatch, state.data.participantId), []);
 
@@ -134,6 +138,7 @@ const Register = (): ReactElement => {
             >
               Upload
               <input
+                accept="image/*"
                 hidden
                 name="imageFile"
                 type="file"

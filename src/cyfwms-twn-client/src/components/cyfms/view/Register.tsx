@@ -13,6 +13,7 @@ import type { ReactElement } from "react";
 
 const Register = (): ReactElement => {
   const data = useAppSelector((state) => state.cyfmsRegister.data);
+  console.log(data);
 
   return (
     <TableContainer
@@ -24,6 +25,9 @@ const Register = (): ReactElement => {
             if (
               t[1] !== "" &&
               t[1] !== 0 &&
+              t[0] !== "image" &&
+              t[0] !== "type" &&
+              t[0] !== "participantImageName" &&
               RegisterLabels[k] !== "ParticipantId"
             ) {
               return (

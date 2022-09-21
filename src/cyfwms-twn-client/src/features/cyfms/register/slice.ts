@@ -14,6 +14,9 @@ export interface Data {
   maritalStatus: string;
   referenceId: number;
   participantImageId: number;
+  image: string;
+  type: string;
+  participantImageName: string;
 }
 
 // Empty Data
@@ -27,6 +30,9 @@ const emptyData: Data = {
   maritalStatus: "",
   referenceId: 0,
   participantImageId: 0,
+  image: "",
+  type: "",
+  participantImageName: "",
 };
 
 export interface State {
