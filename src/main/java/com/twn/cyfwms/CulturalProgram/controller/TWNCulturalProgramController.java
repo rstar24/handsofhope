@@ -1,23 +1,18 @@
-package com.twn.cyfwms.CulturalProgram.api;
+package com.twn.cyfwms.CulturalProgram.controller;
 
 import com.twn.cyfwms.CulturalProgram.dto.*;
-import com.twn.cyfwms.CulturalProgram.entity.CulturalProgImage;
 import com.twn.cyfwms.CulturalProgram.service.*;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("/v1/culturalprogandactservice")
@@ -31,8 +26,6 @@ public class TWNCulturalProgramController {
     private CulturalProgAndActService culturalProgAndActService;
     @Autowired
     private ParticipantCulturalProgService participantCulturalProgService;
-    @Autowired
-    private CulturalProgImageService culturalProgImageService;
 
     @GetMapping(value = "/readCulturalProgAndAct/{culturalprogramid}", produces = "application/json")
     @ApiOperation("Read CulturalProgAndAct")
@@ -122,34 +115,4 @@ public class TWNCulturalProgramController {
                         || var.get("data") == null) ?null:var.get("data"));
         return participantCulturalProgSearchService.searchParticipantCulturalProgAndAct(participantCulturalSearchDto);
     }
-    @PutMapping("/save_one")
-    public  CulturalProgImage uploadFile(@RequestParam(value = "file",required = false) MultipartFile file, @RequestParam("culturalDto") String culturalDto) throws IOException {
-        CulturalProgImage culturalProgImage=culturalProgImageService.uploadImage(file,culturalDto);
-     return culturalProgImage;
-    }
-
-    @GetMapping("/getOneFile/{id}")
-    public CulturalProgImageDto getFile(@PathVariable Long id) {
-        return culturalProgImageService.getOneFile(id);
-
-//        return ResponseEntity.ok()
-//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDB.getName() + "\"")
-//                .contentType(MediaType.valueOf(fileDB.getCulturalImageType()))
-//                .body(fileDB.getCulturamImagefile());
-    }
-
-    @GetMapping(value = "/getAllFiles/{culturalprogramid}", produces = "application/json")
-    @ApiOperation("Read All Files")
-    @ResponseStatus(HttpStatus.OK)
-    public List<CulturalProgImageDto> getAllFiles(@PathVariable("culturalprogramid") Long culturalProgramId) {
-        return culturalProgImageService.getAllFiles(culturalProgramId);
-    }
-
-    @DeleteMapping("/removeCulturalProgImage/{culturalprogimageid}")
-    @ApiOperation("Remove CulturalProgImage")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity removeCulturalProgImage(@PathVariable("culturalprogimageid") Long culturalProgImageId) {
-        return culturalProgImageService.removeCulturalProgImage(culturalProgImageId);
-    }
-
 }

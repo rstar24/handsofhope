@@ -1,10 +1,10 @@
 package com.twn.cyfwms.CulturalProgram.service;
 import com.twn.cyfwms.CulturalProgram.dto.CulturalProgAndActDto;
 import com.twn.cyfwms.CulturalProgram.entity.CulturalProgAndAct;
-import com.twn.cyfwms.CulturalProgram.entity.CulturalProgImage;
+import com.twn.cyfwms.CulturalProgram.entity.AttachmentEntity;
 import com.twn.cyfwms.CulturalProgram.entity.ParticipantCulturalProgAndAct;
 import com.twn.cyfwms.CulturalProgram.repository.CulturalProgAndActRepository;
-import com.twn.cyfwms.CulturalProgram.repository.CulturalProgImageRepository;
+import com.twn.cyfwms.CulturalProgram.repository.AttachmentsRepository;
 import com.twn.cyfwms.CulturalProgram.repository.ParticipantCulturalProgRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -26,7 +26,7 @@ public class CulturalProgAndActServiceImpl implements CulturalProgAndActService 
     @Autowired
     private ParticipantCulturalProgRepository participantCulturalProgRepository;
     @Autowired
-    private CulturalProgImageRepository culturalProgImageRepository;
+    private AttachmentsRepository attachmentsRepository;
 
     private CulturalProgAndAct readCulturalProgram(Long culturalProgramId) {
         CulturalProgAndAct culturalProgAndAct = null;
@@ -91,10 +91,10 @@ public class CulturalProgAndActServiceImpl implements CulturalProgAndActService 
               participantCulturalProgAndAct.setStatus("INACTIVE");
               participantCulturalProgRepository.save(participantCulturalProgAndAct);
            }
-            Optional<CulturalProgImage> culturalProgImage=culturalProgImageRepository.findByCulturalProgramId(culturalProgramId);
+            Optional<AttachmentEntity> culturalProgImage=attachmentsRepository.findByCulturalProgramId(culturalProgramId);
              if (culturalProgImage.isPresent()){
                 culturalProgImage.get().setStatus("INACTIVE");
-                 culturalProgImageRepository.save(culturalProgImage.get());
+                attachmentsRepository.save(culturalProgImage.get());
              }
         } else {
             throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");

@@ -6,7 +6,7 @@ export const doGetAPI = async (
   token: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.get(
-    `culturalprogandactservice/getAllFiles/${cpaId}`,
+    `cpa/attachments/read_all/${cpaId}`,
     {
       headers: { Authorization: "Bearer " + token },
     }
@@ -19,7 +19,7 @@ export const doGetOneAPI = async (
   token: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.get(
-    `culturalprogandactservice/getOneFile/${cpaFileId}`,
+    `cpa/attachments/read_one/${cpaFileId}`,
     {
       headers: { Authorization: "Bearer " + token },
     }
@@ -32,7 +32,7 @@ export const doPostAPI = async (
   token: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.put(
-    "culturalprogandactservice/save_one",
+    "cpa/attachments/save_one",
     attachment,
     {
       headers: {
@@ -49,7 +49,7 @@ export const doDeleteAPI = async (
   token: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.delete(
-    `culturalprogandactservice/removeCulturalProgImage/${cpaFileId}`,
+    `cpa/attachments/remove_one/${cpaFileId}`,
     {
       headers: { Authorization: "Bearer " + token },
     }

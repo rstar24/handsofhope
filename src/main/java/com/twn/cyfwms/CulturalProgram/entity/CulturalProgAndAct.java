@@ -1,5 +1,4 @@
 package com.twn.cyfwms.CulturalProgram.entity;
-import com.twn.cyfwms.participant.entity.CounselorCFSWorker;
 import lombok.*;
 import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
@@ -68,5 +67,5 @@ public class CulturalProgAndAct implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "culturalprogramid", referencedColumnName = "culturalprogramid")
     @Getter @Setter
-    private List<CulturalProgImage> culturalProgImage;
+    private List<AttachmentEntity> culturalProgImage;
 }
