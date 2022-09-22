@@ -36,112 +36,28 @@ public class InitialContactContactNotesSearchRepository {
     }
     private StringBuffer createSearchQuery(InitialContactContactNotesSearchCriteriaDto searchCriteria, List<Object> argsObjectList) {
         StringBuffer  querySBuff = new StringBuffer();
-            querySBuff.append("select p.contactnotesid ,p.filedetailsid, p.name ,p.worker ,p.date , p.time,p.contactmethod ,p.needaddress ,p.summary ,p.result ,p.nextstep ,p.caseplanprogress ,p.additionalinformation ");
-            querySBuff.append("from initialcontactcontactnotes p left join initialcontactfiledetails p2 on p.filedetailsid = p2.filedetailsid where  p.status='ACTIVE' ");
-        Long fileDetailsId = searchCriteria.getFileDetailsId();
-        if (fileDetailsId != null) {
-            querySBuff.append("AND p.filedetailsid = ? ORDER BY p.creationdatetime desc ");
-            argsObjectList.add(fileDetailsId);
-        }
-        String name = searchCriteria.getName();
-        if (name != null && !name.trim().isEmpty()) {
-            name = name.trim()
+        String data=searchCriteria.getData();
+        querySBuff.append("select p.contactnotesid ,p.filedetailsid, p.name ,p.worker ,p.date , p.time,p.contactmethod ,p.needaddress ,p.summary ,p.result ,p.nextstep ,p.caseplanprogress ,p.additionalinformation ");
+        querySBuff.append("from initialcontactcontactnotes p left join initialcontactfiledetails p2 on p.filedetailsid = p2.filedetailsid where  p.status='ACTIVE'");
+        if (data != null && !data.trim().isEmpty()) {
+            data = data.trim()
                     .replace("!", "!!")
                     .replace("%", "!%")
                     .replace("_", "!_")
                     .replace("[", "![");
-            querySBuff.append(" AND p.name LIKE ? ORDER BY p.creationdatetime desc ");
-            argsObjectList.add(name + "%");
-        }
-        String worker = searchCriteria.getWorker();
-        if (worker != null && !worker.trim().isEmpty()) {
-            worker = worker.trim()
-                    .replace("!", "!!")
-                    .replace("%", "!%")
-                    .replace("_", "!_")
-                    .replace("[", "![");
-            querySBuff.append(" AND p.worker LIKE ? ORDER BY p.creationdatetime desc");
-            argsObjectList.add(worker + "%");
-        }
-        LocalDate date = searchCriteria.getDate();
-        if (date != null) {
-            querySBuff.append(" AND p.date = ? ORDER BY p.creationdatetime desc");
-            argsObjectList.add(date);
-        }
-        LocalTime time = searchCriteria.getTime();
-        if (time != null) {
-            querySBuff.append(" AND p.time = ? ORDER BY p.creationdatetime desc");
-            argsObjectList.add(time);
-        }
-        String contactMethod = searchCriteria.getContactMethod();
-        if (contactMethod != null && !contactMethod.trim().isEmpty()) {
-            contactMethod = contactMethod.trim()
-                    .replace("!", "!!")
-                    .replace("%", "!%")
-                    .replace("_", "!_")
-                    .replace("[", "![");
-            querySBuff.append(" AND p.contactmethod LIKE ? ORDER BY p.creationdatetime desc");
-            argsObjectList.add(contactMethod + "%");
-        }
-        String needAddress = searchCriteria.getNeedAddress();
-        if (needAddress != null && !needAddress.trim().isEmpty()) {
-            needAddress = needAddress.trim()
-                    .replace("!", "!!")
-                    .replace("%", "!%")
-                    .replace("_", "!_")
-                    .replace("[", "![");
-            querySBuff.append(" AND p.needaddress LIKE ? ORDER BY p.creationdatetime desc");
-            argsObjectList.add(needAddress + "%");
-        }
-        String summary = searchCriteria.getSummary();
-        if (summary != null && !summary.trim().isEmpty()) {
-            summary = summary.trim()
-                    .replace("!", "!!")
-                    .replace("%", "!%")
-                    .replace("_", "!_")
-                    .replace("[", "![");
-            querySBuff.append(" AND p.summary LIKE ? ORDER BY p.creationdatetime desc");
-            argsObjectList.add(summary + "%");
-        }
-        String result = searchCriteria.getResult();
-        if (result != null && !result.trim().isEmpty()) {
-            result = result.trim()
-                    .replace("!", "!!")
-                    .replace("%", "!%")
-                    .replace("_", "!_")
-                    .replace("[", "![");
-            querySBuff.append(" AND p.result LIKE ? ORDER BY p.creationdatetime desc");
-            argsObjectList.add(result + "%");
-        }
-        String nextStep = searchCriteria.getNextStep();
-        if (nextStep != null && !nextStep.trim().isEmpty()) {
-            nextStep = nextStep.trim()
-                    .replace("!", "!!")
-                    .replace("%", "!%")
-                    .replace("_", "!_")
-                    .replace("[", "![");
-            querySBuff.append(" AND p.nextstep LIKE ? ORDER BY p.creationdatetime desc");
-            argsObjectList.add(nextStep + "%");
-        }
-        String casePlanProgress = searchCriteria.getCasePlanProgress();
-        if (casePlanProgress != null && !casePlanProgress.trim().isEmpty()) {
-            casePlanProgress = casePlanProgress.trim()
-                    .replace("!", "!!")
-                    .replace("%", "!%")
-                    .replace("_", "!_")
-                    .replace("[", "![");
-            querySBuff.append(" AND p.caseplanprogress LIKE ? ORDER BY p.creationdatetime desc");
-            argsObjectList.add(casePlanProgress + "%");
-        }
-        String additionalInformation = searchCriteria.getAdditionalInformation();
-        if (additionalInformation != null && !additionalInformation.trim().isEmpty()) {
-            additionalInformation = additionalInformation.trim()
-                    .replace("!", "!!")
-                    .replace("%", "!%")
-                    .replace("_", "!_")
-                    .replace("[", "![");
-            querySBuff.append(" AND p.additionalinformation LIKE ? ORDER BY p.creationdatetime desc");
-            argsObjectList.add(additionalInformation + "%");
+            querySBuff.append(" AND (p.filedetailsid=? OR p.name LIKE ?  OR p.worker LIKE ?  OR p.date LIKE ?  OR p.time LIKE ?  OR p.contactmethod LIKE ?  OR p.needaddress LIKE ?  OR p.summary LIKE ?  OR p.result LIKE ?  OR p.nextstep LIKE ?  OR p.caseplanprogress LIKE ? OR p.additionalinformation LIKE ?) ORDER BY p.creationdatetime desc ");
+            argsObjectList.add(data);
+            argsObjectList.add("%" +data + "%");
+            argsObjectList.add("%" +data + "%");
+            argsObjectList.add("%" +data + "%");
+            argsObjectList.add("%" +data + "%");
+            argsObjectList.add("%" +data + "%");
+            argsObjectList.add("%" +data + "%");
+            argsObjectList.add("%" +data + "%");
+            argsObjectList.add("%" +data + "%");
+            argsObjectList.add("%" +data + "%");
+            argsObjectList.add("%" +data + "%");
+            argsObjectList.add("%" +data + "%");
         }
         return querySBuff;
     }
