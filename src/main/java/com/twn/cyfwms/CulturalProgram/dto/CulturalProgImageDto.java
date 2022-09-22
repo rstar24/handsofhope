@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.Column;
+
 @AllArgsConstructor
 @NoArgsConstructor
 
@@ -27,4 +30,6 @@ public class CulturalProgImageDto {
     @Getter
     @Setter
     private String imageType;
+    @Getter @Setter
+    private  String culturalimagename;
 }

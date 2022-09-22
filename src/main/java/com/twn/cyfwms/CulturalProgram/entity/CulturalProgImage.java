@@ -54,6 +54,8 @@ public class CulturalProgImage {
 
     @Getter @Setter @Column(name="status")
     private  String status;
+    @Getter @Setter @Column(name="culturalimagename")
+    private  String culturalimagename;
 
     @UpdateTimestamp
     @Getter @Setter @Column(name="updatedatedime")

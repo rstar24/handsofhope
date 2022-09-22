@@ -66,10 +66,11 @@ public class CulturalProgImageServiceImpl implements CulturalProgImageService{
             modelMapper.map(culturalprogimagedto,culturalProgImage);
         }
         if(file!=null){
-            if(file.getContentType().equals("image/png")||file.getContentType().equals("image/jpg")||file.getContentType().equals("image/jpeg")||file.getContentType().equals("application/pdf")||file.getContentType().equals("application/vnd.ms-excel")||file.getContentType().equals("image/bmp")||file.getContentType().equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document")||file.getContentType().equals("image/gif"))
+            if(file.getContentType().equals("image/png")||file.getContentType().equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document")||file.getContentType().equals("image/jpg")||file.getContentType().equals("image/jpeg")||file.getContentType().equals("application/pdf")||file.getContentType().equals("application/vnd.ms-excel")||file.getContentType().equals("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")||file.getContentType().equals("image/bmp")||file.getContentType().equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document")||file.getContentType().equals("image/gif"))
             {
                 culturalProgImage.setCulturamImagefile(file.getBytes());
                 culturalProgImage.setCulturalImageType(file.getContentType());
+                culturalProgImage.setCulturalimagename(file.getOriginalFilename());
             }
 
         }
