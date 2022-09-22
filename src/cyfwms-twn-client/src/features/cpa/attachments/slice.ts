@@ -7,6 +7,7 @@ import type { AxiosResponse } from "axios";
 export interface Record {
   culturalProgramId: number;
   culturalProgImageId: number;
+  culturalimagename: string;
   name: string;
   type: string;
 }
@@ -15,6 +16,7 @@ export interface Record {
 const emptyRecord: Record = {
   culturalProgramId: 0,
   culturalProgImageId: 0,
+  culturalimagename: "",
   name: "",
   type: "",
 };

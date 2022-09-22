@@ -4,7 +4,7 @@ import Input from "../../../components/Input";
 import { selected } from "../../../contexts/cpa/attachments";
 import { doGetOne } from "../../../features/cpa/attachments/slice";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Link } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import type { ReactElement } from "react";
 
@@ -19,6 +19,7 @@ const View = (): ReactElement => {
   const [actualAttachment, setActualAttachment] = useState<any>({
     file: "",
     imageType: "",
+    culturalimagename: "",
   });
 
   /** Download the attachment */
@@ -71,15 +72,14 @@ const View = (): ReactElement => {
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <Button
-              component="a"
-              variant="contained"
+            Download file:{" "}
+            <Link
               download={true}
               href={`data:${actualAttachment.imageType};base64,${actualAttachment.file}`}
               rel="noreferrer noopener"
             >
-              Download
-            </Button>
+              {actualAttachment.culturalimagename}
+            </Link>
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
         </Box>

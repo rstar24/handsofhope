@@ -6,10 +6,10 @@ import { selected } from "../../../contexts/cpa/attachments";
 import { doPost } from "../../../features/cpa/attachments/slice";
 import { onKeyDown } from "../../../library/app";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
-import { Box } from "@mui/material";
-import React from "react";
+import { Box, Button } from "@mui/material";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import type { FormEventHandler, ReactElement } from "react";
+import type { ChangeEventHandler, FormEventHandler, ReactElement } from "react";
 
 /**
  * Form to edit document information selected from attachments.
@@ -19,6 +19,11 @@ const Edit = (): ReactElement => {
   const dispatch = useAppDispatch();
   const cpaId = useAppSelector((state) => state.cpa.data.culturalProgramId);
   const data = useAppSelector((state) => state.cpaAttachments.data);
+  const [fileName, setFileName] = useState<string>("");
+
+  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setFileName(e.currentTarget.value.replace(/^.*[\\/]/, ""));
+  };
 
   const submitHandler: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
@@ -32,6 +37,9 @@ const Edit = (): ReactElement => {
         type: e.currentTarget.attachmentType.value,
       })
     );
+    if (e.currentTarget.attachment.files[0]) {
+      attachment.append("file", e.currentTarget.attachment.files[0]);
+    }
     dispatch(doPost(attachment))
       .unwrap()
       .then((data) => {
@@ -76,6 +84,28 @@ const Edit = (): ReactElement => {
               value="Type"
               autofill={data[selected.value].type}
             />
+          </Box>
+        </Box>
+        <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
+          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+            <Box
+              sx={{
+                display: "flex",
+                gap: "0 1rem",
+                alignItems: "center",
+              }}
+            >
+              <Button variant="contained" component="label">
+                Upload
+                <input
+                  hidden
+                  name="attachment"
+                  type="file"
+                  onChange={handleChange}
+                />
+              </Button>
+              {fileName}
+            </Box>
           </Box>
         </Box>
         <Box sx={{ display: "flex", justifyContent: "right" }}>

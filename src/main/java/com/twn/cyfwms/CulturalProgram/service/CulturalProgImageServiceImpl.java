@@ -59,8 +59,7 @@ public class CulturalProgImageServiceImpl implements CulturalProgImageService{
             culturalprogimagedto.setCulturalProgImageId(culturalProgImageDto.getCulturalProgImageId());
             if(file==null){
                 culturalprogimagedto.setImageType(culturalProgImage.getCulturalImageType());
-               // culturalprogimagedto.setFile(culturalProgImage.getCulturamImagefile());
-
+                culturalprogimagedto.setCulturalimagename(culturalProgImage.getCulturalimagename());
             }
 
             modelMapper.map(culturalprogimagedto,culturalProgImage);
@@ -88,6 +87,7 @@ public class CulturalProgImageServiceImpl implements CulturalProgImageService{
         culturalProgImageDto.setName(culturalProgImage.getName());
         culturalProgImageDto.setImageType(culturalProgImage.getCulturalImageType());
         culturalProgImageDto.setFile(culturalProgImage.getCulturamImagefile());
+        culturalProgImageDto.setCulturalimagename(culturalProgImage.getCulturalimagename());
         return culturalProgImageDto;
     }
 
