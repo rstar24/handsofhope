@@ -31,7 +31,7 @@ public class CulturalProgImageServiceImpl implements CulturalProgImageService{
 
     private CulturalProgImage readCulturalImage(Long participantId){
         CulturalProgImage culturalProgImage= new CulturalProgImage();
-        Optional<CulturalProgImage> participantOpt = culturalProgImageRepository.findByCulturalProgramId(participantId);
+        Optional<CulturalProgImage> participantOpt = culturalProgImageRepository.findById(participantId);
         if(participantOpt.isPresent()){
             culturalProgImage= participantOpt.get();
 
@@ -55,7 +55,7 @@ public class CulturalProgImageServiceImpl implements CulturalProgImageService{
             culturalProgImage.setStatus("ACTIVE");
        }
         else{
-            culturalProgImage = readCulturalImage( culturalProgImageDto.getCulturalProgramId());
+            culturalProgImage = readCulturalImage( culturalProgImageDto.getCulturalProgImageId());
             culturalprogimagedto.setCulturalProgImageId(culturalProgImageDto.getCulturalProgImageId());
             if(file==null){
                 culturalprogimagedto.setImageType(culturalProgImage.getCulturalImageType());
@@ -66,7 +66,7 @@ public class CulturalProgImageServiceImpl implements CulturalProgImageService{
             modelMapper.map(culturalprogimagedto,culturalProgImage);
         }
         if(file!=null){
-            if(file.getContentType().equals("image/png")||file.getContentType().equals("image/jpg")||file.getContentType().equals("image/jpeg")||file.getContentType().equals("application/pdf")||file.getContentType().equals("application/vnd.ms-excel")||file.getContentType().equals("image/bmp")||file.getContentType().equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document"))
+            if(file.getContentType().equals("image/png")||file.getContentType().equals("image/jpg")||file.getContentType().equals("image/jpeg")||file.getContentType().equals("application/pdf")||file.getContentType().equals("application/vnd.ms-excel")||file.getContentType().equals("image/bmp")||file.getContentType().equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document")||file.getContentType().equals("image/gif"))
             {
                 culturalProgImage.setCulturamImagefile(file.getBytes());
                 culturalProgImage.setCulturalImageType(file.getContentType());
@@ -80,7 +80,7 @@ public class CulturalProgImageServiceImpl implements CulturalProgImageService{
     @Override
     public CulturalProgImageDto getOneFile(Long id) {
         CulturalProgImageDto culturalProgImageDto = new CulturalProgImageDto();
-        CulturalProgImage culturalProgImage= culturalProgImageRepository.findByCulturalProgramId(id).get();
+        CulturalProgImage culturalProgImage= culturalProgImageRepository.findById(id).get();
         culturalProgImageDto.setCulturalProgImageId(culturalProgImage.getCulturalProgImageId());
         culturalProgImageDto.setCulturalProgramId(culturalProgImage.getCulturalProgramId());
         culturalProgImageDto.setType(culturalProgImage.getType());

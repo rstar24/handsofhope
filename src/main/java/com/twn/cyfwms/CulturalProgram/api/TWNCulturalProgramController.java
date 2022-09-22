@@ -122,7 +122,7 @@ public class TWNCulturalProgramController {
                         || var.get("data") == null) ?null:var.get("data"));
         return participantCulturalProgSearchService.searchParticipantCulturalProgAndAct(participantCulturalSearchDto);
     }
-    @PutMapping("/filesAttechment")
+    @PutMapping("/save_one")
     public  CulturalProgImage uploadFile(@RequestParam(value = "file",required = false) MultipartFile file, @RequestParam("culturalDto") String culturalDto) throws IOException {
         CulturalProgImage culturalProgImage=culturalProgImageService.uploadImage(file,culturalDto);
      return culturalProgImage;

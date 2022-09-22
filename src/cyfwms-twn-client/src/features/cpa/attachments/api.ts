@@ -14,12 +14,25 @@ export const doGetAPI = async (
   return res;
 };
 
+export const doGetOneAPI = async (
+  cpaFileId: number,
+  token: string
+): Promise<AxiosResponse> => {
+  const res: AxiosResponse = await axiosInstance.get(
+    `culturalprogandactservice/getOneFile/${cpaFileId}`,
+    {
+      headers: { Authorization: "Bearer " + token },
+    }
+  );
+  return res;
+};
+
 export const doPostAPI = async (
   attachment: FormData,
   token: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.put(
-    "culturalprogandactservice/upload",
+    "culturalprogandactservice/save_one",
     attachment,
     {
       headers: {

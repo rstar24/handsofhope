@@ -1,20 +1,37 @@
-import { CYFSWMSNextButton } from "../../../components/CYFSWMSButtons";
 import EditIcon from "../../../components/cpa/attachments/EditIcon";
 import CPALayout from "../../../components/cpa/CPALayout";
 import Input from "../../../components/Input";
 import { selected } from "../../../contexts/cpa/attachments";
-import { useAppSelector } from "../../../library/hooks";
-import { Box } from "@mui/material";
-import React from "react";
+import { doGetOne } from "../../../features/cpa/attachments/slice";
+import { useAppDispatch, useAppSelector } from "../../../library/hooks";
+import { Box, Button } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import type { ReactElement } from "react";
 
 /**
  * Form to view document information selected from attachments.
  */
 const View = (): ReactElement => {
+  const dispatch = useAppDispatch();
   const attachment = useAppSelector(
     (state) => state.cpaAttachments.data[selected.value]
   );
+  const [actualAttachment, setActualAttachment] = useState<any>({
+    file: "",
+    imageType: "",
+  });
+
+  /** Download the attachment */
+  useEffect(() => {
+    dispatch(doGetOne(attachment.culturalProgImageId))
+      .unwrap()
+      .then((data) => {
+        setActualAttachment(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [attachment.culturalProgImageId]);
 
   return (
     <CPALayout>
@@ -52,9 +69,34 @@ const View = (): ReactElement => {
             />
           </Box>
         </Box>
-        <Box sx={{ display: "flex", justifyContent: "right" }}>
-          <CYFSWMSNextButton disabled={true} />
+        <Box sx={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
+          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+            <Button
+              component="a"
+              variant="contained"
+              download={true}
+              href={`data:${actualAttachment.imageType};base64,${actualAttachment.file}`}
+              rel="noreferrer noopener"
+            >
+              Download
+            </Button>
+          </Box>
+          <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
         </Box>
+        <Box sx={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
+          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+            Preview{" "}
+            {actualAttachment.imageType.match(/image\/.*/)
+              ? ""
+              : "(not available)"}
+          </Box>
+          <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
+        </Box>
+        <Box
+          component="embed"
+          sx={{ display: "flex", height: "500px" }}
+          src={`data:${actualAttachment.imageType};base64,${actualAttachment.file}`}
+        />
       </Box>
     </CPALayout>
   );

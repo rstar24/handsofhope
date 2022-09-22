@@ -1,4 +1,4 @@
-import { doDeleteAPI, doGetAPI, doPostAPI } from "./api";
+import { doDeleteAPI, doGetAPI, doGetOneAPI, doPostAPI } from "./api";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "../../../library/store";
 import type { SliceCaseReducers } from "@reduxjs/toolkit";
@@ -29,6 +29,16 @@ export const doGet = createAsyncThunk<Record[], number>(
   async (cpaID, { getState }) => {
     const store = getState() as RootState;
     const res: AxiosResponse = await doGetAPI(cpaID, store.login.token);
+    // Becomes the `fulfilled` action payload:
+    return res.data;
+  }
+);
+
+export const doGetOne = createAsyncThunk<Record, number>(
+  "attachments/doGetOne",
+  async (cpaFileID, { getState }) => {
+    const store = getState() as RootState;
+    const res: AxiosResponse = await doGetOneAPI(cpaFileID, store.login.token);
     // Becomes the `fulfilled` action payload:
     return res.data;
   }
@@ -81,6 +91,16 @@ export const attachmentsSlice = createSlice<State, SliceCaseReducers<State>>({
         state.status = "loading";
       })
       .addCase(doGet.rejected, (state) => {
+        state.status = "failed";
+      });
+    builder
+      .addCase(doGetOne.fulfilled, (state, action) => {
+        state.status = "success";
+      })
+      .addCase(doGetOne.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(doGetOne.rejected, (state) => {
         state.status = "failed";
       });
     builder
