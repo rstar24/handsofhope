@@ -2,16 +2,17 @@ import {
   CYFSWMSNextButton,
   CYFSWMSSaveButton,
 } from "../../../components/CYFSWMSButtons";
+import FileInput from "../../../components/FileInput";
 import Input from "../../../components/Input";
 import CYFMSDropdown from "../../../components/cyfms/CYFMSDropdown";
 import CYFMSLayout from "../../../components/cyfms/CYFMSLayout";
 import { onKeyDown } from "../../../library/app";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import { handleEffect, handleSubmit } from "./register_";
-import { Box, Button, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { Box, Typography } from "@mui/material";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import type { ChangeEventHandler, FormEvent, ReactElement } from "react";
+import type { FormEvent, ReactElement } from "react";
 
 /**
  * The Register functional component.
@@ -26,15 +27,7 @@ const Register = (): ReactElement => {
   const state = useAppSelector((state) => state.cyfmsRegister);
   const edit = useAppSelector((state) => state.popup.edit);
 
-  const [fileName, setFileName] = useState<string>(
-    state.data.participantImageName
-  );
-
   useEffect(() => handleEffect(dispatch, state.data.participantId), []);
-
-  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setFileName(e.currentTarget.value.replace(/^.*[\\/]/, ""));
-  };
 
   const nextClickHandler = () => {
     navigate("../contact");
@@ -131,21 +124,7 @@ const Register = (): ReactElement => {
         </div>
         <div>
           <div>
-            <Button
-              variant="contained"
-              component="label"
-              sx={{ m: "0rem 1rem 0rem 0.5rem" }}
-            >
-              Upload
-              <input
-                accept="image/*"
-                hidden
-                name="imageFile"
-                type="file"
-                onChange={handleChange}
-              />
-            </Button>
-            {fileName}
+            <FileInput id="imageFile" value="Photograph" />
           </div>
           <div></div>
         </div>
