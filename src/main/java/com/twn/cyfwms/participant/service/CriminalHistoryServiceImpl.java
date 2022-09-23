@@ -55,23 +55,48 @@ public class CriminalHistoryServiceImpl implements CriminalHistoryService{
 
     @Override
     public CriminalHistoryDto saveCriminalHistory(CriminalHistoryDto criminalHistoryDto) {
+        CriminalHistoryRecord criminalHistoryRecord=new CriminalHistoryRecord();
         CriminalHistory criminalHistory = null;
+        CriminalHistoryRecord criminalHistoryRecordData=null;
         if (criminalHistoryDto.getCriminalHistoryId() == 0) {
             criminalHistory = new CriminalHistory();
             modelMapper.map(criminalHistoryDto, criminalHistory);
+            for (int i = 0; i < criminalHistory.getCriminalHistoryRecordList().size(); ++i) {
+                criminalHistory.getCriminalHistoryRecordList().get(i).setStatus("ACTIVE");
+            }
+            criminalHistory = criminalHistoryRepo.save(criminalHistory);
+
+            for (int i = 0; i < criminalHistory.getCriminalHistoryRecordList().size(); ++i) {
+                criminalHistoryDto.getCriminalHistoryRecordList().get(i).setCriminalHistoryRecordId(criminalHistory.getCriminalHistoryRecordList().get(i).getCriminalHistoryRecordId());
+                criminalHistoryDto.getCriminalHistoryRecordList().get(i).setCriminalHistoryId(criminalHistory.getCriminalHistoryRecordList().get(i).getCriminalHistoryId());
+            }
         } else {
             criminalHistory = criminalHistoryRepo.findById(criminalHistoryDto.getCriminalHistoryId()).get();
-            modelMapper.map(criminalHistoryDto,criminalHistory);
+            criminalHistory.setConditions(criminalHistoryDto.getConditions());
+            criminalHistory.setCourtWorkerAndContactInfo(criminalHistoryDto.getCourtWorkerAndContactInfo());
+            for (int i=0;i<criminalHistoryDto.getCriminalHistoryRecordList().size();i++) {
+                if (criminalHistoryDto.getCriminalHistoryRecordList().get(i).getCriminalHistoryRecordId() == 0) {
+                    modelMapper.map(criminalHistoryDto.getCriminalHistoryRecordList().get(i),criminalHistoryRecord);
+                    criminalHistoryRecord.setStatus("ACTIVE");
+                    criminalHistoryRecordData= criminalHistoryRecordRepository.save(criminalHistoryRecord);
+                    criminalHistoryDto.getCriminalHistoryRecordList().get(i).setCriminalHistoryRecordId(criminalHistoryRecordData.getCriminalHistoryRecordId());
+
+                } else {
+                    for (int j = 0; j < criminalHistory.getCriminalHistoryRecordList().size(); j++){
+                        if (criminalHistory.getCriminalHistoryRecordList().get(j).getCriminalHistoryRecordId().equals(criminalHistoryDto.getCriminalHistoryRecordList().get(i).getCriminalHistoryRecordId())) {
+                             if (!criminalHistory.getCriminalHistoryRecordList().get(j).getStatus().equals("INACTIVE")) {
+                                 modelMapper.map(criminalHistoryDto.getCriminalHistoryRecordList().get(i), criminalHistory.getCriminalHistoryRecordList().get(j));
+                                 criminalHistory = criminalHistoryRepo.save(criminalHistory);
+                             }
+                             else {
+                                 throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
+                             }
+                        }
+                    }
+                }
+            }
         }
-        for (int i = 0; i < criminalHistory.getCriminalHistoryRecordList().size(); ++i) {
-            criminalHistory.getCriminalHistoryRecordList().get(i).setStatus("ACTIVE");
-        }
-        criminalHistory = criminalHistoryRepo.save(criminalHistory);
         criminalHistoryDto.setCriminalHistoryId(criminalHistory.getCriminalHistoryId());
-        for (int i = 0; i < criminalHistory.getCriminalHistoryRecordList().size(); ++i) {
-            criminalHistoryDto.getCriminalHistoryRecordList().get(i).setCriminalHistoryRecordId(criminalHistory.getCriminalHistoryRecordList().get(i).getCriminalHistoryRecordId());
-            criminalHistoryDto.getCriminalHistoryRecordList().get(i).setCriminalHistoryId(criminalHistory.getCriminalHistoryRecordList().get(i).getCriminalHistoryId());
-        }
         return criminalHistoryDto;
     }
     @Override
