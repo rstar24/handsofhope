@@ -46,7 +46,11 @@ export const handleSubmit: AppFormEventHandler<HTMLFormElement> = (
   formData.append("dateOfBirth", event.currentTarget.dateOfBirth.value);
   formData.append("gender", event.currentTarget.gender.value);
   formData.append("maritalStatus", event.currentTarget.maritalStatus.value);
-  formData.append("participantImageId", String(data.participantImageId));
+  if (data.participantImageId) {
+    formData.append("participantImageId", String(data.participantImageId));
+  } else {
+    formData.append("participantImageId", "0");
+  }
   formData.append("image", event.currentTarget.imageFile.files[0]);
   dispatch(doPost(formData))
     .unwrap()

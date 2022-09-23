@@ -48,6 +48,7 @@ public class ParticipantServiceImpl implements ParticipantService {
                    participantIdentityResponseDto.setDateOfBirth(participant.getDateOfBirth());
                    participantIdentityResponseDto.setGender(participant.getGender());
                    participantIdentityResponseDto.setMaritalStatus(participant.getMaritalStatus());
+                   participantIdentityResponseDto.setReferenceId(participant.getReferenceId());
                    participantIdentityResponseDto.setParticipantImageId(participantImage.getParticipantimageId());
                    participantIdentityResponseDto.setParticipantImageName(participantImage.getParticipantImageName());
                    participantIdentityResponseDto.setType(participantImage.getParticipantImageType());

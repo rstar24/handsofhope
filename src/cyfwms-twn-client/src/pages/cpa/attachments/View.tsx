@@ -4,7 +4,7 @@ import Input from "../../../components/Input";
 import { selected } from "../../../contexts/cpa/attachments";
 import { doGetOne } from "../../../features/cpa/attachments/slice";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
-import { Box, Button, Link } from "@mui/material";
+import { Box, Link } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import type { ReactElement } from "react";
 
@@ -94,8 +94,9 @@ const View = (): ReactElement => {
         </Box>
         <Box
           component="embed"
+          type={actualAttachment.imageType}
           sx={{ display: "flex", height: "500px" }}
-          src={`data:${actualAttachment.imageType};base64,${actualAttachment.file}`}
+          src={actualAttachment.file}
         />
       </Box>
     </CPALayout>
