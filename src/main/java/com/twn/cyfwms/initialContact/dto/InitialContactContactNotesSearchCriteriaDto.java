@@ -7,6 +7,9 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class InitialContactContactNotesSearchCriteriaDto {
-   @Getter @Setter
+    @Getter @Setter
+    private Long fileDetailsId;
+
+    @Getter @Setter
     private String data;
 }

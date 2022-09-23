@@ -119,12 +119,14 @@ public class TWNInitialContactController {
         return initialContactContactNotesService.saveAllContactNotes(initialContactContactNotesDto);
     }
 
-    @GetMapping(value = {"/searchContactNotes/{data}"},produces = "application/json")
+    @GetMapping(value = {"/searchContactNotes/{filedetailsid}/{data}"},produces = "application/json")
     @ApiOperation("Search InitialContact")
     @ResponseStatus(HttpStatus.OK)
     public List<InitialContactContactNotesSearchResultsDto> searchInitialContactContactNotes(@PathVariable Map<String, String> var)
     {
         InitialContactContactNotesSearchCriteriaDto contactNotesSearchCriteriaDto=new InitialContactContactNotesSearchCriteriaDto();
+        contactNotesSearchCriteriaDto.setFileDetailsId(("null".equals(var.get("filedetailsid"))
+                ||var.get("filedetailsid")==null) ? null:Long.parseLong(var.get("filedetailsid")));
         contactNotesSearchCriteriaDto.setData(
                 ("null".equals(var.get("data"))
                         || var.get("data") == null) ?null:var.get("data"));

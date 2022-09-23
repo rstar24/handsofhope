@@ -37,15 +37,24 @@ public class InitialContactContactNotesSearchRepository {
     private StringBuffer createSearchQuery(InitialContactContactNotesSearchCriteriaDto searchCriteria, List<Object> argsObjectList) {
         StringBuffer  querySBuff = new StringBuffer();
         String data=searchCriteria.getData();
+        Long fileDetailsId=searchCriteria.getFileDetailsId();
+
         querySBuff.append("select p.contactnotesid ,p.filedetailsid, p.name ,p.worker ,p.date , p.time,p.contactmethod ,p.needaddress ,p.summary ,p.result ,p.nextstep ,p.caseplanprogress ,p.additionalinformation ");
-        querySBuff.append("from initialcontactcontactnotes p left join initialcontactfiledetails p2 on p.filedetailsid = p2.filedetailsid where  p.status='ACTIVE'");
+        querySBuff.append("from initialcontactcontactnotes p left join initialcontactfiledetails p2 on p.filedetailsid = p2.filedetailsid where  p.status='ACTIVE' ");
+
+        if (fileDetailsId != null) {
+            querySBuff.append(" AND p.filedetailsid = ?");
+            argsObjectList.add(fileDetailsId);
+        }
+
         if (data != null && !data.trim().isEmpty()) {
             data = data.trim()
                     .replace("!", "!!")
                     .replace("%", "!%")
                     .replace("_", "!_")
                     .replace("[", "![");
-            querySBuff.append(" AND (p.filedetailsid=? OR p.name LIKE ?  OR p.worker LIKE ?  OR p.date LIKE ?  OR p.time LIKE ?  OR p.contactmethod LIKE ?  OR p.needaddress LIKE ?  OR p.summary LIKE ?  OR p.result LIKE ?  OR p.nextstep LIKE ?  OR p.caseplanprogress LIKE ? OR p.additionalinformation LIKE ?) ORDER BY p.creationdatetime desc ");
+
+            querySBuff.append(" AND (p.filedetailsid=? OR p.name LIKE ?  OR p.worker LIKE ?  OR p.date LIKE ?  OR p.time LIKE ?  OR p.contactmethod LIKE ?  OR p.needaddress LIKE ?  OR p.summary LIKE ?  OR p.result LIKE ?  OR p.nextstep LIKE ?  OR p.caseplanprogress LIKE ? OR p.additionalinformation LIKE ?)  ORDER BY p.creationdatetime desc ");
             argsObjectList.add(data);
             argsObjectList.add("%" +data + "%");
             argsObjectList.add("%" +data + "%");
