@@ -23,7 +23,7 @@ const ReferralInformation = (): ReactElement => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const initialContactID = useAppSelector(
-    (state) => state.icFileDetails.data.fileDetailsId
+    (state) => state.icFileDetails.getData.fileDetailsId
   );
   const { initialContactReferral } = useAppSelector(
     (state: any) => state.codetable

@@ -23,7 +23,7 @@ const PatientCareInformation = (): ReactElement => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const initialContactID = useAppSelector(
-    (state) => state.icFileDetails.data.fileDetailsId
+    (state) => state.icFileDetails.getData.fileDetailsId
   );
   const patient = useAppSelector((state) => state.codetable.patient);
   const data = useAppSelector((state) => state.icPatientCareInformation.data);

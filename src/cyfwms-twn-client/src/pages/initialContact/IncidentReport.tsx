@@ -24,7 +24,7 @@ const IncidentReport = (): ReactElement => {
   const dispatch = useAppDispatch();
   const { risk } = useAppSelector((state: any) => state.codetable);
   const initialContactID = useAppSelector(
-    (state: any) => state.icFileDetails.data.fileDetailsId
+    (state: any) => state.icFileDetails.getData.fileDetailsId
   );
   const data = useAppSelector((state: any) => state.icIncidentReport.data);
 

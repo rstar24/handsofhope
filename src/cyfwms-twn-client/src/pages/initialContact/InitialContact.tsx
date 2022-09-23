@@ -29,6 +29,7 @@ import { cleanState as cleanIncidentReportState } from "../../features/initialCo
 import { cleanState as cleanPatientCareInformationState } from "../../features/initialContact/patientCareInformation/slice";
 import { cleanState as cleanPresentConcernsState } from "../../features/initialContact/presentConcerns/slice";
 import { cleanState as cleanReferralInformationState } from "../../features/initialContact/referralInformation/slice";
+import { cleanState as cleanContactNotesState } from "../../features/initialContact/contactNotes/slice";
 
 /**
  * The InitialContact functional component.
@@ -62,6 +63,7 @@ const InitialContact = (): ReactElement => {
     dispatch(cleanIncidentReportState(null));
     dispatch(cleanPresentConcernsState(null));
     dispatch(cleanPatientCareInformationState(null));
+    dispatch(cleanContactNotesState(null));
   };
 
   return (

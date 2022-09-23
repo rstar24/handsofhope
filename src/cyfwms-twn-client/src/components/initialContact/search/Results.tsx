@@ -19,7 +19,7 @@ import {
 import React from "react";
 import { Link } from "react-router-dom";
 import type { Record } from "../../../features/initialContact/search/slice";
-import type { ReactElement } from "react";
+import { ReactElement } from "react";
 import { doSearch } from "../../../features/initialContact/contactNotes/slice";
 
 const Results = (): ReactElement => {
@@ -28,12 +28,15 @@ const Results = (): ReactElement => {
 
   const handleSearchView = (initialContactID: any) => {
     dispatch(setView(true));
-    dispatch(doGetFileDetails(initialContactID));
+    dispatch(doGetFileDetails(initialContactID)).then((res: any) => {
+      dispatch(doSearch({ id: res.payload.fileDetailsId, data: "" }))
+        .unwrap()
+        .catch((err) => {});
+    });
     dispatch(doGetReferralInformation(initialContactID));
     dispatch(doGetIncidentReport(initialContactID));
     dispatch(doGetPresentConcerns(initialContactID));
     dispatch(doGetPatientCareInformation(initialContactID));
-    dispatch(doSearch(initialContactID));
   };
 
   return (
@@ -61,7 +64,9 @@ const Results = (): ReactElement => {
               <TableCell>
                 <Link
                   to={`/initial_contact/view/${initialContact.fileDetailsId}`}
-                  onClick={() => handleSearchView(initialContact.fileDetailsId)}
+                  onClick={() => {
+                    handleSearchView(initialContact.fileDetailsId);
+                  }}
                 >
                   {initialContact.fileNumber}
                 </Link>

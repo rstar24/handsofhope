@@ -9,6 +9,7 @@ import CPA from "../../components/cpa/view/CPA";
 import Router from "../../components/nestedRouters/CPA";
 import EditIcon from "../../components/cpa/EditIcon";
 import Participant from "../../components/cpa/view/Participant";
+import Attachments from "../../components/cpa/view/Attachments";
 export const styles = {
   header: {
     fontWeight: 1000,
@@ -109,6 +110,12 @@ const View = (): ReactElement => {
           Participant
         </Typography>
         <Participant />
+      </div>
+      <div id="participant" className="highlight" tabIndex={2}>
+        <Typography variant="h6" sx={styles.header}>
+          Attachments
+        </Typography>
+        <Attachments />
       </div>
 
       <Popup children={<Router />} />

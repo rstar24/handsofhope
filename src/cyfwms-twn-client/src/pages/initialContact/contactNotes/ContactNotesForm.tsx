@@ -29,7 +29,7 @@ const ContactNotesForm = ({
     e.preventDefault();
     const form = e.currentTarget as HTMLFormElement;
     const formData: Data = {
-      fileDetailsId: state.data.fileDetailsId,
+      fileDetailsId: state.getData.fileDetailsId,
       contactNotesId: data.contactNotesId,
       name: form.naam.value,
       worker: form.worker.value,
@@ -47,7 +47,7 @@ const ContactNotesForm = ({
       .unwrap()
       .then(() => {
         console.log("PresentConcerns POST backend API was successful!");
-        dispatch(doSearch(state.data.fileDetailsId));
+        dispatch(doSearch({ id: state.getData.fileDetailsId, data: "" }));
         setAddNew(false);
       })
       .catch((err) => {

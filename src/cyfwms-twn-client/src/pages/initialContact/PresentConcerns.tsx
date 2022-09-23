@@ -24,7 +24,7 @@ const PresentConcerns = (): ReactElement => {
   const dispatch = useAppDispatch();
 
   const initialContactID = useAppSelector(
-    (state) => state.icFileDetails.data.fileDetailsId
+    (state) => state.icFileDetails.getData.fileDetailsId
   );
   const { mentalHealthOrSubstanceAbuse, presentConcerns } = useAppSelector(
     (state: any) => state.codetable

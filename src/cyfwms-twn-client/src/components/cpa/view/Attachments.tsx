@@ -10,18 +10,15 @@ import {
 } from "@mui/material";
 import React from "react";
 import { ReactElement } from "react";
+import { Link } from "react-router-dom";
 
-const Participant = (): ReactElement => {
-  const recordsList = useAppSelector((state) => state.cpaParticipant.record);
-  if (recordsList.length > 0) {
-    if (
-      recordsList[0].notes === "" &&
-      recordsList[0].role === "" &&
-      recordsList[0].participant === ""
-    ) {
-      return <></>;
-    }
-  }
+const Attachments = (): ReactElement => {
+  const recordsList = useAppSelector((state) => state.cpaAttachments.data);
+  //   if (recordsList.length > 0) {
+  //     if (true) {
+  //       return <></>;
+  //     }
+  //   }
 
   return (
     <>
@@ -39,7 +36,13 @@ const Participant = (): ReactElement => {
                 sx={{ "& > tr > td": { border: 0, p: 0, paddingLeft: 5 } }}
               >
                 {Object.entries(recordsList[index]).map((t: any, k: any) => {
-                  if (k !== 0 && k !== 1 && t[1] !== "") {
+                  if (
+                    t[0] !== "culturalProgImageId" &&
+                    t[0] !== "file" &&
+                    t[0] !== "culturalProgramId" &&
+                    t[0] !== "imageType" &&
+                    t[1] !== ""
+                  ) {
                     return (
                       <TableRow key={Math.random() * 1000}>
                         <TableCell
@@ -59,12 +62,21 @@ const Participant = (): ReactElement => {
                             })}
                         </TableCell>
                         <TableCell width="50%">
-                          <Typography
-                            component="p"
-                            sx={{ whiteSpace: "pre-wrap" }}
-                          >
-                            {t[1]}
-                          </Typography>
+                          {t[0] === "culturalimagename" ? (
+                            <Typography
+                              component="p"
+                              sx={{ whiteSpace: "pre-wrap" }}
+                            >
+                              <Link to="/demo">{t[1]}</Link>
+                            </Typography>
+                          ) : (
+                            <Typography
+                              component="p"
+                              sx={{ whiteSpace: "pre-wrap" }}
+                            >
+                              {t[1]}
+                            </Typography>
+                          )}
                         </TableCell>
                       </TableRow>
                     );
@@ -80,4 +92,4 @@ const Participant = (): ReactElement => {
   );
 };
 
-export default Participant;
+export default Attachments;

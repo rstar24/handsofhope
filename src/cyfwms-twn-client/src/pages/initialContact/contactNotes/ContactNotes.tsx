@@ -16,6 +16,7 @@ import { Link } from "react-router-dom";
 
 import {
   cleanState,
+  Data,
   doGet,
   doSearch,
 } from "../../../features/initialContact/contactNotes/slice";
@@ -23,16 +24,19 @@ import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import { doGetICContactMethod } from "../../../features/codetable/slice";
 
 function ContactNotes(props: any) {
+  const state = useAppSelector((state) => state.icFileDetails.getData);
   const dispatch = useAppDispatch();
   const [addNew, setAddNew] = useState(false);
   const [disabled, setDisabled] = useState(false);
-  const [value, setValue] = useState("");
+
   const data = useAppSelector((state) => state.icContactNotes.record);
-  const state = useAppSelector((state) => state.icFileDetails.data);
+
+  const [value, setValue] = useState("");
 
   useEffect(() => {
     dispatch(doGetICContactMethod());
-    dispatch(doSearch(state.fileDetailsId))
+
+    dispatch(doSearch({ id: state.fileDetailsId, data: "" }))
       .unwrap()
       .catch((err) => {});
   }, []);
@@ -50,7 +54,8 @@ function ContactNotes(props: any) {
       });
   };
   const handleSearchIcon = (e: any) => {
-    dispatch(doSearch(value || null))
+    console.group("click");
+    dispatch(doSearch({ id: state.fileDetailsId, data: value }))
       .unwrap()
       .catch((err) => {});
   };

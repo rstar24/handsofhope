@@ -76,7 +76,12 @@ export const doSearch = createAsyncThunk<Data[], any>(
   "contactNotes/doSearch",
   async (formData, { getState }) => {
     const store: any = getState();
-    const res: AxiosResponse = await doSearchAPI(formData, store.login.token);
+    const res: AxiosResponse = await doSearchAPI(
+      formData.id,
+      formData.data || null,
+      store.login.token
+    );
+
     // Becomes the `fulfilled` action payload:
     return res.data;
   }

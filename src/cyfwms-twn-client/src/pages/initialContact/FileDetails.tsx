@@ -44,7 +44,7 @@ const FileDetails = (): ReactElement => {
 
   const [click, setClick] = useState(false);
   useEffect(() => {
-    dispatch(doGet(state.data.fileDetailsId))
+    dispatch(doGet(state.getData.fileDetailsId))
       .unwrap()
       .then((data) => {
         console.log("FileDetails GET backend API was successful!");
@@ -62,7 +62,7 @@ const FileDetails = (): ReactElement => {
     const form: any = e.currentTarget;
     const formData: Data = {
       fileDetailsId: state.getData.fileDetailsId,
-      fileNumber: state.getData.fileDetailsId | 0,
+      fileNumber: state.getData.fileNumber || 0,
       clientName: state.getData.participantId,
       startingDate: form.startingDate.value,
       caseworker: form.caseWorker.value,

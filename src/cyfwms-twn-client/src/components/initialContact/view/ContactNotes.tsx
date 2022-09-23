@@ -1,4 +1,4 @@
-import { useAppSelector } from "../../../library/hooks";
+import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import {
   Table,
   TableBody,
@@ -8,21 +8,18 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import type { ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
+import { doSearch } from "../../../features/initialContact/contactNotes/slice";
 
 const ContactNotes = (): ReactElement => {
   const recordsList = useAppSelector((state) => state.icContactNotes.record);
+  const dispatch = useAppDispatch();
+  const data = useAppSelector((state) => state.icFileDetails.getData);
+  const popup = useAppSelector((state) => state.popup.open);
 
-  //   if (recordsList.length > 0) {
-  //     if (
-  //       false
-  //       //   recordsList[0]. === "" &&
-  //       //   recordsList[0].role === "" &&
-  //       //   recordsList[0].participant === ""
-  //     ) {
-  //       return <></>;
-  //     }
-  //   }
+  useEffect(() => {
+    dispatch(doSearch({ id: data.fileDetailsId, data: "" }));
+  }, [popup]);
 
   return (
     <>

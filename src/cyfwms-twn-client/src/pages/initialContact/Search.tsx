@@ -13,6 +13,7 @@ import { Box, Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import type { Record } from "../../features/initialContact/search/slice";
 import type { FormEvent, ReactElement } from "react";
+import { cleanState } from "../../features/initialContact/contactNotes/slice";
 
 /**
  * The Search functional component.
