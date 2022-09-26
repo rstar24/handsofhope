@@ -118,6 +118,7 @@ const View = (): ReactElement => {
         sx={{
           display: "flex",
           backgroundColor: "#d7d3d354",
+          height: "200px",
         }}
       >
         <Box
