@@ -77,8 +77,9 @@ public class TWNCulturalProgramController {
     @DeleteMapping("/removeCulturalProgAndAct/{culturalprogramid}")
     @ApiOperation("Remove CulturalProgAndAct")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity removeCulturalProgAndAct(@PathVariable("culturalprogramid") Long culturalProgramId) {
-        return culturalProgAndActService.removeCulturalProgAndAct(culturalProgramId);
+    public ResponseEntity<String> removeCulturalProgAndAct(@PathVariable("culturalprogramid") Long culturalProgramId) {
+         culturalProgAndActService.removeCulturalProgAndAct(culturalProgramId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
