@@ -1,12 +1,9 @@
 package com.twn.cyfwms.CulturalProgram.service;
-
 import static org.springframework.http.HttpStatus.*;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +11,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.twn.cyfwms.CulturalProgram.dto.AttachmentDTO;
 import com.twn.cyfwms.CulturalProgram.entity.AttachmentEntity;
 import com.twn.cyfwms.CulturalProgram.repository.AttachmentsRepository;
-
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -74,14 +69,20 @@ public class AttachmentsServiceImpl implements AttachmentsService {
   @Override
   public AttachmentDTO getOneFile(Long id) {
     AttachmentDTO culturalProgImageDto = new AttachmentDTO();
-    AttachmentEntity culturalProgImage= culturalProgImageRepository.findById(id).get();
-    culturalProgImageDto.setCulturalProgImageId(culturalProgImage.getCulturalProgImageId());
-    culturalProgImageDto.setCulturalProgramId(culturalProgImage.getCulturalProgramId());
-    culturalProgImageDto.setType(culturalProgImage.getType());
-    culturalProgImageDto.setName(culturalProgImage.getName());
-    culturalProgImageDto.setImageType(culturalProgImage.getCulturalImageType());
-    culturalProgImageDto.setFile(culturalProgImage.getCulturamImagefile());
-    culturalProgImageDto.setCulturalimagename(culturalProgImage.getCulturalimagename());
+    AttachmentEntity culturalProgImage= culturalProgImageRepository.findByculturalProgImageId(id);
+    if (culturalProgImage!=null) {
+      culturalProgImageDto.setCulturalProgImageId(culturalProgImage.getCulturalProgImageId());
+      culturalProgImageDto.setCulturalProgramId(culturalProgImage.getCulturalProgramId());
+      culturalProgImageDto.setType(culturalProgImage.getType());
+      culturalProgImageDto.setName(culturalProgImage.getName());
+      culturalProgImageDto.setImageType(culturalProgImage.getCulturalImageType());
+      culturalProgImageDto.setFile(culturalProgImage.getCulturamImagefile());
+      culturalProgImageDto.setCulturalimagename(culturalProgImage.getCulturalimagename());
+    }
+    else {
+      throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
+    }
+
     return culturalProgImageDto;
   }
 
@@ -105,7 +106,7 @@ public class AttachmentsServiceImpl implements AttachmentsService {
   public List<AttachmentDTO> getAllFiles(Long culturalProgramId) {
     List<AttachmentDTO> culturalProgImageDtoList = new ArrayList<AttachmentDTO>();
     if (culturalProgramId != 0) {
-      List<AttachmentEntity> CulturalProgImageList = culturalProgImageRepository.findByculturalProgramId(culturalProgramId);
+      List<AttachmentEntity> CulturalProgImageList = culturalProgImageRepository.findByCulturalProgramId(culturalProgramId);
       if (CulturalProgImageList != null) {
         culturalProgImageDtoList = modelMapper.map(CulturalProgImageList, new TypeToken<List<AttachmentDTO>>() {}.getType());
       } else {

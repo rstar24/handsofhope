@@ -1,18 +1,17 @@
 package com.twn.cyfwms.CulturalProgram.service;
 import com.twn.cyfwms.CulturalProgram.dto.CulturalProgAndActDto;
-import com.twn.cyfwms.CulturalProgram.entity.CulturalProgAndAct;
 import com.twn.cyfwms.CulturalProgram.entity.AttachmentEntity;
+import com.twn.cyfwms.CulturalProgram.entity.CulturalProgAndAct;
 import com.twn.cyfwms.CulturalProgram.entity.ParticipantCulturalProgAndAct;
-import com.twn.cyfwms.CulturalProgram.repository.CulturalProgAndActRepository;
 import com.twn.cyfwms.CulturalProgram.repository.AttachmentsRepository;
+import com.twn.cyfwms.CulturalProgram.repository.CulturalProgAndActRepository;
 import com.twn.cyfwms.CulturalProgram.repository.ParticipantCulturalProgRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import java.util.List;
 import java.util.Optional;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 @Service
@@ -76,30 +75,30 @@ public class CulturalProgAndActServiceImpl implements CulturalProgAndActService 
     }
 
     @Override
-    public ResponseEntity removeCulturalProgAndAct(Long culturalProgramId) {
+    public void removeCulturalProgAndAct(Long culturalProgramId) {
         if (culturalProgramId != 0 ) {
             CulturalProgAndAct culturalProgAndAct = culturalProgAndActRepository.findByculturalProgramId(culturalProgramId);
             if (culturalProgAndAct!=null){
                 culturalProgAndAct.setDeletionOfStatus("INACTIVE");
                 culturalProgAndActRepository.save(culturalProgAndAct);
+                List<ParticipantCulturalProgAndAct> participantCulturalProgAndActsList=participantCulturalProgRepository.findByCulturalProgramId(culturalProgramId);
+                for (int i=0;i<participantCulturalProgAndActsList.size();i++){
+                    participantCulturalProgAndActsList.get(i).setStatus("INACTIVE");
+                    participantCulturalProgRepository.save(participantCulturalProgAndActsList.get(i));
+                }
+                List<AttachmentEntity> attachmentEntityList=attachmentsRepository.findByCulturalProgramId(culturalProgramId);
+                for (int i=0;i<attachmentEntityList.size();i++){
+                    attachmentEntityList.get(i).setStatus("INACTIVE");
+                    attachmentsRepository.save(attachmentEntityList.get(i));
+                }
             }
             else {
                 throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
             }
-            ParticipantCulturalProgAndAct participantCulturalProgAndAct=participantCulturalProgRepository.findByculturalProgramId(culturalProgramId);
-            if (participantCulturalProgAndAct!=null){
-              participantCulturalProgAndAct.setStatus("INACTIVE");
-              participantCulturalProgRepository.save(participantCulturalProgAndAct);
-           }
-            Optional<AttachmentEntity> culturalProgImage=attachmentsRepository.findByCulturalProgramId(culturalProgramId);
-             if (culturalProgImage.isPresent()){
-                culturalProgImage.get().setStatus("INACTIVE");
-                attachmentsRepository.save(culturalProgImage.get());
-             }
-        } else {
+        }
+        else{
             throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
         }
-        return new ResponseEntity( HttpStatus.OK);
     }
 
 }

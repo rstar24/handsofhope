@@ -68,6 +68,10 @@ public class InitialContactContactNotesSearchRepository {
             argsObjectList.add("%" +data + "%");
             argsObjectList.add("%" +data + "%");
         }
+        else {
+        querySBuff.append(" AND p.filedetailsid = ?  ORDER BY p.creationdatetime desc ");
+        argsObjectList.add(fileDetailsId);}
+
         return querySBuff;
     }
 }

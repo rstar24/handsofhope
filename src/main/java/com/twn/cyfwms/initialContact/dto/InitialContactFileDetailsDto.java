@@ -34,6 +34,10 @@ public class InitialContactFileDetailsDto {
     @Setter
     private LocalDate dateClosed;
 
+    @Getter
+    @Setter
+    private String status;
+
     @Getter @Setter
     private Long participantId;
 
