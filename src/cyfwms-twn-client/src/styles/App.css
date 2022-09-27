@@ -1,29 +1,5 @@
-@keyframes highlightAnimation {
-  0% {
-    border: initial;
-    background-color: initial;
-  }
-  50% {
-    background-color: #ededed;
-  }
-  100% {
-    border: initial;
-    background-color: initial;
-  }
-}
-
-.highlight:focus {
-  animation: highlightAnimation 3s ease-in-out;
-}
-
-.disabled{
+.disabled {
   border-width: 1px;
   color: rgb(0, 0, 0);
   opacity: 1;
 }
-
-
-
-
-
-
