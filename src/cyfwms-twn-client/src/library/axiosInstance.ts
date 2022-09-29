@@ -3,7 +3,7 @@ import jwtDecode from "jwt-decode";
 import { setLoginFalse } from "../features/login/slice";
 import { store } from "../library/store";
 const axiosInstance = axios.create({
-  baseURL: `${process.env.REACT_APP_REST_API || "http://localhost:9088"}/v1/`,
+  baseURL: `${process.env.REACT_APP_REST_API_TEST || "http://localhost:9088"}/v1/`,
 });
 
 axiosInstance.interceptors.request.use(
