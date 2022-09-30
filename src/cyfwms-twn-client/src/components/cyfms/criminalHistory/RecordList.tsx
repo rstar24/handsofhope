@@ -13,7 +13,7 @@ const RecordList = (props: AppRecordListProps<RecordT>): ReactElement => {
   return (
     <>
       {props.list.map((record, index) => (
-        <Record key={100 + index} record={record} number={index + 1} />
+        <Record key={Math.random() * 1000} record={record} number={index + 1} />
       ))}
     </>
   );

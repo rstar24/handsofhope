@@ -9,9 +9,10 @@ import PresentConcerns from "../../../components/initialContact/view/PresentConc
 import ReferralInformation from "../../../components/initialContact/view/ReferralInformation";
 import ContactNotes from "../../../components/initialContact/view/ContactNotes";
 import Router from "../../../components/nestedRouters/InitialContact";
+import TabContext from "../../../contexts/view/TabContext";
 import { useAppSelector } from "../../../library/hooks";
 import { Box, Tab, Tabs, Typography } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import type { ReactElement } from "react";
 
@@ -33,10 +34,10 @@ export const styles = {
 const View = (): ReactElement => {
   const navigate = useNavigate();
   const state = useAppSelector((state) => state);
-  const [tab, setTab] = React.useState(0);
+  const tabContext = useContext(TabContext);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setTab(newValue);
+    tabContext.tabNumber = newValue;
   };
 
   return (
@@ -70,43 +71,45 @@ const View = (): ReactElement => {
                       inset -1px 0 black`,
         }}
       >
-        <Tabs
-          variant="scrollable"
-          value={tab}
-          onChange={handleChange}
-          aria-label="InitialContact view navigation tabs"
-        >
-          <Tab
-            label="File Details"
-            value={1}
-            onClick={() => navigate("file_details")}
-          />
-          <Tab
-            label="Referral Information"
-            value={2}
-            onClick={() => navigate("referral_information")}
-          />
-          <Tab
-            label="Incident Report"
-            value={3}
-            onClick={() => navigate("incident_report")}
-          />
-          <Tab
-            label="Present Concerns"
-            value={4}
-            onClick={() => navigate("present_concerns")}
-          />
-          <Tab
-            label="Patient Care Information"
-            value={5}
-            onClick={() => navigate("patient_care_information")}
-          />
-          <Tab
-            label="Contact Notes"
-            value={6}
-            onClick={() => navigate("contact_notes")}
-          />
-        </Tabs>
+        <TabContext.Provider value={{ tabNumber: 1 }}>
+          <Tabs
+            variant="scrollable"
+            value={tabContext.tabNumber}
+            onChange={handleChange}
+            aria-label="InitialContact view navigation tabs"
+          >
+            <Tab
+              label="File Details"
+              value={1}
+              onClick={() => navigate("file_details")}
+            />
+            <Tab
+              label="Referral Information"
+              value={2}
+              onClick={() => navigate("referral_information")}
+            />
+            <Tab
+              label="Incident Report"
+              value={3}
+              onClick={() => navigate("incident_report")}
+            />
+            <Tab
+              label="Present Concerns"
+              value={4}
+              onClick={() => navigate("present_concerns")}
+            />
+            <Tab
+              label="Patient Care Information"
+              value={5}
+              onClick={() => navigate("patient_care_information")}
+            />
+            <Tab
+              label="Contact Notes"
+              value={6}
+              onClick={() => navigate("contact_notes")}
+            />
+          </Tabs>
+        </TabContext.Provider>
       </Box>
       <Box sx={{ height: 400, overflowY: "scroll" }}>
         <Routes>
