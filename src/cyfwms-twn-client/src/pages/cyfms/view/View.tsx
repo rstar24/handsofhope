@@ -52,19 +52,26 @@ const View = (): ReactElement => {
         sx={{
           display: "flex",
           backgroundColor: "#d7d3d354",
-          height: "200px",
+          height: "210px",
         }}
       >
         <Box
+          // flexBasis: 2,
+          // flexGrow: 1,
           sx={{
-            borderRadius: "50%",
-            flexBasis: 2,
-            flexGrow: 1,
-            p: "1rem 0 1rem 1rem",
+            backgroundPosition: "center",
+            marginLeft: "1rem",
+            marginTop: "0.25rem",
+            height: "200px",
+            width: "200px",
+            borderRadius: "100%",
+            backgroundColor: "white",
+            backgroundImage: state.cyfmsRegister.data.image
+              ? `url(data:${state.cyfmsRegister.data.type};base64,${state.cyfmsRegister.data.image})`
+              : "url('/img/profile1.png')",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
           }}
-          component="img"
-          src={`data:${state.cyfmsRegister.data.type};base64,${state.cyfmsRegister.data.image}`}
-          width={200}
         ></Box>
         <Box
           sx={{
