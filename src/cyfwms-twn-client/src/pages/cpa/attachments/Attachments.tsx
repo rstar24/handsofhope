@@ -72,7 +72,9 @@ const Attachments = (): ReactElement => {
                   }}
                 >
                   <TableRow>
-                    <TableCell>Action</TableCell>
+                    <TableCell>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </TableCell>
                     <TableCell>Document</TableCell>
                     <TableCell>Type</TableCell>
                   </TableRow>

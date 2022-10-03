@@ -130,7 +130,7 @@ const View = (): ReactElement => {
             aria-label="CYFMS view navigation tabs"
           >
             <Tab
-              label="Registration"
+              label="Identity"
               value={1}
               onClick={() => navigate("register")}
             />
