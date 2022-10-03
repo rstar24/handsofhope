@@ -85,7 +85,21 @@ export const registerSlice = createSlice<State, SliceCaseReducers<State>>({
       });
     builder
       .addCase(doPost.fulfilled, (state, action) => {
-        state.data = action.payload;
+        // Due to backend erratic implementation
+        // Upon not providing image when saving form,
+        // response object does not return image related information.
+        if (action.payload.image) {
+          state.data = action.payload;
+        } else {
+          state.data.dateOfBirth = action.payload.dateOfBirth;
+          state.data.firstname = action.payload.firstname;
+          state.data.gender = action.payload.gender;
+          state.data.maritalStatus = action.payload.maritalStatus;
+          state.data.middleName = action.payload.middleName;
+          state.data.participantId = action.payload.participantId;
+          state.data.referenceId = action.payload.referenceId;
+          state.data.surname = action.payload.surname;
+        }
         state.status = "success";
       })
       .addCase(doPost.pending, (state) => {
