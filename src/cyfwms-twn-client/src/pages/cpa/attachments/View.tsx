@@ -6,12 +6,13 @@ import { doGetOne } from "../../../features/cpa/attachments/slice";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import { Box, Link } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import type { ReactElement } from "react";
+import type { FC } from "react";
 
 /**
- * Form to view document information selected from attachments.
+ * `View` is used to view document information selected from attachments.
+ * @returns `ReactElement`
  */
-const View = (): ReactElement => {
+const View: FC = () => {
   const dispatch = useAppDispatch();
   const attachment = useAppSelector(
     (state) => state.cpaAttachments.data[selected.value]
@@ -83,21 +84,6 @@ const View = (): ReactElement => {
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
         </Box>
-        <Box sx={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
-          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            Preview{" "}
-            {actualAttachment.imageType.match(/image\/.*/)
-              ? ""
-              : "(not available)"}
-          </Box>
-          <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
-        </Box>
-        <Box
-          component="embed"
-          type={actualAttachment.imageType}
-          sx={{ display: "flex", height: "500px" }}
-          src={actualAttachment.file}
-        />
       </Box>
     </CPALayout>
   );
