@@ -27,6 +27,8 @@ const CgLayout: FC<PropsWithChildren> = (props) => {
               { value: "Care Provider", route: "../care_provider" },
               { value: "Capacity", route: "../capacity" },
               { value: "Caregiver(s)", route: "../caregivers" },
+              { value: "Contact Notes(s)", route: "../contact_notes" },
+              { value: "Attachment(s)", route: "../attachments" },
             ]}
           />
         </Box>

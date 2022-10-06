@@ -17,7 +17,7 @@ import InitialContact from "./pages/initialContact/InitialContact"; // where, ic
 import IcSearch from "./pages/initialContact/Search";
 import IcView from "./pages/initialContact/view/View";
 import CG from "./pages/cg/cg/CG"; // where, cg = Caregivers
-// import CgSearch from "./pages/cg/search/Search";
+import CgSearch from "./pages/cg/search/Search";
 // import CgView from "./pages/cg/view/View";
 import { ThemeProvider } from "@mui/material/styles";
 import React, { StrictMode } from "react";
@@ -52,7 +52,7 @@ const App: FC = () => {
                 <Route path="cpa/search/*" element={<CpaSearch />} />
                 <Route path="cpa/view/*" element={<CpaView />} />
                 <Route path="cg/*" element={<CG />} />
-                {/* <Route path="cg/search/*" element={<CgSearch />} /> */}
+                <Route path="/cg/search/*" element={<CgSearch />} />
                 {/* <Route path="cg/view/*" element={<CgView />} /> */}
               </Routes>
             </BrowserRouter>

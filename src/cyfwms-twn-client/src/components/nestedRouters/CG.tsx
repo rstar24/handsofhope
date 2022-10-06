@@ -1,3 +1,9 @@
+import Attachment from "../../pages/cg/Attachment/Attachment";
+import ContactNotes from "../../pages/cg/ContactNotes/ContactNotes";
+import Search from "../../pages/cg/search/Search";
+import Add from "../../pages/cg/cg/Add";
+import View from "../../pages/cg/Attachment/View";
+import Edit from "../../pages/cg/Attachment/Edit";
 //import Capacity from "../../pages/cg/capacity/Capacity";
 //import Caregivers from "../../pages/cg/caregivers/Caregivers";
 import CareProvider from "../../pages/cg/careProvider/CareProvider";
@@ -15,11 +21,11 @@ const CG: FC = () => {
       <Route path="care_provider" element={<CareProvider />} />
       {/* <Route path="capacity" element={<Capacity />} /> */}
       {/* <Route path="caregivers" element={<Caregivers />} /> */}
-      {/* <Route path="contact_notes" element={<ContactNotes />} /> */}
-      {/* <Route path="attachments" element={<Attachments />} /> */}
-      {/* <Route path="attachments/add" element={<Add />} /> */}
-      {/* <Route path="attachments/view" element={<View />} /> */}
-      {/* <Route path="attachments/edit" element={<Edit />} /> */}
+      <Route path="contact_notes" element={<ContactNotes />} />
+      <Route path="attachments" element={<Attachment />} />
+      <Route path="attachments/add" element={<Add />} />
+      <Route path="attachments/view" element={<View />} />
+      <Route path="attachments/edit" element={<Edit />} />
     </Routes>
   );
 };
