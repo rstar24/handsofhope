@@ -4,7 +4,7 @@ import org.cyfwms.participant.dto.HouseholdMemberDto;
 import org.cyfwms.participant.entity.HouseholdMember;
 import org.cyfwms.participant.repository.HouseholdMemberRepository;
 import lombok.AllArgsConstructor;
-import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
@@ -18,8 +18,7 @@ public class HouseholdMemberServiceImpl implements HouseholdMemberService {
     @Autowired
     private HouseholdMemberRepository householdMemberRepo;
 
-    @Autowired
-    private ModelMapper modelMapper;
+
 
     @Override
     public List<HouseholdMemberDto> getAllHouseholdMembers(Long participantId) {
@@ -27,7 +26,7 @@ public class HouseholdMemberServiceImpl implements HouseholdMemberService {
                         .stream().
                         map(hm -> {
                             HouseholdMemberDto hmDTO = new HouseholdMemberDto();
-                            modelMapper.map(hm, hmDTO);
+                            BeanUtils.copyProperties(hm, hmDTO);
                             if (hmDTO.getDateOfBirth() == null) {
                                 hmDTO.setDateOfBirth(LocalDate.of(1, 1, 1));
                             }
@@ -43,11 +42,11 @@ public class HouseholdMemberServiceImpl implements HouseholdMemberService {
             HouseholdMember householdMember = null;
             if (HouseholdMemberDto.getHouseholdMemberId() == 0) {
                 householdMember = new HouseholdMember();
-                modelMapper.map(HouseholdMemberDto, householdMember);
+                BeanUtils.copyProperties(HouseholdMemberDto, householdMember);
                 householdMember.setStatus("ACTIVE");
             } else {
                 householdMember = householdMemberRepo.findById(HouseholdMemberDto.getHouseholdMemberId()).get();
-                modelMapper.map(HouseholdMemberDto,householdMember);
+                BeanUtils.copyProperties(HouseholdMemberDto,householdMember);
             }
             householdMember = householdMemberRepo.save(householdMember);
             HouseholdMemberDto.setHouseholdMemberId(householdMember.getHouseholdMemberId());

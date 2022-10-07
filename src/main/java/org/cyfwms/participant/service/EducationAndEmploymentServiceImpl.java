@@ -8,7 +8,7 @@ import org.cyfwms.participant.entity.Employment;
 import org.cyfwms.participant.repository.EducationRepository;
 import org.cyfwms.participant.repository.EmploymentRepository;
 import lombok.AllArgsConstructor;
-import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -30,8 +30,7 @@ public class EducationAndEmploymentServiceImpl implements EducationAndEmployment
     @Autowired
     EducationService educationService;
 
-    @Autowired
-    private ModelMapper modelMapper;
+
 
     @Override
     public EducationAndEmploymentCompositeDto readEducationAndEmployment(Long participantId) {
@@ -40,11 +39,11 @@ public class EducationAndEmploymentServiceImpl implements EducationAndEmployment
             Education education =
                     educationRepository.findByParticipantId(participantId);
             if (education != null) {
-                modelMapper.map(education, educationAndEmploymentCompositeDto);
+                BeanUtils.copyProperties(education, educationAndEmploymentCompositeDto);
             }
             Employment employment = employmentRepository.findByParticipantId(participantId);
             if (employment != null) {
-                modelMapper.map(employment, educationAndEmploymentCompositeDto);
+                BeanUtils.copyProperties(employment, educationAndEmploymentCompositeDto);
             }
         }
         return educationAndEmploymentCompositeDto;
@@ -53,11 +52,13 @@ public class EducationAndEmploymentServiceImpl implements EducationAndEmployment
     @Override
     public EducationAndEmploymentCompositeDto saveEducationAndEmployment(EducationAndEmploymentCompositeDto educationAndEmploymentCompositeDto) {
         EducationDto educationDto = new EducationDto();
-        modelMapper.map(educationAndEmploymentCompositeDto,educationDto);
+        BeanUtils.copyProperties(educationAndEmploymentCompositeDto,educationDto);
         educationService.saveEducation(educationDto);
+        educationAndEmploymentCompositeDto.setEducationId(educationDto.getEducationId());
         EmploymentDto employmentDto = new EmploymentDto();
-        modelMapper.map(educationAndEmploymentCompositeDto,employmentDto);
+        BeanUtils.copyProperties(educationAndEmploymentCompositeDto,employmentDto);
         employmentService.saveEmployment(employmentDto);
+        educationAndEmploymentCompositeDto.setEmploymentId(employmentDto.getEmploymentId());
         return educationAndEmploymentCompositeDto;
     }
 }
