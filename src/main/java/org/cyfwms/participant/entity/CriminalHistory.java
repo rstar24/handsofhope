@@ -41,7 +41,7 @@ public class CriminalHistory implements Serializable {
     @Getter @Setter @Column(name = "courtworkerandcontactinfo")
     private String courtWorkerAndContactInfo;
     @CreationTimestamp
-    @Getter @Setter @Column(name = "creationdate")
+    @Getter @Setter @Column(name = "creationdate",updatable = false)
     private LocalDate creationDate;
     @UpdateTimestamp
     @Getter @Setter @Column(name = "lastwritten")

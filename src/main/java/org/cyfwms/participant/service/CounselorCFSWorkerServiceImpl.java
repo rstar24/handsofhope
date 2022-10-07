@@ -1,9 +1,9 @@
 package org.cyfwms.participant.service;
+import lombok.AllArgsConstructor;
 import org.cyfwms.participant.dto.CounselorCFSWorkersDto;
 import org.cyfwms.participant.entity.CounselorCFSWorker;
 import org.cyfwms.participant.repository.CounselorCFSWorkerRepository;
-import lombok.AllArgsConstructor;
-import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
@@ -18,9 +18,6 @@ public class CounselorCFSWorkerServiceImpl implements CounselorCFSWorkerService{
     @Autowired
     CounselorCFSWorkerRepository cfsWorkerRepository;
 
-    @Autowired
-    private ModelMapper modelMapper;
-
     @Override
     public List<CounselorCFSWorkersDto> getAllCounselorCFSWorkers(Long participantId) {
         List<CounselorCFSWorkersDto> counselorCFSWorkersDtoList = new ArrayList<CounselorCFSWorkersDto>();
@@ -29,7 +26,7 @@ public class CounselorCFSWorkerServiceImpl implements CounselorCFSWorkerService{
                     .stream()
                     .map(counselorCFSWorker -> {
                         CounselorCFSWorkersDto ccWorkerDto = new CounselorCFSWorkersDto();
-                        modelMapper.map(counselorCFSWorker, ccWorkerDto);
+                        BeanUtils.copyProperties(counselorCFSWorker, ccWorkerDto);
                         if (ccWorkerDto.getStartDate() == null) {
                             ccWorkerDto.setStartDate(LocalDate.of(1,1,1));
                         }
@@ -48,11 +45,11 @@ public class CounselorCFSWorkerServiceImpl implements CounselorCFSWorkerService{
             CounselorCFSWorker counselorCFSWorker = null;
             if (CounselorCFSWorkersDto.getCounselorCFSWorkerId() == 0) {
                 counselorCFSWorker = new CounselorCFSWorker();
-                modelMapper.map(CounselorCFSWorkersDto, counselorCFSWorker);
+                BeanUtils.copyProperties(CounselorCFSWorkersDto, counselorCFSWorker);
                 counselorCFSWorker.setStatus("ACTIVE");
             } else {
                 counselorCFSWorker = cfsWorkerRepository.findById(CounselorCFSWorkersDto.getCounselorCFSWorkerId()).get();
-                modelMapper.map(CounselorCFSWorkersDto, counselorCFSWorker);
+                BeanUtils.copyProperties(CounselorCFSWorkersDto, counselorCFSWorker);
             }
             counselorCFSWorker = cfsWorkerRepository.save(counselorCFSWorker);
             CounselorCFSWorkersDto.setCounselorCFSWorkerId(counselorCFSWorker.getCounselorCFSWorkerId());

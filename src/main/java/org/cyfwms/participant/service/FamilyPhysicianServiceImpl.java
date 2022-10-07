@@ -4,7 +4,7 @@ import org.cyfwms.participant.dto.FamilyPhysicianDto;
 import org.cyfwms.participant.entity.FamilyPhysician;
 import org.cyfwms.participant.repository.FamilyPhysicianRepository;
 import lombok.AllArgsConstructor;
-import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
@@ -18,9 +18,6 @@ public class FamilyPhysicianServiceImpl implements FamilyPhysicianService {
     @Autowired
     private FamilyPhysicianRepository familyPhysicianRepository;
 
-    @Autowired
-    ModelMapper modelMapper;
-
     @Override
     public List<FamilyPhysicianDto> getAllFamilyPhysicians(Long participantId) {
         List<FamilyPhysicianDto> familyPhysicianDtoList = new ArrayList<FamilyPhysicianDto>();
@@ -30,7 +27,7 @@ public class FamilyPhysicianServiceImpl implements FamilyPhysicianService {
                             .stream()
                             .map( fp -> {
                                 FamilyPhysicianDto fpDto = new FamilyPhysicianDto();
-                                modelMapper.map(fpDto, fp);
+                                BeanUtils.copyProperties(fp, fpDto);
                                 return fpDto;
                             }).collect(Collectors.toList());
         }
@@ -43,11 +40,11 @@ public class FamilyPhysicianServiceImpl implements FamilyPhysicianService {
             FamilyPhysician familyPhysician = null;
             if (FamilyPhysicianDto.getFamilyPhysicianId() == 0) {
                 familyPhysician = new FamilyPhysician();
-                modelMapper.map(FamilyPhysicianDto, familyPhysician);
+                BeanUtils.copyProperties(FamilyPhysicianDto, familyPhysician);
                 familyPhysician.setStatus("ACTIVE");
             } else {
                 familyPhysician = familyPhysicianRepository.findById(FamilyPhysicianDto.getFamilyPhysicianId()).get();
-                modelMapper.map(FamilyPhysicianDto, familyPhysician);
+                BeanUtils.copyProperties(FamilyPhysicianDto, familyPhysician);
             }
             familyPhysician = familyPhysicianRepository.save(familyPhysician);
             FamilyPhysicianDto.setFamilyPhysicianId(familyPhysician.getFamilyPhysicianId());

@@ -1,12 +1,11 @@
 package org.cyfwms.participant.service;
-
+import lombok.AllArgsConstructor;
 import org.cyfwms.participant.dto.CriminalHistoryDto;
 import org.cyfwms.participant.entity.CriminalHistory;
 import org.cyfwms.participant.entity.CriminalHistoryRecord;
 import org.cyfwms.participant.repository.CriminalHistoryRecordRepository;
 import org.cyfwms.participant.repository.CriminalHistoryRepository;
-import lombok.AllArgsConstructor;
-import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
@@ -19,8 +18,7 @@ import java.util.stream.Collectors;
 public class CriminalHistoryServiceImpl implements CriminalHistoryService{
     @Autowired
     private CriminalHistoryRepository criminalHistoryRepo;
-    @Autowired
-    private ModelMapper modelMapper;
+
     @Autowired
     CriminalHistoryRecordRepository cHistoryRecordRepo;
 
@@ -37,7 +35,7 @@ public class CriminalHistoryServiceImpl implements CriminalHistoryService{
                                 .getCriminalHistoryRecordList()
                                 .stream()
                                 .filter(chRecord ->
-                                        chRecord.getStatus().equalsIgnoreCase("INACTIVE")
+                                        chRecord.getStatus().equalsIgnoreCase("ACTIVE")
                                 )
                                 .map(cHistoryRecord -> {
                                     if (cHistoryRecord.getArrestDate() == null) {
@@ -47,7 +45,7 @@ public class CriminalHistoryServiceImpl implements CriminalHistoryService{
                                 })
                                 .collect(Collectors.toList());
                 criminalHistory.setCriminalHistoryRecordList(criminalHistoryRecordList);
-                modelMapper.map(criminalHistory, criminalHistoryDto);
+                BeanUtils.copyProperties(criminalHistory, criminalHistoryDto);
             }
         }
         return criminalHistoryDto;
@@ -59,7 +57,7 @@ public class CriminalHistoryServiceImpl implements CriminalHistoryService{
         List<CriminalHistoryRecord> criminalHistoryRecordList = null;
         if (criminalHistoryDto.getCriminalHistoryId() == 0) {
             criminalHistory = new CriminalHistory();
-            modelMapper.map(criminalHistoryDto, criminalHistory);
+            BeanUtils.copyProperties(criminalHistoryDto, criminalHistory);
 
             criminalHistoryRecordList =
                     criminalHistoryDto.getCriminalHistoryRecordList()
@@ -67,7 +65,7 @@ public class CriminalHistoryServiceImpl implements CriminalHistoryService{
                     .map(cHistoryRecordDto -> {
                         CriminalHistoryRecord criminalHistoryRecord =
                                 new CriminalHistoryRecord();
-                        modelMapper.map(cHistoryRecordDto, criminalHistoryRecord);
+                        BeanUtils.copyProperties(cHistoryRecordDto, criminalHistoryRecord);
                         criminalHistoryRecord.setStatus("ACTIVE");
                         return criminalHistoryRecord;
                     })
@@ -84,12 +82,11 @@ public class CriminalHistoryServiceImpl implements CriminalHistoryService{
                             .map(cHistoryRecordDto -> {
                                 CriminalHistoryRecord criminalHistoryRecord =
                                         new CriminalHistoryRecord();
-                                modelMapper.map(cHistoryRecordDto, criminalHistoryRecord);
+                                BeanUtils.copyProperties(cHistoryRecordDto, criminalHistoryRecord);
                                 criminalHistoryRecord.setStatus("ACTIVE");
                                 return criminalHistoryRecord;
                             })
                             .collect(Collectors.toList());
-
         }
         criminalHistory.setCriminalHistoryRecordList(criminalHistoryRecordList);
         criminalHistory = criminalHistoryRepo.save(criminalHistory);

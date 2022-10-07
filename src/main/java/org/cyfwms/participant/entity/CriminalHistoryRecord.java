@@ -38,11 +38,11 @@ public class CriminalHistoryRecord implements Serializable {
     @Getter @Setter @Column(name = "status")
     private String status;
     @CreationTimestamp
-    @Getter @Setter @Column(name = "creationdate")
+    @Getter @Setter @Column(name = "creationdate",updatable = false)
     private LocalDate creationDate;
     @UpdateTimestamp
     @Getter @Setter @Column(name = "lastwritten")
     private LocalDateTime lastwritten;
-    @Getter @Setter @Column(name = "criminalhistoryid")
+    @Getter @Setter @Column(name = "criminalhistoryid",updatable = false)
     private Long criminalHistoryId;
 }
