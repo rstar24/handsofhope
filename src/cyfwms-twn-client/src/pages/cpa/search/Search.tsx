@@ -11,6 +11,7 @@ import CPAHeader from "../../../components/cpa/CPAHeader";
 import { handleSubmit } from "./search_";
 import CPASearchResult from "../../../components/cpa/CPASearchResult";
 import CPADropdown from "../../../components/cpa/CPADropdown";
+import CPADropdownSearch from "../../../components/cpa/CPADropdownSearch";
 
 /**
  * The Search functional component.
@@ -36,7 +37,7 @@ const Search = (): ReactElement => {
           flexDirection: { xs: "column", md: "row" },
           justifyContent: "center",
           p: "1rem",
-          gap: "1rem",
+          gap: "0 1rem",
           "& div": { width: { xs: "100%", md: 350 } },
         }}
       >
@@ -80,7 +81,7 @@ const Search = (): ReactElement => {
             validationTitle="Digits are not allowed!"
             value="Name"
           />
-          <CPADropdown
+          <CPADropdownSearch
             autofill={""}
             id="type"
             optionsList={Object.values(culturalType).map(
@@ -97,7 +98,7 @@ const Search = (): ReactElement => {
           />
           <Input id="startDate" type="date" value="Date " />
 
-          <CPADropdown
+          <CPADropdownSearch
             autofill={""}
             id="status"
             value="Status"

@@ -16,7 +16,7 @@ export interface CPADropdownPropsType
  * @param props - HTML attributes.
  * @returns CPADropdown component skeleton.
  */
-const CPADropdown = (props: CPADropdownPropsType): ReactElement => {
+const CPADropdownSearch = (props: CPADropdownPropsType): ReactElement => {
   return (
     <FormControl
       disabled={props.disabled}
@@ -45,7 +45,6 @@ const CPADropdown = (props: CPADropdownPropsType): ReactElement => {
           flexGrow: 2,
           height: "40px",
           backgroundColor: "#dfdada",
-          paddingLeft: 12,
         }}
       >
         <option disabled></option>
@@ -57,4 +56,4 @@ const CPADropdown = (props: CPADropdownPropsType): ReactElement => {
   );
 };
 
-export default CPADropdown;
+export default CPADropdownSearch;

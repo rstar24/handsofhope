@@ -48,8 +48,8 @@ const ClientResults = ({ setClick, moduleName }: any): ReactElement => {
           <TableRow>
             <TableCell>Reference ID</TableCell>
             <TableCell>First Name</TableCell>
-            <TableCell>Middle Name</TableCell>
             <TableCell>Last Name</TableCell>
+            <TableCell>City</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
