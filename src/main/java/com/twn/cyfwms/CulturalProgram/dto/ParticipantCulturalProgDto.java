@@ -17,4 +17,6 @@ public class ParticipantCulturalProgDto {
     private String role;
     @Getter @Setter
     private String notes;
+    @Getter @Setter
+    private Long participantId;
 }

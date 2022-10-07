@@ -45,6 +45,7 @@ public class ParticipantCulturalProgServiceImpl implements ParticipantCulturalPr
                 Participant participant=participantRepository.findByParticipantId(Long.parseLong(participantCulturalProgDto.getParticipant()));
              if (!participantCulturalProgAndAct.getParticipant().equals("0")) {
                  participantCulturalProgDto.setParticipant(participant.getFirstname() + " " + participant.getSurname());
+                 participantCulturalProgDto.setParticipantId(participant.getParticipantId());
              }
             } else {
                 throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
