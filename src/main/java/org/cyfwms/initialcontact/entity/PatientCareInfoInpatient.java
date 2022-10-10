@@ -1,12 +1,10 @@
 package org.cyfwms.initialcontact.entity;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import javax.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -38,9 +36,12 @@ public class PatientCareInfoInpatient {
     private Long patientCareInfoId;
 
     @CreationTimestamp
-    @Getter @Setter @Column(name = "creationdate")
+    @Getter @Setter @Column(name = "creationdate",updatable = false)
     private LocalDate creationDate;
 
     @UpdateTimestamp
     private LocalDateTime lastwritten;
+
+    @Getter @Setter @Column(name = "status")
+    private String status;
 }

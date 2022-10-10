@@ -59,4 +59,7 @@ public class PatientCareInfoOutpatient {
     @UpdateTimestamp
     @Getter @Setter @Column(name = "lastwritten")
     private LocalDateTime lastwritten;
+
+    @Getter @Setter @Column(name = "status")
+    private String status;
 }

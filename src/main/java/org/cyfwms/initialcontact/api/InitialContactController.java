@@ -1,11 +1,11 @@
 package org.cyfwms.initialcontact.api;
 
-import org.cyfwms.initialcontact.dto.InitialContactSearchCriteriaDto;
-import org.cyfwms.initialcontact.dto.InitialContactSearchResultsDto;
-import org.cyfwms.initialcontact.dto.ReadAllOutputInitialContactDto;
-import org.cyfwms.initialcontact.service.InitialContactFileDetailsService;
-import org.cyfwms.initialcontact.service.InitialContactSearchService;
-import org.cyfwms.initialcontact.service.ReadAllInitialContactService;
+import org.cyfwms.initialcontact.dto.ICSearchCriteriaDto;
+import org.cyfwms.initialcontact.dto.ICSearchResultsDto;
+import org.cyfwms.initialcontact.dto.ICCommonDataDto;
+import org.cyfwms.initialcontact.service.ICFileDetailsService;
+import org.cyfwms.initialcontact.service.ICSearchService;
+import org.cyfwms.initialcontact.service.ICCommonDataService;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,17 +26,17 @@ import static org.springframework.http.HttpStatus.OK;
 @CrossOrigin("*")
 public class InitialContactController {
   @Autowired
-  InitialContactFileDetailsService fileDetailsService;
+  ICFileDetailsService fileDetailsService;
   @Autowired
-  InitialContactSearchService searchService;
+  ICSearchService searchService;
   @Autowired
-  ReadAllInitialContactService readAllInitialContactService;
+  ICCommonDataService iCCommonDataService;
 
   @ApiOperation("Search Initial Contact(s)")
   @GetMapping(value = {"/search/{clientname}/{fileNumber}/{caseworker}/{startingDate}/{status}"}, produces = "application/json")
   @ResponseStatus(OK)
-  public List<InitialContactSearchResultsDto> search(@PathVariable Map<String, String> var) {
-      InitialContactSearchCriteriaDto initialContactSearchCriteriaDto=new InitialContactSearchCriteriaDto();
+  public List<ICSearchResultsDto> search(@PathVariable Map<String, String> var) {
+      ICSearchCriteriaDto initialContactSearchCriteriaDto=new ICSearchCriteriaDto();
       initialContactSearchCriteriaDto.setClientName(
               ("null".equals(var.get("clientname"))
                       || var.get("clientname") == null) ?null:var.get("clientname"));
@@ -60,14 +60,15 @@ public class InitialContactController {
 
   @ApiOperation("Soft delete Initial Contact")
   @DeleteMapping("/remove/{fileNumber}")
-  public ResponseEntity<String> remove(@PathVariable("fileNumber") Long fileNumber) {
-    return fileDetailsService.remove(fileNumber);
+  public ResponseEntity<String> removeICFileDetails(@PathVariable("fileNumber") Long fileNumber) {
+     fileDetailsService.removeICFileDetails(fileNumber);
+      return new ResponseEntity("Operation Successful", HttpStatus.OK);
   }
 
     @GetMapping(value = "/readAll/{fileNumber}", produces = "application/json")
     @ApiOperation("Read All Output InitialContact")
     @ResponseStatus(HttpStatus.OK)
-    public ReadAllOutputInitialContactDto readAllOutPutInitialContact(@PathVariable("fileNumber") Long fileNumber) {
-        return readAllInitialContactService.readAllOutPutInitialContact(fileNumber);
+    public ICCommonDataDto iCCommonData(@PathVariable("fileNumber") Long fileNumber) {
+        return iCCommonDataService.iCCommonData(fileNumber);
     }
 }
