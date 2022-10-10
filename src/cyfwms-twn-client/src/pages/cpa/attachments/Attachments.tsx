@@ -15,9 +15,14 @@ import {
 import { grey } from "@mui/material/colors";
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import type { ReactElement } from "react";
+import type { FC } from "react";
 
-const Attachments = (): ReactElement => {
+/**
+ * `CPA` aka `Cultural Programs and Activities` module.
+ * Sub page: `Attachments`.
+ * @returns `ReactElement`
+ */
+const Attachments: FC = () => {
   const dispatch = useAppDispatch();
   const cpaId = useAppSelector((state) => state.cpa.data.culturalProgramId);
   const state = useAppSelector((state) => state.cpaAttachments);
@@ -66,15 +71,13 @@ const Attachments = (): ReactElement => {
                     "& > tr > th": {
                       backgroundColor: (theme) => theme.palette.primary.main,
                       color: "white",
-                      p: "0.5rem",
+                      p: "0.25rem",
                     },
                     "& > tr": { border: 0 },
                   }}
                 >
                   <TableRow>
-                    <TableCell>
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    </TableCell>
+                    <TableCell></TableCell>
                     <TableCell>Document</TableCell>
                     <TableCell>Type</TableCell>
                   </TableRow>
