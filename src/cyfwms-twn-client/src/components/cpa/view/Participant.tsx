@@ -10,9 +10,20 @@ import {
 } from "@mui/material";
 import React from "react";
 import { ReactElement } from "react";
+import { Link } from "react-router-dom";
+import { doGet as doGetRegister } from "../../../features/cyfms/register/slice";
+import { doGet as doGetContact } from "../../../features/cyfms/contact/slice";
+import { doGet as doGetCounselors } from "../../../features/cyfms/counselors/slice";
+import { doGet as doGetCriminalHistory } from "../../../features/cyfms/criminalHistory/slice";
+import { doGet as doGetEducationAndEmployment } from "../../../features/cyfms/educationAndEmployment/slice";
+import { doGet as doGetFamilyPhysicians } from "../../../features/cyfms/familyPhysicians/slice";
+import { doGet as doGetHouseholdMembers } from "../../../features/cyfms/householdMembers/slice";
+import { doGet as doGetOtherInformation } from "../../../features/cyfms/otherInformation/slice";
 
 const Participant = (): ReactElement => {
+  const dispatch = useAppDispatch();
   const recordsList = useAppSelector((state) => state.cpaParticipant.record);
+  const data = useAppSelector((state) => state.cpaParticipant.getData);
   if (recordsList.length > 0) {
     if (
       recordsList[0].notes === "" &&
@@ -22,6 +33,18 @@ const Participant = (): ReactElement => {
       return <></>;
     }
   }
+
+  const handleLink = () => {
+    console.log(data.participantId);
+    dispatch(doGetRegister(data.participantId));
+    dispatch(doGetContact(data.participantId));
+    dispatch(doGetEducationAndEmployment(data.participantId));
+    dispatch(doGetOtherInformation(data.participantId));
+    dispatch(doGetCriminalHistory(data.participantId));
+    dispatch(doGetHouseholdMembers(data.participantId));
+    dispatch(doGetFamilyPhysicians(data.participantId));
+    dispatch(doGetCounselors(data.participantId));
+  };
 
   return (
     <>
@@ -59,12 +82,23 @@ const Participant = (): ReactElement => {
                             })}
                         </TableCell>
                         <TableCell width="50%">
-                          <Typography
-                            component="p"
-                            sx={{ whiteSpace: "pre-wrap" }}
-                          >
-                            {t[1]}
-                          </Typography>
+                          {t[0] === "participant" ? (
+                            <Typography
+                              component="p"
+                              sx={{ whiteSpace: "pre-wrap" }}
+                            >
+                              <Link to="/cyfms/view" onClick={handleLink}>
+                                {t[1]}
+                              </Link>
+                            </Typography>
+                          ) : (
+                            <Typography
+                              component="p"
+                              sx={{ whiteSpace: "pre-wrap" }}
+                            >
+                              {t[1]}
+                            </Typography>
+                          )}
                         </TableCell>
                       </TableRow>
                     );

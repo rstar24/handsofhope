@@ -13,10 +13,14 @@ import { Link } from "react-router-dom";
 import type { ReactElement } from "react";
 import { Record } from "../../features/cpa/search/slice";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
-import { doGet } from "../../features/cpa/culturalProgramActivity/slice";
+import { doGet as culturalProgramActivity } from "../../features/cpa/culturalProgramActivity/slice";
 import { setView } from "../../features/popupSlice";
 import EditIcon from "./EditIcon";
-import { doSearch } from "../../features/cpa/participant/slice";
+import {
+  doGet as CPAGetParticipant,
+  doSearch,
+} from "../../features/cpa/participant/slice";
+import { doGet as CPAGetAttachments } from "../../features/cpa/attachments/slice";
 
 const CPASearchResult = (): ReactElement => {
   const dispatch = useAppDispatch();
@@ -24,8 +28,15 @@ const CPASearchResult = (): ReactElement => {
 
   const handleSearchView = (id: any) => {
     dispatch(setView(true));
-    dispatch(doGet(id));
-    dispatch(doSearch(id));
+    dispatch(culturalProgramActivity(id));
+    dispatch(culturalProgramActivity(id)).then((res: any) => {
+      dispatch(doSearch(res.payload.culturalProgramId))
+        .unwrap()
+        .catch((err) => {});
+    });
+
+    dispatch(CPAGetParticipant(id));
+    dispatch(CPAGetAttachments(id));
   };
   return (
     <Box>
