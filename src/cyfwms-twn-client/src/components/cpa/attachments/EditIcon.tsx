@@ -5,11 +5,16 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import type { MouseEventHandler, ReactElement } from "react";
+import type { FC, MouseEventHandler } from "react";
 
 const ITEM_HEIGHT = 48;
 
-const EditIcon = (): ReactElement => {
+/**
+ * `EditIcon` FC is used to show edit options on `/edit` page of an
+ * `/attachment` of `CPA` aka `Cultural Programs and Activities` module.
+ * @returns `ReactElement`
+ */
+const EditIcon: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const data = useAppSelector((state) => state.cpaAttachments.data);

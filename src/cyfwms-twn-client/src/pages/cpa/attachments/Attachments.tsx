@@ -65,15 +65,17 @@ const Attachments: FC = () => {
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <TableContainer>
-              <Table>
+              <Table
+                sx={{
+                  "th, td": { width: "33%", textAlign: "center", p: "0.25rem" },
+                }}
+              >
                 <TableHead
                   sx={{
-                    "& > tr > th": {
+                    th: {
                       backgroundColor: (theme) => theme.palette.primary.main,
                       color: "white",
-                      p: "0.25rem",
                     },
-                    "& > tr": { border: 0 },
                   }}
                 >
                   <TableRow>
@@ -82,15 +84,7 @@ const Attachments: FC = () => {
                     <TableCell>Type</TableCell>
                   </TableRow>
                 </TableHead>
-                <TableBody
-                  sx={{
-                    "& > tr > td": {
-                      backgroundColor: grey["400"],
-                      p: "0.25rem",
-                    },
-                    "& > tr": { border: 0 },
-                  }}
-                >
+                <TableBody sx={{ td: { backgroundColor: grey["400"] } }}>
                   <AttachmentList list={state.data} />
                 </TableBody>
               </Table>

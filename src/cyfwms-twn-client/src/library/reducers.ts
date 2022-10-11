@@ -3,6 +3,7 @@ import cpaAttachmentsReducer from "../features/cpa/attachments/slice";
 import cpaParticipantReducer from "../features/cpa/participant/slice";
 import cpaReducer from "../features/cpa/culturalProgramActivity/slice";
 import cpaSearchReducer from "../features/cpa/search/slice";
+import cgAttachmentsReducer from "../features/cg/attachments/slice";
 import cgCapacityReducer from "../features/cg/capacity/slice";
 import cgCareProviderReducer from "../features/cg/careProvider/slice";
 import cyfmsAllReducer from "../features/cyfms/all/slice";
@@ -56,6 +57,7 @@ const rootReducer = {
   cpaAttachments: cpaAttachmentsReducer,
   cgCareProvider: cgCareProviderReducer,
   cgCapacity: cgCapacityReducer,
+  cgAttachments: cgAttachmentsReducer,
 };
 
 export default rootReducer;

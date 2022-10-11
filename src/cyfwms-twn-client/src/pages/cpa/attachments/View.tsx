@@ -9,7 +9,10 @@ import React, { useEffect, useState } from "react";
 import type { FC } from "react";
 
 /**
- * `View` is used to view document information selected from attachments.
+ * `CPA` aka `Cultural Programs and Activities` module.
+ * Sub page: `Attachments`.
+ * Sub sub page: `View`.
+ * Form to view document information selected from attachments.
  * @returns `ReactElement`
  */
 const View: FC = () => {

@@ -1,22 +1,30 @@
 import { CYFSWMSNextButton } from "../../../components/CYFSWMSButtons";
-import CPALayout from "../../../components/cpa/CPALayout";
+import EditIcon from "../../../components/cg/attachments/EditIcon";
+import CgLayout from "../../../components/cg/CgLayout";
 import Input from "../../../components/Input";
-import { doPost } from "../../../features/cpa/attachments/slice";
+import { selected } from "../../../contexts/cpa/attachments";
+import { doPost } from "../../../features/cg/attachments/slice";
 import { onKeyDown } from "../../../library/app";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import { Box, Button } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import type { ChangeEventHandler, FormEventHandler, ReactElement } from "react";
-import CgLayout from "../../../components/cg/CgLayout";
+import type { ChangeEventHandler, FC, FormEventHandler } from "react";
 
 /**
- * Form to submit/add one more document to attachments.
+ * `CG` aka `Caregivers` module.
+ * Sub page: `Attachments`.
+ * Sub sub page: `Edit`.
+ * Form to edit document information selected from attachments.
+ * @returns `ReactElement`
  */
-const Add = (): ReactElement => {
+const Edit: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const cpaId = useAppSelector((state) => state.cpa.data.culturalProgramId);
+  const cgCareProviderId = useAppSelector(
+    (state) => state.cgCareProvider.data.id
+  );
+  const data = useAppSelector((state) => state.cgAttachments.data);
   const [fileName, setFileName] = useState<string>("");
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -29,13 +37,15 @@ const Add = (): ReactElement => {
     attachment.append(
       "culturalDto",
       JSON.stringify({
-        culturalProgramId: cpaId,
-        culturalProgImageId: 0,
+        culturalProgramId: cgCareProviderId,
+        culturalProgImageId: data[selected.value].id,
         name: e.currentTarget.attachmentName.value,
         type: e.currentTarget.attachmentType.value,
       })
     );
-    attachment.append("file", e.currentTarget.attachment.files[0]);
+    if (e.currentTarget.attachment.files[0]) {
+      attachment.append("file", e.currentTarget.attachment.files[0]);
+    }
     dispatch(doPost(attachment))
       .unwrap()
       .then((data) => {
@@ -58,12 +68,28 @@ const Add = (): ReactElement => {
         onSubmit={submitHandler}
         onKeyDown={onKeyDown}
       >
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "flex-end",
+          }}
+        >
+          <EditIcon />
+        </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <Input id="attachmentName" value="Name" />
+            <Input
+              id="attachmentName"
+              value="Name"
+              autofill={data[selected.value].name}
+            />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <Input id="attachmentType" value="Type" />
+            <Input
+              id="attachmentType"
+              value="Type"
+              autofill={data[selected.value].type}
+            />
           </Box>
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
@@ -96,4 +122,4 @@ const Add = (): ReactElement => {
   );
 };
 
-export default Add;
+export default Edit;

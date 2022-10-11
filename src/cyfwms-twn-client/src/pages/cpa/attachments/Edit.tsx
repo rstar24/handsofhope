@@ -9,12 +9,16 @@ import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import { Box, Button } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import type { ChangeEventHandler, FormEventHandler, ReactElement } from "react";
+import type { ChangeEventHandler, FC, FormEventHandler } from "react";
 
 /**
+ * `CPA` aka `Cultural Programs and Activities` module.
+ * Sub page: `Attachments`.
+ * Sub sub page: `Edit`.
  * Form to edit document information selected from attachments.
+ * @returns `ReactElement`
  */
-const Edit = (): ReactElement => {
+const Edit: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const cpaId = useAppSelector((state) => state.cpa.data.culturalProgramId);

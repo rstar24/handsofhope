@@ -2,10 +2,16 @@ import { selected } from "../../../contexts/cpa/attachments";
 import { TableCell, TableRow } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
-import type { ReactElement } from "react";
-import { Record as RecordT } from "../../../features/cpa/attachments/slice";
+import type { FC } from "react";
+import type { Record as RecordT } from "../../../features/cpa/attachments/slice";
 
-const AttachmentList = (props: AppRecordListProps<RecordT>): ReactElement => {
+/**
+ * `AttachmentList` FC is used to list attachments of
+ * `CPA` aka `Cultural Programs and Activities` module.
+ * @param props
+ * @returns `ReactElement`
+ */
+const AttachmentList: FC<AppRecordListProps<RecordT>> = (props) => {
   return (
     <>
       {props.list.map((attachment, index) => (

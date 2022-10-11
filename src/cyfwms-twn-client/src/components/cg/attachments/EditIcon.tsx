@@ -1,18 +1,23 @@
 import { selected } from "../../../contexts/cpa/attachments";
-import { doDelete } from "../../../features/cpa/attachments/slice";
+import { doDelete } from "../../../features/cg/attachments/slice";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import type { MouseEventHandler, ReactElement } from "react";
+import type { FC, MouseEventHandler } from "react";
 
 const ITEM_HEIGHT = 48;
 
-const EditIcon = (): ReactElement => {
+/**
+ * `EditIcon` FC is used to show edit options on `/edit` page of an
+ * `/attachment` of `CG` aka `Caregivers` module.
+ * @returns `ReactElement`
+ */
+const EditIcon: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const data = useAppSelector((state) => state.cpaAttachments.data);
+  const data = useAppSelector((state) => state.cgAttachments.data);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const openDropDown = Boolean(anchorEl);
 
@@ -32,7 +37,7 @@ const EditIcon = (): ReactElement => {
 
   const handleDelete: MouseEventHandler<HTMLElement> = (event) => {
     event.preventDefault();
-    dispatch(doDelete(data[selected.value].culturalProgImageId))
+    dispatch(doDelete(data[selected.value].id))
       .unwrap()
       .then(() => {
         navigate("../attachments");

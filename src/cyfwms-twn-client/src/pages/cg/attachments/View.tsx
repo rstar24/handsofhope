@@ -1,22 +1,25 @@
 import EditIcon from "../../../components/cpa/attachments/EditIcon";
-
+import CgLayout from "../../../components/cg/CgLayout";
 import Input from "../../../components/Input";
 import { selected } from "../../../contexts/cpa/attachments";
-import { doGetOne } from "../../../features/cpa/attachments/slice";
+import { doGetOne } from "../../../features/cg/attachments/slice";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import { Box, Link } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import type { ReactElement } from "react";
-import CgLayout from "../../../components/cg/CgLayout";
+import type { FC } from "react";
 
 /**
+ * `CG` aka `Caregivers` module.
+ * Sub page: `Attachments`.
+ * Sub sub page: `View`.
  * Form to view document information selected from attachments.
+ * @returns `ReactElement`
  */
-const View = (): ReactElement => {
+const View: FC = () => {
   const dispatch = useAppDispatch();
-  //   const attachment = useAppSelector(
-  //     (state) => state.cpaAttachments.data[selected.value]
-  //   );
+  const attachment = useAppSelector(
+    (state) => state.cgAttachments.data[selected.value]
+  );
   const [actualAttachment, setActualAttachment] = useState<any>({
     file: "",
     imageType: "",
@@ -24,16 +27,16 @@ const View = (): ReactElement => {
   });
 
   /** Download the attachment */
-  //   useEffect(() => {
-  //     dispatch(doGetOne(attachment.culturalProgImageId))
-  //       .unwrap()
-  //       .then((data) => {
-  //         setActualAttachment(data);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   }, [attachment.culturalProgImageId]);
+  useEffect(() => {
+    dispatch(doGetOne(attachment.id))
+      .unwrap()
+      .then((data) => {
+        setActualAttachment(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [attachment.id]);
 
   return (
     <CgLayout>
@@ -58,7 +61,7 @@ const View = (): ReactElement => {
             <Input
               id="attachmentName"
               value="Name"
-              //autofill={attachment.name}
+              autofill={attachment.name}
               disabled={true}
             />
           </Box>
@@ -66,7 +69,7 @@ const View = (): ReactElement => {
             <Input
               id="attachmentType"
               value="Type"
-              //   autofill={attachment.type}
+              autofill={attachment.type}
               disabled={true}
             />
           </Box>
@@ -76,16 +79,12 @@ const View = (): ReactElement => {
             Download file:{" "}
             <Link
               download={true}
-              //href={`data:${actualAttachment.imageType};base64,${actualAttachment.file}`}
+              href={`data:${actualAttachment.imageType};base64,${actualAttachment.file}`}
               rel="noreferrer noopener"
             >
-              {/* {actualAttachment.culturalimagename} */}
+              {actualAttachment.culturalimagename}
             </Link>
           </Box>
-          <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
-        </Box>
-        <Box sx={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
-          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>Preview </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
         </Box>
         <Box />
