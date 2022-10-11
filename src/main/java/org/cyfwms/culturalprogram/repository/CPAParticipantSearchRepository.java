@@ -1,20 +1,20 @@
 package org.cyfwms.culturalprogram.repository;
-import org.cyfwms.culturalprogram.dto.CulturalProgAndActSearchCriteriaDto;
-import org.cyfwms.culturalprogram.dto.ParticipantCultureProgSearchResultsDto;
+import org.cyfwms.culturalprogram.dto.CPASearchCriteriaDto;
+import org.cyfwms.culturalprogram.dto.CPAParticipantSearchResultsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 @Repository
-public class ParticipantCultureProgSearchRepository {
+public class CPAParticipantSearchRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    public List<ParticipantCultureProgSearchResultsDto> searchParticipantCulturalProgAndAct(CulturalProgAndActSearchCriteriaDto culturalProgAndActSearchCriteriaDto) {
+    public List<CPAParticipantSearchResultsDto> searchParticipantCulturalProgAndAct(CPASearchCriteriaDto CPASearchCriteriaDto) {
         List<Object> argsObjectList = new ArrayList<>();
-        StringBuffer querySBuff = createSearchQuery(culturalProgAndActSearchCriteriaDto, argsObjectList);
+        StringBuffer querySBuff = createSearchQuery(CPASearchCriteriaDto, argsObjectList);
         return jdbcTemplate.query(querySBuff.toString(),argsObjectList.toArray(),
-                (rs, rowNum) ->  new ParticipantCultureProgSearchResultsDto(
+                (rs, rowNum) ->  new CPAParticipantSearchResultsDto(
                                 rs.getLong("participantculturalprogid"),
                                 rs.getLong("culturalProgramId"),
                                 rs.getString("fullName"),
@@ -25,7 +25,7 @@ public class ParticipantCultureProgSearchRepository {
         );
     }
 
-    private StringBuffer createSearchQuery(CulturalProgAndActSearchCriteriaDto searchCriteria, List<Object> argsObjectList) {
+    private StringBuffer createSearchQuery(CPASearchCriteriaDto searchCriteria, List<Object> argsObjectList) {
         StringBuffer  querySBuff = new StringBuffer();
         String data=searchCriteria.getData();
         querySBuff.append("select p.participantculturalprogid ,p.culturalprogramid , CONCAT(firstname,' ', surname) AS fullName, p.role,p.notes ");

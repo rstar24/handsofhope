@@ -1,5 +1,6 @@
 package org.cyfwms.culturalprogram.entity;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,17 +13,17 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "culturalprogandact")
-public class CulturalProgAndAct implements Serializable {
+public class CPAIdentity implements Serializable {
     @Id @Getter @Setter
     @Column(name = "culturalprogramid", updatable = false, nullable = false)
     @SequenceGenerator(
-            name = "CulturalProgramIdGenerator",
-            sequenceName = "CulturalProgramIdGenerator",
+            name = "culturalProgramIdGenerator",
+            sequenceName = "culturalProgramIdGenerator",
             allocationSize = 100
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "CulturalProgramIdGenerator"
+            generator = "culturalProgramIdGenerator"
     )
     private Long culturalProgramId;
     @Getter @Setter @Column(name = "referenceid", updatable = false, nullable = false)
@@ -51,9 +52,10 @@ public class CulturalProgAndAct implements Serializable {
     private String outcomes;
     @Getter @Setter @Column(name = "notes",length = 1000)
     private String notes;
-    @Getter @Setter @Column(name = "deletionofstatus")
-    private String deletionOfStatus;
-    @Getter @Setter @Column(name = "creationdate")
+    @Getter @Setter @Column(name = "statusofdeletion")
+    private String statusOfDeletion;
+    @CreationTimestamp
+    @Getter @Setter @Column(name = "creationdate",updatable = false)
     private LocalDate creationDate;
     @UpdateTimestamp
     @Getter @Setter @Column(name = "lastwritten")
@@ -62,7 +64,7 @@ public class CulturalProgAndAct implements Serializable {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "culturalprogramid", referencedColumnName = "culturalprogramid")
     @Getter @Setter
-    private ParticipantCulturalProgAndAct participantCulturalProgAndAct;
+    private CPAParticipant CPAParticipant;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "culturalprogramid", referencedColumnName = "culturalprogramid")

@@ -93,9 +93,8 @@ public class AttachmentsServiceImpl implements AttachmentsService {
       if (culturalProgImage != null) {
         culturalProgImage.setStatus("INACTIVE");
         culturalProgImageRepository.save(culturalProgImage);
-      } else {
-        throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
       }
+
     } else {
       throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
     }

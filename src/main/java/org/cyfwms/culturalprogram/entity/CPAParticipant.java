@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "participantculturalprogram")
-public class ParticipantCulturalProgAndAct implements Serializable {
+public class CPAParticipant implements Serializable {
     @Id
     @Getter
     @Setter

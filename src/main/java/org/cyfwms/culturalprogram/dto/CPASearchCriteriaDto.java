@@ -6,7 +6,7 @@ import lombok.*;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @AllArgsConstructor
 @NoArgsConstructor
-public class CulturalProgAndActSearchCriteriaDto {
+public class CPASearchCriteriaDto {
     @Getter
     @Setter
     private String data;

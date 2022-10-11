@@ -7,7 +7,7 @@ import java.time.LocalDate;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @AllArgsConstructor
 @NoArgsConstructor
-public class CulturalProgAndActDto {
+public class CPAIdentityDto {
     @Getter @Setter
     private Long culturalProgramId;
     @Getter @Setter

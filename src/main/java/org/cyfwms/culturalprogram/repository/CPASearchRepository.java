@@ -1,6 +1,6 @@
 package org.cyfwms.culturalprogram.repository;
-import org.cyfwms.culturalprogram.dto.CulturalProgAndActSearchDto;
-import org.cyfwms.culturalprogram.dto.CultureProgAndActSearchResultsDto;
+import org.cyfwms.culturalprogram.dto.CPASearchDto;
+import org.cyfwms.culturalprogram.dto.CPASearchResultsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -8,15 +8,15 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 @Repository
-public class CultureProgAndActSearchRepository {
+public class CPASearchRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    public List<CultureProgAndActSearchResultsDto> searchCulturalProgAndAct(CulturalProgAndActSearchDto culturalProgAndActSearchDto) {
+    public List<CPASearchResultsDto> searchCulturalProgAndAct(CPASearchDto CPASearchDto) {
         List<Object> argsObjectList = new ArrayList<>();
-        StringBuffer querySBuff = createSearchQuery(culturalProgAndActSearchDto, argsObjectList);
+        StringBuffer querySBuff = createSearchQuery(CPASearchDto, argsObjectList);
         return jdbcTemplate.query(querySBuff.toString(),argsObjectList.toArray(),
                 (rs, rowNum) ->
-                        new CultureProgAndActSearchResultsDto(
+                        new CPASearchResultsDto(
                                 rs.getLong("CulturalProgramId"),
                                 rs.getLong("referenceId"),
                                 rs.getString("name"),
@@ -27,7 +27,7 @@ public class CultureProgAndActSearchRepository {
                         )
         );
     }
-    private StringBuffer createSearchQuery(CulturalProgAndActSearchDto searchCriteria, List<Object> argsObjectList) {
+    private StringBuffer createSearchQuery(CPASearchDto searchCriteria, List<Object> argsObjectList) {
         StringBuffer querySBuff = new StringBuffer();
         querySBuff.append("select c.culturalProgramId ,c.referenceid ,c.name ,c.type ,c.caseworker, c.startDate ,c.status ");
         querySBuff.append("from culturalprogandact c where c.deletionofstatus='ACTIVE'");

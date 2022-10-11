@@ -5,8 +5,8 @@ import lombok.*;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
-public class ParticipantCultureProgSearchResultsDto {
-
+@AllArgsConstructor
+public class CPAParticipantDto {
     @Getter @Setter
     private Long participantCulturalProId;
     @Getter @Setter
@@ -17,12 +17,4 @@ public class ParticipantCultureProgSearchResultsDto {
     private String role;
     @Getter @Setter
     private String notes;
-
-    public ParticipantCultureProgSearchResultsDto(Long participantCulturalProId, Long culturalProgramId, String participant, String role, String notes) {
-        this.participantCulturalProId = participantCulturalProId;
-        this.culturalProgramId = culturalProgramId;
-        this.participant = participant;
-        this.role = role;
-        this.notes = notes;
-    }
 }

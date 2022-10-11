@@ -1,14 +1,12 @@
 package org.cyfwms.culturalprogram.controller;
 
 import org.cyfwms.culturalprogram.dto.*;
-import org.cyfwms.culturalprogram.service.*;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
-import org.cyfwms.culturalprogram.dto.*;
-import org.cyfwms.culturalprogram.service.CulturalProgAndActSearchService;
-import org.cyfwms.culturalprogram.service.CulturalProgAndActService;
-import org.cyfwms.culturalprogram.service.ParticipantCulturalProgSearchService;
-import org.cyfwms.culturalprogram.service.ParticipantCulturalProgService;
+import org.cyfwms.culturalprogram.service.CPASearchService;
+import org.cyfwms.culturalprogram.service.CPAIdentityService;
+import org.cyfwms.culturalprogram.service.CPAParticipantSearchService;
+import org.cyfwms.culturalprogram.service.CPAParticipantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,45 +22,46 @@ import java.util.Map;
 @CrossOrigin("*")
 public class CulturalProgramController {
     @Autowired
-    ParticipantCulturalProgSearchService participantCulturalProgSearchService;
+    CPAParticipantSearchService CPAParticipantSearchService;
     @Autowired
-    CulturalProgAndActSearchService culturalProgAndActSearchService;
+    CPASearchService CPASearchService;
     @Autowired
-    private CulturalProgAndActService culturalProgAndActService;
+    private CPAIdentityService CPAIdentityService;
     @Autowired
-    private ParticipantCulturalProgService participantCulturalProgService;
+    private CPAParticipantService CPAParticipantService;
 
     @GetMapping(value = "/readCulturalProgAndAct/{culturalprogramid}", produces = "application/json")
     @ApiOperation("Read CulturalProgAndAct")
     @ResponseStatus(HttpStatus.OK)
-    public CulturalProgAndActDto readCulturalProgAndAct(@PathVariable("culturalprogramid") Long culturalProgramId) {
-        return culturalProgAndActService.readCulturalProgAndAct(culturalProgramId);
+    public CPAIdentityDto readCpaIdentity(@PathVariable("culturalprogramid") Long culturalProgramId) {
+        return CPAIdentityService.readCpaIdentity(culturalProgramId);
     }
 
     @PutMapping(value = "/saveCulturalProgAndAct", produces = "application/json")
     @ApiOperation("Save or Update cultural program")
     @ResponseStatus(HttpStatus.OK)
-    public CulturalProgAndActDto saveCulturalProgramIdentity(@RequestBody CulturalProgAndActDto culturalProgAndActDto) {
-        return culturalProgAndActService.saveCulturalProgramIdentity(culturalProgAndActDto);
+    public ResponseEntity<CPAIdentityDto> saveCpaIdentity(@RequestBody CPAIdentityDto CPAIdentityDto) {
+       CPAIdentityDto cpaIdentityDto = CPAIdentityService.saveCpaIdentity(CPAIdentityDto);
+       return new ResponseEntity<>(cpaIdentityDto,HttpStatus.CREATED);
     }
 
     @GetMapping(value = {"/culturalProgAndActSearch/{referenceId}/{name}/{type}/{caseworker}/{startDate}/{status}"},produces = "application/json")
     @ApiOperation("Search culturalProgAndAct")
     @ResponseStatus(HttpStatus.OK)
-    public List<CultureProgAndActSearchResultsDto> searchCulturalProgAndAct(@PathVariable Map<String, String> var)
+    public List<CPASearchResultsDto> searchCulturalProgAndAct(@PathVariable Map<String, String> var)
     {
-        CulturalProgAndActSearchDto culturalProgAndActSearchDto = new CulturalProgAndActSearchDto();
-        culturalProgAndActSearchDto.setReferenceId(("null".equals(var.get("referenceId"))
+        CPASearchDto CPASearchDto = new CPASearchDto();
+        CPASearchDto.setReferenceId(("null".equals(var.get("referenceId"))
                 || var.get("referenceId") == null) ?null:Long.parseLong(var.get("referenceId")));
-        culturalProgAndActSearchDto.setName(
+        CPASearchDto.setName(
                 ("null".equals(var.get("name"))
                         || var.get("name") == null) ?null:var.get("name"));
 
-        culturalProgAndActSearchDto.setType(
+        CPASearchDto.setType(
                 ("null".equals(var.get("type"))
                         || var.get("type") == null) ?null:var.get("type"));
 
-        culturalProgAndActSearchDto.setCaseworker(
+        CPASearchDto.setCaseworker(
                 ("null".equals(var.get("caseworker"))
                         || var.get("caseworker") == null) ?null:var.get("caseworker"));
 
@@ -71,54 +70,57 @@ public class CulturalProgramController {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             dateTime = LocalDate.parse(var.get("startDate"), formatter);
         }
-        culturalProgAndActSearchDto.setStartDate(dateTime);
+        CPASearchDto.setStartDate(dateTime);
 
-        culturalProgAndActSearchDto.setStatus(
+        CPASearchDto.setStatus(
                 ("null".equals(var.get("status"))
                         || var.get("status") == null) ?null:var.get("status"));
-        return culturalProgAndActSearchService.searchCulturalProgAndAct(culturalProgAndActSearchDto);
+        return CPASearchService.searchCulturalProgAndAct(CPASearchDto);
     }
 
     @DeleteMapping("/removeCulturalProgAndAct/{culturalprogramid}")
     @ApiOperation("Remove CulturalProgAndAct")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> removeCulturalProgAndAct(@PathVariable("culturalprogramid") Long culturalProgramId) {
-         culturalProgAndActService.removeCulturalProgAndAct(culturalProgramId);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<String> removeCpaIdentity(@PathVariable("culturalprogramid") Long culturalProgramId) {
+         CPAIdentityService.removeCpaIdentity(culturalProgramId);
+        return new ResponseEntity<>("Operation Successful",HttpStatus.OK);
     }
 
 
 
-    @GetMapping(value = "/readParticipantsCulturalAndAct/{participantculturalprogid}", produces = "application/json")
+    @GetMapping(value = "/readParticipantsCulturalAndAct/{culturalprogramid}", produces = "application/json")
     @ApiOperation("Read participantsCulturalAndAct")
     @ResponseStatus(HttpStatus.OK)
-    public ParticipantCulturalProgDto readParticipantCulturalAndAct(@PathVariable("participantculturalprogid") Long participantCulturalProId) {
-        return participantCulturalProgService.readParticipantCulturalAndAct(participantCulturalProId);
+    public CPAParticipantDto readCpaParticipant(@PathVariable("culturalprogramid") Long culturalProgramId) {
+        return CPAParticipantService.readCpaParticipant(culturalProgramId);
     }
 
     @PutMapping(value = "/saveParticipantCulturalProg", produces = "application/json")
     @ApiOperation("Save or Update cultural program")
     @ResponseStatus(HttpStatus.OK)
-    public ParticipantCulturalProgDto saveParticipantCulturalProg(@RequestBody ParticipantCulturalProgDto participantCulturalProgDto) {
-        return participantCulturalProgService.saveParticipantCulturalProg(participantCulturalProgDto);
+    public ResponseEntity<CPAParticipantDto> saveCpaParticipant(@RequestBody CPAParticipantDto CPAParticipantDto) {
+        CPAParticipantDto cpaParticipantDto = CPAParticipantService.saveCpaParticipant(CPAParticipantDto);
+        return new ResponseEntity<>(cpaParticipantDto,HttpStatus.CREATED);
     }
 
     @DeleteMapping("/removeParticipantCulturalProg/{participantculturalprogid}")
     @ApiOperation("Remove ParticipantCulturalProg")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity removeParticipantCulturalProg(@PathVariable("participantculturalprogid") Long participantCulturalProId) {
-        return participantCulturalProgService.removeParticipantCulturalProg(participantCulturalProId);
+    public ResponseEntity<String> removeCpaParticipant(@PathVariable("participantculturalprogid") Long participantCulturalProId) {
+         CPAParticipantService.removeCpaParticipant(participantCulturalProId);
+        return new ResponseEntity<>("Operation Successful",HttpStatus.OK);
+
     }
 
     @GetMapping(value = {"/participantCulturalProgSearch/{data}"},produces = "application/json")
     @ApiOperation("Search culturalProgram")
     @ResponseStatus(HttpStatus.OK)
-    public List<ParticipantCultureProgSearchResultsDto> searchCulturalProgram(@PathVariable Map<String, String> var)
+    public List<CPAParticipantSearchResultsDto> searchCulturalProgram(@PathVariable Map<String, String> var)
     {
-        CulturalProgAndActSearchCriteriaDto participantCulturalSearchDto =new CulturalProgAndActSearchCriteriaDto();
+        CPASearchCriteriaDto participantCulturalSearchDto =new CPASearchCriteriaDto();
         participantCulturalSearchDto.setData(
                 ("null".equals(var.get("data"))
                         || var.get("data") == null) ?null:var.get("data"));
-        return participantCulturalProgSearchService.searchParticipantCulturalProgAndAct(participantCulturalSearchDto);
+        return CPAParticipantSearchService.searchParticipantCulturalProgAndAct(participantCulturalSearchDto);
     }
 }

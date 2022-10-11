@@ -6,7 +6,7 @@ import java.time.LocalDate;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
-public class CultureProgAndActSearchResultsDto {
+public class CPASearchResultsDto {
     @Getter @Setter
     private Long CulturalProgramId;
     @Getter @Setter
@@ -21,7 +21,7 @@ public class CultureProgAndActSearchResultsDto {
     private LocalDate startDate;
     @Getter @Setter
     private String status;
-    public CultureProgAndActSearchResultsDto(Long culturalProgramId, Long referenceId, String name, String type, String caseworker, LocalDate startDate, String status) {
+    public CPASearchResultsDto(Long culturalProgramId, Long referenceId, String name, String type, String caseworker, LocalDate startDate, String status) {
         CulturalProgramId = culturalProgramId;
         this.referenceId = referenceId;
         this.name = name;
