@@ -3,16 +3,16 @@ import type { Data } from "./slice";
 import type { AxiosResponse } from "axios";
 
 /**
- * Fetch one/single `Care Provider` of `CG` module.
- * @param id - Primary key of `cg_care_provider` table.
+ * Fetch one/single `Capacity` of `CG` module.
+ * @param cgCareProviderId - `CG` module `Care Provider` ID.
  * @param token - JSON Web Token
  */
 export const doGetAPI = async (
-  id: number,
+  cgCareProviderId: number,
   token: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.get(
-    `cg/care_provider/read/${id}`,
+    `cg/capacity/read/${cgCareProviderId}`,
     {
       headers: { Authorization: "Bearer " + token },
     }
@@ -21,8 +21,8 @@ export const doGetAPI = async (
 };
 
 /**
- * Save one/single `Care Provider` of `CG` module.
- * @param formData -
+ * Save one/single `Capacity` of `CG` module.
+ * @param formData
  * @param token - JSON Web Token
  */
 export const doPostAPI = async (
@@ -30,7 +30,7 @@ export const doPostAPI = async (
   token: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.put(
-    "cg/care_provider/save",
+    "cg/capacity/save",
     formData,
     {
       headers: { Authorization: "Bearer " + token },

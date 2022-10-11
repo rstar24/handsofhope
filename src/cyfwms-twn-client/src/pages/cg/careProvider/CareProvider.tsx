@@ -21,7 +21,6 @@ import type { FC, FormEvent } from "react";
 const CareProvider: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
   const { gender, maritalstatus } = useAppSelector((state) => state.codetable);
   const isInitiated = useAppSelector((state) => state.initiator.isInitiated);
   const state = useAppSelector((state) => state.cyfmsRegister);

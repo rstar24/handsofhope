@@ -8,10 +8,7 @@ import type { NavigateFunction } from "react-router-dom";
  * @param dispatch - Redux action(s) dispatcher
  * @param participantID - Participant ID
  */
-export const handleEffect: AppEffectCallback = (
-  dispatch: AppDispatch,
-  participantID: number
-) => {
+export const handleEffect = (dispatch: AppDispatch, participantID: number) => {
   dispatch(doGet(participantID))
     .unwrap()
     .catch((err) => {

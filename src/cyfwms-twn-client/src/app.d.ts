@@ -12,9 +12,6 @@ type AppFormEventHandler<T = Element> = AppEventHandler<FormEvent<T>>;
 /** Application specific mouse event handler. */
 type AppMouseEventHandler<T = Element> = AppEventHandler<MouseEvent<T>>;
 
-/** Application specific useEffect callback handler. */
-type AppEffectCallback = (...args: any) => void | Destructor;
-
 /** Application specific generic record props. */
 type AppRecordProps<R> = {
   /** Holds data within a record. */
