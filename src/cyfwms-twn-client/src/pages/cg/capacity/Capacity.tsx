@@ -37,7 +37,7 @@ const Capacity: FC = () => {
           "> div": { display: "flex", gap: "0 1rem" },
           "> div > div": { flex: "1 1 0" },
         }}
-        onSubmit={(event) =>
+        onSubmit={(event: any) =>
           handleSubmit(event, navigate, dispatch, cgCareProviderId, state.data)
         }
         onKeyDown={onKeyDown}
