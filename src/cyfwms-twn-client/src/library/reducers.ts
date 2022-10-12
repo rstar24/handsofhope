@@ -5,6 +5,7 @@ import cpaReducer from "../features/cpa/culturalProgramActivity/slice";
 import cpaSearchReducer from "../features/cpa/search/slice";
 import cgAttachmentsReducer from "../features/cg/attachments/slice";
 import cgCapacityReducer from "../features/cg/capacity/slice";
+import cgCaregiversReducer from "../features/cg/caregivers/slice";
 import cgCareProviderReducer from "../features/cg/careProvider/slice";
 import cyfmsAllReducer from "../features/cyfms/all/slice";
 import cyfmsContactReducer from "../features/cyfms/contact/slice";
@@ -57,6 +58,7 @@ const rootReducer = {
   cpaAttachments: cpaAttachmentsReducer,
   cgCareProvider: cgCareProviderReducer,
   cgCapacity: cgCapacityReducer,
+  cgCaregivers: cgCaregiversReducer,
   cgAttachments: cgAttachmentsReducer,
 };
 

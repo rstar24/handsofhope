@@ -4,7 +4,7 @@ import Attachments from "../../pages/cg/attachments/Attachments";
 import Edit from "../../pages/cg/attachments/Edit";
 import View from "../../pages/cg/attachments/View";
 import Capacity from "../../pages/cg/capacity/Capacity";
-//import Caregivers from "../../pages/cg/caregivers/Caregivers";
+import Caregivers from "../../pages/cg/caregivers/Caregivers";
 import CareProvider from "../../pages/cg/careProvider/CareProvider";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
@@ -19,7 +19,7 @@ const CG: FC = () => {
     <Routes>
       <Route path="care_provider" element={<CareProvider />} />
       <Route path="capacity" element={<Capacity />} />
-      {/* <Route path="caregivers" element={<Caregivers />} /> */}
+      <Route path="caregivers" element={<Caregivers />} />
       <Route path="contact_notes" element={<ContactNotes />} />
       <Route path="attachments" element={<Attachments />} />
       <Route path="attachments/add" element={<Add />} />
