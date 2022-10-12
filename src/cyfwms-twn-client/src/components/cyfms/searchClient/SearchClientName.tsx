@@ -1,5 +1,5 @@
 import { Box, Button, IconButton, Modal } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CYFMSDropdown from "../CYFMSDropdown";
 import Input from "../../Input";
 import CloseIcon from "@mui/icons-material/Close";
@@ -8,6 +8,8 @@ import ClientResults from "./ClientResults";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import type { ReactElement } from "react";
 import { doGet, Record } from "../../../features/cyfms/search/slice";
+import { doGetMaritalStatus } from "../../../features/codetable/slice";
+
 const SearchClientName = ({
   moduleName,
   setDisabled,
@@ -27,6 +29,9 @@ const SearchClientName = ({
   const hide = () => {
     setShown(false);
   };
+  useEffect(() => {
+    dispatch(doGetMaritalStatus());
+  }, []);
 
   const handleSubmit: AppFormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();

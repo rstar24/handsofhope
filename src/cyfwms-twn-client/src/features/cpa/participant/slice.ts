@@ -11,6 +11,26 @@ export interface Data {
   notes: string;
 }
 
+//get api data
+export interface GetData {
+  participantCulturalProId: number;
+  culturalProgramId: number;
+  participant: any;
+  role: string;
+  notes: string;
+  participantId: number;
+}
+
+// Empty get Data
+const emptyGetData: GetData = {
+  participantCulturalProId: 0,
+  culturalProgramId: 0,
+  participant: null,
+  role: "",
+  notes: "",
+  participantId: 0,
+};
+
 // Empty Data
 const emptyData: Data = {
   participantCulturalProId: 0,
@@ -26,10 +46,11 @@ export interface State {
   id: number;
   record: Data[];
   data: Data;
+  getData: GetData;
   status: "failed" | "none" | "loading" | "success";
 }
 
-export const doGet = createAsyncThunk<Data, number>(
+export const doGet = createAsyncThunk<GetData, number>(
   "cpaParticipant/doGet",
   async (participantculturalprogid, { getState }) => {
     const store: any = getState();
@@ -81,12 +102,14 @@ export const cpaParticipantSlice = createSlice<State, SliceCaseReducers<State>>(
       record: [],
       click: false,
       data: emptyData,
+      getData: emptyGetData,
       status: "failed",
     },
     reducers: {
       cleanState(state) {
         state.click = false;
         state.clientName = "";
+        state.getData = emptyGetData;
         state.id = 0;
         state.record = [];
         state.data = emptyData;
@@ -96,11 +119,12 @@ export const cpaParticipantSlice = createSlice<State, SliceCaseReducers<State>>(
         state.click = action.payload;
       },
       setClientName(state, action) {
-        console.log(action.payload);
         state.clientName = action.payload;
+        state.getData.participant = action.payload;
       },
       setId(state, action) {
         state.id = action.payload;
+        state.getData.participantId = action.payload;
       },
     },
     // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -108,7 +132,8 @@ export const cpaParticipantSlice = createSlice<State, SliceCaseReducers<State>>(
     extraReducers: (builder) => {
       builder
         .addCase(doGet.fulfilled, (state, action) => {
-          state.data = action.payload;
+          state.getData = action.payload;
+          state.id = action.payload.participantId;
           state.status = "success";
         })
         .addCase(doGet.pending, (state) => {
@@ -120,6 +145,12 @@ export const cpaParticipantSlice = createSlice<State, SliceCaseReducers<State>>(
       builder
         .addCase(doPost.fulfilled, (state, action) => {
           state.data = action.payload;
+          state.getData.culturalProgramId = action.payload.culturalProgramId;
+          state.getData.participantCulturalProId =
+            action.payload.participantCulturalProId;
+          state.getData.notes = action.payload.notes;
+          state.getData.role = action.payload.role;
+
           state.status = "success";
         })
         .addCase(doPost.pending, (state) => {

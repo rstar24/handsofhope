@@ -17,7 +17,7 @@ import { Data } from "../../../features/cpa/participant/slice";
 import { doPost } from "../../../features/cpa/participant/slice";
 const ParticipantForm = ({ setAddNew, setDisabled, disabled }: any) => {
   const dispatch = useAppDispatch();
-  const data = useAppSelector((state) => state.cpaParticipant.data);
+  const data = useAppSelector((state) => state.cpaParticipant.getData);
   const { culturalProgramId } = useAppSelector((state) => state.cpa.data);
   const state = useAppSelector((state) => state.cpaParticipant);
   const { id } = useAppSelector((state) => state.cpaParticipant);
@@ -72,7 +72,7 @@ const ParticipantForm = ({ setAddNew, setDisabled, disabled }: any) => {
           <EditIcon
             setDisabled={setDisabled}
             setAddNew={setAddNew}
-            culturalProgramId={state.data.participantCulturalProId}
+            culturalProgramId={state.getData.participantCulturalProId}
           />
         </Box>
       )}
@@ -96,7 +96,7 @@ const ParticipantForm = ({ setAddNew, setDisabled, disabled }: any) => {
               }}
               size="small"
               readOnly={disabled}
-              value={state.clientName || data.participant}
+              value={data.participant}
               style={{ backgroundColor: "#dfdada" }}
               endAdornment={<SearchIcon onClick={handleSearch} />}
             />

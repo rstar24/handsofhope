@@ -67,7 +67,6 @@ const Results = (): ReactElement => {
                 <Link
                   to={`/cyfms/view/${participant.participantId}`}
                   onClick={() => {
-                    console.log(participant);
                     handleSearchView(participant.participantId);
                   }}
                 >

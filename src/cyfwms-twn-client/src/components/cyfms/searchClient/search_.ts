@@ -8,7 +8,7 @@ import type { Dispatch, SetStateAction } from "react";
  * Callback of useEffect hook.
  * @param dispatch - Redux action(s) dispatcher
  */
-export const handleEffect: AppEffectCallback = (dispatch: AppDispatch) => {
+export const handleEffect = (dispatch: AppDispatch) => {
   dispatch(doGetMaritalStatus());
 };
 

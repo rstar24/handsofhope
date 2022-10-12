@@ -1,27 +1,35 @@
+import CPALayout from "../../../components/cpa/CPALayout";
+import {
+  cleanState,
+  doGet,
+  doSearch,
+} from "../../../features/cpa/participant/slice";
+import { useAppDispatch, useAppSelector } from "../../../library/hooks";
+import ParticipantForm from "./ParticipantForm";
 import {
   Box,
   Button,
   Table,
   TableBody,
   TableCell,
+  TableContainer,
   TableHead,
   TableRow,
 } from "@mui/material";
+import { grey } from "@mui/material/colors";
 import React, { useEffect, useState } from "react";
-
 import { Link } from "react-router-dom";
+import type { FC } from "react";
 
-import { cleanState } from "../../../features/cpa/participant/slice";
-import { useAppDispatch, useAppSelector } from "../../../library/hooks";
-import CPALayout from "../../../components/cpa/CPALayout";
-import ParticipantForm from "./ParticipantForm";
-import { doGet, doSearch } from "../../../features/cpa/participant/slice";
-
-function Participant(props: any) {
+/**
+ * `CPA` aka `Cultural Programs and Activities` module.
+ * Sub page: `Participants`.
+ * @returns `ReactElement`
+ */
+const Participants: FC = () => {
   const dispatch = useAppDispatch();
   const [addNew, setAddNew] = useState(false);
   const [disabled, setDisabled] = useState(false);
-  const [value, setValue] = useState("");
   const data = useAppSelector((state) => state.cpaParticipant.record);
   const state = useAppSelector((state) => state.cpa.data);
 
@@ -70,73 +78,52 @@ function Participant(props: any) {
           </Box>
           <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
             <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-              <Table sx={{ minWidth: 760 }} aria-label="simple table">
-                <TableHead>
-                  <TableRow sx={{ backgroundColor: "#da0404", color: "white" }}>
-                    <TableCell
-                      sx={{ color: "white" }}
-                      align="center"
-                      size="small"
-                    >
-                      {" "}
-                    </TableCell>
-                    <TableCell
-                      sx={{ color: "white" }}
-                      align="center"
-                      size="small"
-                    >
-                      Participant
-                    </TableCell>
-                    <TableCell
-                      sx={{ color: "white" }}
-                      align="center"
-                      size="small"
-                    >
-                      Role
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {data.map((val: any) => (
-                    <TableRow
-                      sx={{
-                        "&:last-child td, &:last-child th": { border: 0 },
-                      }}
-                    >
-                      <TableCell
-                        sx={{ color: "black" }}
-                        align="center"
-                        size="small"
-                      >
-                        <Link
-                          to="../participants"
-                          onClick={() =>
-                            handleSelected(val.participantCulturalProId)
-                          }
-                        >
-                          Select
-                        </Link>
-                      </TableCell>
-
-                      <TableCell
-                        sx={{ color: "black" }}
-                        align="center"
-                        size="small"
-                      >
-                        {" "}
-                        {val.participant}
-                      </TableCell>
-                      <TableCell
-                        sx={{ color: "black" }}
-                        align="center"
-                        size="small"
-                      >
-                        {val.role}
-                      </TableCell>
+              <TableContainer>
+                <Table>
+                  <TableHead
+                    sx={{
+                      "& > tr > th": {
+                        backgroundColor: (theme) => theme.palette.primary.main,
+                        color: "white",
+                        p: "0.25rem",
+                      },
+                      "& > tr": { border: 0 },
+                    }}
+                  >
+                    <TableRow>
+                      <TableCell></TableCell>
+                      <TableCell>Participant</TableCell>
+                      <TableCell>Role</TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                  </TableHead>
+                  <TableBody
+                    sx={{
+                      "& > tr > td": {
+                        backgroundColor: grey["400"],
+                        p: "0.25rem",
+                      },
+                      "& > tr": { border: 0 },
+                    }}
+                  >
+                    {data.map((val: any) => (
+                      <TableRow>
+                        <TableCell>
+                          <Link
+                            to="../participants"
+                            onClick={() =>
+                              handleSelected(val.participantCulturalProId)
+                            }
+                          >
+                            Select
+                          </Link>
+                        </TableCell>
+                        <TableCell>{val.participant}</TableCell>
+                        <TableCell>{val.role}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
             </Box>
           </Box>
         </Box>
@@ -150,6 +137,6 @@ function Participant(props: any) {
       )}
     </CPALayout>
   );
-}
+};
 
-export default Participant;
+export default Participants;

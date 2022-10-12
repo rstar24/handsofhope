@@ -3,9 +3,9 @@ import {
   CYFSWMSSaveButton,
 } from "../../components/CYFSWMSButtons";
 import Input from "../../components/Input";
+import CYFMSDropdown from "../../components/cyfms/CYFMSDropdown";
+import SearchClientName from "../../components/cyfms/searchClient/SearchClientName";
 import ICLayout from "../../components/initialContact/ICLayout";
-import ICInput from "../../components/initialContact/ICInput";
-import ICDropdown from "../../components/initialContact/ICDropdown";
 import {
   disableClosingDate,
   enableClosingDate,
@@ -14,35 +14,33 @@ import {
 } from "../../features/initialContact/fileDetails/slice";
 import { initiate } from "../../features/initiatorSlice";
 import { unhideTabs } from "../../features/navBarSlice";
-import { onKeyDown } from "../../library/app";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
+import { onKeyDown } from "../../library/app";
+import SearchIcon from "@mui/icons-material/Search";
 import { Box, FormControl, FormLabel, OutlinedInput } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { Data } from "../../features/initialContact/fileDetails/slice";
-import type { FormEvent, ReactElement } from "react";
-import SearchIcon from "@mui/icons-material/Search";
-import { handleAddMore } from "../cyfms/familyPhysicians/familyPhysicians_";
-import SearchClientName from "../../components/cyfms/searchClient/SearchClientName";
+import type { FormEvent, FC } from "react";
 
 /**
- * The FileDetails functional component.
- * @returns FileDetails component skeleton.
+ * `IC` aka `Initial Contact` module.
+ * Sub page: `File Details`.
+ * @returns `ReactElement`
  */
-const FileDetails = (): ReactElement => {
+const FileDetails: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { initialContactStatus } = useAppSelector(
     (state: any) => state.codetable
   );
-
   const isInitiated = useAppSelector(
     (state: any) => state.initiator.isInitiated
   );
   const state = useAppSelector((state) => state.icFileDetails);
   const edit = useAppSelector((state) => state.popup.edit);
-
   const [click, setClick] = useState(false);
+
   useEffect(() => {
     dispatch(doGet(state.getData.fileDetailsId))
       .unwrap()
@@ -116,13 +114,15 @@ const FileDetails = (): ReactElement => {
           display: "flex",
           flexDirection: "column",
           gap: "1rem 0",
+          "> div": { display: "flex", gap: "0 1rem" },
+          "> div > div": { flex: "1 1 0" },
         }}
         onSubmit={submitHandler}
         onChange={changeHandler}
         onKeyDown={onKeyDown}
       >
-        <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
-          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+        <div>
+          <div>
             <Box
               sx={{
                 display: "flex",
@@ -136,14 +136,14 @@ const FileDetails = (): ReactElement => {
               <OutlinedInput
                 size="small"
                 readOnly={true}
-                sx={{ borderRadius: 0, flexBasis: 0, flexGrow: 2, ml: -1 }}
+                sx={{ borderRadius: 0, flexBasis: 0, flexGrow: 2 }}
                 defaultValue={state.data.fileNumber}
                 value={state.getData.fileNumber}
                 style={{ backgroundColor: "#dfdada" }}
               />
             </Box>
-          </Box>
-          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+          </div>
+          <div>
             <FormControl
               sx={{
                 display: "flex",
@@ -160,7 +160,7 @@ const FileDetails = (): ReactElement => {
                 sx={{
                   borderRadius: 0,
                   flexBasis: 0,
-                  flexGrow: 2,
+                  flexGrow: 1.9,
                 }}
                 size="small"
                 value={state.getData.clientName}
@@ -168,11 +168,11 @@ const FileDetails = (): ReactElement => {
                 endAdornment={<SearchIcon onClick={handleSearch} />}
               />
             </FormControl>
-          </Box>
-        </Box>
-        <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
-          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <ICInput
+          </div>
+        </div>
+        <div>
+          <div>
+            <Input
               autofill={state.getData.startingDate}
               id="startingDate"
               value="Date"
@@ -181,19 +181,19 @@ const FileDetails = (): ReactElement => {
               type="date"
               required
             />
-          </Box>
-          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <ICInput
+          </div>
+          <div>
+            <Input
               autofill={state.getData.caseworker}
               id="caseWorker"
               value="Case Worker"
               required
             />
-          </Box>
-        </Box>
-        <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
-          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <ICDropdown
+          </div>
+        </div>
+        <div>
+          <div>
+            <CYFMSDropdown
               autofill={state.getData.status}
               id="status"
               optionsList={Object.values(initialContactStatus).map(
@@ -201,8 +201,8 @@ const FileDetails = (): ReactElement => {
               )}
               value="Status"
             />
-          </Box>
-          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+          </div>
+          <div>
             <Input
               autofill={state.getData.dateClosed}
               disabled={state.disabledClosingDate}
@@ -212,8 +212,8 @@ const FileDetails = (): ReactElement => {
               value="Date Closed"
               type="date"
             />
-          </Box>
-        </Box>
+          </div>
+        </div>
         <Box sx={{ display: "flex", justifyContent: "right" }}>
           {isInitiated ? (
             <>

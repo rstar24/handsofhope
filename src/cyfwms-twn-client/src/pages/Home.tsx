@@ -9,7 +9,7 @@ import {
 import { Link } from "react-router-dom";
 import AuthLayout from "../components/auth/layout/AuthLayout";
 import React from "react";
-import type { ReactElement, ReactNode } from "react";
+import type { FC, ReactNode } from "react";
 
 interface IconType {
   value: string;
@@ -33,7 +33,7 @@ const icons: IconType[] = [
     value: "Cultural Programs and Activities",
     route: "/cpa",
   },
-  { value: "Caregivers", route: "/caregivers" },
+  { value: "Caregivers", route: "/cg" },
   { value: "Reports", route: "/reports" },
   { value: "Notifications", route: "/notifications" },
 ];
@@ -73,10 +73,10 @@ const RenderIcons = (icons: IconType[]): ReactNode[] => {
 };
 
 /**
- * The Home functional component.
- * @returns Home component skeleton.
+ * `Home` is displayed on `/home` route.
+ * @returns `ReactElement`
  */
-const Home = (): ReactElement => {
+const Home: FC = () => {
   return (
     <AuthLayout>
       <Box

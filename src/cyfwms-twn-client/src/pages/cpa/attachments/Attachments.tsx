@@ -15,9 +15,14 @@ import {
 import { grey } from "@mui/material/colors";
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import type { ReactElement } from "react";
+import type { FC } from "react";
 
-const Attachments = (): ReactElement => {
+/**
+ * `CPA` aka `Cultural Programs and Activities` module.
+ * Sub page: `Attachments`.
+ * @returns `ReactElement`
+ */
+const Attachments: FC = () => {
   const dispatch = useAppDispatch();
   const cpaId = useAppSelector((state) => state.cpa.data.culturalProgramId);
   const state = useAppSelector((state) => state.cpaAttachments);
@@ -60,32 +65,26 @@ const Attachments = (): ReactElement => {
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <TableContainer>
-              <Table>
+              <Table
+                sx={{
+                  "th, td": { width: "33%", textAlign: "center", p: "0.25rem" },
+                }}
+              >
                 <TableHead
                   sx={{
-                    "& > tr > th": {
+                    th: {
                       backgroundColor: (theme) => theme.palette.primary.main,
                       color: "white",
-                      p: "0.5rem",
                     },
-                    "& > tr": { border: 0 },
                   }}
                 >
                   <TableRow>
-                    <TableCell>Action</TableCell>
+                    <TableCell></TableCell>
                     <TableCell>Document</TableCell>
                     <TableCell>Type</TableCell>
                   </TableRow>
                 </TableHead>
-                <TableBody
-                  sx={{
-                    "& > tr > td": {
-                      backgroundColor: grey["400"],
-                      p: "0.25rem",
-                    },
-                    "& > tr": { border: 0 },
-                  }}
-                >
+                <TableBody sx={{ td: { backgroundColor: grey["400"] } }}>
                   <AttachmentList list={state.data} />
                 </TableBody>
               </Table>

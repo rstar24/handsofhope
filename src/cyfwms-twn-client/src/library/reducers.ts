@@ -1,4 +1,12 @@
 import codetableReducer from "../features/codetable/slice";
+import cpaAttachmentsReducer from "../features/cpa/attachments/slice";
+import cpaParticipantReducer from "../features/cpa/participant/slice";
+import cpaReducer from "../features/cpa/culturalProgramActivity/slice";
+import cpaSearchReducer from "../features/cpa/search/slice";
+import cgAttachmentsReducer from "../features/cg/attachments/slice";
+import cgCapacityReducer from "../features/cg/capacity/slice";
+import cgCaregiversReducer from "../features/cg/caregivers/slice";
+import cgCareProviderReducer from "../features/cg/careProvider/slice";
 import cyfmsAllReducer from "../features/cyfms/all/slice";
 import cyfmsContactReducer from "../features/cyfms/contact/slice";
 import cyfmsCriminalHistoryReducer from "../features/cyfms/criminalHistory/slice";
@@ -20,10 +28,6 @@ import initiatorReducer from "../features/initiatorSlice";
 import loginReducer from "../features/login/slice";
 import popupReducer from "../features/popupSlice";
 import navBarReducer from "../features/navBarSlice";
-import cpaAttachmentsReducer from "../features/cpa/attachments/slice";
-import cpaSearchReducer from "../features/cpa/search/slice";
-import cpaReducer from "../features/cpa/culturalProgramActivity/slice";
-import cpaParticipantReducer from "../features/cpa/participant/slice";
 
 const rootReducer = {
   login: loginReducer,
@@ -52,6 +56,10 @@ const rootReducer = {
   cpaSearch: cpaSearchReducer,
   cpaParticipant: cpaParticipantReducer,
   cpaAttachments: cpaAttachmentsReducer,
+  cgCareProvider: cgCareProviderReducer,
+  cgCapacity: cgCapacityReducer,
+  cgCaregivers: cgCaregiversReducer,
+  cgAttachments: cgAttachmentsReducer,
 };
 
 export default rootReducer;

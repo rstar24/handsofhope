@@ -1,3 +1,13 @@
+import ContactNotesForm from "./ContactNotesForm";
+import ICLayout from "../../../components/initialContact/ICLayout";
+import { doGetICContactMethod } from "../../../features/codetable/slice";
+import {
+  cleanState,
+  doGet,
+  doSearch,
+} from "../../../features/initialContact/contactNotes/slice";
+import { useAppDispatch, useAppSelector } from "../../../library/hooks";
+import SearchIcon from "@mui/icons-material/Search";
 import {
   Box,
   Button,
@@ -5,25 +15,21 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableContainer,
   TableHead,
   TableRow,
 } from "@mui/material";
+import { grey } from "@mui/material/colors";
 import React, { useEffect, useState } from "react";
-import ICLayout from "../../../components/initialContact/ICLayout";
-import SearchIcon from "@mui/icons-material/Search";
-import ContactNotesForm from "./ContactNotesForm";
 import { Link } from "react-router-dom";
+import type { FC } from "react";
 
-import {
-  cleanState,
-  Data,
-  doGet,
-  doSearch,
-} from "../../../features/initialContact/contactNotes/slice";
-import { useAppDispatch, useAppSelector } from "../../../library/hooks";
-import { doGetICContactMethod } from "../../../features/codetable/slice";
-
-function ContactNotes(props: any) {
+/**
+ * `IC` aka `Initial Contact` module.
+ * Sub page: `Contact Notes`.
+ * @returns `ReactElement`
+ */
+const ContactNotes: FC = () => {
   const state = useAppSelector((state) => state.icFileDetails.getData);
   const dispatch = useAppDispatch();
   const [addNew, setAddNew] = useState(false);
@@ -115,81 +121,52 @@ function ContactNotes(props: any) {
           </Box>
           <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
             <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-              <Table sx={{ minWidth: 760 }} aria-label="simple table">
-                <TableHead>
-                  <TableRow sx={{ backgroundColor: "#da0404", color: "white" }}>
-                    <TableCell
-                      sx={{ color: "white" }}
-                      align="center"
-                      size="small"
-                    ></TableCell>
-                    <TableCell
-                      sx={{ color: "white" }}
-                      align="center"
-                      size="small"
-                    >
-                      Date
-                    </TableCell>
-                    <TableCell
-                      sx={{ color: "white" }}
-                      align="center"
-                      size="small"
-                    >
-                      Name
-                    </TableCell>
-                    <TableCell
-                      sx={{ color: "white" }}
-                      align="center"
-                      size="small"
-                    >
-                      Worker
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {data.map((val: any) => (
-                    <TableRow
-                      sx={{
-                        "&:last-child td, &:last-child th": { border: 0 },
-                      }}
-                    >
-                      <TableCell
-                        sx={{ color: "black" }}
-                        align="center"
-                        size="small"
-                      >
-                        <Link
-                          to="../contact_notes"
-                          onClick={() => handleSelected(val.contactNotesId)}
-                        >
-                          Select
-                        </Link>
-                      </TableCell>
-                      <TableCell
-                        sx={{ color: "black" }}
-                        align="center"
-                        size="small"
-                      >
-                        {val.date}
-                      </TableCell>
-                      <TableCell
-                        sx={{ color: "black" }}
-                        align="center"
-                        size="small"
-                      >
-                        {val.name}
-                      </TableCell>
-                      <TableCell
-                        sx={{ color: "black" }}
-                        align="center"
-                        size="small"
-                      >
-                        {val.worker}
-                      </TableCell>
+              <TableContainer>
+                <Table>
+                  <TableHead
+                    sx={{
+                      "& > tr > th": {
+                        backgroundColor: (theme) => theme.palette.primary.main,
+                        color: "white",
+                        p: "0.25rem",
+                      },
+                      "& > tr": { border: 0 },
+                    }}
+                  >
+                    <TableRow>
+                      <TableCell></TableCell>
+                      <TableCell>Date</TableCell>
+                      <TableCell>Name</TableCell>
+                      <TableCell>Worker</TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                  </TableHead>
+                  <TableBody
+                    sx={{
+                      "& > tr > td": {
+                        backgroundColor: grey["400"],
+                        p: "0.25rem",
+                      },
+                      "& > tr": { border: 0 },
+                    }}
+                  >
+                    {data.map((val: any) => (
+                      <TableRow>
+                        <TableCell>
+                          <Link
+                            to="../contact_notes"
+                            onClick={() => handleSelected(val.contactNotesId)}
+                          >
+                            Select
+                          </Link>
+                        </TableCell>
+                        <TableCell>{val.date}</TableCell>
+                        <TableCell>{val.name}</TableCell>
+                        <TableCell>{val.worker}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
             </Box>
           </Box>
         </Box>
@@ -204,6 +181,6 @@ function ContactNotes(props: any) {
       )}
     </ICLayout>
   );
-}
+};
 
 export default ContactNotes;

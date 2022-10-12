@@ -45,6 +45,7 @@ const CPADropdown = (props: CPADropdownPropsType): ReactElement => {
           flexGrow: 2,
           height: "40px",
           backgroundColor: "#dfdada",
+          paddingLeft: 12,
         }}
       >
         <option disabled></option>
