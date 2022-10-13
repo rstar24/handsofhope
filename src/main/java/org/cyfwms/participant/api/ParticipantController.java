@@ -1,8 +1,6 @@
 package org.cyfwms.participant.api;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.cyfwms.participant.dto.*;
-import org.cyfwms.participant.entity.ParticipantImage;
 import org.cyfwms.participant.service.*;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -54,9 +52,6 @@ public class ParticipantController {
     @Autowired
     private ParticipantCommonDataService participantCommonDataService;
 
-    @Autowired
-    private ImageService imageService;
-
     @GetMapping(value = "/readParticipantIdentity/{participantid}", produces = "application/json")
     @ApiOperation("Read Identity")
     @ResponseStatus(HttpStatus.OK)
@@ -67,10 +62,11 @@ public class ParticipantController {
     @PutMapping(value = "/saveParticipantIdentity", produces = "application/json")
     @ApiOperation("Save or Update Identity")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<ParticipantIdentityDto> saveParticipantIdentity(@RequestParam("participantDto") String participantIdentityDto,@RequestParam(value="image",required = false)MultipartFile multipartFile) throws IOException {
-        ParticipantIdentityDto participantidentitydto = new ObjectMapper().readValue(participantIdentityDto, ParticipantIdentityDto.class);
-        participantidentitydto = participantService.saveParticipantIdentity(participantidentitydto, multipartFile);
-        return ResponseEntity.ok(participantidentitydto);
+    public ResponseEntity<ParticipantIdentityDto> saveParticipantIdentity(@RequestParam Map<String,String>params,@RequestParam(value="image",required = false)MultipartFile multipartFile) throws IOException {
+        ParticipantIdentityDto participantIdentityDto = new ParticipantIdentityDto();
+        mapParticipantFormData(participantIdentityDto, params);
+        participantIdentityDto = participantService.saveParticipantIdentity(participantIdentityDto, multipartFile);
+        return ResponseEntity.ok(participantIdentityDto);
     }
 
     @DeleteMapping("/removeParticipant/{referenceId}")
@@ -253,5 +249,18 @@ public class ParticipantController {
     @ResponseStatus(HttpStatus.OK)
     public ParticipantCommonDataDto readAllOutPutParticipant(@PathVariable("referenceId") Long referenceId) {
         return participantCommonDataService.readParticipantCommonData(referenceId);
+    }
+
+    private void mapParticipantFormData(ParticipantIdentityDto participantIdentityDto,
+        Map<String,String> params){
+        long participantId = 0;
+        if(params.get("participantId") != null
+                && params.get("participantId").length() > 0) {
+            participantId = Long.parseLong(params.get("participantId"));
+        }
+        participantIdentityDto.setParticipantId(participantId);
+        participantIdentityDto.setFirstname(params.get("firstName"));
+        participantIdentityDto.setMiddleName(params.get("middleName"));
+        participantIdentityDto.setSurname(params.get("lastName"));
     }
 }
