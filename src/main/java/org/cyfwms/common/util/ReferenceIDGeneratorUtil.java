@@ -11,9 +11,9 @@ import java.util.Optional;
 public class ReferenceIDGeneratorUtil {
 
     @Autowired
-    private static ParticipantRepository participantRepo;
+    private ParticipantRepository participantRepo;
 
-    public static Long generateParticipantReferenceID() {
+    public Long generateParticipantReferenceID() {
         Long referenceId = 128L;
         Optional<Participant> participantOpt =
                 participantRepo.findTopByOrderByCreationDateTimeDesc();

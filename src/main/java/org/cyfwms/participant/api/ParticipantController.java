@@ -254,7 +254,8 @@ public class ParticipantController {
     private void mapParticipantFormData(ParticipantIdentityDto participantIdentityDto,
         Map<String,String> params){
         long participantId = 0;
-        if(params.get("participantId") != null
+        if(params.get("participantId") != null &&
+                !params.get("participantId").equals("undefined")
                 && params.get("participantId").length() > 0) {
             participantId = Long.parseLong(params.get("participantId"));
         }

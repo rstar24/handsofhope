@@ -38,6 +38,8 @@ public class ParticipantServiceImpl implements ParticipantService {
     private ModelMapper modelMapper;
     @Autowired
     private MessageUtil messageUtil;
+    @Autowired
+    private ReferenceIDGeneratorUtil referenceIDGeneratorUtil;
 
     @Override
     public ParticipantIdentityDto readParticipantIdentity(Long participantId) {
@@ -111,7 +113,7 @@ public class ParticipantServiceImpl implements ParticipantService {
             participant.setType("CYFM");
             participant.setStatus("ACTIVE");
             participant.setReferenceId(
-                    ReferenceIDGeneratorUtil.generateParticipantReferenceID());
+                    referenceIDGeneratorUtil.generateParticipantReferenceID());
         }
         else {
             participant = readParticipant(participantID);
