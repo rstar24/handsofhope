@@ -18,6 +18,7 @@ import { cleanState as cleanLoginState } from "../../../features/login/slice";
 import { cleanState as cleanCulturalProgramActivity } from "../../../features/cpa/culturalProgramActivity/slice";
 import { clean as cleanCPAAttachments } from "../../../features/cpa/attachments/slice";
 import { cleanState as cleanCPAParticipant } from "../../../features/cpa/participant/slice";
+
 import { useAppDispatch } from "../../../library/hooks";
 import { Box, Tab } from "@mui/material";
 import React from "react";
@@ -46,7 +47,8 @@ function LinkTab(props: LinkTabProps) {
 export default function Navbar() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
+  const [calendarColor, setCalendarColor] = React.useState("none");
+  const [homeColor, setHomeColor] = React.useState("none");
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -76,13 +78,17 @@ export default function Navbar() {
     dispatch(cleanCulturalProgramActivity(null));
     dispatch(cleanCPAParticipant(null));
     dispatch(cleanCPAAttachments(null));
+    //Calendar
   };
 
   const handleHome = () => {
     handleClean();
     dispatch(setView(false));
+
     navigate("/home");
   };
+
+  const handleCalendar = () => {};
 
   const handleLogout = () => {
     dispatch(cleanLoginState(null));
@@ -112,6 +118,19 @@ export default function Navbar() {
         </Button>
       </Box>
       <Box color="#ffffff" sx={{ p: 0 }}>
+        <Button
+          component={Link}
+          to="/calendar"
+          sx={{
+            color: "white",
+            textTransform: "none",
+          }}
+          onClick={handleCalendar}
+        >
+          Calendar
+        </Button>
+      </Box>
+      <Box color="#ffffff" sx={{ paddingLeft: "970px" }}>
         <Button
           sx={{ color: "white", textTransform: "none" }}
           onClick={handleLogout}

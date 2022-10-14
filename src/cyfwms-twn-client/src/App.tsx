@@ -25,6 +25,7 @@ import { Provider } from "react-redux";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
 import type { FC } from "react";
+import Calendar_ from "./pages/Calendar/Calendar_";
 
 /**
  * `App` is primary router of CYFWMS application.
@@ -54,6 +55,7 @@ const App: FC = () => {
                 <Route path="cg/*" element={<CG />} />
                 <Route path="/cg/search/*" element={<CgSearch />} />
                 {/* <Route path="cg/view/*" element={<CgView />} /> */}
+                <Route path="calendar" element={<Calendar_ />} />
               </Routes>
             </BrowserRouter>
           </ThemeProvider>
