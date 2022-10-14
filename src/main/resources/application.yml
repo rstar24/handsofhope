@@ -24,6 +24,7 @@ spring:
       - participant
       - initialContact
       - culturalProgAndAct
+      - caregivers
   servlet:
     multipart:
       max-file-size: 10MB

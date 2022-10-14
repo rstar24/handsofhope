@@ -5,6 +5,8 @@ public enum ResponseDataType {
     maritalStatus,
     provin,
     role,
+    caregiversStatus,
+    frequency,
     education,
     typeOfEmployee,
     initialContactStatus,

@@ -2,6 +2,7 @@ package org.cyfwms.common.codetable.service;
 
 import org.cyfwms.common.codetable.constants.ResponseDataType;
 import org.cyfwms.common.codetable.dto.DataResponseDto;
+import org.cyfwms.common.codetable.helper.DataRefCaregivers;
 import org.cyfwms.common.codetable.helper.DataRefCluturalProgAndAct;
 import org.cyfwms.common.codetable.helper.DataReferenceParticipant;
 import org.cyfwms.common.codetable.helper.DataReferenceInitialcontact;
@@ -15,6 +16,7 @@ public class DataReferenceServiceImpl implements DataReferenceService{
     private DataReferenceParticipant dataReferenceParticipant;
     private DataReferenceInitialcontact dataReferenceInitilcontact;
     private DataRefCluturalProgAndAct   dataRefCluturalProgAndAct;
+    private DataRefCaregivers dataRefCaregivers;
 
     public DataResponseDto getAllGenderTypes() {
         return DataResponseDto.builder()
@@ -139,6 +141,21 @@ public DataResponseDto getAllProvinceValue() {
         return  DataResponseDto.builder()
                 .type(ResponseDataType.culturalStatus.name())
                 .valuesMap(dataRefCluturalProgAndAct.getCulturalStatus())
+                .build();
+    }
+    @Override
+    public DataResponseDto getAllCaregiversStatusValue() {
+        return  DataResponseDto.builder()
+                .type(ResponseDataType.caregiversStatus.name())
+                .valuesMap(dataRefCaregivers.getCaregiversStatus())
+                .build();
+    }
+
+    @Override
+    public DataResponseDto getAllFrequencyValue() {
+        return  DataResponseDto.builder()
+                .type(ResponseDataType.frequency.name())
+                .valuesMap(dataRefCaregivers.getFrequency())
                 .build();
     }
 

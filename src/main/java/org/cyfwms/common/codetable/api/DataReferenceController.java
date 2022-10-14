@@ -123,4 +123,19 @@ public class DataReferenceController {
 
         return dataReferenceService.getAllCulturalStatusValue();
     }
+    @GetMapping(value = "/caregiversstatus", produces = "application/json")
+    @ApiOperation("Get All caregivers Status Value")
+    @ResponseStatus(HttpStatus.OK)
+    public DataResponseDto getAllCaregiversStatusValue() {
+
+        return dataReferenceService.getAllCaregiversStatusValue();
+    }
+
+    @GetMapping(value = "/frequency", produces = "application/json")
+    @ApiOperation("Get All frequency Value")
+    @ResponseStatus(HttpStatus.OK)
+    public DataResponseDto getAllFrequencyValue() {
+
+        return dataReferenceService.getAllFrequencyValue();
+    }
 }

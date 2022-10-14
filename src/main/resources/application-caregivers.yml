@@ -1,0 +1,28 @@
+caregivers:
+  caregiversStatus:
+    SCHEDULED:
+      "en": "Scheduled"
+      "fr": "Programmé"
+    RESCHEDULED:
+      "en": "rescheduled"
+      "fr": "reporté"
+    COMPLETED:
+      "en": "Completed"
+      "fr": "Complété"
+    CENCELLED:
+      "en": "Cancelled"
+      "fr": "Annulé"
+
+  frequency:
+    DAILY:
+      "en": "Daily"
+      "fr": "du quotidien"
+    WEEKLY:
+      "en": "weekly"
+      "fr": "hebdomadaire"
+    BI-WEEKLY:
+      "en": "bi-weekly"
+      "fr": "bihebdomadaire"
+    MONTHLY:
+      "en": "monthly"
+      "fr": "mensuelle"
