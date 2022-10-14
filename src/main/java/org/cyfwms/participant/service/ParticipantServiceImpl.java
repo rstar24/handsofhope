@@ -1,5 +1,4 @@
 package org.cyfwms.participant.service;
-
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.cyfwms.common.entity.Attachment;
@@ -12,7 +11,6 @@ import org.cyfwms.participant.dto.ParticipantIdentityDto;
 import org.cyfwms.participant.entity.Participant;
 import org.cyfwms.participant.entity.ParticipantAttachment;
 import org.cyfwms.participant.repository.ParticipantRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +21,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import static org.springframework.http.HttpStatus.*;
 
 @Service
@@ -45,24 +42,32 @@ public class ParticipantServiceImpl implements ParticipantService {
         ParticipantIdentityDto participantIdentityDto = new ParticipantIdentityDto();
         if (participantId != 0) {
             Participant participant = readParticipant(participantId);
-            ParticipantAttachmentDto participantAttachmentDto =
-                    new ParticipantAttachmentDto();
-            Optional<ParticipantAttachment> participantAttachmentOpt =
-                    participant.getParticipantAttachmentList()
-                            .stream()
-                            .filter(attachment ->
-                                    attachment.getAttachmentType().equals("PARTICIPANT_PROFILE_PIC") &&
-                                            attachment.getStatus().equals("ACTIVE"))
-                            .findFirst();
-            if (participantAttachmentOpt.isPresent()) {
-                BeanUtils.copyProperties(participantAttachmentOpt.get(),
+            if (participant.getStatus().equals("ACTIVE")) {
+                ParticipantAttachmentDto participantAttachmentDto =
+                        new ParticipantAttachmentDto();
+                Optional<ParticipantAttachment> participantAttachmentOpt =
+                        participant.getParticipantAttachmentList()
+                                .stream()
+                                .filter(attachment ->
+                                        attachment.getAttachmentType().equals("PARTICIPANT_PROFILE_PIC") &&
+                                                attachment.getStatus().equals("ACTIVE"))
+                                .findFirst();
+                if (participantAttachmentOpt.isPresent()) {
+                    BeanUtils.copyProperties(participantAttachmentOpt.get(),
+                            participantAttachmentDto);
+                }
+                BeanUtils.copyProperties(participant,
+                        participantIdentityDto);
+
+                mapParticipantImageData(participantIdentityDto,
                         participantAttachmentDto);
             }
-            BeanUtils.copyProperties(participant,
-                   participantIdentityDto);
-
-            mapParticipantImageData(participantIdentityDto,
-                    participantAttachmentDto);
+             else {
+               throw new NoSuchElementFoundException(messageUtil.getLocalMessage(I18Constants.NO_ITEM_FOUND.getKey(),String.valueOf(participantId)));
+            }
+        }
+        else {
+            throw new NoSuchElementFoundException(messageUtil.getLocalMessage(I18Constants.NO_ITEM_FOUND.getKey(),String.valueOf(participantId)));
         }
         log.info("Exit readParticipantIdentity");
         return participantIdentityDto;
@@ -78,14 +83,16 @@ public class ParticipantServiceImpl implements ParticipantService {
     private void mapParticipantImageData(
             ParticipantIdentityDto participantIdentityDto,
                 ParticipantAttachmentDto participantAttachmentDto){
-        participantIdentityDto.setParticipantImageId(
-                participantAttachmentDto.getParticipantAttachmentId());
-        participantIdentityDto.setParticipantImageName(
-                participantAttachmentDto.getAttachment().getAttachmentName());
-        participantIdentityDto.setImage(
-                participantAttachmentDto.getAttachment().getAttachmentContents());
-        participantIdentityDto.setParticipantImageType(
-               participantAttachmentDto.getAttachmentType());
+            if (participantAttachmentDto.getAttachment()!=null) {
+                participantIdentityDto.setParticipantImageId(
+                        participantAttachmentDto.getParticipantAttachmentId());
+                participantIdentityDto.setParticipantImageName(
+                        participantAttachmentDto.getAttachment().getAttachmentName());
+                participantIdentityDto.setImage(
+                        participantAttachmentDto.getAttachment().getAttachmentContents());
+                participantIdentityDto.setParticipantImageType(
+                        participantAttachmentDto.getAttachmentType());
+            }
     }
 
     @Override
