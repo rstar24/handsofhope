@@ -31,16 +31,18 @@ public class ContactNotesServiceImpl implements ContactNotesService {
     }
 
     @Override
-    public ContactNotesDto getAllContactNotes(Long cgProviderId) {
+    public ContactNotesDto getAllContactNotes(Long cgContactNotesId) {
         ContactNotesDto contactNotesDto=new ContactNotesDto();
-        if (cgProviderId!=0) {
-            ContactNotes contactNotes = contactNotesRepository.findByCgProviderId(cgProviderId);
-            BeanUtils.copyProperties(contactNotes, contactNotesDto);
+        if (cgContactNotesId!=0) {
+            Optional<ContactNotes> contactNotes = contactNotesRepository.findById(cgContactNotesId);
+            if (contactNotes.isPresent() && contactNotes.get().getStatus().equals("ACTIVE")){
+            BeanUtils.copyProperties(contactNotes.get(), contactNotesDto);
             if (contactNotesDto.getDate() == null) {
                 contactNotesDto.setDate(LocalDate.of(1, 1, 1));
             }
             if (contactNotesDto.getTime() == null) {
                 contactNotesDto.setTime(LocalTime.of(1, 1, 1));
+            }
             }
        }
         return contactNotesDto;

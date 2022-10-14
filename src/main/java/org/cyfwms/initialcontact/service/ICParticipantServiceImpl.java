@@ -4,18 +4,12 @@ import org.cyfwms.initialcontact.entity.ICParticipant;
 import org.cyfwms.initialcontact.repository.ICParticipantRepository;
 import org.cyfwms.participant.entity.Participant;
 import org.cyfwms.participant.repository.ParticipantRepository;
-import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-
 import java.util.Optional;
-
-import static org.springframework.http.HttpStatus.NOT_FOUND;
 @Service
 public class ICParticipantServiceImpl implements ICParticipantService{
-    @Autowired
-    ModelMapper modelMapper;
     @Autowired
     ICParticipantRepository icParticipantRepository;
     @Autowired
@@ -25,11 +19,11 @@ public class ICParticipantServiceImpl implements ICParticipantService{
         ICParticipant iCParticipant = null;
         if (iCParticipantDto.getIcParticipantId()== 0) {
             iCParticipant = new ICParticipant();
-            modelMapper.map(iCParticipantDto, iCParticipant);
+            BeanUtils.copyProperties(iCParticipantDto, iCParticipant);
             iCParticipant.setStatus("ACTIVE");
         } else {
             iCParticipant = icParticipantRepository.findById(iCParticipantDto.getIcParticipantId()).get();
-            modelMapper.map(iCParticipantDto, iCParticipant);
+            BeanUtils.copyProperties(iCParticipantDto, iCParticipant);
         }
         iCParticipant = icParticipantRepository.save(iCParticipant);
         iCParticipantDto.setIcParticipantId(iCParticipant.getIcParticipantId());
@@ -42,14 +36,12 @@ public class ICParticipantServiceImpl implements ICParticipantService{
         if (fileDetailsId != 0) {
             ICParticipant iCParticipant = icParticipantRepository.findByFileDetailsId(fileDetailsId);
             if (iCParticipant != null) {
-                modelMapper.map(iCParticipant, iCParticipantDto);
+                BeanUtils.copyProperties(iCParticipant, iCParticipantDto);
                 Participant participant=participantRepository.findByParticipantId(Long.parseLong(iCParticipantDto.getParticipant()));
                 if (!iCParticipant.getParticipant().equals("0")) {
                     iCParticipantDto.setParticipant(participant.getFirstname() + " " + participant.getSurname());
                     iCParticipantDto.setParticipantId(participant.getParticipantId());
                 }
-            } else {
-                throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
             }
         }
         return iCParticipantDto;

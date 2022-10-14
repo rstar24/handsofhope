@@ -29,18 +29,21 @@ public class ICContactNotesServiceImpl implements ICContactNotesService {
         return iCContactNotesDto;
     }
     @Override
-    public ICContactNotesDto readContactNotes(Long fileDetailsID) {
+    public ICContactNotesDto readContactNotes(Long contactNotesId) {
         ICContactNotesDto iCContactNotesDto = new ICContactNotesDto();
-        if (fileDetailsID != 0) {
-            ICContactNotes iCContactNotes = iCContactNotesRepository.findByFileDetailsId(fileDetailsID);
-            if (iCContactNotes != null) {
-                BeanUtils.copyProperties(iCContactNotes, iCContactNotesDto);
+        if (contactNotesId != 0) {
+            Optional<ICContactNotes> iCContactNotes = iCContactNotesRepository.findById(contactNotesId);
+
+            if (iCContactNotes.isPresent()) {
+                if (iCContactNotes.get().getStatus().equals("ACTIVE")){
+                BeanUtils.copyProperties(iCContactNotes.get(), iCContactNotesDto);
                 if (iCContactNotesDto.getDate() == null) {
                     iCContactNotesDto.setDate(LocalDate.of(1, 1, 1));
                 }
                 if (iCContactNotesDto.getTime() == null) {
                     iCContactNotesDto.setTime(LocalTime.of(1, 1, 1));
                 }
+            }
             }
         }
             return iCContactNotesDto;

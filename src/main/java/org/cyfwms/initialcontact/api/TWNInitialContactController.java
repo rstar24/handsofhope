@@ -29,7 +29,7 @@ public class TWNInitialContactController {
     @Autowired
     private ICContactNotesSearchService iCContactNotesSearchService;
     @Autowired
-    private ICClientSearchService iCClientSearchService;
+    private ICParticipantService icParticipantService;
 
     @GetMapping(value = "/readAllFileDetails/{filedetailsid}", produces = "application/json")
     @ApiOperation("Read Identity")
@@ -106,11 +106,11 @@ public class TWNInitialContactController {
         return new ResponseEntity<>(iCReferralInfoDto, HttpStatus.CREATED);
     }
 
-    @GetMapping(value = "/readAllContactNotes/{filedetailsid}", produces = "application/json")
+    @GetMapping(value = "/readAllContactNotes/{contactnotesid}", produces = "application/json")
     @ApiOperation("Read ContactNotes")
     @ResponseStatus(HttpStatus.OK)
-    public ICContactNotesDto readContactNotes(@PathVariable("filedetailsid") Long fileDetailsID) {
-        return iCContactNotesService.readContactNotes(fileDetailsID);
+    public ICContactNotesDto readContactNotes(@PathVariable("contactnotesid") Long contactNotesId) {
+        return iCContactNotesService.readContactNotes(contactNotesId);
     }
     @PutMapping(value = "/saveAllContactNotes", produces = "application/json")
     @ApiOperation("Save or Update ContactNotes")
@@ -139,6 +139,29 @@ public class TWNInitialContactController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> removeContactNotes(@PathVariable("contactNotesId") Long contactNotesId) {
          iCContactNotesService.removeContactNotes(contactNotesId);
+        return new ResponseEntity("Operation Successful", HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/readICParticipant/{filedetailsid}", produces = "application/json")
+    @ApiOperation("Read ICParticipant")
+    @ResponseStatus(HttpStatus.OK)
+    public ICParticipantDto readICParticipant(@PathVariable("filedetailsid") Long fileDetailsId) {
+        return icParticipantService.readICParticipant(fileDetailsId);
+    }
+
+
+    @PutMapping(value = "/saveICParticipant", produces = "application/json")
+    @ApiOperation("Save or Update ICParticipant")
+    @ResponseStatus(HttpStatus.OK)
+    public ICParticipantDto saveICParticipant(@RequestBody ICParticipantDto iCParticipantDto) {
+        return icParticipantService.saveICParticipant(iCParticipantDto);
+    }
+
+    @DeleteMapping("/removeICParticipant/{icparticipantid}")
+    @ApiOperation("Remove ICParticipant")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<String> removeICParticipant(@PathVariable("icparticipantid") Long icParticipantId) {
+        icParticipantService.removeICParticipant(icParticipantId);
         return new ResponseEntity("Operation Successful", HttpStatus.OK);
     }
 

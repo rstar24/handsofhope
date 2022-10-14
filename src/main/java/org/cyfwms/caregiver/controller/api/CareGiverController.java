@@ -110,18 +110,19 @@ public class CareGiverController {
         return new ResponseEntity<>(capacityDto, HttpStatus.CREATED);
     }
 
-    @GetMapping(value = "/getAllContactNotes/{cgproviderid}", produces = "application/json")
+    @GetMapping(value = "/getAllContactNotes/{cgcontactnotesid}", produces = "application/json")
     @ApiOperation("Read All ContactNotes")
     @ResponseStatus(HttpStatus.OK)
-    public ContactNotesDto getAllContactNotes(@PathVariable("cgproviderid") Long cgProviderId) {
-        return contactNotesService.getAllContactNotes(cgProviderId);
+    public ContactNotesDto getAllContactNotes(@PathVariable("cgcontactnotesid") Long cgContactNotesId) {
+        return contactNotesService.getAllContactNotes(cgContactNotesId);
     }
 
     @PutMapping(value = "/saveAllContactNotes", produces = "application/json")
     @ApiOperation("Save All ContactNotes")
     @ResponseStatus(HttpStatus.OK)
-    public ContactNotesDto saveAllContactNotes(@RequestBody ContactNotesDto contactNotesDtoList) {
-        return contactNotesService.saveAllContactNotes(contactNotesDtoList);
+    public ResponseEntity<ContactNotesDto> saveAllContactNotes(@RequestBody ContactNotesDto contactNotesDto) {
+        contactNotesDto=contactNotesService.saveAllContactNotes(contactNotesDto);
+        return new ResponseEntity<>(contactNotesDto, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/removeContactNotes/{cgcontactnotesid}")
@@ -155,8 +156,9 @@ public class CareGiverController {
     @PutMapping(value = "/saveCareGiversBackGroundCheck", produces = "application/json")
     @ApiOperation("Save CareGiversBackGroundCheck")
     @ResponseStatus(HttpStatus.OK)
-    public CareGiversBackGroundCheckDto saveCareGiversBackGroundCheck(@RequestBody CareGiversBackGroundCheckDto careGiverTabDto) {
-        return cgBackGroundCheckService.saveCareGiversBackGroundCheck(careGiverTabDto);
+    public ResponseEntity<CareGiversBackGroundCheckDto> saveCareGiversBackGroundCheck(@RequestBody CareGiversBackGroundCheckDto cgBackGroundCheckDto) {
+        cgBackGroundCheckDto= cgBackGroundCheckService.saveCareGiversBackGroundCheck(cgBackGroundCheckDto);
+        return new ResponseEntity<>(cgBackGroundCheckDto, HttpStatus.CREATED);
     }
 
 
