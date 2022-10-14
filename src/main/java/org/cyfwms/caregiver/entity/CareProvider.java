@@ -1,5 +1,7 @@
 package org.cyfwms.caregiver.entity;
 import lombok.*;
+import org.cyfwms.common.entity.Appointments;
+import org.cyfwms.culturalprogram.entity.AttachmentEntity;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
@@ -72,5 +74,12 @@ public class CareProvider implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cgproviderid", referencedColumnName = "cgproviderid")
     @Getter @Setter
+
     private ContactNotes ContactNotesList;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "cgproviderid", referencedColumnName = "cgproviderid")
+    @Getter @Setter
+    private List<CGAttachmentEntity> cgAttachmentEntities;
+
 }

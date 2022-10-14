@@ -30,7 +30,7 @@ public class CPASearchRepository {
     private StringBuffer createSearchQuery(CPASearchDto searchCriteria, List<Object> argsObjectList) {
         StringBuffer querySBuff = new StringBuffer();
         querySBuff.append("select c.culturalProgramId ,c.referenceid ,c.name ,c.type ,c.caseworker, c.startDate ,c.status ");
-        querySBuff.append("from culturalprogandact c where c.deletionofstatus='ACTIVE'");
+        querySBuff.append("from culturalprogandact c where c.statusofdeletion='ACTIVE'");
 
         Long referenceId = searchCriteria.getReferenceId();
         if (referenceId != null) {
