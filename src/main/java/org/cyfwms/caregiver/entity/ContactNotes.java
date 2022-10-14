@@ -31,31 +31,37 @@ public class ContactNotes implements Serializable {
     )
     private Long cgContactNotesId;
 
+    @Getter @Setter @Column(name = "name")
+    private String name;
+
+    @Getter @Setter @Column(name = "worker")
+    private String worker;
+
     @Getter @Setter @Column(name = "date")
     private LocalDate date;
     @Getter @Setter @Column(name = "time")
     private LocalTime time;
     @Getter @Setter @Column(name = "contactmethod")
     private String contactMethod;
-    @Getter @Setter @Column(name = "needsaddressed")
-    private String needsAddressed;
-    @Getter @Setter @Column(name = "summary")
+    @Getter @Setter @Column(length = 1000,name = "needaddress")
+    private String needAddress;
+    @Getter @Setter @Column(length = 1000,name = "summary")
     private String summary;
-    @Getter @Setter @Column(name = "results")
-    private String results;
-    @Getter @Setter @Column(name = "nextsteps")
-    private String nextSteps;
-    @Getter @Setter @Column(name = "progresstowardscaseplan")
-    private String progressTowardsCP;
-    @Getter @Setter @Column(name = "additionalinformation")
-    private String additionalInfo;
+    @Getter @Setter @Column(name = "result")
+    private String result;
+    @Getter @Setter @Column(length = 1000,name = "nextstep")
+    private String nextStep;
+    @Getter @Setter @Column(length = 1000,name = "caseplanprogress")
+    private String casePlanProgress;
+    @Getter @Setter @Column(length = 1000,name = "additionalinformation")
+    private String additionalInformation;
 
     @Getter @Setter @Column(name = "status")
     private String status;
 
     @CreationTimestamp
-    @Getter @Setter @Column(name = "creationdate")
-    private LocalDate creationDate;
+    @Getter @Setter @Column(name = "creationdatetime")
+    private LocalDateTime creationDateTime;
 
     @UpdateTimestamp
     @Getter @Setter @Column(name = "lastwritten")

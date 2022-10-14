@@ -69,8 +69,8 @@ public class CareProvider implements Serializable {
     @Getter @Setter
     private Capacity Capacity;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cgproviderid", referencedColumnName = "cgproviderid")
     @Getter @Setter
-    private List<ContactNotes> ContactNotesList;
+    private ContactNotes ContactNotesList;
 }

@@ -1,4 +1,5 @@
 package org.cyfwms.caregiver.controller.api;
+
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.cyfwms.caregiver.dto.*;
@@ -7,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Map;
 @RestController
@@ -27,13 +30,24 @@ public class CareGiverController {
     private ContactNotesService contactNotesService;
 
     @Autowired
+    private CareGiverContactNotesSearchService careGiverContactNotesSearchService;
+
+    @Autowired
     private CareGiversBackGroundCheckService cgBackGroundCheckService;
 
     @GetMapping(value = "/readCareProvider/{cgproviderid}", produces = "application/json")
     @ApiOperation("Read CareGiverProvider")
-    @ResponseStatus(HttpStatus.OK)
-    public CareProviderDto readCareProvider(@PathVariable("cgproviderid") Long cgProviderId) {
-        return careProviderService.readCareProvider(cgProviderId);
+    public ResponseEntity<CareProviderDto> readCareProvider(@PathVariable("cgproviderid") Long cgProviderId) {
+        CareProviderDto careProviderDto=new CareProviderDto();
+        try {
+            careProviderDto=careProviderService.readCareProvider(cgProviderId);
+        }catch (EntityNotFoundException ex){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        catch (Exception ex){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(careProviderDto,HttpStatus.OK);
     }
 
     @PutMapping(value = "/saveCareProvider", produces = "application/json")
@@ -116,6 +130,22 @@ public class CareGiverController {
         contactNotesService.removeContactNotes(cgContactNotesId);
         return new ResponseEntity("Operation Successful", HttpStatus.OK);
     }
+
+    @GetMapping(value = {"/searchContactNotes/{cgproviderid}/{data}"},produces = "application/json")
+    @ApiOperation("Search CareGiverContactNotes")
+    @ResponseStatus(HttpStatus.OK)
+    public List<CareGiverContactNotesSearchResultsDto> searchCareGiverContactNotes(@PathVariable Map<String, String> var)
+    {
+        CareGiverContactNotesSearchCriteriaDto cgContactNotesSearchCriteriaDto=new CareGiverContactNotesSearchCriteriaDto();
+        cgContactNotesSearchCriteriaDto.setCgProviderId(("null".equals(var.get("cgproviderid"))
+                ||var.get("cgproviderid")==null) ? null:Long.parseLong(var.get("cgproviderid")));
+        cgContactNotesSearchCriteriaDto.setData(
+                ("null".equals(var.get("data"))
+                        || var.get("data") == null) ?null:var.get("data"));
+        return careGiverContactNotesSearchService.searchContactNotes(cgContactNotesSearchCriteriaDto);
+    }
+
+
     @GetMapping(value = "/readCareGiversBackGroundCheck/{cgproviderid}", produces = "application/json")
     @ApiOperation("Read CareGiversBackGroundCheck")
     public CareGiversBackGroundCheckDto readCareGiversBackGroundCheck(@PathVariable("cgproviderid") Long cgProviderId) {
