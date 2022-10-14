@@ -15,23 +15,21 @@ import java.util.Map;
 @CrossOrigin("*")
 public class TWNInitialContactController {
     @Autowired
-    ICFileDetailsService iCFileDetailsService;
+    private ICFileDetailsService iCFileDetailsService;
     @Autowired
-    ICIncidentReportService iCIncidentReportService;
+    private ICIncidentReportService iCIncidentReportService;
     @Autowired
-    ICPatientCareInfoService iCPatientCareInfoService;
+    private ICPatientCareInfoService iCPatientCareInfoService;
     @Autowired
-    ICPresentConcernsService iCPresentConcernsService;
+    private ICPresentConcernsService iCPresentConcernsService;
     @Autowired
-    ICReferralInfoService iCReferralInfoService;
+    private ICReferralInfoService iCReferralInfoService;
     @Autowired
-    ICSearchService iCSearchService;
+    private ICContactNotesService iCContactNotesService;
     @Autowired
-    ICContactNotesService iCContactNotesService;
+    private ICContactNotesSearchService iCContactNotesSearchService;
     @Autowired
-    ICContactNotesSearchService iCContactNotesSearchService;
-    @Autowired
-    ICClientSearchService iCClientSearchService;
+    private ICClientSearchService iCClientSearchService;
 
     @GetMapping(value = "/readAllFileDetails/{filedetailsid}", produces = "application/json")
     @ApiOperation("Read Identity")
@@ -144,15 +142,4 @@ public class TWNInitialContactController {
         return new ResponseEntity("Operation Successful", HttpStatus.OK);
     }
 
-    @GetMapping(value = {"/InitialContactsClientSearch/{data}"},produces = "application/json")
-    @ApiOperation("Search icClientSearch")
-    @ResponseStatus(HttpStatus.OK)
-    public List<ICClientSearchResultsDto> searchInitialContactClient(@PathVariable Map<String, String> var)
-    {
-        ICClientSearchCriteriaDto iCClientSearchCriteriaDto=new ICClientSearchCriteriaDto();
-        iCClientSearchCriteriaDto.setData(
-                ("null".equals(var.get("data"))
-                        || var.get("data") == null) ?null:var.get("data"));
-        return iCClientSearchService.searchData(iCClientSearchCriteriaDto);
-    }
 }

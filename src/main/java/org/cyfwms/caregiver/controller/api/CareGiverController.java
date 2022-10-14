@@ -2,10 +2,7 @@ package org.cyfwms.caregiver.controller.api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.cyfwms.caregiver.dto.*;
-import org.cyfwms.caregiver.service.ContactNotesService;
-import org.cyfwms.caregiver.service.CapacityService;
-import org.cyfwms.caregiver.service.CareProviderService;
-import org.cyfwms.caregiver.service.CareProviderSearchService;
+import org.cyfwms.caregiver.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +25,9 @@ public class CareGiverController {
 
     @Autowired
     private ContactNotesService contactNotesService;
+
+    @Autowired
+    private CareGiversBackGroundCheckService cgBackGroundCheckService;
 
     @GetMapping(value = "/readCareProvider/{cgproviderid}", produces = "application/json")
     @ApiOperation("Read CareGiverProvider")
@@ -99,14 +99,14 @@ public class CareGiverController {
     @GetMapping(value = "/getAllContactNotes/{cgproviderid}", produces = "application/json")
     @ApiOperation("Read All ContactNotes")
     @ResponseStatus(HttpStatus.OK)
-    public List<ContactNotesDto> getAllAllContactNotes(@PathVariable("cgproviderid") Long cgProviderId) {
+    public ContactNotesDto getAllContactNotes(@PathVariable("cgproviderid") Long cgProviderId) {
         return contactNotesService.getAllContactNotes(cgProviderId);
     }
 
     @PutMapping(value = "/saveAllContactNotes", produces = "application/json")
     @ApiOperation("Save All ContactNotes")
     @ResponseStatus(HttpStatus.OK)
-    public List<ContactNotesDto> saveAllContactNotes(@RequestBody List<ContactNotesDto> contactNotesDtoList) {
+    public ContactNotesDto saveAllContactNotes(@RequestBody ContactNotesDto contactNotesDtoList) {
         return contactNotesService.saveAllContactNotes(contactNotesDtoList);
     }
 
@@ -116,4 +116,18 @@ public class CareGiverController {
         contactNotesService.removeContactNotes(cgContactNotesId);
         return new ResponseEntity("Operation Successful", HttpStatus.OK);
     }
+    @GetMapping(value = "/readCareGiversBackGroundCheck/{cgproviderid}", produces = "application/json")
+    @ApiOperation("Read CareGiversBackGroundCheck")
+    public CareGiversBackGroundCheckDto readCareGiversBackGroundCheck(@PathVariable("cgproviderid") Long cgProviderId) {
+        return cgBackGroundCheckService.readCareGiversBackGroundCheck(cgProviderId);
+    }
+
+    @PutMapping(value = "/saveCareGiversBackGroundCheck", produces = "application/json")
+    @ApiOperation("Save CareGiversBackGroundCheck")
+    @ResponseStatus(HttpStatus.OK)
+    public CareGiversBackGroundCheckDto saveCareGiversBackGroundCheck(@RequestBody CareGiversBackGroundCheckDto careGiverTabDto) {
+        return cgBackGroundCheckService.saveCareGiversBackGroundCheck(careGiverTabDto);
+    }
+
+
 }

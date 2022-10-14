@@ -1,7 +1,6 @@
 package org.cyfwms.caregiver.dto;
 import lombok.Getter;
 import lombok.Setter;
-
 public class CareProviderDto {
     @Getter @Setter
     private Long cgProviderId;
