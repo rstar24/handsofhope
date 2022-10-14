@@ -1,23 +1,16 @@
 package org.cyfwms.participant.service;
-
+import lombok.AllArgsConstructor;
 import org.cyfwms.participant.dto.ParticipantContactDto;
 import org.cyfwms.participant.entity.ParticipantContact;
 import org.cyfwms.participant.repository.ParticipantContactRepository;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-
 @Service
 @AllArgsConstructor
 public class ParticipantContactServiceImpl implements ParticipantContactService {
     @Autowired
     private ParticipantContactRepository participantContactRepository;
-
-
 
     @Override
     public ParticipantContactDto readParticipantContact(Long participantId) {
@@ -26,8 +19,6 @@ public class ParticipantContactServiceImpl implements ParticipantContactService 
             ParticipantContact participantContact = participantContactRepository.findByParticipantId(participantId);
             if (participantContact != null) {
                 BeanUtils.copyProperties(participantContact, participantContactDto);
-            } else {
-                throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
             }
         }
         return participantContactDto;

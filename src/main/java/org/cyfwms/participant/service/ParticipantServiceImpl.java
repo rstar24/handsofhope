@@ -35,8 +35,6 @@ public class ParticipantServiceImpl implements ParticipantService {
     @Autowired
     private ParticipantAttachmentService participantAttachmentService;
     @Autowired
-    private ModelMapper modelMapper;
-    @Autowired
     private MessageUtil messageUtil;
     @Autowired
     private ReferenceIDGeneratorUtil referenceIDGeneratorUtil;
@@ -60,8 +58,9 @@ public class ParticipantServiceImpl implements ParticipantService {
                 BeanUtils.copyProperties(participantAttachmentOpt.get(),
                         participantAttachmentDto);
             }
-            BeanUtils.copyProperties(participantIdentityDto,
-                    participant);
+            BeanUtils.copyProperties(participant,
+                   participantIdentityDto);
+
             mapParticipantImageData(participantIdentityDto,
                     participantAttachmentDto);
         }
@@ -86,7 +85,7 @@ public class ParticipantServiceImpl implements ParticipantService {
         participantIdentityDto.setImage(
                 participantAttachmentDto.getAttachment().getAttachmentContents());
         participantIdentityDto.setParticipantImageType(
-                participantAttachmentDto.getAttachmentType());
+               participantAttachmentDto.getAttachmentType());
     }
 
     @Override

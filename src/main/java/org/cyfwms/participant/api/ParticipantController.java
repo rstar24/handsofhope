@@ -263,5 +263,9 @@ public class ParticipantController {
         participantIdentityDto.setFirstname(params.get("firstName"));
         participantIdentityDto.setMiddleName(params.get("middleName"));
         participantIdentityDto.setSurname(params.get("lastName"));
+        participantIdentityDto.setDateOfBirth(LocalDate.parse(params.get("dateOfBirth")));
+        participantIdentityDto.setGender(params.get("gender"));
+        participantIdentityDto.setMaritalStatus(params.get("maritalStatus"));
+
     }
 }

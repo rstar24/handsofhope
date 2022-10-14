@@ -42,7 +42,7 @@ public class Participant implements Serializable {
     private String gender;
     @Getter @Setter @Column(name = "maritalstatus")
     private String maritalStatus;
-    @Getter @Setter @Column(name = "type")
+    @Getter @Setter @Column(name = "type",updatable = false)
     private String type;
     @Getter @Setter @Column(name = "status")
     private String status;
