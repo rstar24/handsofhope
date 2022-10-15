@@ -1,4 +1,4 @@
-package org.cyfwms.culturalprogram.controller;
+package org.cyfwms.culturalprogram.api;
 
 import org.cyfwms.culturalprogram.dto.*;
 import io.swagger.annotations.ApiOperation;

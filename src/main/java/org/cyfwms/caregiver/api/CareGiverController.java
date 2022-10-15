@@ -1,4 +1,4 @@
-package org.cyfwms.caregiver.controller.api;
+package org.cyfwms.caregiver.api;
 
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;

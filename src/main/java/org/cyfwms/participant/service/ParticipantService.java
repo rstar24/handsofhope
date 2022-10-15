@@ -10,5 +10,5 @@ import java.util.Map;
 public interface ParticipantService {
     ParticipantIdentityDto readParticipantIdentity(Long participantId);
     ParticipantIdentityDto saveParticipantIdentity(ParticipantIdentityDto participantidentitydto, MultipartFile multipartFile) throws IOException;
-    ResponseEntity<String> removeParticipant(Long referenceId);
+    void removeParticipant(Long referenceId);
 }

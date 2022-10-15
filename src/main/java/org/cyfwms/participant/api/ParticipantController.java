@@ -61,7 +61,7 @@ public class ParticipantController {
 
     @PutMapping(value = "/saveParticipantIdentity", produces = "application/json")
     @ApiOperation("Save or Update Identity")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<ParticipantIdentityDto> saveParticipantIdentity(@RequestParam Map<String,String>params,@RequestParam(value="image",required = false)MultipartFile multipartFile) throws IOException {
         ParticipantIdentityDto participantIdentityDto = new ParticipantIdentityDto();
         mapParticipantFormData(participantIdentityDto, params);
@@ -71,8 +71,9 @@ public class ParticipantController {
 
     @DeleteMapping("/removeParticipant/{referenceId}")
     @ApiOperation("Remove Participant")
-    public ResponseEntity<String> removeParticipant(@PathVariable("referenceId") Long referenceId) {
-        return participantService.removeParticipant(referenceId);
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void removeParticipant(@PathVariable("referenceId") Long referenceId) {
+        participantService.removeParticipant(referenceId);
     }
 
     @GetMapping(value = "/readParticipantContact/{participantid}", produces = "application/json")
@@ -84,6 +85,7 @@ public class ParticipantController {
 
     @PutMapping(value = "/saveParticipantContact", produces = "application/json")
     @ApiOperation("Save or Update Contact")
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<ParticipantContactDto> saveParticipantContact(@RequestBody ParticipantContactDto ParticipantContactDto) {
         ParticipantContactDto participantContactDto =
                 participantContactService.saveParticipantContact(ParticipantContactDto);
@@ -99,13 +101,14 @@ public class ParticipantController {
 
     @PutMapping(value = "/saveAllHouseholdMembers", produces = "application/json")
     @ApiOperation("Save All Household Members")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     public List<HouseholdMemberDto> saveAllHouseholdMembers(@RequestBody List<HouseholdMemberDto> HouseholdMemberDtoList) {
         return householdMemberService.saveAllHouseholdMembers(HouseholdMemberDtoList);
     }
 
     @DeleteMapping("/removeAddMoreHouseholdMember/{householdMemberId}")
     @ApiOperation("Remove Household Members")
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public ResponseEntity<String> removeHouseholdMembers(@PathVariable("householdMemberId") Long householdMemberId) {
         householdMemberService.removeHouseholdMembers(householdMemberId);
         return new ResponseEntity("Operation Successful", HttpStatus.OK);
@@ -121,14 +124,14 @@ public class ParticipantController {
 
     @PutMapping(value = "/saveCriminalHistory", produces = "application/json")
     @ApiOperation("Save or Update Criminal History")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     public CriminalHistoryDto saveCriminalHistory(@RequestBody CriminalHistoryDto criminalHistoryDto) {
         return criminalHistoryService.saveCriminalHistory(criminalHistoryDto);
     }
 
     @DeleteMapping("/removeAddMoreCriminalHistory/{criminalhistoryrecordid}")
     @ApiOperation("Remove Criminal History Record")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public ResponseEntity criminalHistoryRecord( @PathVariable("criminalhistoryrecordid") Long criminalHistoryRecordId) {
         criminalHistoryService.removeCriminalHistoryRecord(criminalHistoryRecordId);
         return new ResponseEntity("Operation Successful", HttpStatus.OK);
@@ -143,16 +146,16 @@ public class ParticipantController {
 
     @PutMapping(value = "/saveAllFamilyPhysicians", produces = "application/json")
     @ApiOperation("Save All Family Physicians")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     public List<FamilyPhysicianDto> saveAllFamilyPhysicians(@RequestBody List<FamilyPhysicianDto> FamilyPhysicianDtoList) {
         return familyPhysicianService.saveAllFamilyPhysicians(FamilyPhysicianDtoList);
     }
 
     @DeleteMapping("/removeAddMoreFamilyPhysician/{familyPhysicianId}")
     @ApiOperation("Remove Family Physicians")
-    public ResponseEntity removeFamilyPhysician(@PathVariable("familyPhysicianId") Long familyPhysicianId) {
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void removeFamilyPhysician(@PathVariable("familyPhysicianId") Long familyPhysicianId) {
         familyPhysicianService.removeFamilyPhysician(familyPhysicianId);
-        return new ResponseEntity("Operation Successful", HttpStatus.OK);
     }
     @GetMapping(value = "/getAllCounselorCFSWorkers/{participantid}", produces = "application/json")
     @ApiOperation("Read All Counselor CFS Workers")
@@ -170,9 +173,9 @@ public class ParticipantController {
 
     @DeleteMapping("/removeAddMoreCounselorCFSWorker/{counselorcfsworkerid}")
     @ApiOperation("Remove Counselor CFS Workers")
-    public ResponseEntity<String> removeCounselorCFSWorker(@PathVariable("counselorcfsworkerid") Long counselorCFSWorkerId) {
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void removeCounselorCFSWorker(@PathVariable("counselorcfsworkerid") Long counselorCFSWorkerId) {
         counselorCFSWorkerService.removeCounselorCFSWorker(counselorCFSWorkerId);
-        return new ResponseEntity("Operation Successful", HttpStatus.OK);
     }
 
     @GetMapping(value = "/readParticipantOtherInformation/{participantid}", produces = "application/json")
@@ -198,7 +201,7 @@ public class ParticipantController {
 
     @PutMapping(value = "/saveEmploymentAndEducation", produces = "application/json")
     @ApiOperation("Save Participant Employment And Education")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     public EducationAndEmploymentCompositeDto saveEmploymentAndEducation(@RequestBody EducationAndEmploymentCompositeDto educationAndEmploymentCompositeDto) {
         return educationAndEmploymentService.saveEducationAndEmployment(educationAndEmploymentCompositeDto);
     }
@@ -206,42 +209,43 @@ public class ParticipantController {
     @GetMapping(value = {"/searchParticipants/{referenceId}/{firstname}/{middleName}/{surname}/{dateOfBirth}/{maritalStatus}/{city}/{phoneNumber}"},produces = "application/json")
     @ApiOperation("Search Participants")
     @ResponseStatus(HttpStatus.OK)
-      public List<ParticipantSearchResultsDto> searchParticipants(@PathVariable Map<String, String> var)
-    {
+      public List<ParticipantSearchResultsDto> searchParticipants(
+              @PathVariable Map<String, String> var){
+        ParticipantSearchCriteriaDto participantSearchCriteriaDto =
+                getParticipantSearchCriteriaDto(var);
+        return participantSearchService.search(participantSearchCriteriaDto);
+    }
+
+    private ParticipantSearchCriteriaDto getParticipantSearchCriteriaDto(Map<String, String> var) {
         ParticipantSearchCriteriaDto participantSearchCriteriaDto = new ParticipantSearchCriteriaDto();
         LocalDate dateTime=null;
-
         if(!"null".equals(var.get("dateOfBirth"))) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             dateTime = LocalDate.parse(var.get("dateOfBirth"), formatter);
         }
         participantSearchCriteriaDto.setFirstname(
                 ("null".equals(var.get("firstname"))
-                        || var.get("firstname") == null) ?null:var.get("firstname"));
-
+                        || var.get("firstname") == null) ?null: var.get("firstname"));
         participantSearchCriteriaDto.setCity(
                 ("null".equals(var.get("city"))
-                       || var.get("city") == null) ?null:var.get("city"));
-
-
+                       || var.get("city") == null) ?null: var.get("city"));
         participantSearchCriteriaDto.setDateOfBirth(dateTime);
         participantSearchCriteriaDto.setMaritalStatus(
                 ("null".equals(var.get("maritalStatus"))
-                        || var.get("maritalStatus") == null) ?null:var.get("maritalStatus"));
-
+                        || var.get("maritalStatus") == null) ?null: var.get("maritalStatus"));
         participantSearchCriteriaDto.setSurname(
                 ("null".equals(var.get("surname"))
-                        || var.get("surname") == null) ?null:var.get("surname"));
+                        || var.get("surname") == null) ?null: var.get("surname"));
         participantSearchCriteriaDto.setMiddleName(
                 ("null".equals(var.get("middleName"))
-                        || var.get("middleName") == null) ?null:var.get("middleName"));
+                        || var.get("middleName") == null) ?null: var.get("middleName"));
         participantSearchCriteriaDto.setPhoneNumber(
                 ("null".equals(var.get("phoneNumber"))
-                        || var.get("phoneNumber") == null) ?null:var.get("phoneNumber"));
+                        || var.get("phoneNumber") == null) ?null: var.get("phoneNumber"));
 
-       participantSearchCriteriaDto.setReferenceId(("null".equals(var.get("referenceId"))
-            || var.get("referenceId") == null) ?null:Long.parseLong(var.get("referenceId")));
-        return participantSearchService.search(participantSearchCriteriaDto);
+        participantSearchCriteriaDto.setReferenceId(("null".equals(var.get("referenceId"))
+             || var.get("referenceId") == null) ?null:Long.parseLong(var.get("referenceId")));
+        return participantSearchCriteriaDto;
     }
 
     @GetMapping(value = "/readAllOutputParticipant/{referenceId}", produces = "application/json")

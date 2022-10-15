@@ -13,7 +13,6 @@ import org.cyfwms.participant.entity.ParticipantAttachment;
 import org.cyfwms.participant.repository.ParticipantRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
@@ -61,12 +60,10 @@ public class ParticipantServiceImpl implements ParticipantService {
 
                 mapParticipantImageData(participantIdentityDto,
                         participantAttachmentDto);
-            }
-             else {
+            }else {
                throw new NoSuchElementFoundException(messageUtil.getLocalMessage(I18Constants.NO_ITEM_FOUND.getKey(),String.valueOf(participantId)));
             }
-        }
-        else {
+        }else {
             throw new NoSuchElementFoundException(messageUtil.getLocalMessage(I18Constants.NO_ITEM_FOUND.getKey(),String.valueOf(participantId)));
         }
         log.info("Exit readParticipantIdentity");
@@ -167,13 +164,19 @@ public class ParticipantServiceImpl implements ParticipantService {
     }
 
     @Override
-    public ResponseEntity<String> removeParticipant(Long referenceId) {
-        Optional<Participant> p = participantRepository.findByReferenceId(referenceId);
-        if (!p.isPresent() || p.get().getStatus().equalsIgnoreCase("INACTIVE")) {
-            return new ResponseEntity<String>("Participant not found!", NOT_FOUND);
+    public void removeParticipant(Long referenceId) {
+        Participant p =
+                participantRepository.findByReferenceId(referenceId)
+                        .orElseThrow(() -> new NoSuchElementFoundException(
+                                messageUtil.getLocalMessage(I18Constants.NO_ITEM_FOUND.getKey(),
+                                        String.valueOf(referenceId))));
+
+        if (p.getStatus().equalsIgnoreCase("INACTIVE")) {
+            throw new NoSuchElementFoundException(
+                    messageUtil.getLocalMessage(I18Constants.NO_ITEM_FOUND.getKey(),
+                            String.valueOf(referenceId)));
         }
-        p.get().setStatus("INACTIVE");
-        participantRepository.save(p.get());
-        return new ResponseEntity<String>(OK);
+        p.setStatus("INACTIVE");
+        participantRepository.save(p);
     }
 }

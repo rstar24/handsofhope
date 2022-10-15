@@ -1,4 +1,4 @@
-package org.cyfwms.culturalprogram.controller;
+package org.cyfwms.culturalprogram.api;
 
 import static org.springframework.http.HttpStatus.*;
 
