@@ -1,6 +1,6 @@
 package org.cyfwms.caregiver.entity;
 import lombok.*;
-import org.cyfwms.common.entity.Appointments;
+//import org.cyfwms.common.entity.Appointments;
 import org.cyfwms.culturalprogram.entity.AttachmentEntity;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
