@@ -1,33 +1,27 @@
 package org.cyfwms.caregiver.dto;
-import lombok.Getter;
-import lombok.Setter;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+import lombok.*;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CareProviderDto {
-    @Getter @Setter
-    private Long cgProviderId;
-    @Getter @Setter
-    private String name;
-    @Getter @Setter
-    private String status;
-    @Getter @Setter
-    private String type;
-    @Getter @Setter
-    private String otherType;
-    @Getter @Setter
-    private String address;
-    @Getter @Setter
-    private String city;
-    @Getter @Setter
-    private String postalCode;
-    @Getter @Setter
-    private String province;
-    @Getter @Setter
-    private String phoneNumber;
-    @Getter @Setter
-    private String email;
-    @Getter @Setter
-    private String priCaregiver;
-    @Getter @Setter
-    private String secCaregiver;
-    @Getter @Setter
+    private Long Id;
     private Long referenceId;
+    private String name;
+    private String status;
+    private String type;
+    private String otherType;
+    private String address;
+    private String city;
+    private String postalCode;
+    private String province;
+    private String phoneNumber;
+    private String email;
+    private String primaryCaregiver;
+    private String secondaryCaregiver;
 }

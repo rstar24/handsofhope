@@ -50,6 +50,7 @@ const InputNumber: FC<Props> = (props) => {
           borderRadius: 0,
           flex: props.outlinedInputFlex || "2 1 0",
         }}
+        readOnly={props.readOnly}
       />
     </FormControl>
   );

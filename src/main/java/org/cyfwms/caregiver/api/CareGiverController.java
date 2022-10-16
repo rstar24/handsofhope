@@ -35,34 +35,25 @@ public class CareGiverController {
     @Autowired
     private CareGiversBackGroundCheckService cgBackGroundCheckService;
 
-    @GetMapping(value = "/readCareProvider/{cgproviderid}", produces = "application/json")
-    @ApiOperation("Read CareGiverProvider")
-    public ResponseEntity<CareProviderDto> readCareProvider(@PathVariable("cgproviderid") Long cgProviderId) {
-        CareProviderDto careProviderDto=new CareProviderDto();
-        try {
-            careProviderDto=careProviderService.readCareProvider(cgProviderId);
-        }catch (EntityNotFoundException ex){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        catch (Exception ex){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>(careProviderDto,HttpStatus.OK);
-    }
-
-    @PutMapping(value = "/saveCareProvider", produces = "application/json")
-    @ApiOperation("Save or Update CareProvider")
+    @ApiOperation("Read a Care Provider.")
+    @GetMapping(value = "/care_provider/read/{id}", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<CareProviderDto> saveCareProvider(@RequestBody CareProviderDto careProviderDto) {
-        careProviderDto=careProviderService.CareProvider(careProviderDto);
-        return new ResponseEntity<>(careProviderDto, HttpStatus.CREATED);
+    public CareProviderDto readCareProvider(@PathVariable("id") Long id) {
+        return careProviderService.read(id);
     }
 
-    @ApiOperation("delete CareProvider")
-    @DeleteMapping("/removeCareProvider/{referenceid}")
-    public ResponseEntity<String> removeCareProvider(@PathVariable("referenceid") Long referenceId) {
-        careProviderService.removeCareProvider(referenceId);
-        return new ResponseEntity("Operation Successful", HttpStatus.OK);
+    @ApiOperation("Save/Update a Care Provider.")
+    @PutMapping(value = "/care_provider/save", produces = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public CareProviderDto saveCareProvider(@RequestBody CareProviderDto cpDto) {
+        return careProviderService.save(cpDto);
+    }
+
+    @ApiOperation("Soft delete a Care Provider.")
+    @DeleteMapping("/care_provider/remove/{referenceId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void removeCareProvider(@PathVariable("referenceId") Long referenceId) {
+        careProviderService.remove(referenceId);
     }
 
     @GetMapping(value = {"/careGiverProviderSearch/{referenceId}/{name}/{type}/{priCaregiver}/{secCaregiver}/{status}"},produces = "application/json")

@@ -1,7 +1,4 @@
-import {
-  CYFSWMSNextButton,
-  CYFSWMSSaveButton,
-} from "../../../components/CYFSWMSButtons";
+import { CYFSWMSSaveButton } from "../../../components/CYFSWMSButtons";
 import Input from "../../../components/Input";
 import CYFMSDropdown from "../../../components/cyfms/CYFMSDropdown";
 import CgLayout from "../../../components/cg/CgLayout";
@@ -22,15 +19,10 @@ const CareProvider: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { gender, maritalstatus } = useAppSelector((state) => state.codetable);
-  const isInitiated = useAppSelector((state) => state.initiator.isInitiated);
-  const state = useAppSelector((state) => state.cyfmsRegister);
+  const state = useAppSelector((state) => state.cgCareProvider);
   const edit = useAppSelector((state) => state.popup.edit);
 
-  useEffect(() => handleEffect(dispatch, state.data.participantId), []);
-
-  const nextClickHandler = () => {
-    navigate("../capacity");
-  };
+  useEffect(() => handleEffect(dispatch, state.data.id), []);
 
   return (
     <CgLayout>
@@ -45,22 +37,24 @@ const CareProvider: FC = () => {
           "> div > div": { flex: "1 1 0" },
         }}
         onSubmit={(event: FormEvent<HTMLFormElement>) =>
-          handleSubmit(event, navigate, dispatch, state.data, edit, isInitiated)
+          handleSubmit(event, navigate, dispatch, state.data, edit)
         }
         onKeyDown={onKeyDown}
       >
-        {state.data.referenceId !== 0 && (
+        {state.data.referenceId! >= 0 ? (
           <Typography paddingLeft={1}>
             Reference ID : {state.data.referenceId}
           </Typography>
+        ) : (
+          <></>
         )}
         <div>
           <div>
-            <Input autofill={state.data.firstname} id="naam" value="Name" />
+            <Input autofill={state.data.name} id="naam" value="Name" />
           </div>
           <div>
             <CYFMSDropdown
-              autofill={state.data.gender}
+              autofill={state.data.status}
               id="status"
               optionsList={Object.values(gender).map(
                 (gender: any) => gender.en
@@ -72,7 +66,7 @@ const CareProvider: FC = () => {
         <div>
           <div>
             <CYFMSDropdown
-              autofill={state.data.maritalStatus}
+              autofill={state.data.type}
               id="type"
               optionsList={Object.values(maritalstatus).map(
                 (status: any) => status.en
@@ -82,7 +76,7 @@ const CareProvider: FC = () => {
           </div>
           <div>
             <Input
-              autofill={state.data.firstname}
+              autofill={state.data.otherType}
               id="otherType"
               value="Please specify"
               disabled
@@ -91,27 +85,23 @@ const CareProvider: FC = () => {
         </div>
         <div>
           <div>
-            <Input
-              autofill={state.data.middleName}
-              id="address"
-              value="Address"
-            />
+            <Input autofill={state.data.address} id="address" value="Address" />
           </div>
           <div>
-            <Input autofill={state.data.surname} id="city" value="City" />
+            <Input autofill={state.data.city} id="city" value="City" />
           </div>
         </div>
         <div>
           <div>
             <Input
-              autofill={state.data.middleName}
+              autofill={state.data.postalCode}
               id="postalCode"
               value="Postal Code"
             />
           </div>
           <div>
             <Input
-              autofill={state.data.surname}
+              autofill={state.data.province}
               id="province"
               value="Province"
             />
@@ -120,14 +110,14 @@ const CareProvider: FC = () => {
         <div>
           <div>
             <Input
-              autofill={state.data.middleName}
+              autofill={state.data.phoneNumber}
               id="phoneNumber"
               value="Phone Number"
             />
           </div>
           <div>
             <Input
-              autofill={state.data.surname}
+              autofill={state.data.email}
               type="email"
               id="eMail"
               value="Email"
@@ -137,35 +127,21 @@ const CareProvider: FC = () => {
         <div>
           <div>
             <Input
-              autofill={state.data.middleName}
-              id="priCaregiver"
+              autofill={state.data.primaryCaregiver}
+              id="primaryCaregiver"
               value="Primary Caregiver"
             />
           </div>
           <div>
             <Input
-              autofill={state.data.surname}
-              id="secCaregiver"
+              autofill={state.data.secondaryCaregiver}
+              id="secondaryCaregiver"
               value="Secondary Caregiver"
             />
           </div>
         </div>
         <Box sx={{ justifyContent: "right" }}>
-          {isInitiated ? (
-            <>
-              {edit ? (
-                <>
-                  <CYFSWMSSaveButton />
-                </>
-              ) : (
-                <>
-                  <CYFSWMSNextButton onClick={nextClickHandler} />
-                </>
-              )}
-            </>
-          ) : (
-            <CYFSWMSSaveButton />
-          )}
+          <CYFSWMSSaveButton />
         </Box>
       </Box>
     </CgLayout>

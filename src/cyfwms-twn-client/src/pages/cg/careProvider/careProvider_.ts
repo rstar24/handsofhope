@@ -1,17 +1,16 @@
-import { doGet, doPost } from "../../../features/cyfms/register/slice";
-import { initiate } from "../../../features/initiatorSlice";
+import { doGet, doPost } from "../../../features/cg/careProvider/slice";
 import { unhideTabs } from "../../../features/navBarSlice";
-import type { Data } from "../../../features/cyfms/register/slice";
+import type { CareProvider } from "../../../features/cg/careProvider/slice";
 import type { AppDispatch } from "../../../library/store";
 import type { NavigateFunction } from "react-router-dom";
 
 /**
  * Callback of useEffect hook.
  * @param dispatch - Redux action(s) dispatcher
- * @param participantID - Participant ID
+ * @param id - Care Provider Id
  */
-export const handleEffect = (dispatch: AppDispatch, participantID: number) => {
-  dispatch(doGet(participantID))
+export const handleEffect = (dispatch: AppDispatch, id: number) => {
+  dispatch(doGet(id))
     .unwrap()
     .catch((err) => {
       console.log(err);
@@ -30,32 +29,31 @@ export const handleSubmit: AppFormEventHandler<HTMLFormElement> = (
   event,
   navigate: NavigateFunction,
   dispatch: AppDispatch,
-  data: Data,
+  data: CareProvider,
   edit: boolean
 ) => {
   event.preventDefault();
-  const formData = new FormData();
-  formData.append("referenceId", String(data.referenceId));
-  formData.append("participantId", String(data.participantId));
-  formData.append("firstName", event.currentTarget.firstName.value);
-  formData.append("middleName", event.currentTarget.middleName.value);
-  formData.append("lastName", event.currentTarget.lastName.value);
-  formData.append("dateOfBirth", event.currentTarget.dateOfBirth.value);
-  formData.append("gender", event.currentTarget.gender.value);
-  formData.append("maritalStatus", event.currentTarget.maritalStatus.value);
-  if (data.participantImageId) {
-    formData.append("participantImageId", String(data.participantImageId));
-  } else {
-    formData.append("participantImageId", "0");
-  }
-  formData.append("image", event.currentTarget.imageFile.files[0]);
+  const formData: CareProvider = {
+    id: data.id,
+    name: event.currentTarget.naam.value,
+    status: event.currentTarget.status.value,
+    type: event.currentTarget.type.value,
+    otherType: event.currentTarget.otherType.value,
+    address: event.currentTarget.address.value,
+    city: event.currentTarget.city.value,
+    postalCode: event.currentTarget.postalCode.value,
+    province: event.currentTarget.province.value,
+    phoneNumber: event.currentTarget.phoneNumber.value,
+    email: event.currentTarget.eMail.value,
+    primaryCaregiver: event.currentTarget.primaryCaregiver.value,
+    secondaryCaregiver: event.currentTarget.secondaryCaregiver.value,
+  };
   dispatch(doPost(formData))
     .unwrap()
     .then(() => {
       dispatch(unhideTabs(null));
-      dispatch(initiate(null));
       if (edit) {
-        navigate("../contact");
+        navigate("../capacity");
       }
     })
     .catch((err) => {
