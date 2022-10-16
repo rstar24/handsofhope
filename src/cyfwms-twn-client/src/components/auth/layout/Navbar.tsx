@@ -18,7 +18,7 @@ import { cleanState as cleanLoginState } from "../../../features/login/slice";
 import { cleanState as cleanCulturalProgramActivity } from "../../../features/cpa/culturalProgramActivity/slice";
 import { clean as cleanCPAAttachments } from "../../../features/cpa/attachments/slice";
 import { cleanState as cleanCPAParticipant } from "../../../features/cpa/participant/slice";
-
+import { clean as cleanCGCareProvider } from "../../../features/cg/careProvider/slice";
 import { useAppDispatch } from "../../../library/hooks";
 import { Box, Tab } from "@mui/material";
 import React from "react";
@@ -74,10 +74,12 @@ export default function Navbar() {
     dispatch(cleanPresentConcernsState(null));
     dispatch(cleanPatientCareInformationState(null));
     dispatch(cleanInitialContactSearchState(null));
-    //CPA
+    // CPA
     dispatch(cleanCulturalProgramActivity(null));
     dispatch(cleanCPAParticipant(null));
     dispatch(cleanCPAAttachments(null));
+    // CG
+    dispatch(cleanCGCareProvider(null));
     //Calendar
   };
 

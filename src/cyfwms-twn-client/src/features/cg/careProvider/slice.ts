@@ -4,9 +4,9 @@ import { RootState } from "../../../library/store";
 import type { SliceCaseReducers } from "@reduxjs/toolkit";
 import type { AxiosResponse } from "axios";
 
-export interface Data {
+export interface CareProvider {
   id: number;
-  refId: number;
+  referenceId?: number;
   name: string;
   status: string;
   type: string;
@@ -15,16 +15,15 @@ export interface Data {
   city: string;
   postalCode: string;
   province: string;
-  phoneNum: string;
+  phoneNumber: string;
   email: string;
-  priCaregiver: string;
-  secCaregiver: string;
+  primaryCaregiver: string;
+  secondaryCaregiver: string;
 }
 
-// Empty Data
-const emptyData: Data = {
+const emptyCareProvider: CareProvider = {
   id: 0,
-  refId: 0,
+  referenceId: 0,
   name: "",
   status: "",
   type: "",
@@ -33,18 +32,18 @@ const emptyData: Data = {
   city: "",
   postalCode: "",
   province: "",
-  phoneNum: "",
+  phoneNumber: "",
   email: "",
-  priCaregiver: "",
-  secCaregiver: "",
+  primaryCaregiver: "",
+  secondaryCaregiver: "",
 };
 
 export interface State {
-  data: Data;
+  data: CareProvider;
   status: "failed" | "none" | "loading" | "success";
 }
 
-export const doGet = createAsyncThunk<Data, number>(
+export const doGet = createAsyncThunk<CareProvider, number>(
   "careProvider/doGet",
   async (id, { getState }) => {
     const store = getState() as RootState;
@@ -54,9 +53,9 @@ export const doGet = createAsyncThunk<Data, number>(
   }
 );
 
-export const doPost = createAsyncThunk<Data, Data>(
+export const doPost = createAsyncThunk<CareProvider, CareProvider>(
   "careProvider/doPost",
-  async (formData: Data, { getState }) => {
+  async (formData: CareProvider, { getState }) => {
     const store = getState() as RootState;
     const res: AxiosResponse = await doPostAPI(formData, store.login.token);
     // Becomes the `fulfilled` action payload:
@@ -66,10 +65,10 @@ export const doPost = createAsyncThunk<Data, Data>(
 
 export const careProviderSlice = createSlice<State, SliceCaseReducers<State>>({
   name: "careProvider",
-  initialState: { data: emptyData, status: "none" },
+  initialState: { data: emptyCareProvider, status: "none" },
   reducers: {
-    cleanState(state) {
-      state.data = emptyData;
+    clean(state) {
+      state.data = emptyCareProvider;
       state.status = "none";
     },
   },
