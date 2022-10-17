@@ -1,0 +1,27 @@
+appointment:
+  appointmentStatus:
+    SCHEDULED:
+      "en": "Scheduled"
+      "fr": "Programmé"
+    RESCHEDULED:
+      "en": "Rescheduled"
+      "fr": "reporté"
+    COMPLETED:
+      "en": "Completed"
+      "fr": "Complété"
+    CENCELLED:
+      "en": "Cancelled"
+      "fr": "Annulé"
+  frequency:
+    DAILY:
+      "en": "Daily"
+      "fr": "du quotidien"
+    WEEKLY:
+      "en": "Weekly"
+      "fr": "hebdomadaire"
+    BI-WEEKLY:
+      "en": "Bi-weekly"
+      "fr": "bihebdomadaire"
+    MONTHLY:
+      "en": "Monthly"
+      "fr": "mensuelle"
