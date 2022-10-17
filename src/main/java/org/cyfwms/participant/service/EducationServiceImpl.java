@@ -1,10 +1,10 @@
 package org.cyfwms.participant.service;
 
+import lombok.AllArgsConstructor;
 import org.cyfwms.participant.dto.EducationDto;
 import org.cyfwms.participant.entity.Education;
 import org.cyfwms.participant.repository.EducationRepository;
-import lombok.AllArgsConstructor;
-import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +14,6 @@ public class EducationServiceImpl  implements EducationService{
     @Autowired
     private EducationRepository educationRepository;
 
-    @Autowired
-    private ModelMapper modelMapper;
 
     @Override
     public EducationDto readEducation(Long participantId) {
@@ -23,7 +21,7 @@ public class EducationServiceImpl  implements EducationService{
         if (participantId != 0) {
             Education education = educationRepository.findByParticipantId(participantId);
             if (education != null) {
-                modelMapper.map(education, educationDto);
+                BeanUtils.copyProperties(education, educationDto);
             }
         }
         return educationDto;
@@ -34,10 +32,10 @@ public class EducationServiceImpl  implements EducationService{
         Education education =  null;
         if (educationDto.getEducationId() == 0) {
             education = new Education();
-            modelMapper.map(educationDto, education);
+            BeanUtils.copyProperties(educationDto, education);
         } else {
             education = educationRepository.findById(educationDto.getEducationId()).get();
-            modelMapper.map(educationDto, education);
+            BeanUtils.copyProperties(educationDto, education);
         }
         education = educationRepository.save(education);
         educationDto.setEducationId(education.getEducationId());
