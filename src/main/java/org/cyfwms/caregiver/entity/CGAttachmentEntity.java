@@ -33,8 +33,8 @@ public class CGAttachmentEntity {
     @Column(name="type")
     private String type;
 
-    @Column(name = "cgproviderid")
-    private Long cgProviderId;
+    @Column(name = "id")
+    private Long id;
 
     @Column(name = "cgimagetype")
     private String cgImageType;

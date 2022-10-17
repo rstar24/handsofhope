@@ -4,8 +4,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.cyfwms.caregiver.dto.CGAttachmentDto;
 import org.cyfwms.caregiver.service.CGAttachmentService;
-import org.cyfwms.culturalprogram.dto.AttachmentDTO;
-import org.cyfwms.culturalprogram.entity.AttachmentEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,12 +21,14 @@ import static org.springframework.http.HttpStatus.OK;
 public class CGAttachmentController {
     @Autowired
     CGAttachmentService cgAttachmentService;
+
     @ApiOperation("Save/Upload/Put one/single attachment.")
     @PutMapping("/save_one")
     public CGAttachmentDto saveOne(@RequestParam(value = "file", required = false) MultipartFile file, @RequestParam("cgDto") String cgDto) throws IOException {
         CGAttachmentDto cgAttachmentDto = cgAttachmentService.saveCGAttachment(file, cgDto);
         return cgAttachmentDto;
     }
+
     @ApiOperation("Read/Get one/single attachment.")
     @GetMapping("/read_one/{id}")
     public CGAttachmentDto readOne(@PathVariable Long id) {
@@ -46,6 +46,7 @@ public class CGAttachmentController {
     @DeleteMapping("/remove_one/{cgimageid}")
     @ResponseStatus(OK)
     public ResponseEntity<String> removeOne(@PathVariable("cgimageid") Long cgImageId) {
-        return cgAttachmentService.removeCulturalProgImage(cgImageId);
+        return cgAttachmentService.removeCGImage(cgImageId);
     }
 }
+
