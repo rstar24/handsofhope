@@ -1,10 +1,10 @@
 import { CYFSWMSNextButton } from "../../../components/CYFSWMSButtons";
-import Input from "../../../components/Input";
 import InputNumber from "../../../components/InputNumber";
 import CgLayout from "../../../components/cg/CgLayout";
+import CYFMSTextArea from "../../../components/cyfms/CYFMSTextArea";
 import { onKeyDown } from "../../../library/app";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
-import { handleEffect, handleSubmit } from "./capacity_";
+import { handleChange, handleEffect, handleSubmit } from "./capacity_";
 import { Box } from "@mui/material";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -41,12 +41,13 @@ const Capacity: FC = () => {
           handleSubmit(event, navigate, dispatch, cgCareProviderId, state.data)
         }
         onKeyDown={onKeyDown}
+        onChange={(event: any) => handleChange(event)}
       >
         <div>
           <div>
             <InputNumber
-              autofill={state.data.maxCap}
-              id="maxCap"
+              autofill={state.data.maximumCap}
+              id="maximumCapacity"
               value="Maximum Capacity"
               min={0}
             />
@@ -54,7 +55,7 @@ const Capacity: FC = () => {
           <div>
             <InputNumber
               autofill={state.data.currUtil}
-              id="currUtil"
+              id="currentUtilization"
               value="Current Utilization"
               min={0}
             />
@@ -63,29 +64,31 @@ const Capacity: FC = () => {
         <div>
           <div>
             <InputNumber
-              autofill={state.data.maxCap - state.data.currUtil}
-              id="availableCap"
+              autofill={state.data.maximumCap - state.data.currUtil}
+              id="availableCapacity"
               value="Available Capacity"
               min={0}
-              disabled
+              readOnly={true}
             />
           </div>
           <div></div>
         </div>
         <div>
-          <Input
+          <CYFMSTextArea
+            formLabelFlex="1 1 0"
+            outlinedInputFlex="5 1 0"
             autofill={state.data.currUtilDetails}
-            id="currUtilDetails"
+            id="currentUtilizationDetails"
             value="Current Utilization Details"
-            outlinedInputFlex="5.25 1 0"
           />
         </div>
         <div>
-          <Input
+          <CYFMSTextArea
+            formLabelFlex="1 1 0"
+            outlinedInputFlex="5 1 0"
             autofill={state.data.preferences}
             id="preferences"
             value="Please Specify your Preferences"
-            outlinedInputFlex="5.25 1 0"
           />
         </div>
         <Box sx={{ justifyContent: "right" }}>

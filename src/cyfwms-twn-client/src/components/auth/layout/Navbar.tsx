@@ -19,6 +19,7 @@ import { cleanState as cleanCulturalProgramActivity } from "../../../features/cp
 import { clean as cleanCPAAttachments } from "../../../features/cpa/attachments/slice";
 import { cleanState as cleanCPAParticipant } from "../../../features/cpa/participant/slice";
 import { clean as cleanCGCareProvider } from "../../../features/cg/careProvider/slice";
+import { clean as cleanCGCapacity } from "../../../features/cg/capacity/slice";
 import { useAppDispatch } from "../../../library/hooks";
 import { Box, Tab } from "@mui/material";
 import React from "react";
@@ -80,6 +81,7 @@ export default function Navbar() {
     dispatch(cleanCPAAttachments(null));
     // CG
     dispatch(cleanCGCareProvider(null));
+    dispatch(cleanCGCapacity(null));
     //Calendar
   };
 

@@ -1,4 +1,6 @@
 package org.cyfwms.caregiver.service;
+import javax.persistence.EntityNotFoundException;
+
 import org.cyfwms.caregiver.dto.CapacityDto;
 import org.cyfwms.caregiver.entity.Capacity;
 import org.cyfwms.caregiver.repository.CapacityRepository;
@@ -34,6 +36,12 @@ public class CapacityServiceImpl implements CapacityService {
             {
                 BeanUtils.copyProperties(CGCapacity, cGCapacityDto);
             }
+            else{
+                throw new EntityNotFoundException();
+            }
+        }
+        else{
+            throw new EntityNotFoundException();
         }
         return cGCapacityDto;
     }
