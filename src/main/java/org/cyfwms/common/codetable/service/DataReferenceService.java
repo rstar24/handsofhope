@@ -24,6 +24,8 @@ public interface DataReferenceService {
     DataResponseDto getAllContactMethodValue();
     DataResponseDto getAllCulturalTypeValue();
     DataResponseDto getAllCulturalStatusValue();
-    DataResponseDto getAllCaregiversStatusValue();
     DataResponseDto getAllFrequencyValue();
+    DataResponseDto getAllAppointmentStatusValue();
+    DataResponseDto getAllCaregiversStatusValue();
+    DataResponseDto getAllCaregiversTypeValue();
 }

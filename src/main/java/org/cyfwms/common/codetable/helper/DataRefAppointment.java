@@ -8,11 +8,11 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Map;
 
 @Configuration
-@ConfigurationProperties(prefix = "caregivers")
+@ConfigurationProperties(prefix = "appointment")
 @AllArgsConstructor
 @Data
-public class DataRefCaregivers {
-    private Map<String, Map<String,String>> caregivertype;
-    private Map<String, Map<String,String>> caregiverstatus;
+public class DataRefAppointment {
+    private Map<String, Map<String,String>> frequency;
+    private Map<String, Map<String,String>> appointmentStatus;
 
 }

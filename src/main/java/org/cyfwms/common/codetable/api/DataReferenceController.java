@@ -1,8 +1,9 @@
 package org.cyfwms.common.codetable.api;
-import org.cyfwms.common.codetable.dto.DataResponseDto;
-import org.cyfwms.common.codetable.service.DataReferenceService;
+
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
+import org.cyfwms.common.codetable.dto.DataResponseDto;
+import org.cyfwms.common.codetable.service.DataReferenceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 @RestController
@@ -123,12 +124,12 @@ public class DataReferenceController {
 
         return dataReferenceService.getAllCulturalStatusValue();
     }
-    @GetMapping(value = "/caregiversstatus", produces = "application/json")
-    @ApiOperation("Get All caregivers Status Value")
+    @GetMapping(value = "/appoinmentstatus", produces = "application/json")
+    @ApiOperation("Get All appointment Status Value")
     @ResponseStatus(HttpStatus.OK)
-    public DataResponseDto getAllCaregiversStatusValue() {
+    public DataResponseDto getAllAppointmentStatusValue() {
 
-        return dataReferenceService.getAllCaregiversStatusValue();
+        return dataReferenceService.getAllAppointmentStatusValue();
     }
 
     @GetMapping(value = "/frequency", produces = "application/json")
@@ -137,5 +138,20 @@ public class DataReferenceController {
     public DataResponseDto getAllFrequencyValue() {
 
         return dataReferenceService.getAllFrequencyValue();
+    }
+    @GetMapping(value = "/caregiverstatus", produces = "application/json")
+    @ApiOperation("Get All caregivers Status Value")
+    @ResponseStatus(HttpStatus.OK)
+    public DataResponseDto getAllCaregiversStatusValue() {
+
+        return dataReferenceService.getAllCaregiversStatusValue();
+    }
+
+    @GetMapping(value = "/caregivertype", produces = "application/json")
+    @ApiOperation("Get All caregiver type Value")
+    @ResponseStatus(HttpStatus.OK)
+    public DataResponseDto getAllCaregiversTypeValue() {
+
+        return dataReferenceService.getAllCaregiversTypeValue();
     }
 }

@@ -25,6 +25,7 @@ spring:
       - initialContact
       - culturalProgAndAct
       - caregivers
+      - appointment
   servlet:
     multipart:
       max-file-size: 10MB

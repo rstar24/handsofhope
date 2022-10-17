@@ -1,12 +1,9 @@
 package org.cyfwms.common.codetable.service;
 
+import lombok.AllArgsConstructor;
 import org.cyfwms.common.codetable.constants.ResponseDataType;
 import org.cyfwms.common.codetable.dto.DataResponseDto;
-import org.cyfwms.common.codetable.helper.DataRefCaregivers;
-import org.cyfwms.common.codetable.helper.DataRefCluturalProgAndAct;
-import org.cyfwms.common.codetable.helper.DataReferenceParticipant;
-import org.cyfwms.common.codetable.helper.DataReferenceInitialcontact;
-import lombok.AllArgsConstructor;
+import org.cyfwms.common.codetable.helper.*;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,7 +13,8 @@ public class DataReferenceServiceImpl implements DataReferenceService{
     private DataReferenceParticipant dataReferenceParticipant;
     private DataReferenceInitialcontact dataReferenceInitilcontact;
     private DataRefCluturalProgAndAct   dataRefCluturalProgAndAct;
-    private DataRefCaregivers dataRefCaregivers;
+    private DataRefCaregivers  dataRefCaregivers;
+    private DataRefAppointment dataRefAppointment;
 
     public DataResponseDto getAllGenderTypes() {
         return DataResponseDto.builder()
@@ -144,10 +142,10 @@ public DataResponseDto getAllProvinceValue() {
                 .build();
     }
     @Override
-    public DataResponseDto getAllCaregiversStatusValue() {
+    public DataResponseDto getAllAppointmentStatusValue() {
         return  DataResponseDto.builder()
-                .type(ResponseDataType.caregiversStatus.name())
-                .valuesMap(dataRefCaregivers.getCaregiversStatus())
+                .type(ResponseDataType.appointmentStatus.name())
+                .valuesMap(dataRefAppointment.getAppointmentStatus())
                 .build();
     }
 
@@ -155,8 +153,23 @@ public DataResponseDto getAllProvinceValue() {
     public DataResponseDto getAllFrequencyValue() {
         return  DataResponseDto.builder()
                 .type(ResponseDataType.frequency.name())
-                .valuesMap(dataRefCaregivers.getFrequency())
+                .valuesMap(dataRefAppointment.getFrequency())
                 .build();
     }
 
+    @Override
+    public DataResponseDto getAllCaregiversStatusValue() {
+        return  DataResponseDto.builder()
+                .type(ResponseDataType.caregiversstatus.name())
+                .valuesMap(dataRefCaregivers.getCaregiverstatus())
+                .build();
+    }
+
+    @Override
+    public DataResponseDto getAllCaregiversTypeValue() {
+        return  DataResponseDto.builder()
+                .type(ResponseDataType.caregiverstype.name())
+                .valuesMap(dataRefCaregivers.getCaregivertype())
+                .build();
+    }
 }
