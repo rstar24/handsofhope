@@ -17,6 +17,8 @@ import {
   doGetICContactMethodAPI,
   doGetCPACulturalTypeAPI,
   doGetCPACulturalStatusAPI,
+  doGetCGStatusAPI,
+  doGetCGTypeAPI,
 } from "./api";
 
 export interface CodeTableData {
@@ -35,6 +37,8 @@ export interface CodeTableData {
   contactMethod: {};
   culturalType: {};
   culturalStatus: {};
+  cgStatus: {};
+  cgType: {};
 }
 
 export interface CodeTableState {
@@ -206,6 +210,32 @@ export const doGetCPACulturalStatus = createAsyncThunk(
     return res.data;
   }
 );
+
+//CareGivers status
+export const doGetCGStatus = createAsyncThunk(
+  "codetable/doGetCGStatus",
+  async (_, { dispatch, getState }) => {
+    const res: AxiosResponse = await doGetCGStatusAPI(
+      (getState() as RootState).login.token
+    );
+    // Becomes the `fulfilled` action payload:
+
+    return res.data;
+  }
+);
+
+//CareGivers Type
+export const doGetCGType = createAsyncThunk(
+  "codetable/doGetCGType",
+  async (_, { dispatch, getState }) => {
+    const res: AxiosResponse = await doGetCGTypeAPI(
+      (getState() as RootState).login.token
+    );
+    // Becomes the `fulfilled` action payload:
+    console.log("sdasfasfsf", res);
+    return res.data;
+  }
+);
 export const CodeTableSlice = createSlice({
   name: "codetable",
   initialState: {
@@ -224,6 +254,8 @@ export const CodeTableSlice = createSlice({
     contactMethod: {},
     culturalType: {},
     culturalStatus: {},
+    cgStatus: {},
+    cgType: {},
     jwtToken: "",
     status: "failed",
   },
@@ -244,6 +276,8 @@ export const CodeTableSlice = createSlice({
       state.contactMethod = {};
       state.culturalType = {};
       state.culturalStatus = {};
+      state.cgStatus = {};
+      state.cgType = {};
       state.jwtToken = "";
       state.status = "failed";
     },
@@ -491,6 +525,38 @@ export const CodeTableSlice = createSlice({
       state.status = "loading";
     });
     builder.addCase(doGetCPACulturalType.rejected, (state) => {
+      state.status = "failed";
+    });
+
+    //CareGiver Type
+    builder.addCase(doGetCGStatus.fulfilled, (state, action) => {
+      try {
+        state.cgStatus = action.payload.valuesMap;
+      } catch (err) {
+        console.log(err);
+      }
+      state.status = "success";
+    });
+    builder.addCase(doGetCGStatus.pending, (state) => {
+      state.status = "loading";
+    });
+    builder.addCase(doGetCGStatus.rejected, (state) => {
+      state.status = "failed";
+    });
+
+    //CareGiver Type
+    builder.addCase(doGetCGType.fulfilled, (state, action) => {
+      try {
+        state.cgType = action.payload.valuesMap;
+      } catch (err) {
+        console.log(err);
+      }
+      state.status = "success";
+    });
+    builder.addCase(doGetCGType.pending, (state) => {
+      state.status = "loading";
+    });
+    builder.addCase(doGetCGType.rejected, (state) => {
       state.status = "failed";
     });
   },

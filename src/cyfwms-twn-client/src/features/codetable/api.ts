@@ -173,3 +173,29 @@ export const doGetCPACulturalStatusAPI = async (
   );
   return res;
 };
+
+//CareGivers Status codetable
+export const doGetCGStatusAPI = async (
+  jwtToken: string
+): Promise<AxiosResponse> => {
+  const res: AxiosResponse = await axiosInstance.get(
+    "dataservice/caregiverstatus",
+    {
+      headers: { Authorization: "Bearer " + jwtToken },
+    }
+  );
+  return res;
+};
+
+//CareGivers type codetable
+export const doGetCGTypeAPI = async (
+  jwtToken: string
+): Promise<AxiosResponse> => {
+  const res: AxiosResponse = await axiosInstance.get(
+    "dataservice/caregivertype",
+    {
+      headers: { Authorization: "Bearer " + jwtToken },
+    }
+  );
+  return res;
+};

@@ -1,19 +1,20 @@
 import { CYFSWMSNextButton } from "../../../components/CYFSWMSButtons";
-import ICDropdown from "../../../components/initialContact/ICDropdown";
-import ICInput from "../../../components/initialContact/ICInput";
-import ICTextArea from "../../../components/initialContact/ICTextArea";
-import {
-  Data,
-  doPost,
-  doSearch,
-} from "../../../features/initialContact/contactNotes/slice";
+
 import { onKeyDown } from "../../../library/app";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 
 import { Box } from "@mui/material";
 import React from "react";
 import type { FormEvent } from "react";
-import EditIcon from "../../cpa/Participants/EditIcon";
+
+import Input from "../../../components/Input";
+import CYFMSDropdown from "../../../components/cyfms/CYFMSDropdown";
+import {
+  Data,
+  doPost,
+  doSearch,
+} from "../../../features/cg/contactNotes/slice";
+import EditIcon from "./EditIcon";
 
 const ContactNotesForm = ({
   setAddNew,
@@ -22,16 +23,16 @@ const ContactNotesForm = ({
   targetValue,
 }: any) => {
   const dispatch = useAppDispatch();
-  const state = useAppSelector((state) => state.icFileDetails);
+  const state = useAppSelector((state) => state.cgCareProvider);
   const { contactMethod } = useAppSelector((state) => state.codetable);
-  const data = useAppSelector((state) => state.icContactNotes.data);
+  const data = useAppSelector((state) => state.cgContactNotes.data);
 
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
     const form = e.currentTarget as HTMLFormElement;
     const formData: Data = {
-      fileDetailsId: state.getData.fileDetailsId,
-      contactNotesId: data.contactNotesId,
+      cgProviderId: state.data.id,
+      cgContactNotesId: data.cgContactNotesId,
       name: form.naam.value,
       worker: form.worker.value,
       date: form.date.value,
@@ -47,12 +48,12 @@ const ContactNotesForm = ({
     dispatch(doPost(formData))
       .unwrap()
       .then(() => {
-        console.log("PresentConcerns POST backend API was successful!");
-        dispatch(doSearch({ id: state.getData.fileDetailsId, data: "" }));
+        console.log("ContactNotes POST backend API was successful!");
+        dispatch(doSearch({ id: 1, data: "" }));
         setAddNew(false);
       })
       .catch((err) => {
-        console.log("PresentConcerns POST backend API didn't work!");
+        console.log("ContactNotes POST backend API didn't work!");
         console.log(err);
       });
   };
@@ -77,14 +78,14 @@ const ContactNotesForm = ({
           <EditIcon
             setDisabled={setDisabled}
             setAddNew={setAddNew}
-            contactId={data.contactNotesId}
+            contactId={data.cgContactNotesId}
             targetValue={targetValue}
           />
         </Box>
       )}
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-          <ICInput
+          <Input
             id="naam"
             value="Name"
             required
@@ -93,7 +94,7 @@ const ContactNotesForm = ({
           />
         </Box>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-          <ICInput
+          <Input
             id="worker"
             value="Worker"
             required
@@ -104,7 +105,7 @@ const ContactNotesForm = ({
       </Box>
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-          <ICInput
+          <Input
             id="date"
             value="Date"
             type="date"
@@ -116,7 +117,7 @@ const ContactNotesForm = ({
           />
         </Box>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-          <ICInput
+          <Input
             id="time"
             value="Time"
             type="time"
@@ -127,7 +128,7 @@ const ContactNotesForm = ({
       </Box>
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-          <ICDropdown
+          <CYFMSDropdown
             id="contactMethod"
             value="Contact Method"
             autofill={data.contactMethod}
@@ -140,41 +141,47 @@ const ContactNotesForm = ({
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
       </Box>
 
-      <ICTextArea
+      <Input
         id="address"
         value="Need(s) Addressed"
         autofill={data.needAddress}
         readOnly={disabled}
+        outlinedInputFlex="5.25 1 0"
       />
-      <ICTextArea
+      <Input
         id="summary"
         value="Summary"
         autofill={data.summary}
         readOnly={disabled}
+        outlinedInputFlex="5.25 1 0"
       />
-      <ICTextArea
+      <Input
         id="result"
         value="Results"
         autofill={data.result}
         readOnly={disabled}
+        outlinedInputFlex="5.25 1 0"
       />
-      <ICTextArea
+      <Input
         id="nextStep"
         value="Next Step(s)"
         autofill={data.nextStep}
         readOnly={disabled}
+        outlinedInputFlex="5.25 1 0"
       />
-      <ICTextArea
+      <Input
         id="progress"
         value="Progress towards Case Plan"
         autofill={data.casePlanProgress}
         readOnly={disabled}
+        outlinedInputFlex="5.25 1 0"
       />
-      <ICTextArea
+      <Input
         id="information"
         value="Additional Information"
         autofill={data.additionalInformation}
         readOnly={disabled}
+        outlinedInputFlex="5.25 1 0"
       />
       <Box sx={{ display: "flex", justifyContent: "right" }}>
         <CYFSWMSNextButton disabled={disabled} />

@@ -9,36 +9,33 @@ import {
   TableRow,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-
 import SearchIcon from "@mui/icons-material/Search";
-
 import { Link } from "react-router-dom";
-
 import {
   cleanState,
   Data,
   doGet,
   doSearch,
-} from "../../../features/initialContact/contactNotes/slice";
+} from "../../../features/cg/contactNotes/slice";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import { doGetICContactMethod } from "../../../features/codetable/slice";
-import ContactNotesForm from "../../initialContact/contactNotes/ContactNotesForm";
+import { grey } from "@mui/material/colors";
+
 import CgLayout from "../../../components/cg/CgLayout";
+import ContactNotesForm from "./ContactNotesForm";
 
 function ContactNotes(props: any) {
-  const state = useAppSelector((state) => state.icFileDetails.getData);
+  const state = useAppSelector((state) => state.cgCareProvider.data);
   const dispatch = useAppDispatch();
   const [addNew, setAddNew] = useState(false);
   const [disabled, setDisabled] = useState(false);
-
-  const data = useAppSelector((state) => state.icContactNotes.record);
-
+  const records = useAppSelector((state) => state.cgContactNotes.record);
   const [value, setValue] = useState("");
 
   useEffect(() => {
     dispatch(doGetICContactMethod());
 
-    dispatch(doSearch({ id: state.fileDetailsId, data: "" }))
+    dispatch(doSearch({ id: state.id, data: "" }))
       .unwrap()
       .catch((err) => {});
   }, []);
@@ -56,8 +53,7 @@ function ContactNotes(props: any) {
       });
   };
   const handleSearchIcon = (e: any) => {
-    console.group("click");
-    dispatch(doSearch({ id: state.fileDetailsId, data: value }))
+    dispatch(doSearch({ id: state.id, data: value }))
       .unwrap()
       .catch((err) => {});
   };
@@ -118,79 +114,49 @@ function ContactNotes(props: any) {
           <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
             <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
               <Table sx={{ minWidth: 760 }} aria-label="simple table">
-                <TableHead>
+                <TableHead
+                  sx={{
+                    "& > tr > th": {
+                      backgroundColor: (theme) => theme.palette.primary.main,
+                      color: "white",
+                      p: "0.25rem",
+                    },
+                    "& > tr": { border: 0 },
+                  }}
+                >
                   <TableRow sx={{ backgroundColor: "#da0404", color: "white" }}>
-                    <TableCell
-                      sx={{ color: "white" }}
-                      align="center"
-                      size="small"
-                    ></TableCell>
-                    <TableCell
-                      sx={{ color: "white" }}
-                      align="center"
-                      size="small"
-                    >
-                      Date
-                    </TableCell>
-                    <TableCell
-                      sx={{ color: "white" }}
-                      align="center"
-                      size="small"
-                    >
-                      Name
-                    </TableCell>
-                    <TableCell
-                      sx={{ color: "white" }}
-                      align="center"
-                      size="small"
-                    >
-                      Worker
-                    </TableCell>
+                    <TableCell></TableCell>
+                    <TableCell>Date</TableCell>
+                    <TableCell>Name</TableCell>
+                    <TableCell>Worker</TableCell>
                   </TableRow>
                 </TableHead>
-                <TableBody>
-                  <TableRow
-                    sx={{
-                      "&:last-child td, &:last-child th": { border: 0 },
-                    }}
-                  >
-                    <TableCell
-                      sx={{ color: "black" }}
-                      align="center"
-                      size="small"
-                    >
-                      <Link
-                        to="../contact_notes"
-                        onClick={() => {
-                          setAddNew(true);
-                          setDisabled(true);
-                        }}
-                      >
-                        Select
-                      </Link>
-                    </TableCell>
-                    <TableCell
-                      sx={{ color: "black" }}
-                      align="center"
-                      size="small"
-                    >
-                      {}
-                    </TableCell>
-                    <TableCell
-                      sx={{ color: "black" }}
-                      align="center"
-                      size="small"
-                    >
-                      shubh
-                    </TableCell>
-                    <TableCell
-                      sx={{ color: "black" }}
-                      align="center"
-                      size="small"
-                    >
-                      shubham
-                    </TableCell>
-                  </TableRow>
+                <TableBody
+                  sx={{
+                    "& > tr > td": {
+                      backgroundColor: grey["400"],
+                      p: "0.25rem",
+                    },
+                    "& > tr": { border: 0 },
+                  }}
+                >
+                  {records &&
+                    Array.isArray(records) &&
+                    records.map((val: any) => (
+                      <TableRow key={val.cgContactNotesId}>
+                        <TableCell>
+                          <Link
+                            to="../contact_notes"
+                            onClick={() => handleSelected(val.cgContactNotesId)}
+                          >
+                            Select
+                          </Link>
+                        </TableCell>
+                        <TableCell>{val.date}</TableCell>
+                        <TableCell>{val.name}</TableCell>
+                        <TableCell>{val.worker}</TableCell>
+                      </TableRow>
+                    ))}
                 </TableBody>
               </Table>
             </Box>
