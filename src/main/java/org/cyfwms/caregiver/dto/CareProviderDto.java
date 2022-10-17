@@ -10,7 +10,7 @@ import lombok.*;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CareProviderDto {
-    private Long Id;
+    private Long Id=0L;
     private Long referenceId;
     private String name;
     private String status;

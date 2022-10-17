@@ -11,7 +11,7 @@ import lombok.*;
 public class ParticipantOtherInformationServiceDto {
     @Getter
     @Setter
-    private Long participantOtherInfoId;
+    private Long participantOtherInfoId=0L;
 
     @Getter
     @Setter

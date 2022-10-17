@@ -15,7 +15,7 @@ public class ICReferralInfoDto {
 
     @Getter
     @Setter
-    private Long referralInfoId;
+    private Long referralInfoId=0L;
 
     @Getter
     @Setter

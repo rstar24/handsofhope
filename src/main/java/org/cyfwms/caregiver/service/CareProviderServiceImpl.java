@@ -51,6 +51,8 @@ public class CareProviderServiceImpl implements CareProviderService {
 
     @Override
     public CareProviderDto read(Long id) {
+        CareProviderDto cpDto = new CareProviderDto();
+        if (id!=0){
         CareProvider cp = careProviderRepository.findByIdWhereActive(id)
             .orElseThrow(() -> new NoSuchElementFoundException(
                 messageUtility.getLocalMessage(
@@ -58,8 +60,9 @@ public class CareProviderServiceImpl implements CareProviderService {
                     String.valueOf(id)
                 )
             ));
-        CareProviderDto cpDto = new CareProviderDto();
+
         BeanUtils.copyProperties(cp, cpDto);
+        }
         return cpDto;
     }
 

@@ -17,7 +17,7 @@ public class ICIncidentReportDto {
 
     @Getter
     @Setter
-    private Long incidentReportId;
+    private Long incidentReportId=0L;
 
     @Getter
     @Setter

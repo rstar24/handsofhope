@@ -10,7 +10,7 @@ import lombok.*;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CapacityDto {
     @Getter @Setter
-    private Long cgCapacityId;
+    private Long cgCapacityId=0L;
 
     @Getter @Setter
     private Long maximumCap;

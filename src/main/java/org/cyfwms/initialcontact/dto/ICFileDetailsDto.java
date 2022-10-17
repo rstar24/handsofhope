@@ -12,7 +12,7 @@ import java.time.LocalDate;
 public class ICFileDetailsDto {
     @Getter
     @Setter
-    private Long fileDetailsId;
+    private Long fileDetailsId=0L;
 
     @Getter
     @Setter

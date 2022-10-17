@@ -15,7 +15,7 @@ public class ParticipantContactDto {
 
     @Getter
     @Setter
-    private Long participantContactId;
+    private Long participantContactId=0L;
 
     @Getter
     @Setter

@@ -60,11 +60,7 @@ public class ParticipantServiceImpl implements ParticipantService {
 
                 mapParticipantImageData(participantIdentityDto,
                         participantAttachmentDto);
-            }else {
-               throw new NoSuchElementFoundException(messageUtil.getLocalMessage(I18Constants.NO_ITEM_FOUND.getKey(),String.valueOf(participantId)));
             }
-        }else {
-            throw new NoSuchElementFoundException(messageUtil.getLocalMessage(I18Constants.NO_ITEM_FOUND.getKey(),String.valueOf(participantId)));
         }
         log.info("Exit readParticipantIdentity");
         return participantIdentityDto;

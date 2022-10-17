@@ -19,12 +19,12 @@ public class CareProviderSearchRepository {
         return jdbcTemplate.query(querySBuff.toString(),argsObjectList.toArray(),
                 (rs, rowNum) ->
                         new CareProviderSearchResultsDto(
-                                rs.getLong("cgProviderId"),
-                                rs.getLong("referenceId"),
+                                rs.getLong("id"),
+                                rs.getLong("reference_id"),
                                 rs.getString("name"),
                                 rs.getString("type"),
-                                rs.getString("primarycaregiver"),
-                                rs.getString("secondarycaregiver"),
+                                rs.getString("primary_caregiver"),
+                                rs.getString("secondary_caregiver"),
                                 rs.getString("status")
 
                         )
@@ -33,12 +33,12 @@ public class CareProviderSearchRepository {
 
     private StringBuffer createSearchQuery(CareProviderSearchCriteriaDto searchCriteria, List<Object> argsObjectList) {
         StringBuffer querySBuff = new StringBuffer();
-        querySBuff.append("select c.cgproviderid ,c.referenceid ,c.name ,c.type ,c.primarycaregiver, c.secondarycaregiver ,c.status ");
-        querySBuff.append("from caregiverprovider c where c.statusofdeletion='ACTIVE'");
+        querySBuff.append("select c.id ,c.reference_id ,c.name ,c.type ,c.primary_caregiver, c.secondary_caregiver ,c.status ");
+        querySBuff.append("from cg_care_provider c where c.deletion_status='ACTIVE'");
 
         Long referenceId = searchCriteria.getReferenceId();
         if (referenceId != null) {
-            querySBuff.append(" AND c.referenceid = ?");
+            querySBuff.append(" AND c.reference_id = ?");
             argsObjectList.add(referenceId);
         }
         String name = searchCriteria.getName();
@@ -70,7 +70,7 @@ public class CareProviderSearchRepository {
                     .replace("%", "!%")
                     .replace("_", "!_")
                     .replace("[", "![");
-            querySBuff.append(" AND c.primarycaregiver LIKE ?");
+            querySBuff.append(" AND c.primary_caregiver LIKE ?");
             argsObjectList.add(priCaregiver + "%");
         }
 
@@ -81,7 +81,7 @@ public class CareProviderSearchRepository {
                     .replace("%", "!%")
                     .replace("_", "!_")
                     .replace("[", "![");
-            querySBuff.append(" AND c.secondarycaregiver LIKE ?");
+            querySBuff.append(" AND c.secondary_caregiver LIKE ?");
             argsObjectList.add(secCaregiver + "%");
         }
 

@@ -40,7 +40,7 @@ public class CareGiverContactNotesSearchRepository {
         Long cgProviderId=searchCriteria.getCgProviderId();
 
         querySBuff.append("select c.cgcontactnotesid ,c.cgproviderid, c.name ,c.worker ,c.date , c.time,c.contactmethod ,c.needaddress ,c.summary ,c.result ,c.nextstep ,c.caseplanprogress ,c.additionalinformation ");
-        querySBuff.append("from caregivercontactnotes c left join caregiverprovider c2 on c.cgproviderid = c2.cgproviderid where  c.status='ACTIVE' ");
+        querySBuff.append("from caregivercontactnotes c left join cg_care_provider c2 on c.cgproviderid = c2.id where  c.status='ACTIVE' ");
 
         if (cgProviderId != null) {
             querySBuff.append(" AND c.cgproviderid = ?");
