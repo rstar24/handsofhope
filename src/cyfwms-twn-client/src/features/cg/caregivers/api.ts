@@ -1,5 +1,5 @@
 import axiosInstance from "../../../library/axiosInstance";
-import type { CaregiversDetails } from "./slice";
+import type { Caregiver } from "./slice";
 import type { AxiosResponse } from "axios";
 
 /**
@@ -12,7 +12,7 @@ export const doGetAPI = async (
   token: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.get(
-    `cg/caregivers/read/${cgCareProviderId}`,
+    `caregiverservice/readCareGiversBackGroundCheck/${cgCareProviderId}`,
     {
       headers: { Authorization: "Bearer " + token },
     }
@@ -26,11 +26,11 @@ export const doGetAPI = async (
  * @param token - JSON Web Token
  */
 export const doPostAPI = async (
-  formData: CaregiversDetails,
+  formData: Caregiver,
   token: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.put(
-    "cg/caregivers/save",
+    "caregiverservice/saveCareGiversBackGroundCheck",
     formData,
     {
       headers: { Authorization: "Bearer " + token },

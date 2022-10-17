@@ -4,8 +4,7 @@ import AuthLayout from "../../../components/auth/layout/AuthLayout";
 import Router from "../../../components/nestedRouters/CG";
 import { setOpen as setOpenPopup } from "../../../features/popupSlice";
 import { cleanState as cleanContactNotes } from "../../../features/cg/contactNotes/slice";
-import { cleanState as cleanSearchState } from "../../../features/initialContact/contactNotes/slice";
-
+import { cleanState as cleanCaregiverState } from "../../../features/cg/caregivers/slice";
 import { useAppDispatch } from "../../../library/hooks";
 import { Box, Button } from "@mui/material";
 import React from "react";
@@ -21,7 +20,8 @@ const CG: FC = () => {
   const cleanStore = () => {
     console.log("clicked");
     dispatch(cleanContactNotes(null));
-    dispatch(cleanSearchState(null));
+    dispatch(cleanCaregiverState(null));
+    //dispatch(cleanProviderStatus(null));
   };
   return (
     <AuthLayout>
