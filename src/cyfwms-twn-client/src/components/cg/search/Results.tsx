@@ -1,6 +1,9 @@
 import { doGet as doGetCaregiverProvider } from "../../../features/cg/careProvider/slice";
 import { doGet as doGetCGCapacity } from "../../../features/cg/capacity/slice";
 import { doGet as doGetCGAttachment } from "../../../features/cg/attachments/slice";
+import { doGet as doGetCareGivers } from "../../../features/cg/caregivers/slice";
+import { doGet as doGetContactNotes } from "../../../features/cg/contactNotes/slice";
+
 import { setView } from "../../../features/popupSlice";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import EditIcon from "../EditIcon";
@@ -17,7 +20,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import type { Record } from "../../../features/cg/search/slice";
 import { ReactElement } from "react";
-import { doSearch } from "../../../features/cg/contactNotes/slice";
+import { doGet, doSearch } from "../../../features/cg/contactNotes/slice";
 
 const Results = (): ReactElement => {
   const dispatch = useAppDispatch();
@@ -30,6 +33,8 @@ const Results = (): ReactElement => {
         .unwrap()
         .catch((err) => {});
     });
+    dispatch(doGetCareGivers(id));
+    dispatch(doGetContactNotes(id));
     dispatch(doGetCGCapacity(id));
     dispatch(doGetCGAttachment(id));
   };
@@ -58,9 +63,9 @@ const Results = (): ReactElement => {
             >
               <TableCell>
                 <Link
-                  to={`/cg/view/${careGiver.referenceId}`}
+                  to={`/cg/view/${careGiver.cgProviderId}`}
                   onClick={() => {
-                    handleSearchView(careGiver.referenceId);
+                    handleSearchView(careGiver.cgProviderId);
                   }}
                 >
                   {careGiver.referenceId}
