@@ -1,11 +1,11 @@
 import EditIcon from "../../../components/cpa/attachments/EditIcon";
 import CgLayout from "../../../components/cg/CgLayout";
 import Input from "../../../components/Input";
-import { selected } from "../../../contexts/cpa/attachments";
+import SelectionContext from "../../../contexts/SelectionContext";
 import { doGetOne } from "../../../features/cg/attachments/slice";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import { Box, Link } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import type { FC } from "react";
 
 /**
@@ -16,19 +16,20 @@ import type { FC } from "react";
  * @returns `ReactElement`
  */
 const View: FC = () => {
+  const selection = useContext(SelectionContext);
   const dispatch = useAppDispatch();
   const attachment = useAppSelector(
-    (state) => state.cgAttachments.data[selected.value]
+    (state) => state.cgAttachments.data[selection.selected]
   );
   const [actualAttachment, setActualAttachment] = useState<any>({
-    file: "",
+    cgImagefile: "",
     imageType: "",
-    culturalimagename: "",
+    cgImageName: "",
   });
 
   /** Download the attachment */
   useEffect(() => {
-    dispatch(doGetOne(attachment.id))
+    dispatch(doGetOne(attachment.cgImageId))
       .unwrap()
       .then((data) => {
         setActualAttachment(data);
@@ -36,7 +37,7 @@ const View: FC = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [attachment.id]);
+  }, [attachment.cgImageId]);
 
   return (
     <CgLayout>
@@ -82,7 +83,7 @@ const View: FC = () => {
               href={`data:${actualAttachment.imageType};base64,${actualAttachment.file}`}
               rel="noreferrer noopener"
             >
-              {actualAttachment.culturalimagename}
+              {actualAttachment.cgImageName}
             </Link>
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>

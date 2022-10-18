@@ -6,7 +6,7 @@ export const doGetAPI = async (
   token: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.get(
-    `cg/attachments/read_all/${cgCareProviderId}`,
+    `caregiverservice/attachments/read_all/${cgCareProviderId}`,
     {
       headers: { Authorization: "Bearer " + token },
     }
@@ -19,7 +19,7 @@ export const doGetOneAPI = async (
   token: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.get(
-    `cg/attachments/read_one/${cgFileId}`,
+    `caregiverservice/attachments/read_one/${cgFileId}`,
     {
       headers: { Authorization: "Bearer " + token },
     }
@@ -32,7 +32,7 @@ export const doPostAPI = async (
   token: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.put(
-    "cg/attachments/save_one",
+    "caregiverservice/attachments/save_one",
     attachment,
     {
       headers: {

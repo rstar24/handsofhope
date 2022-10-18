@@ -1,9 +1,9 @@
-import { selected } from "../../../contexts/cpa/attachments";
+import SelectionContext from "../../../contexts/SelectionContext";
 import { doDelete } from "../../../features/cpa/attachments/slice";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { IconButton, Menu, MenuItem } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import type { FC, MouseEventHandler } from "react";
 
@@ -15,6 +15,7 @@ const ITEM_HEIGHT = 48;
  * @returns `ReactElement`
  */
 const EditIcon: FC = () => {
+  const selection = useContext(SelectionContext);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const data = useAppSelector((state) => state.cpaAttachments.data);
@@ -37,7 +38,7 @@ const EditIcon: FC = () => {
 
   const handleDelete: MouseEventHandler<HTMLElement> = (event) => {
     event.preventDefault();
-    dispatch(doDelete(data[selected.value].culturalProgImageId))
+    dispatch(doDelete(data[selection.selected].culturalProgImageId))
       .unwrap()
       .then(() => {
         navigate("../attachments");

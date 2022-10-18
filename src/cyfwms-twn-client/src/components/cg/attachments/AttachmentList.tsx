@@ -1,6 +1,6 @@
-import { selected } from "../../../contexts/cpa/attachments";
+import SelectionContext from "../../../contexts/SelectionContext";
 import { TableCell, TableRow } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import type { FC } from "react";
 import type { Record as RecordT } from "../../../features/cg/attachments/slice";
@@ -12,6 +12,7 @@ import type { Record as RecordT } from "../../../features/cg/attachments/slice";
  * @returns `ReactElement`
  */
 const AttachmentList: FC<AppRecordListProps<RecordT>> = (props) => {
+  const selection = useContext(SelectionContext);
   return (
     <>
       {props.list.map((attachment, index) => (
@@ -20,7 +21,7 @@ const AttachmentList: FC<AppRecordListProps<RecordT>> = (props) => {
             <Link
               to="view"
               onClick={() => {
-                selected.value = index;
+                selection.selected = index;
               }}
             >
               Select

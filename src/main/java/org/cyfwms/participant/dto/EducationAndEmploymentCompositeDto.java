@@ -11,7 +11,7 @@ import lombok.*;
 public class EducationAndEmploymentCompositeDto {
     @Getter
     @Setter
-    private Long educationId;
+    private Long educationId=0L;
 
     @Getter
     @Setter
@@ -31,7 +31,7 @@ public class EducationAndEmploymentCompositeDto {
 
     @Getter
     @Setter
-    private Long employmentId;
+    private Long employmentId=0L;
 
     @Getter
     @Setter

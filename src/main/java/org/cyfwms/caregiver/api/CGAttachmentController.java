@@ -16,7 +16,7 @@ import static org.springframework.http.HttpStatus.OK;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/v1/cg/attachments")
+@RequestMapping("/v1/caregiverservice/attachments")
 @CrossOrigin("*")
 public class CGAttachmentController {
     @Autowired

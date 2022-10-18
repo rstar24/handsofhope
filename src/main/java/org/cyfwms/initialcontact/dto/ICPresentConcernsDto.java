@@ -15,7 +15,7 @@ public class ICPresentConcernsDto {
 
     @Getter
     @Setter
-    private Long presentConcernsId;
+    private Long presentConcernsId=0L;
 
     @Getter
     @Setter

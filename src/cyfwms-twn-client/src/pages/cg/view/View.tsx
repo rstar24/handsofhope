@@ -10,6 +10,11 @@ import type { ReactElement } from "react";
 import Header from "../../../components/Header";
 import EditIcon from "../../../components/cg/EditIcon";
 import AuthLayout from "../../../components/auth/layout/AuthLayout";
+import CareProvider from "../../../components/cg/view/CareProvider";
+import CareGiver from "../../../components/cg/view/CareGiver";
+import Capacity from "../../../components/cg/view/Capacity";
+import ContactNotes from "../../../components/cg/view/ContactNotes";
+import Attachments from "../../../components/cg/view/Attachments";
 
 export const styles = {
   header: {
@@ -103,8 +108,12 @@ const View = (): ReactElement => {
       </Box>
       <Box sx={{ height: 400, overflowY: "scroll" }}>
         <Routes>
-          {/* <Route path="*" element={<FileDetails />} />
-          <Route path="file_details" element={<FileDetails />} /> */}
+          <Route path="*" element={<CareProvider />} />
+          <Route path="care_provider" element={<CareProvider />} />
+          <Route path="capacity" element={<Capacity />} />
+          <Route path="caregivers" element={<CareGiver />} />
+          <Route path="contact_notes" element={<ContactNotes />} />
+          <Route path="attachments" element={<Attachments />} />
         </Routes>
       </Box>
       <Popup children={<Router />} />

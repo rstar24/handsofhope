@@ -6,8 +6,8 @@ import type { AxiosResponse } from "axios";
 
 export interface Record {
   cgCareProviderId: number;
-  id: number;
-  fileName: string;
+  cgImageId: number;
+  cgImageName: string;
   name: string;
   type: string;
 }
@@ -15,8 +15,8 @@ export interface Record {
 // Empty Record
 const emptyRecord: Record = {
   cgCareProviderId: 0,
-  id: 0,
-  fileName: "",
+  cgImageId: 0,
+  cgImageName: "",
   name: "",
   type: "",
 };

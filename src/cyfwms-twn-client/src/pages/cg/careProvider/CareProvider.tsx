@@ -6,9 +6,9 @@ import { onKeyDown } from "../../../library/app";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import { handleEffect, handleSubmit } from "./careProvider_";
 import { Box, Typography } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { SyntheticEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import type { FC, FormEvent } from "react";
+import type { FC } from "react";
 
 /**
  * `CG` aka `Caregivers` module.
@@ -18,9 +18,13 @@ import type { FC, FormEvent } from "react";
 const CareProvider: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { gender, maritalstatus } = useAppSelector((state) => state.codetable);
+  const { cgStatus, cgType } = useAppSelector((state) => state.codetable);
   const state = useAppSelector((state) => state.cgCareProvider);
   const edit = useAppSelector((state) => state.popup.edit);
+
+  const [disableOtherType, setDisableOtherType] = useState<boolean>(
+    state.data.type !== "" ? false : true
+  );
 
   useEffect(() => handleEffect(dispatch, state.data.id), []);
 
@@ -36,7 +40,15 @@ const CareProvider: FC = () => {
           "> div": { display: "flex", gap: "0 1rem" },
           "> div > div": { flex: "1 1 0" },
         }}
-        onSubmit={(event: FormEvent<HTMLFormElement>) =>
+        onChange={(event: SyntheticEvent<HTMLFormElement>) => {
+          if (event.currentTarget.type.value === "Other") {
+            setDisableOtherType(false);
+          } else {
+            event.currentTarget.otherType.value = "";
+            setDisableOtherType(true);
+          }
+        }}
+        onSubmit={(event) =>
           handleSubmit(event, navigate, dispatch, state.data, edit)
         }
         onKeyDown={onKeyDown}
@@ -50,16 +62,17 @@ const CareProvider: FC = () => {
         )}
         <div>
           <div>
-            <Input autofill={state.data.name} id="naam" value="Name" />
+            <Input autofill={state.data.name} id="naam" value="Name" required />
           </div>
           <div>
             <CYFMSDropdown
               autofill={state.data.status}
               id="status"
-              optionsList={Object.values(gender).map(
-                (gender: any) => gender.en
+              optionsList={Object.values(cgStatus).map(
+                (cgStatus: any) => cgStatus.en
               )}
               value="Status"
+              required
             />
           </div>
         </div>
@@ -68,10 +81,11 @@ const CareProvider: FC = () => {
             <CYFMSDropdown
               autofill={state.data.type}
               id="type"
-              optionsList={Object.values(maritalstatus).map(
-                (status: any) => status.en
+              optionsList={Object.values(cgType).map(
+                (cgType: any) => cgType.en
               )}
               value="Type"
+              required
             />
           </div>
           <div>
@@ -79,7 +93,7 @@ const CareProvider: FC = () => {
               autofill={state.data.otherType}
               id="otherType"
               value="Please specify"
-              disabled
+              disabled={disableOtherType}
             />
           </div>
         </div>
@@ -130,6 +144,7 @@ const CareProvider: FC = () => {
               autofill={state.data.primaryCaregiver}
               id="primaryCaregiver"
               value="Primary Caregiver"
+              required
             />
           </div>
           <div>
@@ -137,6 +152,7 @@ const CareProvider: FC = () => {
               autofill={state.data.secondaryCaregiver}
               id="secondaryCaregiver"
               value="Secondary Caregiver"
+              required
             />
           </div>
         </div>
