@@ -5,6 +5,9 @@ import {
 } from "../../../features/cg/caregivers/slice";
 import type { AppDispatch } from "../../../library/store";
 import type { NavigateFunction } from "react-router-dom";
+import { hideTabs, unhideTabs } from "../../../features/navBarSlice";
+import { initiate, uninitiate } from "../../../features/initiatorSlice";
+import { setOpen, setView } from "../../../features/popupSlice";
 
 /**
  * Callback of useEffect hook.
@@ -54,7 +57,13 @@ export const handleSubmit: AppFormEventHandler<HTMLFormElement> = (
   dispatch(doPost(formData))
     .unwrap()
     .then(() => {
-      navigate("../contact_notes");
+      dispatch(unhideTabs(null));
+      dispatch(initiate(null));
+      dispatch(setOpen(false));
+      dispatch(hideTabs(null));
+      dispatch(uninitiate(null));
+      dispatch(setView(true));
+      navigate("/cg/view");
     })
     .catch((err) => {
       console.log(err);
