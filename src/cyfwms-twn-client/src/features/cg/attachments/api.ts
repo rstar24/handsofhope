@@ -19,7 +19,7 @@ export const doGetOneAPI = async (
   token: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.get(
-    `cg/attachments/read_one/${cgFileId}`,
+    `caregiverservice/attachments/read_one/${cgFileId}`,
     {
       headers: { Authorization: "Bearer " + token },
     }
