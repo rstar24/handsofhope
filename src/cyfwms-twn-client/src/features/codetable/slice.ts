@@ -232,7 +232,6 @@ export const doGetCGType = createAsyncThunk(
       (getState() as RootState).login.token
     );
     // Becomes the `fulfilled` action payload:
-    console.log("sdasfasfsf", res);
     return res.data;
   }
 );
