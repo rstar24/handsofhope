@@ -37,7 +37,7 @@ const EditIcon: FC = () => {
 
   const handleDelete: MouseEventHandler<HTMLElement> = (event) => {
     event.preventDefault();
-    dispatch(doDelete(data[selected.value].id))
+    dispatch(doDelete(data[selected.value].cgImageId))
       .unwrap()
       .then(() => {
         navigate("../attachments");

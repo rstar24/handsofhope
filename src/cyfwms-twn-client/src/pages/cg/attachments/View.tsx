@@ -21,14 +21,14 @@ const View: FC = () => {
     (state) => state.cgAttachments.data[selected.value]
   );
   const [actualAttachment, setActualAttachment] = useState<any>({
-    file: "",
+    cgImagefile: "",
     imageType: "",
-    culturalimagename: "",
+    cgImageName: "",
   });
 
   /** Download the attachment */
   useEffect(() => {
-    dispatch(doGetOne(attachment.id))
+    dispatch(doGetOne(attachment.cgImageId))
       .unwrap()
       .then((data) => {
         setActualAttachment(data);
@@ -36,7 +36,7 @@ const View: FC = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [attachment.id]);
+  }, [attachment.cgImageId]);
 
   return (
     <CgLayout>
@@ -82,7 +82,7 @@ const View: FC = () => {
               href={`data:${actualAttachment.imageType};base64,${actualAttachment.file}`}
               rel="noreferrer noopener"
             >
-              {actualAttachment.culturalimagename}
+              {actualAttachment.cgImageName}
             </Link>
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>

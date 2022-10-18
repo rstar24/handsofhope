@@ -32,10 +32,10 @@ const Add: FC = () => {
     e.preventDefault();
     const attachment = new FormData();
     attachment.append(
-      "culturalDto",
+      "cgDto",
       JSON.stringify({
-        culturalProgramId: cgCareProviderId,
-        culturalProgImageId: 0,
+        id: cgCareProviderId,
+        cgImageId: 0,
         name: e.currentTarget.attachmentName.value,
         type: e.currentTarget.attachmentType.value,
       })

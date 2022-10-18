@@ -35,10 +35,10 @@ const Edit: FC = () => {
     e.preventDefault();
     const attachment = new FormData();
     attachment.append(
-      "culturalDto",
+      "cgDto",
       JSON.stringify({
-        culturalProgramId: cgCareProviderId,
-        culturalProgImageId: data[selected.value].id,
+        id: cgCareProviderId,
+        cgImageId: data[selected.value].cgImageId,
         name: e.currentTarget.attachmentName.value,
         type: e.currentTarget.attachmentType.value,
       })
