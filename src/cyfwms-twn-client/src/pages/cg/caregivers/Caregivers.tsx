@@ -47,14 +47,14 @@ const Caregivers: FC = () => {
         <div>
           <div>
             <Input
-              autofill={state.data.priCaregiver.bgCheckStatus}
+              autofill={state.data.priBGCheckStatus}
               id="priBgCheckStatus"
               value="Background Check Status"
             />
           </div>
           <div>
             <Input
-              autofill={state.data.priCaregiver.date}
+              autofill={state.data.priDate}
               id="priDate"
               maxDate={new Date().toISOString().substring(0, 10)}
               minDate="1900-01-01"
@@ -67,7 +67,7 @@ const Caregivers: FC = () => {
           <CYFMSTextArea
             formLabelFlex="1 1 0"
             outlinedInputFlex="5 1 0"
-            autofill={state.data.priCaregiver.details}
+            autofill={state.data.priDetails}
             id="priDetails"
             value="Details"
           />
@@ -76,7 +76,7 @@ const Caregivers: FC = () => {
           <CYFMSTextArea
             formLabelFlex="1 1 0"
             outlinedInputFlex="5 1 0"
-            autofill={state.data.priCaregiver.trainingsCompleted}
+            autofill={state.data.priTrainingCompleted}
             id="priTrainingsCompleted"
             value="Training(s) Completed"
           />
@@ -87,14 +87,14 @@ const Caregivers: FC = () => {
         <div>
           <div>
             <Input
-              autofill={state.data.secCaregiver.bgCheckStatus}
+              autofill={state.data.secBGCheckStatus}
               id="secBgCheckStatus"
               value="Background Check Status"
             />
           </div>
           <div>
             <Input
-              autofill={state.data.secCaregiver.date}
+              autofill={state.data.secDate}
               id="secDate"
               maxDate={new Date().toISOString().substring(0, 10)}
               minDate="1900-01-01"
@@ -107,7 +107,7 @@ const Caregivers: FC = () => {
           <CYFMSTextArea
             formLabelFlex="1 1 0"
             outlinedInputFlex="5 1 0"
-            autofill={state.data.secCaregiver.details}
+            autofill={state.data.secDetails}
             id="secDetails"
             value="Details"
           />
@@ -116,7 +116,7 @@ const Caregivers: FC = () => {
           <CYFMSTextArea
             formLabelFlex="1 1 0"
             outlinedInputFlex="5 1 0"
-            autofill={state.data.secCaregiver.trainingsCompleted}
+            autofill={state.data.secTrainingCompleted}
             id="secTrainingsCompleted"
             value="Training(s) Completed"
           />

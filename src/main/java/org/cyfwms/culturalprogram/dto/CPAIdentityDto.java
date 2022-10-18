@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class CPAIdentityDto {
     @Getter @Setter
-    private Long culturalProgramId;
+    private Long culturalProgramId=0L;
     @Getter @Setter
     private Long referenceId;
     @Getter @Setter

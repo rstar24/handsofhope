@@ -76,6 +76,7 @@ const Input = (props: InputProps): ReactElement => {
         endAdornment={props.type !== "password" ? undefined : EndAdornment}
         id={props.id}
         name={props.name}
+        readOnly={props.readOnly}
         inputProps={{
           min: props.minDate,
           max: props.maxDate,

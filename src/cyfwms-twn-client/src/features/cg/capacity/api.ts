@@ -1,18 +1,18 @@
 import axiosInstance from "../../../library/axiosInstance";
-import type { Data } from "./slice";
+import type { Capacity } from "./slice";
 import type { AxiosResponse } from "axios";
 
 /**
  * Fetch one/single `Capacity` of `CG` module.
- * @param cgCareProviderId - `CG` module `Care Provider` ID.
+ * @param careProviderId - `CG` module `Care Provider` ID.
  * @param token - JSON Web Token
  */
 export const doGetAPI = async (
-  cgCareProviderId: number,
+  careProviderId: number,
   token: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.get(
-    `cg/capacity/read/${cgCareProviderId}`,
+    `caregiverservice/readCapacity/${careProviderId}`,
     {
       headers: { Authorization: "Bearer " + token },
     }
@@ -26,11 +26,11 @@ export const doGetAPI = async (
  * @param token - JSON Web Token
  */
 export const doPostAPI = async (
-  formData: Data,
+  formData: Capacity,
   token: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.put(
-    "cg/capacity/save",
+    "caregiverservice/saveCapacity",
     formData,
     {
       headers: { Authorization: "Bearer " + token },

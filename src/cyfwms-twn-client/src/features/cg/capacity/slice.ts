@@ -4,36 +4,35 @@ import { RootState } from "../../../library/store";
 import type { SliceCaseReducers } from "@reduxjs/toolkit";
 import type { AxiosResponse } from "axios";
 
-export interface Data {
-  id: number;
-  cgCareProviderId: number;
-  maxCap: number;
+export interface Capacity {
+  cgCapacityId: number;
+  cgProviderId: number;
+  maximumCap: number;
   currUtil: number;
   currUtilDetails: string;
   preferences: string;
 }
 
-// Empty Data
-const emptyData: Data = {
-  id: 0,
-  cgCareProviderId: 0,
-  maxCap: 0,
+const emptyCapacity: Capacity = {
+  cgCapacityId: 0,
+  cgProviderId: 0,
+  maximumCap: 0,
   currUtil: 0,
   currUtilDetails: "",
   preferences: "",
 };
 
 export interface State {
-  data: Data;
+  data: Capacity;
   status: "failed" | "none" | "loading" | "success";
 }
 
-export const doGet = createAsyncThunk<Data, number>(
+export const doGet = createAsyncThunk<Capacity, number>(
   "capacity/doGet",
-  async (cgCareProviderId, { getState }) => {
+  async (careProviderId, { getState }) => {
     const store = getState() as RootState;
     const res: AxiosResponse = await doGetAPI(
-      cgCareProviderId,
+      careProviderId,
       store.login.token
     );
     // Becomes the `fulfilled` action payload:
@@ -41,9 +40,9 @@ export const doGet = createAsyncThunk<Data, number>(
   }
 );
 
-export const doPost = createAsyncThunk<Data, Data>(
+export const doPost = createAsyncThunk<Capacity, Capacity>(
   "capacity/doPost",
-  async (formData: Data, { getState }) => {
+  async (formData, { getState }) => {
     const store = getState() as RootState;
     const res: AxiosResponse = await doPostAPI(formData, store.login.token);
     // Becomes the `fulfilled` action payload:
@@ -53,10 +52,10 @@ export const doPost = createAsyncThunk<Data, Data>(
 
 export const capacitySlice = createSlice<State, SliceCaseReducers<State>>({
   name: "capacity",
-  initialState: { data: emptyData, status: "none" },
+  initialState: { data: emptyCapacity, status: "none" },
   reducers: {
-    cleanState(state) {
-      state.data = emptyData;
+    clean(state) {
+      state.data = emptyCapacity;
       state.status = "none";
     },
   },

@@ -10,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 public class EmploymentDto {
     @Getter @Setter
-    private Long employmentId;
+    private Long employmentId=0L;
     @Getter @Setter
     private String employed;
     @Getter @Setter

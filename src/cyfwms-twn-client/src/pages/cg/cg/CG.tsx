@@ -3,6 +3,8 @@ import Popup from "../../../components/Popup";
 import AuthLayout from "../../../components/auth/layout/AuthLayout";
 import Router from "../../../components/nestedRouters/CG";
 import { setOpen as setOpenPopup } from "../../../features/popupSlice";
+import { cleanState as cleanContactNotes } from "../../../features/cg/contactNotes/slice";
+import { cleanState as cleanCaregiverState } from "../../../features/cg/caregivers/slice";
 import { useAppDispatch } from "../../../library/hooks";
 import { Box, Button } from "@mui/material";
 import React from "react";
@@ -15,7 +17,12 @@ import type { FC } from "react";
  */
 const CG: FC = () => {
   const dispatch = useAppDispatch();
-
+  const cleanStore = () => {
+    console.log("clicked");
+    dispatch(cleanContactNotes(null));
+    dispatch(cleanCaregiverState(null));
+    //dispatch(cleanProviderStatus(null));
+  };
   return (
     <AuthLayout>
       <Header bannerTitle="Caregiver" />
@@ -48,6 +55,7 @@ const CG: FC = () => {
               textAlign: "center",
             }}
             onClick={() => {
+              cleanStore();
               dispatch(setOpenPopup(true));
             }}
           >

@@ -5,43 +5,37 @@ import type { SliceCaseReducers } from "@reduxjs/toolkit";
 import type { AxiosResponse } from "axios";
 
 export interface Caregiver {
-  id: number;
-  cgCaregiverId: number;
-  bgCheckStatus: string;
-  date: string;
-  details: string;
-  trainingsCompleted: string;
+  cgProviderId: number;
+  cgBackGroundCheckId: number;
+  priBGCheckStatus: string;
+  priDate: string;
+  priDetails: string;
+  priTrainingCompleted: string;
+  secBGCheckStatus: string;
+  secDate: string;
+  secDetails: string;
+  secTrainingCompleted: string;
 }
 
 const emptyCaregiver: Caregiver = {
-  id: 0,
-  cgCaregiverId: 0,
-  bgCheckStatus: "",
-  date: "",
-  details: "",
-  trainingsCompleted: "",
-};
-
-export interface CaregiversDetails {
-  id: number;
-  cgCareProviderId: number;
-  priCaregiver: Caregiver;
-  secCaregiver: Caregiver;
-}
-
-const emptyCaregiverDetails: CaregiversDetails = {
-  id: 0,
-  cgCareProviderId: 0,
-  priCaregiver: emptyCaregiver,
-  secCaregiver: emptyCaregiver,
+  cgProviderId: 0,
+  cgBackGroundCheckId: 0,
+  priBGCheckStatus: "",
+  priDate: "",
+  priDetails: "",
+  priTrainingCompleted: "",
+  secBGCheckStatus: "",
+  secDate: "",
+  secDetails: "",
+  secTrainingCompleted: "",
 };
 
 export interface State {
-  data: CaregiversDetails;
+  data: Caregiver;
   status: "failed" | "none" | "loading" | "success";
 }
 
-export const doGet = createAsyncThunk<CaregiversDetails, number>(
+export const doGet = createAsyncThunk<Caregiver, number>(
   "caregivers/doGet",
   async (cgCareProviderId, { getState }) => {
     const store = getState() as RootState;
@@ -54,9 +48,9 @@ export const doGet = createAsyncThunk<CaregiversDetails, number>(
   }
 );
 
-export const doPost = createAsyncThunk<CaregiversDetails, CaregiversDetails>(
+export const doPost = createAsyncThunk<Caregiver, Caregiver>(
   "caregivers/doPost",
-  async (formData: CaregiversDetails, { getState }) => {
+  async (formData: Caregiver, { getState }) => {
     const store = getState() as RootState;
     const res: AxiosResponse = await doPostAPI(formData, store.login.token);
     // Becomes the `fulfilled` action payload:
@@ -66,10 +60,10 @@ export const doPost = createAsyncThunk<CaregiversDetails, CaregiversDetails>(
 
 export const caregiversSlice = createSlice<State, SliceCaseReducers<State>>({
   name: "caregivers",
-  initialState: { data: emptyCaregiverDetails, status: "none" },
+  initialState: { data: emptyCaregiver, status: "none" },
   reducers: {
     cleanState(state) {
-      state.data = emptyCaregiverDetails;
+      state.data = emptyCaregiver;
       state.status = "none";
     },
   },
@@ -101,6 +95,6 @@ export const caregiversSlice = createSlice<State, SliceCaseReducers<State>>({
   },
 });
 
-export const { clean } = caregiversSlice.actions;
+export const { cleanState } = caregiversSlice.actions;
 
 export default caregiversSlice.reducer;

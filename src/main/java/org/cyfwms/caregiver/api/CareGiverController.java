@@ -86,11 +86,21 @@ public class CareGiverController {
         return careProviderSearchService.searchCareGiver(careProviderSearchCriteriaDto);
     }
 
-    @GetMapping(value = "/readCapacity/{cgproviderid}", produces = "application/json")
+    @GetMapping(value = "/readCapacity/{id}", produces = "application/json")
     @ApiOperation("Read CGCapacity")
-    @ResponseStatus(HttpStatus.OK)
-    public CapacityDto readCapacity(@PathVariable("cgproviderid") Long cgProviderId) {
-        return capacityService.readCapacity(cgProviderId);
+   // @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<CapacityDto> readCapacity(@PathVariable("id") Long id) {
+        // return capacityService.readCapacity(cgProviderId);
+        CapacityDto capacityDto=new CapacityDto();
+        try {
+            capacityDto=capacityService.readCapacity(id);
+        }catch (EntityNotFoundException ex){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        catch (Exception ex){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(capacityDto,HttpStatus.OK);
     }
 
     @PutMapping(value = "/saveCapacity", produces = "application/json")

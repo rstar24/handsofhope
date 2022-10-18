@@ -1,5 +1,8 @@
-import { doGet, doPost } from "../../../features/cg/caregivers/slice";
-import type { CaregiversDetails } from "../../../features/cg/caregivers/slice";
+import {
+  Caregiver,
+  doGet,
+  doPost,
+} from "../../../features/cg/caregivers/slice";
 import type { AppDispatch } from "../../../library/store";
 import type { NavigateFunction } from "react-router-dom";
 
@@ -32,28 +35,21 @@ export const handleSubmit: AppFormEventHandler<HTMLFormElement> = (
   navigate: NavigateFunction,
   dispatch: AppDispatch,
   cgCareProviderId: number,
-  data: CaregiversDetails
+  data: Caregiver
 ) => {
   event.preventDefault();
-  const formData: CaregiversDetails = {
-    id: data.id,
-    cgCareProviderId: cgCareProviderId,
-    priCaregiver: {
-      id: data.priCaregiver.id,
-      cgCaregiverId: data.id,
-      bgCheckStatus: event.currentTarget.priBgCheckStatus.value,
-      date: event.currentTarget.priDate.value,
-      details: event.currentTarget.priDetails.value,
-      trainingsCompleted: event.currentTarget.priTrainingsCompleted.value,
-    },
-    secCaregiver: {
-      id: data.secCaregiver.id,
-      cgCaregiverId: data.id,
-      bgCheckStatus: event.currentTarget.secBgCheckStatus.value,
-      date: event.currentTarget.secDate.value,
-      details: event.currentTarget.secDetails.value,
-      trainingsCompleted: event.currentTarget.secTrainingsCompleted.value,
-    },
+
+  const formData: Caregiver = {
+    cgProviderId: cgCareProviderId,
+    cgBackGroundCheckId: data.cgBackGroundCheckId | 0,
+    priBGCheckStatus: event.currentTarget.priBgCheckStatus.value,
+    priDate: event.currentTarget.priDate.value,
+    priDetails: event.currentTarget.priDetails.value,
+    priTrainingCompleted: event.currentTarget.priTrainingsCompleted.value,
+    secBGCheckStatus: event.currentTarget.secBgCheckStatus.value,
+    secDate: event.currentTarget.secDate.value,
+    secDetails: event.currentTarget.secDetails.value,
+    secTrainingCompleted: event.currentTarget.secTrainingsCompleted.value,
   };
   dispatch(doPost(formData))
     .unwrap()

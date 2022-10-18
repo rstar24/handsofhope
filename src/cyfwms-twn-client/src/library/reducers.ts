@@ -7,6 +7,8 @@ import cgAttachmentsReducer from "../features/cg/attachments/slice";
 import cgCapacityReducer from "../features/cg/capacity/slice";
 import cgCaregiversReducer from "../features/cg/caregivers/slice";
 import cgCareProviderReducer from "../features/cg/careProvider/slice";
+import cgContactNotesReducer from "../features/cg/contactNotes/slice";
+import cgSearchReducer from "../features/cg/search/slice";
 import cyfmsAllReducer from "../features/cyfms/all/slice";
 import cyfmsContactReducer from "../features/cyfms/contact/slice";
 import cyfmsCriminalHistoryReducer from "../features/cyfms/criminalHistory/slice";
@@ -60,6 +62,8 @@ const rootReducer = {
   cgCapacity: cgCapacityReducer,
   cgCaregivers: cgCaregiversReducer,
   cgAttachments: cgAttachmentsReducer,
+  cgContactNotes: cgContactNotesReducer,
+  cgSearch: cgSearchReducer,
 };
 
 export default rootReducer;
