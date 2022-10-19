@@ -3,26 +3,18 @@ ul {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: rgb(5, 4, 4);
+   
   }
   
   li {
     float: left;
   }
- 
- 
-  
   li Button:active {
     background-color: #920b0b;
   }
-.name{
- 
-         float: right;
-         margin-right: 2%;        
-      
-  }
-  li a:hover(.active) {
-    background-color: rgb(201, 36, 165);
+  .logout{
+    float: right;
+    margin-right: 2%;           
   }
 
   .list{
