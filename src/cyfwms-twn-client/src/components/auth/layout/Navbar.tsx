@@ -127,7 +127,7 @@ export default function Navbar() {
               </Button>
             </li>
 
-            <li className="name">
+            <li className="logout">
               <Button
                 sx={{ color: "white", textTransform: "none" }}
                 onClick={handleLogout}
