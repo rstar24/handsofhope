@@ -7,7 +7,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import type { ReactElement } from "react";
 import {
   CapacityLabels,
@@ -15,6 +15,8 @@ import {
 
 const Capacity = (): ReactElement => {
   const data = useAppSelector((state) => state.cgCapacity.data);
+  const [ available, setAvailable ] = useState( data.maximumCap - data.currUtil );
+  
 
   return (
     <TableContainer
@@ -23,7 +25,10 @@ const Capacity = (): ReactElement => {
       <Table sx={{ maxWidth: 900 }} aria-label="register data table">
         <TableBody sx={{ "& > tr > td": { border: 0, p: 0 } }}>
           {Object.entries(data).map((t: any, k: any) => {
-            if (k !== 0 && k !== 1 && t[1] !== "") {
+            if (k!==0 && k!==1 && k!==2 && k!==5 ) {
+              //t[0]!=="cgCapacityId" && t[0]!=="maximumCap" && t[0]!=="cgProviderId" && t[0]!=="currUtil"
+              //t[0]!=="cgCapacityId" && t[0]!=="maximumCap" && t[0]!=="cgProviderId" && t[0]!=="currUtil" 
+             // && CapacityLabels[k]!=="Capacity Id" && CapacityLabels[k]!==""
               return (
                 <TableRow key={Math.random() * 1000}>
                   <TableCell
@@ -47,6 +52,24 @@ const Capacity = (): ReactElement => {
             }
             return <></>;
           })}
+          <TableRow key={Math.random() * 1000}>
+                  <TableCell
+                    sx={{
+                      display: "flex",
+                      width: "50%",
+                      alignContent: "start",
+                      fontWeight: "bold",
+                      fontSize: "1rem",
+                    }}
+                  >
+                    Available Capacity
+                  </TableCell>
+                  <TableCell width="50%">
+                    <Typography component="p" sx={{ whiteSpace: "pre-wrap" }}>
+                      {available}
+                    </Typography>
+                  </TableCell>
+                </TableRow>
         </TableBody>
       </Table>
     </TableContainer>

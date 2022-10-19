@@ -52,9 +52,7 @@ export const handleSubmit: AppFormEventHandler<HTMLFormElement> = (
     .unwrap()
     .then(() => {
       dispatch(unhideTabs(null));
-      if (edit) {
-        navigate("../capacity");
-      }
+      navigate("../capacity");
     })
     .catch((err) => {
       console.log(err);

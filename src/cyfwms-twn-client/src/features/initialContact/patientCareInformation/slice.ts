@@ -87,7 +87,9 @@ export const patientCareInformationSlice = createSlice<
   extraReducers: (builder) => {
     builder
       .addCase(doGet.fulfilled, (state, action) => {
-        state.data = action.payload;
+        if (action.payload.outpatient) {
+          state.data = action.payload;
+        }
         state.status = "success";
       })
       .addCase(doGet.pending, (state) => {

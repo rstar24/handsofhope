@@ -47,6 +47,9 @@ const Popup = (props: { children: ReactNode | ReactNode[] }): ReactElement => {
   const culturalProgramId = useAppSelector(
     (state) => state.cpa.data.culturalProgramId
   );
+  const cgProviderId = useAppSelector(
+    (state) => state.cgCareProvider.data.id
+  );
 
   useEffect(() => {
     if (navigationAction === "POP") {
@@ -119,14 +122,16 @@ const Popup = (props: { children: ReactNode | ReactNode[] }): ReactElement => {
             if (
               fileDetailsId !== 0 ||
               participantId !== 0 ||
-              culturalProgramId !== 0
+              culturalProgramId !== 0 ||
+              cgProviderId !== 0
             ) {
               navigate("./view");
             }
             if (
               fileDetailsId === 0 &&
               participantId === 0 &&
-              culturalProgramId === 0
+              culturalProgramId === 0 &&
+              cgProviderId === 0
             ) {
               navigate("./");
             }

@@ -30,11 +30,11 @@ export const CareGiverLabels = [
 
 export const CapacityLabels = [
   "Capacity Id",
-  "Provider Id",
   "Maximum Capacity",
   "Current Utilization",
   "Current Utilization Details",
   "Preferences",
+  "Provider Id",
 ];
 
 export const ContactNotesLabels = [

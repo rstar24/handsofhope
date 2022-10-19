@@ -37,8 +37,8 @@ public class ICFileDetailsServiceImpl implements ICFileDetailsService {
             if (iCFileDetails != null) {
                 if (iCFileDetails.getStatusOfDeletion().equals("ACTIVE")) {
                     BeanUtils.copyProperties(iCFileDetails, iCFileDetailsDto);
+                    if (iCFileDetails.getClientName()!=null) {
                     Participant participant = participantRepository.findByParticipantId(Long.parseLong(iCFileDetailsDto.getClientName()));
-                    if (!iCFileDetails.getClientName().equals("0")) {
                         iCFileDetailsDto.setClientName(participant.getFirstname() + " " + participant.getSurname());
                         iCFileDetailsDto.setParticipantId(participant.getParticipantId());
                     }
