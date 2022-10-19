@@ -5,7 +5,7 @@ import org.cyfwms.caregiver.dto.CGAttachmentDto;
 import org.cyfwms.caregiver.entity.CGAttachmentEntity;
 import org.cyfwms.caregiver.repository.CGAttachmentRepository;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -16,16 +16,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.OK;
 
 @Service
-public class CGAttachmentServiceImpl implements  CGAttachmentService{
-  @Autowired
+public class CGAttachmentServiceImpl implements CGAttachmentService {
+    @Autowired
     CGAttachmentRepository cgAttachmentRepository;
     @Autowired
     private ModelMapper modelMapper;
+
     @Override
     public CGAttachmentDto saveCGAttachment(MultipartFile file, String cgAttachmentDto) throws IOException {
         CGAttachmentDto cgAttachmentdto = new ObjectMapper().readValue(cgAttachmentDto, CGAttachmentDto.class);
@@ -33,24 +35,25 @@ public class CGAttachmentServiceImpl implements  CGAttachmentService{
         cgattachmentdto.setName(cgAttachmentdto.getName());
         cgattachmentdto.setType(cgAttachmentdto.getType());
         cgattachmentdto.setId(cgAttachmentdto.getId());
-        if(file != null){
-           if(file.getContentType().equals("image/png")||file.getContentType().equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document")||file.getContentType().equals("image/jpg")||file.getContentType().equals("image/jpeg")||file.getContentType().equals("application/pdf")||file.getContentType().equals("application/vnd.ms-excel")||file.getContentType().equals("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")||file.getContentType().equals("image/bmp")||file.getContentType().equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document")||file.getContentType().equals("image/gif"))  {
-            cgattachmentdto.setCgImageType(file.getContentType());
-            cgattachmentdto.setCgImageName(file.getOriginalFilename());
-            cgattachmentdto.setCgImageFile(file.getBytes());
-        }}
+        if (file != null) {
+            if (file.getContentType().equals("image/png") || file.getContentType().equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document") || file.getContentType().equals("image/jpg") || file.getContentType().equals("image/jpeg") || file.getContentType().equals("application/pdf") || file.getContentType().equals("application/vnd.ms-excel") || file.getContentType().equals("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") || file.getContentType().equals("image/bmp") || file.getContentType().equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document") || file.getContentType().equals("image/gif")) {
+                cgattachmentdto.setCgImageType(file.getContentType());
+                cgattachmentdto.setCgImageName(file.getOriginalFilename());
+                cgattachmentdto.setCgImageFile(file.getBytes());
+            }
+        }
         CGAttachmentEntity cgAttachmentEntity = new CGAttachmentEntity();
         if (cgAttachmentdto.getCgImageId() == 0) {
-           modelMapper.map(cgattachmentdto,cgAttachmentEntity);
+            modelMapper.map(cgattachmentdto, cgAttachmentEntity);
             cgAttachmentEntity.setStatus("ACTIVE");
         } else {
-            cgAttachmentEntity = readCulturalImage( cgAttachmentdto.getCgImageId());
+            cgAttachmentEntity = readCulturalImage(cgAttachmentdto.getCgImageId());
             cgattachmentdto.setCgImageId(cgAttachmentEntity.getCgImageId());
             if (file == null) {
                 cgattachmentdto.setCgImageType(cgAttachmentEntity.getCgImageType());
                 cgattachmentdto.setCgImageName(cgAttachmentEntity.getCgImagename());
             }
-            modelMapper.map(cgattachmentdto,cgAttachmentEntity);
+            modelMapper.map(cgattachmentdto, cgAttachmentEntity);
         }
         cgAttachmentEntity = cgAttachmentRepository.save(cgAttachmentEntity);
 
@@ -62,8 +65,8 @@ public class CGAttachmentServiceImpl implements  CGAttachmentService{
     @Override
     public CGAttachmentDto getOneFile(Long id) {
         CGAttachmentDto cgAttachmentDto = new CGAttachmentDto();
-        CGAttachmentEntity cgAttachmentEntity= cgAttachmentRepository.findByCgImageId(id);
-        if (cgAttachmentEntity!=null) {
+        CGAttachmentEntity cgAttachmentEntity = cgAttachmentRepository.findByCgImageId(id);
+        if (cgAttachmentEntity != null) {
             cgAttachmentDto.setCgImageId(cgAttachmentEntity.getCgImageId());
             cgAttachmentDto.setId(cgAttachmentEntity.getId());
             cgAttachmentDto.setType(cgAttachmentEntity.getType());
@@ -71,8 +74,7 @@ public class CGAttachmentServiceImpl implements  CGAttachmentService{
             cgAttachmentDto.setCgImageFile(cgAttachmentEntity.getCgImagefile());
             cgAttachmentDto.setCgImageType(cgAttachmentEntity.getCgImageType());
             cgAttachmentDto.setCgImageName(cgAttachmentEntity.getCgImagename());
-        }
-        else {
+        } else {
             throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
         }
 
@@ -82,7 +84,7 @@ public class CGAttachmentServiceImpl implements  CGAttachmentService{
 
     @Override
     public ResponseEntity<String> removeCGImage(Long cgImageId) {
-        if (cgImageId != 0 ) {
+        if (cgImageId != 0) {
             CGAttachmentEntity cgAttachmentEntity = cgAttachmentRepository.findByCgImageId(cgImageId);
             if (cgAttachmentEntity != null) {
                 cgAttachmentEntity.setStatus("INACTIVE");
@@ -100,12 +102,12 @@ public class CGAttachmentServiceImpl implements  CGAttachmentService{
     public List<CGAttachmentDto> getAllFiles(Long caregiverProviderId) {
         List<CGAttachmentDto> cGAttachmentDtoList = new ArrayList<CGAttachmentDto>();
         if (caregiverProviderId != 0) {
-            List<CGAttachmentEntity> cgImageList = cgAttachmentRepository.findByCaregiverProviderId(caregiverProviderId);
-            if (cgImageList != null) {
-                cGAttachmentDtoList = modelMapper.map(cgImageList, new TypeToken<List<CGAttachmentDto>>() {}.getType());
-            } else {
-                throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
-            }
+            cGAttachmentDtoList = cgAttachmentRepository.findByCaregiverProviderId(caregiverProviderId)
+                    .stream().map(attach -> {
+                        CGAttachmentDto cgAttachmentDto = new CGAttachmentDto();
+                        BeanUtils.copyProperties(attach, cgAttachmentDto, "cgImagefile");
+                        return cgAttachmentDto;
+                    }).collect(Collectors.toList());
         }
         return cGAttachmentDtoList;
     }
@@ -115,7 +117,7 @@ public class CGAttachmentServiceImpl implements  CGAttachmentService{
         CGAttachmentEntity cgAttachmentEntity = new CGAttachmentEntity();
         Optional<CGAttachmentEntity> participantOpt = cgAttachmentRepository.findById(cgImageId);
         if (participantOpt.isPresent()) {
-            cgAttachmentEntity= participantOpt.get();
+            cgAttachmentEntity = participantOpt.get();
         }
         return cgAttachmentEntity;
     }
