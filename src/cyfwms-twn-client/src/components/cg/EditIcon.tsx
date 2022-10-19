@@ -82,7 +82,7 @@ const EditIcon = (props: any): ReactElement => {
           to="care_provider"
           onClick={(event: React.MouseEvent<HTMLElement>) => {
             handleCloseDropDown(event);
-            dispatch(doSearch(props.cgProviderId));
+            dispatch(doSearch({id: props.cgProviderId, data:"" }));
             dispatch(doGetCaregiverProvider(props.cgProviderId))
               .unwrap()
               .then(() => {

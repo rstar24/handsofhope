@@ -38,7 +38,7 @@ function ContactNotes(props: any) {
     dispatch(doSearch({ id: state.id, data: "" }))
       .unwrap()
       .catch((err) => {});
-  }, []);
+  }, [addNew]);
   const handleAddNew = () => {
     dispatch(cleanState(null));
     setDisabled(false);
