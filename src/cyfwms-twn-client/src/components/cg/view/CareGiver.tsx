@@ -23,7 +23,7 @@ const CareGiver = (): ReactElement => {
       <Table sx={{ maxWidth: 900 }} aria-label="register data table">
         <TableBody sx={{ "& > tr > td": { border: 0, p: 0 } }}>
           {Object.entries(data).map((t: any, k: any) => {
-            if (k !== 9 && t[1] !== "" && t[1] !== 0 && t[1]!==null) {
+            if (k!==0 && k !== 9 && t[1] !== "" && t[1] !== 0 && t[1]!==null) {
               return (
                 <TableRow key={Math.random() * 1000}>
                   <TableCell
