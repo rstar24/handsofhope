@@ -25,7 +25,7 @@ import CgLayout from "../../../components/cg/CgLayout";
 import ContactNotesForm from "./ContactNotesForm";
 
 function ContactNotes(props: any) {
-  const state = useAppSelector((state) => state.cgCareProvider.data);
+  const state = useAppSelector((state) => state.cgCareProvider);
   const dispatch = useAppDispatch();
   const [addNew, setAddNew] = useState(false);
   const [disabled, setDisabled] = useState(false);
@@ -35,7 +35,7 @@ function ContactNotes(props: any) {
   useEffect(() => {
     dispatch(doGetICContactMethod());
 
-    dispatch(doSearch({ id: state.id, data: "" }))
+    dispatch(doSearch({ id: state.data.id ? state.data.id : state.getData.id, data: "" }))
       .unwrap()
       .catch((err) => {});
   }, [addNew]);
@@ -53,7 +53,7 @@ function ContactNotes(props: any) {
       });
   };
   const handleSearchIcon = (e: any) => {
-    dispatch(doSearch({ id: state.id, data: value }))
+    dispatch(doSearch({ id: state.data.id ? state.data.id : state.getData.id, data: value }))
       .unwrap()
       .catch((err) => {});
   };

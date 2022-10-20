@@ -15,11 +15,11 @@ import { ContactNotesLabels } from "../../../library/labels/careGivers";
 const ContactNotes = (): ReactElement => {
   const recordsList = useAppSelector((state) => state.cgContactNotes.record);
   const dispatch = useAppDispatch();
-  const data = useAppSelector((state) => state.cgCareProvider.data);
+  const data = useAppSelector((state) => state.cgCareProvider);
   const popup = useAppSelector((state) => state.popup.open);
 
   useEffect(() => {
-    dispatch(doSearch({ id: data.id, data: "" }));
+    dispatch(doSearch({ id: data.data.id ? data.data.id : data.getData.id, data: "" }));
   }, [popup]);
   return (
     <>

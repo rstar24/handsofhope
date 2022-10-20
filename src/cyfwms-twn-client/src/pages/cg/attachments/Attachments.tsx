@@ -25,7 +25,7 @@ import type { FC } from "react";
 const Attachments: FC = () => {
   const dispatch = useAppDispatch();
   const cgCareProviderId = useAppSelector(
-    (state) => state.cgCareProvider.data.id
+    (state) => state.cgCareProvider.getData.id
   );
   const state = useAppSelector((state) => state.cgAttachments);
 
