@@ -20,41 +20,25 @@ import { clean as cleanCPAAttachments } from "../../../features/cpa/attachments/
 import { cleanState as cleanCPAParticipant } from "../../../features/cpa/participant/slice";
 import { clean as cleanCGCareProvider } from "../../../features/cg/careProvider/slice";
 import { clean as cleanCGCapacity } from "../../../features/cg/capacity/slice";
-import { useAppDispatch } from "../../../library/hooks";
-import { Box, Tab } from "@mui/material";
+import { cleanState as cleanNavbar } from "../../../features/navBarSlice";
+
+import { useAppDispatch, useAppSelector } from "../../../library/hooks";
+import { Box } from "@mui/material";
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { setView } from "../../../features/popupSlice";
+import "./Navbar.css";
+import { changeCalendarColor, changeHomeColor } from "../../../features/navBarSlice";
 
-interface LinkTabProps {
-  label?: string;
-  href?: string;
-}
 
-function LinkTab(props: LinkTabProps) {
-  return (
-    <Tab
-      component={Link}
-      to={""}
-      onClick={(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-        event.preventDefault();
-      }}
-      {...props}
-    />
-  );
-}
+
 
 export default function Navbar() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [calendarColor, setCalendarColor] = React.useState("none");
-  const [homeColor, setHomeColor] = React.useState("none");
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
+  const {homeColor, calendarColor} = useAppSelector((state)=>state.navBar)
+  
 
   const handleClean = () => {
     dispatch(cleanCodetableState());
@@ -82,17 +66,23 @@ export default function Navbar() {
     // CG
     dispatch(cleanCGCareProvider(null));
     dispatch(cleanCGCapacity(null));
-    //Calendar
+    //NAVBAR
+    dispatch(cleanNavbar(null));
+
   };
 
   const handleHome = () => {
     handleClean();
     dispatch(setView(false));
-
+   dispatch(changeHomeColor("red"));
     navigate("/home");
   };
 
-  const handleCalendar = () => {};
+  const handleCalendar = (e:any) => {
+
+    dispatch(changeCalendarColor("red"));
+    navigate("/calendar");
+  };
 
   const handleLogout = () => {
     dispatch(cleanLoginState(null));
@@ -102,46 +92,52 @@ export default function Navbar() {
 
   return (
     <Box
+  
       sx={{
         width: "100%",
         backgroundColor: "black",
-        display: "flex",
-        textAlign: "center",
-        justifyContent: "space-between",
         mt: 4,
       }}
     >
-      <Box color="#ffffff" sx={{ p: 0 }}>
-        <Button
-          component={Link}
-          to="/home"
-          sx={{ color: "white", textTransform: "none" }}
-          onClick={handleHome}
-        >
-          Home
-        </Button>
-      </Box>
-      <Box color="#ffffff" sx={{ p: 0 }}>
-        <Button
-          component={Link}
-          to="/calendar"
-          sx={{
-            color: "white",
-            textTransform: "none",
-          }}
-          onClick={handleCalendar}
-        >
-          Calendar
-        </Button>
-      </Box>
-      <Box color="#ffffff" sx={{ paddingLeft: "970px" }}>
-        <Button
-          sx={{ color: "white", textTransform: "none" }}
-          onClick={handleLogout}
-        >
-          Logout
-        </Button>
-      </Box>
+        <ul>
+            <li className="list"> 
+              <Button
+                sx={{ color: "white",
+                      textTransform: "none" ,
+                      backgroundColor:homeColor,
+                      
+                    }}
+                onClick={handleHome}
+              >
+                Home
+              </Button>
+              
+            </li>
+
+            <li className="list">
+              <Button
+                sx={{
+                  color: "white",
+                  textTransform: "none",
+                  backgroundColor:calendarColor,
+                }}
+                onClick={handleCalendar}
+              >
+                Calendar
+              </Button>
+            </li>
+
+            <li className="logout">
+              <Button
+                sx={{ color: "white", textTransform: "none" }}
+                onClick={handleLogout}
+              >
+                Logout
+              </Button>
+            </li>
+            
+        </ul>
+
     </Box>
   );
 }

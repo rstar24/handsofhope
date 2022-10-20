@@ -29,7 +29,7 @@ const Results = (): ReactElement => {
   const handleSearchView = (id: any) => {
     dispatch(setView(true));
     dispatch(doGetCaregiverProvider(id)).then((res: any) => {
-      dispatch(doSearch({ id: res.payload.referenceId, data: "" }))
+      dispatch(doSearch({ id: id, data: "" }))
         .unwrap()
         .catch((err) => {});
     });

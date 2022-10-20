@@ -1,11 +1,19 @@
 import { CYFSWMSSaveButton } from "../../../components/CYFSWMSButtons";
 import Input from "../../../components/Input";
 import CYFMSDropdown from "../../../components/cyfms/CYFMSDropdown";
+import SearchClientName from "../../../components/cyfms/searchClient/SearchClientName";
 import CgLayout from "../../../components/cg/CgLayout";
 import { onKeyDown } from "../../../library/app";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import { handleEffect, handleSubmit } from "./careProvider_";
-import { Box, Typography } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+import {
+  Box,
+  FormControl,
+  FormLabel,
+  OutlinedInput,
+  Typography,
+} from "@mui/material";
 import React, { SyntheticEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { FC } from "react";
@@ -22,6 +30,7 @@ const CareProvider: FC = () => {
   const state = useAppSelector((state) => state.cgCareProvider);
   const edit = useAppSelector((state) => state.popup.edit);
 
+  const [click, setClick] = useState(false);
   const [disableOtherType, setDisableOtherType] = useState<boolean>(
     state.data.type !== "" ? false : true
   );
@@ -140,26 +149,72 @@ const CareProvider: FC = () => {
         </div>
         <div>
           <div>
-            <Input
-              autofill={state.data.primaryCaregiver}
-              id="primaryCaregiver"
-              value="Primary Caregiver"
-              required
-            />
+            <FormControl
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                flexWrap: "wrap",
+              }}
+            >
+              <FormLabel
+                sx={{ p: 1, flexBasis: 0, flexGrow: 1, color: "black" }}
+              >
+                Primary Caregiver
+              </FormLabel>
+              <OutlinedInput
+                sx={{
+                  borderRadius: 0,
+                  flexBasis: 0,
+                  flexGrow: 1.9,
+                }}
+                id="primaryCaregiver"
+                size="small"
+                value={state.data.primaryCaregiver}
+                style={{ backgroundColor: "#dfdada" }}
+                required
+                endAdornment={<SearchIcon onClick={() => setClick(true)} />}
+              />
+            </FormControl>
           </div>
           <div>
-            <Input
-              autofill={state.data.secondaryCaregiver}
-              id="secondaryCaregiver"
-              value="Secondary Caregiver"
-              required
-            />
+            <FormControl
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                flexWrap: "wrap",
+              }}
+            >
+              <FormLabel
+                sx={{ p: 1, flexBasis: 0, flexGrow: 1, color: "black" }}
+              >
+                Secondary Caregiver
+              </FormLabel>
+              <OutlinedInput
+                sx={{
+                  borderRadius: 0,
+                  flexBasis: 0,
+                  flexGrow: 1.9,
+                }}
+                id="secondaryCaregiver"
+                size="small"
+                value={state.data.secondaryCaregiver}
+                style={{ backgroundColor: "#dfdada" }}
+                endAdornment={<SearchIcon onClick={() => setClick(true)} />}
+              />
+            </FormControl>
           </div>
         </div>
         <Box sx={{ justifyContent: "right" }}>
           <CYFSWMSSaveButton />
         </Box>
       </Box>
+      {click && (
+        <SearchClientName
+          click={click}
+          setClick={setClick}
+          moduleName="initialContact"
+        />
+      )}
     </CgLayout>
   );
 };

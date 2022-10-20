@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+
 @Service
 public class CPAParticipantServiceImpl implements CPAParticipantService {
     @Autowired
@@ -17,10 +18,11 @@ public class CPAParticipantServiceImpl implements CPAParticipantService {
 
     @Autowired
     private ParticipantRepository participantRepository;
+
     @Override
     public CPAParticipantDto saveCpaParticipant(CPAParticipantDto CPAParticipantDto) {
         CPAParticipant CPAParticipant = null;
-        if (CPAParticipantDto.getParticipantCulturalProId()== 0) {
+        if (CPAParticipantDto.getParticipantCulturalProId() == 0) {
             CPAParticipant = new CPAParticipant();
             BeanUtils.copyProperties(CPAParticipantDto, CPAParticipant);
             CPAParticipant.setStatus("ACTIVE");
@@ -40,10 +42,11 @@ public class CPAParticipantServiceImpl implements CPAParticipantService {
             CPAParticipant CPAParticipant = CPAParticipantRepository.findByCulturalProgramId(culturalProgramId);
             if (CPAParticipant != null) {
                 BeanUtils.copyProperties(CPAParticipant, CPAParticipantDto);
-                Participant participant=participantRepository.findByParticipantId(Long.parseLong(CPAParticipantDto.getParticipant()));
-             if (!CPAParticipant.getParticipant().equals("0")) {
-                 CPAParticipantDto.setParticipant(participant.getFirstname() + " " + participant.getSurname());
-             }
+                Participant participant = participantRepository.findByParticipantId(Long.parseLong(CPAParticipantDto.getParticipant()));
+                if (!CPAParticipant.getParticipant().equals("0")) {
+                    CPAParticipantDto.setParticipant(participant.getFirstname() + " " + participant.getSurname());
+                    CPAParticipantDto.setParticipantId(participant.getParticipantId());
+                }
             }
 
         }
@@ -52,12 +55,12 @@ public class CPAParticipantServiceImpl implements CPAParticipantService {
 
     @Override
     public void removeCpaParticipant(Long participantCulturalProId) {
-            Optional<CPAParticipant> cpaParticipantOpt = CPAParticipantRepository.findById(participantCulturalProId);
-            if (cpaParticipantOpt.isPresent()){
-                CPAParticipant CPAParticipant = new CPAParticipant();
-                CPAParticipant = cpaParticipantOpt.get();
-                CPAParticipant.setStatus("INACTIVE");
-                CPAParticipantRepository.save(CPAParticipant);
-            }
+        Optional<CPAParticipant> cpaParticipantOpt = CPAParticipantRepository.findById(participantCulturalProId);
+        if (cpaParticipantOpt.isPresent()) {
+            CPAParticipant CPAParticipant = new CPAParticipant();
+            CPAParticipant = cpaParticipantOpt.get();
+            CPAParticipant.setStatus("INACTIVE");
+            CPAParticipantRepository.save(CPAParticipant);
+        }
     }
 }
