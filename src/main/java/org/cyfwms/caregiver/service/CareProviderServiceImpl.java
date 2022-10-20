@@ -10,6 +10,8 @@ import org.cyfwms.common.exception.I18Constants;
 import org.cyfwms.common.exception.MessageUtil;
 import org.cyfwms.common.exception.NoSuchElementFoundException;
 
+import org.cyfwms.participant.entity.Participant;
+import org.cyfwms.participant.repository.ParticipantRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,9 @@ public class CareProviderServiceImpl implements CareProviderService {
 
     @Autowired
     MessageUtil messageUtility;
+
+    @Autowired
+    private ParticipantRepository participantRepository;
 
     @Override
     public CareProviderDto save(CareProviderDto cpDto) {
@@ -60,8 +65,17 @@ public class CareProviderServiceImpl implements CareProviderService {
                     String.valueOf(id)
                 )
             ));
-
         BeanUtils.copyProperties(cp, cpDto);
+            if (!cp.getPrimaryCaregiver().isEmpty()) {
+                Participant participantPrimary = participantRepository.findByParticipantId(Long.parseLong(cpDto.getPrimaryCaregiver()));
+                cpDto.setPrimaryCaregiver(participantPrimary.getFirstname() + " " + participantPrimary.getSurname());
+                cpDto.setPriParticipantId(participantPrimary.getParticipantId());
+            }
+            if (!cp.getSecondaryCaregiver().isEmpty()){
+                Participant participantSecondary = participantRepository.findByParticipantId(Long.parseLong(cpDto.getSecondaryCaregiver()));
+                cpDto.setSecondaryCaregiver(participantSecondary.getFirstname() + " " + participantSecondary.getSurname());
+                cpDto.setSecParticipantId(participantSecondary.getParticipantId());
+            }
         }
         return cpDto;
     }
