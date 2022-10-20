@@ -71,11 +71,13 @@ public class CareProviderServiceImpl implements CareProviderService {
                 cpDto.setPrimaryCaregiver(participantPrimary.getFirstname() + " " + participantPrimary.getSurname());
                 cpDto.setPriParticipantId(participantPrimary.getParticipantId());
             }
+          if (cp.getSecondaryCaregiver()!=null){
             if (!cp.getSecondaryCaregiver().isEmpty()){
                 Participant participantSecondary = participantRepository.findByParticipantId(Long.parseLong(cpDto.getSecondaryCaregiver()));
                 cpDto.setSecondaryCaregiver(participantSecondary.getFirstname() + " " + participantSecondary.getSurname());
                 cpDto.setSecParticipantId(participantSecondary.getParticipantId());
             }
+          }
         }
         return cpDto;
     }
