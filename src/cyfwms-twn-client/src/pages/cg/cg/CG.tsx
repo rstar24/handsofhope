@@ -11,6 +11,9 @@ import { Box, Button } from "@mui/material";
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import type { FC } from "react";
+import { clean as cleanCareproviderState} from "../../../features/cg/careProvider/slice";
+import { clean as cleanAttachmentState} from "../../../features/cg/attachments/slice";
+import { clean as cleanCapacityState } from "../../../features/cg/capacity/slice";
 
 /**
  * `CG` aka `Caregivers` module main page.
@@ -27,7 +30,9 @@ const CG: FC = () => {
   const cleanStore = () => {
     dispatch(cleanContactNotes(null));
     dispatch(cleanCaregiverState(null));
-    //dispatch(cleanProviderStatus(null));
+    dispatch(cleanCareproviderState(null))
+    dispatch(cleanAttachmentState(null))
+    dispatch(cleanCapacityState(null))
   };
 
   return (

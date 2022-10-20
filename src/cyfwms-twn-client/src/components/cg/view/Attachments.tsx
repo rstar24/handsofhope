@@ -36,7 +36,7 @@ const Attachments = (): ReactElement => {
                 sx={{ "& > tr > td": { border: 0, p: 0, paddingLeft: 5 } }}
               >
                 {Object.entries(recordsList[index]).map((t: any, k: any) => {
-                  if (k!==2){
+                  if (k!==2 && t[0]!=="cgImageType"){
                     return (
                       <TableRow key={Math.random() * 1000}>
                         <TableCell

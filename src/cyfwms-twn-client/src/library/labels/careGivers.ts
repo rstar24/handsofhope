@@ -12,6 +12,8 @@ export const CareProviderLabels = [
   "Email",
   "Primary Caregiver",
   "Secondary Caregiver",
+  "Primary ParticipantId",
+  "Secondary ParticipantId",
   "Care Provider Id",
 ];
 

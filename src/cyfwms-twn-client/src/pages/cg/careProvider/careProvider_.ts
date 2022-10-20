@@ -1,4 +1,4 @@
-import { doGet, doPost } from "../../../features/cg/careProvider/slice";
+import { doGet, doPost, GetCareProvider } from "../../../features/cg/careProvider/slice";
 import { unhideTabs } from "../../../features/navBarSlice";
 import type { CareProvider } from "../../../features/cg/careProvider/slice";
 import type { AppDispatch } from "../../../library/store";
@@ -29,7 +29,7 @@ export const handleSubmit: AppFormEventHandler<HTMLFormElement> = (
   event,
   navigate: NavigateFunction,
   dispatch: AppDispatch,
-  data: CareProvider,
+  data: GetCareProvider,
   edit: boolean
 ) => {
   event.preventDefault();
@@ -45,8 +45,8 @@ export const handleSubmit: AppFormEventHandler<HTMLFormElement> = (
     province: event.currentTarget.province.value,
     phoneNumber: event.currentTarget.phoneNumber.value,
     email: event.currentTarget.eMail.value,
-    primaryCaregiver: event.currentTarget.primaryCaregiver.value,
-    secondaryCaregiver: event.currentTarget.secondaryCaregiver.value,
+    primaryCaregiver: data.priParticipantId,
+    secondaryCaregiver: data.secParticipantId,
   };
   dispatch(doPost(formData))
     .unwrap()

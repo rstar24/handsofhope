@@ -50,7 +50,6 @@ const Results = (): ReactElement => {
             <TableCell>Reference Id</TableCell>
             <TableCell>Name</TableCell>
             <TableCell>Type</TableCell>
-            <TableCell>Primary Caregiver</TableCell>
             <TableCell>Status</TableCell>
             <TableCell>Action</TableCell>
           </TableRow>
@@ -73,7 +72,6 @@ const Results = (): ReactElement => {
               </TableCell>
               <TableCell>{careGiver.name}</TableCell>
               <TableCell>{careGiver.type}</TableCell>
-              <TableCell>{careGiver.priCaregiver}</TableCell>
               <TableCell>{careGiver.status}</TableCell>
               <TableCell>
                 <EditIcon
