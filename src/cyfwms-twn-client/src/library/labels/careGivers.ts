@@ -18,12 +18,12 @@ export const CareProviderLabels = [
 ];
 
 export const CareGiverLabels = [
-  "BackGround Check Id",
-  "Primary BG Check Status",
+  "Background Check Id",
+  "Primary Background Check Status",
   "Primary Date",
   "Primary Details",
   "Primary Training Completed",
-  "Secondary BG Check Status",
+  "Secondary Background Check Status",
   "Secondary Date",
   "Secondary Details",
   "Secondary Training Completed",
@@ -55,9 +55,4 @@ export const ContactNotesLabels = [
   "Additional Information",
 ];
 
-export const AttachmentsLabels = [
-    "Image Id",
-    "Name",
-    "Id",
-    "Type",
-];
+export const AttachmentsLabels = ["Image Id", "Name", "Id", "Type"];
