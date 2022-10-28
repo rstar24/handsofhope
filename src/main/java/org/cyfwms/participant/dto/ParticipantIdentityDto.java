@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class ParticipantIdentityDto {
     @Getter @Setter
-    private Long participantId;
+    private Long participantId=0L;
     @Getter @Setter
     private String firstname;
     @Getter @Setter
