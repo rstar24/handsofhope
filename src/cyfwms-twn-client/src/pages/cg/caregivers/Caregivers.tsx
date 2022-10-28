@@ -19,11 +19,11 @@ const Caregivers: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const cgCareProviderId = useAppSelector(
-    (state) => state.cgCareProvider.data.id
+    (state) => state.cgCareProvider
   );
   const state = useAppSelector((state) => state.cgCaregivers);
 
-  useEffect(() => handleEffect(dispatch, cgCareProviderId), []);
+  useEffect(() => handleEffect(dispatch, cgCareProviderId.data.id || cgCareProviderId.getData.id ), []);
 
   return (
     <CgLayout>
@@ -37,7 +37,7 @@ const Caregivers: FC = () => {
           "> div > div": { flex: "1 1 0" },
         }}
         onSubmit={(event: FormEvent<HTMLFormElement>) =>
-          handleSubmit(event, navigate, dispatch, cgCareProviderId, state.data)
+          handleSubmit(event, navigate, dispatch, cgCareProviderId.data.id || cgCareProviderId.getData.id, state.data)
         }
         onKeyDown={onKeyDown}
       >

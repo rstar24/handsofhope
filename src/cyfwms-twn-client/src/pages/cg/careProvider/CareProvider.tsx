@@ -29,13 +29,13 @@ const CareProvider: FC = () => {
   const { cgStatus, cgType } = useAppSelector((state) => state.codetable);
   const state = useAppSelector((state) => state.cgCareProvider);
   const edit = useAppSelector((state) => state.popup.edit);
-
+  const [searchId ,setSearchId] = useState("");
   const [click, setClick] = useState(false);
   const [disableOtherType, setDisableOtherType] = useState<boolean>(
     state.data.type !== "" ? false : true
   );
 
-  useEffect(() => handleEffect(dispatch, state.data.id), []);
+  useEffect(() => handleEffect(dispatch, state.getData.id), []);
 
   return (
     <CgLayout>
@@ -57,25 +57,25 @@ const CareProvider: FC = () => {
             setDisableOtherType(true);
           }
         }}
-        onSubmit={(event) =>
-          handleSubmit(event, navigate, dispatch, state.data, edit)
+        onSubmit={(event:any) =>
+          handleSubmit(event, navigate, dispatch, state.getData, edit)
         }
         onKeyDown={onKeyDown}
       >
-        {state.data.referenceId! >= 0 ? (
+        {state.getData.referenceId! >= 0 ? (
           <Typography paddingLeft={1}>
-            Reference ID : {state.data.referenceId}
+            Reference ID : {state.getData.referenceId}
           </Typography>
         ) : (
           <></>
         )}
         <div>
           <div>
-            <Input autofill={state.data.name} id="naam" value="Name" required />
+            <Input autofill={state.getData.name} id="naam" value="Name" required />
           </div>
           <div>
             <CYFMSDropdown
-              autofill={state.data.status}
+              autofill={state.getData.status}
               id="status"
               optionsList={Object.values(cgStatus).map(
                 (cgStatus: any) => cgStatus.en
@@ -88,7 +88,7 @@ const CareProvider: FC = () => {
         <div>
           <div>
             <CYFMSDropdown
-              autofill={state.data.type}
+              autofill={state.getData.type}
               id="type"
               optionsList={Object.values(cgType).map(
                 (cgType: any) => cgType.en
@@ -99,7 +99,7 @@ const CareProvider: FC = () => {
           </div>
           <div>
             <Input
-              autofill={state.data.otherType}
+              autofill={state.getData.otherType}
               id="otherType"
               value="Please specify"
               disabled={disableOtherType}
@@ -108,23 +108,23 @@ const CareProvider: FC = () => {
         </div>
         <div>
           <div>
-            <Input autofill={state.data.address} id="address" value="Address" />
+            <Input autofill={state.getData.address} id="address" value="Address" />
           </div>
           <div>
-            <Input autofill={state.data.city} id="city" value="City" />
+            <Input autofill={state.getData.city} id="city" value="City" />
           </div>
         </div>
         <div>
           <div>
             <Input
-              autofill={state.data.postalCode}
+              autofill={state.getData.postalCode}
               id="postalCode"
               value="Postal Code"
             />
           </div>
           <div>
             <Input
-              autofill={state.data.province}
+              autofill={state.getData.province}
               id="province"
               value="Province"
             />
@@ -133,14 +133,14 @@ const CareProvider: FC = () => {
         <div>
           <div>
             <Input
-              autofill={state.data.phoneNumber}
+              autofill={state.getData.phoneNumber}
               id="phoneNumber"
               value="Phone Number"
             />
           </div>
           <div>
             <Input
-              autofill={state.data.email}
+              autofill={state.getData.email}
               type="email"
               id="eMail"
               value="Email"
@@ -169,10 +169,10 @@ const CareProvider: FC = () => {
                 }}
                 id="primaryCaregiver"
                 size="small"
-                value={state.data.primaryCaregiver}
+                value={state.getData.primaryCaregiver}
                 style={{ backgroundColor: "#dfdada" }}
                 required
-                endAdornment={<SearchIcon onClick={() => setClick(true)} />}
+                endAdornment={<SearchIcon onClick={() =>{ setClick(true);setSearchId("primary")}} />}
               />
             </FormControl>
           </div>
@@ -197,9 +197,9 @@ const CareProvider: FC = () => {
                 }}
                 id="secondaryCaregiver"
                 size="small"
-                value={state.data.secondaryCaregiver}
+                value={state.getData.secondaryCaregiver}
                 style={{ backgroundColor: "#dfdada" }}
-                endAdornment={<SearchIcon onClick={() => setClick(true)} />}
+                endAdornment={<SearchIcon onClick={() => {setClick(true);setSearchId("secondary")}} />}
               />
             </FormControl>
           </div>
@@ -210,9 +210,10 @@ const CareProvider: FC = () => {
       </Box>
       {click && (
         <SearchClientName
+          searchId={searchId}
           click={click}
           setClick={setClick}
-          moduleName="initialContact"
+          moduleName="caregivers"
         />
       )}
     </CgLayout>

@@ -24,4 +24,6 @@ public class CareProviderDto {
     private String email;
     private String primaryCaregiver;
     private String secondaryCaregiver;
+    private Long priParticipantId;
+    private Long secParticipantId;
 }

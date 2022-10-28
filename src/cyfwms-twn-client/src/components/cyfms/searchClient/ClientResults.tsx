@@ -17,8 +17,9 @@ import {
   setCyfmsId,
 } from "../../../features/initialContact/fileDetails/slice";
 import { setClientName, setId } from "../../../features/cpa/participant/slice";
+import { setCgClientName, setCgId, setCgSecClientName, setCgSecId } from "../../../features/cg/careProvider/slice";
 
-const ClientResults = ({ setClick, moduleName }: any): ReactElement => {
+const ClientResults = ({ setClick, moduleName ,searchId}: any): ReactElement => {
   const dispatch = useAppDispatch();
   const data = useAppSelector((state) => state.cyfmsSearch.data);
   const handleCellClick = (participant: Record) => {
@@ -35,6 +36,26 @@ const ClientResults = ({ setClick, moduleName }: any): ReactElement => {
         )
       );
       dispatch(setCyfmsId(participant.participantId));
+      setClick(false);
+    }
+
+    else if (moduleName === "caregivers" && searchId==="primary") {
+      dispatch(
+        setCgClientName(
+          `${participant.firstname}${" "}${participant.surname}`
+        )
+      );
+      dispatch(setCgId(participant.participantId));
+      setClick(false);
+    }
+
+    else if (moduleName === "caregivers" && searchId==="secondary") {
+      dispatch(
+        setCgSecClientName(
+          `${participant.firstname}${" "}${participant.surname}`
+        )
+      );
+      dispatch(setCgSecId(participant.participantId));
       setClick(false);
     }
   };

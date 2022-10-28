@@ -51,7 +51,7 @@ public class CGAttachmentServiceImpl implements CGAttachmentService {
             cgattachmentdto.setCgImageId(cgAttachmentEntity.getCgImageId());
             if (file == null) {
                 cgattachmentdto.setCgImageType(cgAttachmentEntity.getCgImageType());
-                cgattachmentdto.setCgImageName(cgAttachmentEntity.getCgImagename());
+                cgattachmentdto.setCgImageName(cgAttachmentEntity.getCgImageName());
             }
             modelMapper.map(cgattachmentdto, cgAttachmentEntity);
         }
@@ -73,7 +73,7 @@ public class CGAttachmentServiceImpl implements CGAttachmentService {
             cgAttachmentDto.setName(cgAttachmentEntity.getName());
             cgAttachmentDto.setCgImageFile(cgAttachmentEntity.getCgImagefile());
             cgAttachmentDto.setCgImageType(cgAttachmentEntity.getCgImageType());
-            cgAttachmentDto.setCgImageName(cgAttachmentEntity.getCgImagename());
+            cgAttachmentDto.setCgImageName(cgAttachmentEntity.getCgImageName());
         } else {
             throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
         }

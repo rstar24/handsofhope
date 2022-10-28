@@ -43,7 +43,7 @@ public class CGAttachmentEntity {
     private  String status;
 
     @Column(name="cgimagename")
-    private  String cgImagename;
+    private  String cgImageName;
 
     @Column(name="updatedatedime")
     @UpdateTimestamp

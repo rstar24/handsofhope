@@ -11,6 +11,7 @@ import { doGet, Record } from "../../../features/cyfms/search/slice";
 import { doGetMaritalStatus } from "../../../features/codetable/slice";
 
 const SearchClientName = ({
+  searchId,
   moduleName,
   setDisabled,
   setAddNew,
@@ -216,7 +217,7 @@ const SearchClientName = ({
             </Box>
           </Box>
           {show && (
-            <ClientResults setClick={setClick} moduleName={moduleName} />
+            <ClientResults setClick={setClick} moduleName={moduleName} searchId={searchId}/>
           )}
         </Box>
       </Modal>

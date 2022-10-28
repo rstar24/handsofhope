@@ -8,9 +8,9 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import type { ReactElement } from "react";
+import type { FC } from "react";
 
-const Register = (): ReactElement => {
+const Register: FC = () => {
   const data = useAppSelector((state) => state.cyfmsRegister.data);
 
   return (

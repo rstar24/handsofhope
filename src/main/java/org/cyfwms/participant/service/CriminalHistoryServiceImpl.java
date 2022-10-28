@@ -1,6 +1,8 @@
 package org.cyfwms.participant.service;
+
 import lombok.AllArgsConstructor;
 import org.cyfwms.participant.dto.CriminalHistoryDto;
+import org.cyfwms.participant.dto.CriminalHistoryRecordDto;
 import org.cyfwms.participant.entity.CriminalHistory;
 import org.cyfwms.participant.entity.CriminalHistoryRecord;
 import org.cyfwms.participant.repository.CriminalHistoryRecordRepository;
@@ -25,6 +27,7 @@ public class CriminalHistoryServiceImpl implements CriminalHistoryService{
     @Override
     public CriminalHistoryDto readCriminalHistory(Long participantId) {
         CriminalHistoryDto criminalHistoryDto = new CriminalHistoryDto();
+        List<CriminalHistoryRecordDto> criminalHistoryRecordDtoList = null;
         if (participantId != 0) {
             //Criminal History
             Optional<CriminalHistory> criminalHistoryOpt = Optional.ofNullable(criminalHistoryRepo.findByParticipantId(participantId));
@@ -46,6 +49,14 @@ public class CriminalHistoryServiceImpl implements CriminalHistoryService{
                                 .collect(Collectors.toList());
                 criminalHistory.setCriminalHistoryRecordList(criminalHistoryRecordList);
                 BeanUtils.copyProperties(criminalHistory, criminalHistoryDto);
+
+                criminalHistoryRecordDtoList=criminalHistory.getCriminalHistoryRecordList().stream().map(chRecordDto->{
+                    CriminalHistoryRecordDto criminalHistoryRecordDto =
+                            new CriminalHistoryRecordDto();
+                    BeanUtils.copyProperties(chRecordDto,criminalHistoryRecordDto);
+                    return criminalHistoryRecordDto;
+                }).collect(Collectors.toList());
+                criminalHistoryDto.setCriminalHistoryRecordList(criminalHistoryRecordDtoList);
             }
         }
         return criminalHistoryDto;

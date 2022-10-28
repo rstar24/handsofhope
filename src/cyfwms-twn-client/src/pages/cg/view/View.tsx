@@ -52,12 +52,12 @@ const View = (): ReactElement => {
         }}
       >
         <Typography variant="h5" alignSelf="center">
-          Care Provider: {state.cgCareProvider.data.id}
+          Care Provider: {state.cgCareProvider.getData.id}
         </Typography>
         <Typography>
           <EditIcon
-            value={state.cgCareProvider.data.id}
-            cgProviderId={state.cgCareProvider.data.id || 0}
+            value={state.cgCareProvider.getData.id}
+            cgProviderId={state.cgCareProvider.getData.id || 0}
           />
         </Typography>
       </Box>
