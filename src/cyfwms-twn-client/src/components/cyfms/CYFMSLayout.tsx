@@ -53,6 +53,10 @@ const CYFMSLayout = (props: {
                 value: "Other Information",
                 route: "../other_information",
               },
+              {
+                value: "Appointments",
+                route: "../appointment",
+              },
             ]}
           />
         </Box>

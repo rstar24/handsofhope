@@ -30,6 +30,8 @@ import initiatorReducer from "../features/initiatorSlice";
 import loginReducer from "../features/login/slice";
 import popupReducer from "../features/popupSlice";
 import navBarReducer from "../features/navBarSlice";
+import  cyfmsAppointmentsReducer  from "../features/cyfms/appointment/slice";
+// import ICappointmentsReducer from "../features/initialContact/appointment/slice";
 
 const rootReducer = {
   login: loginReducer,
@@ -45,9 +47,11 @@ const rootReducer = {
   cyfmsFamilyPhysicians: cyfmsFamilyPhysiciansReducer,
   cyfmsCounselors: cyfmsCounselorsReducer,
   cyfmsOtherInformation: cyfmsOtherInformationReducer,
+  cyfmsAppointments:cyfmsAppointmentsReducer,
   cyfmsSearch: cyfmsSearchReducer,
   cyfmsAll: cyfmsAllReducer,
   icFileDetails: icFileDetailsReducer,
+  // icAppointment: ICappointmentsReducer,
   icIncidentReport: icIncidentReportReducer,
   icReferralInformation: icReferralInformationReducer,
   icPresentConcerns: icPresentConcernsReducer,

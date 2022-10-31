@@ -5,6 +5,7 @@ import {
   doGenderGetAPI,
   doGetMaritalStatusAPI,
   doGetProvinceAPI,
+  doGetAppointmentStatusAPI,
   doGetRoleAPI,
   doGetEducationAPI,
   doGetTypeOfEmployeeAPI,
@@ -19,10 +20,12 @@ import {
   doGetCPACulturalStatusAPI,
   doGetCGStatusAPI,
   doGetCGTypeAPI,
+  doGetFrequencyAPI,
 } from "./api";
 
 export interface CodeTableData {
   gender: {};
+  appointment:{};
   maritalstatus: {};
   province: {};
   role: {};
@@ -39,6 +42,7 @@ export interface CodeTableData {
   culturalStatus: {};
   cgStatus: {};
   cgType: {};
+  frequency:{};
 }
 
 export interface CodeTableState {
@@ -50,6 +54,26 @@ export const doGetGender = createAsyncThunk(
   "codetable/doGetGender",
   async (_, { dispatch, getState }) => {
     const res: AxiosResponse = await doGenderGetAPI(
+      (getState() as RootState).login.token
+    );
+    // Becomes the `fulfilled` action payload:
+    return res.data;
+  }
+);
+export const doGetAppointmentStatus = createAsyncThunk(
+  "codetable/doGetAppointmentStatus",
+  async (_, { dispatch, getState }) => {
+    const res: AxiosResponse = await doGetAppointmentStatusAPI(
+      (getState() as RootState).login.token
+    );
+    // Becomes the `fulfilled` action payload:
+    return res.data;
+  }
+);
+export const doGetFrequency = createAsyncThunk(
+  "codetable/doGetFrequency",
+  async (_, { dispatch, getState }) => {
+    const res: AxiosResponse = await  doGetFrequencyAPI(
       (getState() as RootState).login.token
     );
     // Becomes the `fulfilled` action payload:
@@ -239,6 +263,8 @@ export const CodeTableSlice = createSlice({
   name: "codetable",
   initialState: {
     gender: {},
+    appointmentstatus:{},
+    frequency:{},
     maritalstatus: {},
     province: {},
     role: {},
@@ -261,6 +287,7 @@ export const CodeTableSlice = createSlice({
   reducers: {
     cleanCodetableState(state: any) {
       state.gender = {};
+      state.appointmentstatus={};
       state.maritalstatus = {};
       state.province = {};
       state.role = {};
@@ -297,6 +324,30 @@ export const CodeTableSlice = createSlice({
       state.status = "loading";
     });
     builder.addCase(doGetGender.rejected, (state) => {
+      state.status = "failed";
+    });
+     //AppointmentStatus
+     builder.addCase(doGetFrequency.fulfilled, (state, action) => {
+      try {
+        state.frequency = action.payload.valuesMap;
+      } catch (err) {
+        console.log(err);
+      }
+      state.status = "success";
+    });
+    //frequency value
+    builder.addCase(doGetAppointmentStatus.fulfilled, (state, action) => {
+      try {
+        state.appointmentstatus = action.payload.valuesMap;
+      } catch (err) {
+        console.log(err);
+      }
+      state.status = "success";
+    });
+    builder.addCase(doGetAppointmentStatus.pending, (state) => {
+      state.status = "loading";
+    });
+    builder.addCase(doGetAppointmentStatus.rejected, (state) => {
       state.status = "failed";
     });
 

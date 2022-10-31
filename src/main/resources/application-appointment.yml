@@ -9,9 +9,12 @@ appointment:
     COMPLETED:
       "en": "Completed"
       "fr": "Complété"
-    CENCELLED:
+    CANCELLED:
       "en": "Cancelled"
       "fr": "Annulé"
+    MISSED:
+      "en" : "Missed"
+      "fr" : "Manqué"
   frequency:
     DAILY:
       "en": "Daily"
