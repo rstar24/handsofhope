@@ -144,7 +144,7 @@ const CulturalProgramOrActivity = (): ReactElement => {
               required
             />
           </Box>
-          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+          <Box sx={{ flexBasis: 0, flexGrow: 1.01 }}>
             <CPADropdown
               autofill={state.data.type}
               id="type"
@@ -157,7 +157,7 @@ const CulturalProgramOrActivity = (): ReactElement => {
           </Box>
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
-          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+          <Box sx={{ flexBasis: 0, flexGrow: 0.99 }}>
             <CPADropdown
               autofill={state.data.status}
               id="status"
