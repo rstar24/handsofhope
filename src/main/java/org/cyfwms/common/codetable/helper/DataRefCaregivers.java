@@ -14,5 +14,5 @@ import java.util.Map;
 public class DataRefCaregivers {
     private Map<String, Map<String,String>> caregivertype;
     private Map<String, Map<String,String>> caregiverstatus;
-
+    public Map<String, Map<String, String>> caregiverbackgroundstatus;
 }

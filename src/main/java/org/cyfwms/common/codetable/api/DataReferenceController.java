@@ -154,4 +154,12 @@ public class DataReferenceController {
 
         return dataReferenceService.getAllCaregiversTypeValue();
     }
+
+    @GetMapping(value = "/caregiverbackgroundstatus", produces = "application/json")
+    @ApiOperation("Get All caregiver Background  status")
+    @ResponseStatus(HttpStatus.OK)
+    public DataResponseDto getAllCaregiversBackgroundStatusValue() {
+
+        return dataReferenceService.getAllCaregiversBackgroundStatusValue();
+    }
 }

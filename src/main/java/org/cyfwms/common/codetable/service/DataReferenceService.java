@@ -28,4 +28,5 @@ public interface DataReferenceService {
     DataResponseDto getAllAppointmentStatusValue();
     DataResponseDto getAllCaregiversStatusValue();
     DataResponseDto getAllCaregiversTypeValue();
+    DataResponseDto getAllCaregiversBackgroundStatusValue();
 }
