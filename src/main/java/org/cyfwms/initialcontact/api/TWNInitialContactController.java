@@ -145,11 +145,11 @@ public class TWNInitialContactController {
         return new ResponseEntity("Operation Successful", HttpStatus.OK);
     }
 
-    @GetMapping(value = "/readICParticipant/{filedetailsid}", produces = "application/json")
+    @GetMapping(value = "/readICParticipant/{icparticipantid}", produces = "application/json")
     @ApiOperation("Read ICParticipant")
     @ResponseStatus(HttpStatus.OK)
-    public ICParticipantDto readICParticipant(@PathVariable("filedetailsid") Long fileDetailsId) {
-        return icParticipantService.readICParticipant(fileDetailsId);
+    public ICParticipantDto readICParticipant(@PathVariable("icparticipantid") Long icParticipantId) {
+        return icParticipantService.readICParticipant(icParticipantId);
     }
 
 

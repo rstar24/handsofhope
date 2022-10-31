@@ -31,14 +31,14 @@ public class ICParticipantServiceImpl implements ICParticipantService{
     }
 
     @Override
-    public ICParticipantDto readICParticipant(Long fileDetailsId) {
+    public ICParticipantDto readICParticipant(Long icParticipantId) {
         ICParticipantDto iCParticipantDto = new ICParticipantDto();
-        if (fileDetailsId != 0) {
-            ICParticipant iCParticipant = icParticipantRepository.findByFileDetailsId(fileDetailsId);
-            if (iCParticipant != null) {
-                BeanUtils.copyProperties(iCParticipant, iCParticipantDto);
+        if (icParticipantId != 0) {
+            Optional<ICParticipant> iCParticipant = icParticipantRepository.findById(icParticipantId).filter(i->i.getStatus().equalsIgnoreCase("ACTIVE"));
+            if (iCParticipant.isPresent()) {
+                BeanUtils.copyProperties(iCParticipant.get(), iCParticipantDto);
                 Participant participant=participantRepository.findByParticipantId(Long.parseLong(iCParticipantDto.getParticipant()));
-                if (!iCParticipant.getParticipant().equals("0")) {
+                if (!iCParticipant.get().getParticipant().equals("0")) {
                     iCParticipantDto.setParticipant(participant.getFirstname() + " " + participant.getSurname());
                     iCParticipantDto.setParticipantId(participant.getParticipantId());
                 }
