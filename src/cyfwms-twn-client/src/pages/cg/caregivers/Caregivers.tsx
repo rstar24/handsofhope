@@ -1,6 +1,7 @@
 import { CYFSWMSSaveButton } from "../../../components/CYFSWMSButtons";
 import Input from "../../../components/Input";
 import CgLayout from "../../../components/cg/CgLayout";
+import CYFMSDropdown from "../../../components/cyfms/CYFMSDropdown";
 import CYFMSTextArea from "../../../components/cyfms/CYFMSTextArea";
 import { onKeyDown } from "../../../library/app";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
@@ -21,6 +22,9 @@ const Caregivers: FC = () => {
   const cgCareProviderId = useAppSelector(
     (state) => state.cgCareProvider
   );
+  const {
+    cgBgCheckStatus
+  } = useAppSelector((state) => state.codetable);
   const state = useAppSelector((state) => state.cgCaregivers);
 
   useEffect(() => handleEffect(dispatch, cgCareProviderId.data.id || cgCareProviderId.getData.id ), []);
@@ -46,10 +50,13 @@ const Caregivers: FC = () => {
         </Typography>
         <div>
           <div>
-            <Input
+            <CYFMSDropdown
               autofill={state.data.priBGCheckStatus}
               id="priBgCheckStatus"
               value="Background Check Status"
+              optionsList={Object.values(cgBgCheckStatus).map(
+                (cgStatus: any) => cgStatus.en
+              )}
             />
           </div>
           <div>
@@ -86,10 +93,13 @@ const Caregivers: FC = () => {
         </Typography>
         <div>
           <div>
-            <Input
+            <CYFMSDropdown
               autofill={state.data.secBGCheckStatus}
               id="secBgCheckStatus"
               value="Background Check Status"
+              optionsList={Object.values(cgBgCheckStatus).map(
+                (cgStatus: any) => cgStatus.en
+              )}
             />
           </div>
           <div>
