@@ -15,6 +15,7 @@ import { Box, Tab, Tabs, Typography } from "@mui/material";
 import React, { useContext } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import type { ReactElement } from "react";
+import Participants from "../../../components/initialContact/view/Participants";
 
 export const styles = {
   header: {
@@ -103,11 +104,17 @@ const View = (): ReactElement => {
               value={5}
               onClick={() => navigate("patient_care_information")}
             />
+             <Tab
+              label="Participants"
+              value={6}
+              onClick={() => navigate("participants")}
+            />
             <Tab
               label="Contact Notes"
-              value={6}
+              value={7}
               onClick={() => navigate("contact_notes")}
             />
+            
           </Tabs>
         </TabContext.Provider>
       </Box>
@@ -125,7 +132,9 @@ const View = (): ReactElement => {
             path="patient_care_information"
             element={<PatientCareInformation />}
           />
+          <Route path="participants" element={<Participants />} />
           <Route path="contact_notes" element={<ContactNotes />} />
+          
         </Routes>
       </Box>
       <Popup children={<Router />} />

@@ -18,6 +18,7 @@ import {
 } from "../../../features/initialContact/fileDetails/slice";
 import { setClientName, setId } from "../../../features/cpa/participant/slice";
 import { setCgClientName, setCgId, setCgSecClientName, setCgSecId } from "../../../features/cg/careProvider/slice";
+import { setParticipantClientName, setParticipantId } from "../../../features/initialContact/participant/slice";
 
 const ClientResults = ({ setClick, moduleName ,searchId}: any): ReactElement => {
   const dispatch = useAppDispatch();
@@ -29,13 +30,23 @@ const ClientResults = ({ setClick, moduleName ,searchId}: any): ReactElement => 
       );
       dispatch(setId(participant.participantId));
       setClick(false);
-    } else if (moduleName === "initialContact") {
+    } else if (moduleName === "initialContact" && searchId==="fileDetails") {
       dispatch(
         setCyfmsClientName(
           `${participant.firstname}${" "}${participant.surname}`
         )
       );
       dispatch(setCyfmsId(participant.participantId));
+      setClick(false);
+    }
+
+    else if (moduleName === "initialContact" && searchId==="icParticipant") {
+      dispatch(
+        setParticipantClientName(
+          `${participant.firstname}${" "}${participant.surname}`
+        )
+      );
+      dispatch(setParticipantId(participant.participantId));
       setClick(false);
     }
 

@@ -25,6 +25,7 @@ import icIncidentReportReducer from "../features/initialContact/incidentReport/s
 import icPresentConcernsReducer from "../features/initialContact/presentConcerns/slice";
 import icPatientCareInformationReducer from "../features/initialContact/patientCareInformation/slice";
 import icReferralInformationReducer from "../features/initialContact/referralInformation/slice";
+import icParticipantsReducer from "../features/initialContact/participant/slice";
 import icSearchReducer from "../features/initialContact/search/slice";
 import initiatorReducer from "../features/initiatorSlice";
 import loginReducer from "../features/login/slice";
@@ -57,6 +58,7 @@ const rootReducer = {
   icPresentConcerns: icPresentConcernsReducer,
   icPatientCareInformation: icPatientCareInformationReducer,
   icContactNotes: icContactNotesReducer,
+  icParticipants: icParticipantsReducer,
   icSearch: icSearchReducer,
   cpa: cpaReducer,
   cpaSearch: cpaSearchReducer,

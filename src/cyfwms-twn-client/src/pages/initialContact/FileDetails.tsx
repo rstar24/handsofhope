@@ -237,6 +237,7 @@ const FileDetails: FC = () => {
           click={click}
           setClick={setClick}
           moduleName="initialContact"
+          searchId="fileDetails"
         />
       )}
     </ICLayout>
