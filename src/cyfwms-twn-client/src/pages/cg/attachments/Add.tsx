@@ -20,7 +20,7 @@ const Add: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const cgCareProviderId = useAppSelector(
-    (state) => state.cgCareProvider.data.id
+    (state) => state.cgCareProvider.getData.id
   );
   const [fileName, setFileName] = useState<string>("");
 
