@@ -21,6 +21,7 @@ import {
   doGetCGStatusAPI,
   doGetCGTypeAPI,
   doGetFrequencyAPI,
+  doGetCgBgCheckStatusAPI,
 } from "./api";
 
 export interface CodeTableData {
@@ -43,6 +44,7 @@ export interface CodeTableData {
   cgStatus: {};
   cgType: {};
   frequency:{};
+  cgBgCheckStatus: {};
 }
 
 export interface CodeTableState {
@@ -259,6 +261,19 @@ export const doGetCGType = createAsyncThunk(
     return res.data;
   }
 );
+
+//CareGivers Background Check Status
+export const doGetCgBgCheckStatus = createAsyncThunk(
+  "codetable/doGetCgBgCheckStatus",
+  async (arg, { getState }) => {
+    const res: AxiosResponse = await doGetCgBgCheckStatusAPI(
+      (getState() as RootState).login.token
+    );
+    // Becomes the `fulfilled` action payload:
+    return res.data;
+  }
+);
+
 export const CodeTableSlice = createSlice({
   name: "codetable",
   initialState: {
@@ -281,6 +296,7 @@ export const CodeTableSlice = createSlice({
     culturalStatus: {},
     cgStatus: {},
     cgType: {},
+    cgBgCheckStatus: {},
     jwtToken: "",
     status: "failed",
   },
@@ -607,6 +623,22 @@ export const CodeTableSlice = createSlice({
       state.status = "loading";
     });
     builder.addCase(doGetCGType.rejected, (state) => {
+      state.status = "failed";
+    });
+
+    //CareGiver Background Check Status
+    builder.addCase(doGetCgBgCheckStatus.fulfilled, (state, action) => {
+      try {
+        state.cgBgCheckStatus = action.payload.valuesMap;
+      } catch (err) {
+        console.log(err);
+      }
+      state.status = "success";
+    });
+    builder.addCase(doGetCgBgCheckStatus.pending, (state) => {
+      state.status = "loading";
+    });
+    builder.addCase(doGetCgBgCheckStatus.rejected, (state) => {
       state.status = "failed";
     });
   },

@@ -152,7 +152,7 @@ const CareProvider = (): ReactElement => {
                   fontSize: "1rem",
                 }}
               >
-                Other Type
+                Please Specify
               </TableCell>
               <TableCell width="50%">
                 <Typography component="p" sx={{ whiteSpace: "pre-wrap" }}>

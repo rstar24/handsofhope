@@ -9,7 +9,6 @@ caregivers:
     INACTIVE:
       "en": "Inactive"
       "fr": "inactif"
-
   caregivertype:
     KINSHIP CARE:
       "en": "Kinship Care"
@@ -29,3 +28,13 @@ caregivers:
     OTHER:
       "en": "Other"
       "fr": "Autre"
+  caregiverbackgroundstatus:
+    IN PROGRESS:
+      "en": "In Progress"
+      "fr": "En cours"
+    COMPLETED:
+      "en": "Completed"
+      "fr": "Complété"
+    SCHEDULED:
+      "en": "Scheduled"
+      "fr": "Programmé"

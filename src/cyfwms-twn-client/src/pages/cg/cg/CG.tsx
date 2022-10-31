@@ -2,7 +2,7 @@ import Header from "../../../components/Header";
 import Popup from "../../../components/Popup";
 import AuthLayout from "../../../components/auth/layout/AuthLayout";
 import Router from "../../../components/nestedRouters/CG";
-import { doGetCGStatus, doGetCGType } from "../../../features/codetable/slice";
+import { doGetCgBgCheckStatus, doGetCGStatus, doGetCGType, doGetProvince } from "../../../features/codetable/slice";
 import { setOpen as setOpenPopup } from "../../../features/popupSlice";
 import { cleanState as cleanContactNotes } from "../../../features/cg/contactNotes/slice";
 import { cleanState as cleanCaregiverState } from "../../../features/cg/caregivers/slice";
@@ -25,6 +25,8 @@ const CG: FC = () => {
   useEffect(() => {
     dispatch(doGetCGStatus())
     dispatch(doGetCGType())
+    dispatch(doGetProvince())
+    dispatch(doGetCgBgCheckStatus())
   });
 
   const cleanStore = () => {
@@ -71,7 +73,7 @@ const CG: FC = () => {
               dispatch(setOpenPopup(true));
             }}
           >
-            Add Caregiver
+            Add  A Caregiver
           </Button>
           <Button
             component={Link}
@@ -86,7 +88,7 @@ const CG: FC = () => {
               textAlign: "center",
             }}
           >
-            Search Caregivers
+            Search for a Caregiver
           </Button>
         </Box>
       </Box>

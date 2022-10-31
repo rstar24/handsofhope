@@ -20,7 +20,7 @@ const Register: FC = () => {
       <Table sx={{ maxWidth: 900 }}>
         <TableBody sx={{ "& > tr > td": { border: 0, p: 0 } }}>
           {data.firstname !== "" ? (
-            <TableRow key={Math.random() * 1000}>
+            <TableRow>
               <TableCell
                 sx={{
                   display: "flex",
@@ -42,7 +42,7 @@ const Register: FC = () => {
             <></>
           )}
           {data.middleName !== "" ? (
-            <TableRow key={Math.random() * 1000}>
+            <TableRow>
               <TableCell
                 sx={{
                   display: "flex",
@@ -64,7 +64,7 @@ const Register: FC = () => {
             <></>
           )}
           {data.surname !== "" ? (
-            <TableRow key={Math.random() * 1000}>
+            <TableRow>
               <TableCell
                 sx={{
                   display: "flex",
@@ -86,7 +86,7 @@ const Register: FC = () => {
             <></>
           )}
           {data.dateOfBirth !== "" ? (
-            <TableRow key={Math.random() * 1000}>
+            <TableRow>
               <TableCell
                 sx={{
                   display: "flex",
@@ -108,7 +108,7 @@ const Register: FC = () => {
             <></>
           )}
           {data.gender !== "" ? (
-            <TableRow key={Math.random() * 1000}>
+            <TableRow>
               <TableCell
                 sx={{
                   display: "flex",
@@ -130,7 +130,7 @@ const Register: FC = () => {
             <></>
           )}
           {data.maritalStatus !== "" ? (
-            <TableRow key={Math.random() * 1000}>
+            <TableRow>
               <TableCell
                 sx={{
                   display: "flex",
@@ -152,7 +152,7 @@ const Register: FC = () => {
             <></>
           )}
           {data.referenceId !== 0 ? (
-            <TableRow key={Math.random() * 1000}>
+            <TableRow>
               <TableCell
                 sx={{
                   display: "flex",

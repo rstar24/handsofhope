@@ -26,7 +26,11 @@ import type { FC } from "react";
 const CareProvider: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { cgStatus, cgType } = useAppSelector((state) => state.codetable);
+  const {
+    cgStatus,
+    cgType,
+    province
+  } = useAppSelector((state) => state.codetable);
   const state = useAppSelector((state) => state.cgCareProvider);
   const edit = useAppSelector((state) => state.popup.edit);
   const [searchId ,setSearchId] = useState("");
@@ -101,7 +105,7 @@ const CareProvider: FC = () => {
             <Input
               autofill={state.getData.otherType}
               id="otherType"
-              value="Please specify"
+              value="Please Specify"
               disabled={disableOtherType}
             />
           </div>
@@ -123,10 +127,13 @@ const CareProvider: FC = () => {
             />
           </div>
           <div>
-            <Input
+            <CYFMSDropdown
               autofill={state.getData.province}
               id="province"
               value="Province"
+              optionsList={Object.values(province).map(
+                (cgStatus: any) => cgStatus.en
+              )}
             />
           </div>
         </div>

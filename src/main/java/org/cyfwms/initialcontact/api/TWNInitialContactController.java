@@ -31,6 +31,9 @@ public class TWNInitialContactController {
     @Autowired
     private ICParticipantService icParticipantService;
 
+    @Autowired
+    private ICParticipantSearchService icParticipantSearchService;
+
     @GetMapping(value = "/readAllFileDetails/{filedetailsid}", produces = "application/json")
     @ApiOperation("Read Identity")
     @ResponseStatus(HttpStatus.OK)
@@ -163,6 +166,18 @@ public class TWNInitialContactController {
     public ResponseEntity<String> removeICParticipant(@PathVariable("icparticipantid") Long icParticipantId) {
         icParticipantService.removeICParticipant(icParticipantId);
         return new ResponseEntity("Operation Successful", HttpStatus.OK);
+    }
+
+    @GetMapping(value = {"/participantICSearch/{data}"},produces = "application/json")
+    @ApiOperation("Search ICParticipant")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ICParticipantSearchResultDto> searchICParticipant(@PathVariable Map<String, String> var)
+    {
+        ICParticipantSearchCriteriaDto iCParticipantSearchCriteriaDto =new ICParticipantSearchCriteriaDto();
+        iCParticipantSearchCriteriaDto.setData(
+                ("null".equals(var.get("data"))
+                        || var.get("data") == null) ?null:var.get("data"));
+        return icParticipantSearchService.searchICParticipant(iCParticipantSearchCriteriaDto);
     }
 
 }

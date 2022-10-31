@@ -215,3 +215,16 @@ export const doGetCGTypeAPI = async (
   );
   return res;
 };
+
+//CareGivers background check status codetable
+export const doGetCgBgCheckStatusAPI = async (
+  jwtToken: string
+): Promise<AxiosResponse> => {
+  const res: AxiosResponse = await axiosInstance.get(
+    "dataservice/caregiverbackgroundstatus",
+    {
+      headers: { Authorization: "Bearer " + jwtToken },
+    }
+  );
+  return res;
+};

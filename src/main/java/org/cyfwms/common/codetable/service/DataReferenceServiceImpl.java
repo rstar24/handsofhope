@@ -172,4 +172,12 @@ public DataResponseDto getAllProvinceValue() {
                 .valuesMap(dataRefCaregivers.getCaregivertype())
                 .build();
     }
+
+    @Override
+    public DataResponseDto getAllCaregiversBackgroundStatusValue() {
+        return  DataResponseDto.builder()
+                .type(ResponseDataType.caregiverbackgroundstatus.name())
+                .valuesMap(dataRefCaregivers.getCaregiverbackgroundstatus())
+                .build();
+    }
 }
