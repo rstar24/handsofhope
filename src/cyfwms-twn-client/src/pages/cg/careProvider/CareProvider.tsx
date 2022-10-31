@@ -105,7 +105,7 @@ const CareProvider: FC = () => {
             <Input
               autofill={state.getData.otherType}
               id="otherType"
-              value="Please specify"
+              value="Please Specify"
               disabled={disableOtherType}
             />
           </div>

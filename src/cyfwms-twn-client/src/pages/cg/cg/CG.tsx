@@ -73,7 +73,7 @@ const CG: FC = () => {
               dispatch(setOpenPopup(true));
             }}
           >
-            Add Caregiver
+            Add  A Caregiver
           </Button>
           <Button
             component={Link}
@@ -88,7 +88,7 @@ const CG: FC = () => {
               textAlign: "center",
             }}
           >
-            Search Caregivers
+            Search for a Caregiver
           </Button>
         </Box>
       </Box>

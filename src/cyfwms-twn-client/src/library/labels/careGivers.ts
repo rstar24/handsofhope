@@ -47,7 +47,7 @@ export const ContactNotesLabels = [
   "Date",
   "Time",
   "Contact Method",
-  "Need Address",
+  "Need(s) Addressed",
   "Summary",
   "Result",
   "Next Step",
