@@ -31,7 +31,7 @@ import loginReducer from "../features/login/slice";
 import popupReducer from "../features/popupSlice";
 import navBarReducer from "../features/navBarSlice";
 import  cyfmsAppointmentsReducer  from "../features/cyfms/appointment/slice";
-// import ICappointmentsReducer from "../features/initialContact/appointment/slice";
+import ICappointmentsReducer from "../features/initialContact/appointment/slice";
 
 const rootReducer = {
   login: loginReducer,
@@ -51,7 +51,7 @@ const rootReducer = {
   cyfmsSearch: cyfmsSearchReducer,
   cyfmsAll: cyfmsAllReducer,
   icFileDetails: icFileDetailsReducer,
-  // icAppointment: ICappointmentsReducer,
+  icAppointment: ICappointmentsReducer,
   icIncidentReport: icIncidentReportReducer,
   icReferralInformation: icReferralInformationReducer,
   icPresentConcerns: icPresentConcernsReducer,
