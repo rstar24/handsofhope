@@ -5,6 +5,9 @@ import org.cyfwms.caregiver.repository.CareGiversBackGroundRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+
 @Service
 public class CareGiversBackGroundCheckServiceImpl implements CareGiversBackGroundCheckService {
     @Autowired
@@ -17,6 +20,12 @@ public class CareGiversBackGroundCheckServiceImpl implements CareGiversBackGroun
             if (cgBackGroundCheck!=null)
             {
                 BeanUtils.copyProperties(cgBackGroundCheck, careGiverBGCheckDto);
+                if (careGiverBGCheckDto.getPriDate() == null) {
+                    careGiverBGCheckDto.setPriDate(LocalDate.of(1, 1, 1));
+                }
+                if (careGiverBGCheckDto.getSecDate() == null) {
+                    careGiverBGCheckDto.setSecDate(LocalDate.of(1, 1, 1));
+                }
             }
         }
         return careGiverBGCheckDto;

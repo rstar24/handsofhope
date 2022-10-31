@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import org.cyfwms.caregiver.dto.CGAttachmentDto;
 import org.cyfwms.caregiver.service.CGAttachmentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,9 +25,10 @@ public class CGAttachmentController {
 
     @ApiOperation("Save/Upload/Put one/single attachment.")
     @PutMapping("/save_one")
-    public CGAttachmentDto saveOne(@RequestParam(value = "file", required = false) MultipartFile file, @RequestParam("cgDto") String cgDto) throws IOException {
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<CGAttachmentDto> saveOne(@RequestParam(value = "file", required = false) MultipartFile file, @RequestParam("cgDto") String cgDto) throws IOException {
         CGAttachmentDto cgAttachmentDto = cgAttachmentService.saveCGAttachment(file, cgDto);
-        return cgAttachmentDto;
+        return ResponseEntity.ok(cgAttachmentDto);
     }
 
     @ApiOperation("Read/Get one/single attachment.")
@@ -44,9 +46,9 @@ public class CGAttachmentController {
 
     @ApiOperation("Soft remove/delete one/single attachment.")
     @DeleteMapping("/remove_one/{cgimageid}")
-    @ResponseStatus(OK)
-    public ResponseEntity<String> removeOne(@PathVariable("cgimageid") Long cgImageId) {
-        return cgAttachmentService.removeCGImage(cgImageId);
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void removeOne(@PathVariable("cgimageid") Long cgImageId) {
+         cgAttachmentService.removeCGImage(cgImageId);
     }
 }
 

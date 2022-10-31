@@ -1,18 +1,22 @@
 package org.cyfwms.initialcontact.api;
 
-import org.cyfwms.initialcontact.dto.ICSearchCriteriaDto;
-import org.cyfwms.initialcontact.dto.ICSearchResultsDto;
-import org.cyfwms.initialcontact.dto.ICCommonDataDto;
-import org.cyfwms.initialcontact.service.ICFileDetailsService;
-import org.cyfwms.initialcontact.service.ICSearchService;
-import org.cyfwms.initialcontact.service.ICCommonDataService;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
+import org.cyfwms.initialcontact.dto.ICAttachmentDTO;
+import org.cyfwms.initialcontact.dto.ICCommonDataDto;
+import org.cyfwms.initialcontact.dto.ICSearchCriteriaDto;
+import org.cyfwms.initialcontact.dto.ICSearchResultsDto;
+import org.cyfwms.initialcontact.service.ICAttachmentService;
+import org.cyfwms.initialcontact.service.ICCommonDataService;
+import org.cyfwms.initialcontact.service.ICFileDetailsService;
+import org.cyfwms.initialcontact.service.ICSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -31,6 +35,9 @@ public class InitialContactController {
   ICSearchService searchService;
   @Autowired
   ICCommonDataService iCCommonDataService;
+
+  @Autowired
+  private ICAttachmentService icAttachmentService;
 
   @ApiOperation("Search Initial Contact(s)")
   @GetMapping(value = {"/search/{clientname}/{fileNumber}/{caseworker}/{startingDate}/{status}"}, produces = "application/json")
@@ -70,5 +77,34 @@ public class InitialContactController {
     @ResponseStatus(HttpStatus.OK)
     public ICCommonDataDto iCCommonData(@PathVariable("fileNumber") Long fileNumber) {
         return iCCommonDataService.iCCommonData(fileNumber);
+    }
+
+    @ApiOperation("Save/Upload/Put one/single attachment.")
+    @PutMapping("/save_one")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<ICAttachmentDTO> saveOne(@RequestParam(value = "file", required = false) MultipartFile file, @RequestParam("icDto") String icDto) throws IOException {
+        ICAttachmentDTO iCAttachmentDTO = icAttachmentService.uploadAttachment(file, icDto);
+        return ResponseEntity.ok(iCAttachmentDTO);
+    }
+
+    @ApiOperation("Read/Get one/single attachment.")
+    @GetMapping("/read_one/{icattchmentid}")
+    public ICAttachmentDTO readOne(@PathVariable("icattchmentid") Long icAttachmentId) {
+        return icAttachmentService.getOneFile(icAttachmentId);
+    }
+
+    @ApiOperation("Read/Get all attachments.")
+    @GetMapping(value = "/read_all/{filedetailsid}", produces = "application/json")
+    @ResponseStatus(OK)
+    public List<ICAttachmentDTO> readAll(@PathVariable("filedetailsid") Long fileDetailsId) {
+        return icAttachmentService.getAllFiles(fileDetailsId);
+    }
+
+
+    @DeleteMapping("/remove_one/{icattchmentid}")
+    @ApiOperation("Soft remove/delete one/single attachment.")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void removeICAttachment(@PathVariable("icattchmentid") Long icAttachmentId) {
+        icAttachmentService.removeICAttachment(icAttachmentId);
     }
 }

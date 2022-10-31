@@ -31,19 +31,19 @@ public class ParticipantCommonDataDto {
     private Long referenceId;
 
     @Getter @Setter
-    private ParticipantContact participantContact;
+    private ParticipantContactDto participantContact;
     @Getter @Setter
-    private List<HouseholdMember> householdMember;
+    private List<HouseholdMemberDto> householdMember;
     @Getter @Setter
-    private Education education;
+    private EducationDto education;
     @Getter @Setter
-    private Employment employment;
+    private EmploymentDto employment;
     @Getter @Setter
-    private CriminalHistory criminalHistory;
+    private CriminalHistoryDto criminalHistory;
     @Getter @Setter
-    private List<FamilyPhysician> familyPhysicians;
+    private List<FamilyPhysicianDto> familyPhysicians;
     @Getter @Setter
-    private List<CounselorCFSWorker> counselorCFSWorker;
+    private List<CounselorCFSWorkersDto> counselorCFSWorker;
     @Getter @Setter
-    private ParticipantOtherInformation participantOtherInfo;
+    private ParticipantOtherInformationServiceDto participantOtherInfo;
 }

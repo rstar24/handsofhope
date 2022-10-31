@@ -31,6 +31,12 @@ public class ParticipantAttachment {
     )
     private Long participantAttachmentId;
 
+    @Getter @Setter @Column(name = "name")
+    private String name;
+
+    @Getter @Setter @Column(name = "type")
+    private String type;
+
     @Getter @Setter @Column(name = "participantid")
     private Long participantId;
 

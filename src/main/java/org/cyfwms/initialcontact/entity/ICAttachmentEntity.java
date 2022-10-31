@@ -1,4 +1,4 @@
-package org.cyfwms.caregiver.entity;
+package org.cyfwms.initialcontact.entity;
 
 import lombok.*;
 import org.cyfwms.common.entity.Attachment;
@@ -11,31 +11,28 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name="cg_attachments")
-public class CGAttachmentEntity {
+@Table(name="icattachments")
+public class ICAttachmentEntity {
     @Id
-    @Column(name="cgimageid", nullable=false)
-    @SequenceGenerator(name="cgImageIdGenerator", sequenceName="cgImageIdGenerator", allocationSize=100)
-    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator="cgImageIdGenerator")
-    private Long cgImageId;
+    @Column(name="icattchmentid", nullable=false)
+    @SequenceGenerator(name="icAttachmentIdGenerator", sequenceName="icAttachmentIdGenerator", allocationSize=100)
+    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator="icAttachmentIdGenerator")
+    private Long icAttachmentId;
 
-    @Column(name="name")
     private String name;
 
-    @CreationTimestamp
-    @Column(name="creationdatetime")
-    private LocalDateTime creationDateTime;
 
-
-    @Column(name="type")
     private String type;
 
-    @Column(name = "id")
-    private Long id;
+    @Column(name = "filedetailsid")
+    private Long fileDetailsId;
 
 
-    @Column(name ="status")
     private  String status;
+
+    @Column(name="creationdatetime")
+    @CreationTimestamp
+    private LocalDateTime creationDateTime;
 
 
     @Column(name="lastwritten")
@@ -49,4 +46,3 @@ public class CGAttachmentEntity {
     @Setter
     private Attachment attachment;
 }
-

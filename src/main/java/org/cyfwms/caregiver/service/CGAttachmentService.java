@@ -10,6 +10,6 @@ import java.util.List;
 public interface CGAttachmentService {
     CGAttachmentDto saveCGAttachment(MultipartFile file, String  cgAttachmentDto) throws IOException;
     CGAttachmentDto getOneFile(Long id);
-    ResponseEntity<String> removeCGImage(Long cgImageId);
+    void removeCGImage(Long cgImageId);
     List<CGAttachmentDto> getAllFiles(Long caregiverProviderId);
 }

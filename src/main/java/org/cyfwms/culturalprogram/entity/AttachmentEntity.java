@@ -1,13 +1,12 @@
 package org.cyfwms.culturalprogram.entity;
 
-import java.time.LocalDateTime;
+import lombok.*;
+import org.cyfwms.common.entity.Attachment;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.*;
-import lombok.*;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,11 +22,8 @@ public class AttachmentEntity {
 
   private String name;
 
-  @Column(name="culturamimagefile")
-  @Lob
-  private byte[] culturamImagefile;
 
-  @Column(name="creationdatedime")
+  @Column(name="creationdatetime")
   @CreationTimestamp
   private LocalDateTime creationDateTime;
 
@@ -36,15 +32,17 @@ public class AttachmentEntity {
   @Column(name = "culturalprogramid")
   private Long culturalProgramId;
 
-  @Column(name = "culturamimagetype")
-  private String culturalImageType;
 
   private  String status;
 
-  @Column(name="culturalimagename")
-  private  String culturalimagename;
 
-  @Column(name="updatedatedime")
+  @Column(name="lastwritten")
   @UpdateTimestamp
-  private LocalDateTime updateDateTime;
+  private LocalDateTime lastWritten;
+
+
+  @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @JoinColumn(name = "attachmentid", referencedColumnName = "attachmentid")
+  @Getter @Setter
+  private Attachment attachment;
 }
