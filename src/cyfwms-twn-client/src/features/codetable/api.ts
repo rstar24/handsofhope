@@ -9,6 +9,22 @@ export const doGenderGetAPI = async (
   });
   return res;
 };
+export const doGetAppointmentStatusAPI = async (
+  jwtToken: string
+): Promise<AxiosResponse> => {
+  const res: AxiosResponse = await axiosInstance.get("dataservice/appoinmentstatus", {
+    headers: { Authorization: "Bearer " + jwtToken },
+  });
+  return res;
+};
+export const doGetFrequencyAPI = async (
+  jwtToken: string
+): Promise<AxiosResponse> => {
+  const res: AxiosResponse = await axiosInstance.get("dataservice/frequency", {
+    headers: { Authorization: "Bearer " + jwtToken },
+  });
+  return res;
+};
 
 export const doGetMaritalStatusAPI = async (
   jwtToken: string

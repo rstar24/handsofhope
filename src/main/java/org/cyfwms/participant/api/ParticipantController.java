@@ -1,5 +1,9 @@
 package org.cyfwms.participant.api;
 
+import org.cyfwms.common.dto.AppointmentDto;
+import org.cyfwms.initialcontact.dto.ICContactNotesDto;
+import org.cyfwms.initialcontact.dto.ICContactNotesSearchCriteriaDto;
+import org.cyfwms.initialcontact.dto.ICContactNotesSearchResultsDto;
 import org.cyfwms.participant.dto.*;
 import org.cyfwms.participant.service.*;
 import io.swagger.annotations.ApiOperation;
@@ -8,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
@@ -50,7 +55,13 @@ public class ParticipantController {
     private ParticipantSearchService participantSearchService;
 
     @Autowired
+    private ParticipantAppointmentService participantAppointmentService;
+
+    @Autowired
     private ParticipantCommonDataService participantCommonDataService;
+
+    @Autowired
+    private ParticipantContactNotesSearchService participantContactNotesSearchService;
 
     @GetMapping(value = "/readParticipantIdentity/{participantid}", produces = "application/json")
     @ApiOperation("Read Identity")
@@ -272,4 +283,43 @@ public class ParticipantController {
         participantIdentityDto.setMaritalStatus(params.get("maritalStatus"));
 
     }
+
+    @PutMapping(value = "/saveParticipantAppointment", produces = "application/json")
+    @ApiOperation("Save or Update Participant Appointment Informtion")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ParticipantAppointmentDto saveParticipantAppointment(@RequestBody ParticipantAppointmentDto  ParticipantAppointmentDto) {
+        return participantAppointmentService.saveParticipantAppointment(ParticipantAppointmentDto);
+
+    }
+
+    @DeleteMapping("/deleteParticipantAppointment/{ParticipantAppointmentId}")
+    @ApiOperation("Remove Counselor CFS Workers")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void removeParticipantAppointment(@PathVariable("ParticipantAppointmentId") Long ParticipantAppointmentId) {
+        participantAppointmentService.removeParticipantAppointment(ParticipantAppointmentId);
+    }
+
+
+    @GetMapping(value = {"/searchContactNotes/{participantid}/{data}"},produces = "application/json")
+    @ApiOperation("Search Participant")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ParticipantContactNotesSearchResultsDto> searchParticipantContactNotes(@PathVariable Map<String, String> var)
+    {
+        ParticipantContactNotesSearchCriteriaDto iCContactNotesSearchCriteriaDto=new ParticipantContactNotesSearchCriteriaDto();
+        iCContactNotesSearchCriteriaDto.setParticipantId(("null".equals(var.get("participantid"))
+                ||var.get("participantid")==null) ? null:Long.parseLong(var.get("participantid")));
+        iCContactNotesSearchCriteriaDto.setData(
+                ("null".equals(var.get("data"))
+                        || var.get("data") == null) ?null:var.get("data"));
+        return participantContactNotesSearchService.search(iCContactNotesSearchCriteriaDto);
+    }
+    @GetMapping(value = "/readOneAppointment/{participantAppointmentId}", produces = "application/json")
+    @ApiOperation("Read ContactNotes")
+    @ResponseStatus(HttpStatus.OK)
+    public ParticipantAppointmentDto readOneAppointment(@PathVariable("participantAppointmentId") Long participantAppointmentId) {
+
+        return participantAppointmentService.readOneAppointment(participantAppointmentId);
+    }
+
+
 }

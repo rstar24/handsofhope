@@ -1,6 +1,7 @@
 package org.cyfwms.participant.entity;
 
 import lombok.*;
+import org.cyfwms.common.entity.Appointments;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -88,6 +89,11 @@ public class Participant implements Serializable {
     @JoinColumn(name = "participantid", referencedColumnName = "participantid")
     @Getter @Setter
     private List<ParticipantAttachment> participantAttachmentList;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "participantid", referencedColumnName = "participantid")
+    @Getter @Setter
+    private List<ParticipantAppointment> participantAppointments;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "participantid", referencedColumnName = "participantid")

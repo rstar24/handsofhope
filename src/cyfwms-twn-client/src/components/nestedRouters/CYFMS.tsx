@@ -8,6 +8,8 @@ import CYFMSOtherInformation from "../../pages/cyfms/otherInformation/OtherInfor
 import CYFMSRegister from "../../pages/cyfms/register/Register";
 import { Route, Routes } from "react-router-dom";
 import React from "react";
+import Appointments from "../../pages/cyfms/appointment/Appointments";
+import AppointmentsForm from "../../pages/cyfms/appointment/AppointmentsForm";
 
 const CYFMS = () => {
   return (
@@ -23,6 +25,7 @@ const CYFMS = () => {
       <Route path="family_physicians" element={<CYFMSFamilyPhysicians />} />
       <Route path="counselors" element={<CYFMSCounselors />} />
       <Route path="other_information" element={<CYFMSOtherInformation />} />
+      <Route path="appointment" element={<Appointments />} />
     </Routes>
   );
 };
