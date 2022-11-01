@@ -77,7 +77,8 @@ const EditIcon: FC = () => {
         }}
         PaperProps={{
           style: {
-            backgroundColor: "red",
+            maxHeight: ITEM_HEIGHT * 4.5,
+            maxWidth: "10ch",
           },
         }}
       >

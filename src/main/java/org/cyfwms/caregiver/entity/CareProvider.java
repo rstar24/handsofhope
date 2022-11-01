@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import org.cyfwms.common.entity.Appointments;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -92,4 +93,9 @@ public class CareProvider {
     @JoinColumn(name = "id", referencedColumnName = "id")
     @Getter @Setter
     private List<CGAttachmentEntity> cgAttachmentEntities;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id", referencedColumnName = "id")
+    @Getter @Setter
+    private List<Appointments> Appointment;
 }

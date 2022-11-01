@@ -1,4 +1,4 @@
-import EditIcon from "../../../components/cpa/attachments/EditIcon";
+import EditIcon from "../../../components/cg/attachments/EditIcon";
 import CgLayout from "../../../components/cg/CgLayout";
 import Input from "../../../components/Input";
 import SelectionContext from "../../../contexts/SelectionContext";

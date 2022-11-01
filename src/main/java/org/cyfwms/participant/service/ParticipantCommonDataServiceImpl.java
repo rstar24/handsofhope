@@ -1,30 +1,25 @@
 package org.cyfwms.participant.service;
 
-import com.google.common.reflect.TypeToken;
-import org.cyfwms.participant.dto.ParticipantCommonDataDto;
+import org.cyfwms.common.exception.I18Constants;
+import org.cyfwms.common.exception.MessageUtil;
+import org.cyfwms.common.exception.NoSuchElementFoundException;
+import org.cyfwms.participant.dto.*;
 import org.cyfwms.participant.entity.*;
 import org.cyfwms.participant.repository.*;
-import org.cyfwms.participant.repository.*;
-import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-import java.lang.reflect.Type;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-
 @Service
 public class ParticipantCommonDataServiceImpl implements ParticipantCommonDataService {
     @Autowired
     private ParticipantRepository participantRepo;
-
-    @Autowired
-    ModelMapper modelMapper;
 
     @Autowired
     private ParticipantContactRepository participantContactRepo;
@@ -44,6 +39,15 @@ public class ParticipantCommonDataServiceImpl implements ParticipantCommonDataSe
     @Autowired
     private ParticipantOtherInformationRepository participantOtherInformationRepo;
 
+    @Autowired
+    private FamilyPhysicianRepository fpRepository;
+    @Autowired
+    CounselorCFSWorkerRepository cfsWorkerRepository;
+
+
+    @Autowired
+    private MessageUtil messageUtil;
+
     @Override
     public ParticipantCommonDataDto readParticipantCommonData(Long referenceId) {
         ParticipantCommonDataDto participantCommonDataDto = new ParticipantCommonDataDto();
@@ -51,113 +55,127 @@ public class ParticipantCommonDataServiceImpl implements ParticipantCommonDataSe
             Participant participant = readReference(referenceId);
             if (participant != null) {
                 System.out.println(participant.getParticipantId());
-                /*if (!participant.getStatus().equalsIgnoreCase("INACTIVE")) {
-                    Long participantId = participant.getParticipantId();
-                    modelMapper.map(participant, participantCommonDataDto);
+                Long participantId = participant.getParticipantId();
+                BeanUtils.copyProperties(participant, participantCommonDataDto);
 
-                    //Participant Contact
-                    Optional<ParticipantContact> pContactOtp =
-                            Optional.ofNullable(participantContactRepo.findByParticipantId(participantId));
-                    if (pContactOtp.isPresent()) {
-                        if (!pContactOtp.get().getStatus().equalsIgnoreCase("INACTIVE")) {
-                            participantCommonDataDto.setParticipantContact(pContactOtp.get());
-                        }
-                    }
+                //Participant Contact
+                Optional<ParticipantContact> pContactOtp =
+                        Optional.ofNullable(participantContactRepo.findByParticipantId(participantId))
+                                .filter(pc -> pc.getStatus().equalsIgnoreCase("ACTIVE"));
+                if (pContactOtp.isPresent()) {
+                    ParticipantContactDto participantContactDto = new ParticipantContactDto();
+                    BeanUtils.copyProperties(pContactOtp.get(), participantContactDto);
+                    participantCommonDataDto.setParticipantContact(participantContactDto);
+                }
 
-                    //Education
-                    Optional<Education> educationOpt = Optional.ofNullable(educationRepo.findByParticipantId(participantId));
-                    if (educationOpt.isPresent()) {
-                        modelMapper.map(educationOpt.get(), participantCommonDataDto);
-                    }
+                //Education
+                Optional<Education> educationOpt = Optional.ofNullable(educationRepo.findByParticipantId(participantId));
+                if (educationOpt.isPresent()) {
+                    EducationDto educationDto = new EducationDto();
+                    BeanUtils.copyProperties(educationOpt.get(), educationDto);
+                    participantCommonDataDto.setEducation(educationDto);
+                }
 
-                    //Employment
-                    Optional<Employment> employmentOpt = Optional.ofNullable(employmentRepo.findByParticipantId(participantId));
-                    if (employmentOpt.isPresent()) {
-                        modelMapper.map(employmentOpt.get(), participantCommonDataDto);
-                    }
+                //Employment
+                Optional<Employment> employmentOpt = Optional.ofNullable(employmentRepo.findByParticipantId(participantId));
+                if (employmentOpt.isPresent()) {
+                    EmploymentDto employmentDto = new EmploymentDto();
+                    BeanUtils.copyProperties(employmentOpt.get(), employmentDto);
+                    participantCommonDataDto.setEmployment(employmentDto);
+                }
 
-                    //Criminal History
-                    Optional<CriminalHistory> criminalHistoryOpt = Optional.ofNullable(criminalHistoryRepo.findByParticipantId(participantId));
-                    if (criminalHistoryOpt.isPresent()) {
-                        CriminalHistory criminalHistory = criminalHistoryOpt.get();
-                        List<CriminalHistoryRecord> criminalHistoryRecordList =
-                                criminalHistory
-                                        .getCriminalHistoryRecordList()
-                                        .stream()
-                                        .filter(chRecord ->
-                                                chRecord.getStatus().equalsIgnoreCase("INACTIVE")
-                                        )
-                                        .map(cHistoryRecord -> {
-                                            if (cHistoryRecord.getArrestDate() == null) {
-                                                cHistoryRecord.setArrestDate(LocalDate.of(1, 1, 1));
-                                            }
-                                            return cHistoryRecord;
-                                        })
-                                        .collect(Collectors.toList());
-                        criminalHistory.setCriminalHistoryRecordList(criminalHistoryRecordList);
-                        modelMapper.map(criminalHistory, participantCommonDataDto);
-                    }
+                //Criminal History
+                Optional<CriminalHistory> criminalHistoryOpt = Optional.ofNullable(criminalHistoryRepo.findByParticipantId(participantId));
+                if (criminalHistoryOpt.isPresent()) {
+                    CriminalHistory criminalHistory = criminalHistoryOpt.get();
+                    CriminalHistoryDto criminalHistoryDto = new CriminalHistoryDto();
+                    List<CriminalHistoryRecordDto> criminalHistoryRecordDtoList = new ArrayList<>();
+                    List<CriminalHistoryRecord> criminalHistoryRecordList =
+                            criminalHistory
+                                    .getCriminalHistoryRecordList()
+                                    .stream()
+                                    .filter(chRecord ->
+                                            chRecord.getStatus().equalsIgnoreCase("ACTIVE")
+                                    )
+                                    .map(cHistoryRecord -> {
+                                        if (cHistoryRecord.getArrestDate() == null) {
+                                            cHistoryRecord.setArrestDate(LocalDate.of(1, 1, 1));
+                                        }
+                                        return cHistoryRecord;
+                                    })
+                                    .collect(Collectors.toList());
+                    criminalHistoryRecordDtoList = criminalHistoryRecordList.stream().map(chRecordDto -> {
+                        CriminalHistoryRecordDto criminalHistoryRecordDto =
+                                new CriminalHistoryRecordDto();
+                        BeanUtils.copyProperties(chRecordDto, criminalHistoryRecordDto);
+                        return criminalHistoryRecordDto;
+                    }).collect(Collectors.toList());
+                    BeanUtils.copyProperties(criminalHistory, criminalHistoryDto);
+                    criminalHistoryDto.setCriminalHistoryRecordList(criminalHistoryRecordDtoList);
+                    participantCommonDataDto.setCriminalHistory(criminalHistoryDto);
+                }
 
-                    //HouseholdMember
-                    List<HouseholdMember> householdMemberList =
-                            hhMemberRepo.findByParticipantId(participantId);
+                List<HouseholdMemberDto> hmDtoList = hhMemberRepo.findByParticipantId(participantId)
+                        .stream().
+                        map(hm -> {
+                            HouseholdMemberDto hmDTO = new HouseholdMemberDto();
+                            BeanUtils.copyProperties(hm, hmDTO);
+                            if (hmDTO.getDateOfBirth() == null) {
+                                hmDTO.setDateOfBirth(LocalDate.of(1, 1, 1));
+                            }
+                            return hmDTO;
+                        }).collect(Collectors.toList());
+               participantCommonDataDto.setHouseholdMember(hmDtoList);
+
+                List<FamilyPhysicianDto> fpDtoList = new ArrayList<FamilyPhysicianDto>();
+                if(participantId != 0){
+                    fpDtoList =
+                            fpRepository.findByParticipantId(participantId)
+                                    .stream()
+                                    .map( fp -> {
+                                        FamilyPhysicianDto fpDto = new FamilyPhysicianDto();
+                                        BeanUtils.copyProperties(fp, fpDto);
+                                        return fpDto;
+                                    }).collect(Collectors.toList());
+                }
+                participantCommonDataDto.setFamilyPhysicians(fpDtoList);
+
+                List<CounselorCFSWorkersDto> counselorCFSWorkersDtoList = new ArrayList<CounselorCFSWorkersDto>();
+                if (participantId != 0) {
+                    counselorCFSWorkersDtoList = cfsWorkerRepository.findByParticipantId(participantId)
                             .stream()
+                            .map(counselorCFSWorker -> {
+                                CounselorCFSWorkersDto ccWorkerDto = new CounselorCFSWorkersDto();
+                                BeanUtils.copyProperties(counselorCFSWorker, ccWorkerDto);
+                                if (ccWorkerDto.getStartDate() == null) {
+                                    ccWorkerDto.setStartDate(LocalDate.of(1,1,1));
+                                }
+                                if (ccWorkerDto.getEndDate() == null) {
+                                    ccWorkerDto.setEndDate(LocalDate.of(1,1,1));
+                                }
+                                return ccWorkerDto;
+                            }).collect(Collectors.toList());
+                }
+                participantCommonDataDto.setCounselorCFSWorker(counselorCFSWorkersDtoList);
 
-                    //ParticipantOtherInformation participantOtherInformationOpt = participantOtherInformationRepo.findByParticipantId(participantId);
+                Optional<ParticipantOtherInformation> pOtherInfoOtp =
+                        Optional.ofNullable(participantOtherInformationRepo.findByParticipantId(participantId));
+                if (pContactOtp.isPresent()) {
+                    ParticipantOtherInformationServiceDto pOtherInfoDto = new ParticipantOtherInformationServiceDto();
+                    BeanUtils.copyProperties(pOtherInfoOtp.get(), pOtherInfoDto);
+                    participantCommonDataDto.setParticipantOtherInfo(pOtherInfoDto);
+                }
 
-                    Type householdMemberListType = new TypeToken<List<HouseholdMember>>() {
-                    }.getType();
-                    List<HouseholdMember> householdMemberRecordList = new ArrayList<>();
-                    List<HouseholdMember> householdMemberDTOList = modelMapper.map(participant.getHouseholdMemberList(), householdMemberListType);
-                    for (int i = 0; i < householdMemberDTOList.size(); ++i) {
-                        if (!participant.getHouseholdMemberList().get(i).getStatus().equalsIgnoreCase("INACTIVE")) {
-                            householdMemberRecordList.add(householdMemberDTOList.get(i));
-                        }
-                    }
-                    participantCommonDataDto.setHouseholdMember(householdMemberRecordList);
-                    for (int i = 0; i < participantCommonDataDto.getHouseholdMember().size(); i++) {
-                        if (participantCommonDataDto.getHouseholdMember().get(i).getDateOfBirth() == null) {
-                            participantCommonDataDto.getHouseholdMember().get(i).setDateOfBirth(LocalDate.of(0, 0, 0));
-                        }
-                    }
 
-                    Type FamilyPhysicianListType = new TypeToken<List<FamilyPhysician>>() {
-                    }.getType();
-                    List<FamilyPhysician> familyPhysicianRecordList = new ArrayList<>();
-                    List<FamilyPhysician> FamilyPhysicianDTOList = modelMapper.map(participant.getFamilyPhysicianList(), FamilyPhysicianListType);
-                    for (int i = 0; i < FamilyPhysicianDTOList.size(); ++i) {
-                        if (!participant.getFamilyPhysicianList().get(i).getStatus().equalsIgnoreCase("INACTIVE")) {
-                            familyPhysicianRecordList.add(FamilyPhysicianDTOList.get(i));
-                        }
-                    }
-                    participantCommonDataDto.setFamilyPhysicians(familyPhysicianRecordList);
-                    Type counselorCFSWorkerListType = new TypeToken<List<CounselorCFSWorker>>() {
-                    }.getType();
-                    List<CounselorCFSWorker> counselorCFSWorkerRecordList = new ArrayList<>();
-                    List<CounselorCFSWorker> counselorCFSWorkerDTOList = modelMapper.map(participant.getCounselorCFSWorkerList(), counselorCFSWorkerListType);
-                    for (int i = 0; i < counselorCFSWorkerDTOList.size(); ++i) {
-                        if (!participant.getCounselorCFSWorkerList().get(i).getStatus().equalsIgnoreCase("INACTIVE")) {
-                            counselorCFSWorkerRecordList.add(counselorCFSWorkerDTOList.get(i));
-                        }
-                    }
-                    participantCommonDataDto.setCounselorCFSWorker(counselorCFSWorkerRecordList);
-                    for (int i = 0; i < participantCommonDataDto.getCounselorCFSWorker().size(); ++i) {
-                        if (participantCommonDataDto.getCounselorCFSWorker().get(i).getStartDate() == null) {
-                            participantCommonDataDto.getCounselorCFSWorker().get(i).setStartDate(LocalDate.of(1, 1, 1));
-                        }
-                        if (participantCommonDataDto.getCounselorCFSWorker().get(i).getEndDate() == null) {
-                            participantCommonDataDto.getCounselorCFSWorker().get(i).setEndDate(LocalDate.of(1, 1, 1));
-                        }
-                    }
-                    participantCommonDataDto.setParticipantOtherInfo(participantOtherInformationOpt);
-                }*/
+
             }
         }
         return participantCommonDataDto;
     }
     private Participant readReference(Long referenceId) {
         Participant participant = null;
-        Optional<Participant> participantOpt = participantRepo.findByReferenceId(referenceId);
+        Optional<Participant> participantOpt = Optional.ofNullable(participantRepo.findByReferenceId(referenceId).filter(p -> p.getStatus().equals("ACTIVE")).orElseThrow(() ->
+                new NoSuchElementFoundException(messageUtil.getLocalMessage(I18Constants.NO_ITEM_FOUND.getKey(), String.valueOf(referenceId)))));
         if (participantOpt.isPresent()) {
             participant = participantOpt.get();
         }

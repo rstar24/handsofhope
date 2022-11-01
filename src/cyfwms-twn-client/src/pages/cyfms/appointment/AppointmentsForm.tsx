@@ -251,6 +251,8 @@ const AppointmentsForm = ({
       </Box>
 
       <CYFMSTextArea
+      formLabelFlex="1 1 0"
+      outlinedInputFlex="5 3 0"
         id="notes"
         value="Notes"
         autofill={data.appointmentdto.notes}

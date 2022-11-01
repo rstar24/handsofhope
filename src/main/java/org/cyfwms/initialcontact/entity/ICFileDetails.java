@@ -1,12 +1,14 @@
 package org.cyfwms.initialcontact.entity;
 
-import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import javax.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -77,4 +79,9 @@ public class ICFileDetails implements Serializable {
     @JoinColumn(name = "filedetailsid", referencedColumnName = "filedetailsid")
     @Getter @Setter
     private ICReferralInfo referralInfo;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "filedetailsid", referencedColumnName = "filedetailsid")
+    @Getter @Setter
+    private List<ICAttachmentEntity> iCAttachmentEntity;
 }

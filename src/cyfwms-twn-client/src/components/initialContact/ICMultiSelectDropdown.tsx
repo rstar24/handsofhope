@@ -74,7 +74,6 @@ const ICMultiSelectDropdown = (props: ICDropdownPropsType): ReactElement => {
               onChange={handleChange}
               input={<OutlinedInput />}
               renderValue={(selected) => {
-                console.log("tyuio", selected);
                 if (selected.length === 1) {
                   return selected.join("");
                 }

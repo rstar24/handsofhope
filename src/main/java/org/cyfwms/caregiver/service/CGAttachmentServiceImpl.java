@@ -4,121 +4,130 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.cyfwms.caregiver.dto.CGAttachmentDto;
 import org.cyfwms.caregiver.entity.CGAttachmentEntity;
 import org.cyfwms.caregiver.repository.CGAttachmentRepository;
-import org.modelmapper.ModelMapper;
+import org.cyfwms.common.entity.Attachment;
+import org.cyfwms.common.exception.I18Constants;
+import org.cyfwms.common.exception.MessageUtil;
+import org.cyfwms.common.exception.NoSuchElementFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 @Service
 public class CGAttachmentServiceImpl implements CGAttachmentService {
     @Autowired
-    CGAttachmentRepository cgAttachmentRepository;
+    private CGAttachmentRepository cgAttachmentRepository;
+
     @Autowired
-    private ModelMapper modelMapper;
+    private MessageUtil messageUtil;
+
 
     @Override
     public CGAttachmentDto saveCGAttachment(MultipartFile file, String cgAttachmentDto) throws IOException {
-        CGAttachmentDto cgAttachmentdto = new ObjectMapper().readValue(cgAttachmentDto, CGAttachmentDto.class);
-        CGAttachmentDto cgattachmentdto = new CGAttachmentDto();
-        cgattachmentdto.setName(cgAttachmentdto.getName());
-        cgattachmentdto.setType(cgAttachmentdto.getType());
-        cgattachmentdto.setId(cgAttachmentdto.getId());
-        if (file != null) {
-            if (file.getContentType().equals("image/png") || file.getContentType().equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document") || file.getContentType().equals("image/jpg") || file.getContentType().equals("image/jpeg") || file.getContentType().equals("application/pdf") || file.getContentType().equals("application/vnd.ms-excel") || file.getContentType().equals("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") || file.getContentType().equals("image/bmp") || file.getContentType().equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document") || file.getContentType().equals("image/gif")) {
-                cgattachmentdto.setCgImageType(file.getContentType());
-                cgattachmentdto.setCgImageName(file.getOriginalFilename());
-                cgattachmentdto.setCgImageFile(file.getBytes());
-            }
-        }
-        CGAttachmentEntity cgAttachmentEntity = new CGAttachmentEntity();
-        if (cgAttachmentdto.getCgImageId() == 0) {
-            modelMapper.map(cgattachmentdto, cgAttachmentEntity);
-            cgAttachmentEntity.setStatus("ACTIVE");
+        Attachment attachment = null;
+        CGAttachmentDto cGAttachmentDto = new ObjectMapper().readValue(cgAttachmentDto, CGAttachmentDto.class);
+        CGAttachmentEntity cGAttachmentEntity = new CGAttachmentEntity();
+        attachment = new Attachment();
+        long cgImageId = cGAttachmentDto.getCgImageId();
+        if (cGAttachmentDto.getCgImageId() == 0) {
+            cGAttachmentEntity.setStatus("ACTIVE");
+            BeanUtils.copyProperties(cGAttachmentDto, cGAttachmentEntity);
         } else {
-            cgAttachmentEntity = readCulturalImage(cgAttachmentdto.getCgImageId());
-            cgattachmentdto.setCgImageId(cgAttachmentEntity.getCgImageId());
-            if (file == null) {
-                cgattachmentdto.setCgImageType(cgAttachmentEntity.getCgImageType());
-                cgattachmentdto.setCgImageName(cgAttachmentEntity.getCgImageName());
+            cGAttachmentEntity = readCareGiverImage(cgImageId);
+            cGAttachmentDto.setCgImageId(cGAttachmentDto.getCgImageId());
+            if (cGAttachmentEntity.getAttachment() != null) {
+                attachment.setAttachmentId(cGAttachmentEntity.getAttachment().getAttachmentId());
+                attachment.setReceiptDate(cGAttachmentEntity.getAttachment().getReceiptDate());
             }
-            modelMapper.map(cgattachmentdto, cgAttachmentEntity);
+            BeanUtils.copyProperties(cGAttachmentDto, cGAttachmentEntity);
         }
-        cgAttachmentEntity = cgAttachmentRepository.save(cgAttachmentEntity);
-
-        cgattachmentdto.setCgImageId(cgAttachmentEntity.getCgImageId());
-
-        return cgattachmentdto;
+        if (file != null) {
+            validateCareGiverAttachment(file);
+            attachment.setAttachmentContents(file.getBytes());
+            attachment.setAttachmentName(file.getOriginalFilename());
+            attachment.setAttachmentStatus("ACTIVE");
+            attachment.setDocumentType(file.getContentType());
+            cGAttachmentEntity.setAttachment(attachment);
+        }
+        cGAttachmentEntity = cgAttachmentRepository.save(cGAttachmentEntity);
+        cGAttachmentDto.setCgImageName(attachment.getAttachmentName());
+        cGAttachmentDto.setCgImageType(attachment.getDocumentType());
+        cGAttachmentDto.setCgImageFile(attachment.getAttachmentContents());
+        cGAttachmentDto.setCgImageId(cGAttachmentEntity.getCgImageId());
+        return cGAttachmentDto;
     }
+
+    private void validateCareGiverAttachment(MultipartFile file) {
+        boolean invalidCareGiverAttachment = true;
+
+        if (file.getContentType().equals("image/png") ||
+                file.getContentType().equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document") ||
+                file.getContentType().equals("image/jpg") || file.getContentType().equals("image/jpeg") ||
+                file.getContentType().equals("application/pdf") || file.getContentType().equals("application/vnd.ms-excel") ||
+                file.getContentType().equals("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") ||
+                file.getContentType().equals("image/bmp") ||
+                file.getContentType().equals("image/gif")) {
+            invalidCareGiverAttachment = false;
+        }
+        if (invalidCareGiverAttachment) {
+            throw new ResponseStatusException(
+                    INTERNAL_SERVER_ERROR, " PNG DOCUMENT JPG PDF SHEET BMP AND GIF content type are allowed");
+        }
+    }
+
 
     @Override
     public CGAttachmentDto getOneFile(Long id) {
-        CGAttachmentDto cgAttachmentDto = new CGAttachmentDto();
-        CGAttachmentEntity cgAttachmentEntity = cgAttachmentRepository.findByCgImageId(id);
-        if (cgAttachmentEntity != null) {
-            cgAttachmentDto.setCgImageId(cgAttachmentEntity.getCgImageId());
-            cgAttachmentDto.setId(cgAttachmentEntity.getId());
-            cgAttachmentDto.setType(cgAttachmentEntity.getType());
-            cgAttachmentDto.setName(cgAttachmentEntity.getName());
-            cgAttachmentDto.setCgImageFile(cgAttachmentEntity.getCgImagefile());
-            cgAttachmentDto.setCgImageType(cgAttachmentEntity.getCgImageType());
-            cgAttachmentDto.setCgImageName(cgAttachmentEntity.getCgImageName());
-        } else {
-            throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
+        CGAttachmentDto cGAttachmentDto = new CGAttachmentDto();
+        CGAttachmentEntity attachmentEntity = readCareGiverImage(id);
+        cGAttachmentDto.setCgImageId(attachmentEntity.getCgImageId());
+        cGAttachmentDto.setId(attachmentEntity.getId());
+        cGAttachmentDto.setType(attachmentEntity.getType());
+        cGAttachmentDto.setName(attachmentEntity.getName());
+        if (attachmentEntity.getAttachment() != null) {
+            cGAttachmentDto.setCgImageType(attachmentEntity.getAttachment().getDocumentType());
+            cGAttachmentDto.setCgImageFile(attachmentEntity.getAttachment().getAttachmentContents());
+            cGAttachmentDto.setCgImageName(attachmentEntity.getAttachment().getAttachmentName());
         }
-
-        return cgAttachmentDto;
-
+        return cGAttachmentDto;
     }
 
     @Override
-    public ResponseEntity<String> removeCGImage(Long cgImageId) {
-        if (cgImageId != 0) {
-            CGAttachmentEntity cgAttachmentEntity = cgAttachmentRepository.findByCgImageId(cgImageId);
-            if (cgAttachmentEntity != null) {
-                cgAttachmentEntity.setStatus("INACTIVE");
-                cgAttachmentRepository.save(cgAttachmentEntity);
-            }
-
-        } else {
-            throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
-        }
-        return new ResponseEntity<String>(OK);
-
+    public void removeCGImage(Long cgImageId) {
+        CGAttachmentEntity cgAttachmentEntity = readCareGiverImage(cgImageId);
+        cgAttachmentEntity.setStatus("INACTIVE");
+        cgAttachmentRepository.save(cgAttachmentEntity);
     }
 
     @Override
     public List<CGAttachmentDto> getAllFiles(Long caregiverProviderId) {
-        List<CGAttachmentDto> cGAttachmentDtoList = new ArrayList<CGAttachmentDto>();
-        if (caregiverProviderId != 0) {
-            cGAttachmentDtoList = cgAttachmentRepository.findByCaregiverProviderId(caregiverProviderId)
-                    .stream().map(attach -> {
-                        CGAttachmentDto cgAttachmentDto = new CGAttachmentDto();
-                        BeanUtils.copyProperties(attach, cgAttachmentDto, "cgImagefile");
-                        return cgAttachmentDto;
-                    }).collect(Collectors.toList());
-        }
-        return cGAttachmentDtoList;
+        List<CGAttachmentDto> careGiverImageDtoList = new ArrayList<CGAttachmentDto>();
+        careGiverImageDtoList = cgAttachmentRepository.findByCaregiverProviderId(caregiverProviderId)
+                .stream()
+                .map(attachment -> {
+                    CGAttachmentDto attachDto = new CGAttachmentDto();
+                    BeanUtils.copyProperties(attachment, attachDto);
+                    if (attachment.getAttachment() != null) {
+                        attachDto.setCgImageName(attachment.getAttachment().getAttachmentName());
+                        attachDto.setCgImageType(attachment.getAttachment().getDocumentType());
+                    }
+                    return attachDto;
+                }).collect(Collectors.toList());
+        return careGiverImageDtoList;
     }
 
 
-    private CGAttachmentEntity readCulturalImage(long cgImageId) {
-        CGAttachmentEntity cgAttachmentEntity = new CGAttachmentEntity();
-        Optional<CGAttachmentEntity> participantOpt = cgAttachmentRepository.findById(cgImageId);
-        if (participantOpt.isPresent()) {
-            cgAttachmentEntity = participantOpt.get();
-        }
-        return cgAttachmentEntity;
+    private CGAttachmentEntity readCareGiverImage(long cgImageId) {
+        CGAttachmentEntity cGAttachmentEntity = cgAttachmentRepository.findById(cgImageId).filter(p -> p.getStatus().equals("ACTIVE"))
+                .orElseThrow(() -> new NoSuchElementFoundException(messageUtil.getLocalMessage(I18Constants.NO_ITEM_FOUND.getKey(), String.valueOf(cgImageId))));
+
+        return cGAttachmentEntity;
     }
 }

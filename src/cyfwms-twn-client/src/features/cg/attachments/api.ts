@@ -49,7 +49,7 @@ export const doDeleteAPI = async (
   token: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.delete(
-    `cg/attachments/remove_one/${cgFileId}`,
+    `caregiverservice/attachments/remove_one/${cgFileId}`,
     {
       headers: { Authorization: "Bearer " + token },
     }

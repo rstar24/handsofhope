@@ -1,8 +1,7 @@
 package org.cyfwms.caregiver.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.cyfwms.common.entity.Attachment;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -16,19 +15,17 @@ import java.time.LocalDateTime;
 public class CGAttachmentEntity {
     @Id
     @Column(name="cgimageid", nullable=false)
-    @SequenceGenerator(name="cgimageIdGenerator", sequenceName="cgimageIdGenerator", allocationSize=100)
-    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator="cgimageIdGenerator")
+    @SequenceGenerator(name="cgImageIdGenerator", sequenceName="cgImageIdGenerator", allocationSize=100)
+    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator="cgImageIdGenerator")
     private Long cgImageId;
 
     @Column(name="name")
     private String name;
-    @Lob
-    @Column(name="cgimagefile")
-    private byte[] cgImagefile;
 
     @CreationTimestamp
-    @Column(name="creationdatedime")
+    @Column(name="creationdatetime")
     private LocalDateTime creationDateTime;
+
 
     @Column(name="type")
     private String type;
@@ -36,17 +33,20 @@ public class CGAttachmentEntity {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "cgimagetype")
-    private String cgImageType;
 
     @Column(name ="status")
     private  String status;
 
-    @Column(name="cgimagename")
-    private  String cgImageName;
 
-    @Column(name="updatedatedime")
+    @Column(name="lastwritten")
     @UpdateTimestamp
-    private LocalDateTime updateDateTime;
+    private LocalDateTime lastWritten;
+
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "attachmentid", referencedColumnName = "attachmentid")
+    @Getter
+    @Setter
+    private Attachment attachment;
 }
 

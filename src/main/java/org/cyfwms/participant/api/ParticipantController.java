@@ -1,25 +1,23 @@
 package org.cyfwms.participant.api;
 
-import org.cyfwms.common.dto.AppointmentDto;
-import org.cyfwms.initialcontact.dto.ICContactNotesDto;
-import org.cyfwms.initialcontact.dto.ICContactNotesSearchCriteriaDto;
-import org.cyfwms.initialcontact.dto.ICContactNotesSearchResultsDto;
-import org.cyfwms.participant.dto.*;
-import org.cyfwms.participant.service.*;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.cyfwms.participant.dto.*;
+import org.cyfwms.participant.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
+
+import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @Slf4j(topic = "Participant_Controller")
@@ -59,6 +57,8 @@ public class ParticipantController {
 
     @Autowired
     private ParticipantCommonDataService participantCommonDataService;
+    @Autowired
+    private ParticipantAttachmentService participantAttachmentService;
 
     @Autowired
     private ParticipantContactNotesSearchService participantContactNotesSearchService;
@@ -321,5 +321,33 @@ public class ParticipantController {
         return participantAppointmentService.readOneAppointment(participantAppointmentId);
     }
 
+
+    @ApiOperation("Save/Upload/Put one/single attachment.")
+    @PutMapping("/save_one")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<ParticipantAttachmentDto> saveOne(@RequestParam(value = "file", required = false) MultipartFile file, @RequestParam("participantDto") String participantDto) throws IOException {
+        ParticipantAttachmentDto participantAttachmentTabDto = participantAttachmentService.uploadParticipantAttachment(file, participantDto);
+        return ResponseEntity.ok(participantAttachmentTabDto);
+    }
+    @ApiOperation("Read/Get one/single attachment.")
+    @GetMapping("/read_one/{participantAttachmentId}")
+    public ParticipantAttachmentDto readOne(@PathVariable Long participantAttachmentId)
+    {
+        return participantAttachmentService.getOneFile(participantAttachmentId);
+    }
+
+    @ApiOperation("Read/Get all attachments.")
+    @GetMapping(value = "/read_all/{participantId}", produces = "application/json")
+    @ResponseStatus(OK)
+    public List<ParticipantAttachmentDto> readAll(@PathVariable("participantId") Long participantId) {
+        return participantAttachmentService.getAllFiles(participantId);
+    }
+
+    @DeleteMapping("/remove_one/{participantAttachmentId}")
+    @ApiOperation("Soft remove/delete one/single attachment.")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void removeParticipantAttachment(@PathVariable("participantAttachmentId") Long participantAttachmentId) {
+        participantAttachmentService.removeParticipantAttachment(participantAttachmentId);
+    }
 
 }
