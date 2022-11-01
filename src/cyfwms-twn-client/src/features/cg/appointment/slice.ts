@@ -57,9 +57,9 @@ export interface State {
 
 export const doGet = createAsyncThunk<Data, number>(
   "caregiverservice/doGet",
-  async (participantAppointmentId, { getState }) => {
+  async (CGAppointmentId, { getState }) => {
     const store: any = getState();
-    const res: AxiosResponse = await doGetAPI(participantAppointmentId, store.login.token);
+    const res: AxiosResponse = await doGetAPI(CGAppointmentId, store.login.token);
     // Becomes the `fulfilled` action payload:
     return res.data;
   }

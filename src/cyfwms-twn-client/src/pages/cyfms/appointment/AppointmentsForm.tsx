@@ -128,7 +128,7 @@ const AppointmentsForm = ({
           <Input
             id="subject"
             value="Subject"
-            //required
+            required
             autofill={data.appointmentdto.subject}
             readOnly={disabled}
           />
@@ -136,7 +136,8 @@ const AppointmentsForm = ({
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
           <CYFMSDropdown
             id="appointmentstatus"
-            value="Appointment Status"
+            value="Status"
+            required
             autofill={data.appointmentdto.status}
             disabled={disabled}
             // optionsList={[" ","Scheduled", "Rescheduled","Missed","Completed","Cancelled"]}
@@ -152,7 +153,7 @@ const AppointmentsForm = ({
             id="date"
             value="Date"
             type="date"
-            //required
+            required
             readOnly={disabled}
             autofill={data.appointmentdto.date}
             maxDate={new Date().toISOString().substring(0, 10)}

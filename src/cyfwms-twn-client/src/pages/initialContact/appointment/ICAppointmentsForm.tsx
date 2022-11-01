@@ -132,7 +132,7 @@ const ICAppointmentsForm = ({
           <ICInput
             id="subject"
             value="Subject"
-            //required
+            required
             autofill={data.appointmentDto.subject}
             readOnly={disabled}
           />
@@ -140,7 +140,8 @@ const ICAppointmentsForm = ({
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
           <ICDropdown
             id="appointmentstatus"
-            value="Appointment Status"
+            value="Status"
+            required
             autofill={data.appointmentDto.status}
             disabled={disabled}
             // optionsList={[" ","Scheduled", "Rescheduled","Missed","Completed","Cancelled"]}
@@ -156,7 +157,7 @@ const ICAppointmentsForm = ({
             id="date"
             value="Date"
             type="date"
-            //required
+            required
             readOnly={disabled}
             autofill={data.appointmentDto.date}
             maxDate={new Date().toISOString().substring(0, 10)}
