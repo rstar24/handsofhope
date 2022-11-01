@@ -13,7 +13,6 @@ import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Data
 @Entity
 @Table(name = "cg_care_provider")

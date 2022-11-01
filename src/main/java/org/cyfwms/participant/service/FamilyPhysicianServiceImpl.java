@@ -1,5 +1,6 @@
 package org.cyfwms.participant.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.cyfwms.participant.dto.FamilyPhysicianDto;
 import org.cyfwms.participant.entity.FamilyPhysician;
 import org.cyfwms.participant.repository.FamilyPhysicianRepository;
@@ -14,12 +15,14 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class FamilyPhysicianServiceImpl implements FamilyPhysicianService {
     @Autowired
     private FamilyPhysicianRepository familyPhysicianRepository;
 
     @Override
     public List<FamilyPhysicianDto> getAllFamilyPhysicians(Long participantId) {
+        log.info("Inside GetAllFamilyPhysicians");
         List<FamilyPhysicianDto> familyPhysicianDtoList = new ArrayList<FamilyPhysicianDto>();
         if(participantId != 0){
             familyPhysicianDtoList =
@@ -31,11 +34,13 @@ public class FamilyPhysicianServiceImpl implements FamilyPhysicianService {
                                 return fpDto;
                             }).collect(Collectors.toList());
         }
+        log.info("Exit GetAllFamilyPhysicians");
         return familyPhysicianDtoList;
     }
 
     @Override
     public List<FamilyPhysicianDto> saveAllFamilyPhysicians(List<FamilyPhysicianDto> FamilyPhysicianDtoList) {
+        log.info("Inside SaveAllFamilyPhysicians");
         for (FamilyPhysicianDto FamilyPhysicianDto: FamilyPhysicianDtoList) {
             FamilyPhysician familyPhysician = null;
             if (FamilyPhysicianDto.getFamilyPhysicianId() == 0) {
@@ -49,16 +54,19 @@ public class FamilyPhysicianServiceImpl implements FamilyPhysicianService {
             familyPhysician = familyPhysicianRepository.save(familyPhysician);
             FamilyPhysicianDto.setFamilyPhysicianId(familyPhysician.getFamilyPhysicianId());
         }
+        log.info("Exit SaveAllFamilyPhysicians");
         return FamilyPhysicianDtoList;
     }
 
     @Override
     public void removeFamilyPhysician(Long familyPhysicianId) {
+        log.info("Inside RemoveFamilyPhysicians");
         Optional<FamilyPhysician> familyPhysicianOpt =
                 familyPhysicianRepository.findById(familyPhysicianId);
         if(familyPhysicianOpt.isPresent()){
             FamilyPhysician familyPhysician = familyPhysicianOpt.get();
             familyPhysician.setStatus("INACTIVE");
+            log.info("Exit RemoveFamilyPhysicians");
             familyPhysicianRepository.save(familyPhysician);
         }
     }

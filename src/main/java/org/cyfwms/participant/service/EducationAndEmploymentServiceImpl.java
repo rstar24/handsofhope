@@ -1,5 +1,6 @@
 package org.cyfwms.participant.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.cyfwms.participant.dto.EducationAndEmploymentCompositeDto;
 import org.cyfwms.participant.dto.EducationDto;
 import org.cyfwms.participant.dto.EmploymentDto;
@@ -17,6 +18,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class EducationAndEmploymentServiceImpl implements EducationAndEmploymentService {
     @Autowired
     private EducationRepository educationRepository;
@@ -34,6 +36,7 @@ public class EducationAndEmploymentServiceImpl implements EducationAndEmployment
 
     @Override
     public EducationAndEmploymentCompositeDto readEducationAndEmployment(Long participantId) {
+        log.info("Inside ReadEducationAndEmployment");
         EducationAndEmploymentCompositeDto educationAndEmploymentCompositeDto = new EducationAndEmploymentCompositeDto();
         if (participantId != 0) {
             Education education =
@@ -46,11 +49,13 @@ public class EducationAndEmploymentServiceImpl implements EducationAndEmployment
                 BeanUtils.copyProperties(employment, educationAndEmploymentCompositeDto);
             }
         }
+        log.info("Exit ReadEducationAndEmployment");
         return educationAndEmploymentCompositeDto;
     }
 
     @Override
     public EducationAndEmploymentCompositeDto saveEducationAndEmployment(EducationAndEmploymentCompositeDto educationAndEmploymentCompositeDto) {
+        log.info("Inside SaveEducationAndEmployment");
         EducationDto educationDto = new EducationDto();
         BeanUtils.copyProperties(educationAndEmploymentCompositeDto,educationDto);
         educationService.saveEducation(educationDto);
@@ -59,6 +64,7 @@ public class EducationAndEmploymentServiceImpl implements EducationAndEmployment
         BeanUtils.copyProperties(educationAndEmploymentCompositeDto,employmentDto);
         employmentService.saveEmployment(employmentDto);
         educationAndEmploymentCompositeDto.setEmploymentId(employmentDto.getEmploymentId());
+        log.info("Exit SaveEducationAndEmployment");
         return educationAndEmploymentCompositeDto;
     }
 }

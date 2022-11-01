@@ -1,5 +1,6 @@
 package org.cyfwms.initialcontact.service;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.cyfwms.initialcontact.dto.ICIncidentReportDto;
 import org.cyfwms.initialcontact.entity.ICtIncidentReport;
 import org.cyfwms.initialcontact.repository.ICIncidentReportRepository;
@@ -10,12 +11,14 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 @Service
 @AllArgsConstructor
+@Slf4j
 public class ICIncidentReportServiceImpl implements ICIncidentReportService {
     @Autowired
     ICIncidentReportRepository iCIncidentReportRepository;
 
     @Override
     public ICIncidentReportDto readAllIncidentReports(Long fileDetailsID) {
+        log.info("Inside ReadAllIncidentReports");
         ICIncidentReportDto iCIncidentReportDto = new ICIncidentReportDto();
         if (fileDetailsID != 0) {
 
@@ -34,6 +37,7 @@ public class ICIncidentReportServiceImpl implements ICIncidentReportService {
             }
 
         }
+        log.info("Exit ReadAllIncidentReports");
             return iCIncidentReportDto;
 
 
@@ -41,6 +45,7 @@ public class ICIncidentReportServiceImpl implements ICIncidentReportService {
 
     @Override
     public ICIncidentReportDto saveAllIncidentReports(ICIncidentReportDto iCIncidentReportDto) {
+        log.info("Inside SaveAllIncidentReports");
         ICtIncidentReport iCtIncidentReport = null;
         if (iCIncidentReportDto.getIncidentReportId() == 0) {
             iCtIncidentReport = new ICtIncidentReport();
@@ -52,6 +57,7 @@ public class ICIncidentReportServiceImpl implements ICIncidentReportService {
         iCtIncidentReport = iCIncidentReportRepository.save(iCtIncidentReport);
         iCIncidentReportDto.setFileDetailsId(iCtIncidentReport.getFileDetailsId());
         iCIncidentReportDto.setIncidentReportId(iCtIncidentReport.getIncidentReportId());
+        log.info("Exit SaveAllIncidentReports");
         return iCIncidentReportDto;
     }
 }

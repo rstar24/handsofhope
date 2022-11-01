@@ -1,5 +1,6 @@
 package org.cyfwms.participant.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.cyfwms.participant.dto.HouseholdMemberDto;
 import org.cyfwms.participant.entity.HouseholdMember;
 import org.cyfwms.participant.repository.HouseholdMemberRepository;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class HouseholdMemberServiceImpl implements HouseholdMemberService {
     @Autowired
     private HouseholdMemberRepository householdMemberRepo;
@@ -22,6 +24,7 @@ public class HouseholdMemberServiceImpl implements HouseholdMemberService {
 
     @Override
     public List<HouseholdMemberDto> getAllHouseholdMembers(Long participantId) {
+          log.info("Inside GetAllHouseHoldMembers");
         List<HouseholdMemberDto> hmDtoList = householdMemberRepo.findByParticipantId(participantId)
                         .stream().
                         map(hm -> {
@@ -32,12 +35,13 @@ public class HouseholdMemberServiceImpl implements HouseholdMemberService {
                             }
                             return hmDTO;
                         }).collect(Collectors.toList());
-
+             log.info("Exit GetAllHouseHoldMembers");
         return hmDtoList;
     }
 
     @Override
     public List<HouseholdMemberDto> saveAllHouseholdMembers(List<HouseholdMemberDto> HouseholdMemberDtoList) {
+        log.info("Inside SaveAllHouseHoldMembers");
         for (HouseholdMemberDto HouseholdMemberDto: HouseholdMemberDtoList) {
             HouseholdMember householdMember = null;
             if (HouseholdMemberDto.getHouseholdMemberId() == 0) {
@@ -51,16 +55,19 @@ public class HouseholdMemberServiceImpl implements HouseholdMemberService {
             householdMember = householdMemberRepo.save(householdMember);
             HouseholdMemberDto.setHouseholdMemberId(householdMember.getHouseholdMemberId());
         }
+        log.info("Exit SaveAllHouseHoldMembers");
         return HouseholdMemberDtoList;
     }
 
     @Override
     public void removeHouseholdMembers(Long householdMemberId) {
+        log.info("Inside RemoveHouseHoldMembers");
         Optional<HouseholdMember> householdMemberOpt =
                 householdMemberRepo.findById(householdMemberId);
         if(householdMemberOpt.isPresent()){
             HouseholdMember householdMember = householdMemberOpt.get();
             householdMember.setStatus("INACTIVE");
+            log.info("Exit RemoveHouseHoldMembers");
             householdMemberRepo.save(householdMember);
         }
     }

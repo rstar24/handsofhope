@@ -1,6 +1,8 @@
 package org.cyfwms.initialcontact.api;
+
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.cyfwms.initialcontact.dto.*;
 import org.cyfwms.initialcontact.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +11,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("/v1/initialcontactservice")
 @CrossOrigin("*")
+@Slf4j
 public class TWNInitialContactController {
     @Autowired
     private ICFileDetailsService iCFileDetailsService;
@@ -33,11 +37,13 @@ public class TWNInitialContactController {
 
     @Autowired
     private ICParticipantSearchService icParticipantSearchService;
+    private ICReminderService icReminderService;
 
     @GetMapping(value = "/readAllFileDetails/{filedetailsid}", produces = "application/json")
     @ApiOperation("Read Identity")
     @ResponseStatus(HttpStatus.OK)
     public ICFileDetailsDto readAllFileDetails(@PathVariable("filedetailsid") Long fileDetailsID) {
+        log.info("ReadAllFileDetails " + "fileDetailsID :" + fileDetailsID);
         return iCFileDetailsService.readAllFileDetails(fileDetailsID);
     }
 
@@ -45,7 +51,8 @@ public class TWNInitialContactController {
     @ApiOperation("Save or Update Identity")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ICFileDetailsDto> saveAllFileDetails(@RequestBody ICFileDetailsDto iCFileDetailsDto) {
-        ICFileDetailsDto icFileDetailsDto=iCFileDetailsService.saveAllFileDetails(iCFileDetailsDto);
+        ICFileDetailsDto icFileDetailsDto = iCFileDetailsService.saveAllFileDetails(iCFileDetailsDto);
+        log.info("SaveAllFileDetails " + iCFileDetailsDto);
         return new ResponseEntity<>(icFileDetailsDto, HttpStatus.CREATED);
     }
 
@@ -53,14 +60,17 @@ public class TWNInitialContactController {
     @ApiOperation("Read IncidentReports")
     @ResponseStatus(HttpStatus.OK)
     public ICIncidentReportDto readAllIncidentReports(@PathVariable("filedetailsid") Long fileDetailsID) {
+        log.info("ReadAllIncidentReports " + "FileDetailsID :" + fileDetailsID);
         return iCIncidentReportService.readAllIncidentReports(fileDetailsID);
     }
 
     @PutMapping(value = "/saveAllIncidentReports", produces = "application/json")
     @ApiOperation("Save or Update IncidentReports")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<ICIncidentReportDto> saveAllIncidentReports(@RequestBody ICIncidentReportDto iCIncidentReportDto) {
-        iCIncidentReportDto= iCIncidentReportService.saveAllIncidentReports(iCIncidentReportDto);
+    public ResponseEntity<ICIncidentReportDto> saveAllIncidentReports(
+            @RequestBody ICIncidentReportDto iCIncidentReportDto) {
+        iCIncidentReportDto = iCIncidentReportService.saveAllIncidentReports(iCIncidentReportDto);
+        log.info("SaveAllIncidentReports " + iCIncidentReportDto);
         return new ResponseEntity<>(iCIncidentReportDto, HttpStatus.CREATED);
     }
 
@@ -68,14 +78,17 @@ public class TWNInitialContactController {
     @ApiOperation("Read PatientCareInfo")
     @ResponseStatus(HttpStatus.OK)
     public ICPatientCareInfoDto readAllPatientCareInfo(@PathVariable("filedetailsid") Long fileDetailsID) {
+        log.info("ReadAllPatientCareInfo " + "FileDetailsID :" + fileDetailsID);
         return iCPatientCareInfoService.readAllPatientCareInfo(fileDetailsID);
     }
 
     @PutMapping(value = "/saveAllPatientCareInfo", produces = "application/json")
     @ApiOperation("Save or Update PatientCareInfo")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<ICPatientCareInfoDto> saveAllPatientCareInfo(@RequestBody ICPatientCareInfoDto iCPatientCareInfoDto) {
-        iCPatientCareInfoDto=iCPatientCareInfoService.saveAllPatientCareInfo(iCPatientCareInfoDto);
+    public ResponseEntity<ICPatientCareInfoDto> saveAllPatientCareInfo(
+            @RequestBody ICPatientCareInfoDto iCPatientCareInfoDto) {
+        iCPatientCareInfoDto = iCPatientCareInfoService.saveAllPatientCareInfo(iCPatientCareInfoDto);
+        log.info("SaveAllPatientCareInfo " + iCPatientCareInfoDto);
         return new ResponseEntity<>(iCPatientCareInfoDto, HttpStatus.CREATED);
     }
 
@@ -83,14 +96,17 @@ public class TWNInitialContactController {
     @ApiOperation("Read PresentConcerns")
     @ResponseStatus(HttpStatus.OK)
     public ICPresentConcernsDto readPresentConcerns(@PathVariable("filedetailsid") Long fileDetailsID) {
+        log.info("ReadAllPresentConcerns " + "FileDetailsID :" + fileDetailsID);
         return iCPresentConcernsService.readPresentConcerns(fileDetailsID);
     }
 
     @PutMapping(value = "/saveAllPresentConcerns", produces = "application/json")
     @ApiOperation("Save or Update PresentConcerns")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<ICPresentConcernsDto> savePresentConcerns(@RequestBody ICPresentConcernsDto iCPresentConcernsDto) {
-        iCPresentConcernsDto=iCPresentConcernsService.savePresentConcerns(iCPresentConcernsDto);
+    public ResponseEntity<ICPresentConcernsDto> savePresentConcerns(
+            @RequestBody ICPresentConcernsDto iCPresentConcernsDto) {
+        iCPresentConcernsDto = iCPresentConcernsService.savePresentConcerns(iCPresentConcernsDto);
+        log.info("SaveAllPresentConcerns " + iCPresentConcernsDto);
         return new ResponseEntity<>(iCPresentConcernsDto, HttpStatus.CREATED);
     }
 
@@ -98,6 +114,7 @@ public class TWNInitialContactController {
     @ApiOperation("Read ReferralInfo")
     @ResponseStatus(HttpStatus.OK)
     public ICReferralInfoDto readAllReferralInfo(@PathVariable("filedetailsid") Long fileDetailsID) {
+        log.info("ReadAllReferralInfo " + "FileDetailsID :" + fileDetailsID);
         return iCReferralInfoService.readAllReferralInfo(fileDetailsID);
     }
 
@@ -105,7 +122,8 @@ public class TWNInitialContactController {
     @ApiOperation("Save or Update ReferralInfo")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ICReferralInfoDto> saveAllReferralInfo(@RequestBody ICReferralInfoDto iCReferralInfoDto) {
-        iCReferralInfoDto=iCReferralInfoService.saveAllReferralInfo(iCReferralInfoDto);
+        iCReferralInfoDto = iCReferralInfoService.saveAllReferralInfo(iCReferralInfoDto);
+        log.info("SaveAllReferralInfo " + iCReferralInfoDto);
         return new ResponseEntity<>(iCReferralInfoDto, HttpStatus.CREATED);
     }
 
@@ -113,27 +131,30 @@ public class TWNInitialContactController {
     @ApiOperation("Read ContactNotes")
     @ResponseStatus(HttpStatus.OK)
     public ICContactNotesDto readContactNotes(@PathVariable("contactnotesid") Long contactNotesId) {
+        log.info("ReadAllContactNotes " + "ContactNotesId :" + contactNotesId);
         return iCContactNotesService.readContactNotes(contactNotesId);
     }
+
     @PutMapping(value = "/saveAllContactNotes", produces = "application/json")
     @ApiOperation("Save or Update ContactNotes")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ICContactNotesDto> saveContactNotes(@RequestBody ICContactNotesDto iCContactNotesDto) {
-        iCContactNotesDto=iCContactNotesService.saveContactNotes(iCContactNotesDto);
+        iCContactNotesDto = iCContactNotesService.saveContactNotes(iCContactNotesDto);
+        log.info("SaveContactNotes " + iCContactNotesDto);
         return new ResponseEntity<>(iCContactNotesDto, HttpStatus.CREATED);
     }
 
-    @GetMapping(value = {"/searchContactNotes/{filedetailsid}/{data}"},produces = "application/json")
+    @GetMapping(value = { "/searchContactNotes/{filedetailsid}/{data}" }, produces = "application/json")
     @ApiOperation("Search InitialContact")
     @ResponseStatus(HttpStatus.OK)
-    public List<ICContactNotesSearchResultsDto> searchICContactNotes(@PathVariable Map<String, String> var)
-    {
-        ICContactNotesSearchCriteriaDto iCContactNotesSearchCriteriaDto=new ICContactNotesSearchCriteriaDto();
+    public List<ICContactNotesSearchResultsDto> searchICContactNotes(@PathVariable Map<String, String> var) {
+        ICContactNotesSearchCriteriaDto iCContactNotesSearchCriteriaDto = new ICContactNotesSearchCriteriaDto();
         iCContactNotesSearchCriteriaDto.setFileDetailsId(("null".equals(var.get("filedetailsid"))
-                ||var.get("filedetailsid")==null) ? null:Long.parseLong(var.get("filedetailsid")));
+                || var.get("filedetailsid") == null) ? null : Long.parseLong(var.get("filedetailsid")));
         iCContactNotesSearchCriteriaDto.setData(
                 ("null".equals(var.get("data"))
-                        || var.get("data") == null) ?null:var.get("data"));
+                        || var.get("data") == null) ? null : var.get("data"));
+        log.info("SearchICContactNotes " + iCContactNotesSearchCriteriaDto);
         return iCContactNotesSearchService.search(iCContactNotesSearchCriteriaDto);
     }
 
@@ -141,7 +162,8 @@ public class TWNInitialContactController {
     @ApiOperation("Remove Contact Notes")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> removeContactNotes(@PathVariable("contactNotesId") Long contactNotesId) {
-         iCContactNotesService.removeContactNotes(contactNotesId);
+        iCContactNotesService.removeContactNotes(contactNotesId);
+        log.info("RemoveContactNotes " + "ContactNotesId :" + contactNotesId);
         return new ResponseEntity("Operation Successful", HttpStatus.OK);
     }
 
@@ -157,6 +179,7 @@ public class TWNInitialContactController {
     @ApiOperation("Save or Update ICParticipant")
     @ResponseStatus(HttpStatus.OK)
     public ICParticipantDto saveICParticipant(@RequestBody ICParticipantDto iCParticipantDto) {
+        log.info("SaveICParticipant " + iCParticipantDto);
         return icParticipantService.saveICParticipant(iCParticipantDto);
     }
 
@@ -165,18 +188,43 @@ public class TWNInitialContactController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> removeICParticipant(@PathVariable("icparticipantid") Long icParticipantId) {
         icParticipantService.removeICParticipant(icParticipantId);
+        log.info("RemoveICParticipant " + "IcParticipantId :" + icParticipantId);
         return new ResponseEntity("Operation Successful", HttpStatus.OK);
     }
 
-    @GetMapping(value = {"/participantICSearch/{data}"},produces = "application/json")
+    @PutMapping(value = "/saveICReminder", produces = "application/json")
+    @ApiOperation("save or update ICReminder")
+    @ResponseStatus(HttpStatus.OK)
+    public ICReminderDto saveICReminder(@RequestBody ICReminderDto icReminderDto) {
+        log.info("SaveICReminder " + icReminderDto);
+        return icReminderService.saveICReminder(icReminderDto);
+    }
+
+    @GetMapping(value = "/readICReminder/{fileDetailsId}", produces = "application/json")
+    @ApiOperation("Read ICReminder By fileDetailsId")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ICReminderDto> readICReminder(@PathVariable("fileDetailsId") Long fileDetailsId) {
+        log.info("ReadICReminder " + "FileDetailsId :" + fileDetailsId);
+        return icReminderService.readICReminder(fileDetailsId);
+    }
+
+    @DeleteMapping(value = "/removeICReminder/{icReminderId}", produces = "application/json")
+    @ApiOperation("Remove ICReminder by icReminderId")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<String> removeICReminder(@PathVariable("icReminderId") Long icReminderId) {
+        icReminderService.removeICReminder(icReminderId);
+        log.info("RemoveICReminder " + "IcReminderId :" + icReminderId);
+        return new ResponseEntity("Operation Successful", HttpStatus.OK);
+    }
+
+    @GetMapping(value = { "/participantICSearch/{data}" }, produces = "application/json")
     @ApiOperation("Search ICParticipant")
     @ResponseStatus(HttpStatus.OK)
-    public List<ICParticipantSearchResultDto> searchICParticipant(@PathVariable Map<String, String> var)
-    {
-        ICParticipantSearchCriteriaDto iCParticipantSearchCriteriaDto =new ICParticipantSearchCriteriaDto();
+    public List<ICParticipantSearchResultDto> searchICParticipant(@PathVariable Map<String, String> var) {
+        ICParticipantSearchCriteriaDto iCParticipantSearchCriteriaDto = new ICParticipantSearchCriteriaDto();
         iCParticipantSearchCriteriaDto.setData(
                 ("null".equals(var.get("data"))
-                        || var.get("data") == null) ?null:var.get("data"));
+                        || var.get("data") == null) ? null : var.get("data"));
         return icParticipantSearchService.searchICParticipant(iCParticipantSearchCriteriaDto);
     }
 

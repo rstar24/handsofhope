@@ -1,4 +1,5 @@
 package org.cyfwms.initialcontact.service;
+import lombok.extern.slf4j.Slf4j;
 import org.cyfwms.initialcontact.dto.ICCommonDataDto;
 import org.cyfwms.initialcontact.entity.*;
 import org.cyfwms.initialcontact.repository.*;
@@ -9,6 +10,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Optional;
 @Service
+@Slf4j
 public class ICCommonDataServiceImpl implements ICCommonDataService {
     @Autowired
     ICFileDetailsRepository iCFileDetailsRepository;
@@ -25,6 +27,7 @@ public class ICCommonDataServiceImpl implements ICCommonDataService {
     ICContactNotesRepository icContactNotesRepository;
     @Override
     public ICCommonDataDto iCCommonData(Long fileNumber) {
+        log.info("Inside ICCommonData");
         ICCommonDataDto iCCommonDataDto = new ICCommonDataDto();
         if (fileNumber!=0) {
             ICFileDetails iCFileDetails = readFileNumber(fileNumber);
@@ -67,17 +70,20 @@ public class ICCommonDataServiceImpl implements ICCommonDataService {
                 }
             }
         }
+        log.info("Exit ICCommonData");
             return iCCommonDataDto;
 
 
     }
 
     private ICFileDetails readFileNumber(Long fileNumber) {
+        log.info("Inside ReadFileNumber");
         ICFileDetails iCFileDetails = null;
         Optional<ICFileDetails> iCFileDetailsOpt = iCFileDetailsRepository.findByFileNumber(fileNumber);
         if (iCFileDetailsOpt.isPresent()) {
             iCFileDetails = iCFileDetailsOpt.get();
         }
+        log.info("Exit ReadFileNumber");
         return iCFileDetails;
     }
 }

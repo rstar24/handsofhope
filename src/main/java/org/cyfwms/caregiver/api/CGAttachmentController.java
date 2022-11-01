@@ -2,6 +2,7 @@ package org.cyfwms.caregiver.api;
 
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.cyfwms.caregiver.dto.CGAttachmentDto;
 import org.cyfwms.caregiver.service.CGAttachmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import static org.springframework.http.HttpStatus.OK;
 @RestController
 @RequestMapping("/v1/caregiverservice/attachments")
 @CrossOrigin("*")
+@Slf4j
 public class CGAttachmentController {
     @Autowired
     CGAttachmentService cgAttachmentService;
@@ -26,14 +28,18 @@ public class CGAttachmentController {
     @ApiOperation("Save/Upload/Put one/single attachment.")
     @PutMapping("/save_one")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<CGAttachmentDto> saveOne(@RequestParam(value = "file", required = false) MultipartFile file, @RequestParam("cgDto") String cgDto) throws IOException {
+    public ResponseEntity<CGAttachmentDto> saveOne(@RequestParam(value = "file", required = false) MultipartFile file,
+            @RequestParam("cgDto") String cgDto) throws IOException {
         CGAttachmentDto cgAttachmentDto = cgAttachmentService.saveCGAttachment(file, cgDto);
+        log.info("SaveOne " + cgAttachmentDto);
         return ResponseEntity.ok(cgAttachmentDto);
+
     }
 
     @ApiOperation("Read/Get one/single attachment.")
     @GetMapping("/read_one/{id}")
     public CGAttachmentDto readOne(@PathVariable Long id) {
+        log.info("Attachment ReadOne " + "id :" + id);
         return cgAttachmentService.getOneFile(id);
     }
 
@@ -41,6 +47,7 @@ public class CGAttachmentController {
     @GetMapping(value = "/read_all/{caregiverproviderid}", produces = "application/json")
     @ResponseStatus(OK)
     public List<CGAttachmentDto> readAll(@PathVariable("caregiverproviderid") Long caregiverProviderId) {
+        log.info("Attachment ReadAll " + "caregiverProviderId :" + caregiverProviderId);
         return cgAttachmentService.getAllFiles(caregiverProviderId);
     }
 
@@ -48,7 +55,7 @@ public class CGAttachmentController {
     @DeleteMapping("/remove_one/{cgimageid}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void removeOne(@PathVariable("cgimageid") Long cgImageId) {
-         cgAttachmentService.removeCGImage(cgImageId);
+        cgAttachmentService.removeCGImage(cgImageId);
     }
-}
 
+}

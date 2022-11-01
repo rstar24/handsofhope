@@ -1,34 +1,22 @@
 package org.cyfwms.participant.service;
 
-import org.cyfwms.caregiver.dto.CGAttachmentDto;
-import org.cyfwms.common.entity.Appointments;
-import org.cyfwms.common.exception.I18Constants;
-import org.cyfwms.common.exception.MessageUtil;
-import org.cyfwms.common.exception.NoSuchElementFoundException;
-import org.cyfwms.common.repository.AppointmentRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.cyfwms.common.dto.AppointmentDto;
-import org.cyfwms.initialcontact.dto.ICContactNotesDto;
-import org.cyfwms.initialcontact.entity.ICContactNotes;
+import org.cyfwms.common.entity.Appointments;
+import org.cyfwms.common.exception.MessageUtil;
+import org.cyfwms.common.repository.AppointmentRepository;
 import org.cyfwms.participant.dto.ParticipantAppointmentDto;
 import org.cyfwms.participant.entity.ParticipantAppointment;
 import org.cyfwms.participant.repository.ParticipantAppointmentRepo;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-
-import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 
 @Service
+@Slf4j
 public class ParticipantAppointmentServiceImpl implements ParticipantAppointmentService {
     @Autowired
     AppointmentRepository appointmentRepository;
@@ -39,6 +27,7 @@ public class ParticipantAppointmentServiceImpl implements ParticipantAppointment
 
     @Override
     public ParticipantAppointmentDto saveParticipantAppointment(ParticipantAppointmentDto participantAppointmentDto) {
+        log.info("Inside SaveParticipantAppointment");
         Appointments appointments = null;
         ParticipantAppointment participantAppointment = new ParticipantAppointment();
         if (participantAppointmentDto.getParticipantAppointmentId() == 0) {
@@ -58,7 +47,8 @@ public class ParticipantAppointmentServiceImpl implements ParticipantAppointment
         participantAppointment = participantAppointmentRepo.save(participantAppointment);
         participantAppointmentDto.setParticipantAppointmentId(participantAppointment.getParticipantAppointmentId());
         participantAppointmentDto.getAppointmentdto().setAppointmentId(participantAppointment.getAppointments().getAppointmentId());
-       return participantAppointmentDto;
+        log.info("Exit SaveParticipantAppointment");
+        return participantAppointmentDto;
 
     }
 
@@ -66,17 +56,19 @@ public class ParticipantAppointmentServiceImpl implements ParticipantAppointment
 
     @Override
     public void removeParticipantAppointment(Long participantAppointmentId) {
+        log.info("Inside RemoveParticipantAppointment");
         Optional<ParticipantAppointment> AppointmentsOptional = participantAppointmentRepo.findById(participantAppointmentId);
         if (AppointmentsOptional.isPresent()) {
             ParticipantAppointment participantAppointment = AppointmentsOptional.get();
             participantAppointment.setStatus("INACTIVE");
             participantAppointment.getAppointments().setAppointmentStatus("Inactive");
             participantAppointmentRepo.save(participantAppointment);
-
+            log.info("Exit RemoveParticipantAppointment");
         }
     }
     @Override
     public ParticipantAppointmentDto readOneAppointment(Long participantAppontmentId) {
+        log.info("Inside ReadOneAppointment");
         ParticipantAppointmentDto participantAppointmentDto = new ParticipantAppointmentDto();
         AppointmentDto appointmentDto = new AppointmentDto();
         if (participantAppontmentId != 0) {
@@ -96,6 +88,7 @@ public class ParticipantAppointmentServiceImpl implements ParticipantAppointment
                 }
             }
         }
+        log.info("Exit ReadOneAppointment");
         return participantAppointmentDto;
 
     }

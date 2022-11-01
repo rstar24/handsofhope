@@ -13,8 +13,8 @@ spring:
   application:
     name: TWN-SERVER
   datasource:
-    url: jdbc:mysql://cyfwmsdb.mysql.database.azure.com:3306/twnmysqldb
-    username: admin1
+    url: jdbc:mysql://localhost:3306/twn
+    username: root
     password: Password@123
   profiles:
     include:
@@ -41,3 +41,12 @@ spring:
   #    mode: always
 jwt:
   secret: gigatorb
+logging:
+    level:
+      root:
+      org.springframework.web: ERROR
+      com.howtodoinjava: DEBUG
+      org.hibernate: ERROR
+    pattern:
+      file:%d{yyyy-MMM-dd-HH:mm:ss} %p:%C[%M] %L %m %n
+    file.name: C:/cyfwms-logs/twn.log

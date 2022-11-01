@@ -1,4 +1,6 @@
 package org.cyfwms.initialcontact.service;
+
+import lombok.extern.slf4j.Slf4j;
 import org.cyfwms.initialcontact.dto.ICParticipantDto;
 import org.cyfwms.initialcontact.entity.ICParticipant;
 import org.cyfwms.initialcontact.repository.ICParticipantRepository;
@@ -8,16 +10,20 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
+
 @Service
-public class ICParticipantServiceImpl implements ICParticipantService{
+@Slf4j
+public class ICParticipantServiceImpl implements ICParticipantService {
     @Autowired
     ICParticipantRepository icParticipantRepository;
     @Autowired
     ParticipantRepository participantRepository;
+
     @Override
     public ICParticipantDto saveICParticipant(ICParticipantDto iCParticipantDto) {
+        log.info("Inside SaveICParticipant");
         ICParticipant iCParticipant = null;
-        if (iCParticipantDto.getIcParticipantId()== 0) {
+        if (iCParticipantDto.getIcParticipantId() == 0) {
             iCParticipant = new ICParticipant();
             BeanUtils.copyProperties(iCParticipantDto, iCParticipant);
             iCParticipant.setStatus("ACTIVE");
@@ -27,34 +33,42 @@ public class ICParticipantServiceImpl implements ICParticipantService{
         }
         iCParticipant = icParticipantRepository.save(iCParticipant);
         iCParticipantDto.setIcParticipantId(iCParticipant.getIcParticipantId());
+        log.info("Exit SaveICParticipant");
         return iCParticipantDto;
     }
 
     @Override
     public ICParticipantDto readICParticipant(Long icParticipantId) {
+
+
+        log.info("Inside ReadICParticipant");
         ICParticipantDto iCParticipantDto = new ICParticipantDto();
         if (icParticipantId != 0) {
-            Optional<ICParticipant> iCParticipant = icParticipantRepository.findById(icParticipantId).filter(i->i.getStatus().equalsIgnoreCase("ACTIVE"));
+            Optional<ICParticipant> iCParticipant = icParticipantRepository.findById(icParticipantId)
+                    .filter(i -> i.getStatus().equalsIgnoreCase("ACTIVE"));
             if (iCParticipant.isPresent()) {
                 BeanUtils.copyProperties(iCParticipant.get(), iCParticipantDto);
-                Participant participant=participantRepository.findByParticipantId(Long.parseLong(iCParticipantDto.getParticipant()));
+                Participant participant = participantRepository
+                        .findByParticipantId(Long.parseLong(iCParticipantDto.getParticipant()));
                 if (!iCParticipant.get().getParticipant().equals("0")) {
                     iCParticipantDto.setParticipant(participant.getFirstname() + " " + participant.getSurname());
                     iCParticipantDto.setParticipantId(participant.getParticipantId());
                 }
             }
         }
+        log.info("Exit ReadICParticipant");
         return iCParticipantDto;
     }
 
     @Override
     public void removeICParticipant(Long icParticipantId) {
-        Optional<ICParticipant> iCParticipantOpt =
-                icParticipantRepository.findById(icParticipantId);
-        if(iCParticipantOpt.isPresent()){
+        log.info("Inside RemoveICParticipant");
+        Optional<ICParticipant> iCParticipantOpt = icParticipantRepository.findById(icParticipantId);
+        if (iCParticipantOpt.isPresent()) {
             ICParticipant iCParticipant = iCParticipantOpt.get();
             iCParticipant.setStatus("INACTIVE");
             icParticipantRepository.save(iCParticipant);
+            log.info("Exit RemoveICParticipant");
         }
     }
 }

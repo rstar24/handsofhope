@@ -1,5 +1,6 @@
 package org.cyfwms.initialcontact.service;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.cyfwms.initialcontact.dto.ICPresentConcernsDto;
 import org.cyfwms.initialcontact.entity.ICPresentConcerns;
 import org.cyfwms.initialcontact.repository.ICPresentConcernsRepository;
@@ -8,12 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
+@Slf4j
 public class ICPresentConcernsServiceImpl implements ICPresentConcernsService {
     @Autowired
     ICPresentConcernsRepository iCPresentConcernsRepository;
 
     @Override
     public ICPresentConcernsDto readPresentConcerns(Long fileDetailsId) {
+        log.info("Inside ReadPresentConcerns");
         ICPresentConcernsDto iCPresentConcernsDto = new ICPresentConcernsDto();
         if (fileDetailsId != 0) {
             ICPresentConcerns iCPresentConcerns = iCPresentConcernsRepository.findByFileDetailsId(fileDetailsId);
@@ -21,11 +24,13 @@ public class ICPresentConcernsServiceImpl implements ICPresentConcernsService {
                 BeanUtils.copyProperties(iCPresentConcerns, iCPresentConcernsDto);
             }
         }
+        log.info("Exit ReadPresentConcerns");
             return iCPresentConcernsDto;
     }
 
     @Override
     public ICPresentConcernsDto savePresentConcerns(ICPresentConcernsDto iCPresentConcernsDto) {
+        log.info("Inside SavePresentConcerns");
         ICPresentConcerns iCPresentConcerns = null;
         if(iCPresentConcernsDto.getPresentConcernsId() == 0) {
             iCPresentConcerns = new ICPresentConcerns();
@@ -37,6 +42,7 @@ public class ICPresentConcernsServiceImpl implements ICPresentConcernsService {
         iCPresentConcerns = iCPresentConcernsRepository.save(iCPresentConcerns);
         iCPresentConcernsDto.setFileDetailsId(iCPresentConcerns.getFileDetailsId());
         iCPresentConcernsDto.setPresentConcernsId(iCPresentConcerns.getPresentConcernsId());
+        log.info("Exit SavePresentConcerns");
         return iCPresentConcernsDto;
     }
 }

@@ -1,6 +1,7 @@
 package org.cyfwms.common.login.api;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.cyfwms.common.login.dto.LoginRequest;
 import org.cyfwms.common.login.dto.LoginResponse;
 import org.cyfwms.common.login.service.BlacklistedTokensService;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
  * https://sopheamak.medium.com/springboot-how-to-invalidate-jwt-token-such-as-logout-or-reset-all-active-tokens-73f55289d47b
  */
 @CrossOrigin(origins = "*")
+@Slf4j
 @RestController
 @RequestMapping("/v1/login")
 public class LoginController {
@@ -51,7 +53,7 @@ public class LoginController {
         final UserDetails userDetails = customUserDetailsService.loadUserByUsername(
                 loginRequest.getUsername());
         final String token = jwtUtil.generateToken(userDetails);
-
+        log.info("LoginController Authenticate");
         return new LoginResponse(token);
     }
 
@@ -60,7 +62,7 @@ public class LoginController {
     @GetMapping("/admin-home")
     @PreAuthorize("hasAuthority ('admin')")
        public String adminPing(){
-
+        log.info("LoginController Authenticate By Admin");
         return "This is admin home";
     }
 
@@ -68,7 +70,7 @@ public class LoginController {
     @GetMapping("/cw-home")
     @PreAuthorize("hasAuthority ('caseworker')")
     public String caseWorkerHome(){
-
+        log.info("LoginController Authenticate By Caseworker");
         return "This is CW home";
     }
 

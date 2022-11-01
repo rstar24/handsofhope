@@ -28,7 +28,7 @@ public class ICFileDetailsServiceImpl implements ICFileDetailsService {
 
     @Override
     public ICFileDetailsDto readAllFileDetails(Long fileDetailsID) {
-        log.info("Reading InitialContact.");
+        log.info("Inside ReadAllFileDetails");
         ICFileDetailsDto iCFileDetailsDto = new ICFileDetailsDto();
         if (fileDetailsID != 0) {
             ICFileDetails iCFileDetails = fileDetailsRepo.findById(
@@ -49,11 +49,13 @@ public class ICFileDetailsServiceImpl implements ICFileDetailsService {
 
             }
         }
+        log.info("Exit ReadAllFileDetails");
             return iCFileDetailsDto;
     }
 
     @Override
     public ICFileDetailsDto saveAllFileDetails(ICFileDetailsDto iCFileDetailsDto) {
+        log.info("Inside SaveAllFileDetails");
         ICFileDetails iCFileDetails = null;
         if (iCFileDetailsDto.getFileDetailsId() == 0) {
             iCFileDetails = new ICFileDetails();
@@ -73,16 +75,19 @@ public class ICFileDetailsServiceImpl implements ICFileDetailsService {
         iCFileDetails = fileDetailsRepo.save(iCFileDetails);
         iCFileDetailsDto.setFileDetailsId(iCFileDetails.getFileDetailsId());
         iCFileDetailsDto.setFileNumber(iCFileDetails.getFileNumber());
+        log.info("Exit SaveAllFileDetails");
         return iCFileDetailsDto;
     }
 
     @Override
     public void removeICFileDetails(Long fileNumber) {
+        log.info("Inside RemoveICFileDetails");
         Optional<ICFileDetails> iCFileDetailsOpt = fileDetailsRepo.findByFileNumber(fileNumber);
         if(iCFileDetailsOpt.isPresent()){
             ICFileDetails iCFileDetails = iCFileDetailsOpt.get();
             iCFileDetails.setStatusOfDeletion("INACTIVE");
             fileDetailsRepo.save(iCFileDetails);
+            log.info("Exit RemoveICFileDetails");
         }
     }
 }

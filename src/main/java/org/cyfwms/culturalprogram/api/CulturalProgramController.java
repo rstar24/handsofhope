@@ -1,5 +1,6 @@
 package org.cyfwms.culturalprogram.api;
 
+import lombok.extern.slf4j.Slf4j;
 import org.cyfwms.culturalprogram.dto.*;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -18,6 +19,7 @@ import java.util.Map;
 
 @RestController
 @AllArgsConstructor
+@Slf4j
 @RequestMapping("/v1/culturalprogandactservice")
 @CrossOrigin("*")
 public class CulturalProgramController {
@@ -34,6 +36,7 @@ public class CulturalProgramController {
     @ApiOperation("Read CulturalProgAndAct")
     @ResponseStatus(HttpStatus.OK)
     public CPAIdentityDto readCpaIdentity(@PathVariable("culturalprogramid") Long culturalProgramId) {
+        log.info("Read CulturalProgAndActIdentity "+"CulturalProgramId :"+culturalProgramId);
         return CPAIdentityService.readCpaIdentity(culturalProgramId);
     }
 
@@ -42,14 +45,14 @@ public class CulturalProgramController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<CPAIdentityDto> saveCpaIdentity(@RequestBody CPAIdentityDto CPAIdentityDto) {
        CPAIdentityDto cpaIdentityDto = CPAIdentityService.saveCpaIdentity(CPAIdentityDto);
+       log.info("Save or Update Cultural Program "+CPAIdentityDto);
        return new ResponseEntity<>(cpaIdentityDto,HttpStatus.CREATED);
     }
 
     @GetMapping(value = {"/culturalProgAndActSearch/{referenceId}/{name}/{type}/{caseworker}/{startDate}/{status}"},produces = "application/json")
     @ApiOperation("Search culturalProgAndAct")
     @ResponseStatus(HttpStatus.OK)
-    public List<CPASearchResultsDto> searchCulturalProgAndAct(@PathVariable Map<String, String> var)
-    {
+    public List<CPASearchResultsDto> searchCulturalProgAndAct(@PathVariable Map<String, String> var) {
         CPASearchDto CPASearchDto = new CPASearchDto();
         CPASearchDto.setReferenceId(("null".equals(var.get("referenceId"))
                 || var.get("referenceId") == null) ?null:Long.parseLong(var.get("referenceId")));
@@ -75,6 +78,7 @@ public class CulturalProgramController {
         CPASearchDto.setStatus(
                 ("null".equals(var.get("status"))
                         || var.get("status") == null) ?null:var.get("status"));
+        log.info("SearchCulturalProgAndAct "+CPASearchDto);
         return CPASearchService.searchCulturalProgAndAct(CPASearchDto);
     }
 
@@ -83,6 +87,7 @@ public class CulturalProgramController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> removeCpaIdentity(@PathVariable("culturalprogramid") Long culturalProgramId) {
          CPAIdentityService.removeCpaIdentity(culturalProgramId);
+        log.info("Remove CulturalProgAndAct "+"CulturalProgramId :"+culturalProgramId);
         return new ResponseEntity<>("Operation Successful",HttpStatus.OK);
     }
 
@@ -92,6 +97,7 @@ public class CulturalProgramController {
     @ApiOperation("Read participantsCulturalAndAct")
     @ResponseStatus(HttpStatus.OK)
     public CPAParticipantDto readCpaParticipant(@PathVariable("culturalprogramid") Long culturalProgramId) {
+        log.info("Read participantsCulturalAndAct "+"culturalProgramId :"+culturalProgramId);
         return CPAParticipantService.readCpaParticipant(culturalProgramId);
     }
 
@@ -100,6 +106,7 @@ public class CulturalProgramController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<CPAParticipantDto> saveCpaParticipant(@RequestBody CPAParticipantDto CPAParticipantDto) {
         CPAParticipantDto cpaParticipantDto = CPAParticipantService.saveCpaParticipant(CPAParticipantDto);
+        log.info("Save or Update participantsCulturalAndAct "+CPAParticipantDto);
         return new ResponseEntity<>(cpaParticipantDto,HttpStatus.CREATED);
     }
 
@@ -108,6 +115,7 @@ public class CulturalProgramController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> removeCpaParticipant(@PathVariable("participantculturalprogid") Long participantCulturalProId) {
          CPAParticipantService.removeCpaParticipant(participantCulturalProId);
+        log.info("Remove ParticipantsCulturalAndAct "+"ParticipantCulturalProId"+participantCulturalProId);
         return new ResponseEntity<>("Operation Successful",HttpStatus.OK);
 
     }
@@ -121,6 +129,7 @@ public class CulturalProgramController {
         participantCulturalSearchDto.setData(
                 ("null".equals(var.get("data"))
                         || var.get("data") == null) ?null:var.get("data"));
+        log.info("Search CulturalProgram"+participantCulturalSearchDto);
         return CPAParticipantSearchService.searchParticipantCulturalProgAndAct(participantCulturalSearchDto);
     }
 }

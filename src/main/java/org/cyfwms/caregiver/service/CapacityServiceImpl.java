@@ -1,6 +1,7 @@
 package org.cyfwms.caregiver.service;
 import javax.persistence.EntityNotFoundException;
 
+import lombok.extern.slf4j.Slf4j;
 import org.cyfwms.caregiver.dto.CapacityDto;
 import org.cyfwms.caregiver.entity.Capacity;
 import org.cyfwms.caregiver.repository.CapacityRepository;
@@ -8,11 +9,13 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 @Service
+@Slf4j
 public class CapacityServiceImpl implements CapacityService {
     @Autowired
     CapacityRepository cGCapacityRepository;
     @Override
     public CapacityDto saveCapacity(CapacityDto cGCapacityDto) {
+        log.info("Inside SaveCapacity");
         Capacity cGCapacity = null;
         if (cGCapacityDto.getCgCapacityId() == 0) {
             cGCapacity = new Capacity();
@@ -24,11 +27,13 @@ public class CapacityServiceImpl implements CapacityService {
         }
         cGCapacity = cGCapacityRepository.save(cGCapacity);
         cGCapacityDto.setCgCapacityId(cGCapacity.getCgCapacityId());
+        log.info("Exit SaveCapacity");
         return cGCapacityDto;
     }
 
     @Override
     public CapacityDto readCapacity(Long cgProviderId) {
+        log.info("Inside ReadCapacity");
       CapacityDto cGCapacityDto = new CapacityDto();
         if (cgProviderId != 0) {
             Capacity CGCapacity = cGCapacityRepository.findByCgProviderId(cgProviderId);
@@ -43,6 +48,7 @@ public class CapacityServiceImpl implements CapacityService {
         else{
             throw new EntityNotFoundException();
         }
+        log.info("Exit ReadCapacity");
         return cGCapacityDto;
     }
 }

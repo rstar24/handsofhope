@@ -5,6 +5,7 @@ import org.cyfwms.common.entity.Attachment;
 import org.cyfwms.common.exception.I18Constants;
 import org.cyfwms.common.exception.MessageUtil;
 import org.cyfwms.common.exception.NoSuchElementFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.cyfwms.participant.dto.ParticipantAttachmentDto;
 import org.cyfwms.participant.entity.ParticipantAttachment;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,7 @@ import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class ParticipantAttachmentServiceImpl implements ParticipantAttachmentService {
 
     @Autowired
@@ -34,6 +36,8 @@ public class ParticipantAttachmentServiceImpl implements ParticipantAttachmentSe
     @Override
     public ParticipantAttachmentDto readParticipantAttachmentByTypeAndStatus(
             Long participantId, String attachmentType, String status) {
+
+        log.info("Inside ReadParticipantAttachmentByTypeAndStatus");
         ParticipantAttachmentDto participantAttachmentDto =
                 new ParticipantAttachmentDto();
         List<ParticipantAttachment> participantAttachList = participantAttachmentRepo
@@ -45,24 +49,29 @@ public class ParticipantAttachmentServiceImpl implements ParticipantAttachmentSe
                     participantAttachList.get(0), participantAttachmentDto);
 
         }
+        log.info("Exit ReadParticipantAttachmentByTypeAndStatus");
         return participantAttachmentDto;
     }
 
-
     @Override
     public ParticipantAttachmentDto saveParticipantAttachment(ParticipantAttachmentDto participantAttachmentDto) {
+        log.info("Inside SaveParticipantAttachment");
         ParticipantAttachment participantAttachment = new ParticipantAttachment();
         BeanUtils.copyProperties(participantAttachmentDto, participantAttachment);
         participantAttachment = participantAttachmentRepo.save(participantAttachment);
         participantAttachmentDto.setParticipantAttachmentId(
                 participantAttachment.getParticipantAttachmentId());
+        participantAttachmentDto.setAttachment(participantAttachment.getAttachment());
+        log.info("Exit SaveParticipantAttachment");
         return participantAttachmentDto;
     }
 
     @Override
-    public ParticipantAttachmentDto uploadParticipantAttachment(MultipartFile file, String participantDto) throws IOException {
+    public ParticipantAttachmentDto uploadParticipantAttachment(MultipartFile file, String participantDto)
+            throws IOException {
         Attachment attachment = null;
-        ParticipantAttachmentDto participantAttachmentDto = new ObjectMapper().readValue(participantDto, ParticipantAttachmentDto.class);
+        ParticipantAttachmentDto participantAttachmentDto = new ObjectMapper().readValue(participantDto,
+                ParticipantAttachmentDto.class);
         ParticipantAttachment participantAttachment = new ParticipantAttachment();
 
         attachment = new Attachment();
@@ -143,8 +152,10 @@ public class ParticipantAttachmentServiceImpl implements ParticipantAttachmentSe
     }
 
     private ParticipantAttachment readParticipantAttachment(long participantAttachmentId) {
-        ParticipantAttachment participantAttachmentEntity = participantAttachmentRepo.findById(participantAttachmentId).filter(p -> p.getStatus().equals("ACTIVE")).orElseThrow(() ->
-                new NoSuchElementFoundException(messageUtil.getLocalMessage(I18Constants.NO_ITEM_FOUND.getKey(), String.valueOf(participantAttachmentId))));
+        ParticipantAttachment participantAttachmentEntity = participantAttachmentRepo.findById(participantAttachmentId)
+                .filter(p -> p.getStatus().equals("ACTIVE"))
+                .orElseThrow(() -> new NoSuchElementFoundException(messageUtil.getLocalMessage(
+                        I18Constants.NO_ITEM_FOUND.getKey(), String.valueOf(participantAttachmentId))));
         ;
         return participantAttachmentEntity;
     }
@@ -153,9 +164,11 @@ public class ParticipantAttachmentServiceImpl implements ParticipantAttachmentSe
         boolean invalidParticipantAttachment = true;
 
         if (file.getContentType().equals("image/png") ||
-                file.getContentType().equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document") ||
+                file.getContentType().equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+                ||
                 file.getContentType().equals("image/jpg") || file.getContentType().equals("image/jpeg") ||
-                file.getContentType().equals("application/pdf") || file.getContentType().equals("application/vnd.ms-excel") ||
+                file.getContentType().equals("application/pdf")
+                || file.getContentType().equals("application/vnd.ms-excel") ||
                 file.getContentType().equals("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") ||
                 file.getContentType().equals("image/bmp") ||
                 file.getContentType().equals("image/gif")) {

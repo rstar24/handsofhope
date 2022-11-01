@@ -1,5 +1,6 @@
 package org.cyfwms.initialcontact.service;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.cyfwms.initialcontact.dto.ICReferralInfoDto;
 import org.cyfwms.initialcontact.entity.ICReferralInfo;
 import org.cyfwms.initialcontact.repository.ICReferralInfoRepository;
@@ -8,12 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
+@Slf4j
 public class ICReferralInfoServiceImpl implements ICReferralInfoService {
     @Autowired
     ICReferralInfoRepository iCReferralInfoRepository;
 
     @Override
     public ICReferralInfoDto readAllReferralInfo(Long fileDetailsId) {
+        log.info("Inside ReadAllReferralInfo");
         ICReferralInfoDto iCReferralInfoDto = new ICReferralInfoDto();
         if (fileDetailsId != 0) {
             ICReferralInfo iCReferralInfo = iCReferralInfoRepository.findByFileDetailsId(fileDetailsId);
@@ -21,11 +24,13 @@ public class ICReferralInfoServiceImpl implements ICReferralInfoService {
                 BeanUtils.copyProperties(iCReferralInfo, iCReferralInfoDto);
             }
         }
+        log.info("Exit ReadAllReferralInfo");
             return iCReferralInfoDto;
     }
 
     @Override
     public ICReferralInfoDto saveAllReferralInfo(ICReferralInfoDto iCReferralInfoDto) {
+        log.info("Inside SaveAllReferralInfo");
         ICReferralInfo iCReferralInfo = null;
         if (iCReferralInfoDto.getReferralInfoId() == 0) {
             iCReferralInfo = new ICReferralInfo();
@@ -37,6 +42,7 @@ public class ICReferralInfoServiceImpl implements ICReferralInfoService {
         iCReferralInfo = iCReferralInfoRepository.save(iCReferralInfo);
         iCReferralInfoDto.setFileDetailsId(iCReferralInfo.getFileDetailsId());
         iCReferralInfoDto.setReferralInfoId(iCReferralInfo.getReferralInfoId());
+        log.info("Exit SaveAllReferralInfo");
         return iCReferralInfoDto;
     }
 }

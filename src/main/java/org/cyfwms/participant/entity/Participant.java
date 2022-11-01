@@ -110,4 +110,9 @@ public class Participant implements Serializable {
     @Getter @Setter
     private ParticipantOtherInformation participantOtherInfo;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "participantid", referencedColumnName = "participantid")
+    @Getter @Setter
+    private List<ParticipantReminder> participantReminderList;
+
 }

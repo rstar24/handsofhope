@@ -20,35 +20,35 @@ import static org.springframework.http.HttpStatus.OK;
 @RequestMapping("/v1/cpa/attachments")
 @CrossOrigin("*")
 public class AttachmentsController {
-    @Autowired
-    private AttachmentsService attachmentsService;
+  @Autowired
+  private AttachmentsService attachmentsService;
 
-    @ApiOperation("Save/Upload/Put one/single attachment.")
-    @PutMapping("/save_one")
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<AttachmentDTO> saveOne(@RequestParam(value = "file", required = false) MultipartFile file, @RequestParam("culturalDto") String culturalDto) throws IOException {
-        AttachmentDTO culturalProgImage = attachmentsService.uploadImage(file, culturalDto);
-        return ResponseEntity.ok(culturalProgImage);
-    }
+  @ApiOperation("Save/Upload/Put one/single attachment.")
+  @PutMapping("/save_one")
+  @ResponseStatus(HttpStatus.CREATED)
+  public ResponseEntity<AttachmentDTO> saveOne(@RequestParam(value = "file", required = false) MultipartFile file, @RequestParam("culturalDto") String culturalDto) throws IOException {
+    AttachmentDTO culturalProgImage = attachmentsService.uploadImage(file, culturalDto);
+    return ResponseEntity.ok(culturalProgImage);
+  }
 
-    @ApiOperation("Read/Get one/single attachment.")
-    @GetMapping("/read_one/{id}")
-    public AttachmentDTO readOne(@PathVariable Long id) {
-        return attachmentsService.getOneFile(id);
-    }
+  @ApiOperation("Read/Get one/single attachment.")
+  @GetMapping("/read_one/{id}")
+  public AttachmentDTO readOne(@PathVariable Long id) {
+    return attachmentsService.getOneFile(id);
+  }
 
-    @ApiOperation("Read/Get all attachments.")
-    @GetMapping(value = "/read_all/{culturalprogramid}", produces = "application/json")
-    @ResponseStatus(OK)
-    public List<AttachmentDTO> readAll(@PathVariable("culturalprogramid") Long culturalProgramId) {
-        return attachmentsService.getAllFiles(culturalProgramId);
-    }
+  @ApiOperation("Read/Get all attachments.")
+  @GetMapping(value = "/read_all/{culturalprogramid}", produces = "application/json")
+  @ResponseStatus(OK)
+  public List<AttachmentDTO> readAll(@PathVariable("culturalprogramid") Long culturalProgramId) {
+    return attachmentsService.getAllFiles(culturalProgramId);
+  }
 
 
-    @DeleteMapping("/remove_one/{culturalprogimageid}")
-    @ApiOperation("Soft remove/delete one/single attachment.")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public void removeCulturalProgImage(@PathVariable("culturalprogimageid") Long culturalProgImageId) {
-        attachmentsService.removeCulturalProgImage(culturalProgImageId);
-    }
+  @DeleteMapping("/remove_one/{culturalprogimageid}")
+  @ApiOperation("Soft remove/delete one/single attachment.")
+  @ResponseStatus(HttpStatus.ACCEPTED)
+  public void removeCulturalProgImage(@PathVariable("culturalprogimageid") Long culturalProgImageId) {
+    attachmentsService.removeCulturalProgImage(culturalProgImageId);
+  }
 }

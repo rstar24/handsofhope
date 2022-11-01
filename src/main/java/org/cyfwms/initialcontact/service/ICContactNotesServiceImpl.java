@@ -1,4 +1,5 @@
 package org.cyfwms.initialcontact.service;
+import lombok.extern.slf4j.Slf4j;
 import org.cyfwms.initialcontact.dto.ICContactNotesDto;
 import org.cyfwms.initialcontact.entity.ICContactNotes;
 import org.cyfwms.initialcontact.repository.ICContactNotesRepository;
@@ -10,11 +11,13 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Optional;
 @Service
+@Slf4j
 public class ICContactNotesServiceImpl implements ICContactNotesService {
     @Autowired
     private ICContactNotesRepository iCContactNotesRepository;
     @Override
     public ICContactNotesDto saveContactNotes(ICContactNotesDto iCContactNotesDto) {
+        log.info("Inside SaveContactNotes");
         ICContactNotes iCContactNotes = null;
         if (iCContactNotesDto.getContactNotesId() == 0) {
             iCContactNotes = new ICContactNotes();
@@ -26,10 +29,12 @@ public class ICContactNotesServiceImpl implements ICContactNotesService {
         }
         iCContactNotes = iCContactNotesRepository.save(iCContactNotes);
         iCContactNotesDto.setContactNotesId(iCContactNotes.getContactNotesId());
+        log.info("Exit SaveContactNotes");
         return iCContactNotesDto;
     }
     @Override
     public ICContactNotesDto readContactNotes(Long contactNotesId) {
+        log.info("Inside ReadContactNotes");
         ICContactNotesDto iCContactNotesDto = new ICContactNotesDto();
         if (contactNotesId != 0) {
             Optional<ICContactNotes> iCContactNotes = iCContactNotesRepository.findById(contactNotesId);
@@ -46,16 +51,19 @@ public class ICContactNotesServiceImpl implements ICContactNotesService {
             }
             }
         }
+        log.info("Exit ReadContactNotes");
             return iCContactNotesDto;
 
     }
     @Override
     public void removeContactNotes(Long contactNotesId) {
+        log.info("Inside RemoveContactNotes");
         Optional<ICContactNotes> iCContactNotesOpt = iCContactNotesRepository.findById(contactNotesId);
         if(iCContactNotesOpt.isPresent()){
             ICContactNotes iCContactNotes = iCContactNotesOpt.get();
             iCContactNotes.setStatus("INACTIVE");
             iCContactNotesRepository.save(iCContactNotes);
+            log.info("Exit RemoveContactNotes");
         }
     }
 }

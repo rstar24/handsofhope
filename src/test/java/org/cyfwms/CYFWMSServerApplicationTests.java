@@ -1,13 +1,12 @@
 package org.cyfwms;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-
-@SpringBootTest
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+@Suite.SuiteClasses({ParticipantControllerTest.class,TWNInitialContactControllerTest.class,CulturalProgramControllerTest.class,CareGiverControllerTest.class})
+@RunWith(Suite.class)
 class CYFWMSServerApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+
+
 
 }

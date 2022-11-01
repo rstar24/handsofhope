@@ -1,5 +1,6 @@
 package org.cyfwms.culturalprogram.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.cyfwms.culturalprogram.dto.CPAParticipantDto;
 import org.cyfwms.culturalprogram.entity.CPAParticipant;
 import org.cyfwms.culturalprogram.repository.CPAParticipantRepository;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class CPAParticipantServiceImpl implements CPAParticipantService {
     @Autowired
     private CPAParticipantRepository CPAParticipantRepository;
@@ -21,6 +23,7 @@ public class CPAParticipantServiceImpl implements CPAParticipantService {
 
     @Override
     public CPAParticipantDto saveCpaParticipant(CPAParticipantDto CPAParticipantDto) {
+        log.info("Inside SaveCpaParticipant");
         CPAParticipant CPAParticipant = null;
         if (CPAParticipantDto.getParticipantCulturalProId() == 0) {
             CPAParticipant = new CPAParticipant();
@@ -32,11 +35,13 @@ public class CPAParticipantServiceImpl implements CPAParticipantService {
         }
         CPAParticipant = CPAParticipantRepository.save(CPAParticipant);
         CPAParticipantDto.setParticipantCulturalProId(CPAParticipant.getParticipantCulturalProId());
+        log.info("Exit SaveCpaParticipant");
         return CPAParticipantDto;
     }
 
     @Override
     public CPAParticipantDto readCpaParticipant(Long culturalProgramId) {
+        log.info("Inside ReadCpaParticipant");
         CPAParticipantDto CPAParticipantDto = new CPAParticipantDto();
         if (culturalProgramId != 0) {
             CPAParticipant CPAParticipant = CPAParticipantRepository.findByCulturalProgramId(culturalProgramId);
@@ -50,17 +55,20 @@ public class CPAParticipantServiceImpl implements CPAParticipantService {
             }
 
         }
+        log.info("Exit ReadCpaParticipant");
         return CPAParticipantDto;
     }
 
     @Override
     public void removeCpaParticipant(Long participantCulturalProId) {
+        log.info("Inside RemoveCpaParticipant");
         Optional<CPAParticipant> cpaParticipantOpt = CPAParticipantRepository.findById(participantCulturalProId);
         if (cpaParticipantOpt.isPresent()) {
             CPAParticipant CPAParticipant = new CPAParticipant();
             CPAParticipant = cpaParticipantOpt.get();
             CPAParticipant.setStatus("INACTIVE");
             CPAParticipantRepository.save(CPAParticipant);
+            log.info("Exit RemoveCpaParticipant");
         }
     }
 }

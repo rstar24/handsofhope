@@ -2,6 +2,7 @@ package org.cyfwms.caregiver.service;
 
 import java.util.Optional;
 
+import lombok.extern.slf4j.Slf4j;
 import org.cyfwms.caregiver.dto.CareProviderDto;
 import org.cyfwms.caregiver.entity.CareProvider;
 import org.cyfwms.caregiver.repository.CareProviderRepository;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class CareProviderServiceImpl implements CareProviderService {
     @Autowired
     CareProviderRepository careProviderRepository;
@@ -29,6 +31,7 @@ public class CareProviderServiceImpl implements CareProviderService {
 
     @Override
     public CareProviderDto save(CareProviderDto cpDto) {
+        log.info("Inside Save CareProvider");
         CareProvider cp = null;
         if (cpDto.getId() == 0) {
             cp = new CareProvider();
@@ -51,11 +54,13 @@ public class CareProviderServiceImpl implements CareProviderService {
         cp = careProviderRepository.save(cp);
         cpDto.setId(cp.getId());
         cpDto.setReferenceId(cp.getReferenceId());
+        log.info("Exit Save CareProvider");
         return cpDto;
     }
 
     @Override
     public CareProviderDto read(Long id) {
+        log.info("Inside Read CareProvider");
         CareProviderDto cpDto = new CareProviderDto();
         if (id!=0){
         CareProvider cp = careProviderRepository.findByIdWhereActive(id)
@@ -79,11 +84,13 @@ public class CareProviderServiceImpl implements CareProviderService {
             }
           }
         }
+        log.info("Exit Read CareProvider");
         return cpDto;
     }
 
     @Override
     public void remove(Long referenceId) {
+        log.info("Inside Remove CareProvider");
         CareProvider cp = careProviderRepository
             .findByReferenceIdWhereActive(referenceId)
             .orElseThrow(() -> new NoSuchElementFoundException(
@@ -92,5 +99,6 @@ public class CareProviderServiceImpl implements CareProviderService {
             ));
         cp.setDeletionStatus("INACTIVE");
         careProviderRepository.save(cp);
+        log.info("Exit Remove CareProvider");
     }
 }

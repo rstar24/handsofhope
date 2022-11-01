@@ -1,4 +1,5 @@
 package org.cyfwms.caregiver.service;
+import lombok.extern.slf4j.Slf4j;
 import org.cyfwms.caregiver.dto.ContactNotesDto;
 import org.cyfwms.caregiver.entity.ContactNotes;
 import org.cyfwms.caregiver.repository.ContactNotesRepository;
@@ -9,12 +10,14 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Optional;
 @Service
+@Slf4j
 public class ContactNotesServiceImpl implements ContactNotesService {
     @Autowired
     ContactNotesRepository contactNotesRepository;
 
     @Override
     public ContactNotesDto saveAllContactNotes(ContactNotesDto cgContactNotesDto) {
+        log.info("Inside SaveAllContactNotes");
             ContactNotes careGiverContactNotes = null;
             if (cgContactNotesDto.getCgContactNotesId() == 0) {
                 careGiverContactNotes = new ContactNotes();
@@ -26,12 +29,13 @@ public class ContactNotesServiceImpl implements ContactNotesService {
             }
             careGiverContactNotes = contactNotesRepository.save(careGiverContactNotes);
         cgContactNotesDto.setCgContactNotesId(careGiverContactNotes.getCgContactNotesId());
-
+        log.info("Exit SaveAllContactNotes");
         return cgContactNotesDto;
     }
 
-    @Override
+    @Override()
     public ContactNotesDto getAllContactNotes(Long cgContactNotesId) {
+        log.info("Inside GetAllContactNotes");
         ContactNotesDto contactNotesDto=new ContactNotesDto();
         if (cgContactNotesId!=0) {
             Optional<ContactNotes> contactNotes = contactNotesRepository.findById(cgContactNotesId);
@@ -45,17 +49,20 @@ public class ContactNotesServiceImpl implements ContactNotesService {
             }
             }
        }
+        log.info("Exit GetAllContactNotes");
         return contactNotesDto;
     }
 
     @Override
     public void removeContactNotes(Long cgContactNotesId) {
+        log.info("Inside RemoveContactNotes");
         Optional<ContactNotes> contactNotesOpt =
                 contactNotesRepository.findById(cgContactNotesId);
         if(contactNotesOpt.isPresent()){
             ContactNotes contactNotes = contactNotesOpt.get();
             contactNotes.setStatus("INACTIVE");
             contactNotesRepository.save(contactNotes);
+            log.info("Exit RemoveContactNotes");
         }
     }
 }

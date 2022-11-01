@@ -37,7 +37,7 @@ public class ParticipantServiceImpl implements ParticipantService {
 
     @Override
     public ParticipantIdentityDto readParticipantIdentity(Long participantId) {
-        log.info("Reading readParticipantIdentity");
+        log.info("Reading ReadParticipantIdentity");
         ParticipantIdentityDto participantIdentityDto = new ParticipantIdentityDto();
         if (participantId != 0) {
             Participant participant = readParticipant(participantId);
@@ -62,7 +62,7 @@ public class ParticipantServiceImpl implements ParticipantService {
                         participantAttachmentDto);
             }
         }
-        log.info("Exit readParticipantIdentity");
+        log.info("Exit ReadParticipantIdentity");
         return participantIdentityDto;
     }
 
@@ -90,6 +90,7 @@ public class ParticipantServiceImpl implements ParticipantService {
 
     @Override
     public ParticipantIdentityDto saveParticipantIdentity(ParticipantIdentityDto participantIdentityDto, MultipartFile multipartFile) throws IOException {
+       log.info("Inside SaveParticipantIdentity");
         Participant participant = null;
         List<ParticipantAttachment> participantAttachmentList = null;
         if(multipartFile != null) {
@@ -125,6 +126,7 @@ public class ParticipantServiceImpl implements ParticipantService {
         participant = participantRepository.save(participant);
         participantIdentityDto.setParticipantId(participant.getParticipantId());
         participantIdentityDto.setReferenceId(participant.getReferenceId());
+        log.info("Exit SaveParticipantIdentity");
         return participantIdentityDto;
     }
 
@@ -161,6 +163,7 @@ public class ParticipantServiceImpl implements ParticipantService {
 
     @Override
     public void removeParticipant(Long referenceId) {
+        log.info("Inside RemoveParticipant");
         Participant p =
                 participantRepository.findByReferenceId(referenceId)
                         .orElseThrow(() -> new NoSuchElementFoundException(
@@ -173,6 +176,7 @@ public class ParticipantServiceImpl implements ParticipantService {
                             String.valueOf(referenceId)));
         }
         p.setStatus("INACTIVE");
+        log.info("Exit RemoveParticipant");
         participantRepository.save(p);
     }
 }
