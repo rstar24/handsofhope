@@ -58,6 +58,10 @@ const ICLayout = (props: {
                 value: "Contact Notes",
                 route: "../contact_notes",
               },
+              {
+                value: "Appointments",
+                route: "../appointment",
+              },
             ]}
           />
         </Box>

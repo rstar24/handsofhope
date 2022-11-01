@@ -8,6 +8,9 @@ import { Route, Routes } from "react-router-dom";
 import type { ReactElement } from "react";
 import ContactNotes from "../../pages/initialContact/contactNotes/ContactNotes";
 import Participants from "../../pages/initialContact/Participants/Participant";
+import Appointments from "../../pages/initialContact/appointment/ICAppointments";
+import ICAppointments from "../../pages/initialContact/appointment/ICAppointments";
+
 
 const InitialContact = (): ReactElement => {
   return (
@@ -22,6 +25,8 @@ const InitialContact = (): ReactElement => {
       />
        <Route path="participants" element={<Participants />} />
       <Route path="contact_notes" element={<ContactNotes />} />
+      <Route path="appointment" element={<ICAppointments />} />
+
     </Routes>
   );
 };
