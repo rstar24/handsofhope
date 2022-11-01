@@ -2,6 +2,7 @@ import Popup from "../../../components/Popup";
 import AuthLayout from "../../../components/auth/layout/AuthLayout";
 import CYFMSHeader from "../../../components/cyfms/CYFMSHeader";
 import EditIcon from "../../../components/cyfms/EditIcon";
+import Attachments from "../../../components/cyfms/view/Attachments";
 import Contact from "../../../components/cyfms/view/Contact";
 import Counselors from "../../../components/cyfms/view/Counselors";
 import CriminalHistory from "../../../components/cyfms/view/CriminalHistory";
@@ -176,6 +177,11 @@ const View = (): ReactElement => {
               value={8}
               onClick={() => navigate("other_information")}
             />
+            <Tab
+              label="Attachments"
+              value={9}
+              onClick={() => navigate("attachments")}
+            />
           </Tabs>
         </TabContext.Provider>
       </Box>
@@ -193,6 +199,7 @@ const View = (): ReactElement => {
           <Route path="family_physicians" element={<FamilyPhysicians />} />
           <Route path="counselors" element={<Counselors />} />
           <Route path="other_information" element={<OtherInformation />} />
+          <Route path="attachments" element={<Attachments />} />
         </Routes>
       </Box>
       <Popup children={<Router />} />

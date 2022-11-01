@@ -10,6 +10,7 @@ import cgCareProviderReducer from "../features/cg/careProvider/slice";
 import cgContactNotesReducer from "../features/cg/contactNotes/slice";
 import cgSearchReducer from "../features/cg/search/slice";
 import cyfmsAllReducer from "../features/cyfms/all/slice";
+import cyfmsAttachmentsReducer from "../features/cyfms/attachments/slice";
 import cyfmsContactReducer from "../features/cyfms/contact/slice";
 import cyfmsCriminalHistoryReducer from "../features/cyfms/criminalHistory/slice";
 import cyfmsEducationAndEmploymentReducer from "../features/cyfms/educationAndEmployment/slice";
@@ -19,6 +20,7 @@ import cyfmsOtherInformationReducer from "../features/cyfms/otherInformation/sli
 import cyfmsRegisterReducer from "../features/cyfms/register/slice";
 import cyfmsCounselorsReducer from "../features/cyfms/counselors/slice";
 import cyfmsSearchReducer from "../features/cyfms/search/slice";
+import icAttachmentsReducer from "../features/initialContact/attachments/slice";
 import icContactNotesReducer from "../features/initialContact/contactNotes/slice";
 import icFileDetailsReducer from "../features/initialContact/fileDetails/slice";
 import icIncidentReportReducer from "../features/initialContact/incidentReport/slice";
@@ -31,7 +33,7 @@ import initiatorReducer from "../features/initiatorSlice";
 import loginReducer from "../features/login/slice";
 import popupReducer from "../features/popupSlice";
 import navBarReducer from "../features/navBarSlice";
-import  cyfmsAppointmentsReducer  from "../features/cyfms/appointment/slice";
+import cyfmsAppointmentsReducer  from "../features/cyfms/appointment/slice";
 import ICappointmentsReducer from "../features/initialContact/appointment/slice";
 import cgAppointmentsReducer from "../features/cg/appointment/slice";
 
@@ -49,7 +51,8 @@ const rootReducer = {
   cyfmsFamilyPhysicians: cyfmsFamilyPhysiciansReducer,
   cyfmsCounselors: cyfmsCounselorsReducer,
   cyfmsOtherInformation: cyfmsOtherInformationReducer,
-  cyfmsAppointments:cyfmsAppointmentsReducer,
+  cyfmsAppointments: cyfmsAppointmentsReducer,
+  cyfmsAttachments: cyfmsAttachmentsReducer,
   cyfmsSearch: cyfmsSearchReducer,
   cyfmsAll: cyfmsAllReducer,
   icFileDetails: icFileDetailsReducer,
@@ -61,6 +64,7 @@ const rootReducer = {
   icContactNotes: icContactNotesReducer,
   icParticipants: icParticipantsReducer,
   icSearch: icSearchReducer,
+  icAttachments: icAttachmentsReducer,
   cpa: cpaReducer,
   cpaSearch: cpaSearchReducer,
   cpaParticipant: cpaParticipantReducer,

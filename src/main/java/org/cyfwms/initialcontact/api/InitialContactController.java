@@ -85,7 +85,7 @@ public class InitialContactController {
     }
 
     @ApiOperation("Save/Upload/Put one/single attachment.")
-    @PutMapping("/save_one")
+    @PutMapping("/attachments/save_one")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<ICAttachmentDTO> saveOne(@RequestParam(value = "file", required = false) MultipartFile file,
             @RequestParam("icDto") String icDto) throws IOException {
@@ -94,19 +94,20 @@ public class InitialContactController {
     }
 
     @ApiOperation("Read/Get one/single attachment.")
-    @GetMapping("/read_one/{icattchmentid}")
+    @GetMapping("/attachments/read_one/{icattchmentid}")
     public ICAttachmentDTO readOne(@PathVariable("icattchmentid") Long icAttachmentId) {
         return icAttachmentService.getOneFile(icAttachmentId);
     }
 
     @ApiOperation("Read/Get all attachments.")
-    @GetMapping(value = "/read_all/{filedetailsid}", produces = "application/json")
+    @GetMapping(value = "/attachments/read_all/{filedetailsid}", produces = "application/json")
     @ResponseStatus(OK)
     public List<ICAttachmentDTO> readAll(@PathVariable("filedetailsid") Long fileDetailsId) {
         return icAttachmentService.getAllFiles(fileDetailsId);
     }
 
-    @DeleteMapping("/remove_one/{icattchmentid}")
+
+    @DeleteMapping("/attachments/remove_one/{icattchmentid}")
     @ApiOperation("Soft remove/delete one/single attachment.")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void removeICAttachment(@PathVariable("icattchmentid") Long icAttachmentId) {

@@ -2,6 +2,7 @@ import Popup from "../../../components/Popup";
 import AuthLayout from "../../../components/auth/layout/AuthLayout";
 import ICHeader from "../../../components/initialContact/ICHeader";
 import EditIcon from "../../../components/initialContact/EditIcon";
+import Attachments from "../../../components/initialContact/view/Attachments";
 import FileDetails from "../../../components/initialContact/view/FileDetails";
 import IncidentReport from "../../../components/initialContact/view/IncidentReport";
 import PatientCareInformation from "../../../components/initialContact/view/PatientCareInformation";
@@ -114,7 +115,11 @@ const View = (): ReactElement => {
               value={7}
               onClick={() => navigate("contact_notes")}
             />
-            
+            <Tab
+              label="Attachments"
+              value={8}
+              onClick={() => navigate("attachments")}
+            />
           </Tabs>
         </TabContext.Provider>
       </Box>
@@ -134,7 +139,7 @@ const View = (): ReactElement => {
           />
           <Route path="participants" element={<Participants />} />
           <Route path="contact_notes" element={<ContactNotes />} />
-          
+          <Route path="attachments" element={<Attachments />} />
         </Routes>
       </Box>
       <Popup children={<Router />} />

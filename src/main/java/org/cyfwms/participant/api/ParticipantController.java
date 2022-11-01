@@ -390,7 +390,7 @@ public class ParticipantController {
     }
 
     @ApiOperation("Save/Upload/Put one/single attachment.")
-    @PutMapping("/save_one")
+    @PutMapping("/attachments/save_one")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<ParticipantAttachmentDto> saveOne(
             @RequestParam(value = "file", required = false) MultipartFile file,
@@ -401,19 +401,20 @@ public class ParticipantController {
     }
 
     @ApiOperation("Read/Get one/single attachment.")
-    @GetMapping("/read_one/{participantAttachmentId}")
-    public ParticipantAttachmentDto readOne(@PathVariable Long participantAttachmentId) {
+    @GetMapping("/attachments/read_one/{participantAttachmentId}")
+    public ParticipantAttachmentDto readOne(@PathVariable Long participantAttachmentId)
+    {
         return participantAttachmentService.getOneFile(participantAttachmentId);
     }
 
     @ApiOperation("Read/Get all attachments.")
-    @GetMapping(value = "/read_all/{participantId}", produces = "application/json")
+    @GetMapping(value = "/attachments/read_all/{participantId}", produces = "application/json")
     @ResponseStatus(OK)
     public List<ParticipantAttachmentDto> readAll(@PathVariable("participantId") Long participantId) {
         return participantAttachmentService.getAllFiles(participantId);
     }
 
-    @DeleteMapping("/remove_one/{participantAttachmentId}")
+    @DeleteMapping("/attachments/remove_one/{participantAttachmentId}")
     @ApiOperation("Soft remove/delete one/single attachment.")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void removeParticipantAttachment(@PathVariable("participantAttachmentId") Long participantAttachmentId) {

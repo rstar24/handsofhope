@@ -1,4 +1,5 @@
 import { cleanCodetableState } from "../../../features/codetable/slice";
+import { clean as cleanCyfmsAttachmentsState } from "../../../features/cyfms/attachments/slice";
 import { cleanState as cleanContactState } from "../../../features/cyfms/contact/slice";
 import { cleanState as cleanCounselorsState } from "../../../features/cyfms/counselors/slice";
 import { cleanState as cleanCriminalHistoryState } from "../../../features/cyfms/criminalHistory/slice";
@@ -8,6 +9,7 @@ import { cleanState as cleanHouseholdMembersState } from "../../../features/cyfm
 import { cleanState as cleanOtherInformationState } from "../../../features/cyfms/otherInformation/slice";
 import { cleanState as cleanRegisterState } from "../../../features/cyfms/register/slice";
 import { cleanState as cleanCYFMSSearchState } from "../../../features/cyfms/search/slice";
+import { clean as cleanIcAttachmentsState } from "../../../features/initialContact/attachments/slice";
 import { cleanState as cleanFileDetailsState } from "../../../features/initialContact/fileDetails/slice";
 import { cleanState as cleanReferralInformationState } from "../../../features/initialContact/referralInformation/slice";
 import { cleanState as cleanIncidentReportState } from "../../../features/initialContact/incidentReport/slice";
@@ -52,6 +54,7 @@ export default function Navbar() {
     dispatch(cleanCounselorsState(null));
     dispatch(cleanOtherInformationState(null));
     dispatch(cleanCYFMSSearchState(null));
+    dispatch(cleanCyfmsAttachmentsState(null));
     // InitialContact
     dispatch(cleanFileDetailsState(null));
     dispatch(cleanReferralInformationState(null));
@@ -59,6 +62,7 @@ export default function Navbar() {
     dispatch(cleanPresentConcernsState(null));
     dispatch(cleanPatientCareInformationState(null));
     dispatch(cleanInitialContactSearchState(null));
+    dispatch(cleanIcAttachmentsState(null));
     // CPA
     dispatch(cleanCulturalProgramActivity(null));
     dispatch(cleanCPAParticipant(null));
