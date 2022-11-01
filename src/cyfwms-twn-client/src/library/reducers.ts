@@ -33,6 +33,7 @@ import popupReducer from "../features/popupSlice";
 import navBarReducer from "../features/navBarSlice";
 import  cyfmsAppointmentsReducer  from "../features/cyfms/appointment/slice";
 import ICappointmentsReducer from "../features/initialContact/appointment/slice";
+import cgAppointmentsReducer from "../features/cg/appointment/slice";
 
 const rootReducer = {
   login: loginReducer,
@@ -65,6 +66,7 @@ const rootReducer = {
   cpaParticipant: cpaParticipantReducer,
   cpaAttachments: cpaAttachmentsReducer,
   cgCareProvider: cgCareProviderReducer,
+  cgAppointment: cgAppointmentsReducer,
   cgCapacity: cgCapacityReducer,
   cgCaregivers: cgCaregiversReducer,
   cgAttachments: cgAttachmentsReducer,

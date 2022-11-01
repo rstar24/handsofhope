@@ -1,11 +1,12 @@
 import { CYFSWMSNextButton } from "../../../components/CYFSWMSButtons";
+import CYFMSDropdown from "../../../components/cyfms/CYFMSDropdown";
 import Input from "../../../components/Input";
+import CYFMSTextArea from "../../../components/cyfms/CYFMSTextArea";
 import {
   Data,
   doPost,
   doSearch,
-} from "../../../features/cyfms/appointment/slice";
-import CYFMSDropdown from "../../../components/cyfms/CYFMSDropdown";
+} from "../../../features/cg/appointment/slice";
 import { onKeyDown } from "../../../library/app";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import EditIcon from "./EditIcon";
@@ -18,33 +19,29 @@ import {
   disabledFrequency,
   enableFrequency
  
-} from "../../../features/cyfms/appointment/slice";
-import CYFMSTextArea from "../../../components/cyfms/CYFMSTextArea";
-
-const AppointmentsForm = ({
+} from "../../../features/cg/appointment/slice";
+const CGAppointmentsForm = ({
   setAddNew,
   setDisabled,
   disabled,
   targetValue,
 }: any) => {
   const dispatch = useAppDispatch();
-  const state = useAppSelector((state) => state.cyfmsRegister);
+  const state = useAppSelector((state) => state.cgCareProvider);
   const { appointmentstatus } = useAppSelector((state) => state.codetable);
   const { frequency } = useAppSelector((state) => state.codetable); 
   const { initialContactReferral } = useAppSelector((state) => state.codetable);
-  const data = useAppSelector((state) => state.cyfmsAppointments.data);
- const stete = useAppSelector((state)=>state.cyfmsAppointments)
+  const data = useAppSelector((state) => state.cgAppointment.data);
+  const stete = useAppSelector((state)=>state.cgAppointment)
   const submitHandler = (e: FormEvent) => {
-
     e.preventDefault();
     const form = e.currentTarget as HTMLFormElement;
     const formData: Data = {
-  
-      participantAppointmentId:data.participantAppointmentId,
-      participantId:state.data.participantId,
-      referenceId:state.data.referenceId,
-      appointmentdto:{
-        appointmentId: data.appointmentdto.appointmentId,
+      cgappointmentId:data.cgappointmentId,
+      id:state.getData.id,
+     
+      appointmentDto:{
+        appointmentId: data.appointmentDto.appointmentId,
         subject: form.subject.value,
         status: form.appointmentstatus.value,
         date: form.date.value,
@@ -58,24 +55,20 @@ const AppointmentsForm = ({
         endDate: form.endDate.value,
         notes:form.notes.value,
       }
-     
-      
     };
-
+    console.log(formData)
     dispatch(doPost(formData))
       .unwrap()
       .then(() => {
         console.log("PresentConcerns POST backend API was successful!");
-       dispatch(doSearch({ id: state.data.participantId, data: "" }));
+        dispatch(doSearch({ id: state.getData.id, data: "" }));
         setAddNew(false);
       })
-      .catch((err:any) => {
+      .catch((err) => {
         console.log("PresentConcerns POST backend API didn't work!");
         console.log(err);
       });
   };
-  // Handles the form data submi and other
-  // activities.
   const changeHandler = (e: FormEvent) => {
     e.preventDefault();
     const form: any = e.currentTarget;
@@ -100,9 +93,7 @@ const AppointmentsForm = ({
       onSubmit={submitHandler}
       onChange={changeHandler}
       onKeyDown={onKeyDown}
-      
     >
-      
       {disabled && (
         <Box
           sx={{
@@ -113,37 +104,40 @@ const AppointmentsForm = ({
           <EditIcon
             setDisabled={setDisabled}
             setAddNew={setAddNew}
-            participantAppointmentId={data.participantAppointmentId}
+            CGAppointmentId={data.cgappointmentId}
             targetValue={targetValue}
           />
         </Box>
       )}
-      {disabled && (
-        <Typography sx={{ p: 1 }}>
-          Reference Id:{state.data.referenceId}
-        </Typography>
-      )}
+ {state.getData.referenceId! >= 0 ? (
+          <Typography paddingLeft={1}>
+            Reference ID : {state.getData.referenceId}
+          </Typography>
+        ) : (
+          <></>
+        )}
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
           <Input
             id="subject"
             value="Subject"
             //required
-            autofill={data.appointmentdto.subject}
+            autofill={data.appointmentDto.subject}
             readOnly={disabled}
           />
         </Box>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
           <CYFMSDropdown
-            id="appointmentstatus"
-            value="Appointment Status"
-            autofill={data.appointmentdto.status}
+           id="appointmentstatus"
+           value="Appointment Status"
+            //autofill={data.contactMethod}
             disabled={disabled}
-            // optionsList={[" ","Scheduled", "Rescheduled","Missed","Completed","Cancelled"]}
+           
             optionsList={Object.values(appointmentstatus).map(
               (status: any) => status.en
             )}
           />
+          
         </Box>
       </Box>
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
@@ -154,7 +148,7 @@ const AppointmentsForm = ({
             type="date"
             //required
             readOnly={disabled}
-            autofill={data.appointmentdto.date}
+            autofill={data.appointmentDto.date}
             maxDate={new Date().toISOString().substring(0, 10)}
             minDate="1900-01-01"
           />
@@ -164,7 +158,7 @@ const AppointmentsForm = ({
             id="time"
             value="Time"
             type="time"
-            autofill={data.appointmentdto.time}
+            autofill={data.appointmentDto.time}
             readOnly={disabled}
           />
         </Box>
@@ -174,7 +168,7 @@ const AppointmentsForm = ({
           <Input
             id="location"
             value="Location"
-            autofill={data.appointmentdto.location}
+            autofill={data.appointmentDto.location}
             readOnly={disabled}
           />
         </Box>
@@ -182,7 +176,7 @@ const AppointmentsForm = ({
           <Input
             id="duration"
             value="Duration"
-            autofill={data.appointmentdto.duration}
+            autofill={data.appointmentDto.duration}
             readOnly={disabled}
           />
         </Box>
@@ -192,7 +186,7 @@ const AppointmentsForm = ({
           <Input
             id="client"
             value="Client"
-            autofill={data.appointmentdto.client}
+            autofill={data.appointmentDto.client}
             readOnly={disabled}
           />
         </Box>
@@ -200,7 +194,7 @@ const AppointmentsForm = ({
           <Input
             id="caseworker"
             value="Caseworker"
-            autofill={data.appointmentdto.caseworker}
+            autofill={data.appointmentDto.caseworker}
             readOnly={disabled}
           />
         </Box>
@@ -211,9 +205,8 @@ const AppointmentsForm = ({
           <CYFMSDropdown
             id="recurringappointment"
             value="Is this a recurring appointment ?"
-            autofill={data.appointmentdto.recurringAppointment}
+            autofill={data.appointmentDto.recurringAppointment}
             disabled={disabled}
-            // optionsList={["", "Yes", "No"]}
             optionsList={Object.values(initialContactReferral).map(
               (status: any) => status.en
             )}
@@ -228,7 +221,7 @@ const AppointmentsForm = ({
             id="frequency"
             value="Frequency"
             disabled={stete.disabledFrequency}
-            autofill={data.appointmentdto.frequency}
+            autofill={data.appointmentDto.frequency}
             readOnly={disabled}
             optionsList={Object.values(frequency).map(
               (status: any) => status.en
@@ -238,24 +231,23 @@ const AppointmentsForm = ({
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
           <Input
             id="endDate"
-            disabled={stete.disabledClosingDate}
-
             value="End Date"
+            disabled={stete.disabledClosingDate}
+            type="date"
+            autofill={data.appointmentDto.endDate}
+            readOnly={disabled}
             maxDate={new Date().toISOString().substring(0, 10)}
             minDate="1900-01-01"
-            type="date"
-            autofill={data.appointmentdto.endDate}
-          
           />
         </Box>
       </Box>
 
       <CYFMSTextArea
-      formLabelFlex="1 1 0"
-      outlinedInputFlex="5 3 0"
+       formLabelFlex="1 1 0"
+       outlinedInputFlex="5 3 0"
         id="notes"
         value="Notes"
-        autofill={data.appointmentdto.notes}
+        //autofill={data.notes}
         readOnly={disabled}
       />
 
@@ -266,4 +258,4 @@ const AppointmentsForm = ({
   );
 };
 
-export default AppointmentsForm;
+export default CGAppointmentsForm;

@@ -3,7 +3,11 @@ package org.cyfwms.caregiver.api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.cyfwms.caregiver.dto.*;
+import org.cyfwms.caregiver.entity.CaregiverAppointment;
 import org.cyfwms.caregiver.service.*;
+import org.cyfwms.initialcontact.dto.ICAppointmentDto;
+import org.cyfwms.initialcontact.dto.ICAppointmentSearchDto;
+import org.cyfwms.initialcontact.dto.ICAppointmentSearchResultDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +38,10 @@ public class CareGiverController {
 
     @Autowired
     private CareGiversBackGroundCheckService cgBackGroundCheckService;
+    @Autowired
+    private CGAppointmentService  cgAppointmentService;
+    @Autowired
+    private CareGiverSearchAppointmentService careGiverSearchAppointmentService;
 
     @ApiOperation("Read a Care Provider.")
     @GetMapping(value = "/care_provider/read/{id}", produces = "application/json")
@@ -161,6 +169,41 @@ public class CareGiverController {
         cgBackGroundCheckDto= cgBackGroundCheckService.saveCareGiversBackGroundCheck(cgBackGroundCheckDto);
         return new ResponseEntity<>(cgBackGroundCheckDto, HttpStatus.CREATED);
     }
+    @PutMapping(value = "/saveCGAppointment", produces = "application/json")
+    @ApiOperation("Save or Update caregiver Appointment Informtion")
+    @ResponseStatus(HttpStatus.CREATED)
+    public CaregiverAppointmentDto saveCaregiverAppointment(@RequestBody CaregiverAppointmentDto caregiverAppointmentDto) {
+        return cgAppointmentService.saveCgAppointment(caregiverAppointmentDto);
+    }
 
+
+
+    @DeleteMapping("/deleteCGAppointment/{cgAppointmentId}")
+    @ApiOperation("Remove Counselor CFS Workers")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void removeParticipantAppointment(@PathVariable("cgAppointmentId") Long cgAppointmentId) {
+        cgAppointmentService.removeICAppointment(cgAppointmentId);
+    }
+
+    @GetMapping(value = {"/searchCGAppointment/{id}/{data}"},produces = "application/json")
+    @ApiOperation("Search Initial Contact Appointment Information")
+    @ResponseStatus(HttpStatus.OK)
+    public List<CaregGiverSearchAppointmentResultDto> searchCGAppointment(@PathVariable Map<String, String> var)
+    {
+        CareGiverSearchAppointmentDto careGiverSearchAppointmentDto = new CareGiverSearchAppointmentDto();
+        careGiverSearchAppointmentDto.setId(("null".equals(var.get("id"))
+                ||var.get("id")==null) ? null:Long.parseLong(var.get("id")));
+        careGiverSearchAppointmentDto.setData(
+                ("null".equals(var.get("data"))
+                        || var.get("data") == null) ?null:var.get("data"));
+        return careGiverSearchAppointmentService.searchCGAppointment(careGiverSearchAppointmentDto);
+    }
+    @GetMapping(value = "/readOneAppointment/{CGAppointmentId}", produces = "application/json")
+    @ApiOperation("Read CareGiver Appointment Information")
+    @ResponseStatus(HttpStatus.OK)
+    public CaregiverAppointmentDto readOneAppointment(@PathVariable("CGAppointmentId") Long CGAppointmentId) {
+
+        return cgAppointmentService.readOneAppointment(CGAppointmentId);
+    }
 
 }

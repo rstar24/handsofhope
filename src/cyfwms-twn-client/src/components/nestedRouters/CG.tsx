@@ -6,6 +6,7 @@ import View from "../../pages/cg/attachments/View";
 import Capacity from "../../pages/cg/capacity/Capacity";
 import Caregivers from "../../pages/cg/caregivers/Caregivers";
 import CareProvider from "../../pages/cg/careProvider/CareProvider";
+import CGAppointment from "../../pages/cg/appointment/CGAppointments";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import type { FC } from "react";
@@ -25,6 +26,7 @@ const CG: FC = () => {
       <Route path="attachments/add" element={<Add />} />
       <Route path="attachments/view" element={<View />} />
       <Route path="attachments/edit" element={<Edit />} />
+      <Route path="appointment" element={<CGAppointment/>}/>
     </Routes>
   );
 };
