@@ -12,6 +12,6 @@ import java.util.List;
 public interface AppointmentRepository extends JpaRepository<Appointments,Long> {
     @Query(value = "select * from appointments where appointmentid=? AND appointmentStatus ='Active'",nativeQuery = true)
     Appointments findByAppointmentId(Long appointmentIdId);
-    @Query(value = "select * from appointments where date=? AND appointmentStatus ='Active' AND status='scheduled'",nativeQuery = true)
+   @Query(value = "select * from appointments where date=? AND appointmentStatus ='ACTIVE' AND status='Scheduled'",nativeQuery = true)
     List<Appointments> findByDate(LocalDate date);
 }

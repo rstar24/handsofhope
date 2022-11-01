@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.cyfwms.common.dto.AppointmentDto;
+import org.cyfwms.common.dto.CalenderCommonDto;
 import org.cyfwms.common.dto.CalenderDto;
 import org.cyfwms.common.service.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,17 @@ public class CommanApi {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         dateTime = LocalDate.parse(date, formatter);
         return appointmentService.getAllDate(dateTime);
+    }
+
+
+    @GetMapping(value = "/getAllCommonCalenderDate/{date}", produces = "application/json")
+    @ApiOperation("Calender Api")
+    @ResponseStatus(HttpStatus.OK)
+    public List<CalenderCommonDto> getAllCommonCalenderDate(@PathVariable("date") String date) {
+        LocalDate dateTime=null;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        dateTime = LocalDate.parse(date, formatter);
+        return appointmentService.getAllCommonCalenderDate(dateTime);
     }
 
 }

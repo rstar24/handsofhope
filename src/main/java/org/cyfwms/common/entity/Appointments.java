@@ -1,6 +1,10 @@
 package org.cyfwms.common.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.cyfwms.initialcontact.entity.ICAppointment;
+import org.cyfwms.participant.entity.ParticipantAppointment;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -60,4 +64,11 @@ public class Appointments implements Serializable {
     private LocalDate creationDate;
     @Column(name="appointmentStatus")
     private String appointmentStatus;
+
+    @OneToOne(mappedBy = "appointments")
+    private ParticipantAppointment participantAppointment;
+
+    @OneToOne(mappedBy = "appointments")
+    private ICAppointment icAppointment;
+
 }

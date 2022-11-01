@@ -4,11 +4,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.cyfwms.caregiver.dto.*;
-import org.cyfwms.caregiver.entity.CaregiverAppointment;
 import org.cyfwms.caregiver.service.*;
-import org.cyfwms.initialcontact.dto.ICAppointmentDto;
-import org.cyfwms.initialcontact.dto.ICAppointmentSearchDto;
-import org.cyfwms.initialcontact.dto.ICAppointmentSearchResultDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +44,9 @@ public class CareGiverController {
 
     @Autowired
     private CareGiverReminderService careGiverReminderService;
+    @Autowired
+    private CareGiverSearchReminderService careGiverSearchReminderService;
+
 
     @ApiOperation("Read a Care Provider.")
     @GetMapping(value = "/care_provider/read/{id}", produces = "application/json")
@@ -74,7 +73,7 @@ public class CareGiverController {
     }
 
     @GetMapping(value = {
-            "/careGiverProviderSearch/{referenceId}/{name}/{type}/{priCaregiver}/{secCaregiver}/{status}" }, produces = "application/json")
+            "/careGiverProviderSearch/{referenceId}/{name}/{type}/{priCaregiver}/{secCaregiver}/{status}"}, produces = "application/json")
     @ApiOperation("Search Caregivers")
     @ResponseStatus(HttpStatus.OK)
     public List<CareProviderSearchResultsDto> searchCareGiver(@PathVariable Map<String, String> var) {
@@ -155,7 +154,7 @@ public class CareGiverController {
         return new ResponseEntity("Operation Successful", HttpStatus.OK);
     }
 
-    @GetMapping(value = { "/searchContactNotes/{cgproviderid}/{data}" }, produces = "application/json")
+    @GetMapping(value = {"/searchContactNotes/{cgproviderid}/{data}"}, produces = "application/json")
     @ApiOperation("Search CareGiverContactNotes")
     @ResponseStatus(HttpStatus.OK)
     public List<CareGiverContactNotesSearchResultsDto> searchCareGiverContactNotes(
@@ -202,7 +201,7 @@ public class CareGiverController {
         cgAppointmentService.removeICAppointment(cgAppointmentId);
     }
 
-    @GetMapping(value = { "/searchCGAppointment/{id}/{data}" }, produces = "application/json")
+    @GetMapping(value = {"/searchCGAppointment/{id}/{data}"}, produces = "application/json")
     @ApiOperation("Search Initial Contact Appointment Information")
     @ResponseStatus(HttpStatus.OK)
     public List<CaregGiverSearchAppointmentResultDto> searchCGAppointment(@PathVariable Map<String, String> var) {
@@ -246,6 +245,19 @@ public class CareGiverController {
         careGiverReminderService.removeCGReminder(referenceId);
         log.info("RemoveCGReminder " + "ReferenceId :" + referenceId);
         return new ResponseEntity("Operation Successful", HttpStatus.OK);
+    }
+
+    @GetMapping(value = {"/searchCGReminder/{cgProviderId}/{data}"}, produces = "application/json")
+    @ApiOperation("Search CareGiver Reminder")
+    @ResponseStatus(HttpStatus.OK)
+    public List<CareGiverSearchReminderResultDto> searchCGReminder(@PathVariable Map<String, String> var) {
+        CareGiverSearchReminderDto careGiverSearchReminderDto = new CareGiverSearchReminderDto();
+        careGiverSearchReminderDto.setCgProviderId(("null".equals(var.get("cgProviderId"))
+                || var.get("cgProviderId") == null) ? null : Long.parseLong(var.get("cgProviderId")));
+        careGiverSearchReminderDto.setData(
+                ("null".equals(var.get("data"))
+                        || var.get("data") == null) ? null : var.get("data"));
+        return careGiverSearchReminderService.searchCGReminder(careGiverSearchReminderDto);
     }
 
 }
