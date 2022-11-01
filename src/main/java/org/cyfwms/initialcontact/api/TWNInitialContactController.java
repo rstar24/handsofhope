@@ -5,9 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.cyfwms.initialcontact.dto.*;
 import org.cyfwms.initialcontact.service.*;
-import org.cyfwms.participant.dto.ParticipantAppointmentDto;
-import org.cyfwms.participant.dto.ParticipantContactNotesSearchCriteriaDto;
-import org.cyfwms.participant.dto.ParticipantContactNotesSearchResultsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,6 +42,9 @@ public class TWNInitialContactController {
     private ICAppointmentService icAppointmentService;
     @Autowired
     private ICAppointmentSearchService icAppointmentSearchService;
+
+    @Autowired
+    private ICSearchReminderService iCSearchReminderService;
 
     @GetMapping(value = "/readAllFileDetails/{filedetailsid}", produces = "application/json")
     @ApiOperation("Read Identity")
@@ -222,6 +222,19 @@ public class TWNInitialContactController {
         icReminderService.removeICReminder(icReminderId);
         log.info("RemoveICReminder " + "IcReminderId :" + icReminderId);
         return new ResponseEntity("Operation Successful", HttpStatus.OK);
+    }
+
+    @GetMapping(value = {"/searchICReminder/{fileDetailsId}/{data}"}, produces = "application/json")
+    @ApiOperation("Search CareGiver Reminder")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ICSearchReminderResultDto> searchICReminder(@PathVariable Map<String, String> var) {
+        ICSearchReminderDto iCSearchReminderDto = new ICSearchReminderDto();
+        iCSearchReminderDto.setFileDetailsId(("null".equals(var.get("fileDetailsId"))
+                || var.get("fileDetailsId") == null) ? null : Long.parseLong(var.get("fileDetailsId")));
+        iCSearchReminderDto.setData(
+                ("null".equals(var.get("data"))
+                        || var.get("data") == null) ? null : var.get("data"));
+        return iCSearchReminderService.searchICReminder(iCSearchReminderDto);
     }
 
     @GetMapping(value = { "/participantICSearch/{data}" }, produces = "application/json")
