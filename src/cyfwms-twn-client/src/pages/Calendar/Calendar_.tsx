@@ -7,6 +7,7 @@ import AuthLayout from "../../components/auth/layout/AuthLayout";
 import { useCallback, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import EventView from "./EventView";
+import { doGetByDate } from "../../features/calendar/slice";
 
 const localizer = momentLocalizer(moment);
 
@@ -14,6 +15,7 @@ const initialArtists = [{ id: 0, title: "Neeraj", start: "", end: "" }];
 const Calendar_ = (props: any) => {
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
+  const data = useAppSelector((state)=>state.calendar.record)
   const [title, setTitle] = useState(["No Event"]);
   const [newEvent, setNewEvent] = useState(initialArtists);
   const [start, setStart] = useState(
@@ -23,23 +25,25 @@ const Calendar_ = (props: any) => {
     moment(new Date()).format(" ddd, DD MMM yyyy ")
   );
 
-  // useEffect(() => {
-  //   dispatch(doGet()).then((res: any) => {
-  //     const events = res.payload.map((key: any) => ({
-  //       id: key.calendarId,
-  //       title: key.title,
-  //       start: moment(key.start).toDate(),
-  //       end: moment(key.end).toDate(),
-  //     }));
-  //     setNewEvent(events);
+  
 
-  //     for (var i = 0; i < res.payload.length; i++) {
-  //       if (res.payload[i].start === moment(new Date()).format("yyyy-MM-DD")) {
-  //         setTitle(res.payload[i].title);
-  //       }
-  //     }
-  //   });
-  // }, [open]);
+  useEffect(() => {
+    dispatch(doGetByDate(moment(new Date()).format("yyyy-MM-DD"))).then((res: any) => {
+      const events = res.payload.map((key: any) => ({
+        id: key.calendarId,
+        title: key.subject,
+        start: moment(key.start).toDate(),
+        end: moment(key.end).toDate(),
+      }));
+      setNewEvent(events);
+
+      // for (var i = 0; i < res.payload.length; i++) {
+      //   if (res.payload[i].start === moment(new Date()).format("yyyy-MM-DD")) {
+      //     setTitle(res.payload[i].title);
+      //   }
+      // }
+    });
+  }, [open]);
 
   const showEvent = (e: any) => {
     setTitle(e.title);
@@ -85,14 +89,7 @@ const Calendar_ = (props: any) => {
               <Calendar
                 selectable
                 className="rbc-button-link rbc-show-more rbc-month-view "
-                events={[
-                  {
-                    end: new Date("2022-10-10T18:30:00.000Z"),
-                    id: 1,
-                    start: new Date("2022-10-10T18:30:00.000Z"),
-                    title: "Test",
-                  },
-                ]}
+                events={newEvent}
                 startAccessor="start"
                 endAccessor="end"
                 onSelectEvent={handleEvent}

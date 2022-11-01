@@ -24,6 +24,7 @@ import { doGetAppointmentStatus, doGetFrequency } from "../../../features/codeta
 import { doGetICReferral } from "../../../features/codetable/slice";
 import AppointmentsForm from "./ICAppointmentsForm";
 import { grey } from "@mui/material/colors";
+import { Calendar } from "react-calendar";
 
 function ICAppointments(props: any) {
   const state = useAppSelector((state) => state.icFileDetails.getData);
@@ -32,16 +33,18 @@ function ICAppointments(props: any) {
   const [disabled, setDisabled] = useState(false);
 
   const data = useAppSelector((state) => state.icAppointment.record);
-
+  const calendar = useAppSelector((state)=>state.calendar)
   const [value, setValue] = useState("");
   useEffect(() => {
     dispatch(doGetAppointmentStatus()).then(()=>{
       dispatch(doGetFrequency());
       dispatch(doGetICReferral());
   
+     if(!calendar.calendar){
       dispatch(doSearch({ id: state.fileDetailsId, data: "" }))
-        .unwrap()
-        .catch((err) => {});
+      .unwrap()
+      .catch((err) => {});
+     }
     });
    
   }, [addNew]);

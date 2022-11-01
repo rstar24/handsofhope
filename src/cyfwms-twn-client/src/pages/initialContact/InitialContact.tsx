@@ -30,6 +30,7 @@ import { cleanState as cleanPatientCareInformationState } from "../../features/i
 import { cleanState as cleanPresentConcernsState } from "../../features/initialContact/presentConcerns/slice";
 import { cleanState as cleanReferralInformationState } from "../../features/initialContact/referralInformation/slice";
 import { cleanState as cleanContactNotesState } from "../../features/initialContact/contactNotes/slice";
+import { setCalendarView } from "../../features/calendar/slice";
 
 /**
  * The InitialContact functional component.
@@ -96,6 +97,7 @@ const InitialContact = (): ReactElement => {
             onClick={() => {
               cleanStore();
               dispatch(setOpenPopup(true));
+              dispatch(setCalendarView(false));
             }}
           >
             Add an Initial Contact File

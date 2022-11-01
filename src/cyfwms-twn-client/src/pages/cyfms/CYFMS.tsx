@@ -18,6 +18,7 @@ import { Link } from "react-router-dom";
 import type { ReactElement } from "react";
 import { useLocation } from "react-router-dom";
 import { setOpen } from "../../features/popupSlice";
+import { setCalendarView } from "../../features/calendar/slice";
 /**
  * The CYFMS functional component.
  * @returns CYFMS component skeleton.
@@ -73,6 +74,7 @@ const CYFMS = (): ReactElement => {
             }}
             onClick={() => {
               dispatch(setOpenPopup(true));
+              dispatch(setCalendarView(false))
             }}
           >
             Register a Child, Youth, or Family Member

@@ -36,7 +36,7 @@ import navBarReducer from "../features/navBarSlice";
 import cyfmsAppointmentsReducer  from "../features/cyfms/appointment/slice";
 import ICappointmentsReducer from "../features/initialContact/appointment/slice";
 import cgAppointmentsReducer from "../features/cg/appointment/slice";
-
+import calendarReducer from "../features/calendar/slice";
 const rootReducer = {
   login: loginReducer,
   popup: popupReducer,
@@ -76,6 +76,7 @@ const rootReducer = {
   cgAttachments: cgAttachmentsReducer,
   cgContactNotes: cgContactNotesReducer,
   cgSearch: cgSearchReducer,
+  calendar: calendarReducer
 };
 
 export default rootReducer;

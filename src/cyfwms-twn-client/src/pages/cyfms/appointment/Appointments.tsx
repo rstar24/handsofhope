@@ -26,6 +26,7 @@ function Appointments(props: any) {
   const [addNew, setAddNew] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const data = useAppSelector((state) => state.cyfmsAppointments.record);
+  const calendar = useAppSelector((state) => state.calendar)
   const [value, setValue] = useState("");
 
   useEffect(() => {
@@ -33,13 +34,15 @@ function Appointments(props: any) {
       dispatch(doGetFrequency());
       dispatch(doGetICReferral());
   
-  
-      dispatch(doSearch({ id: state.participantId, data: "" }))
+      if(!calendar.calendar){
+        dispatch(doSearch({ id: state.participantId , data: "" }))
         .unwrap()
         .catch(() => {});
+      }
     });
     
   }, [addNew]);
+  
   const handleAddNew = () => {
     dispatch(cleanState(null));
     setDisabled(false);

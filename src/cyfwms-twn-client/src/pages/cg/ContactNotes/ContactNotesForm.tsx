@@ -31,7 +31,7 @@ const ContactNotesForm = ({
     e.preventDefault();
     const form = e.currentTarget as HTMLFormElement;
     const formData: Data = {
-      cgProviderId: state.data.id,
+      cgProviderId: state.getData.id ? state.getData.id : state.data.id ,
       cgContactNotesId: data.cgContactNotesId,
       name: form.naam.value,
       worker: form.worker.value,
