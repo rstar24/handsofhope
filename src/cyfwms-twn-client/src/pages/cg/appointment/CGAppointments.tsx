@@ -36,14 +36,16 @@ function CGAppointments(props: any) {
   const [value, setValue] = useState("");
 
   useEffect(() => {
-    dispatch(doGetAppointmentStatus());
-    dispatch(doGetFrequency());
+    dispatch(doGetAppointmentStatus()).then(()=>{
+      dispatch(doGetFrequency());
     dispatch(doGetICReferral());
 
     dispatch(doSearch({ id: state.id, data: "" }))
       .unwrap()
       .catch((err) => {});
-  }, []);
+    });
+    
+  }, [addNew]);
   const handleAddNew = () => {
     dispatch(cleanState(null));
     setDisabled(false);

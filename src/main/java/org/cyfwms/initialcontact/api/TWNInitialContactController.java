@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.cyfwms.initialcontact.dto.*;
 import org.cyfwms.initialcontact.service.*;
+import org.cyfwms.participant.dto.ParticipantAppointmentDto;
+import org.cyfwms.participant.dto.ParticipantContactNotesSearchCriteriaDto;
+import org.cyfwms.participant.dto.ParticipantContactNotesSearchResultsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +41,10 @@ public class TWNInitialContactController {
     @Autowired
     private ICParticipantSearchService icParticipantSearchService;
     private ICReminderService icReminderService;
+    @Autowired
+    private ICAppointmentService icAppointmentService;
+    @Autowired
+    private ICAppointmentSearchService icAppointmentSearchService;
 
     @GetMapping(value = "/readAllFileDetails/{filedetailsid}", produces = "application/json")
     @ApiOperation("Read Identity")
@@ -226,6 +233,39 @@ public class TWNInitialContactController {
                 ("null".equals(var.get("data"))
                         || var.get("data") == null) ? null : var.get("data"));
         return icParticipantSearchService.searchICParticipant(iCParticipantSearchCriteriaDto);
+    }
+    @PutMapping(value = "/saveICAppointment", produces = "application/json")
+    @ApiOperation("Save or Update InitialContact Appointment Informtion")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ICAppointmentDto saveParticipantAppointment(@RequestBody ICAppointmentDto  icAppointmentDto) {
+        return icAppointmentService.saveICAppointment(icAppointmentDto);
+
+    }
+    @DeleteMapping("/deleteICAppointment/{ICAppointmentId}")
+    @ApiOperation("Remove Counselor CFS Workers")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void removeParticipantAppointment(@PathVariable("ICAppointmentId") Long ICAppointmentId) {
+        icAppointmentService.removeICAppointment(ICAppointmentId);
+    }
+    @GetMapping(value = "/readOneAppointment/{ICAppointmentId}", produces = "application/json")
+    @ApiOperation("Read ContactNotes")
+    @ResponseStatus(HttpStatus.OK)
+    public ICAppointmentDto readOneAppointment(@PathVariable("ICAppointmentId") Long ICAppointmentId) {
+
+        return icAppointmentService.readOneAppointment(ICAppointmentId);
+    }
+    @GetMapping(value = {"/searchICAppointment/{fileDetailsId}/{data}"},produces = "application/json")
+    @ApiOperation("Search Participant")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ICAppointmentSearchResultDto> searchICAppointment(@PathVariable Map<String, String> var)
+    {
+        ICAppointmentSearchDto icAppointmentSearchDto = new ICAppointmentSearchDto();
+        icAppointmentSearchDto.setFileDetailsId(("null".equals(var.get("fileDetailsId"))
+                ||var.get("fileDetailsId")==null) ? null:Long.parseLong(var.get("fileDetailsId")));
+        icAppointmentSearchDto.setData(
+                ("null".equals(var.get("data"))
+                        || var.get("data") == null) ?null:var.get("data"));
+        return icAppointmentSearchService.searchICAppointment(icAppointmentSearchDto);
     }
 
 }

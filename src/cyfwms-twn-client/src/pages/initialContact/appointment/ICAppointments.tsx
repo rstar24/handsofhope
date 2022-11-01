@@ -34,16 +34,17 @@ function ICAppointments(props: any) {
   const data = useAppSelector((state) => state.icAppointment.record);
 
   const [value, setValue] = useState("");
-  console.log("i ammmmmm",data)
   useEffect(() => {
-    dispatch(doGetAppointmentStatus());
-    dispatch(doGetFrequency());
-    dispatch(doGetICReferral());
-
-    dispatch(doSearch({ id: state.fileDetailsId, data: "" }))
-      .unwrap()
-      .catch((err) => {});
-  }, []);
+    dispatch(doGetAppointmentStatus()).then(()=>{
+      dispatch(doGetFrequency());
+      dispatch(doGetICReferral());
+  
+      dispatch(doSearch({ id: state.fileDetailsId, data: "" }))
+        .unwrap()
+        .catch((err) => {});
+    });
+   
+  }, [addNew]);
   const handleAddNew = () => {
     dispatch(cleanState(null));
     setDisabled(false);

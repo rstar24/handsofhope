@@ -29,14 +29,16 @@ function Appointments(props: any) {
   const [value, setValue] = useState("");
 
   useEffect(() => {
-    dispatch(doGetAppointmentStatus());
-    dispatch(doGetFrequency());
-    dispatch(doGetICReferral());
-
-
-    dispatch(doSearch({ id: state.participantId, data: "" }))
-      .unwrap()
-      .catch(() => {});
+    dispatch(doGetAppointmentStatus()).then(()=>{
+      dispatch(doGetFrequency());
+      dispatch(doGetICReferral());
+  
+  
+      dispatch(doSearch({ id: state.participantId, data: "" }))
+        .unwrap()
+        .catch(() => {});
+    });
+    
   }, [addNew]);
   const handleAddNew = () => {
     dispatch(cleanState(null));
