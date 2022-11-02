@@ -2,12 +2,13 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "../../index.css";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import AuthLayout from "../../components/auth/layout/AuthLayout";
 import { useCallback, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
-import EventView from "./EventView";
-import { doGetByDate } from "../../features/calendar/slice";
+import AppointmentEvent from "./AppointmentEvent";
+import { doGetByDate } from "../../features/calendar/appointments/slice";
+import ReminderEvent from "./ReminderEvent";
 
 const localizer = momentLocalizer(moment);
 
@@ -15,7 +16,7 @@ const initialArtists = [{ id: 0, title: "Neeraj", start: "", end: "" }];
 const Calendar_ = (props: any) => {
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
-  const data = useAppSelector((state)=>state.calendar.record)
+  const data = useAppSelector((state)=>state.calendarAppointment.record)
   const [title, setTitle] = useState(["No Event"]);
   const [newEvent, setNewEvent] = useState(initialArtists);
   const [start, setStart] = useState(
@@ -81,10 +82,10 @@ const Calendar_ = (props: any) => {
             display: "flex",
             flexDirection: "column",
             gap: "1rem 0",
-            padding: "2%",
+            padding: "1%",
           }}
         >
-          <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
+          <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 0rem" }}>
             <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
               <Calendar
                 selectable
@@ -115,7 +116,16 @@ const Calendar_ = (props: any) => {
               />
             </Box>
             <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-              <EventView />
+              <Typography sx={{fontWeight:1000}}>Appointments</Typography>
+              <Box sx={{ height:180, flexBasis: 0, flexGrow: 1,overflow: "hidden",
+                        overflowY: "scroll"}}>
+                <AppointmentEvent />
+              </Box>
+              <Typography sx={{fontWeight:1000}}>Reminders</Typography>
+              <Box sx={{ height:180,flexBasis: 0, flexGrow: 1 ,overflow: "hidden",
+                        overflowY: "scroll"}}>
+                <ReminderEvent />
+              </Box>
             </Box>
           </Box>
         </Box>

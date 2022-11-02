@@ -9,19 +9,20 @@ import {
 import { Link } from "react-router-dom";
 import { grey } from "@mui/material/colors";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
-import { doGet as doGetCalendar, doGetByDate, setCalendarView } from "../../features/calendar/slice";
+import { doGet as doGetCalendar, doGetByDate, setCalendarView } from "../../features/calendar/appointments/slice";
 import { initiate } from "../../features/initiatorSlice";
 import { setEdit, setOpen } from "../../features/popupSlice";
 import { unhideTabs } from "../../features/navBarSlice";
 import { doGet as doGetAppointment } from "../../features/cyfms/register/slice";
 import { doSearch as doSearchCyfmsAppointment} from "../../features/cyfms/appointment/slice";
 import {doSearch as doSearchICAppointment} from "../../features/initialContact/appointment/slice";
+import moment from "moment";
 
-function EventView(): ReactElement {
+function AppointmentEvent(): ReactElement {
   const dispatch  = useAppDispatch();
-  const data = useAppSelector((state)=>state.calendar.record)
+  const data = useAppSelector((state)=>state.calendarAppointment.record)
   useEffect(()=>{
-    dispatch(doGetByDate("2022-11-01"));
+    dispatch(doGetByDate(moment(new Date()).format("2022-11-01")));
   },[])
 
   const handleSelected = (id:number, participant : number) => {
@@ -92,6 +93,17 @@ function EventView(): ReactElement {
                 Select
               </Link>
               )}
+
+              { val.cgProviderId && (
+                <Link
+                to="../cg/appointment"
+                onClick={() =>{ handleSelected(val.appointmentId, val.cgProviderId);
+                  dispatch(doSearchICAppointment({ id:val.fileDetailsId, data: "" }))
+                }}
+              >
+                Select
+              </Link>
+              )}
               
             </TableCell>
             <TableCell sx={{ color: "black" }} align="center" size="small">
@@ -111,4 +123,4 @@ function EventView(): ReactElement {
   );
 }
 
-export default EventView;
+export default AppointmentEvent;

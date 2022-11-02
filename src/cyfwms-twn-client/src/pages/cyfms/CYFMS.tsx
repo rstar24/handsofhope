@@ -18,7 +18,7 @@ import { Link } from "react-router-dom";
 import type { ReactElement } from "react";
 import { useLocation } from "react-router-dom";
 import { setOpen } from "../../features/popupSlice";
-import { setCalendarView } from "../../features/calendar/slice";
+import { setCalendarView } from "../../features/calendar/appointments/slice";
 /**
  * The CYFMS functional component.
  * @returns CYFMS component skeleton.

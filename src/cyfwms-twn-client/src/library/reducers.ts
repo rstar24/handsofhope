@@ -36,7 +36,9 @@ import navBarReducer from "../features/navBarSlice";
 import cyfmsAppointmentsReducer  from "../features/cyfms/appointment/slice";
 import ICappointmentsReducer from "../features/initialContact/appointment/slice";
 import cgAppointmentsReducer from "../features/cg/appointment/slice";
-import calendarReducer from "../features/calendar/slice";
+import calendarAppointmentReducer from "../features/calendar/appointments/slice";
+import calendarReminderReducer from "../features/calendar/reminders/slice";
+
 const rootReducer = {
   login: loginReducer,
   popup: popupReducer,
@@ -76,7 +78,8 @@ const rootReducer = {
   cgAttachments: cgAttachmentsReducer,
   cgContactNotes: cgContactNotesReducer,
   cgSearch: cgSearchReducer,
-  calendar: calendarReducer
+  calendarAppointment: calendarAppointmentReducer,
+  calendarReminder: calendarReminderReducer
 };
 
 export default rootReducer;

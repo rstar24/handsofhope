@@ -1,8 +1,8 @@
-import { doGetAPI, doGetByDateAPI, doPostAPI } from "./api";
+import { doGetAPI, doGetByDateAPI } from "./api";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { SliceCaseReducers } from "@reduxjs/toolkit";
 import type { AxiosResponse } from "axios";
-import { RootState } from "../../library/store";
+import { RootState } from "../../../library/store";
 
 export interface Data {
     appointmentId: number;
@@ -11,6 +11,7 @@ export interface Data {
     date: string;
     participantId:number;
     icAppointmentId:number;
+    cgProviderId:number;
 }
 
 // Empty Data
@@ -21,6 +22,7 @@ const emptyData: Data = {
   date: "",
   participantId:0,
   icAppointmentId:0,
+  cgProviderId:0
   
 };
 
@@ -42,7 +44,7 @@ export const doGet = createAsyncThunk<Data, number>(
 );
 
 export const doGetByDate = createAsyncThunk<Data[], string>(
-    "calendar/doGetByDate",
+    "calendar/doGetAppointmentByDate",
     async (date, { getState }) => {
       const store = getState() as RootState;
       const res: AxiosResponse = await doGetByDateAPI(date, store.login.token);
@@ -50,16 +52,6 @@ export const doGetByDate = createAsyncThunk<Data[], string>(
       return res.data;
     }
   );
-
-export const doPost = createAsyncThunk<Data, FormData>(
-  "calendar/doPost",
-  async (formData, { getState }) => {
-    const store = getState() as RootState;
-    const res: AxiosResponse = await doPostAPI(formData, store.login.token);
-    // Becomes the `fulfilled` action payload:
-    return res.data;
-  }
-);
 
 export const calendarSlice = createSlice<State, SliceCaseReducers<State>>({
   name: "calendar",
@@ -98,17 +90,6 @@ export const calendarSlice = createSlice<State, SliceCaseReducers<State>>({
         state.status = "loading";
       })
       .addCase(doGetByDate.rejected, (state) => {
-        state.status = "failed";
-      });
-    builder
-      .addCase(doPost.fulfilled, (state, action) => {
-        state.data = action.payload;
-        state.status = "success";
-      })
-      .addCase(doPost.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(doPost.rejected, (state) => {
         state.status = "failed";
       });
   },

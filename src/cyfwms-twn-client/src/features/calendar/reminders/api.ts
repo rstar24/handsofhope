@@ -1,4 +1,4 @@
-import axiosInstance from "../../library/axiosInstance";
+import axiosInstance from "../../../library/axiosInstance";
 import type { AxiosResponse } from "axios";
 
 export const doGetAPI = async (
@@ -19,7 +19,7 @@ export const doGetByDateAPI = async (
     token: string
   ): Promise<AxiosResponse> => {
     const res: AxiosResponse = await axiosInstance.get(
-      `commanservice/getAllCommonCalenderDate/${date}`,
+      `commonservice/reminder/getAllCalenderDate/${date}`,
       {
         headers: { Authorization: "Bearer " + token },
       }
@@ -27,19 +27,4 @@ export const doGetByDateAPI = async (
     return res;
   };
 
-export const doPostAPI = async (
-  formData: FormData,
-  token: string
-): Promise<AxiosResponse> => {
-  const res: AxiosResponse = await axiosInstance.put(
-    "commanservice/saveParticipantIdentity/",
-    formData,
-    {
-      headers: {
-        Authorization: "Bearer " + token,
-        "Content-Type": "multipart/form-data",
-      },
-    }
-  );
-  return res;
-};
+

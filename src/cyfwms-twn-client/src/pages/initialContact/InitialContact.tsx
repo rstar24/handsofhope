@@ -30,7 +30,7 @@ import { cleanState as cleanPatientCareInformationState } from "../../features/i
 import { cleanState as cleanPresentConcernsState } from "../../features/initialContact/presentConcerns/slice";
 import { cleanState as cleanReferralInformationState } from "../../features/initialContact/referralInformation/slice";
 import { cleanState as cleanContactNotesState } from "../../features/initialContact/contactNotes/slice";
-import { setCalendarView } from "../../features/calendar/slice";
+import { setCalendarView } from "../../features/calendar/appointments/slice";
 
 /**
  * The InitialContact functional component.

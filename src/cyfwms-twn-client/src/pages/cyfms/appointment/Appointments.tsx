@@ -26,7 +26,7 @@ function Appointments(props: any) {
   const [addNew, setAddNew] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const data = useAppSelector((state) => state.cyfmsAppointments.record);
-  const calendar = useAppSelector((state) => state.calendar)
+  const calendar = useAppSelector((state) => state.calendarAppointment)
   const [value, setValue] = useState("");
 
   useEffect(() => {

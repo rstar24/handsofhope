@@ -30,7 +30,7 @@ function CGAppointments(props: any) {
 
   const [addNew, setAddNew] = useState(false);
   const [disabled, setDisabled] = useState(false);
-
+  const calendar = useAppSelector((state)=>state.calendarAppointment);
   const data = useAppSelector((state) => state.cgAppointment.record);
 
   const [value, setValue] = useState("");
@@ -38,11 +38,13 @@ function CGAppointments(props: any) {
   useEffect(() => {
     dispatch(doGetAppointmentStatus()).then(()=>{
       dispatch(doGetFrequency());
-    dispatch(doGetICReferral());
+      dispatch(doGetICReferral());
 
-    dispatch(doSearch({ id: state.id, data: "" }))
-      .unwrap()
-      .catch((err) => {});
+      if(!calendar.calendar){
+        dispatch(doSearch({ id: state.id, data: "" }))
+        .unwrap()
+        .catch((err) => {});
+      }
     });
     
   }, [addNew]);

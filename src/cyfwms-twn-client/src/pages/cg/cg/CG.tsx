@@ -14,6 +14,7 @@ import type { FC } from "react";
 import { clean as cleanCareproviderState} from "../../../features/cg/careProvider/slice";
 import { clean as cleanAttachmentState} from "../../../features/cg/attachments/slice";
 import { clean as cleanCapacityState } from "../../../features/cg/capacity/slice";
+import { setCalendarView } from "../../../features/calendar/appointments/slice";
 
 /**
  * `CG` aka `Caregivers` module main page.
@@ -35,6 +36,7 @@ const CG: FC = () => {
     dispatch(cleanCareproviderState(null))
     dispatch(cleanAttachmentState(null))
     dispatch(cleanCapacityState(null))
+    dispatch(setCalendarView(false));
   };
 
   return (
