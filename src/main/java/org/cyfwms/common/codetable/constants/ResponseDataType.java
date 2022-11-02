@@ -7,6 +7,7 @@ public enum ResponseDataType {
     role,
     appointmentStatus,
     frequency,
+    reminderstatus,
     caregiversstatus,
     caregiverbackgroundstatus,
     caregiverstype,

@@ -14,5 +14,7 @@ import java.util.Map;
 public class DataRefAppointment {
     private Map<String, Map<String,String>> frequency;
     private Map<String, Map<String,String>> appointmentStatus;
+    private Map<String, Map<String,String>> reminderstatus;
+
 
 }

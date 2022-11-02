@@ -180,4 +180,12 @@ public DataResponseDto getAllProvinceValue() {
                 .valuesMap(dataRefCaregivers.getCaregiverbackgroundstatus())
                 .build();
     }
+
+    @Override
+    public DataResponseDto getAllReminderStatusValue() {
+        return  DataResponseDto.builder()
+                .type(ResponseDataType.reminderstatus.name())
+                .valuesMap(dataRefAppointment.getReminderstatus())
+                .build();
+    }
 }

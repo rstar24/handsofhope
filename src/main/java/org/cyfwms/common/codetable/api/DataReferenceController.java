@@ -164,4 +164,11 @@ public class DataReferenceController {
 
         return dataReferenceService.getAllCaregiversBackgroundStatusValue();
     }
+    @GetMapping(value = "/reminderstatus", produces = "application/json")
+    @ApiOperation("Get All reminder  status")
+    @ResponseStatus(HttpStatus.OK)
+    public DataResponseDto getAllReminderStatusValue() {
+
+        return dataReferenceService.getAllReminderStatusValue();
+    }
 }
