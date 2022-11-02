@@ -16,6 +16,8 @@ import { unhideTabs } from "../../features/navBarSlice";
 import { doGet as doGetAppointment } from "../../features/cyfms/register/slice";
 import { doSearch as doSearchCyfmsAppointment} from "../../features/cyfms/appointment/slice";
 import {doSearch as doSearchICAppointment} from "../../features/initialContact/appointment/slice";
+import {doSearch as doSearchcgAppointment} from "../../features/cg/appointment/slice";
+
 import moment from "moment";
 
 function AppointmentEvent(): ReactElement {
@@ -98,7 +100,7 @@ function AppointmentEvent(): ReactElement {
                 <Link
                 to="../cg/appointment"
                 onClick={() =>{ handleSelected(val.appointmentId, val.cgProviderId);
-                  dispatch(doSearchICAppointment({ id:val.fileDetailsId, data: "" }))
+                  dispatch(doSearchcgAppointment({ id:val.cgProviderId, data: "" }))
                 }}
               >
                 Select
