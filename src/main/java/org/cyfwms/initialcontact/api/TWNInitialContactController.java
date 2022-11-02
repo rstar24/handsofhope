@@ -210,7 +210,7 @@ public class TWNInitialContactController {
     @GetMapping(value = "/readICReminder/{fileDetailsId}", produces = "application/json")
     @ApiOperation("Read ICReminder By fileDetailsId")
     @ResponseStatus(HttpStatus.OK)
-    public List<ICReminderDto> readICReminder(@PathVariable("fileDetailsId") Long fileDetailsId) {
+    public ICReminderDto readICReminder(@PathVariable("fileDetailsId") Long fileDetailsId) {
         log.info("ReadICReminder " + "FileDetailsId :" + fileDetailsId);
         return icReminderService.readICReminder(fileDetailsId);
     }
