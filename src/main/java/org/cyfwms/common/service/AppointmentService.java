@@ -1,7 +1,7 @@
 package org.cyfwms.common.service;
 
 import org.cyfwms.common.dto.AppointmentDto;
-import org.cyfwms.common.dto.CalenderCommonDto;
+import org.cyfwms.common.dto.CalenderAppointmentDto;
 import org.cyfwms.common.dto.CalenderDto;
 
 import java.time.LocalDate;
@@ -13,5 +13,5 @@ public interface AppointmentService {
 
     List<CalenderDto> getAllDate(LocalDate date);
 
-    List<CalenderCommonDto> getAllCommonCalenderDate(LocalDate dateTime);
+    List<CalenderAppointmentDto> getAllCommonCalenderDate(LocalDate dateTime);
 }

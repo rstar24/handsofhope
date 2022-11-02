@@ -1,6 +1,8 @@
 package org.cyfwms.common.dto;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
+
 import java.time.LocalDate;
 
 @Builder
@@ -8,17 +10,16 @@ import java.time.LocalDate;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @AllArgsConstructor
 @NoArgsConstructor
-public class CalenderCommonDto {
-    private Long appointmentId;
+public class CalenderReminderDto {
+    private Long reminderId;
     private String subject;
     private String status;
-    private LocalDate date;
-    @Getter
-    @Setter
-    private Long participantAppointmentId;
-    @Getter
-    @Setter
-    private Long icAppointmentId;
+    private LocalDate reminderDate;
 
+    private Long participantId;
+
+    private Long fileDetailsId;
+
+    private Long cgProviderId;
 
 }

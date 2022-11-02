@@ -1,7 +1,7 @@
 package org.cyfwms.common.service;
 
 import org.cyfwms.common.dto.AppointmentDto;
-import org.cyfwms.common.dto.CalenderCommonDto;
+import org.cyfwms.common.dto.CalenderAppointmentDto;
 import org.cyfwms.common.dto.CalenderDto;
 import org.cyfwms.common.entity.Appointments;
 import org.cyfwms.common.repository.AppointmentRepository;
@@ -48,22 +48,25 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public List<CalenderCommonDto> getAllCommonCalenderDate(LocalDate date) {
+    public List<CalenderAppointmentDto> getAllCommonCalenderDate(LocalDate date) {
         List<Appointments> appointments = appointmentRepository.findByDate(date);
 
-        List<CalenderCommonDto> CalenderCommonDtoList = appointments.stream().
+        List<CalenderAppointmentDto> calenderAppointmentDtoList = appointments.stream().
                 map(ca -> {
-                    CalenderCommonDto calenderCommonDto = new CalenderCommonDto();
-                    BeanUtils.copyProperties(ca, calenderCommonDto);
+                    CalenderAppointmentDto calenderAppointmentDto = new CalenderAppointmentDto();
+                    BeanUtils.copyProperties(ca, calenderAppointmentDto);
                     if (ca.getParticipantAppointment() != null) {
-                        calenderCommonDto.setParticipantAppointmentId(ca.getParticipantAppointment().getParticipantAppointmentId());
+                        calenderAppointmentDto.setParticipantId(ca.getParticipantAppointment().getParticipantId());
                     }
                     if (ca.getIcAppointment() != null) {
-                        calenderCommonDto.setIcAppointmentId(ca.getIcAppointment().getIcappointmentId());
+                        calenderAppointmentDto.setFileDetailsId(ca.getIcAppointment().getFileDetailsId());
                     }
-                    return calenderCommonDto;
+                    if (ca.getCaregiverAppointment() != null) {
+                        calenderAppointmentDto.setCgProviderId(ca.getCaregiverAppointment().getId());
+                    }
+                    return calenderAppointmentDto;
                 }).collect(Collectors.toList());
 
-        return CalenderCommonDtoList;
+        return calenderAppointmentDtoList;
     }
 }

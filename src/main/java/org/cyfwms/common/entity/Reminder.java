@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.cyfwms.caregiver.entity.CareGiverReminder;
+import org.cyfwms.initialcontact.entity.ICReminder;
+import org.cyfwms.participant.entity.ParticipantReminder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -49,6 +52,16 @@ public class Reminder implements Serializable {
     @Getter @Setter @Column(name = "lastwritten")
     private LocalDateTime lastWritten;
 
+    @Getter @Setter
+    @OneToOne(mappedBy = "reminder")
+    private ParticipantReminder participantReminder;
 
+    @Getter @Setter
+    @OneToOne(mappedBy = "reminder")
+    private ICReminder iCReminder;
+
+    @Getter @Setter
+    @OneToOne(mappedBy = "reminder")
+    private CareGiverReminder careGiverReminder;
 
 }

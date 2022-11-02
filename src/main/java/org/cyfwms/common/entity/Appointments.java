@@ -1,8 +1,7 @@
 package org.cyfwms.common.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.cyfwms.caregiver.entity.CaregiverAppointment;
 import org.cyfwms.initialcontact.entity.ICAppointment;
 import org.cyfwms.participant.entity.ParticipantAppointment;
 import org.hibernate.annotations.CreationTimestamp;
@@ -70,5 +69,9 @@ public class Appointments implements Serializable {
 
     @OneToOne(mappedBy = "appointments")
     private ICAppointment icAppointment;
+
+    @Getter @Setter
+    @OneToOne(mappedBy = "appointments")
+    private CaregiverAppointment caregiverAppointment;
 
 }
