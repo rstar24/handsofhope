@@ -8,7 +8,9 @@ public interface ICReminderService {
 
     ICReminderDto saveICReminder(ICReminderDto icReminderDto);
 
-    List<ICReminderDto> readICReminder(Long fileDetailsId);
+    ICReminderDto readICReminder(Long icReminderId);
+
+    List<ICReminderDto> readAllICReminder(Long fileDetailsId);
 
     void removeICReminder(Long icReminderId);
 

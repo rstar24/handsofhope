@@ -62,7 +62,11 @@ public class ParticipantController {
 
     @Autowired
     private ParticipantContactNotesSearchService participantContactNotesSearchService;
+    @Autowired
     private ParticipantReminderService participantReminderService;
+
+    @Autowired
+    private ParticipantReminderSearchService participantReminderSearchService;
 
     @GetMapping(value = "/readParticipantIdentity/{participantid}", produces = "application/json")
     @ApiOperation("Read Identity")
@@ -318,6 +322,23 @@ public class ParticipantController {
             @RequestBody ParticipantReminderDto participantReminderDtoList) {
         log.info("SaveParticipantReminder " + participantReminderDtoList);
         return participantReminderService.saveParticipantReminder(participantReminderDtoList);
+    }
+
+    @GetMapping(value = {"/searchParticipantReminder/{participantId}/{data}"}, produces = "application/json")
+    @ApiOperation("Search ParticipantReminder")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ParticipantReminderSearchResultsDto> searchParticipantReminder(@PathVariable Map<String, String> var) {
+        ParticipantReminderSearchCriteriaDto participantReminderSearchCriteriaDto = new ParticipantReminderSearchCriteriaDto();
+
+
+        participantReminderSearchCriteriaDto.setParticipantId(("null".equals(var.get("participantId"))
+                || var.get("participantId") == null) ? null : Long.parseLong(var.get("participantId")));
+        participantReminderSearchCriteriaDto.setData(
+                ("null".equals(var.get("data"))
+                        || var.get("data") == null) ? null : var.get("data"));
+
+        log.info("searchParticipantReminder " + participantReminderSearchCriteriaDto);
+        return participantReminderSearchService.search(participantReminderSearchCriteriaDto);
     }
 
     @DeleteMapping("/removeParticipantReminder/{referenceId}")

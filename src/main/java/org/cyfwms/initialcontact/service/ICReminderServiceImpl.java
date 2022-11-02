@@ -2,6 +2,7 @@ package org.cyfwms.initialcontact.service;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.cyfwms.common.dto.ReminderDto;
 import org.cyfwms.common.entity.Reminder;
 import org.cyfwms.common.exception.I18Constants;
 import org.cyfwms.common.exception.MessageUtil;
@@ -11,12 +12,13 @@ import org.cyfwms.common.util.ReferenceIDGeneratorUtil;
 import org.cyfwms.initialcontact.dto.ICReminderDto;
 import org.cyfwms.initialcontact.entity.ICReminder;
 import org.cyfwms.initialcontact.repository.ICReminderRepository;
-import org.cyfwms.common.dto.ReminderDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,22 +36,6 @@ public class ICReminderServiceImpl implements ICReminderService {
 
     @Autowired
     private MessageUtil messageUtil;
-
-    @Override
-    public List<ICReminderDto> readICReminder(Long fileDetailsId) {
-        log.info("Inside ReadICReminder");
-        List<ICReminder> icReminders = icReminderRepository.findByFileDetailsId(fileDetailsId);
-        List<ICReminderDto> icReminderDtoList = icReminders.stream().map(icReminder -> {
-            ICReminderDto icReminderDto = new ICReminderDto();
-            ReminderDto reminderDto = new ReminderDto();
-            BeanUtils.copyProperties(icReminder.getReminder(), reminderDto);
-            BeanUtils.copyProperties(icReminder, icReminderDto);
-            icReminderDto.setReminderDto(reminderDto);
-            return icReminderDto;
-        }).collect(Collectors.toList());
-        log.info("Exit ReadICReminder");
-        return icReminderDtoList;
-    }
 
     @Override
     public ICReminderDto saveICReminder(ICReminderDto icReminderDto) {
@@ -78,6 +64,39 @@ public class ICReminderServiceImpl implements ICReminderService {
         icReminderDto.setIcReminderId(icReminder.getIcReminderId());
         log.info("Exit SaveICReminder");
         return icReminderDto;
+    }
+
+    @Override
+    public ICReminderDto readICReminder(Long icReminderId) {
+        ICReminderDto icReminderDto = new ICReminderDto();
+        ReminderDto reminderDto = new ReminderDto();
+        if (icReminderId != 0) {
+            Optional<ICReminder> icReminder = icReminderRepository.findById(icReminderId);
+
+            if (icReminder.isPresent()) {
+                if (icReminder.get().getStatusOfDeletion().equals("ACTIVE")) {
+                    BeanUtils.copyProperties(icReminder.get(), icReminderDto);
+                    BeanUtils.copyProperties(icReminder.get().getReminder(), reminderDto);
+                    icReminderDto.setReminderDto(reminderDto);
+                }
+            }
+        }
+        return icReminderDto;
+
+    }
+
+    @Override
+    public List<ICReminderDto> readAllICReminder(Long fileDetailsId) {
+        List<ICReminderDto> icReminderDtoList = new ArrayList<>();
+        icReminderDtoList = icReminderRepository.findByFileDetailsId(fileDetailsId).stream().map(a -> {
+            ReminderDto reminderDto = new ReminderDto();
+            ICReminderDto icReminderDto = new ICReminderDto();
+            BeanUtils.copyProperties(a.getReminder(), reminderDto);
+            BeanUtils.copyProperties(a, icReminderDto);
+            icReminderDto.setReminderDto(reminderDto);
+            return icReminderDto;
+        }).collect(Collectors.toList());
+        return icReminderDtoList;
     }
 
     @Override
