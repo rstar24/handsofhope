@@ -8,7 +8,7 @@ public interface CareGiverReminderService {
 
     CareGiverReminderDto saveCGReminder(CareGiverReminderDto careGiverReminderDto);
 
-    List<CareGiverReminderDto> readCGReminder(Long cgProviderId);
+    CareGiverReminderDto readCGReminder(Long cgReminderId);
 
     void removeCGReminder(Long referenceId);
 }

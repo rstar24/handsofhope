@@ -11,10 +11,10 @@ import java.util.Optional;
 @Repository
 public interface ParticipantReminderRepository extends JpaRepository<ParticipantReminder, Long> {
 
-    @Query(value = "select * from participantreminder where participantid=? AND statusofdeletion='active'", nativeQuery = true)
-    List<ParticipantReminder> findByParticipantId(Long participantId);
+    @Query(value = "select * from participantreminder where participantReminderId=? AND statusofdeletion='active'", nativeQuery = true)
+    ParticipantReminder findByParticipantReminderId(Long participantReminderId);
 
     Optional<ParticipantReminder> findTopByOrderByCreationDateTimeDesc();
 
-    Optional<ParticipantReminder> findByReferenceId(Long referenceId);
+
 }

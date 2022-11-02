@@ -234,7 +234,7 @@ public class CareGiverController {
     @GetMapping(value = "/readCGReminder/{cgReminderId}", produces = "application/json")
     @ApiOperation("Read ICReminder")
     @ResponseStatus(HttpStatus.OK)
-    public List<CareGiverReminderDto> readCGReminder(@PathVariable("cgReminderId") Long cgReminderId) {
+    public CareGiverReminderDto readCGReminder(@PathVariable("cgReminderId") Long cgReminderId) {
         log.info("ReadCGReminder " + "cgReminderId :" + cgReminderId);
         return careGiverReminderService.readCGReminder(cgReminderId);
     }

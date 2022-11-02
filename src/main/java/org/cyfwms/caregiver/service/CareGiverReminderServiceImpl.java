@@ -5,19 +5,18 @@ import lombok.extern.slf4j.Slf4j;
 import org.cyfwms.caregiver.dto.CareGiverReminderDto;
 import org.cyfwms.caregiver.entity.CareGiverReminder;
 import org.cyfwms.caregiver.repository.CareGiverReminderRepository;
+import org.cyfwms.common.dto.ReminderDto;
 import org.cyfwms.common.entity.Reminder;
 import org.cyfwms.common.exception.I18Constants;
 import org.cyfwms.common.exception.MessageUtil;
 import org.cyfwms.common.exception.NoSuchElementFoundException;
 import org.cyfwms.common.repository.ReminderRepository;
 import org.cyfwms.common.util.ReferenceIDGeneratorUtil;
-import org.cyfwms.common.dto.ReminderDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -67,22 +66,27 @@ public class CareGiverReminderServiceImpl implements CareGiverReminderService{
     }
 
     @Override
-    public List<CareGiverReminderDto> readCGReminder(Long cgReminderId) {
-        log.info("Inside ReadCGReminder");
-        List<CareGiverReminder> cgReminders = careGiverReminderRepository.findByCGReminderId(cgReminderId);
-        System.out.println(cgReminderId+" read");
-        List<CareGiverReminderDto> cgReminderDtoList = cgReminders.stream().map(cgReminder -> {
-            CareGiverReminderDto cgReminderDto = new CareGiverReminderDto();
-            ReminderDto reminderDto = new ReminderDto();
-            BeanUtils.copyProperties(cgReminder.getReminder(), reminderDto);
-            BeanUtils.copyProperties(cgReminder, cgReminderDto);
-            cgReminderDto.setReminderDto(reminderDto);
-            System.out.println(cgReminderId +"outside find by id");
-            return cgReminderDto;
-        }).collect(Collectors.toList());
-        log.info("Exit ReadCGReminder");
-        return  cgReminderDtoList;
+    public CareGiverReminderDto readCGReminder(Long cgReminderId) {
+        log.info("Inside readCGReminder");
+        CareGiverReminderDto careGiverReminderDto = new CareGiverReminderDto();
+        ReminderDto reminderDto = new ReminderDto();
+        if (cgReminderId != 0) {
+            Optional<CareGiverReminder> careGiverReminder = Optional.ofNullable(careGiverReminderRepository.findByCGReminderId(cgReminderId));
+
+            if (careGiverReminder.isPresent()) {
+                if (careGiverReminder.get().getStatusOfDeletion().equals("ACTIVE")) {
+                    BeanUtils.copyProperties(careGiverReminder.get(), careGiverReminderDto);
+                    BeanUtils.copyProperties(careGiverReminder.get().getReminder(), reminderDto);
+                    careGiverReminderDto.setReminderDto(reminderDto);
+
+                }
+            }
+        }
+        log.info("Exit readCGReminder");
+        return careGiverReminderDto;
+
     }
+
 
     @Override
     public void removeCGReminder(Long referenceId) {

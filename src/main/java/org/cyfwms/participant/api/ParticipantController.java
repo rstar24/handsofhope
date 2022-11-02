@@ -310,7 +310,7 @@ public class ParticipantController {
     @GetMapping(value = "/readParticipantReminder/{participantId}", produces = "application/json")
     @ApiOperation("Read Participant Reminder By Id")
     @ResponseStatus(HttpStatus.OK)
-    public List<ParticipantReminderDto> readParticipantReminder(@PathVariable("participantId") Long participantId) {
+    public ParticipantReminderDto readParticipantReminder(@PathVariable("participantId") Long participantId) {
         log.info("ReadParticipantReminder " + participantId);
         return participantReminderService.readParticipantReminder(participantId);
     }
@@ -341,12 +341,12 @@ public class ParticipantController {
         return participantReminderSearchService.search(participantReminderSearchCriteriaDto);
     }
 
-    @DeleteMapping("/removeParticipantReminder/{referenceId}")
-    @ApiOperation("Remove Participant Reminder By ReferenceId")
+    @DeleteMapping("/removeParticipantReminder/{participantReminderId}")
+    @ApiOperation("Remove Participant Reminder By participantReminderId")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void removeParticipantReminder(@PathVariable("referenceId") Long referenceId) {
-        log.info("removeParticipantReminder " + referenceId);
-        participantReminderService.removeParticipantReminder(referenceId);
+    public void removeParticipantReminder(@PathVariable("participantReminderId") Long participantReminderId) {
+        log.info("removeParticipantReminder " + participantReminderId);
+        participantReminderService.removeParticipantReminder(participantReminderId);
     }
 
     private void mapParticipantFormData(ParticipantIdentityDto participantIdentityDto,

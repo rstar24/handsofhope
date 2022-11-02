@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface CareGiverReminderRepository extends JpaRepository<CareGiverReminder, Long> {
 
     @Query(value = "select * from caregiverreminder where cgreminderid=? AND statusofdeletion='active'", nativeQuery = true)
-    List<CareGiverReminder> findByCGReminderId(Long cgReminderId);
+    CareGiverReminder findByCGReminderId(Long cgReminderId);
 
     Optional<CareGiverReminder> findTopByOrderByCreationDateTimeDesc();
 }

@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface ParticipantReminderService {
 
-    List<ParticipantReminderDto> readParticipantReminder(Long participantId);
+    ParticipantReminderDto readParticipantReminder(Long participantId);
 
     ParticipantReminderDto saveParticipantReminder(ParticipantReminderDto participantReminderDto);
 
-    void removeParticipantReminder(Long referenceId);
+    void removeParticipantReminder(Long participantReminderId);
 
 
 }
