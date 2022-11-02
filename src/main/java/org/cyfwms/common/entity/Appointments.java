@@ -54,6 +54,7 @@ public class Appointments implements Serializable {
     @Column(name="end_date")
     private LocalDate endDate;
     @Column(name="notes")
+    @Lob
     private String notes;
     @UpdateTimestamp
     @Column(name = "lastwritten")
