@@ -65,12 +65,12 @@ const AppointmentsForm = ({
     dispatch(doPost(formData))
       .unwrap()
       .then(() => {
-        console.log("PresentConcerns POST backend API was successful!");
+        console.log("ParticipantAppointment POST backend API was successful!");
        dispatch(doSearch({ id: state.data.participantId, data: "" }));
         setAddNew(false);
       })
       .catch((err:any) => {
-        console.log("PresentConcerns POST backend API didn't work!");
+        console.log("ParticipantAppointment POST backend API didn't work!");
         console.log(err);
       });
   };
@@ -156,7 +156,6 @@ const AppointmentsForm = ({
             required
             readOnly={disabled}
             autofill={data.appointmentdto.date}
-            maxDate={new Date().toISOString().substring(0, 10)}
             minDate="1900-01-01"
           />
         </Box>
@@ -242,7 +241,6 @@ const AppointmentsForm = ({
             disabled={stete.disabledClosingDate}
 
             value="End Date"
-            maxDate={new Date().toISOString().substring(0, 10)}
             minDate="1900-01-01"
             type="date"
             autofill={data.appointmentdto.endDate}

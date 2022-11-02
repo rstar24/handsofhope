@@ -60,12 +60,12 @@ const CGAppointmentsForm = ({
     dispatch(doPost(formData))
       .unwrap()
       .then(() => {
-        console.log("PresentConcerns POST backend API was successful!");
+        console.log("CGAppointment POST backend API was successful!");
         dispatch(doSearch({ id: state.getData.id, data: "" }));
         setAddNew(false);
       })
       .catch((err) => {
-        console.log("PresentConcerns POST backend API didn't work!");
+        console.log("CGAppointment POST backend API didn't work!");
         console.log(err);
       });
   };
@@ -150,7 +150,6 @@ const CGAppointmentsForm = ({
             required
             readOnly={disabled}
             autofill={data.appointmentDto.date}
-            maxDate={new Date().toISOString().substring(0, 10)}
             minDate="1900-01-01"
           />
         </Box>
@@ -237,7 +236,6 @@ const CGAppointmentsForm = ({
             type="date"
             autofill={data.appointmentDto.endDate}
             readOnly={disabled}
-            maxDate={new Date().toISOString().substring(0, 10)}
             minDate="1900-01-01"
           />
         </Box>

@@ -28,7 +28,7 @@ const CgLayout: FC<PropsWithChildren> = (props) => {
               { value: "Capacity", route: "../capacity" },
               { value: "Caregivers", route: "../caregivers" },
               { value: "Contact Notes", route: "../contact_notes" },
-              { value: "Appointment", route: "../appointment" },
+              { value: "Appointments", route: "../appointment" },
               { value: "Attachments", route: "../attachments" },
           
             ]}

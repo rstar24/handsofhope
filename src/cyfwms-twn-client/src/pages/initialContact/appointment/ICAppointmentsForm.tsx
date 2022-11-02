@@ -66,12 +66,12 @@ const ICAppointmentsForm = ({
       dispatch(doPost(formData))
       .unwrap()
       .then(() => {
-        console.log("PresentConcerns POST backend API was successful!");
+        console.log("InitialAppointment POST backend API was successful!");
        dispatch(doSearch({ id: state.getData.fileDetailsId, data: "" }));
         setAddNew(false);
       })
       .catch((err) => {
-        console.log("PresentConcerns POST backend API didn't work!");
+        console.log("InitialAppointment POST backend API didn't work!");
         console.log(err);
       });
   };
@@ -160,7 +160,6 @@ const ICAppointmentsForm = ({
             required
             readOnly={disabled}
             autofill={data.appointmentDto.date}
-            maxDate={new Date().toISOString().substring(0, 10)}
             minDate="1900-01-01"
           />
         </Box>
@@ -246,7 +245,6 @@ const ICAppointmentsForm = ({
             disabled={stete.disabledClosingDate}
 
             value="End Date"
-            maxDate={new Date().toISOString().substring(0, 10)}
             minDate="1900-01-01"
             type="date"
             autofill={data.appointmentDto.endDate}
