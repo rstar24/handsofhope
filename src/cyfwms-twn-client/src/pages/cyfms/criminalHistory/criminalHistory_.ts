@@ -73,8 +73,8 @@ export const handleSubmit: AppFormEventHandler<HTMLFormElement> = (
     participantId: participantID,
     criminalHistoryId: data.criminalHistoryId,
     criminalHistoryRecordList: new Array<Record>(len),
-    probation: data.probation,
-    parole: data.parole,
+    probation: event.currentTarget.probation.checked,
+    parole: event.currentTarget.parole.checked,
     conditions: event.currentTarget.conditions.value,
     courtWorkerAndContactInfo:
       event.currentTarget.courtWorkersAndContactInformation.value,
