@@ -1,7 +1,5 @@
 package org.cyfwms.initialcontact.repository;
 
-import org.cyfwms.caregiver.dto.CareGiverSearchReminderDto;
-import org.cyfwms.caregiver.dto.CareGiverSearchReminderResultDto;
 import org.cyfwms.initialcontact.dto.ICSearchReminderDto;
 import org.cyfwms.initialcontact.dto.ICSearchReminderResultDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +39,7 @@ public class ICSearchReminderRepo {
         String data = iCSearchReminderDto.getData();
         Long fileDetailsId = iCSearchReminderDto.getFileDetailsId();
 
-        querySBuff.append("select p.reminderid ,p2.icreminderid,p.subject,p.assignedto ,p.status ,p.reminderdate,p.enddate,p.regarding ,p.frequency,p.description  ");
+        querySBuff.append("select p.reminderid ,p2.icreminderid,p.assignedto,p.regarding ,p.subject ,p.frequency,p.status,p.description ,p.reminderdate,p.endDate  ");
         querySBuff.append("from reminder p left join initialcontactreminder p2 on p.reminderid = p2.reminderid where  p2.statusofdeletion='ACTIVE' ");
 
         if (fileDetailsId != null) {
@@ -57,7 +55,7 @@ public class ICSearchReminderRepo {
                     .replace("_", "!_")
                     .replace("[", "![");
 
-            querySBuff.append(" AND (p2.filedetailsid=? OR p.subject LIKE ?  OR p.reminderdate LIKE ?  OR p.enddate LIKE ?    OR p.subject LIKE ?  OR p.frequency LIKE ? OR p.status LIKE ? OR p.description LIKE ? OR p.assignedto LIKE ? ) ORDER BY p2.creationdatetime desc ");
+            querySBuff.append(" AND (p2.filedetailsid=? OR p.assignedto LIKE ?  OR p.regarding LIKE ?  OR p.subject LIKE ?    OR p.frequency LIKE ?  OR p.status LIKE ? OR p.description LIKE ? OR p.reminderdate LIKE ? OR p.endDate LIKE ? ) ORDER BY p2.creationdatetime desc ");
             argsObjectList.add(data);
             argsObjectList.add("%" + data + "%");
             argsObjectList.add("%" + data + "%");
