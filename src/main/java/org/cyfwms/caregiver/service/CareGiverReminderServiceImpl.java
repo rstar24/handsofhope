@@ -37,20 +37,18 @@ public class CareGiverReminderServiceImpl implements CareGiverReminderService{
 
     @Override
     public CareGiverReminderDto saveCGReminder(CareGiverReminderDto careGiverReminderDto) {
-        log.info("Inside SaveCGReminder");
         Reminder reminder = null;
         CareGiverReminder cgReminder = new CareGiverReminder();
-        if (careGiverReminderDto.getReminderDto().getReminderId() == 0) {
+        if (careGiverReminderDto.getCgReminderId() == 0) {
             reminder = new Reminder();
             BeanUtils.copyProperties(careGiverReminderDto.getReminderDto(), reminder);
             BeanUtils.copyProperties(careGiverReminderDto, cgReminder);
             cgReminder.setStatusOfDeletion("ACTIVE");
-            cgReminder.setReferenceId(referenceIDGeneratorUtil.generateCareGiverReminderReferenceID());
+            reminder.setStatus("ACTIVE");
         } else {
             cgReminder = careGiverReminderRepository.findById(careGiverReminderDto.getCgReminderId()).get();
             reminder = reminderRepository.findById(careGiverReminderDto.getReminderDto().getReminderId()).get();
             BeanUtils.copyProperties(careGiverReminderDto.getReminderDto(), reminder);
-
             BeanUtils.copyProperties(careGiverReminderDto, cgReminder);
 
         }
@@ -58,9 +56,7 @@ public class CareGiverReminderServiceImpl implements CareGiverReminderService{
         cgReminder = careGiverReminderRepository.save(cgReminder);
         careGiverReminderDto.setCgReminderId(cgReminder.getCgReminderId());
         careGiverReminderDto.getReminderDto().setReminderId(cgReminder.getReminder().getReminderId());
-        careGiverReminderDto.setCgReminderId(cgReminder.getCgReminderId());
-        careGiverReminderDto.setReferenceId(cgReminder.getReferenceId());
-        log.info("Exit SaveCGReminder");
+        log.info("Exit SaveCareGiversReminder");
         return careGiverReminderDto;
 
     }

@@ -15,4 +15,7 @@ public interface CareGiverReminderRepository extends JpaRepository<CareGiverRemi
     CareGiverReminder findByCGReminderId(Long cgReminderId);
 
     Optional<CareGiverReminder> findTopByOrderByCreationDateTimeDesc();
+
+    @Query(value = "select * from caregiverreminder where  id=? AND statusofdeletion='active'",nativeQuery = true)
+    List<CareGiverReminder> findByCGId(long participantId);
 }

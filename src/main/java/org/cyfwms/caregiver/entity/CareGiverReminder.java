@@ -48,8 +48,8 @@ public class CareGiverReminder {
 
     @Getter
     @Setter
-    @Column(name = "cgproviderid")
-    private Long cgProviderId;
+    @Column(name = "id")
+    private Long id;
 
     @Column(
             name = "reference_id",

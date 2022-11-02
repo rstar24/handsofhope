@@ -22,7 +22,7 @@ public class CareGiverReminderDto {
 
     @Getter
     @Setter
-    private Long cgProviderId;
+    private Long id;
 
     @Getter
     @Setter

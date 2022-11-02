@@ -29,7 +29,7 @@ public class ReminderServiceImpl implements ReminderService{
                         calenderReminderDto.setFileDetailsId(cr.getICReminder().getFileDetailsId());
                     }
                     if (cr.getCareGiverReminder() != null) {
-                        calenderReminderDto.setCgProviderId(cr.getCareGiverReminder().getCgProviderId());
+                        calenderReminderDto.setCgProviderId(cr.getCareGiverReminder().getId());
                     }
                     return calenderReminderDto;
                 }).collect(Collectors.toList());

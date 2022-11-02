@@ -43,7 +43,7 @@ public class ReferenceIDGeneratorUtil {
         return referenceId;
     }
 
-    public Long generateCareGiverReminderReferenceID() {
+  /*  public Long generateCareGiverReminderReferenceID() {
         Long referenceId = 128L;
         Optional<CareGiverReminder> careGiverReminder =
                 careGiverReminderRepo.findTopByOrderByCreationDateTimeDesc();
@@ -52,6 +52,6 @@ public class ReferenceIDGeneratorUtil {
         }
         return referenceId;
     }
-
+*/
 
 }
