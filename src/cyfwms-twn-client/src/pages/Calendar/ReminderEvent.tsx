@@ -22,7 +22,7 @@ function ReminderEvent(): ReactElement {
   const dispatch  = useAppDispatch();
   const data = useAppSelector((state)=>state.calendarReminder.record)
   useEffect(()=>{
-    dispatch(doGetByDate(moment(new Date()).format("2022-11-01")));
+    dispatch(doGetByDate(moment(new Date()).format("yyyy-MM-DD")));
   },[])
 
   const handleSelected = (id:number, participant : number) => {
