@@ -11,6 +11,7 @@ import Participants from "../../pages/initialContact/Participants/Participant";
 import PatientCareInformation from "../../pages/initialContact/PatientCareInformation";
 import PresentConcerns from "../../pages/initialContact/PresentConcerns";
 import ReferralInformation from "../../pages/initialContact/ReferralInformation";
+import Reminders from "../../pages/initialContact/reminders/Reminders";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import type { FC } from "react";
@@ -34,6 +35,7 @@ const IcRouter: FC = () => (
       <Route path="participants" element={<Participants />} />
       <Route path="contact_notes" element={<ContactNotes />} />
       <Route path="appointment" element={<Appointments />} />
+      <Route path="reminder" element={<Reminders />} />
     </Routes>
     <AttachmentsContextProvider>
       <Routes>

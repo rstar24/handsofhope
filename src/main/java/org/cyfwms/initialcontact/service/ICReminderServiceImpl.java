@@ -50,7 +50,7 @@ public class ICReminderServiceImpl implements ICReminderService {
 
 
         } else {
-            icReminder = icReminderRepository.findById(icReminderDto.getFileDetailsId()).get();
+            icReminder = icReminderRepository.findById(icReminderDto.getIcReminderId()).get();
             reminder = reminderRepository.findById(icReminderDto.getReminderDto().getReminderId()).get();
             BeanUtils.copyProperties(icReminderDto.getReminderDto(), reminder);
 

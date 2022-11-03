@@ -58,9 +58,14 @@ const CYFMSLayout = (props: {
                 route: "../appointment",
               },
               {
+                value: "Reminders",
+                route: "../reminder",
+              },
+              {
                 value: "Attachments",
                 route: "../attachments",
               },
+
             ]}
           />
         </Box>

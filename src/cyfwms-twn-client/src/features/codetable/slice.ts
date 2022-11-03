@@ -4,6 +4,7 @@ import { RootState } from "../../library/store";
 import {
   doGenderGetAPI,
   doGetMaritalStatusAPI,
+  doGetReminderStatusAPI,
   doGetProvinceAPI,
   doGetAppointmentStatusAPI,
   doGetRoleAPI,
@@ -27,6 +28,7 @@ import {
 export interface CodeTableData {
   gender: {};
   appointment:{};
+  reminderstatus:{};
   maritalstatus: {};
   province: {};
   role: {};
@@ -66,6 +68,16 @@ export const doGetAppointmentStatus = createAsyncThunk(
   "codetable/doGetAppointmentStatus",
   async (_, { dispatch, getState }) => {
     const res: AxiosResponse = await doGetAppointmentStatusAPI(
+      (getState() as RootState).login.token
+    );
+    // Becomes the `fulfilled` action payload:
+    return res.data;
+  }
+);
+export const doGetReminderStatus = createAsyncThunk(
+  "codetable/doGetReminderStatus",
+  async (_, { dispatch, getState }) => {
+    const res: AxiosResponse = await doGetReminderStatusAPI(
       (getState() as RootState).login.token
     );
     // Becomes the `fulfilled` action payload:
@@ -279,6 +291,7 @@ export const CodeTableSlice = createSlice({
   initialState: {
     gender: {},
     appointmentstatus:{},
+    reminderstatus:{},
     frequency:{},
     maritalstatus: {},
     province: {},
@@ -304,6 +317,7 @@ export const CodeTableSlice = createSlice({
     cleanCodetableState(state: any) {
       state.gender = {};
       state.appointmentstatus={};
+      state.reminderstatus={};
       state.maritalstatus = {};
       state.province = {};
       state.role = {};
@@ -428,6 +442,22 @@ export const CodeTableSlice = createSlice({
       state.status = "loading";
     });
     builder.addCase(doGetEducation.rejected, (state) => {
+      state.status = "failed";
+    });
+    //Reminder
+
+    builder.addCase(doGetReminderStatus.fulfilled, (state, action) => {
+      try {
+        state.reminderstatus = action.payload.valuesMap;
+      } catch (err) {
+        console.log(err);
+      }
+      state.status = "success";
+    });
+    builder.addCase(doGetReminderStatus.pending, (state) => {
+      state.status = "loading";
+    });
+    builder.addCase(doGetReminderStatus.rejected, (state) => {
       state.status = "failed";
     });
 

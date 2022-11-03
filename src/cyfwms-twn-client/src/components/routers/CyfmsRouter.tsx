@@ -11,6 +11,7 @@ import EducationAndEmployment from "../../pages/cyfms/educationAndEmployment/Edu
 import FamilyPhysicians from "../../pages/cyfms/familyPhysicians/FamilyPhysicians";
 import HouseholdMembers from "../../pages/cyfms/householdMembers/HouseholdMembers";
 import OtherInformation from "../../pages/cyfms/otherInformation/OtherInformation";
+import Reminders from "../../pages/cyfms/reminders/Reminders";
 import Register from "../../pages/cyfms/register/Register";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
@@ -37,6 +38,7 @@ const CyfmsRouter: FC = () => (
       <Route path="counselors" element={<Counselors />} />
       <Route path="other_information" element={<OtherInformation />} />
       <Route path="appointment" element={<Appointments />} />
+      <Route path="reminder" element={<Reminders />} />
     </Routes>
     <AttachmentsContextProvider>
       <Routes>
