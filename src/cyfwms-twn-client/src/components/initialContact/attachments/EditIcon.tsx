@@ -1,4 +1,4 @@
-import SelectionContext from "../../../contexts/SelectionContext";
+import AttachmentsContext from "../../../contexts/AttachmentsContext";
 import { doDelete } from "../../../features/initialContact/attachments/slice";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
@@ -15,7 +15,7 @@ const ITEM_HEIGHT = 48;
  * @returns `ReactElement`
  */
 const EditIcon: FC = () => {
-  const selection = useContext(SelectionContext);
+  const context = useContext(AttachmentsContext);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const data = useAppSelector((state) => state.icAttachments.data);
@@ -38,7 +38,7 @@ const EditIcon: FC = () => {
 
   const handleDelete: MouseEventHandler<HTMLElement> = (event) => {
     event.preventDefault();
-    dispatch(doDelete(data[selection.selected].icAttachmentId))
+    dispatch(doDelete(data[context.selected].icAttachmentId))
       .unwrap()
       .then(() => {
         navigate("../attachments");

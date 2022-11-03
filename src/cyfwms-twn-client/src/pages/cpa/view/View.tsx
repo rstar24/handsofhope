@@ -5,7 +5,7 @@ import EditIcon from "../../../components/cpa/EditIcon";
 import Attachments from "../../../components/cpa/view/Attachments";
 import CPA from "../../../components/cpa/view/CPA";
 import Participant from "../../../components/cpa/view/Participant";
-import Router from "../../../components/nestedRouters/CPA";
+import Router from "../../../components/routers/CpaRouter";
 import TabContext from "../../../contexts/view/TabContext";
 import { useAppSelector } from "../../../library/hooks";
 import { Box, Tab, Tabs, Typography } from "@mui/material";

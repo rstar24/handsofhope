@@ -1,7 +1,7 @@
 import Popup from "../../components/Popup";
 import AuthLayout from "../../components/auth/layout/AuthLayout";
 import CYFMSHeader from "../../components/cyfms/CYFMSHeader";
-import Router from "../../components/nestedRouters/CYFMS";
+import Router from "../../components/routers/CyfmsRouter";
 import {
   doGetEducation,
   doGetGender,

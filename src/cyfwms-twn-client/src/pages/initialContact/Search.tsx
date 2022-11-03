@@ -4,7 +4,7 @@ import AuthLayout from "../../components/auth/layout/AuthLayout";
 import CYFMSDropdown from "../../components/cyfms/CYFMSDropdown";
 import ICHeader from "../../components/initialContact/ICHeader";
 import Results from "../../components/initialContact/search/Results";
-import Router from "../../components/nestedRouters/InitialContact";
+import Router from "../../components/routers/IcRouter";
 import { doGetICStatus } from "../../features/codetable/slice";
 import { doGet as doGetSearch } from "../../features/initialContact/search/slice";
 import { onKeyDown } from "../../library/app";

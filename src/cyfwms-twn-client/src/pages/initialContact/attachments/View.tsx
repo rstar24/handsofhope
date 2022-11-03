@@ -1,7 +1,7 @@
 import EditIcon from "../../../components/initialContact/attachments/EditIcon";
 import IcLayout from "../../../components/initialContact/ICLayout";
 import Input from "../../../components/Input";
-import SelectionContext from "../../../contexts/SelectionContext";
+import AttachmentsContext from "../../../contexts/AttachmentsContext";
 import { doGetOne } from "../../../features/initialContact/attachments/slice";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import { Box, Link } from "@mui/material";
@@ -16,10 +16,10 @@ import type { FC } from "react";
  * @returns `ReactElement`
  */
 const View: FC = () => {
-  const selection = useContext(SelectionContext);
+  const context = useContext(AttachmentsContext);
   const dispatch = useAppDispatch();
   const attachment = useAppSelector(
-    (state) => state.icAttachments.data[selection.selected]
+    (state) => state.icAttachments.data[context.selected]
   );
   const [actualAttachment, setActualAttachment] = useState<any>({
     cgImagefile: "",

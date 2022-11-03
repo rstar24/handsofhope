@@ -11,7 +11,7 @@ import FamilyPhysicians from "../../../components/cyfms/view/FamilyPhysicians";
 import HouseholdMembers from "../../../components/cyfms/view/HouseholdMembers";
 import OtherInformation from "../../../components/cyfms/view/OtherInformation";
 import Register from "../../../components/cyfms/view/Register";
-import Router from "../../../components/nestedRouters/CYFMS";
+import Router from "../../../components/routers/CyfmsRouter";
 import TabContext from "../../../contexts/view/TabContext";
 import { useAppSelector } from "../../../library/hooks";
 import { Box, Tab, Tabs, Typography } from "@mui/material";

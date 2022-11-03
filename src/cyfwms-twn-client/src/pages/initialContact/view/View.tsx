@@ -9,7 +9,7 @@ import PatientCareInformation from "../../../components/initialContact/view/Pati
 import PresentConcerns from "../../../components/initialContact/view/PresentConcerns";
 import ReferralInformation from "../../../components/initialContact/view/ReferralInformation";
 import ContactNotes from "../../../components/initialContact/view/ContactNotes";
-import Router from "../../../components/nestedRouters/InitialContact";
+import Router from "../../../components/routers/IcRouter";
 import TabContext from "../../../contexts/view/TabContext";
 import { useAppSelector } from "../../../library/hooks";
 import { Box, Tab, Tabs, Typography } from "@mui/material";

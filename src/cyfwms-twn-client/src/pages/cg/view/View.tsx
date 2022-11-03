@@ -1,6 +1,6 @@
 import Popup from "../../../components/Popup";
 
-import Router from "../../../components/nestedRouters/CG";
+import Router from "../../../components/routers/CgRouter";
 import TabContext from "../../../contexts/view/TabContext";
 import { useAppSelector } from "../../../library/hooks";
 import { Box, Tab, Tabs, Typography } from "@mui/material";

@@ -1,4 +1,4 @@
-import SelectionContext from "../../../contexts/SelectionContext";
+import SelectionContext from "../../../contexts/AttachmentsContext";
 import { doDelete } from "../../../features/cpa/attachments/slice";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";

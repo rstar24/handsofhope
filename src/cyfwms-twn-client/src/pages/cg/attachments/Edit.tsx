@@ -2,7 +2,7 @@ import { CYFSWMSNextButton } from "../../../components/CYFSWMSButtons";
 import EditIcon from "../../../components/cg/attachments/EditIcon";
 import CgLayout from "../../../components/cg/CgLayout";
 import Input from "../../../components/Input";
-import SelectionContext from "../../../contexts/SelectionContext";
+import AttachmentsContext from "../../../contexts/AttachmentsContext";
 import { doPost } from "../../../features/cg/attachments/slice";
 import { onKeyDown } from "../../../library/app";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
@@ -19,7 +19,7 @@ import type { ChangeEventHandler, FC, FormEventHandler } from "react";
  * @returns `ReactElement`
  */
 const Edit: FC = () => {
-  const selection = useContext(SelectionContext);
+  const context = useContext(AttachmentsContext);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const cgCareProviderId = useAppSelector(
@@ -39,7 +39,7 @@ const Edit: FC = () => {
       "cgDto",
       JSON.stringify({
         id: cgCareProviderId,
-        cgImageId: data[selection.selected].cgImageId,
+        cgImageId: data[context.selected].cgImageId,
         name: e.currentTarget.attachmentName.value,
         type: e.currentTarget.attachmentType.value,
       })
@@ -82,14 +82,14 @@ const Edit: FC = () => {
             <Input
               id="attachmentName"
               value="Name"
-              autofill={data[selection.selected].name}
+              autofill={data[context.selected].name}
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <Input
               id="attachmentType"
               value="Type"
-              autofill={data[selection.selected].type}
+              autofill={data[context.selected].type}
             />
           </Box>
         </Box>

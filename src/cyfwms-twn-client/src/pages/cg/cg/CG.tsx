@@ -1,8 +1,13 @@
 import Header from "../../../components/Header";
 import Popup from "../../../components/Popup";
 import AuthLayout from "../../../components/auth/layout/AuthLayout";
-import Router from "../../../components/nestedRouters/CG";
-import { doGetCgBgCheckStatus, doGetCGStatus, doGetCGType, doGetProvince } from "../../../features/codetable/slice";
+import Router from "../../../components/routers/CgRouter";
+import {
+  doGetCgBgCheckStatus,
+  doGetCGStatus,
+  doGetCGType,
+  doGetProvince,
+} from "../../../features/codetable/slice";
 import { setOpen as setOpenPopup } from "../../../features/popupSlice";
 import { cleanState as cleanContactNotes } from "../../../features/cg/contactNotes/slice";
 import { cleanState as cleanCaregiverState } from "../../../features/cg/caregivers/slice";
@@ -11,8 +16,8 @@ import { Box, Button } from "@mui/material";
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import type { FC } from "react";
-import { clean as cleanCareproviderState} from "../../../features/cg/careProvider/slice";
-import { clean as cleanAttachmentState} from "../../../features/cg/attachments/slice";
+import { clean as cleanCareproviderState } from "../../../features/cg/careProvider/slice";
+import { clean as cleanAttachmentState } from "../../../features/cg/attachments/slice";
 import { clean as cleanCapacityState } from "../../../features/cg/capacity/slice";
 import { setCalendarView } from "../../../features/calendar/appointments/slice";
 
@@ -24,18 +29,18 @@ const CG: FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(doGetCGStatus())
-    dispatch(doGetCGType())
-    dispatch(doGetProvince())
-    dispatch(doGetCgBgCheckStatus())
+    dispatch(doGetCGStatus());
+    dispatch(doGetCGType());
+    dispatch(doGetProvince());
+    dispatch(doGetCgBgCheckStatus());
   });
 
   const cleanStore = () => {
     dispatch(cleanContactNotes(null));
     dispatch(cleanCaregiverState(null));
-    dispatch(cleanCareproviderState(null))
-    dispatch(cleanAttachmentState(null))
-    dispatch(cleanCapacityState(null))
+    dispatch(cleanCareproviderState(null));
+    dispatch(cleanAttachmentState(null));
+    dispatch(cleanCapacityState(null));
     dispatch(setCalendarView(false));
   };
 
@@ -75,7 +80,7 @@ const CG: FC = () => {
               dispatch(setOpenPopup(true));
             }}
           >
-            Add  A Caregiver
+            Add A Caregiver
           </Button>
           <Button
             component={Link}

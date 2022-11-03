@@ -4,7 +4,7 @@ import AuthLayout from "../../../components/auth/layout/AuthLayout";
 import CYFMSDropdown from "../../../components/cyfms/CYFMSDropdown";
 import CYFMSHeader from "../../../components/cyfms/CYFMSHeader";
 import Results from "../../../components/cyfms/search/Results";
-import Router from "../../../components/nestedRouters/CYFMS";
+import Router from "../../../components/routers/CyfmsRouter";
 import { onKeyDown } from "../../../library/app";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import { handleEffect, handleSubmit } from "./search_";

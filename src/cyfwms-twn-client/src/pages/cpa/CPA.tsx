@@ -1,7 +1,7 @@
 import Popup from "../../components/Popup";
 import AuthLayout from "../../components/auth/layout/AuthLayout";
 import CPAHeader from "../../components/cpa/CPAHeader";
-import Router from "../../components/nestedRouters/CPA";
+import Router from "../../components/routers/CpaRouter";
 import {
   doGetCPACulturalStatus,
   doGetCPACulturalType,

@@ -9,7 +9,7 @@ import CYFMSDropdown from "../../../components/cyfms/CYFMSDropdown";
 import { doGetCGStatus, doGetCGType } from "../../../features/codetable/slice";
 import { doGet, Record } from "../../../features/cg/search/slice";
 import Results from "../../../components/cg/search/Results";
-import Router from "../../../components/nestedRouters/CG";
+import Router from "../../../components/routers/CgRouter";
 import Header from "../../../components/Header";
 
 /**

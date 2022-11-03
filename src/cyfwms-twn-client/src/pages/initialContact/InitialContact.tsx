@@ -1,7 +1,7 @@
 import Popup from "../../components/Popup";
 import AuthLayout from "../../components/auth/layout/AuthLayout";
 import ICHeader from "../../components/initialContact/ICHeader";
-import Router from "../../components/nestedRouters/InitialContact";
+import Router from "../../components/routers/IcRouter";
 import {
   doGetICMentalHealthOrSubstanceAbuse,
   doGetICPresentConcerns,

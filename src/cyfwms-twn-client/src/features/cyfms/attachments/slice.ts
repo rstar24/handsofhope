@@ -30,10 +30,7 @@ export const doGet = createAsyncThunk<Record[], number>(
   "attachments/doGet",
   async (participantID, { getState }) => {
     const store = getState() as RootState;
-    const res: AxiosResponse = await doGetAPI(
-      participantID,
-      store.login.token
-    );
+    const res: AxiosResponse = await doGetAPI(participantID, store.login.token);
     // Becomes the `fulfilled` action payload:
     return res.data;
   }
@@ -43,7 +40,10 @@ export const doGetOne = createAsyncThunk<Record, number>(
   "attachments/doGetOne",
   async (cyfmsFileID, { getState }) => {
     const store = getState() as RootState;
-    const res: AxiosResponse = await doGetOneAPI(cyfmsFileID, store.login.token);
+    const res: AxiosResponse = await doGetOneAPI(
+      cyfmsFileID,
+      store.login.token
+    );
     // Becomes the `fulfilled` action payload:
     return res.data;
   }
@@ -63,7 +63,10 @@ export const doDelete = createAsyncThunk<any, number>(
   "attachments/doDelete",
   async (cyfmsFileId, { getState }) => {
     const store = getState() as RootState;
-    const res: AxiosResponse = await doDeleteAPI(cyfmsFileId, store.login.token);
+    const res: AxiosResponse = await doDeleteAPI(
+      cyfmsFileId,
+      store.login.token
+    );
     // Becomes the `fulfilled` action payload:
     return res.data;
   }

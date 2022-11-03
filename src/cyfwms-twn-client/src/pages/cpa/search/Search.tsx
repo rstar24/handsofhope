@@ -1,7 +1,7 @@
 import Input from "../../../components/Input";
 import Popup from "../../../components/Popup";
 import AuthLayout from "../../../components/auth/layout/AuthLayout";
-import Router from "../../../components/nestedRouters/CPA";
+import Router from "../../../components/routers/CpaRouter";
 import { onKeyDown } from "../../../library/app";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import { Box, Button } from "@mui/material";
