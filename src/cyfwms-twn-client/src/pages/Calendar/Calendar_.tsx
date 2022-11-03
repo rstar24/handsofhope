@@ -7,8 +7,12 @@ import AuthLayout from "../../components/auth/layout/AuthLayout";
 import { useCallback, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import AppointmentEvent from "./AppointmentEvent";
-import { doGetByDate } from "../../features/calendar/appointments/slice";
+import {
+  doGetAll,
+  doGetByDate as doGetAppointments,
+} from "../../features/calendar/appointments/slice";
 import ReminderEvent from "./ReminderEvent";
+import { doGetByDate } from "../../features/calendar/reminders/slice";
 
 const localizer = momentLocalizer(moment);
 
@@ -16,7 +20,7 @@ const initialArtists = [{ id: 0, title: "Neeraj", start: "", end: "" }];
 const Calendar_ = (props: any) => {
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
-  const data = useAppSelector((state)=>state.calendarAppointment.record)
+  const data = useAppSelector((state) => state.calendarAppointment.record);
   const [title, setTitle] = useState(["No Event"]);
   const [newEvent, setNewEvent] = useState(initialArtists);
   const [start, setStart] = useState(
@@ -26,15 +30,13 @@ const Calendar_ = (props: any) => {
     moment(new Date()).format(" ddd, DD MMM yyyy ")
   );
 
-  
-
   useEffect(() => {
-    dispatch(doGetByDate(moment(new Date()).format("yyyy-MM-DD"))).then((res: any) => {
+    dispatch(doGetAll()).then((res: any) => {
       const events = res.payload.map((key: any) => ({
-        id: key.calendarId,
+        id: key.appointmentId,
         title: key.subject,
-        start: moment(key.start).toDate(),
-        end: moment(key.end).toDate(),
+        start: moment(key.date).toDate(),
+        end: moment(key.date).toDate(),
       }));
       setNewEvent(events);
 
@@ -67,11 +69,13 @@ const Calendar_ = (props: any) => {
   };
 
   const selecetedSlot = (slotInfo: any) => {
-    console.log("slot--", slotInfo);
+    //slotInfo.start
+    dispatch(doGetAppointments(moment(slotInfo.start).format("yyyy-MM-DD")));
+    dispatch(doGetByDate(moment(slotInfo.start).format("yyyy-MM-DD")));
   };
 
-  const handleEvent = () => {
-    console.log("eventsssssssss");
+  const handleEvent = (e: any) => {
+    console.log("eventsssssssss", e);
   };
 
   return (
@@ -116,14 +120,28 @@ const Calendar_ = (props: any) => {
               />
             </Box>
             <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-              <Typography sx={{fontWeight:1000}}>Appointments</Typography>
-              <Box sx={{ height:180, flexBasis: 0, flexGrow: 1,overflow: "hidden",
-                        overflowY: "scroll"}}>
+              <Typography sx={{ fontWeight: 1000 }}>Appointments</Typography>
+              <Box
+                sx={{
+                  height: 180,
+                  flexBasis: 0,
+                  flexGrow: 1,
+                  overflow: "hidden",
+                  overflowY: "scroll",
+                }}
+              >
                 <AppointmentEvent />
               </Box>
-              <Typography sx={{fontWeight:1000}}>Reminders</Typography>
-              <Box sx={{ height:180,flexBasis: 0, flexGrow: 1 ,overflow: "hidden",
-                        overflowY: "scroll"}}>
+              <Typography sx={{ fontWeight: 1000 }}>Reminders</Typography>
+              <Box
+                sx={{
+                  height: 180,
+                  flexBasis: 0,
+                  flexGrow: 1,
+                  overflow: "hidden",
+                  overflowY: "scroll",
+                }}
+              >
                 <ReminderEvent />
               </Box>
             </Box>
