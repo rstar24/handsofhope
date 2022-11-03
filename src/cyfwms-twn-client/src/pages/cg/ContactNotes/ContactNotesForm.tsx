@@ -49,7 +49,7 @@ const ContactNotesForm = ({
       .unwrap()
       .then(() => {
         console.log("ContactNotes POST backend API was successful!");
-        dispatch(doSearch({ id: 1, data: "" }));
+        dispatch(doSearch({ id: state.data.id ? state.data.id : state.getData.id, data: "" }));
         setAddNew(false);
       })
       .catch((err) => {
