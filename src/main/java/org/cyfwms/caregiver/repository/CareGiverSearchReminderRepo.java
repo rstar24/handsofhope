@@ -15,14 +15,14 @@ public class CareGiverSearchReminderRepo {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public List<CareGiverSearchReminderResultDto> searchCGReminder(CareGiverSearchReminderDto careGiverSearchAppointmentDto) {
+    public List<CareGiverSearchReminderResultDto> searchCGReminder(CareGiverSearchReminderDto cgSearchReminderDto) {
         List<Object> argsObjectList = new ArrayList<>();
-        StringBuffer querySBuff = createSearchQuery(careGiverSearchAppointmentDto, argsObjectList);
+        StringBuffer querySBuff = createSearchQuery(cgSearchReminderDto, argsObjectList);
         return jdbcTemplate.query(querySBuff.toString(), argsObjectList.toArray(),
                 (rs, rowNum) ->
                         new CareGiverSearchReminderResultDto(
-                                rs.getLong("reminderid"),
-                                rs.getLong("cgreminderid"),
+                                rs.getLong("reminderId"),
+                                rs.getLong("cgProviderId"),
                                 rs.getString("assignedTo"),
                                 rs.getString("regarding"),
                                 rs.getString("subject"),
@@ -36,12 +36,12 @@ public class CareGiverSearchReminderRepo {
         );
     }
 
-    private StringBuffer createSearchQuery(CareGiverSearchReminderDto cgAppointmentSearchDto, List<Object> argsObjectList) {
+    private StringBuffer createSearchQuery(CareGiverSearchReminderDto cgSearchReminderDto, List<Object> argsObjectList) {
         StringBuffer querySBuff = new StringBuffer();
-        String data = cgAppointmentSearchDto.getData();
-        Long cgProviderId = cgAppointmentSearchDto.getCgProviderId();
+        String data = cgSearchReminderDto.getData();
+        Long cgProviderId = cgSearchReminderDto.getCgProviderId();
 
-        querySBuff.append("select p.reminderid ,p2.cgreminderid,p.subject,p.assignedto ,p.status ,p.reminderdate,p.enddate,p.regarding ,p.frequency,p.description  ");
+        querySBuff.append("select p.reminderid ,p2.cgproviderid,p.assignedto,p.regarding ,p.subject ,p.frequency,p.status,p.description ,p.reminderdate,p.enddate  ");
         querySBuff.append("from reminder p left join caregiverreminder p2 on p.reminderid = p2.reminderid where  p2.statusofdeletion='ACTIVE' ");
 
         if (cgProviderId != null) {
@@ -57,7 +57,7 @@ public class CareGiverSearchReminderRepo {
                     .replace("_", "!_")
                     .replace("[", "![");
 
-            querySBuff.append(" AND (p2.cgproviderid=? OR p.subject LIKE ?  OR p.reminderdate LIKE ?  OR p.enddate LIKE ?    OR p.subject LIKE ?  OR p.frequency LIKE ? OR p.status LIKE ? OR p.description LIKE ? OR p.assignedto LIKE ? ) ORDER BY p2.creationdatetime desc ");
+            querySBuff.append(" AND (p2.cgproviderid=? OR p.assignedto LIKE ? OR p.regarding LIKE ? OR p.subject LIKE ? OR p.frequency LIKE ?  OR p.status LIKE ? OR p.description LIKE ? OR p.reminderdate LIKE ? OR p.enddate LIKE ? ) ORDER BY p2.creationdatetime desc ");
             argsObjectList.add(data);
             argsObjectList.add("%" + data + "%");
             argsObjectList.add("%" + data + "%");

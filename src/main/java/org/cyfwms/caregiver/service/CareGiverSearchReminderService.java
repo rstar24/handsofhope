@@ -12,7 +12,7 @@ import java.util.List;
 public class CareGiverSearchReminderService {
     @Autowired
     private CareGiverSearchReminderRepo careGiverSearchReminderRepo;
-    public List<CareGiverSearchReminderResultDto> searchCGReminder(CareGiverSearchReminderDto careGiverSearchAppointmentDto) {
-        return careGiverSearchReminderRepo.searchCGReminder(careGiverSearchAppointmentDto);
+    public List<CareGiverSearchReminderResultDto> searchCGReminder(CareGiverSearchReminderDto cgSearchReminderDto) {
+        return careGiverSearchReminderRepo.searchCGReminder(cgSearchReminderDto);
     }
 }

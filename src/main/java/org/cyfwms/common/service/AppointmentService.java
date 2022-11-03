@@ -14,4 +14,6 @@ public interface AppointmentService {
     List<CalenderDto> getAllDate(LocalDate date);
 
     List<CalenderAppointmentDto> getAllCommonCalenderDate(LocalDate dateTime);
+
+    List<Object> getAllCalenderData();
 }

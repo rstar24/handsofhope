@@ -15,7 +15,7 @@ public class CareGiverSearchReminderResultDto {
 
     @Getter
     @Setter
-    private Long cgReminderId;
+    private Long cgProviderId;
 
     @Getter
     @Setter
@@ -45,18 +45,16 @@ public class CareGiverSearchReminderResultDto {
     @Setter
     private LocalDate endDate;
 
-
-    public CareGiverSearchReminderResultDto(Long reminderId, Long cgReminderId,String subject, String regarding,String assignedTo,String frequency,String description, String status, LocalDate reminderDate,LocalDate endDate) {
-        this.reminderId=reminderId;
-        this.cgReminderId=cgReminderId;
-        this.subject=subject;
-        this.status=status;
-        this.assignedTo=assignedTo;
-        this.description=description;
-        this.frequency=frequency;
-        this.regarding=regarding;
-        this.reminderDate=reminderDate;
-        this.endDate=endDate;
-
+    public CareGiverSearchReminderResultDto(Long reminderId, Long cgProviderId, String assignedTo, String regarding, String subject, String frequency, String status, String description, LocalDate reminderDate, LocalDate endDate) {
+        this.reminderId = reminderId;
+        this.cgProviderId = cgProviderId;
+        this.assignedTo = assignedTo;
+        this.regarding = regarding;
+        this.subject = subject;
+        this.frequency = frequency;
+        this.status = status;
+        this.description = description;
+        this.reminderDate = reminderDate;
+        this.endDate = endDate;
     }
 }

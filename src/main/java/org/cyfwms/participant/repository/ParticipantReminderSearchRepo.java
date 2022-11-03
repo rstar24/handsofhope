@@ -42,7 +42,7 @@ public class ParticipantReminderSearchRepo {
         String data = searchCriteriaDto.getData();
         Long participantId = searchCriteriaDto.getParticipantId();
 
-        querySBuff.append("select p.reminderid ,p2.participantid ,p.subject ,p.assignedto ,p.status ,p.reminderdate ,p.enddate ,p.regarding ,p.frequency ,p.description  ");
+        querySBuff.append("select p.reminderid ,p2.participantid ,p.assignedto ,p.regarding ,p.subject ,p.frequency ,p.status ,p.description ,p.reminderDate ,p.endDate  ");
         querySBuff.append("from reminder p left join participantreminder p2 on (p.reminderid = p2.reminderid) where p2.statusofdeletion='ACTIVE' ");
 
         if (participantId != null) {
@@ -58,7 +58,7 @@ public class ParticipantReminderSearchRepo {
                     .replace("_", "!_")
                     .replace("[", "![");
 
-            querySBuff.append(" AND (p2.participantid=? OR p.subject LIKE ?  OR p.reminderdate LIKE ?  OR p.enddate LIKE ?    OR p.subject LIKE ?  OR p.frequency LIKE ? OR p.status LIKE ? OR p.description LIKE ? OR p.assignedto LIKE ? ) ORDER BY p2.creationdatetime desc ");
+            querySBuff.append(" AND (p2.participantid=? OR p.assignedto LIKE ?  OR p.regarding LIKE ?  OR p.subject LIKE ?  OR p.frequency LIKE ?  OR p.status LIKE ? OR p.description LIKE ? OR p.reminderDate LIKE ? OR p.endDate LIKE ? ) ORDER BY p2.creationdatetime desc ");
             argsObjectList.add(data);
             argsObjectList.add("%" + data + "%");
             argsObjectList.add("%" + data + "%");

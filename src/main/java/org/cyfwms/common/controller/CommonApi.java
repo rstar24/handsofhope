@@ -51,4 +51,13 @@ public class CommonApi {
     }
 
 
+    @GetMapping(value = "/appointment/getAllCalenderData", produces = "application/json")
+    @ApiOperation("Calender Api Of Appointment")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Object> getAllCalenderData() {
+
+        return appointmentService.getAllCalenderData();
+    }
+
+
 }
