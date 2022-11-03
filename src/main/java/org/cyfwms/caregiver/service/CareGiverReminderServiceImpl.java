@@ -85,18 +85,18 @@ public class CareGiverReminderServiceImpl implements CareGiverReminderService{
 
 
     @Override
-    public void removeCGReminder(Long referenceId) {
+    public void removeCGReminder(Long cgReminderId) {
         log.info("Inside RemoveCGReminder");
         CareGiverReminder c =
-                    careGiverReminderRepository.findById(referenceId)
+                    careGiverReminderRepository.findById(cgReminderId)
                             .orElseThrow(() -> new NoSuchElementFoundException(
                                     messageUtil.getLocalMessage(I18Constants.NO_ITEM_FOUND.getKey(),
-                                            String.valueOf(referenceId))));
+                                            String.valueOf(cgReminderId))));
 
             if (c.getStatusOfDeletion().equalsIgnoreCase("INACTIVE")) {
                 throw new NoSuchElementFoundException(
                         messageUtil.getLocalMessage(I18Constants.NO_ITEM_FOUND.getKey(),
-                                String.valueOf(referenceId)));
+                                String.valueOf(cgReminderId)));
             }
             c.setStatusOfDeletion("INACTIVE");
         careGiverReminderRepository.save(c);

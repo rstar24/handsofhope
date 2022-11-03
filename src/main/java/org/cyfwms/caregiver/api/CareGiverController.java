@@ -105,7 +105,6 @@ public class CareGiverController {
 
     @GetMapping(value = "/readCapacity/{id}", produces = "application/json")
     @ApiOperation("Read CGCapacity")
-    // @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<CapacityDto> readCapacity(@PathVariable("id") Long id) {
         // return capacityService.readCapacity(cgProviderId);
         CapacityDto capacityDto = new CapacityDto();
@@ -239,11 +238,11 @@ public class CareGiverController {
         return careGiverReminderService.readCGReminder(cgReminderId);
     }
 
-    @DeleteMapping("/removeCGReminder/{referenceId}")
+    @DeleteMapping("/removeCGReminder/{cgReminderId}")
     @ApiOperation("Remove Contact Notes")
-    public ResponseEntity<String> removeCGReminder(@PathVariable("cgcontactnotesid") Long referenceId) {
-        careGiverReminderService.removeCGReminder(referenceId);
-        log.info("RemoveCGReminder " + "ReferenceId :" + referenceId);
+    public ResponseEntity<String> removeCGReminder(@PathVariable("cgReminderId") Long cgReminderId) {
+        careGiverReminderService.removeCGReminder(cgReminderId);
+        log.info("RemoveCGReminder " + "cgReminderId :" + cgReminderId);
         return new ResponseEntity("Operation Successful", HttpStatus.OK);
     }
 

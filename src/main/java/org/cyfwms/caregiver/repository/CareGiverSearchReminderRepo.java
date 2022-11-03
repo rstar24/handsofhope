@@ -22,7 +22,7 @@ public class CareGiverSearchReminderRepo {
                 (rs, rowNum) ->
                         new CareGiverSearchReminderResultDto(
                                 rs.getLong("reminderId"),
-                                rs.getLong("cgProviderId"),
+                                rs.getLong("id"),
                                 rs.getString("assignedTo"),
                                 rs.getString("regarding"),
                                 rs.getString("subject"),
@@ -41,11 +41,11 @@ public class CareGiverSearchReminderRepo {
         String data = cgSearchReminderDto.getData();
         Long cgProviderId = cgSearchReminderDto.getCgProviderId();
 
-        querySBuff.append("select p.reminderid ,p2.cgproviderid,p.assignedto,p.regarding ,p.subject ,p.frequency,p.status,p.description ,p.reminderdate,p.enddate  ");
+        querySBuff.append("select p.reminderid ,p2.id,p.assignedto,p.regarding ,p.subject ,p.frequency,p.status,p.description ,p.reminderdate,p.enddate  ");
         querySBuff.append("from reminder p left join caregiverreminder p2 on p.reminderid = p2.reminderid where  p2.statusofdeletion='ACTIVE' ");
 
         if (cgProviderId != null) {
-            querySBuff.append(" AND p2.cgproviderid = ?");
+            querySBuff.append(" AND p2.id = ?");
             argsObjectList.add(cgProviderId);
         }
 
@@ -57,7 +57,7 @@ public class CareGiverSearchReminderRepo {
                     .replace("_", "!_")
                     .replace("[", "![");
 
-            querySBuff.append(" AND (p2.cgproviderid=? OR p.assignedto LIKE ? OR p.regarding LIKE ? OR p.subject LIKE ? OR p.frequency LIKE ?  OR p.status LIKE ? OR p.description LIKE ? OR p.reminderdate LIKE ? OR p.enddate LIKE ? ) ORDER BY p2.creationdatetime desc ");
+            querySBuff.append(" AND (p2.id=? OR p.assignedto LIKE ? OR p.regarding LIKE ? OR p.subject LIKE ? OR p.frequency LIKE ?  OR p.status LIKE ? OR p.description LIKE ? OR p.reminderdate LIKE ? OR p.enddate LIKE ? ) ORDER BY p2.creationdatetime desc ");
             argsObjectList.add(data);
             argsObjectList.add("%" + data + "%");
             argsObjectList.add("%" + data + "%");
@@ -70,7 +70,7 @@ public class CareGiverSearchReminderRepo {
 
 
         } else {
-            querySBuff.append(" AND p2.cgproviderid = ? ORDER BY p2.creationdatetime desc ");
+            querySBuff.append(" AND p2.id = ? ORDER BY p2.creationdatetime desc ");
             argsObjectList.add(cgProviderId);
         }
         return querySBuff;
