@@ -20,6 +20,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import React, { useEffect } from "react";
 import type { ReactElement, ReactNode } from "react";
 import { useNavigate, useNavigationType } from "react-router";
+import { setCalendarView } from "../features/calendar/appointments/slice";
 
 /**
  * The Popup functional component.
@@ -47,10 +48,10 @@ const Popup = (props: { children: ReactNode | ReactNode[] }): ReactElement => {
   const culturalProgramId = useAppSelector(
     (state) => state.cpa.data.culturalProgramId
   );
-  const cgProviderId = useAppSelector(
-    (state) => state.cgCareProvider.data.id
-  );
+  const cgProviderId = useAppSelector((state) => state.cgCareProvider.data.id);
 
+  const calendarview = useAppSelector((state) => state.calendarAppointment);
+  console.log(calendarview);
   useEffect(() => {
     if (navigationAction === "POP") {
       console.log("popup close");
@@ -116,24 +117,30 @@ const Popup = (props: { children: ReactNode | ReactNode[] }): ReactElement => {
             dispatch(setEdit(false));
             dispatch(uninitiate(null));
             dispatch(hideTabs(null));
+            dispatch(setCalendarView(false));
             if (!state.view) {
               cleanStore();
             }
-            if (
-              fileDetailsId !== 0 ||
-              participantId !== 0 ||
-              culturalProgramId !== 0 ||
-              cgProviderId !== 0
-            ) {
-              navigate("./view");
-            }
-            if (
-              fileDetailsId === 0 &&
-              participantId === 0 &&
-              culturalProgramId === 0 &&
-              cgProviderId === 0
-            ) {
-              navigate("./");
+            if (calendarview.calendar) {
+              console.log("calendar view ");
+              navigate("/calendar");
+            } else {
+              if (
+                fileDetailsId !== 0 ||
+                participantId !== 0 ||
+                culturalProgramId !== 0 ||
+                cgProviderId !== 0
+              ) {
+                navigate("./view");
+              }
+              if (
+                fileDetailsId === 0 &&
+                participantId === 0 &&
+                culturalProgramId === 0 &&
+                cgProviderId === 0
+              ) {
+                navigate("./");
+              }
             }
           }}
           sx={{ position: "absolute", right: 0 }}

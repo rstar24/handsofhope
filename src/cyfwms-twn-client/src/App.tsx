@@ -55,7 +55,7 @@ const App: FC = () => {
                 <Route path="cg/*" element={<CG />} />
                 <Route path="/cg/search/*" element={<CgSearch />} />
                 <Route path="cg/view/*" element={<View />} />
-                <Route path="calendar" element={<Calendar_ />} />
+                <Route path="calendar/*" element={<Calendar_ />} />
               </Routes>
             </BrowserRouter>
           </ThemeProvider>
