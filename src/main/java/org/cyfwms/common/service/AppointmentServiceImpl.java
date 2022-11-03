@@ -104,7 +104,7 @@ public class AppointmentServiceImpl implements AppointmentService {
                         calenderAppointmentDto.setFileDetailsId(ca.getICReminder().getFileDetailsId());
                     }
                     if (ca.getCareGiverReminder() != null) {
-                        calenderAppointmentDto.setCgProviderId(ca.getCareGiverReminder().getCgProviderId());
+                        calenderAppointmentDto.setCgProviderId(ca.getCareGiverReminder().getId());
                     }
                     return calenderAppointmentDto;
                 }).collect(Collectors.toList());
