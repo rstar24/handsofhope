@@ -51,11 +51,9 @@ public class CareGiverReminder {
     @Column(name = "id")
     private Long id;
 
-    @Column(
-            name = "reference_id",
-            updatable = false,
-            nullable = false,
-            unique = true)
+    @Getter
+    @Setter
+    @Column(name = "reference_id")
     private Long referenceId;
 
 

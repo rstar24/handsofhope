@@ -45,7 +45,11 @@ public class CareGiverSearchReminderResultDto {
     @Setter
     private LocalDate endDate;
 
-    public CareGiverSearchReminderResultDto(Long reminderId, Long cgProviderId, String assignedTo, String regarding, String subject, String frequency, String status, String description, LocalDate reminderDate, LocalDate endDate) {
+    @Getter
+    @Setter
+    private Long cgReminderId;
+
+    public CareGiverSearchReminderResultDto(Long reminderId, Long cgProviderId, String assignedTo, String regarding, String subject, String frequency, String status, String description, LocalDate reminderDate, LocalDate endDate,Long cgReminderId) {
         this.reminderId = reminderId;
         this.cgProviderId = cgProviderId;
         this.assignedTo = assignedTo;
@@ -56,5 +60,6 @@ public class CareGiverSearchReminderResultDto {
         this.description = description;
         this.reminderDate = reminderDate;
         this.endDate = endDate;
+        this.cgReminderId=cgReminderId;
     }
 }

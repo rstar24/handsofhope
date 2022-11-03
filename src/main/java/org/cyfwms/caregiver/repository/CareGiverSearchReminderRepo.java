@@ -31,7 +31,9 @@ public class CareGiverSearchReminderRepo {
                                 rs.getString("description"),
 
                                 rs.getDate("reminderDate") != null ? rs.getDate("reminderDate").toLocalDate() : LocalDate.of(1, 1, 1),
-                                rs.getDate("endDate") != null ? rs.getDate("endDate").toLocalDate() : LocalDate.of(1, 1, 1)
+                                rs.getDate("endDate") != null ? rs.getDate("endDate").toLocalDate() : LocalDate.of(1, 1, 1),
+                                rs.getLong("cgReminderId")
+
                         )
         );
     }
@@ -41,7 +43,7 @@ public class CareGiverSearchReminderRepo {
         String data = cgSearchReminderDto.getData();
         Long cgProviderId = cgSearchReminderDto.getCgProviderId();
 
-        querySBuff.append("select p.reminderid ,p2.id,p.assignedto,p.regarding ,p.subject ,p.frequency,p.status,p.description ,p.reminderdate,p.enddate  ");
+        querySBuff.append("select p.reminderid ,p2.id,p.assignedto,p.regarding ,p.subject ,p.frequency,p.status,p.description ,p.reminderdate,p.enddate,p2.cgreminderid  ");
         querySBuff.append("from reminder p left join caregiverreminder p2 on p.reminderid = p2.reminderid where  p2.statusofdeletion='ACTIVE' ");
 
         if (cgProviderId != null) {

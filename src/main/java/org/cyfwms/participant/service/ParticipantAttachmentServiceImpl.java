@@ -77,7 +77,6 @@ public class ParticipantAttachmentServiceImpl implements ParticipantAttachmentSe
         attachment = new Attachment();
         long participantAttachmentId = participantAttachmentDto.getParticipantAttachmentId();
         if (participantAttachmentDto.getParticipantAttachmentId() == 0) {
-            participantAttachment.setStatus("ACTIVE");
             BeanUtils.copyProperties(participantAttachmentDto, participantAttachment);
         } else {
             participantAttachment = readParticipantAttachment(participantAttachmentId);
@@ -95,11 +94,11 @@ public class ParticipantAttachmentServiceImpl implements ParticipantAttachmentSe
             attachment.setAttachmentName(file.getOriginalFilename());
             attachment.setAttachmentStatus("ACTIVE");
             attachment.setDocumentType(file.getContentType());
-            participantAttachment.setAttachmentType("PARTICIPANT_PROFILE_PIC");
-            participantAttachment.setStatus("ACTIVE");
             participantAttachment.setAttachment(attachment);
 
         }
+        participantAttachment.setAttachmentType("PARTICIPANT_PROFILE_PIC");
+        participantAttachment.setStatus("ACTIVE");
         participantAttachment = participantAttachmentRepo.save(participantAttachment);
         participantAttachmentDto.setAttachmentType(attachment.getDocumentType());
         participantAttachmentDto.setParticipantAttachmentId(participantAttachment.getParticipantAttachmentId());
