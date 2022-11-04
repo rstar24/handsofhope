@@ -40,13 +40,11 @@ const ContactNotes: FC = () => {
   const [value, setValue] = useState("");
 
   useEffect(() => {
-    dispatch(doGetICContactMethod()).then(()=>{
+    dispatch(doGetICContactMethod()).then(() => {
       dispatch(doSearch({ id: state.fileDetailsId, data: "" }))
-      .unwrap()
-      .catch((err) => {});
-    })
-
-  
+        .unwrap()
+        .catch((err) => {});
+    });
   }, [addNew]);
   const handleAddNew = () => {
     dispatch(cleanState(null));

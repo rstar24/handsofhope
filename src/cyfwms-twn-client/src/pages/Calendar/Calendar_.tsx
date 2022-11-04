@@ -75,7 +75,8 @@ const Calendar_ = (props: any) => {
   };
 
   const handleEvent = (e: any) => {
-    console.log("eventsssssssss", e);
+    dispatch(doGetAppointments(moment(e.start).format("yyyy-MM-DD")));
+    dispatch(doGetByDate(moment(e.start).format("yyyy-MM-DD")));
   };
 
   return (
