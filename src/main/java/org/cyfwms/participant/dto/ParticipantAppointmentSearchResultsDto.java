@@ -4,12 +4,12 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
+
 @Builder
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
-public class ParticipantContactNotesSearchResultsDto {
+public class ParticipantAppointmentSearchResultsDto {
     @Getter
     @Setter
     private Long appointmentId;
@@ -33,7 +33,7 @@ public class ParticipantContactNotesSearchResultsDto {
     @Setter
     private Long participantAppointmentId;
 
-    public ParticipantContactNotesSearchResultsDto(Long appointmentId, Long participantId, String subject, String status, LocalDate date,Long participantAppointmentId) {
+    public ParticipantAppointmentSearchResultsDto(Long appointmentId, Long participantId, String subject, String status, LocalDate date, Long participantAppointmentId) {
         this.appointmentId=appointmentId;
         this.participantId=participantId;
         this.subject=subject;

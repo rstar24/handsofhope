@@ -61,7 +61,7 @@ public class ParticipantController {
     private ParticipantAttachmentService participantAttachmentService;
 
     @Autowired
-    private ParticipantContactNotesSearchService participantContactNotesSearchService;
+    private ParticipantAppointmentSearchService participantContactNotesSearchService;
     @Autowired
     private ParticipantReminderService participantReminderService;
 
@@ -388,16 +388,16 @@ public class ParticipantController {
     @GetMapping(value = { "/searchContactNotes/{participantid}/{data}" }, produces = "application/json")
     @ApiOperation("Search Participant")
     @ResponseStatus(HttpStatus.OK)
-    public List<ParticipantContactNotesSearchResultsDto> searchParticipantContactNotes(
+    public List<ParticipantAppointmentSearchResultsDto> searchParticipantAppointment(
             @PathVariable Map<String, String> var) {
-        ParticipantContactNotesSearchCriteriaDto iCContactNotesSearchCriteriaDto = new ParticipantContactNotesSearchCriteriaDto();
-        iCContactNotesSearchCriteriaDto.setParticipantId(("null".equals(var.get("participantid"))
+        ParticipantAppointmentSearchCriteriaDto participantAppointmentSearchCriteriaDto = new ParticipantAppointmentSearchCriteriaDto();
+        participantAppointmentSearchCriteriaDto.setParticipantId(("null".equals(var.get("participantid"))
                 || var.get("participantid") == null) ? null : Long.parseLong(var.get("participantid")));
-        iCContactNotesSearchCriteriaDto.setData(
+        participantAppointmentSearchCriteriaDto.setData(
                 ("null".equals(var.get("data"))
                         || var.get("data") == null) ? null : var.get("data"));
-        log.info("SearchContactNotes " + iCContactNotesSearchCriteriaDto);
-        return participantContactNotesSearchService.search(iCContactNotesSearchCriteriaDto);
+        log.info("SearchContactNotes " + participantAppointmentSearchCriteriaDto);
+        return participantContactNotesSearchService.search(participantAppointmentSearchCriteriaDto);
     }
 
     @GetMapping(value = "/readOneAppointment/{participantAppointmentId}", produces = "application/json")

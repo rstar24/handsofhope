@@ -2,8 +2,6 @@ package org.cyfwms.initialcontact.repository;
 
 import org.cyfwms.initialcontact.dto.ICAppointmentSearchDto;
 import org.cyfwms.initialcontact.dto.ICAppointmentSearchResultDto;
-import org.cyfwms.participant.dto.ParticipantContactNotesSearchCriteriaDto;
-import org.cyfwms.participant.dto.ParticipantContactNotesSearchResultsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -40,10 +38,10 @@ public class ICAppointmentSearchRepo {
         querySBuff.append("select p.appointmentid ,p2.filedetailsid,p2.icappointmentid,p.subject ,p.status ,p.date ");
         querySBuff.append("from appointments p left join ic_appointment p2 on p.appointmentid = p2.appointmentid where  p2.status='ACTIVE' ");
 
-//        if (participantId != null) {
-//            querySBuff.append(" AND p2.appointmentid = ?");
-//            argsObjectList.add(participantId);
-//        }
+        if (fileDetailsId != null) {
+            querySBuff.append(" AND p2.filedetailsid = ?");
+            argsObjectList.add(fileDetailsId);
+        }
 
         if (data != null && !data.trim().isEmpty()) {
             data = data.trim()

@@ -40,10 +40,10 @@ public class CareGiverSearchAppointmentRepo {
         querySBuff.append("select p.appointmentid ,p2.id,p2.cgappointmentid,p.subject ,p.status ,p.date ");
         querySBuff.append("from appointments p left join cg_appointment p2 on p.appointmentid = p2.appointmentid where  p2.status='ACTIVE' ");
 
-//        if (participantId != null) {
-//            querySBuff.append(" AND p2.appointmentid = ?");
-//            argsObjectList.add(participantId);
-//        }
+        if (id != null) {
+            querySBuff.append(" AND p2.id = ?");
+            argsObjectList.add(id);
+        }
 
         if (data != null && !data.trim().isEmpty()) {
             data = data.trim()

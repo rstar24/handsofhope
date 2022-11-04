@@ -1,26 +1,24 @@
 package org.cyfwms.participant.repository;
 
-import org.cyfwms.initialcontact.dto.ICContactNotesSearchResultsDto;
-import org.cyfwms.participant.dto.ParticipantContactNotesSearchCriteriaDto;
-import org.cyfwms.participant.dto.ParticipantContactNotesSearchResultsDto;
+import org.cyfwms.participant.dto.ParticipantAppointmentSearchCriteriaDto;
+import org.cyfwms.participant.dto.ParticipantAppointmentSearchResultsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 @Repository
-public class ParticipantContactNotesSearchRepository {
+public class ParticipantAppointmentSearchRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    public List<ParticipantContactNotesSearchResultsDto> searchParticipantContactNotes(ParticipantContactNotesSearchCriteriaDto iCContactNotesSearchCriteriaDto) {
+    public List<ParticipantAppointmentSearchResultsDto> searchParticipantContactNotes(ParticipantAppointmentSearchCriteriaDto participantAppointmentSearchCriteriaDto) {
         List<Object> argsObjectList = new ArrayList<>();
-        StringBuffer querySBuff = createSearchQuery(iCContactNotesSearchCriteriaDto, argsObjectList);
+        StringBuffer querySBuff = createSearchQuery(participantAppointmentSearchCriteriaDto, argsObjectList);
         return jdbcTemplate.query(querySBuff.toString(),argsObjectList.toArray(),
                 (rs, rowNum) ->
-                        new ParticipantContactNotesSearchResultsDto(
+                        new ParticipantAppointmentSearchResultsDto(
                                 rs.getLong("appointmentid"),
                                 rs.getLong("participantid"),
                                 rs.getString("subject"),
@@ -31,7 +29,7 @@ public class ParticipantContactNotesSearchRepository {
         );
     }
 
-    private StringBuffer createSearchQuery(ParticipantContactNotesSearchCriteriaDto searchCriteria, List<Object> argsObjectList) {
+    private StringBuffer createSearchQuery(ParticipantAppointmentSearchCriteriaDto searchCriteria, List<Object> argsObjectList) {
         StringBuffer  querySBuff = new StringBuffer();
         String data=searchCriteria.getData();
         Long participantId=searchCriteria.getParticipantId();
@@ -39,10 +37,10 @@ public class ParticipantContactNotesSearchRepository {
         querySBuff.append("select p.appointmentid ,p2.participantid,p2.participantappointmentid,p.subject ,p.status ,p.date ");
         querySBuff.append("from appointments p left join participant_appointment p2 on p.appointmentid = p2.appointmentid where  p2.status='ACTIVE' ");
 
-//        if (participantId != null) {
-//            querySBuff.append(" AND p2.appointmentid = ?");
-//            argsObjectList.add(participantId);
-//        }
+        if (participantId != null) {
+            querySBuff.append(" AND p2.participantid = ?");
+            argsObjectList.add(participantId);
+        }
 
         if (data != null && !data.trim().isEmpty()) {
             data = data.trim()

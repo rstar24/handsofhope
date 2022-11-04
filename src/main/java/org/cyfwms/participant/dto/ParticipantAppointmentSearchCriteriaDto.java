@@ -3,7 +3,7 @@ package org.cyfwms.participant.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-public class ParticipantContactNotesSearchCriteriaDto {
+public class ParticipantAppointmentSearchCriteriaDto {
     @Getter
     @Setter
     private Long participantId;
