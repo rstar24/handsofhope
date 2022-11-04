@@ -1,15 +1,18 @@
 import { CYFSWMSNextButton } from "../../../components/CYFSWMSButtons";
 import ICTextArea from "../../../components/initialContact/ICTextArea";
-import { Data, doPost,doSearch } from "../../../features/cyfms/reminders/slice";
+import {
+  Data,
+  doPost,
+  doSearch,
+} from "../../../features/cyfms/reminders/slice";
 import { onKeyDown } from "../../../library/app";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
-import { Box,Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import React, { useState } from "react";
 import type { FormEvent } from "react";
 import EditIcon from "./EditIcon";
 import Input from "../../../components/Input";
 import CYFMSDropdown from "../../../components/cyfms/CYFMSDropdown";
-
 
 const RemindersForm = ({
   setAddNew,
@@ -18,7 +21,9 @@ const RemindersForm = ({
   targetValue,
 }: any) => {
   const dispatch = useAppDispatch();
-  const { reminderstatus ,  frequency } = useAppSelector((state) => state.codetable); 
+  const { reminderstatus, frequency } = useAppSelector(
+    (state) => state.codetable
+  );
   const state = useAppSelector((state) => state.cyfmsRegister);
   const data = useAppSelector((state) => state.cyfmsReminders.data);
   const [click, setClick] = useState(false);
@@ -80,7 +85,7 @@ const RemindersForm = ({
             />
           </Box>
         )}
-    
+
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <Input
@@ -103,13 +108,13 @@ const RemindersForm = ({
 
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-          <Input
-          id="regarding"
+            <Input
+              id="regarding"
               value="Regarding"
               autofill={data.reminderDto.regarding}
               readOnly={disabled}
               required
-              />
+            />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <Input
@@ -131,19 +136,11 @@ const RemindersForm = ({
               autofill={data.reminderDto.status}
               readOnly={disabled}
               optionsList={Object.values(reminderstatus).map(
-                (status: any) => status.en)}
+                (status: any) => status.en
+              )}
             />
           </Box>
-          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <Input
-              id="description"
-              value="Description"
-              type="text"
-              autofill={data.reminderDto.description}
-              readOnly={disabled}
-              required
-            />
-          </Box>
+          <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
@@ -153,22 +150,23 @@ const RemindersForm = ({
           </Box>
         </Box>
         <ICTextArea
-          id="notes"
-          value="Notes"
-          //autofill={data.notes}
+          id="description"
+          value="Description"
+          type="text"
+          autofill={data.reminderDto.description}
           readOnly={disabled}
         />
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-          <CYFMSDropdown
-            id="frequency"
-            value="Frequency"
-            autofill={data.reminderDto.frequency}
-            readOnly={disabled}
-            optionsList={Object.values(frequency).map(
-              (status: any) => status.en
-            )}
-          />
+            <CYFMSDropdown
+              id="frequency"
+              value="Frequency"
+              autofill={data.reminderDto.frequency}
+              readOnly={disabled}
+              optionsList={Object.values(frequency).map(
+                (status: any) => status.en
+              )}
+            />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <Input
@@ -179,7 +177,6 @@ const RemindersForm = ({
               readOnly={disabled}
             />
           </Box>
-          
         </Box>
         <Box sx={{ display: "flex", justifyContent: "right" }}>
           <CYFSWMSNextButton disabled={disabled} />
