@@ -48,5 +48,9 @@ public class ReminderDto {
     @Setter
     private String frequency;
 
+    @Getter
+    @Setter
+    private Long participantId;
+
 
 }

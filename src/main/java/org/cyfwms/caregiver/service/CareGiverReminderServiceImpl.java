@@ -11,7 +11,8 @@ import org.cyfwms.common.exception.I18Constants;
 import org.cyfwms.common.exception.MessageUtil;
 import org.cyfwms.common.exception.NoSuchElementFoundException;
 import org.cyfwms.common.repository.ReminderRepository;
-import org.cyfwms.common.util.ReferenceIDGeneratorUtil;
+import org.cyfwms.participant.entity.Participant;
+import org.cyfwms.participant.repository.ParticipantRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,19 +22,19 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 @Slf4j
-public class CareGiverReminderServiceImpl implements CareGiverReminderService{
+public class CareGiverReminderServiceImpl implements CareGiverReminderService {
 
     @Autowired
     private CareGiverReminderRepository careGiverReminderRepository;
-
-    @Autowired
-    private ReferenceIDGeneratorUtil referenceIDGeneratorUtil;
 
     @Autowired
     private ReminderRepository reminderRepository;
 
     @Autowired
     private MessageUtil messageUtil;
+
+    @Autowired
+    private ParticipantRepository participantRepository;
 
     @Override
     public CareGiverReminderDto saveCGReminder(CareGiverReminderDto careGiverReminderDto) {
@@ -67,12 +68,19 @@ public class CareGiverReminderServiceImpl implements CareGiverReminderService{
         CareGiverReminderDto careGiverReminderDto = new CareGiverReminderDto();
         ReminderDto reminderDto = new ReminderDto();
         if (cgReminderId != 0) {
-            Optional<CareGiverReminder> careGiverReminder = Optional.ofNullable(careGiverReminderRepository.findByCGReminderId(cgReminderId));
+            Optional<CareGiverReminder> careGiverReminder = careGiverReminderRepository.findById(cgReminderId);
 
             if (careGiverReminder.isPresent()) {
                 if (careGiverReminder.get().getStatusOfDeletion().equals("ACTIVE")) {
                     BeanUtils.copyProperties(careGiverReminder.get(), careGiverReminderDto);
                     BeanUtils.copyProperties(careGiverReminder.get().getReminder(), reminderDto);
+
+                    if (!reminderDto.getRegarding().isEmpty() && reminderDto.getRegarding() != null) {
+                        Long participantId = Long.parseLong(reminderDto.getRegarding());
+                        Participant participant = participantRepository.findByParticipantId(participantId);
+                        reminderDto.setRegarding(participant.getFirstname() + " " + participant.getSurname());
+                        reminderDto.setParticipantId(participant.getParticipantId());
+                    }
                     careGiverReminderDto.setReminderDto(reminderDto);
 
                 }
