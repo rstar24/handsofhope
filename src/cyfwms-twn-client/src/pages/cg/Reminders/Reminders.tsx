@@ -25,7 +25,7 @@ import RemindersForm from "./RemindersForm";
 import { grey } from "@mui/material/colors";
 
 import CgLayout from "../../../components/cg/CgLayout";
-import { doGetCGStatus } from "../../../features/codetable/slice";
+import { doGetFrequency, doGetReminderStatus } from "../../../features/codetable/slice";
 
 function Reminders(props: any) {
   const dispatch = useAppDispatch();
@@ -38,7 +38,8 @@ function Reminders(props: any) {
   const [value, setValue] = useState("");
 
   useEffect(() => {
-    dispatch(doGetCGStatus()).then(() => {
+    dispatch(doGetFrequency())
+    dispatch((doGetReminderStatus())).then(() => {
       dispatch(
         doSearch({
           id: state1.data.id ? state1.data.id : state1.getData.id,

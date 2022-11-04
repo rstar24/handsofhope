@@ -26,9 +26,7 @@ const RemindersForm = ({
   targetValue,
 }: any) => {
   const dispatch = useAppDispatch();
-  const { cgStatus } = useAppSelector((state) => state.codetable);
   const state = useAppSelector((state) => state.cgCareProvider);
-  //const stte = useAppSelector((state) => state.cgReminder);
   const data = useAppSelector((state) => state.cgReminder.data);
   const [click, setClick] = useState(false);
   const handleSearch = () => {
@@ -36,6 +34,7 @@ const RemindersForm = ({
     setClick(true);
   };
   console.log("dataaaa--", state.getData.referenceId);
+  const { reminderstatus,frequency } = useAppSelector((state) => state.codetable);
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
     console.log("hellow");
@@ -160,7 +159,7 @@ const RemindersForm = ({
             required
             autofill={data.reminderDto.status}
             readOnly={disabled}
-            optionsList={Object.values(cgStatus).map(
+            optionsList={Object.values(reminderstatus).map(
               (status: any) => status.en
             )}
           />
@@ -182,11 +181,14 @@ const RemindersForm = ({
       </Typography>
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-          <Input
+        <CYFMSDropdown
             id="frequency"
             value="Frequency"
-            autofill={data.reminderDto.frequency}
+            autofill={data.reminderDto.status}
             readOnly={disabled}
+            optionsList={Object.values(frequency).map(
+              (status: any) => status.en
+            )}
           />
         </Box>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
