@@ -22,9 +22,8 @@ const View: FC = () => {
     (state) => state.cyfmsAttachments.data[context.selected]
   );
   const [actualAttachment, setActualAttachment] = useState<any>({
-    cgImagefile: "",
-    imageType: "",
-    cgImageName: "",
+    attachmentType: "",
+    participantImageName: "",
   });
 
   /** Download the attachment */
@@ -37,7 +36,7 @@ const View: FC = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [attachment.participantAttachmentId]);
+  }, []);
 
   return (
     <CyfmsLayout>
@@ -80,10 +79,10 @@ const View: FC = () => {
             Download file:{" "}
             <Link
               download={true}
-              href={`data:${actualAttachment.imageType};base64,${actualAttachment.file}`}
+              href={`data:${actualAttachment.attachmentType};base64,${actualAttachment.file}`}
               rel="noreferrer noopener"
             >
-              {actualAttachment.cgImageName}
+              {actualAttachment.participantImageName}
             </Link>
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>

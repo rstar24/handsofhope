@@ -22,14 +22,13 @@ const View: FC = () => {
     (state) => state.icAttachments.data[context.selected]
   );
   const [actualAttachment, setActualAttachment] = useState<any>({
-    cgImagefile: "",
-    imageType: "",
-    cgImageName: "",
+    icAttachmentType: "",
+    icAttachmentName: "",
   });
 
   /** Download the attachment */
   useEffect(() => {
-    dispatch(doGetOne(attachment.fileDetailsId))
+    dispatch(doGetOne(attachment.icAttachmentId))
       .unwrap()
       .then((data) => {
         setActualAttachment(data);
@@ -37,7 +36,7 @@ const View: FC = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [attachment.fileDetailsId]);
+  }, []);
 
   return (
     <IcLayout>
@@ -80,10 +79,10 @@ const View: FC = () => {
             Download file:{" "}
             <Link
               download={true}
-              href={`data:${actualAttachment.imageType};base64,${actualAttachment.file}`}
+              href={`data:${actualAttachment.icAttachmentType};base64,${actualAttachment.file}`}
               rel="noreferrer noopener"
             >
-              {actualAttachment.cgImageName}
+              {actualAttachment.icAttachmentName}
             </Link>
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
