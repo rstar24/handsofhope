@@ -8,7 +8,6 @@ import org.cyfwms.common.exception.I18Constants;
 import org.cyfwms.common.exception.MessageUtil;
 import org.cyfwms.common.exception.NoSuchElementFoundException;
 import org.cyfwms.common.repository.ReminderRepository;
-import org.cyfwms.common.util.ReferenceIDGeneratorUtil;
 import org.cyfwms.initialcontact.dto.ICReminderDto;
 import org.cyfwms.initialcontact.entity.ICReminder;
 import org.cyfwms.initialcontact.repository.ICReminderRepository;
@@ -29,8 +28,6 @@ public class ICReminderServiceImpl implements ICReminderService {
     @Autowired
     private ICReminderRepository icReminderRepository;
 
-    @Autowired
-    private ReferenceIDGeneratorUtil referenceIDGeneratorUtil;
     @Autowired
     private ReminderRepository reminderRepository;
 

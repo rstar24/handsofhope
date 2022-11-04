@@ -8,10 +8,11 @@ import org.cyfwms.common.exception.I18Constants;
 import org.cyfwms.common.exception.MessageUtil;
 import org.cyfwms.common.exception.NoSuchElementFoundException;
 import org.cyfwms.common.repository.ReminderRepository;
-import org.cyfwms.common.util.ReferenceIDGeneratorUtil;
 import org.cyfwms.participant.dto.ParticipantReminderDto;
+import org.cyfwms.participant.entity.Participant;
 import org.cyfwms.participant.entity.ParticipantReminder;
 import org.cyfwms.participant.repository.ParticipantReminderRepository;
+import org.cyfwms.participant.repository.ParticipantRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,10 +28,10 @@ public class ParticipantReminderServiceImpl implements ParticipantReminderServic
     private ParticipantReminderRepository participantReminderRepository;
 
     @Autowired
-    private ReferenceIDGeneratorUtil referenceIDGeneratorUtil;
+    private ReminderRepository reminderRepository;
 
     @Autowired
-    private ReminderRepository reminderRepository;
+    private ParticipantRepository participantRepository;
 
     @Autowired
     private MessageUtil messageUtil;
@@ -47,6 +48,13 @@ public class ParticipantReminderServiceImpl implements ParticipantReminderServic
                 if (participantReminder.get().getStatusOfDeletion().equals("ACTIVE")) {
                     BeanUtils.copyProperties(participantReminder.get(), participantReminderDto);
                     BeanUtils.copyProperties(participantReminder.get().getReminder(), reminderDto);
+
+                    if (!reminderDto.getRegarding().isEmpty() && reminderDto.getRegarding() != null) {
+                        Long participantId = Long.parseLong(reminderDto.getRegarding());
+                        Participant participant = participantRepository.findByParticipantId(participantId);
+                        reminderDto.setRegarding(participant.getFirstname() + " " + participant.getSurname());
+                        reminderDto.setParticipantId(participant.getParticipantId());
+                    }
                     participantReminderDto.setReminderDto(reminderDto);
 
                 }
@@ -66,7 +74,6 @@ public class ParticipantReminderServiceImpl implements ParticipantReminderServic
             BeanUtils.copyProperties(participantReminderDto.getReminderDto(), reminder);
             BeanUtils.copyProperties(participantReminderDto, participantReminder);
             participantReminder.setStatusOfDeletion("ACTIVE");
-            participantReminder.setReferenceId(referenceIDGeneratorUtil.generateParticipantReminderReferenceID());
         } else {
             participantReminder = participantReminderRepository.findById(participantReminderDto.getParticipantReminderId()).get();
             reminder = reminderRepository.findById(participantReminderDto.getReminderDto().getReminderId()).get();
