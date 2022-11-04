@@ -33,7 +33,8 @@ const AppointmentsForm = ({
   const { frequency } = useAppSelector((state) => state.codetable); 
   const { initialContactReferral } = useAppSelector((state) => state.codetable);
   const data = useAppSelector((state) => state.cyfmsAppointments.data);
- const stete = useAppSelector((state)=>state.cyfmsAppointments)
+ const stete = useAppSelector((state)=>state.cyfmsAppointments);
+ console.log(data)
   const submitHandler = (e: FormEvent) => {
 
     e.preventDefault();
@@ -129,7 +130,7 @@ const AppointmentsForm = ({
             id="subject"
             value="Subject"
             required
-            autofill={data.appointmentdto.subject}
+           autofill={data.appointmentdto.subject}
             readOnly={disabled}
           />
         </Box>
@@ -192,7 +193,7 @@ const AppointmentsForm = ({
           <Input
             id="client"
             value="Client"
-            autofill={data.appointmentdto.client}
+           autofill={data.appointmentdto.client}
             readOnly={disabled}
           />
         </Box>
@@ -211,7 +212,7 @@ const AppointmentsForm = ({
           <CYFMSDropdown
             id="recurringappointment"
             value="Is this a recurring appointment ?"
-            autofill={data.appointmentdto.recurringAppointment}
+           autofill={data.appointmentdto.recurringAppointment}
             disabled={disabled}
             // optionsList={["", "Yes", "No"]}
             optionsList={Object.values(initialContactReferral).map(

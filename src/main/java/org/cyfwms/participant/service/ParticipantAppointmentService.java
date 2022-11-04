@@ -6,7 +6,7 @@ import org.cyfwms.participant.dto.ParticipantAppointmentDto;
 import java.util.List;
 
 public interface ParticipantAppointmentService {
-    ParticipantAppointmentDto saveParticipantAppointment(ParticipantAppointmentDto participantAppointmentDto);
+    List<ParticipantAppointmentDto> saveParticipantAppointment(ParticipantAppointmentDto participantAppointmentDto);
 
     void removeParticipantAppointment(Long participantAppointmentId);
     ParticipantAppointmentDto readOneAppointment(Long participantAppointment);

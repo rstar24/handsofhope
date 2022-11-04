@@ -54,6 +54,7 @@ export interface State {
   disabledClosingDate: boolean;
   disabledFrequency:boolean;
   record: Data[];
+  record1:Data[];
   data: Data;
   status: "failed" | "none" | "loading" | "success";
 }
@@ -68,7 +69,7 @@ export const doGet = createAsyncThunk<Data, number>(
   }
 );
 
-export const doPost = createAsyncThunk<Data, Data>(
+export const doPost = createAsyncThunk<Data[], Data>(
   "participantservice/doPost",
   async (formData: Data, { getState }) => {
     const store: any = getState();
@@ -109,6 +110,7 @@ export const appointmentsSlice = createSlice<State, SliceCaseReducers<State>>({
     disabledClosingDate: true,
     disabledFrequency:true,
     record: [],
+    record1:[],
     data: emptyData,
     status: "failed",
   },
@@ -139,6 +141,7 @@ export const appointmentsSlice = createSlice<State, SliceCaseReducers<State>>({
       state.disabledFrequency = true;
       state.data = emptyData;
       state.record = [];
+      state.record1=[];
       state.status = "none";
     },
   },
@@ -159,7 +162,7 @@ export const appointmentsSlice = createSlice<State, SliceCaseReducers<State>>({
       });
     builder
       .addCase(doPost.fulfilled, (state, action) => {
-        state.data = action.payload;
+        state.record1 = action.payload;
         state.status = "success";
       })
       .addCase(doPost.pending, (state) => {

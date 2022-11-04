@@ -371,10 +371,9 @@ public class ParticipantController {
     @PutMapping(value = "/saveParticipantAppointment", produces = "application/json")
     @ApiOperation("Save or Update Participant Appointment Informtion")
     @ResponseStatus(HttpStatus.CREATED)
-    public ParticipantAppointmentDto saveParticipantAppointment(
-            @RequestBody ParticipantAppointmentDto ParticipantAppointmentDto) {
-        log.info("SaveParticipantAppointment " + ParticipantAppointmentDto);
-        return participantAppointmentService.saveParticipantAppointment(ParticipantAppointmentDto);
+    public List<ParticipantAppointmentDto>  saveParticipantAppointment(@RequestBody ParticipantAppointmentDto participantAppointmentDto) {
+        log.info("SaveParticipantAppointment " + participantAppointmentDto);
+        return participantAppointmentService.saveParticipantAppointment(participantAppointmentDto);
 
     }
 
