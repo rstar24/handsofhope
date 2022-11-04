@@ -23,7 +23,7 @@ const ReminderForm = ({
 }: any) => {
   const dispatch = useAppDispatch();
   const state = useAppSelector((state) => state.icFileDetails);
-  const { reminderstatus } = useAppSelector((state) => state.codetable);
+  const { reminderstatus, frequency } = useAppSelector((state) => state.codetable);
   const data = useAppSelector((state) => state.icReminder.data);
 
   const submitHandler = (e: FormEvent) => {
@@ -45,6 +45,7 @@ const ReminderForm = ({
         frequency: form.frequency.value,
       }
     };
+    console.log(formData)
     dispatch(doPost(formData))
       .unwrap()
       .then(() => {
@@ -158,12 +159,14 @@ const ReminderForm = ({
         <h4>Reccurance</h4>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <ICInput
-              
+          <ICDropdown
               id="frequency"
               value="Frequency"
               autofill={data.reminderDto.frequency}
               readOnly={disabled}
+              optionsList={Object.values(frequency).map(
+                (status: any) => status.en
+              )}
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>

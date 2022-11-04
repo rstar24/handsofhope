@@ -20,12 +20,12 @@ import {
   doSearch,
 } from "../../../features/cyfms/reminders/slice";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
-import {  doGetReminderStatus } from "../../../features/codetable/slice";
+import {  doGetReminderStatus, doGetFrequency } from "../../../features/codetable/slice";
 
 function Reminders(props: any) {
   const state = useAppSelector((state) => state.cyfmsRegister.data);
   const dispatch = useAppDispatch();
-  const { reminderstatus } = useAppSelector((state) => state.codetable);
+  const { reminderstatus , frequency} = useAppSelector((state) => state.codetable);
   const [addNew, setAddNew] = useState(false);
   const [disabled, setDisabled] = useState(false);
 
@@ -55,9 +55,10 @@ function Reminders(props: any) {
         setAddNew(true);
       });
   };
+  console.log("->",data);
   const handleSearchIcon = (e: any) => {
     console.group("click");
-    dispatch(doSearch({ id: state.participantId, data: value }))
+    dispatch(doSearch({ id: state.participantId, data: value ,}))
       .unwrap()
       .catch((err) => {});
   };

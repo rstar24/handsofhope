@@ -47,9 +47,9 @@ export interface State {
 
 export const doGet = createAsyncThunk<Data, number>(
   "participantservice/doGet",
-  async (reminderId, { getState }) => {
+  async (participantReminderId, { getState }) => {
     const store: any = getState();
-    const res: AxiosResponse = await doGetAPI(reminderId, store.login.token);
+    const res: AxiosResponse = await doGetAPI(participantReminderId, store.login.token);
     // Becomes the `fulfilled` action payload:
     return res.data;
  

@@ -3,11 +3,11 @@ import type { Data } from "./slice";
 import type { AxiosResponse } from "axios";
 
 export const doGetAPI = async (
-  participantID: number,
+  participantReminderId: number,
   token: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.get(
-    `participantservice/readParticipantReminder/${participantID}`,
+    `participantservice/readParticipantReminder/${participantReminderId}`,
     {
       headers: { Authorization: "Bearer " + token },
     }

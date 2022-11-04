@@ -18,10 +18,7 @@ const RemindersForm = ({
   targetValue,
 }: any) => {
   const dispatch = useAppDispatch();
-  const participantID = useAppSelector(
-    (state) => state.cyfmsRegister.data.participantId
-  );
-  const { reminderstatus } = useAppSelector((state) => state.codetable);
+  const { reminderstatus ,  frequency } = useAppSelector((state) => state.codetable); 
   const state = useAppSelector((state) => state.cyfmsRegister);
   const data = useAppSelector((state) => state.cyfmsReminders.data);
   const [click, setClick] = useState(false);
@@ -163,12 +160,15 @@ const RemindersForm = ({
         />
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <Input
-              id="frequency"
-              value="Frequency"
-              //autofill={data.reminderDto.frequency}
-              readOnly={disabled}
-            />
+          <CYFMSDropdown
+            id="frequency"
+            value="Frequency"
+            autofill={data.reminderDto.frequency}
+            readOnly={disabled}
+            optionsList={Object.values(frequency).map(
+              (status: any) => status.en
+            )}
+          />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <Input

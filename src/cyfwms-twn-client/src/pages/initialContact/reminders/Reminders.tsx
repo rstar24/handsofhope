@@ -20,12 +20,12 @@ import {
   doSearch,
 } from "../../../features/initialContact/reminder/slice";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
-import { doGetReminderStatus } from "../../../features/codetable/slice";
+import { doGetReminderStatus , doGetFrequency } from "../../../features/codetable/slice";
 
 function Reminders(props: any) {
   const state = useAppSelector((state) => state.icFileDetails.getData);
   const dispatch = useAppDispatch();
-  const { reminderstatus } = useAppSelector((state) => state.codetable);
+  const { reminderstatus,  frequency } = useAppSelector((state) => state.codetable);
   const [addNew, setAddNew] = useState(false);
   const [disabled, setDisabled] = useState(false);
 
