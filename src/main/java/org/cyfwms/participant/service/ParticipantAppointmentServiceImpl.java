@@ -84,26 +84,39 @@ public class ParticipantAppointmentServiceImpl implements ParticipantAppointment
             Period pd = Period.between(participantAppointmentDto.getAppointmentdto().getDate(), participantAppointmentDto.getAppointmentdto().getEndDate());
             int difference = pd.getDays();
             System.out.println(difference);
-            int n = 0,counter=0;
+            int n = 0,counter=0,remainder=0;
             if(participantAppointmentDto.getAppointmentdto().getFrequency().equalsIgnoreCase("Daily")){
                 n = difference+1;
+                remainder = n+1;
                 counter=1;
             } else if (participantAppointmentDto.getAppointmentdto().getFrequency().equalsIgnoreCase("Weekly")) {
                 n = (difference+1)/7;
+                remainder = n%7;
+                if(remainder>0){
+                    n=n+1;
+                }
                 counter=7;
             } else if (participantAppointmentDto.getAppointmentdto().getFrequency().equalsIgnoreCase("Monthly")) {
                 n = (difference+1)/30;
+                remainder =n%30;
+                if(remainder>0){
+                    n=n+1;
+                }
                 counter=30;
             }
             else {
                 n = (difference+1)/3;
+                remainder = n%3;
+                if(remainder>0){
+                    n=n+1;
+                }
                 counter=3;
             }
             List<ParticipantAppointmentDto>listparticipantAppointments = new ArrayList<>();
-            listparticipantAppointments = saveFrequency(n,counter,participantAppointmentDto);
+            listparticipantAppointments = saveFrequency(n,counter,remainder,participantAppointmentDto);
         return listparticipantAppointments;
         }
-        public List<ParticipantAppointmentDto> saveFrequency(int n,int counter, ParticipantAppointmentDto participantAppointmentDto) {
+        public List<ParticipantAppointmentDto> saveFrequency(int n,int counter,int remainder, ParticipantAppointmentDto participantAppointmentDto) {
 
             List<ParticipantAppointmentDto>listparticipantAppointments = new ArrayList<>();
             int cnt=0;
@@ -127,6 +140,10 @@ public class ParticipantAppointmentServiceImpl implements ParticipantAppointment
                 BeanUtils.copyProperties(appointments,appointmentDto);
                 participantAppointmentdto.setAppointmentdto(appointmentDto);
                 listparticipantAppointments.add(participantAppointmentdto);
+                if(i==n-1 && remainder>0){
+                    cnt =cnt+1;
+
+                }
                 cnt=cnt+counter;
             }
 
