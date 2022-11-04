@@ -41,7 +41,7 @@ public class ParticipantAttachment {
     private Long participantId;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "attachmentid", referencedColumnName = "attachmentid")
+    @JoinColumn(name = "attachmentid", referencedColumnName = "attachmentid",updatable = false)
     @Getter @Setter
     private Attachment attachment;
 
