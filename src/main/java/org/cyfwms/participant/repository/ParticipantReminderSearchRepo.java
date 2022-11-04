@@ -32,7 +32,8 @@ public class ParticipantReminderSearchRepo {
                                 rs.getString("description"),
 
                                 rs.getDate("reminderDate") != null ? rs.getDate("reminderDate").toLocalDate() : LocalDate.of(1, 1, 1),
-                                rs.getDate("endDate") != null ? rs.getDate("endDate").toLocalDate() : LocalDate.of(1, 1, 1)
+                                rs.getDate("endDate") != null ? rs.getDate("endDate").toLocalDate() : LocalDate.of(1, 1, 1),
+                                rs.getLong("participantReminderId")
                         )
         );
     }
@@ -42,7 +43,7 @@ public class ParticipantReminderSearchRepo {
         String data = searchCriteriaDto.getData();
         Long participantId = searchCriteriaDto.getParticipantId();
 
-        querySBuff.append("select p.reminderid ,p2.participantid ,p.assignedto ,p.regarding ,p.subject ,p.frequency ,p.status ,p.description ,p.reminderDate ,p.endDate  ");
+        querySBuff.append("select p.reminderid ,p2.participantid ,p.assignedto ,p.regarding ,p.subject ,p.frequency ,p.status ,p.description ,p.reminderDate ,p.endDate ,p2.participantreminderid ");
         querySBuff.append("from reminder p left join participantreminder p2 on (p.reminderid = p2.reminderid) where p2.statusofdeletion='ACTIVE' ");
 
         if (participantId != null) {
