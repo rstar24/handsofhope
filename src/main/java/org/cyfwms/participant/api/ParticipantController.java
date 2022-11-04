@@ -307,12 +307,12 @@ public class ParticipantController {
         return participantCommonDataService.readParticipantCommonData(referenceId);
     }
 
-    @GetMapping(value = "/readParticipantReminder/{participantId}", produces = "application/json")
+    @GetMapping(value = "/readParticipantReminder/{participantReminderId}", produces = "application/json")
     @ApiOperation("Read Participant Reminder By Id")
     @ResponseStatus(HttpStatus.OK)
-    public ParticipantReminderDto readParticipantReminder(@PathVariable("participantId") Long participantId) {
-        log.info("ReadParticipantReminder " + participantId);
-        return participantReminderService.readParticipantReminder(participantId);
+    public ParticipantReminderDto readParticipantReminder(@PathVariable("participantReminderId") Long participantReminderId) {
+        log.info("ReadParticipantReminder " + participantReminderId);
+        return participantReminderService.readParticipantReminder(participantReminderId);
     }
 
     @PutMapping(value = "/saveParticipantReminder", produces = "application/json")

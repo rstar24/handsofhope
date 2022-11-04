@@ -41,7 +41,7 @@ public class ParticipantReminderServiceImpl implements ParticipantReminderServic
         ParticipantReminderDto participantReminderDto = new ParticipantReminderDto();
         ReminderDto reminderDto = new ReminderDto();
         if (participantReminderId != 0) {
-            Optional<ParticipantReminder> participantReminder = Optional.ofNullable(participantReminderRepository.findByParticipantReminderId(participantReminderId));
+            Optional<ParticipantReminder> participantReminder = participantReminderRepository.findById(participantReminderId);
 
             if (participantReminder.isPresent()) {
                 if (participantReminder.get().getStatusOfDeletion().equals("ACTIVE")) {

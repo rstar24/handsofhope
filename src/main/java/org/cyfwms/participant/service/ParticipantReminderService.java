@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ParticipantReminderService {
 
-    ParticipantReminderDto readParticipantReminder(Long participantId);
+    ParticipantReminderDto readParticipantReminder(Long participantReminderId);
 
     ParticipantReminderDto saveParticipantReminder(ParticipantReminderDto participantReminderDto);
 
