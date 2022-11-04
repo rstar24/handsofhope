@@ -49,12 +49,12 @@ public class ParticipantReminderServiceImpl implements ParticipantReminderServic
                     BeanUtils.copyProperties(participantReminder.get(), participantReminderDto);
                     BeanUtils.copyProperties(participantReminder.get().getReminder(), reminderDto);
 
-                    if (!reminderDto.getRegarding().isEmpty() && reminderDto.getRegarding() != null) {
+                /*    if (!reminderDto.getRegarding().isEmpty() && reminderDto.getRegarding() != null) {
                         Long participantId = Long.parseLong(reminderDto.getRegarding());
                         Participant participant = participantRepository.findByParticipantId(participantId);
                         reminderDto.setRegarding(participant.getFirstname() + " " + participant.getSurname());
                         reminderDto.setParticipantId(participant.getParticipantId());
-                    }
+                    }*/
                     participantReminderDto.setReminderDto(reminderDto);
 
                 }
