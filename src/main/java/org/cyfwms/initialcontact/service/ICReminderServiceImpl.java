@@ -11,6 +11,8 @@ import org.cyfwms.common.repository.ReminderRepository;
 import org.cyfwms.initialcontact.dto.ICReminderDto;
 import org.cyfwms.initialcontact.entity.ICReminder;
 import org.cyfwms.initialcontact.repository.ICReminderRepository;
+import org.cyfwms.participant.entity.Participant;
+import org.cyfwms.participant.repository.ParticipantRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +35,9 @@ public class ICReminderServiceImpl implements ICReminderService {
 
     @Autowired
     private MessageUtil messageUtil;
+
+    @Autowired
+    private ParticipantRepository participantRepository;
 
     @Override
     public ICReminderDto saveICReminder(ICReminderDto icReminderDto) {
@@ -74,6 +79,13 @@ public class ICReminderServiceImpl implements ICReminderService {
                 if (icReminder.get().getStatusOfDeletion().equals("ACTIVE")) {
                     BeanUtils.copyProperties(icReminder.get(), icReminderDto);
                     BeanUtils.copyProperties(icReminder.get().getReminder(), reminderDto);
+
+                    if(!reminderDto.getRegarding().isEmpty() && reminderDto.getRegarding()!=null){
+                        Long participantId = Long.parseLong(reminderDto.getRegarding());
+                        Participant participant = participantRepository.findByParticipantId(participantId);
+                        reminderDto.setRegarding(participant.getFirstname() + " " + participant.getSurname());
+                        reminderDto.setParticipantId(participant.getParticipantId());
+                    }
                     icReminderDto.setReminderDto(reminderDto);
                 }
             }
