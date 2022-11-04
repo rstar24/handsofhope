@@ -12,9 +12,12 @@ export const doGenderGetAPI = async (
 export const doGetAppointmentStatusAPI = async (
   jwtToken: string
 ): Promise<AxiosResponse> => {
-  const res: AxiosResponse = await axiosInstance.get("dataservice/appoinmentstatus", {
-    headers: { Authorization: "Bearer " + jwtToken },
-  });
+  const res: AxiosResponse = await axiosInstance.get(
+    "dataservice/appoinmentstatus",
+    {
+      headers: { Authorization: "Bearer " + jwtToken },
+    }
+  );
   return res;
 };
 export const doGetReminderStatusAPI = async (

@@ -8,6 +8,7 @@ import cgCapacityReducer from "../features/cg/capacity/slice";
 import cgCaregiversReducer from "../features/cg/caregivers/slice";
 import cgCareProviderReducer from "../features/cg/careProvider/slice";
 import cgContactNotesReducer from "../features/cg/contactNotes/slice";
+import cgReminderReducer from "../features/cg/reminders/slice";
 import cgSearchReducer from "../features/cg/search/slice";
 import cyfmsAllReducer from "../features/cyfms/all/slice";
 import cyfmsAttachmentsReducer from "../features/cyfms/attachments/slice";
@@ -34,7 +35,7 @@ import initiatorReducer from "../features/initiatorSlice";
 import loginReducer from "../features/login/slice";
 import popupReducer from "../features/popupSlice";
 import navBarReducer from "../features/navBarSlice";
-import cyfmsAppointmentsReducer  from "../features/cyfms/appointment/slice";
+import cyfmsAppointmentsReducer from "../features/cyfms/appointment/slice";
 import ICappointmentsReducer from "../features/initialContact/appointment/slice";
 import cgAppointmentsReducer from "../features/cg/appointment/slice";
 import calendarAppointmentReducer from "../features/calendar/appointments/slice";
@@ -81,9 +82,10 @@ const rootReducer = {
   cgCaregivers: cgCaregiversReducer,
   cgAttachments: cgAttachmentsReducer,
   cgContactNotes: cgContactNotesReducer,
+  cgReminder: cgReminderReducer,
   cgSearch: cgSearchReducer,
   calendarAppointment: calendarAppointmentReducer,
-  calendarReminder: calendarReminderReducer
+  calendarReminder: calendarReminderReducer,
 };
 
 export default rootReducer;
