@@ -44,6 +44,8 @@ public class Reminder implements Serializable {
     private String frequency;
     @Getter @Setter @Column(name = "enddate")
     private LocalDate endDate;
+    @Getter@Setter@Column(name = "statusofdeletion")
+    private String statusOfDeletion;
     @CreationTimestamp
     @Getter @Setter @Column(name = "creationdatetime")
     private LocalDateTime creationDateTime;

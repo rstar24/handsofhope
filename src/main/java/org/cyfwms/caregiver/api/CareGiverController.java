@@ -224,7 +224,7 @@ public class CareGiverController {
     @PutMapping(value = "/saveCareGiverReminder", produces = "application/json")
     @ApiOperation("Save All CareGiverReminder")
     @ResponseStatus(HttpStatus.OK)
-    public CareGiverReminderDto saveCGReminder(@RequestBody CareGiverReminderDto careGiverReminderDto) {
+    public List<CareGiverReminderDto> saveCGReminder(@RequestBody CareGiverReminderDto careGiverReminderDto) {
         log.info("saveCGReminder " + careGiverReminderDto);
         return careGiverReminderService.saveCGReminder(careGiverReminderDto);
 

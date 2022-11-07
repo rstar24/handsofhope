@@ -8,7 +8,7 @@ public interface ParticipantReminderService {
 
     ParticipantReminderDto readParticipantReminder(Long participantReminderId);
 
-    ParticipantReminderDto saveParticipantReminder(ParticipantReminderDto participantReminderDto);
+    List<ParticipantReminderDto> saveParticipantReminder(ParticipantReminderDto participantReminderDto);
 
     void removeParticipantReminder(Long participantReminderId);
 

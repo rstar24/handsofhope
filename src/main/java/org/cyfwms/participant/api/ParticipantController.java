@@ -318,7 +318,7 @@ public class ParticipantController {
     @PutMapping(value = "/saveParticipantReminder", produces = "application/json")
     @ApiOperation("Save Participant Reminder")
     @ResponseStatus(HttpStatus.OK)
-    public ParticipantReminderDto saveParticipantReminder(
+    public List<ParticipantReminderDto> saveParticipantReminder(
             @RequestBody ParticipantReminderDto participantReminderDtoList) {
         log.info("SaveParticipantReminder " + participantReminderDtoList);
         return participantReminderService.saveParticipantReminder(participantReminderDtoList);

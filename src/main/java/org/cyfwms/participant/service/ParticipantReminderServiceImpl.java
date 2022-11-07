@@ -17,6 +17,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -65,15 +69,21 @@ public class ParticipantReminderServiceImpl implements ParticipantReminderServic
     }
 
     @Override
-    public ParticipantReminderDto saveParticipantReminder(ParticipantReminderDto participantReminderDto) {
+    public List<ParticipantReminderDto> saveParticipantReminder(ParticipantReminderDto participantReminderDto) {
         log.info("Inside SaveParticipantReminder");
         Reminder reminder = null;
+        ReminderDto reminderDto=new ReminderDto();
+        ParticipantReminderDto participantReminderDto1=new ParticipantReminderDto();
+        List<ParticipantReminderDto> participantReminderDtoList=new ArrayList<>();
         ParticipantReminder participantReminder = new ParticipantReminder();
         if (participantReminderDto.getParticipantReminderId() == 0) {
+            participantReminderDtoList =checkFrequency(participantReminderDto);
             reminder = new Reminder();
             BeanUtils.copyProperties(participantReminderDto.getReminderDto(), reminder);
             BeanUtils.copyProperties(participantReminderDto, participantReminder);
             participantReminder.setStatusOfDeletion("ACTIVE");
+            reminder.setStatusOfDeletion("ACTIVE");
+
         } else {
             participantReminder = participantReminderRepository.findById(participantReminderDto.getParticipantReminderId()).get();
             reminder = reminderRepository.findById(participantReminderDto.getReminderDto().getReminderId()).get();
@@ -82,13 +92,76 @@ public class ParticipantReminderServiceImpl implements ParticipantReminderServic
             BeanUtils.copyProperties(participantReminderDto, participantReminder);
 
         }
-        participantReminder.setReminder(reminder);
-        participantReminder = participantReminderRepository.save(participantReminder);
-        participantReminderDto.setParticipantReminderId(participantReminder.getParticipantReminderId());
-        participantReminderDto.getReminderDto().setReminderId(participantReminder.getReminder().getReminderId());
-        participantReminderDto.setReferenceId(participantReminder.getReferenceId());
-        log.info("Exit SaveParticipantReminder");
-        return participantReminderDto;
+
+        return participantReminderDtoList;
+    }
+
+    public List<ParticipantReminderDto> checkFrequency(ParticipantReminderDto participantReminderDto) {
+        System.out.println(participantReminderDto);
+        Period pd = Period.between(participantReminderDto.getReminderDto().getReminderDate() ,participantReminderDto.getReminderDto().getEndDate());
+        int difference = pd.getDays();
+        System.out.println(difference);
+        int n = 0,counter=0, rem =0;
+        if(participantReminderDto.getReminderDto().getFrequency().equalsIgnoreCase("Daily")){
+            n = difference+1;
+            rem = n+1;
+            counter=1;
+        } else if (participantReminderDto.getReminderDto().getFrequency().equalsIgnoreCase("Weekly")) {
+            n = (difference+1)/7;
+            rem = n%7;
+            if (rem>0){
+                n=n+1;
+            }
+            counter=7;
+        } else if (participantReminderDto.getReminderDto().getFrequency().equalsIgnoreCase("Monthly")) {
+            n = (difference+1)/30;
+            rem = n%30;
+            if(rem>0){
+                n=n+1;
+            }
+            counter=30;
+        }else {
+            n = (difference+1)/3;
+            rem = n%3;
+            if(rem>0){
+                n=n+1;
+            }
+            counter=3;
+        }
+        List<ParticipantReminderDto> listparticipantReminder =new ArrayList<>();
+        listparticipantReminder = saveFrequency(n,counter,rem,participantReminderDto);
+        return listparticipantReminder;
+    }
+
+    public List<ParticipantReminderDto> saveFrequency(int n, int counter, int rem, ParticipantReminderDto participantReminderDto) {
+          List<ParticipantReminderDto> listparticipantreminder = new ArrayList<>();
+          int cnt=0;
+          for(int i=0;i<n;i++){
+              ParticipantReminder participantReminder=new ParticipantReminder();
+              Reminder reminder=new Reminder();
+              BeanUtils.copyProperties(participantReminderDto,participantReminder);
+              BeanUtils.copyProperties(participantReminderDto.getReminderDto(),reminder);
+              participantReminder.setStatusOfDeletion("Active");
+              reminder.setStatusOfDeletion("ACTIVE");
+              LocalDate localDate=participantReminderDto.getReminderDto().getReminderDate().plusDays(cnt);
+              reminder.setReminderDate(localDate);
+              participantReminder.setReminder(reminder);
+              participantReminder = participantReminderRepository.save(participantReminder);
+
+              ReminderDto reminderDto = new ReminderDto();
+
+              ParticipantReminderDto participantReminderDto1=new ParticipantReminderDto();
+              BeanUtils.copyProperties(participantReminder,participantReminderDto1);
+              BeanUtils.copyProperties(reminder,reminderDto);
+              participantReminderDto1.setReminderDto(reminderDto);
+              listparticipantreminder.add(participantReminderDto1);
+              if(i==n-1 && rem>0){
+                  cnt =cnt+1;
+
+              }
+              cnt=cnt+counter;
+          }
+          return listparticipantreminder;
     }
 
     @Override

@@ -17,6 +17,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -37,29 +41,97 @@ public class CareGiverReminderServiceImpl implements CareGiverReminderService {
     private ParticipantRepository participantRepository;
 
     @Override
-    public CareGiverReminderDto saveCGReminder(CareGiverReminderDto careGiverReminderDto) {
+    public List<CareGiverReminderDto> saveCGReminder(CareGiverReminderDto careGiverReminderDto) {
         Reminder reminder = null;
-        CareGiverReminder cgReminder = new CareGiverReminder();
+        ReminderDto reminderDto=new ReminderDto();
+        CareGiverReminderDto careGiverReminderDto1=new CareGiverReminderDto();
+        List<CareGiverReminderDto> careGiverReminderDtoList=new ArrayList<>();
+        CareGiverReminder  careGiverReminder = new CareGiverReminder();
         if (careGiverReminderDto.getCgReminderId() == 0) {
+            careGiverReminderDtoList =checkFrequency(careGiverReminderDto);
             reminder = new Reminder();
             BeanUtils.copyProperties(careGiverReminderDto.getReminderDto(), reminder);
-            BeanUtils.copyProperties(careGiverReminderDto, cgReminder);
-            cgReminder.setStatusOfDeletion("ACTIVE");
-            reminder.setStatus("ACTIVE");
+            BeanUtils.copyProperties(careGiverReminderDto, careGiverReminder);
+            careGiverReminder.setStatusOfDeletion("ACTIVE");
+            reminder.setStatusOfDeletion("ACTIVE");
         } else {
-            cgReminder = careGiverReminderRepository.findById(careGiverReminderDto.getCgReminderId()).get();
+            careGiverReminder = careGiverReminderRepository.findById(careGiverReminderDto.getCgReminderId()).get();
             reminder = reminderRepository.findById(careGiverReminderDto.getReminderDto().getReminderId()).get();
             BeanUtils.copyProperties(careGiverReminderDto.getReminderDto(), reminder);
-            BeanUtils.copyProperties(careGiverReminderDto, cgReminder);
+            BeanUtils.copyProperties(careGiverReminderDto, careGiverReminder);
 
         }
-        cgReminder.setReminder(reminder);
-        cgReminder = careGiverReminderRepository.save(cgReminder);
-        careGiverReminderDto.setCgReminderId(cgReminder.getCgReminderId());
-        careGiverReminderDto.getReminderDto().setReminderId(cgReminder.getReminder().getReminderId());
-        log.info("Exit SaveCareGiversReminder");
-        return careGiverReminderDto;
 
+        return careGiverReminderDtoList;
+
+    }
+
+    public List<CareGiverReminderDto> checkFrequency(CareGiverReminderDto careGiverReminderDto) {
+        System.out.println(careGiverReminderDto);
+        Period pd = Period.between(careGiverReminderDto.getReminderDto().getReminderDate() ,careGiverReminderDto.getReminderDto().getEndDate());
+        int difference = pd.getDays();
+        System.out.println(difference);
+        int n = 0,counter=0, rem =0;
+        if(careGiverReminderDto.getReminderDto().getFrequency().equalsIgnoreCase("Daily")){
+            n = difference+1;
+            rem = n+1;
+            counter=1;
+        } else if (careGiverReminderDto.getReminderDto().getFrequency().equalsIgnoreCase("Weekly")) {
+            n = (difference+1)/7;
+            rem = n%7;
+            if (rem>0){
+                n=n+1;
+            }
+            counter=7;
+        } else if (careGiverReminderDto.getReminderDto().getFrequency().equalsIgnoreCase("Monthly")) {
+            n = (difference+1)/30;
+            rem = n%30;
+            if(rem>0){
+                n=n+1;
+            }
+            counter=30;
+        }else {
+            n = (difference+1)/3;
+            rem = n%3;
+            if(rem>0){
+                n=n+1;
+            }
+            counter=3;
+        }
+        List<CareGiverReminderDto> listcaregiverReminder =new ArrayList<>();
+        listcaregiverReminder = saveFrequency(n,counter,rem,careGiverReminderDto);
+        return listcaregiverReminder;
+    }
+
+    public List<CareGiverReminderDto> saveFrequency(int n, int counter, int rem, CareGiverReminderDto careGiverReminderDto) {
+        List<CareGiverReminderDto> listcaregiverreminder = new ArrayList<>();
+        int cnt=0;
+        for(int i=0;i<n;i++){
+            CareGiverReminder caregiverReminder=new CareGiverReminder();
+            Reminder reminder=new Reminder();
+            BeanUtils.copyProperties(careGiverReminderDto,caregiverReminder);
+            BeanUtils.copyProperties(careGiverReminderDto.getReminderDto(),reminder);
+            caregiverReminder.setStatusOfDeletion("ACTIVE");
+            reminder.setStatusOfDeletion("ACTIVE");
+            LocalDate localDate=careGiverReminderDto.getReminderDto().getReminderDate().plusDays(cnt);
+            reminder.setReminderDate(localDate);
+            caregiverReminder.setReminder(reminder);
+            caregiverReminder = careGiverReminderRepository.save(caregiverReminder);
+
+            ReminderDto reminderDto = new ReminderDto();
+
+            CareGiverReminderDto careGiverReminderDto1=new CareGiverReminderDto();
+            BeanUtils.copyProperties(caregiverReminder,careGiverReminderDto1);
+            BeanUtils.copyProperties(reminder,reminderDto);
+            careGiverReminderDto1.setReminderDto(reminderDto);
+            listcaregiverreminder.add(careGiverReminderDto1);
+            if(i==n-1 && rem>0){
+                cnt =cnt+1;
+
+            }
+            cnt=cnt+counter;
+        }
+        return listcaregiverreminder;
     }
 
     @Override
