@@ -42,6 +42,7 @@ public class CareGiverReminderServiceImpl implements CareGiverReminderService {
 
     @Override
     public List<CareGiverReminderDto> saveCGReminder(CareGiverReminderDto careGiverReminderDto) {
+        log.info("Inside SaveCareGiverReminder");
         Reminder reminder = null;
         ReminderDto reminderDto=new ReminderDto();
         CareGiverReminderDto careGiverReminderDto1=new CareGiverReminderDto();
@@ -61,16 +62,16 @@ public class CareGiverReminderServiceImpl implements CareGiverReminderService {
             BeanUtils.copyProperties(careGiverReminderDto, careGiverReminder);
 
         }
-
+        log.info("Exit SaveCareGiverReminder");
         return careGiverReminderDtoList;
 
     }
 
     public List<CareGiverReminderDto> checkFrequency(CareGiverReminderDto careGiverReminderDto) {
-        System.out.println(careGiverReminderDto);
+
         Period pd = Period.between(careGiverReminderDto.getReminderDto().getReminderDate() ,careGiverReminderDto.getReminderDto().getEndDate());
         int difference = pd.getDays();
-        System.out.println(difference);
+
         int n = 0,counter=0, rem =0;
         if(careGiverReminderDto.getReminderDto().getFrequency().equalsIgnoreCase("Daily")){
             n = difference+1;
@@ -131,6 +132,7 @@ public class CareGiverReminderServiceImpl implements CareGiverReminderService {
             }
             cnt=cnt+counter;
         }
+        log.info("Exit SaveCareGiverReminder");
         return listcaregiverreminder;
     }
 
@@ -179,6 +181,7 @@ public class CareGiverReminderServiceImpl implements CareGiverReminderService {
                                 String.valueOf(cgReminderId)));
             }
             c.setStatusOfDeletion("INACTIVE");
+            c.getReminder().setStatusOfDeletion("INACTIVE");
         careGiverReminderRepository.save(c);
         log.info("Exit RemoveCGReminder");
 

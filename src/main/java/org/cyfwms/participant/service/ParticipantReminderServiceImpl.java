@@ -92,15 +92,14 @@ public class ParticipantReminderServiceImpl implements ParticipantReminderServic
             BeanUtils.copyProperties(participantReminderDto, participantReminder);
 
         }
-
+        log.info("Exit SaveParticipantReminder");
         return participantReminderDtoList;
     }
 
     public List<ParticipantReminderDto> checkFrequency(ParticipantReminderDto participantReminderDto) {
-        System.out.println(participantReminderDto);
         Period pd = Period.between(participantReminderDto.getReminderDto().getReminderDate() ,participantReminderDto.getReminderDto().getEndDate());
         int difference = pd.getDays();
-        System.out.println(difference);
+
         int n = 0,counter=0, rem =0;
         if(participantReminderDto.getReminderDto().getFrequency().equalsIgnoreCase("Daily")){
             n = difference+1;
@@ -161,6 +160,7 @@ public class ParticipantReminderServiceImpl implements ParticipantReminderServic
               }
               cnt=cnt+counter;
           }
+          log.info("Exit SaveParticipantReminder");
           return listparticipantreminder;
     }
 
@@ -179,6 +179,7 @@ public class ParticipantReminderServiceImpl implements ParticipantReminderServic
                             String.valueOf(participantReminderId)));
         }
         p.setStatusOfDeletion("INACTIVE");
+        p.getReminder().setStatusOfDeletion("INACTIVE");
         participantReminderRepository.save(p);
         log.info("Exit RemoveParticipantReminder");
     }
