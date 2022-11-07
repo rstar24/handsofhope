@@ -188,7 +188,7 @@ public class CareGiverController {
     @PutMapping(value = "/saveCGAppointment", produces = "application/json")
     @ApiOperation("Save or Update caregiver Appointment Informtion")
     @ResponseStatus(HttpStatus.CREATED)
-    public CaregiverAppointmentDto saveCaregiverAppointment(
+    public List<CaregiverAppointmentDto> saveCaregiverAppointment(
             @RequestBody CaregiverAppointmentDto caregiverAppointmentDto) {
         return cgAppointmentService.saveCgAppointment(caregiverAppointmentDto);
     }

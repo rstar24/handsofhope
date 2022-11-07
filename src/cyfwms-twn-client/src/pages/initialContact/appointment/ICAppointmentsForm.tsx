@@ -11,7 +11,7 @@ import {
 import { onKeyDown } from "../../../library/app";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import EditIcon from "./EditIcon";
-import { Box ,Typography }from "@mui/material";
+import { Box, Typography,FormControl, FormLabel, OutlinedInput } from "@mui/material";
 import React from "react";
 import type { FormEvent } from "react";
 import {
@@ -21,6 +21,9 @@ import {
   enableFrequency
  
 } from "../../../features/initialContact/appointment/slice";
+import  {useState } from "react";
+import SearchIcon from "@mui/icons-material/Search";
+import SearchClientName from "../../../components/cyfms/searchClient/SearchClientName";
 
 const ICAppointmentsForm = ({
   setAddNew,
@@ -35,10 +38,13 @@ const ICAppointmentsForm = ({
   const { initialContactReferral } = useAppSelector((state) => state.codetable);
   const data = useAppSelector((state) => state.icAppointment.data);
  const stete = useAppSelector((state)=>state.icAppointment)
-  const submitHandler = (e: FormEvent) => {
+ const {id,clientName} = useAppSelector((state)=>state.icAppointment);
+ const [click, setClick] = useState(false); 
+ const submitHandler = (e: FormEvent) => {
 
     e.preventDefault();
-    const form = e.currentTarget as HTMLFormElement;
+    if(!click){
+      const form = e.currentTarget as HTMLFormElement;
     const formData: Data = {
       icappointmentId:data.icappointmentId,
       fileDetailsId:state.getData.fileDetailsId,
@@ -51,7 +57,7 @@ const ICAppointmentsForm = ({
         time: form.time.value,
         location: form.location.value,
         duration: form.duration.value,
-        client: form.client.value,
+        client: id,
         caseworker: form.caseworker.value,
         recurringAppointment : form.recurringappointment.value,
         frequency: form.frequency.value,
@@ -74,6 +80,8 @@ const ICAppointmentsForm = ({
         console.log("InitialAppointment POST backend API didn't work!");
         console.log(err);
       });
+    }
+    
   };
     
   console.log("helloooo",data)
@@ -90,6 +98,11 @@ const ICAppointmentsForm = ({
       // form.recurringappointment.value = "";
       dispatch(disableClosingDate(null));
       dispatch(disableFrequency(null));
+    }
+  };
+  const handleSearch = () => {
+    if (!disabled) {
+      setClick(true);
     }
   };
   return (
@@ -193,12 +206,30 @@ const ICAppointmentsForm = ({
       </Box>
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-          <ICInput
-            id="client"
-            value="Client"
-            autofill={data.appointmentDto.client}
-            readOnly={disabled}
-          />
+        <FormControl
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              flexWrap: "wrap",
+            }}
+          >
+            <FormLabel sx={{ p: 1, flexBasis: 0, flexGrow: 1, color: "black" }}>
+             Client
+            </FormLabel>
+            <OutlinedInput
+              sx={{
+                borderRadius: 0,
+                flexBasis: 0,
+                flexGrow: 2,
+              }}
+              size="small"
+              readOnly={disabled}
+              value={clientName}
+              style={{ backgroundColor: "#dfdada" }}
+              endAdornment={<SearchIcon onClick={handleSearch} />}
+            />
+          </FormControl>
+        
         </Box>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
           <ICInput
@@ -263,6 +294,14 @@ const ICAppointmentsForm = ({
       <Box sx={{ display: "flex", justifyContent: "right" }}>
         <CYFSWMSNextButton disabled={disabled} />
       </Box>
+      {click && (
+        <SearchClientName
+          click={click}
+          setClick={setClick}
+          moduleName="icAppointment"
+          searchId="icparticipantId"
+        />
+      )}
     </Box>
   );
 };

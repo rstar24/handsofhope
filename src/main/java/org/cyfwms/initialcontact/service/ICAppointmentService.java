@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ICAppointmentService {
 
-    ICAppointmentDto saveICAppointment(ICAppointmentDto icAppointmentDto);
+    List<ICAppointmentDto> saveICAppointment(ICAppointmentDto icAppointmentDto);
     List<ICAppointmentDto> readAllICAppointment(Long fileDetailsId) throws Exception;
     void removeICAppointment(Long ICAppointmentId);
     ICAppointmentDto readOneAppointment(Long ICAppointmentId);

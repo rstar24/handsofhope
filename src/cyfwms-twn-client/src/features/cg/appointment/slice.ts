@@ -15,7 +15,7 @@ export interface Data {
       time: string;
       location: string;
       duration: string;
-      client: string;
+      client: any;
       caseworker: string;
       recurringAppointment: string;
       frequency: string;
@@ -23,6 +23,28 @@ export interface Data {
       notes: string;
     }
     
+}
+//get api data
+export interface GetData{
+  cgappointmentId:number;
+  id:number;
+  participantId:number;
+  appointmentdto:{
+    appointmentId: number; 
+    subject: string;
+    status: string;
+    date: string;
+    time: string;
+    location: string;
+    duration: string;
+    client: any;
+    caseworker: string;
+    recurringAppointment: string;
+    frequency: string;
+    endDate: string;
+    notes: string;
+  }
+
 }
 
 // Empty Data
@@ -46,12 +68,38 @@ const emptyData: Data = {
     notes: "",
     }
 };
+//Empty get Data
+const emptyGetData: GetData={
+  cgappointmentId:0,
+  id:0,
+  participantId:0,
+  appointmentdto:{
+    appointmentId: 0, 
+    subject: "",
+    status: "",
+    date: "",
+    time: "",
+    location: "",
+    duration: "",
+    client: "",
+    caseworker: "",
+    recurringAppointment: "",
+    frequency: "",
+    endDate: "",
+    notes: "",
+  }
+}
 
 export interface State {
   disabledClosingDate: boolean;
   disabledFrequency:boolean;
   record: Data[];
   data: Data;
+  record1:Data[];
+  click: boolean;
+  clientName: string;
+  id: number;
+  getData: GetData;
   status: "failed" | "none" | "loading" | "success";
 }
 
@@ -65,7 +113,7 @@ export const doGet = createAsyncThunk<Data, number>(
   }
 );
 
-export const doPost = createAsyncThunk<Data, Data>(
+export const doPost = createAsyncThunk<Data[], Data>(
   "caregiverservice/doPost",
   async (formData: Data, { getState }) => {
     const store: any = getState();
@@ -106,7 +154,12 @@ export const CGappointmentsSlice = createSlice<State, SliceCaseReducers<State>>(
     disabledClosingDate: true,
     disabledFrequency:true,
     record: [],
+    record1:[],
+    clientName: "",
+    id: 0,
+    click: false,
     data: emptyData,
+    getData: emptyGetData,
     status: "failed",
   },
   reducers: {
@@ -136,7 +189,23 @@ export const CGappointmentsSlice = createSlice<State, SliceCaseReducers<State>>(
       state.disabledFrequency = true;
       state.data = emptyData;
       state.record = [];
+      state.record1=[];
       state.status = "none";
+      state.click = false;
+      state.clientName = "";
+      state.getData = emptyGetData;
+      state.id = 0;
+    },
+    setClick(state, action) {
+      state.click = action.payload;
+    },
+    setCGAppointmentClientName(state, action) {
+      state.clientName = action.payload;
+      state.getData.appointmentdto.client = action.payload;
+    },
+    setCGAppointmentParticipantId(state, action) {
+      state.id = action.payload;
+      state.getData.participantId = action.payload;
     },
   },
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -156,7 +225,22 @@ export const CGappointmentsSlice = createSlice<State, SliceCaseReducers<State>>(
       });
     builder
       .addCase(doPost.fulfilled, (state, action) => {
-        state.data = action.payload;
+        // state.data = action.payload;
+        state.record1 = action.payload;
+        state.getData.cgappointmentId=action.payload[0].cgappointmentId;
+        state.getData.id=action.payload[0].id;
+        state.getData.appointmentdto.appointmentId=action.payload[0].appointmentDto.appointmentId;
+        state.getData.appointmentdto.subject=action.payload[0].appointmentDto.subject;
+        state.getData.appointmentdto.status=action.payload[0].appointmentDto.status;
+        state.getData.appointmentdto.caseworker=action.payload[0].appointmentDto.caseworker;
+        state.getData.appointmentdto.client=action.payload[0].appointmentDto.client;
+        state.getData.appointmentdto.date=action.payload[0].appointmentDto.date;
+        state.getData.appointmentdto.notes=action.payload[0].appointmentDto.notes;
+        state.getData.appointmentdto.duration=action.payload[0].appointmentDto.duration;
+        state.getData.appointmentdto.endDate=action.payload[0].appointmentDto.endDate;
+        state.getData.appointmentdto.frequency=action.payload[0].appointmentDto.frequency;
+        state.getData.appointmentdto.location=action.payload[0].appointmentDto.location;
+        state.getData.appointmentdto.recurringAppointment=action.payload[0].appointmentDto.recurringAppointment;
         state.status = "success";
       })
       .addCase(doPost.pending, (state) => {
@@ -193,7 +277,7 @@ export const { cleanState,
   disableClosingDate,
   enableClosingDate,
   disabledFrequency,
-  enableFrequency, } 
+  enableFrequency,setClick,setCGAppointmentClientName,setCGAppointmentParticipantId } 
   = CGappointmentsSlice.actions;
 export const { spliceRecord} = CGappointmentsSlice.actions;
 export default CGappointmentsSlice.reducer

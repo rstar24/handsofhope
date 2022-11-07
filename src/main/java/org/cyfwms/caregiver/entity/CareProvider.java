@@ -97,7 +97,7 @@ public class CareProvider {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "id", referencedColumnName = "id")
     @Getter @Setter
-    private List<ICAppointment> icAppointments;
+    private List<CaregiverAppointment> caregiverAppointmentList;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "id", referencedColumnName = "id")

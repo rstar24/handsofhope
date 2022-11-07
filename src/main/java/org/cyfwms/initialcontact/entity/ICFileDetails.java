@@ -105,5 +105,11 @@ public class ICFileDetails implements Serializable {
     @JoinColumn(name = "filedetailsid", referencedColumnName = "filedetailsid")
     @Getter
     @Setter
+    private List<ICAppointment> icAppointmentList;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "filedetailsid", referencedColumnName = "filedetailsid")
+    @Getter
+    @Setter
     private List<ICReminder> icReminderList;
 }

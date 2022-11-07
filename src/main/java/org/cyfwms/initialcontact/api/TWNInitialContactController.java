@@ -250,7 +250,7 @@ public class TWNInitialContactController {
     @PutMapping(value = "/saveICAppointment", produces = "application/json")
     @ApiOperation("Save or Update InitialContact Appointment Informtion")
     @ResponseStatus(HttpStatus.CREATED)
-    public ICAppointmentDto saveParticipantAppointment(@RequestBody ICAppointmentDto  icAppointmentDto) {
+    public List<ICAppointmentDto> saveParticipantAppointment(@RequestBody ICAppointmentDto  icAppointmentDto) {
         return icAppointmentService.saveICAppointment(icAppointmentDto);
 
     }

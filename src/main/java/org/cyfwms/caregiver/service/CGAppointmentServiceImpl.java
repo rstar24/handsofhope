@@ -7,14 +7,23 @@ import org.cyfwms.caregiver.entity.CaregiverAppointment;
 import org.cyfwms.caregiver.repository.CareGiversAppointmentRepository;
 import org.cyfwms.common.dto.AppointmentDto;
 import org.cyfwms.common.entity.Appointments;
+import org.cyfwms.common.exception.I18Constants;
 import org.cyfwms.common.exception.MessageUtil;
+import org.cyfwms.common.exception.NoSuchElementFoundException;
 import org.cyfwms.common.repository.AppointmentRepository;
+import org.cyfwms.initialcontact.dto.ICAppointmentDto;
+import org.cyfwms.initialcontact.entity.ICAppointment;
 import org.cyfwms.participant.dto.ParticipantAppointmentDto;
+import org.cyfwms.participant.entity.Participant;
 import org.cyfwms.participant.entity.ParticipantAppointment;
+import org.cyfwms.participant.repository.ParticipantRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -30,13 +39,24 @@ public class CGAppointmentServiceImpl implements CGAppointmentService {
     private AppointmentRepository appointmentRepository;
     @Autowired
     private MessageUtil messageUtil;
+    @Autowired
+    private ParticipantRepository participantRepository;
 
 
     @Override
-    public CaregiverAppointmentDto saveCgAppointment(CaregiverAppointmentDto caregiverAppointmentDto) {
+    public List<CaregiverAppointmentDto> saveCgAppointment(CaregiverAppointmentDto caregiverAppointmentDto) {
         Appointments appointments = null;
+        List<CaregiverAppointmentDto> caregiverAppointmentDtoList = new ArrayList<>();
         CaregiverAppointment caregiverAppointment = new CaregiverAppointment();
+        AppointmentDto appointmentDto = new AppointmentDto();
+        CaregiverAppointmentDto caregiverAppointmentDto1 = new CaregiverAppointmentDto();
         if (caregiverAppointmentDto.getCgappointmentId() == 0) {
+            if(caregiverAppointmentDto.getAppointmentDto().getRecurringAppointment().equalsIgnoreCase("Yes")){
+                System.out.println(caregiverAppointmentDto);
+                caregiverAppointmentDtoList = checkFrequency(caregiverAppointmentDto);
+                System.out.println(caregiverAppointmentDtoList);
+                return caregiverAppointmentDtoList;
+            }
             appointments = new Appointments();
             BeanUtils.copyProperties(caregiverAppointmentDto.getAppointmentDto(), appointments);
             BeanUtils.copyProperties(caregiverAppointmentDto, caregiverAppointment);
@@ -50,12 +70,82 @@ public class CGAppointmentServiceImpl implements CGAppointmentService {
         }
         caregiverAppointment.setAppointments(appointments);
         caregiverAppointment = careGiversAppointmentRepository.save(caregiverAppointment);
-        caregiverAppointmentDto.setCgappointmentId(caregiverAppointment.getCgappointmentId());
-        caregiverAppointmentDto.getAppointmentDto().setAppointmentId(caregiverAppointment.getAppointments().getAppointmentId());
-        return caregiverAppointmentDto;
+        //copy save data into list
+        BeanUtils.copyProperties(caregiverAppointment,caregiverAppointmentDto1);
+        BeanUtils.copyProperties(appointments,appointmentDto);
+        caregiverAppointmentDto1.setAppointmentDto(appointmentDto);
+        caregiverAppointmentDtoList.add(caregiverAppointmentDto1);
+        return caregiverAppointmentDtoList;
     }
+    public List<CaregiverAppointmentDto> checkFrequency(CaregiverAppointmentDto caregiverAppointmentDto){
+        Period pd = Period.between(caregiverAppointmentDto.getAppointmentDto().getDate(), caregiverAppointmentDto.getAppointmentDto().getEndDate());
+        int difference = pd.getDays();
+        System.out.println(difference);
+        int n = 0,counter=0,remainder=0;
+        if(caregiverAppointmentDto.getAppointmentDto().getFrequency().equalsIgnoreCase("Daily")){
+            n = difference+1;
+            remainder = n+1;
+            counter=1;
+        } else if (caregiverAppointmentDto.getAppointmentDto().getFrequency().equalsIgnoreCase("Weekly")) {
+            n = (difference+1)/7;
+            remainder = n%7;
+            if(remainder>0){
+                n=n+1;
+            }
+            counter=7;
+        } else if (caregiverAppointmentDto.getAppointmentDto().getFrequency().equalsIgnoreCase("Monthly")) {
+            n = (difference+1)/30;
+            remainder =n%30;
+            if(remainder>0){
+                n=n+1;
+            }
+            counter=30;
+        }
+        else {
+            n = (difference+1)/3;
+            remainder = n%3;
+            if(remainder>0){
+                n=n+1;
+            }
+            counter=3;
+        }
+        List<CaregiverAppointmentDto>listicgappointment = new ArrayList<>();
+        listicgappointment = saveFrequency(n,counter,remainder,caregiverAppointmentDto);
+        return listicgappointment;
+    }
+    public List<CaregiverAppointmentDto> saveFrequency(int n,int counter,int remainder, CaregiverAppointmentDto caregiverAppointmentDto) {
 
+        List<CaregiverAppointmentDto>listCGAppointment = new ArrayList<>();
+        int cnt=0;
+        for(int i=0;i<n;i++){
+            //save data into table
+            CaregiverAppointment cgAppointment = new CaregiverAppointment();
+            Appointments appointments = new Appointments();
+            BeanUtils.copyProperties(caregiverAppointmentDto,cgAppointment);
+            BeanUtils.copyProperties(caregiverAppointmentDto.getAppointmentDto(),appointments);
+            cgAppointment.setStatus("ACTIVE");
+            appointments.setAppointmentStatus("ACTIVE");
+            LocalDate l = caregiverAppointmentDto.getAppointmentDto().getDate().plusDays(cnt);
+            appointments.setDate(l);
+            cgAppointment.setAppointments(appointments);
+            cgAppointment = careGiversAppointmentRepository.save(cgAppointment);
+            //copy save data into list caregiverAppointment
+            AppointmentDto appointmentDto = new AppointmentDto();
 
+            CaregiverAppointmentDto cgAppintmentDto = new CaregiverAppointmentDto();
+            BeanUtils.copyProperties(cgAppointment,cgAppintmentDto);
+            BeanUtils.copyProperties(appointments,appointmentDto);
+            cgAppintmentDto.setAppointmentDto(appointmentDto);
+            listCGAppointment.add(cgAppintmentDto);
+            if(i==n-1 && remainder>0){
+                cnt =cnt+1;
+
+            }
+            cnt=cnt+counter;
+        }
+
+        return listCGAppointment;
+    }
   
 
     @Override
@@ -70,13 +160,19 @@ public class CGAppointmentServiceImpl implements CGAppointmentService {
 
                     BeanUtils.copyProperties(caregiverAppointment.get(), caregiverAppointmentDto);
                     BeanUtils.copyProperties(caregiverAppointment.get().getAppointments(),appointmentDto);
+                    if (!appointmentDto.getClient().isEmpty() && appointmentDto.getClient() != null) {
+                        Long p= Long.parseLong(appointmentDto.getClient());
+
+                        Participant participant=participantRepository.findByParticipantId(p);
+                        appointmentDto.setClient(participant.getFirstname()+" "+participant.getSurname());
+                    }
                     caregiverAppointmentDto.setAppointmentDto(appointmentDto);
-//                    if (iCContactNotesDto.getDate() == null) {
-//                        iCContactNotesDto.setDate(LocalDate.of(1, 1, 1));
-//                    }
-//                    if (iCContactNotesDto.getTime() == null) {
-//                        iCContactNotesDto.setTime(LocalTime.of(1, 1, 1));
-//                    }
+                    if (appointmentDto.getDate() == null) {
+                        appointmentDto.setDate(LocalDate.of(1, 1, 1));
+                    }
+                    if (appointmentDto.getTime() == null) {
+                        appointmentDto.setTime(LocalTime.of(1, 1, 1));
+                    }
                 }
             }
         }
@@ -87,9 +183,14 @@ public class CGAppointmentServiceImpl implements CGAppointmentService {
 
     @Override
     public void removeICAppointment(Long cgAppointmentId) {
-        Optional<CaregiverAppointment> AppointmentsOptional = careGiversAppointmentRepository.findById(cgAppointmentId);
-        if (AppointmentsOptional.isPresent()) {
-            CaregiverAppointment caregiverAppointment = AppointmentsOptional.get();
+        CaregiverAppointment caregiverAppointment = careGiversAppointmentRepository.findById(cgAppointmentId).orElseThrow(()->new NoSuchElementFoundException(
+                messageUtil.getLocalMessage(I18Constants.NO_ITEM_FOUND.getKey(),
+                        String.valueOf(cgAppointmentId))));
+        if (caregiverAppointment.getStatus().equalsIgnoreCase("INACTIVE")) {
+            throw new NoSuchElementFoundException(
+                    messageUtil.getLocalMessage(I18Constants.NO_ITEM_FOUND.getKey(),
+                            String.valueOf(caregiverAppointment)));
+        }
             caregiverAppointment.setStatus("INACTIVE");
             caregiverAppointment.getAppointments().setAppointmentStatus("INACTIVE");
             careGiversAppointmentRepository.save(caregiverAppointment);
@@ -97,4 +198,4 @@ public class CGAppointmentServiceImpl implements CGAppointmentService {
     }
 
     }
-}
+

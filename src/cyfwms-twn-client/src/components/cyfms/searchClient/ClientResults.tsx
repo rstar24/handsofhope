@@ -19,6 +19,10 @@ import {
 import { setClientName, setId } from "../../../features/cpa/participant/slice";
 import { setCgClientName, setCgId, setCgSecClientName, setCgSecId } from "../../../features/cg/careProvider/slice";
 import { setParticipantClientName, setParticipantId } from "../../../features/initialContact/participant/slice";
+import{setCyfmsAppointmentClientName,setCyfmsAppointmentParticipantId}from "../../../features/cyfms/appointment/slice";
+import {setICAppointmentClientName,setICAppointmentParticipantId} from "../../../features/initialContact/appointment/slice";
+import {setCGAppointmentClientName,setCGAppointmentParticipantId} from "../../../features/cg/appointment/slice";
+
 
 const ClientResults = ({ setClick, moduleName ,searchId}: any): ReactElement => {
   const dispatch = useAppDispatch();
@@ -49,7 +53,34 @@ const ClientResults = ({ setClick, moduleName ,searchId}: any): ReactElement => 
       dispatch(setParticipantId(participant.participantId));
       setClick(false);
     }
-
+    
+    else if (moduleName === "cyfmsAppointment" && searchId==="participantId") {
+      dispatch(
+        setCyfmsAppointmentClientName(
+          `${participant.firstname}${" "}${participant.surname}`
+        )
+      );
+      dispatch(setCyfmsAppointmentParticipantId(participant.participantId));
+      setClick(false);
+    }
+    else if (moduleName === "icAppointment" && searchId==="icparticipantId") {
+      dispatch(
+        setICAppointmentClientName(
+          `${participant.firstname}${" "}${participant.surname}`
+        )
+      );
+      dispatch(setICAppointmentParticipantId(participant.participantId));
+      setClick(false);
+    }
+    else if (moduleName === "cgAppointment" && searchId==="cgparticipantId") {
+      dispatch(
+        setCGAppointmentClientName(
+          `${participant.firstname}${" "}${participant.surname}`
+        )
+      );
+      dispatch(setCGAppointmentParticipantId(participant.participantId));
+      setClick(false);
+    }
     else if (moduleName === "caregivers" && searchId==="primary") {
       dispatch(
         setCgClientName(

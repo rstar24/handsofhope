@@ -7,7 +7,7 @@ import java.util.List;
 public interface CGAppointmentService {
 
 
-    CaregiverAppointmentDto saveCgAppointment(CaregiverAppointmentDto caregiverAppointmentDto);
+    List<CaregiverAppointmentDto> saveCgAppointment(CaregiverAppointmentDto caregiverAppointmentDto);
 
     void removeICAppointment(Long cgAppointmentId);
 

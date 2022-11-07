@@ -8,14 +8,17 @@ import org.cyfwms.common.exception.MessageUtil;
 import org.cyfwms.common.exception.NoSuchElementFoundException;
 import org.cyfwms.common.repository.AppointmentRepository;
 import org.cyfwms.participant.dto.ParticipantAppointmentDto;
+import org.cyfwms.participant.entity.Participant;
 import org.cyfwms.participant.entity.ParticipantAppointment;
 import org.cyfwms.participant.entity.ParticipantReminder;
 import org.cyfwms.participant.repository.ParticipantAppointmentRepo;
+import org.cyfwms.participant.repository.ParticipantRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -32,6 +35,8 @@ public class ParticipantAppointmentServiceImpl implements ParticipantAppointment
     ParticipantAppointmentRepo participantAppointmentRepo;
     @Autowired
     MessageUtil messageUtil;
+    @Autowired
+    private ParticipantRepository participantRepository;
 
     @Override
     public List<ParticipantAppointmentDto> saveParticipantAppointment(ParticipantAppointmentDto participantAppointmentDto) {
@@ -55,7 +60,7 @@ public class ParticipantAppointmentServiceImpl implements ParticipantAppointment
             participantAppointment.setStatus("ACTIVE");
             appointments.setAppointmentStatus("ACTIVE");
         }
-        //for update particular user appointment information
+        // update particular user appointment information
         else {
             participantAppointment = participantAppointmentRepo.findById(participantAppointmentDto.getParticipantAppointmentId()).get();
             appointments = appointmentRepository.findById(participantAppointmentDto.getAppointmentdto().getAppointmentId()).get();
@@ -181,15 +186,27 @@ public class ParticipantAppointmentServiceImpl implements ParticipantAppointment
 
             if (participantAppointment.isPresent()) {
                 if (participantAppointment.get().getStatus().equals("ACTIVE")){
+
                     BeanUtils.copyProperties(participantAppointment.get(), participantAppointmentDto);
                     BeanUtils.copyProperties(participantAppointment.get().getAppointments(),appointmentDto);
+
+
+                    if (!appointmentDto.getClient().isEmpty() && appointmentDto.getClient() != null) {
+                   Long p= Long.parseLong(appointmentDto.getClient());
+
+                        Participant participant=participantRepository.findByParticipantId(p);
+                        appointmentDto.setClient(participant.getFirstname()+" "+participant.getSurname());
+                    }
+
+
+
                     participantAppointmentDto.setAppointmentdto(appointmentDto);
-//                    if (iCContactNotesDto.getDate() == null) {
-//                        iCContactNotesDto.setDate(LocalDate.of(1, 1, 1));
-//                    }
-//                    if (iCContactNotesDto.getTime() == null) {
-//                        iCContactNotesDto.setTime(LocalTime.of(1, 1, 1));
-//                    }
+                    if (appointmentDto.getDate() == null) {
+                        appointmentDto.setDate(LocalDate.of(1, 1, 1));
+                    }
+                    if (appointmentDto.getTime() == null) {
+                        appointmentDto.setTime(LocalTime.of(1, 1, 1));
+                    }
                 }
             }
         }

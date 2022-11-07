@@ -8,9 +8,11 @@ import {
 import CYFMSDropdown from "../../../components/cyfms/CYFMSDropdown";
 import { onKeyDown } from "../../../library/app";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
+import SearchClientName from "../../../components/cyfms/searchClient/SearchClientName";
 import EditIcon from "./EditIcon";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography,FormControl, FormLabel, OutlinedInput } from "@mui/material";
 import React from "react";
+import  {useState } from "react";
 import type { FormEvent } from "react";
 import {
   disableClosingDate,
@@ -19,6 +21,7 @@ import {
   enableFrequency
  
 } from "../../../features/cyfms/appointment/slice";
+import SearchIcon from "@mui/icons-material/Search";
 import CYFMSTextArea from "../../../components/cyfms/CYFMSTextArea";
 
 const AppointmentsForm = ({
@@ -34,46 +37,51 @@ const AppointmentsForm = ({
   const { initialContactReferral } = useAppSelector((state) => state.codetable);
   const data = useAppSelector((state) => state.cyfmsAppointments.data);
  const stete = useAppSelector((state)=>state.cyfmsAppointments);
+ const {id,clientName} = useAppSelector((state)=>state.cyfmsAppointments);
+ const [click, setClick] = useState(false);
  console.log(data)
   const submitHandler = (e: FormEvent) => {
 
     e.preventDefault();
-    const form = e.currentTarget as HTMLFormElement;
-    const formData: Data = {
+    if(!click){
+      const form = e.currentTarget as HTMLFormElement;
+      const formData: Data = {
+    
+        participantAppointmentId:data.participantAppointmentId,
+        participantId:state.data.participantId,
+        referenceId:state.data.referenceId,
+        appointmentdto:{
+          appointmentId: data.appointmentdto.appointmentId,
+          subject: form.subject.value,
+          status: form.appointmentstatus.value,
+          date: form.date.value,
+          time: form.time.value,
+          location: form.location.value,
+          duration: form.duration.value,
+          client: id,
+          caseworker: form.caseworker.value,
+          recurringAppointment : form.recurringappointment.value,
+          frequency: form.frequency.value,
+          endDate: form.endDate.value,
+          notes:form.notes.value,
+        }
+       
+        
+      };
   
-      participantAppointmentId:data.participantAppointmentId,
-      participantId:state.data.participantId,
-      referenceId:state.data.referenceId,
-      appointmentdto:{
-        appointmentId: data.appointmentdto.appointmentId,
-        subject: form.subject.value,
-        status: form.appointmentstatus.value,
-        date: form.date.value,
-        time: form.time.value,
-        location: form.location.value,
-        duration: form.duration.value,
-        client: form.client.value,
-        caseworker: form.caseworker.value,
-        recurringAppointment : form.recurringappointment.value,
-        frequency: form.frequency.value,
-        endDate: form.endDate.value,
-        notes:form.notes.value,
-      }
-     
-      
-    };
+      dispatch(doPost(formData))
+        .unwrap()
+        .then(() => {
+          console.log("ParticipantAppointment POST backend API was successful!");
+         dispatch(doSearch({ id: state.data.participantId, data: "" }));
+          setAddNew(false);
+        })
+        .catch((err:any) => {
+          console.log("ParticipantAppointment POST backend API didn't work!");
+          console.log(err);
+        });
+    }
 
-    dispatch(doPost(formData))
-      .unwrap()
-      .then(() => {
-        console.log("ParticipantAppointment POST backend API was successful!");
-       dispatch(doSearch({ id: state.data.participantId, data: "" }));
-        setAddNew(false);
-      })
-      .catch((err:any) => {
-        console.log("ParticipantAppointment POST backend API didn't work!");
-        console.log(err);
-      });
   };
   // Handles the form data submi and other
   // activities.
@@ -88,6 +96,11 @@ const AppointmentsForm = ({
       // form.recurringappointment.value = "";
       dispatch(disableClosingDate(null));
       dispatch(disabledFrequency(null));
+    }
+  };
+  const handleSearch = () => {
+    if (!disabled) {
+      setClick(true);
     }
   };
   return (
@@ -190,12 +203,37 @@ const AppointmentsForm = ({
       </Box>
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-          <Input
+        <FormControl
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              flexWrap: "wrap",
+            }}
+          >
+            <FormLabel sx={{ p: 1, flexBasis: 0, flexGrow: 1, color: "black" }}>
+             Client
+            </FormLabel>
+            <OutlinedInput
+              sx={{
+                borderRadius: 0,
+                flexBasis: 0,
+                flexGrow: 2,
+              }}
+              size="small"
+              readOnly={disabled}
+              value={clientName}
+              style={{ backgroundColor: "#dfdada" }}
+              endAdornment={<SearchIcon onClick={handleSearch} />}
+            />
+          </FormControl>
+        
+        
+          {/* <Input
             id="client"
             value="Client"
            autofill={data.appointmentdto.client}
             readOnly={disabled}
-          />
+          /> */}
         </Box>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
           <Input
@@ -262,6 +300,14 @@ const AppointmentsForm = ({
       <Box sx={{ display: "flex", justifyContent: "right" }}>
         <CYFSWMSNextButton disabled={disabled} />
       </Box>
+      {click && (
+        <SearchClientName
+          click={click}
+          setClick={setClick}
+          moduleName="cyfmsAppointment"
+          searchId="participantId"
+        />
+      )}
     </Box>
   );
 };
