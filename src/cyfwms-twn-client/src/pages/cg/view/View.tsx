@@ -52,7 +52,7 @@ const View = (): ReactElement => {
         }}
       >
         <Typography variant="h5" alignSelf="center">
-          Care Provider: {state.cgCareProvider.getData.id}
+          Care Provider: {state.cgCareProvider.getData.referenceId}
         </Typography>
         <Typography>
           <EditIcon
@@ -89,7 +89,7 @@ const View = (): ReactElement => {
               onClick={() => navigate("capacity")}
             />
             <Tab
-              label="Care Givers"
+              label="Caregivers"
               value={3}
               onClick={() => navigate("caregivers")}
             />
