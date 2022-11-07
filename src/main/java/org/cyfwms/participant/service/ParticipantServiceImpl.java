@@ -156,7 +156,12 @@ public class ParticipantServiceImpl implements ParticipantService {
             attachment.setAttachmentStatus("ACTIVE");
             participantAttachmentDto.setAttachment(attachment);
             participantAttachmentDto.setAttachmentType("PARTICIPANT_PROFILE_PIC");
-            participantAttachmentDto.setStatus("ACTIVE");
+            if(participantAttachmentDto.getProfilePic().equals(true)){
+                participantAttachmentDto.setStatus("INACTIVE");
+            }
+            else {
+                participantAttachmentDto.setStatus("ACTIVE");
+            }
         }
         return participantAttachmentDto;
     }

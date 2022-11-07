@@ -97,7 +97,7 @@ public class ParticipantAttachmentServiceImpl implements ParticipantAttachmentSe
             participantAttachment.setAttachment(attachment);
 
         }
-        participantAttachment.setAttachmentType("PARTICIPANT_PROFILE_PIC");
+        participantAttachment.setAttachmentType("PARTICIPANT_ATTACHMENT");
         participantAttachment.setStatus("ACTIVE");
         participantAttachment = participantAttachmentRepo.save(participantAttachment);
         participantAttachmentDto.setAttachmentType(attachment.getDocumentType());
