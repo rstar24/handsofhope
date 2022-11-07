@@ -24,32 +24,6 @@ public class AppointmentServiceImpl implements AppointmentService {
     private ReminderRepository reminderRepository;
 
 
-    //    @Override
-//    public AppointmentDto getOneAppointment(Long appointmentId) {
-//        AppointmentDto appointmentDto = new AppointmentDto();
-//        if (appointmentId != 0) {
-//            Appointments appointments = appointmentRepository.findByAppointmentId(appointmentId);
-//            if (appointments != null) {
-//                BeanUtils.copyProperties(appointments, appointmentDto);
-//            }
-//
-//        }
-//        return appointmentDto;
-//    }
-//
-//    @Override
-//    public List<CalenderDto> getAllDate(LocalDate date) {
-//        List<Appointments> appointments = appointmentRepository.findByDate(date);
-//        List<CalenderDto> calenderDtos = appointments.stream().
-//                map(hm -> {
-//                    CalenderDto calenderDto = new CalenderDto();
-//                    BeanUtils.copyProperties(hm, calenderDto);
-//                    return calenderDto;
-//                }).collect(Collectors.toList());
-//
-//        return calenderDtos;
-//    }
-
     @Override
     public List<CalenderAppointmentDto> getAllCommonCalenderDate(LocalDate date) {
         List<Appointments> appointments = appointmentRepository.findByDate(date);
@@ -94,7 +68,7 @@ public class AppointmentServiceImpl implements AppointmentService {
                 }).collect(Collectors.toList());
 
         List<Reminder> reminders = reminderRepository.findAll();
-        List<CalenderReminderDto> calenderAppointmentDtoLis = reminders.stream().
+        List<CalenderReminderDto> calenderAppointmentDtoLis = reminders.stream().filter(a->a.getStatusOfDeletion().equalsIgnoreCase("ACTIVE")).
                 map(ca -> {
                     CalenderReminderDto calenderAppointmentDto = new CalenderReminderDto();
                     BeanUtils.copyProperties(ca, calenderAppointmentDto);

@@ -17,6 +17,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -40,32 +42,97 @@ public class ICReminderServiceImpl implements ICReminderService {
     private ParticipantRepository participantRepository;
 
     @Override
-    public ICReminderDto saveICReminder(ICReminderDto icReminderDto) {
-        log.info("Inside SaveICReminder");
+    public List<ICReminderDto> saveICReminder(ICReminderDto icReminderDto) {
+        log.info("Inside SaveICtReminder");
         Reminder reminder = null;
-        ICReminder icReminder = new ICReminder();
-        if (icReminderDto.getReminderDto().getReminderId() == 0) {
+        List<ICReminderDto> icReminderDtoList =new ArrayList<>();
+        ICReminder participantReminder = new ICReminder();
+        if (icReminderDto.getIcReminderId() == 0) {
+            icReminderDtoList =checkFrequency(icReminderDto);
             reminder = new Reminder();
             BeanUtils.copyProperties(icReminderDto.getReminderDto(), reminder);
-            BeanUtils.copyProperties(icReminderDto, icReminder);
-            icReminder.setStatusOfDeletion("ACTIVE");
-
+            BeanUtils.copyProperties(icReminderDto, participantReminder);
+            participantReminder.setStatusOfDeletion("ACTIVE");
+            reminder.setStatusOfDeletion("ACTIVE");
 
         } else {
-            icReminder = icReminderRepository.findById(icReminderDto.getIcReminderId()).get();
+            participantReminder = icReminderRepository.findById(icReminderDto.getIcReminderId()).get();
             reminder = reminderRepository.findById(icReminderDto.getReminderDto().getReminderId()).get();
             BeanUtils.copyProperties(icReminderDto.getReminderDto(), reminder);
 
-            BeanUtils.copyProperties(icReminderDto, icReminder);
+            BeanUtils.copyProperties(icReminderDto, participantReminder);
 
         }
-        icReminder.setReminder(reminder);
-        icReminder = icReminderRepository.save(icReminder);
-        icReminderDto.setFileDetailsId(icReminder.getFileDetailsId());
-        icReminderDto.getReminderDto().setReminderId(icReminder.getReminder().getReminderId());
-        icReminderDto.setIcReminderId(icReminder.getIcReminderId());
         log.info("Exit SaveICReminder");
-        return icReminderDto;
+        return icReminderDtoList;
+    }
+
+    public List<ICReminderDto> checkFrequency(ICReminderDto participantReminderDto) {
+        Period pd = Period.between(participantReminderDto.getReminderDto().getReminderDate() ,participantReminderDto.getReminderDto().getEndDate());
+        int difference = pd.getDays();
+
+        int n = 0,counter=0, rem =0;
+        if(participantReminderDto.getReminderDto().getFrequency().equalsIgnoreCase("Daily")){
+            n = difference+1;
+            rem = n+1;
+            counter=1;
+        } else if (participantReminderDto.getReminderDto().getFrequency().equalsIgnoreCase("Weekly")) {
+            n = (difference+1)/7;
+            rem = n%7;
+            if (rem>0){
+                n=n+1;
+            }
+            counter=7;
+        } else if (participantReminderDto.getReminderDto().getFrequency().equalsIgnoreCase("Monthly")) {
+            n = (difference+1)/30;
+            rem = n%30;
+            if(rem>0){
+                n=n+1;
+            }
+            counter=30;
+        }else {
+            n = (difference+1)/3;
+            rem = n%3;
+            if(rem>0){
+                n=n+1;
+            }
+            counter=3;
+        }
+        List<ICReminderDto> iCReminderDtoList =new ArrayList<>();
+        iCReminderDtoList = saveFrequency(n,counter,rem,participantReminderDto);
+        return iCReminderDtoList;
+    }
+
+    public List<ICReminderDto> saveFrequency(int n, int counter, int rem, ICReminderDto participantReminderDto) {
+        List<ICReminderDto> iCReminderDtoList = new ArrayList<>();
+        int cnt=0;
+        for(int i=0;i<n;i++){
+            ICReminder participantReminder=new ICReminder();
+            Reminder reminder=new Reminder();
+            BeanUtils.copyProperties(participantReminderDto,participantReminder);
+            BeanUtils.copyProperties(participantReminderDto.getReminderDto(),reminder);
+            participantReminder.setStatusOfDeletion("ACTIVE");
+            reminder.setStatusOfDeletion("ACTIVE");
+            LocalDate localDate=participantReminderDto.getReminderDto().getReminderDate().plusDays(cnt);
+            reminder.setReminderDate(localDate);
+            participantReminder.setReminder(reminder);
+            participantReminder = icReminderRepository.save(participantReminder);
+
+            ReminderDto reminderDto = new ReminderDto();
+
+            ICReminderDto participantReminderDto1=new ICReminderDto();
+            BeanUtils.copyProperties(participantReminder,participantReminderDto1);
+            BeanUtils.copyProperties(reminder,reminderDto);
+            participantReminderDto1.setReminderDto(reminderDto);
+            iCReminderDtoList.add(participantReminderDto1);
+            if(i==n-1 && rem>0){
+                cnt =cnt+1;
+
+            }
+            cnt=cnt+counter;
+        }
+        log.info("Exit SaveICReminder");
+        return iCReminderDtoList;
     }
 
     @Override
@@ -123,6 +190,7 @@ public class ICReminderServiceImpl implements ICReminderService {
                             String.valueOf(icReminderId)));
         }
         icReminder.setStatusOfDeletion("INACTIVE");
+        icReminder.getReminder().setStatusOfDeletion("INACTIVE");
         icReminderRepository.save(icReminder);
         log.info("Exit RemoveICReminder");
     }

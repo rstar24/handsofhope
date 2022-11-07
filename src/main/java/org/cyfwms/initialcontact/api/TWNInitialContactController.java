@@ -202,7 +202,7 @@ public class TWNInitialContactController {
     @PutMapping(value = "/saveICReminder", produces = "application/json")
     @ApiOperation("save or update ICReminder")
     @ResponseStatus(HttpStatus.OK)
-    public ICReminderDto saveICReminder(@RequestBody ICReminderDto icReminderDto) {
+    public List<ICReminderDto> saveICReminder(@RequestBody ICReminderDto icReminderDto) {
         log.info("SaveICReminder " + icReminderDto);
         return icReminderService.saveICReminder(icReminderDto);
     }

@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ICReminderService {
 
-    ICReminderDto saveICReminder(ICReminderDto icReminderDto);
+    List<ICReminderDto> saveICReminder(ICReminderDto icReminderDto);
 
     ICReminderDto readICReminder(Long icReminderId);
 

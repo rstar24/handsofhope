@@ -9,10 +9,6 @@ import java.util.List;
 
 public interface AppointmentService {
 
-//    AppointmentDto getOneAppointment(Long appointmentId);
-//
-//    List<CalenderDto> getAllDate(LocalDate date);
-
     List<CalenderAppointmentDto> getAllCommonCalenderDate(LocalDate dateTime);
 
     List<Object> getAllCalenderData();
