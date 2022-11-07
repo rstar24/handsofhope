@@ -22,8 +22,7 @@ import { setParticipantClientName, setParticipantId } from "../../../features/in
 import{setCyfmsAppointmentClientName,setCyfmsAppointmentParticipantId}from "../../../features/cyfms/appointment/slice";
 import {setICAppointmentClientName,setICAppointmentParticipantId} from "../../../features/initialContact/appointment/slice";
 import {setCGAppointmentClientName,setCGAppointmentParticipantId} from "../../../features/cg/appointment/slice";
-
-
+import { setCgReminderClientName,setCgReminderParticipantId } from "../../../features/cg/reminders/slice";
 const ClientResults = ({ setClick, moduleName ,searchId}: any): ReactElement => {
   const dispatch = useAppDispatch();
   const data = useAppSelector((state) => state.cyfmsSearch.data);
@@ -90,7 +89,15 @@ const ClientResults = ({ setClick, moduleName ,searchId}: any): ReactElement => 
       dispatch(setCgId(participant.participantId));
       setClick(false);
     }
-
+    else if (moduleName === "cgReminder" && searchId==="cgReminderId") {
+      dispatch(
+        setCgReminderClientName(
+          `${participant.firstname}${" "}${participant.surname}`
+        )
+      );
+      dispatch(setCgReminderParticipantId(participant.participantId));
+      setClick(false);
+    }
     else if (moduleName === "caregivers" && searchId==="secondary") {
       dispatch(
         setCgSecClientName(

@@ -10,7 +10,7 @@ export interface Data {
   reminderDto: {
     reminderId: number;
     assignedTo: string;
-    regarding: string;
+    regarding: any;
     subject: string;
     status: string;
     reminderDate: string;
@@ -20,7 +20,41 @@ export interface Data {
   };
 }
 
+export interface GetData {
+  cgReminderId: number;
+  id: number;
+  participantId: number;
+  referenceId: any;
+  reminderDto: {
+    reminderId: number;
+    assignedTo: string;
+    regarding: any;
+    subject: string;
+    status: string;
+    reminderDate: string;
+    endDate: string;
+    description: string;
+    frequency: string;
+  };
+}
 // Empty Data
+const emptyGetData: GetData = {
+  cgReminderId: 0,
+  id: 0,
+  referenceId: 0,
+  participantId: 0,
+  reminderDto: {
+    reminderId: 0,
+    assignedTo: "",
+    regarding: "",
+    subject: "",
+    status: "",
+    reminderDate: "",
+    endDate: "",
+    description: "",
+    frequency: "",
+  },
+};
 const emptyData: Data = {
   cgReminderId: 0,
   id: 0,
@@ -39,13 +73,18 @@ const emptyData: Data = {
 };
 
 export interface State {
+  clientName: string;
+  click: boolean;
+  id: number;
   record: Data[];
+  record1:Data[];
+  getData: GetData;
   data: Data;
   status: "failed" | "none" | "loading" | "success";
 }
 
 export const doGet = createAsyncThunk<Data, number>(
-  "caregiverservice/doGet",
+  "caregiverReminderservice/doGet",
   async (cgReminderId, { getState }) => {
     const store: any = getState();
     const res: AxiosResponse = await doGetAPI(cgReminderId, store.login.token);
@@ -54,8 +93,8 @@ export const doGet = createAsyncThunk<Data, number>(
   }
 );
 
-export const doPost = createAsyncThunk<Data, Data>(
-  "caregiverservice/doPost",
+export const doPost = createAsyncThunk<Data[], Data>(
+  "caregiverReminderservice/doPost",
   async (formData: Data, { getState }) => {
     const store: any = getState();
     const res: AxiosResponse = await doPostAPI(formData, store.login.token);
@@ -65,7 +104,7 @@ export const doPost = createAsyncThunk<Data, Data>(
 );
 
 export const doRemove = createAsyncThunk<Data, number>(
-  "caregiverservice/doRemove",
+  "caregiverReminderservice/doRemove",
   async (formData, { getState }) => {
     const store: any = getState();
     const res: AxiosResponse = await doRemoveAPI(formData, store.login.token);
@@ -75,7 +114,7 @@ export const doRemove = createAsyncThunk<Data, number>(
 );
 
 export const doSearch = createAsyncThunk<Data[], any>(
-  "caregiverservice/doSearch",
+  "caregiverReminderservice/doSearch",
   async (formData, { getState }) => {
     const store: any = getState();
     const res: AxiosResponse = await doSearchAPI(
@@ -92,15 +131,36 @@ export const doSearch = createAsyncThunk<Data[], any>(
 export const cgReminderSlice = createSlice<State, SliceCaseReducers<State>>({
   name: "cgReminder",
   initialState: {
+    clientName: "",
+    id: 0,
+    click: false,
     record: [],
+    record1:[],
     data: emptyData,
+    getData: emptyGetData,
     status: "failed",
   },
   reducers: {
     cleanState(state) {
       state.data = emptyData;
+      state.getData = emptyGetData;
       state.record = [];
+      state.record1=[];
       state.status = "none";
+      state.click = false;
+      state.clientName = "";
+      state.id = 0;
+    },
+    setClick(state, action) {
+      state.click = action.payload;
+    },
+    setCgReminderClientName(state, action) {
+      state.clientName = action.payload;
+      state.getData.reminderDto.regarding = action.payload;
+    },
+    setCgReminderParticipantId(state, action) {
+      state.id = action.payload;
+      state.getData.participantId = action.payload;
     },
   },
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -111,6 +171,7 @@ export const cgReminderSlice = createSlice<State, SliceCaseReducers<State>>({
         state.data = action.payload;
         state.status = "success";
       })
+
       .addCase(doGet.pending, (state) => {
         state.status = "loading";
       })
@@ -119,7 +180,24 @@ export const cgReminderSlice = createSlice<State, SliceCaseReducers<State>>({
       });
     builder
       .addCase(doPost.fulfilled, (state, action) => {
-        state.data = action.payload;
+        // state.data = action.payload;
+        state.record1=action.payload;
+        state.getData.cgReminderId = action.payload[0].cgReminderId;
+
+        state.getData.id = action.payload[0].id;
+        state.getData.reminderDto.assignedTo =
+          action.payload[0].reminderDto.assignedTo;
+        state.getData.reminderDto.description =
+          action.payload[0].reminderDto.description;
+        state.getData.reminderDto.endDate = action.payload[0].reminderDto.endDate;
+        state.getData.reminderDto.frequency =
+          action.payload[0].reminderDto.frequency;
+        state.getData.reminderDto.regarding =
+          action.payload[0].reminderDto.regarding;
+        state.getData.reminderDto.status = action.payload[0].reminderDto.status;
+        state.getData.reminderDto.subject = action.payload[0].reminderDto.subject;
+        state.getData.reminderDto.reminderDate =
+          action.payload[0].reminderDto.reminderDate;
         state.status = "success";
       })
       .addCase(doPost.pending, (state) => {
@@ -152,6 +230,14 @@ export const cgReminderSlice = createSlice<State, SliceCaseReducers<State>>({
   },
 });
 
-export const { cleanState } = cgReminderSlice.actions;
+export const {
+  disableClosingDate,
+  enableClosingDate,
+  cleanState,
+  setName,
+  setClick,
+  setCgReminderClientName,
+  setCgReminderParticipantId,
+} = cgReminderSlice.actions;
 
 export default cgReminderSlice.reducer;

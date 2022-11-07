@@ -29,52 +29,58 @@ const RemindersForm = ({
   const state = useAppSelector((state) => state.cgCareProvider);
   const data = useAppSelector((state) => state.cgReminder.data);
   const [click, setClick] = useState(false);
+  const { id, clientName } = useAppSelector((state) => state.cgReminder);
+
   const handleSearch = () => {
     console.log("click search");
     setClick(true);
   };
-  console.log("dataaaa--", state.getData.referenceId);
-  const { reminderstatus,frequency } = useAppSelector((state) => state.codetable);
+ 
+  const { reminderstatus, frequency } = useAppSelector(
+    (state) => state.codetable
+  );
+ 
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
-    console.log("hellow");
 
-    const form = e.currentTarget as HTMLFormElement;
-    const formData: Data = {
-      id: state.getData.id,
-      cgReminderId: data.cgReminderId,
-      referenceId: state.getData.referenceId
-        ? state.getData.referenceId
-        : state.data.referenceId,
-      reminderDto: {
-        reminderId: data.reminderDto.reminderId,
-        assignedTo: form.assignedTo.value,
-        regarding: form.regarding.value,
-        subject: form.subject.value,
-        status: form.status.value,
-        reminderDate: form.reminderDate.value,
-        endDate: form.endDate.value,
-        description: form.description.value,
-        frequency: form.frequency.value,
-      },
-    };
-    console.log("rem", formData);
-    dispatch(doPost(formData))
-      .unwrap()
-      .then(() => {
-        console.log("Reminders POST backend API was successful!");
-        dispatch(
-          doSearch({
-            id: state.data.id ? state.data.id : state.getData.id,
-            data: "",
-          })
-        );
-        setAddNew(false);
-      })
-      .catch((err) => {
-        console.log("reminders POST backend API didn't work");
-        console.log(err);
-      });
+    if (!click) {
+      const form = e.currentTarget as HTMLFormElement;
+      const formData: Data = {
+        id: state.getData.id,
+        cgReminderId: data.cgReminderId,
+        referenceId: state.getData.referenceId
+          ? state.getData.referenceId
+          : state.data.referenceId,
+        reminderDto: {
+          reminderId: data.reminderDto.reminderId,
+          assignedTo: form.assignedTo.value,
+          regarding: id,
+          subject: form.subject.value,
+          status: form.status.value,
+          reminderDate: form.reminderDate.value,
+          endDate: form.endDate.value,
+          description: form.description.value,
+          frequency: form.frequency.value,
+        },
+      };
+    
+      dispatch(doPost(formData))
+        .unwrap()
+        .then(() => {
+          setAddNew(false);
+          console.log("Reminders POST backend API was successful!");
+          dispatch(
+            doSearch({
+              id: state.data.id ? state.data.id : state.getData.id,
+              data: "",
+            })
+          );
+        })
+        .catch((err) => {
+          console.log("reminders POST backend API didn't work");
+          console.log(err);
+        });
+    }
   };
   return (
     <Box
@@ -132,12 +138,30 @@ const RemindersForm = ({
       </Box>
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-          <Input
-            id="regarding"
-            value="Regarding"
-            autofill={data.reminderDto.regarding}
-            readOnly={disabled}
-            required
+          <FormLabel
+            sx={{
+              p: 1,
+              marginRight: "36.5px",
+              flexBasis: 0,
+              flexGrow: 1.3,
+              color: "black",
+            }}
+          >
+            Regarding
+          </FormLabel>
+
+          <OutlinedInput
+            sx={{
+              borderRadius: 0,
+
+              flexBasis: 0,
+
+              flexGrow: 1.2,
+            }}
+            size="small"
+            value={clientName}
+            style={{ backgroundColor: "#dfdada" }}
+            endAdornment={<SearchIcon onClick={handleSearch} />}
           />
         </Box>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
@@ -181,7 +205,7 @@ const RemindersForm = ({
       </Typography>
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-        <CYFMSDropdown
+          <CYFMSDropdown
             id="frequency"
             value="Frequency"
             autofill={data.reminderDto.status}
@@ -189,6 +213,7 @@ const RemindersForm = ({
             optionsList={Object.values(frequency).map(
               (status: any) => status.en
             )}
+            required
           />
         </Box>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
@@ -204,7 +229,8 @@ const RemindersForm = ({
           <SearchClientName
             click={click}
             setClick={setClick}
-            moduleName="caregiver"
+            moduleName="cgReminder"
+            searchId="cgReminderId"
           />
         )}
       </Box>
