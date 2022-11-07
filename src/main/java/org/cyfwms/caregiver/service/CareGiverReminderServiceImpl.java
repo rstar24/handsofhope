@@ -11,6 +11,7 @@ import org.cyfwms.common.exception.I18Constants;
 import org.cyfwms.common.exception.MessageUtil;
 import org.cyfwms.common.exception.NoSuchElementFoundException;
 import org.cyfwms.common.repository.ReminderRepository;
+import org.cyfwms.participant.entity.Participant;
 import org.cyfwms.participant.repository.ParticipantRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,12 +75,12 @@ public class CareGiverReminderServiceImpl implements CareGiverReminderService {
                     BeanUtils.copyProperties(careGiverReminder.get(), careGiverReminderDto);
                     BeanUtils.copyProperties(careGiverReminder.get().getReminder(), reminderDto);
 
-                  /*  if (!reminderDto.getRegarding().isEmpty() && reminderDto.getRegarding() != null) {
+                    if (!reminderDto.getRegarding().isEmpty() && reminderDto.getRegarding() != null) {
                         Long participantId = Long.parseLong(reminderDto.getRegarding());
                         Participant participant = participantRepository.findByParticipantId(participantId);
                         reminderDto.setRegarding(participant.getFirstname() + " " + participant.getSurname());
                         reminderDto.setParticipantId(participant.getParticipantId());
-                    }*/
+                    }
                     careGiverReminderDto.setReminderDto(reminderDto);
 
                 }
