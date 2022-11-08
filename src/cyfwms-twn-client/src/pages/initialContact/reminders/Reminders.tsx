@@ -29,7 +29,7 @@ function Reminders(props: any) {
   const [addNew, setAddNew] = useState(false);
   const [disabled, setDisabled] = useState(false);
 
-  const data = useAppSelector((state) => state.icReminder.record);
+  const data = useAppSelector((state) => state.icReminder.record2);
 
   const [value, setValue] = useState("");
   

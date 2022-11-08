@@ -3,6 +3,20 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { SliceCaseReducers } from "@reduxjs/toolkit";
 import type { AxiosResponse } from "axios";
 
+export interface Recordnew {
+  fileDetailsId: number;
+  icReminderId: number;
+  subject: string;
+  assignedTo: string;
+}
+// Empty Recordnew
+const emptyRecordnew: Recordnew =  {
+  fileDetailsId: 0,
+  icReminderId: 0,
+  subject: "",
+  assignedTo: "",
+};
+
 export interface Data {
   icReminderId:number,
   fileDetailsId:number,
@@ -82,8 +96,10 @@ export interface State {
   id: number;
   record: Data[];
   record1:Data[];
+  record2: Recordnew[];
   data: Data;
   getData: GetData;
+  recordNew:Recordnew;
   status: "failed" | "none" | "loading" | "success";
 }
 
@@ -117,7 +133,7 @@ export const doRemove = createAsyncThunk<Data, number>(
   }
 );
 
-export const doSearch = createAsyncThunk<Data[], any>(
+export const doSearch = createAsyncThunk<Recordnew[], any>(
   "initialcontactserviceReminder/doSearch",
   async (formData, { getState }) => {
     const store: any = getState();
@@ -133,7 +149,7 @@ export const doSearch = createAsyncThunk<Data[], any>(
 );
 
 export const contactNotesSlice = createSlice<State, SliceCaseReducers<State>>({
-  name: "initialcontactservice",
+  name: "initialcontactreminder",
   initialState: {
     disabledClosingDate: true,
     disabledFrequency:true,
@@ -142,11 +158,16 @@ export const contactNotesSlice = createSlice<State, SliceCaseReducers<State>>({
     click: false,
     record: [],
     record1:[],
+    record2:[],
     data: emptyData,
     getData: emptyGetData,
+    recordNew:emptyRecordnew,
     status: "failed",
   },
   reducers: {
+    add(state, action) {
+      state.record2.push(emptyRecordnew);
+    },
     disableClosingDate(state) {
       state.disabledClosingDate = true;
     },
@@ -165,6 +186,7 @@ export const contactNotesSlice = createSlice<State, SliceCaseReducers<State>>({
       state.data = emptyData;
       state.record = [];
       state.record1=[];
+      state.record2=[];
       state.status = "none";
       state.click = false;
       state.clientName = "";
@@ -222,7 +244,7 @@ export const contactNotesSlice = createSlice<State, SliceCaseReducers<State>>({
       });
     builder
       .addCase(doSearch.fulfilled, (state, action) => {
-        state.record = action.payload;
+        state.record2 = action.payload;
         state.status = "success";
       })
       .addCase(doSearch.pending, (state) => {

@@ -18,6 +18,7 @@ import React, { useContext } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import type { ReactElement } from "react";
 import Participants from "../../../components/initialContact/view/Participants";
+import Reminders from "../../../components/initialContact/view/Reminders";
 
 
 
@@ -123,15 +124,17 @@ const View = (): ReactElement => {
               value={8}
               onClick={() => navigate("attachments")}
             />
-
-
-             <Tab
+            <Tab
               label="Appointments"
               value={9}
               onClick={() => navigate("appointment")}
 
             />
-
+            <Tab
+              label="Reminders"
+              value={10}
+              onClick={() => navigate("reminder")}
+            />
           </Tabs>
         </TabContext.Provider>
       </Box>
@@ -149,8 +152,8 @@ const View = (): ReactElement => {
           <Route path="participants" element={<Participants />} />
           <Route path="contact_notes" element={<ContactNotes />} />
           <Route path="attachments" element={<Attachments />} />
-        
           <Route path="appointment" element={<Appointment />} />
+          <Route path="reminder" element={<Reminders />} />
         </Routes>
       </Box>
       <Popup children={<Router />} />
