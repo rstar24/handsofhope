@@ -123,11 +123,15 @@ const EditIcon = ({
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
-        <Box sx={{ ...style, width: 400, paddingLeft: "5%" }}>
+        <Box sx={{ ...style, width: 400, paddingLeft: "2%" ,display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
+              textAlign: "center" }}>
           <p id="parent-modal-description">
-            Are you sure ? You want to delete ?
+          Are you sure you want to delete this record?
           </p>
-          <Box paddingLeft={7}>
+          <Box sx={{display: "flex",
+              justifyContent: "center",}}>
             <Button onClick={handleDelete}>Yes</Button>
             <Button onClick={handleCloseModel}>No</Button>
           </Box>
