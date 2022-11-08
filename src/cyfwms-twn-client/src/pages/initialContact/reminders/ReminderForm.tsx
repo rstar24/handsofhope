@@ -11,9 +11,13 @@ import {
 import { onKeyDown } from "../../../library/app";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import EditIcon from "./EditIcon";
-import { Box,Typography} from "@mui/material";
-import React from "react";
+import { Box,FormControl,FormLabel,OutlinedInput,Typography } from "@mui/material";
+import React, { useState } from "react";
 import type { FormEvent } from "react";
+import SearchIcon from '@mui/icons-material/Search';
+import SearchClientName from "../../../components/cyfms/searchClient/SearchClientName";
+
+
 
 const ReminderForm = ({
   setAddNew,
@@ -25,9 +29,18 @@ const ReminderForm = ({
   const state = useAppSelector((state) => state.icFileDetails);
   const { reminderstatus, frequency } = useAppSelector((state) => state.codetable);
   const data = useAppSelector((state) => state.icReminder.data);
+  const {id,clientName} = useAppSelector((state)=>state.icReminder);
+
+  const [click,setClick] = useState(false)
+  const handleSearch = () => {
+    if (!disabled) {
+      setClick(true);
+    }
+  };
 
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
+    if(!click){
     const form = e.currentTarget as HTMLFormElement;
     const formData: Data = {
       icReminderId: data.icReminderId,
@@ -36,7 +49,7 @@ const ReminderForm = ({
       reminderDto:{
         reminderId: data.reminderDto.reminderId,
         assignedTo: form.assignedTo.value,
-        regarding: form.regarding.value,
+        regarding: id,
         subject: form.subject.value,
         status: form.status.value,
         reminderDate: form.reminderDate.value,
@@ -50,13 +63,14 @@ const ReminderForm = ({
       .unwrap()
       .then(() => {
         console.log("IcReminder POST backend API was successful!");
-        dispatch(doSearch({ id: state.getData.fileDetailsId, data: "" }));
+       dispatch(doSearch({ id: state.getData.fileDetailsId, data: "" }));
         setAddNew(false);
       })
       .catch((err) => {
         console.log("IcReminder POST backend API didn't work!");
         console.log(err);
       });
+    }
   };
   return (
     <>
@@ -96,6 +110,7 @@ const ReminderForm = ({
               id="reminderDate"
               value="Reminder Date"
               type="date"
+              required
               autofill={data.reminderDto.reminderDate}
               readOnly={disabled}
               
@@ -113,19 +128,34 @@ const ReminderForm = ({
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <ICInput
-             
-              id="regarding"
-              value="Regarding"
-              autofill={data.reminderDto.regarding}
+          <FormControl
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              flexWrap: "wrap",
+            }}
+          >
+            <FormLabel sx={{ p: 1, flexBasis: 0, flexGrow: 1, color: "black" }}>
+             Regarding
+            </FormLabel>
+            <OutlinedInput
+              sx={{
+                borderRadius: 0,
+                flexBasis: 0,
+                flexGrow: 2,
+              }}
+              size="small"
               readOnly={disabled}
-              required
+              value={clientName}
+              style={{ backgroundColor: "#dfdada" }}
+              endAdornment={<SearchIcon onClick={handleSearch} />}
             />
-          </Box>
+          </FormControl>
+        </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <ICInput
              
-              id="subject"
+             id="subject"
               value="Subject"
               autofill={data.reminderDto.subject}
               readOnly={disabled}
@@ -148,7 +178,7 @@ const ReminderForm = ({
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
         </Box>
-
+ 
         <ICTextArea
           id="description"
           value="Description"
@@ -175,10 +205,18 @@ const ReminderForm = ({
               id="endDate"
               value="End Date"
               type="date"
+              required
               autofill={data.reminderDto.endDate}
               readOnly={disabled}
             />
           </Box>
+          {click && (<SearchClientName
+          click={click}
+          setClick={setClick}
+          moduleName="initialcontactreminder"
+          searchId="icReminderId"
+          />
+          )}
         </Box>
 
         <Box sx={{ display: "flex", justifyContent: "right" }}>

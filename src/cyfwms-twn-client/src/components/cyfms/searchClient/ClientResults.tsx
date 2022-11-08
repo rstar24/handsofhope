@@ -99,6 +99,16 @@ const ClientResults = ({ setClick, moduleName ,searchId}: any): ReactElement => 
       dispatch(setCgId(participant.participantId));
       setClick(false);
     }
+   
+    else if (moduleName === "caregivers" && searchId==="secondary") {
+      dispatch(
+        setCgSecClientName(
+          `${participant.firstname}${" "}${participant.surname}`
+        )
+      );
+      dispatch(setCgSecId(participant.participantId));
+      setClick(false);
+    }
     else if (moduleName === "cgReminder" && searchId==="cgReminderId") {
       dispatch(
         setCgReminderClientName(
@@ -108,13 +118,13 @@ const ClientResults = ({ setClick, moduleName ,searchId}: any): ReactElement => 
       dispatch(setCgReminderParticipantId(participant.participantId));
       setClick(false);
     }
-    else if (moduleName === "caregivers" && searchId==="secondary") {
+    else if (moduleName === "initialcontactreminder" && searchId==="icReminderId") {
       dispatch(
-        setCgSecClientName(
+        setInitialContactReminderClientName(
           `${participant.firstname}${" "}${participant.surname}`
         )
       );
-      dispatch(setCgSecId(participant.participantId));
+      dispatch(setInitialContactReminderId(participant.participantId));
       setClick(false);
     }
   };

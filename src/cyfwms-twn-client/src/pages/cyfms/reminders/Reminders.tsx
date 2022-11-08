@@ -35,6 +35,7 @@ function Reminders(props: any) {
   useEffect(() => {
     dispatch(doGetFrequency())
     dispatch(doGetReminderStatus()).then(()=>{
+      dispatch(doGetFrequency());
       dispatch(doSearch({ id: state.participantId, data: "" }))
       .unwrap()
       .catch((err) => {});
@@ -174,7 +175,7 @@ function Reminders(props: any) {
                         align="center"
                         size="small"
                       >
-                        {val.endDate}
+                        {val.reminderDate}
                       </TableCell>
                       <TableCell
                         sx={{ color: "black" }}
