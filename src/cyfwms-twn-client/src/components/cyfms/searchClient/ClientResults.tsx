@@ -24,6 +24,7 @@ import {setICAppointmentClientName,setICAppointmentParticipantId} from "../../..
 import {setCGAppointmentClientName,setCGAppointmentParticipantId} from "../../../features/cg/appointment/slice";
 import { setCgReminderClientName,setCgReminderParticipantId } from "../../../features/cg/reminders/slice";
 import { setCyfmsReminderClientName,setCyfmsReminderParticipantId } from "../../../features/cyfms/reminders/slice";
+import { setInitialContactReminderClientName,setInitialContactReminderId } from "../../../features/initialContact/reminder/slice";
 const ClientResults = ({ setClick, moduleName ,searchId}: any): ReactElement => {
   const dispatch = useAppDispatch();
   const data = useAppSelector((state) => state.cyfmsSearch.data);
