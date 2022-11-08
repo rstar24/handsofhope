@@ -1,5 +1,6 @@
 package org.cyfwms.caregiver.repository;
 
+import lombok.extern.slf4j.Slf4j;
 import org.cyfwms.caregiver.dto.CareGiverSearchReminderDto;
 import org.cyfwms.caregiver.dto.CareGiverSearchReminderResultDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,13 +10,14 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
+@Slf4j
 @Repository
 public class CareGiverSearchReminderRepo {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
     public List<CareGiverSearchReminderResultDto> searchCGReminder(CareGiverSearchReminderDto cgSearchReminderDto) {
+        log.info("Inside SearchCGReminder");
         List<Object> argsObjectList = new ArrayList<>();
         StringBuffer querySBuff = createSearchQuery(cgSearchReminderDto, argsObjectList);
         return jdbcTemplate.query(querySBuff.toString(), argsObjectList.toArray(),
@@ -75,6 +77,7 @@ public class CareGiverSearchReminderRepo {
             querySBuff.append(" AND p2.id = ? ORDER BY p2.creationdatetime desc ");
             argsObjectList.add(cgProviderId);
         }
+        log.info("Exit SearchCGReminder");
         return querySBuff;
     }
 }

@@ -31,7 +31,7 @@ public class CGAttachmentController {
     public ResponseEntity<CGAttachmentDto> saveOne(@RequestParam(value = "file", required = false) MultipartFile file,
             @RequestParam("cgDto") String cgDto) throws IOException {
         CGAttachmentDto cgAttachmentDto = cgAttachmentService.saveCGAttachment(file, cgDto);
-        log.info("SaveOne " + cgAttachmentDto);
+        log.info("SaveOne :" + cgAttachmentDto);
         return ResponseEntity.ok(cgAttachmentDto);
 
     }
@@ -55,6 +55,7 @@ public class CGAttachmentController {
     @DeleteMapping("/remove_one/{cgimageid}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void removeOne(@PathVariable("cgimageid") Long cgImageId) {
+        log.info("Soft Remove/Delete One/Single Attachment By CGImageId:"+cgImageId);
         cgAttachmentService.removeCGImage(cgImageId);
     }
 

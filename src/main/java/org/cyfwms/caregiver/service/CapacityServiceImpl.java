@@ -15,7 +15,7 @@ public class CapacityServiceImpl implements CapacityService {
     CapacityRepository cGCapacityRepository;
     @Override
     public CapacityDto saveCapacity(CapacityDto cGCapacityDto) {
-        log.info("Inside SaveCapacity");
+        log.info("Inside CareGiver SaveCapacity");
         Capacity cGCapacity = null;
         if (cGCapacityDto.getCgCapacityId() == 0) {
             cGCapacity = new Capacity();
@@ -27,13 +27,13 @@ public class CapacityServiceImpl implements CapacityService {
         }
         cGCapacity = cGCapacityRepository.save(cGCapacity);
         cGCapacityDto.setCgCapacityId(cGCapacity.getCgCapacityId());
-        log.info("Exit SaveCapacity");
+        log.info("Exit CareGiver SaveCapacity");
         return cGCapacityDto;
     }
 
     @Override
     public CapacityDto readCapacity(Long cgProviderId) {
-        log.info("Inside ReadCapacity");
+        log.info("Inside CareGiver ReadCapacity");
       CapacityDto cGCapacityDto = new CapacityDto();
         if (cgProviderId != 0) {
             Capacity CGCapacity = cGCapacityRepository.findByCgProviderId(cgProviderId);
@@ -48,7 +48,7 @@ public class CapacityServiceImpl implements CapacityService {
         else{
             throw new EntityNotFoundException();
         }
-        log.info("Exit ReadCapacity");
+        log.info("Exit CareGiver ReadCapacity");
         return cGCapacityDto;
     }
 }

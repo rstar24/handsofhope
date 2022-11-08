@@ -60,7 +60,7 @@ public class CareGiverController {
     @PutMapping(value = "/care_provider/save", produces = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     public CareProviderDto saveCareProvider(@RequestBody CareProviderDto cpDto) {
-        log.info("SaveCareProvider " + cpDto);
+        log.info("SaveCareProvider :" + cpDto);
         return careProviderService.save(cpDto);
     }
 
@@ -99,7 +99,7 @@ public class CareGiverController {
         careProviderSearchCriteriaDto.setStatus(
                 ("null".equals(var.get("status"))
                         || var.get("status") == null) ? null : var.get("status"));
-        log.info("SearchCareGiver " + careProviderSearchCriteriaDto);
+        log.info("SearchCareGiver :" + careProviderSearchCriteriaDto);
         return careProviderSearchService.searchCareGiver(careProviderSearchCriteriaDto);
     }
 
@@ -124,7 +124,7 @@ public class CareGiverController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<CapacityDto> saveCapacity(@RequestBody CapacityDto capacityDto) {
         capacityDto = capacityService.saveCapacity(capacityDto);
-        log.info("SaveCapacity " + capacityDto);
+        log.info("SaveCapacity :" + capacityDto);
         return new ResponseEntity<>(capacityDto, HttpStatus.CREATED);
     }
 
@@ -141,7 +141,7 @@ public class CareGiverController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ContactNotesDto> saveAllContactNotes(@RequestBody ContactNotesDto contactNotesDto) {
         contactNotesDto = contactNotesService.saveAllContactNotes(contactNotesDto);
-        log.info("SaveAllContactNotes " + contactNotesDto);
+        log.info("SaveAllContactNotes :" + contactNotesDto);
         return new ResponseEntity<>(contactNotesDto, HttpStatus.CREATED);
     }
 
@@ -164,7 +164,7 @@ public class CareGiverController {
         cgContactNotesSearchCriteriaDto.setData(
                 ("null".equals(var.get("data"))
                         || var.get("data") == null) ? null : var.get("data"));
-        log.info("SearchCareGiverContactNotes " + cgContactNotesSearchCriteriaDto);
+        log.info("SearchCareGiverContactNotes :" + cgContactNotesSearchCriteriaDto);
         return careGiverContactNotesSearchService.searchContactNotes(cgContactNotesSearchCriteriaDto);
     }
 
@@ -181,7 +181,7 @@ public class CareGiverController {
     public ResponseEntity<CareGiversBackGroundCheckDto> saveCareGiversBackGroundCheck(
             @RequestBody CareGiversBackGroundCheckDto cgBackGroundCheckDto) {
         cgBackGroundCheckDto = cgBackGroundCheckService.saveCareGiversBackGroundCheck(cgBackGroundCheckDto);
-        log.info("SaveCareGiversBackGroundCheck " + cgBackGroundCheckDto);
+        log.info("Save CareGiversBackGroundCheck :" + cgBackGroundCheckDto);
         return new ResponseEntity<>(cgBackGroundCheckDto, HttpStatus.CREATED);
     }
 
@@ -190,6 +190,7 @@ public class CareGiverController {
     @ResponseStatus(HttpStatus.CREATED)
     public List<CaregiverAppointmentDto> saveCaregiverAppointment(
             @RequestBody CaregiverAppointmentDto caregiverAppointmentDto) {
+        log.info("Save or Update caregiver Appointment Informtion :"+caregiverAppointmentDto);
         return cgAppointmentService.saveCgAppointment(caregiverAppointmentDto);
     }
 
@@ -197,6 +198,7 @@ public class CareGiverController {
     @ApiOperation("Remove Counselor CFS Workers")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void removeParticipantAppointment(@PathVariable("cgAppointmentId") Long cgAppointmentId) {
+        log.info("Remove Counselor CFS Workers By cgAppointmentId :"+cgAppointmentId);
         cgAppointmentService.removeICAppointment(cgAppointmentId);
     }
 
@@ -210,6 +212,7 @@ public class CareGiverController {
         careGiverSearchAppointmentDto.setData(
                 ("null".equals(var.get("data"))
                         || var.get("data") == null) ? null : var.get("data"));
+        log.info("Search Initial Contact Appointment Information :"+careGiverSearchAppointmentDto);
         return careGiverSearchAppointmentService.searchCGAppointment(careGiverSearchAppointmentDto);
     }
 
@@ -217,7 +220,7 @@ public class CareGiverController {
     @ApiOperation("Read CareGiver Appointment Information")
     @ResponseStatus(HttpStatus.OK)
     public CaregiverAppointmentDto readOneAppointment(@PathVariable("CGAppointmentId") Long CGAppointmentId) {
-
+        log.info("Read CareGiver Appointment Information By CGAppointmentId :"+CGAppointmentId);
         return cgAppointmentService.readOneAppointment(CGAppointmentId);
     }
 
@@ -225,7 +228,7 @@ public class CareGiverController {
     @ApiOperation("Save All CareGiverReminder")
     @ResponseStatus(HttpStatus.OK)
     public List<CareGiverReminderDto> saveCGReminder(@RequestBody CareGiverReminderDto careGiverReminderDto) {
-        log.info("saveCGReminder " + careGiverReminderDto);
+        log.info("SaveCGReminder :" + careGiverReminderDto);
         return careGiverReminderService.saveCGReminder(careGiverReminderDto);
 
     }
@@ -256,6 +259,7 @@ public class CareGiverController {
         careGiverSearchReminderDto.setData(
                 ("null".equals(var.get("data"))
                         || var.get("data") == null) ? null : var.get("data"));
+        log.info("SearchCGReminder :"+careGiverSearchReminderDto);
         return careGiverSearchReminderService.searchCGReminder(careGiverSearchReminderDto);
     }
 

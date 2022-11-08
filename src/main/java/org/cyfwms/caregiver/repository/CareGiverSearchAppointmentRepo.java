@@ -1,10 +1,8 @@
 package org.cyfwms.caregiver.repository;
 
-import org.cyfwms.caregiver.dto.CareGiverContactNotesSearchResultsDto;
+import lombok.extern.slf4j.Slf4j;
 import org.cyfwms.caregiver.dto.CareGiverSearchAppointmentDto;
 import org.cyfwms.caregiver.dto.CaregGiverSearchAppointmentResultDto;
-import org.cyfwms.initialcontact.dto.ICAppointmentSearchDto;
-import org.cyfwms.initialcontact.dto.ICAppointmentSearchResultDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -12,11 +10,13 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+@Slf4j
 @Repository
 public class CareGiverSearchAppointmentRepo {
     @Autowired
     private JdbcTemplate jdbcTemplate;
     public List<CaregGiverSearchAppointmentResultDto> searchCGAppointment(CareGiverSearchAppointmentDto cgAppointmentSearchDto) {
+        log.info("Inside SearchCGAppointment");
         List<Object> argsObjectList = new ArrayList<>();
         StringBuffer querySBuff = createSearchQuery(cgAppointmentSearchDto, argsObjectList);
         return jdbcTemplate.query(querySBuff.toString(),argsObjectList.toArray(),
@@ -71,7 +71,7 @@ public class CareGiverSearchAppointmentRepo {
         else {
             querySBuff.append(" AND p2.id = ? ");
             argsObjectList.add(id);}
-
+        log.info("Exit SearchCGAppointment");
         return querySBuff;
 
     }

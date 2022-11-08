@@ -141,7 +141,7 @@ public class CareGiverReminderServiceImpl implements CareGiverReminderService {
             }
             cnt=cnt+counter;
         }
-        log.info("Exit SaveCareGiverReminder");
+
         return listcaregiverreminder;
     }
 

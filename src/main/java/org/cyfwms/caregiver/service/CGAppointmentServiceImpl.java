@@ -45,6 +45,7 @@ public class CGAppointmentServiceImpl implements CGAppointmentService {
 
     @Override
     public List<CaregiverAppointmentDto> saveCgAppointment(CaregiverAppointmentDto caregiverAppointmentDto) {
+        log.info("Inside SaveCareGiverAppointment");
         Appointments appointments = null;
         List<CaregiverAppointmentDto> caregiverAppointmentDtoList = new ArrayList<>();
         CaregiverAppointment caregiverAppointment = new CaregiverAppointment();
@@ -75,6 +76,7 @@ public class CGAppointmentServiceImpl implements CGAppointmentService {
         BeanUtils.copyProperties(appointments,appointmentDto);
         caregiverAppointmentDto1.setAppointmentDto(appointmentDto);
         caregiverAppointmentDtoList.add(caregiverAppointmentDto1);
+        log.info("Exit SaveCareGiverAppointment");
         return caregiverAppointmentDtoList;
     }
     public List<CaregiverAppointmentDto> checkFrequency(CaregiverAppointmentDto caregiverAppointmentDto){
@@ -150,6 +152,7 @@ public class CGAppointmentServiceImpl implements CGAppointmentService {
 
     @Override
     public CaregiverAppointmentDto readOneAppointment(Long cgAppointmentId) {
+        log.info("Inside ReadOneCareGiverAppointment");
         CaregiverAppointmentDto caregiverAppointmentDto = new CaregiverAppointmentDto();
         AppointmentDto appointmentDto = new AppointmentDto();
         if (cgAppointmentId != 0) {
@@ -176,13 +179,14 @@ public class CGAppointmentServiceImpl implements CGAppointmentService {
                 }
             }
         }
-
+        log.info("Exit ReadOneCareGiverAppointment");
         return caregiverAppointmentDto;
     }
 
 
     @Override
     public void removeICAppointment(Long cgAppointmentId) {
+        log.info("Inside RemoveCareGiverAppointment");
         CaregiverAppointment caregiverAppointment = careGiversAppointmentRepository.findById(cgAppointmentId).orElseThrow(()->new NoSuchElementFoundException(
                 messageUtil.getLocalMessage(I18Constants.NO_ITEM_FOUND.getKey(),
                         String.valueOf(cgAppointmentId))));
@@ -194,7 +198,7 @@ public class CGAppointmentServiceImpl implements CGAppointmentService {
             caregiverAppointment.setStatus("INACTIVE");
             caregiverAppointment.getAppointments().setAppointmentStatus("INACTIVE");
             careGiversAppointmentRepository.save(caregiverAppointment);
-
+        log.info("Exit RemoveCareGiverAppointment");
     }
 
     }
