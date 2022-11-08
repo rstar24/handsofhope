@@ -3,6 +3,37 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { SliceCaseReducers } from "@reduxjs/toolkit";
 import type { AxiosResponse } from "axios";
 
+export interface GetData1 {
+  participantId: number;
+     
+  participantReminderId: number;
+
+    reminderId: number;
+    assignedTo: string;
+    regarding: any;
+    subject: string;
+    status: string;
+    reminderDate: string;
+    endDate: string;
+    description: string;
+    frequency: string;
+  
+}
+const emptyGetData1: GetData1 = {
+  participantId: 0,
+  participantReminderId: 0,
+  
+    reminderId: 0,
+    assignedTo: "",
+    regarding: "",
+    subject: "",
+    status: "",
+    reminderDate: "",
+    endDate: "",
+    description: "",
+    frequency: "",
+  
+};
 export interface Data {
   participantId: number;
 
@@ -19,39 +50,6 @@ export interface Data {
     frequency: string;
   };
 }
-export interface GetData {
-  participantId: number;
-  id: number;
-  participantReminderId: number;
-  reminderDto: {
-    reminderId: number;
-    assignedTo: string;
-    regarding: any;
-    subject: string;
-    status: string;
-    reminderDate: string;
-    endDate: string;
-    description: string;
-    frequency: string;
-  };
-}
-const emptyGetData: GetData = {
-  participantId: 0,
-  id: 0,
-  participantReminderId: 0,
-  reminderDto: {
-    reminderId: 0,
-    assignedTo: "",
-    regarding: "",
-    subject: "",
-    status: "",
-    reminderDate: "",
-    endDate: "",
-    description: "",
-    frequency: "",
-  },
-};
-
 // Empty Data
 const emptyData: Data = {
   participantId: 0,
@@ -69,6 +67,41 @@ const emptyData: Data = {
   },
 };
 
+export interface GetData {
+  participantId: number;
+  id: number;
+  participantReminderId: number;
+  reminderDto: {
+    reminderId: number;
+    assignedTo: string;
+    regarding: any;
+    subject: string;
+    status: string;
+    reminderDate: string;
+    endDate: string;
+    description: string;
+    frequency: string;
+  };
+}
+const emptyGetData: GetData={
+  participantId:0,
+  id:0,
+  participantReminderId: 0,
+  reminderDto: {
+    reminderId: 0,
+    assignedTo: "",
+    regarding: "",
+    subject: "",
+    status: "",
+    reminderDate: "",
+    endDate: "",
+    description: "",
+    frequency: "",
+  }
+}
+
+
+
 export interface State {
   data: Data;
   click: boolean;
@@ -76,7 +109,9 @@ export interface State {
   id: number;
   record: Data[];
   record1: Data[];
+  record2:GetData1[];
   getData: GetData;
+  getData1:GetData1;
   status: "failed" | "none" | "loading" | "success";
 }
 
@@ -111,7 +146,7 @@ export const doRemove = createAsyncThunk<Data, number>(
     return res.data;
   }
 );
-export const doSearch = createAsyncThunk<Data[], any>(
+export const doSearch = createAsyncThunk<GetData1[], any>(
   "participantserviceReminder/doSearch",
   async (formData, { getState }) => {
     const store: any = getState();
@@ -134,8 +169,10 @@ export const contactSlice = createSlice<State, SliceCaseReducers<State>>({
     record: [],
     id: 0,
     getData: emptyGetData,
+    getData1:emptyGetData1,
     click: false,
     record1: [],
+    record2:[],
     status: "failed",
   },
   reducers: {
@@ -146,8 +183,10 @@ export const contactSlice = createSlice<State, SliceCaseReducers<State>>({
       state.id = 0;
       state.record = [];
       state.record1 = [];
+      state.record2=[];
       state.click = false;
       state.getData = emptyGetData;
+      state.getData1=emptyGetData1;
     },
     setClick(state, action) {
       state.click = action.payload;
@@ -217,7 +256,7 @@ export const contactSlice = createSlice<State, SliceCaseReducers<State>>({
       });
     builder
       .addCase(doSearch.fulfilled, (state, action) => {
-        state.record = action.payload;
+        state.record2 = action.payload;
         state.status = "success";
       })
       .addCase(doSearch.pending, (state) => {

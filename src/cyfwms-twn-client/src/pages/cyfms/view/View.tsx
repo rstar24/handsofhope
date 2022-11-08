@@ -19,6 +19,8 @@ import React, { useContext } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import type { ReactElement } from "react";
 import Appointments from "../../../components/cyfms/view/Appointment";
+import Reminders from "../../../components/cyfms/view/Reminders";
+
 
 export const styles = {
   panel: {
@@ -188,6 +190,11 @@ const View = (): ReactElement => {
               label="Appointments"
               value={10}
               onClick={() => navigate("appointment")}
+              />
+            <Tab
+              label="Reminders"
+              value={11}
+              onClick={() => navigate("reminders")}
             />
           </Tabs>
         </TabContext.Provider>
@@ -208,6 +215,7 @@ const View = (): ReactElement => {
           <Route path="other_information" element={<OtherInformation />} />
           <Route path="attachments" element={<Attachments />} />
           <Route path="appointment" element={<Appointments />} />
+          <Route path="reminders" element={<Reminders />} />
         </Routes>
       </Box>
       <Popup children={<Router />} />

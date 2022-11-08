@@ -16,6 +16,7 @@ import Capacity from "../../../components/cg/view/Capacity";
 import ContactNotes from "../../../components/cg/view/ContactNotes";
 import Attachments from "../../../components/cg/view/Attachments";
 import Appointment from "../../../components/cg/view/Appointment";
+import Reminders from "../../../components/cg/view/Reminders";
 
 export const styles = {
   header: {
@@ -108,6 +109,11 @@ const View = (): ReactElement => {
               label="Appointments"
               value={6}
               onClick={() => navigate("appointment")}
+              />
+             <Tab
+              label="Reminders"
+              value={7}
+              onClick={() => navigate("reminders")}
             />
           </Tabs>
         </TabContext.Provider>
@@ -121,6 +127,7 @@ const View = (): ReactElement => {
           <Route path="contact_notes" element={<ContactNotes />} />
           <Route path="attachments" element={<Attachments />} />
           <Route path="appointment" element={<Appointment />} />
+          <Route path="reminders" element={<Reminders />} />
         </Routes>
       </Box>
       <Popup children={<Router />} />

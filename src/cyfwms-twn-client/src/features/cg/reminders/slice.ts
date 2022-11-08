@@ -2,7 +2,36 @@ import { doGetAPI, doPostAPI, doRemoveAPI, doSearchAPI } from "./api";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { SliceCaseReducers } from "@reduxjs/toolkit";
 import type { AxiosResponse } from "axios";
+export interface GetData1 {
+  cgReminderId: number;
+  id: number;
+  referenceId: any;
+    reminderId: number;
+    assignedTo: string;
+    regarding: any;
+    subject: string;
+    status: string;
+    reminderDate: string;
+    endDate: string;
+    description: string;
+    frequency: string;
 
+}
+const emptyGetData1:GetData1={
+  cgReminderId: 0,
+  id: 0,
+  referenceId: 0,
+    reminderId: 0,
+    assignedTo: "",
+    regarding: "",
+    subject: "",
+    status: "",
+    reminderDate: "",
+    endDate: "",
+    description: "",
+    frequency: "",
+
+}
 export interface Data {
   cgReminderId: number;
   id: number;
@@ -73,12 +102,16 @@ const emptyData: Data = {
 };
 
 export interface State {
+  disabledClosingDate: boolean;
+  disabledFrequency:boolean;
   clientName: string;
   click: boolean;
   id: number;
   record: Data[];
   record1:Data[];
+  record2:GetData1[];
   getData: GetData;
+  getData1:GetData1;
   data: Data;
   status: "failed" | "none" | "loading" | "success";
 }
@@ -113,7 +146,7 @@ export const doRemove = createAsyncThunk<Data, number>(
   }
 );
 
-export const doSearch = createAsyncThunk<Data[], any>(
+export const doSearch = createAsyncThunk<GetData1[], any>(
   "caregiverReminderservice/doSearch",
   async (formData, { getState }) => {
     const store: any = getState();
@@ -131,21 +164,28 @@ export const doSearch = createAsyncThunk<Data[], any>(
 export const cgReminderSlice = createSlice<State, SliceCaseReducers<State>>({
   name: "cgReminder",
   initialState: {
+    disabledClosingDate: true,
+    disabledFrequency:true,
     clientName: "",
     id: 0,
     click: false,
     record: [],
     record1:[],
+    record2:[],
     data: emptyData,
     getData: emptyGetData,
+    getData1:emptyGetData1,
     status: "failed",
   },
   reducers: {
     cleanState(state) {
+      state.disabledClosingDate = true;
+      state.disabledFrequency = true;
       state.data = emptyData;
       state.getData = emptyGetData;
       state.record = [];
       state.record1=[];
+      state.record2=[];
       state.status = "none";
       state.click = false;
       state.clientName = "";
@@ -208,7 +248,7 @@ export const cgReminderSlice = createSlice<State, SliceCaseReducers<State>>({
       });
     builder
       .addCase(doSearch.fulfilled, (state, action) => {
-        state.record = action.payload;
+        state.record2 = action.payload;
         state.status = "success";
       })
       .addCase(doSearch.pending, (state) => {

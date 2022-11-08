@@ -23,6 +23,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import type { Record } from "../../../features/cyfms/search/slice";
 import type { ReactElement } from "react";
+import { doSearch } from "../../../features/cyfms/reminders/slice";
 
 const Results = (): ReactElement => {
   const dispatch = useAppDispatch();
@@ -39,6 +40,7 @@ const Results = (): ReactElement => {
     dispatch(doGetFamilyPhysicians(id));
     dispatch(doGetCounselors(id));
     dispatch(doSearchAppointment({id:id,data:""}));
+    dispatch(doSearch({id:id, data:""}));
   };
 
   return (

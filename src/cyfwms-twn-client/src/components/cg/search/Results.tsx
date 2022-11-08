@@ -21,7 +21,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import type { Record } from "../../../features/cg/search/slice";
 import { ReactElement } from "react";
-import { doGet, doSearch } from "../../../features/cg/contactNotes/slice";
+import {  doSearch as doSearchContactNotes} from "../../../features/cg/contactNotes/slice";
+import {  doSearch as doSearchReminder} from "../../../features/cg/reminders/slice";
 
 const Results = (): ReactElement => {
   const dispatch = useAppDispatch();
@@ -30,7 +31,7 @@ const Results = (): ReactElement => {
   const handleSearchView = (id: any) => {
     dispatch(setView(true));
     dispatch(doGetCaregiverProvider(id)).then((res: any) => {
-      dispatch(doSearch({ id: id, data: "" }))
+      dispatch(doSearchContactNotes({ id: id, data: "" }))
         .unwrap()
         .catch((err) => {});
     });
@@ -39,6 +40,7 @@ const Results = (): ReactElement => {
     dispatch(doGetCGCapacity(id));
     dispatch(doGetCGAttachment(id));
     dispatch(doSearchCGAppointment({id:id,data:""}));
+    dispatch(doSearchReminder({id:id,data:""}))
   };
 
   return (

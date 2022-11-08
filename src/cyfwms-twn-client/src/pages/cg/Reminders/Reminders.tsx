@@ -31,7 +31,7 @@ function Reminders(props: any) {
   const dispatch = useAppDispatch();
   const state1 = useAppSelector((state) => state.cgCareProvider);
   const state = useAppSelector((state) => state.cgReminder.data);
-  const data = useAppSelector((state) => state.cgReminder.record);
+  const data = useAppSelector((state) => state.cgReminder.record2);
   const [addNew, setAddNew] = useState(false);
   const [disabled, setDisabled] = useState(false);
 
