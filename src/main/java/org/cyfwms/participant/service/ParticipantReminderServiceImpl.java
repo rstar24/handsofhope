@@ -92,6 +92,14 @@ public class ParticipantReminderServiceImpl implements ParticipantReminderServic
             BeanUtils.copyProperties(participantReminderDto, participantReminder);
 
         }
+
+        participantReminder.setReminder(reminder);
+        participantReminder = participantReminderRepository.save(participantReminder);
+
+        BeanUtils.copyProperties(participantReminder,participantReminderDto1);
+        BeanUtils.copyProperties(reminder,reminderDto);
+        participantReminderDto1.setReminderDto(reminderDto);
+        participantReminderDtoList.add(participantReminderDto1);
         log.info("Exit SaveParticipantReminder");
         return participantReminderDtoList;
     }
@@ -136,8 +144,8 @@ public class ParticipantReminderServiceImpl implements ParticipantReminderServic
     public List<ParticipantReminderDto> saveFrequency(int n, int counter, int rem, ParticipantReminderDto participantReminderDto) {
           log.info("Inside SaveFrequency");
           List<ParticipantReminderDto> listparticipantreminder = new ArrayList<>();
-          int cnt=0;
-          for(int i=0;i<n;i++){
+          int cnt=1;
+          for(int i=1;i<n;i++){
               ParticipantReminder participantReminder=new ParticipantReminder();
               Reminder reminder=new Reminder();
               BeanUtils.copyProperties(participantReminderDto,participantReminder);
@@ -154,6 +162,7 @@ public class ParticipantReminderServiceImpl implements ParticipantReminderServic
               ParticipantReminderDto participantReminderDto1=new ParticipantReminderDto();
               BeanUtils.copyProperties(participantReminder,participantReminderDto1);
               BeanUtils.copyProperties(reminder,reminderDto);
+              reminderDto.setReminderId(participantReminder.getReminder().getReminderId());
               participantReminderDto1.setReminderDto(reminderDto);
               listparticipantreminder.add(participantReminderDto1);
               if(i==n-1 && rem>0){

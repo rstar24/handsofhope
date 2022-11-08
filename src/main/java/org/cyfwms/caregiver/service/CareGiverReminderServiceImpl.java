@@ -62,6 +62,14 @@ public class CareGiverReminderServiceImpl implements CareGiverReminderService {
             BeanUtils.copyProperties(careGiverReminderDto, careGiverReminder);
 
         }
+        careGiverReminder.setReminder(reminder);
+        careGiverReminder = careGiverReminderRepository.save(careGiverReminder);
+
+        BeanUtils.copyProperties(careGiverReminder,careGiverReminderDto1);
+        BeanUtils.copyProperties(reminder,reminderDto);
+        careGiverReminderDto1.setReminderDto(reminderDto);
+        careGiverReminderDtoList.add(careGiverReminderDto1);
+
         log.info("Exit SaveCareGiverReminder");
         return careGiverReminderDtoList;
 
@@ -106,8 +114,8 @@ public class CareGiverReminderServiceImpl implements CareGiverReminderService {
 
     public List<CareGiverReminderDto> saveFrequency(int n, int counter, int rem, CareGiverReminderDto careGiverReminderDto) {
         List<CareGiverReminderDto> listcaregiverreminder = new ArrayList<>();
-        int cnt=0;
-        for(int i=0;i<n;i++){
+        int cnt=1;
+        for(int i=1;i<n;i++){
             CareGiverReminder caregiverReminder=new CareGiverReminder();
             Reminder reminder=new Reminder();
             BeanUtils.copyProperties(careGiverReminderDto,caregiverReminder);
@@ -124,6 +132,7 @@ public class CareGiverReminderServiceImpl implements CareGiverReminderService {
             CareGiverReminderDto careGiverReminderDto1=new CareGiverReminderDto();
             BeanUtils.copyProperties(caregiverReminder,careGiverReminderDto1);
             BeanUtils.copyProperties(reminder,reminderDto);
+            reminderDto.setReminderId(caregiverReminder.getReminder().getReminderId());
             careGiverReminderDto1.setReminderDto(reminderDto);
             listcaregiverreminder.add(careGiverReminderDto1);
             if(i==n-1 && rem>0){
