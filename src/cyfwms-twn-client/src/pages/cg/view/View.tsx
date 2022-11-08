@@ -53,7 +53,7 @@ const View = (): ReactElement => {
         }}
       >
         <Typography variant="h5" alignSelf="center">
-          Care Provider: {state.cgCareProvider.getData.id}
+         
         </Typography>
         <Typography>
           <EditIcon
