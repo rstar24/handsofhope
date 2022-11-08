@@ -15,6 +15,7 @@ import CareGiver from "../../../components/cg/view/CareGiver";
 import Capacity from "../../../components/cg/view/Capacity";
 import ContactNotes from "../../../components/cg/view/ContactNotes";
 import Attachments from "../../../components/cg/view/Attachments";
+import Appointment from "../../../components/cg/view/Appointment";
 
 export const styles = {
   header: {
@@ -52,7 +53,7 @@ const View = (): ReactElement => {
         }}
       >
         <Typography variant="h5" alignSelf="center">
-          Care Provider: {state.cgCareProvider.getData.referenceId}
+          Care Provider: {state.cgCareProvider.getData.id}
         </Typography>
         <Typography>
           <EditIcon
@@ -89,7 +90,7 @@ const View = (): ReactElement => {
               onClick={() => navigate("capacity")}
             />
             <Tab
-              label="Caregivers"
+              label="Care Givers"
               value={3}
               onClick={() => navigate("caregivers")}
             />
@@ -103,6 +104,11 @@ const View = (): ReactElement => {
               value={5}
               onClick={() => navigate("attachments")}
             />
+              <Tab
+              label="Appointments"
+              value={6}
+              onClick={() => navigate("appointment")}
+            />
           </Tabs>
         </TabContext.Provider>
       </Box>
@@ -114,6 +120,7 @@ const View = (): ReactElement => {
           <Route path="caregivers" element={<CareGiver />} />
           <Route path="contact_notes" element={<ContactNotes />} />
           <Route path="attachments" element={<Attachments />} />
+          <Route path="appointment" element={<Appointment />} />
         </Routes>
       </Box>
       <Popup children={<Router />} />

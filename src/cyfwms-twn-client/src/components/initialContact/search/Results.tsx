@@ -3,6 +3,7 @@ import { doGet as doGetIncidentReport } from "../../../features/initialContact/i
 import { doGet as doGetPatientCareInformation } from "../../../features/initialContact/patientCareInformation/slice";
 import { doGet as doGetPresentConcerns } from "../../../features/initialContact/presentConcerns/slice";
 import { doGet as doGetReferralInformation } from "../../../features/initialContact/referralInformation/slice";
+import { doSearch as doSearchICAppointment } from "../../../features/initialContact/appointment/slice";
 
 import { setView } from "../../../features/popupSlice";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
@@ -37,6 +38,7 @@ const Results = (): ReactElement => {
     dispatch(doGetIncidentReport(initialContactID));
     dispatch(doGetPresentConcerns(initialContactID));
     dispatch(doGetPatientCareInformation(initialContactID));
+    dispatch(doSearchICAppointment({id:initialContactID,data:""}));
   };
 
   return (

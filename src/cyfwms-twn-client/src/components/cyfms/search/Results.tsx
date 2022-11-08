@@ -6,6 +6,7 @@ import { doGet as doGetEducationAndEmployment } from "../../../features/cyfms/ed
 import { doGet as doGetFamilyPhysicians } from "../../../features/cyfms/familyPhysicians/slice";
 import { doGet as doGetHouseholdMembers } from "../../../features/cyfms/householdMembers/slice";
 import { doGet as doGetOtherInformation } from "../../../features/cyfms/otherInformation/slice";
+import{doSearch as doSearchAppointment} from "../../../features/cyfms/appointment/slice";
 import { setView } from "../../../features/popupSlice";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import EditIcon from "../EditIcon";
@@ -37,6 +38,7 @@ const Results = (): ReactElement => {
     dispatch(doGetHouseholdMembers(id));
     dispatch(doGetFamilyPhysicians(id));
     dispatch(doGetCounselors(id));
+    dispatch(doSearchAppointment({id:id,data:""}));
   };
 
   return (

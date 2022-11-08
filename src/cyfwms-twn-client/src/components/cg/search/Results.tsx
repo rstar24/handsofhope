@@ -3,6 +3,7 @@ import { doGet as doGetCGCapacity } from "../../../features/cg/capacity/slice";
 import { doGet as doGetCGAttachment } from "../../../features/cg/attachments/slice";
 import { doGet as doGetCareGivers } from "../../../features/cg/caregivers/slice";
 import { doGet as doGetContactNotes } from "../../../features/cg/contactNotes/slice";
+import{doSearch as doSearchCGAppointment}  from "../../../features/cg/appointment/slice";
 
 import { setView } from "../../../features/popupSlice";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
@@ -37,6 +38,7 @@ const Results = (): ReactElement => {
     dispatch(doGetContactNotes(id));
     dispatch(doGetCGCapacity(id));
     dispatch(doGetCGAttachment(id));
+    dispatch(doSearchCGAppointment({id:id,data:""}));
   };
 
   return (

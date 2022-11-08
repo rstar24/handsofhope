@@ -385,7 +385,7 @@ public class ParticipantController {
         participantAppointmentService.removeParticipantAppointment(ParticipantAppointmentId);
     }
 
-    @GetMapping(value = { "/searchContactNotes/{participantid}/{data}" }, produces = "application/json")
+    @GetMapping(value = { "/searchParticipantAppointent/{participantid}/{data}" }, produces = "application/json")
     @ApiOperation("Search Participant")
     @ResponseStatus(HttpStatus.OK)
     public List<ParticipantAppointmentSearchResultsDto> searchParticipantAppointment(

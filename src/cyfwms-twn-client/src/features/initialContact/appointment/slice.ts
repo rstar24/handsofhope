@@ -3,6 +3,46 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { SliceCaseReducers } from "@reduxjs/toolkit";
 import type { AxiosResponse } from "axios";
 
+export interface GetData1{
+  icappointmentId:number;
+  fileDetailsId:number;
+  fileDetailsNo:number;
+  appointmentId: number; 
+  subject: string;
+  status: string;
+  date: string;
+  time: string;
+  location: string;
+  duration: string;
+  client: any;
+  caseworker: string;
+  recurringAppointment: string;
+  frequency: string;
+  endDate: string;
+  notes: string;
+
+}
+const emptyGetData1: GetData1={
+  icappointmentId:0,
+  fileDetailsId:0,
+  fileDetailsNo:0,
+  appointmentId: 0, 
+  subject: "",
+  status: "",
+  date: "",
+  time: "",
+  location: "",
+  duration: "",
+  client: "",
+  caseworker: "",
+  recurringAppointment: "",
+  frequency: "",
+  endDate: "",
+  notes: "",
+
+}
+
+
 export interface Data {
  
     icappointmentId:number;
@@ -100,11 +140,13 @@ export interface State {
   disabledFrequency:boolean;
   record: Data[];
   record1:Data[];
+  record2:GetData1[];
   click: boolean;
   clientName: string;
   id: number;
   data: Data;
   getData: GetData;
+  getData1:GetData1;
   status: "failed" | "none" | "loading" | "success";
 }
 
@@ -139,7 +181,7 @@ export const doRemove = createAsyncThunk<Data, number>(
   }
 );
 
-export const doSearch = createAsyncThunk<Data[], any>(
+export const doSearch = createAsyncThunk<GetData1[], any>(
   "initialcontactservice/doSearch",
   async (formData, { getState }) => {
     const store: any = getState();
@@ -164,9 +206,10 @@ export const ICappointmentsSlice = createSlice<State, SliceCaseReducers<State>>(
     click: false,
     record: [],
     record1:[],
+    record2:[],
     data: emptyData,
     getData: emptyGetData,
-
+    getData1:emptyGetData1,
     status: "failed",
   },
   reducers: {
@@ -188,10 +231,12 @@ export const ICappointmentsSlice = createSlice<State, SliceCaseReducers<State>>(
       state.data = emptyData;
       state.record = [];
       state.record1=[];
+      state.record2=[];
       state.status = "none";
       state.click = false;
       state.clientName = "";
       state.getData = emptyGetData;
+      state.getData1=emptyGetData1;
       state.id = 0;
     },
     setClick(state, action) {
@@ -251,7 +296,7 @@ export const ICappointmentsSlice = createSlice<State, SliceCaseReducers<State>>(
       });
     builder
       .addCase(doSearch.fulfilled, (state, action) => {
-        state.record = action.payload;
+        state.record2 = action.payload;
         state.status = "success";
       })
       .addCase(doSearch.pending, (state) => {

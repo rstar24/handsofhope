@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,17 @@ public class ICAppointmentSearchRepo {
                                 rs.getString("subject"),
                                 rs.getString("status"),
                                 rs.getDate("date")!=null?rs.getDate("date").toLocalDate(): LocalDate.of(1,1,1),
-                                rs.getLong("icappointmentId")
+                                rs.getLong("icappointmentId"),
+                                rs.getTime("time")!=null?rs.getTime("time").toLocalTime(): LocalTime.of(1,1,1),
+
+                                rs.getString("location"),
+                                rs.getString("duration"),
+                                rs.getString("client"),
+                                rs.getString("caseworker"),
+                                rs.getString("recurring_appointment"),
+                                rs.getString("frequency"),
+                                rs.getDate("end_date")!=null?rs.getDate("end_date").toLocalDate(): LocalDate.of(1,1,1),
+                                rs.getString("notes")
                         )
         );
     }
@@ -35,7 +46,7 @@ public class ICAppointmentSearchRepo {
         String data=icAppointmentSearchDto.getData();
         Long fileDetailsId = icAppointmentSearchDto.getFileDetailsId();
 
-        querySBuff.append("select p.appointmentid ,p2.filedetailsid,p2.icappointmentid,p.subject ,p.status ,p.date ");
+        querySBuff.append("select p.appointmentid ,p2.filedetailsid,p2.icappointmentid,p.subject ,p.status ,p.date,p.time,p.location,p.duration,p.client,p.caseworker,p.recurring_appointment,p.frequency,p.end_date,p.notes ");
         querySBuff.append("from appointments p left join ic_appointment p2 on p.appointmentid = p2.appointmentid where  p2.status='ACTIVE' ");
 
         if (fileDetailsId != null) {

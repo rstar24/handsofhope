@@ -9,6 +9,7 @@ import PatientCareInformation from "../../../components/initialContact/view/Pati
 import PresentConcerns from "../../../components/initialContact/view/PresentConcerns";
 import ReferralInformation from "../../../components/initialContact/view/ReferralInformation";
 import ContactNotes from "../../../components/initialContact/view/ContactNotes";
+import Appointment from "../../../components/initialContact/view/Appointment";
 import Router from "../../../components/routers/IcRouter";
 import TabContext from "../../../contexts/view/TabContext";
 import { useAppSelector } from "../../../library/hooks";
@@ -17,6 +18,8 @@ import React, { useContext } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import type { ReactElement } from "react";
 import Participants from "../../../components/initialContact/view/Participants";
+
+
 
 export const styles = {
   header: {
@@ -120,6 +123,15 @@ const View = (): ReactElement => {
               value={8}
               onClick={() => navigate("attachments")}
             />
+
+
+             <Tab
+              label="Appointments"
+              value={9}
+              onClick={() => navigate("appointment")}
+
+            />
+
           </Tabs>
         </TabContext.Provider>
       </Box>
@@ -127,19 +139,18 @@ const View = (): ReactElement => {
         <Routes>
           <Route path="*" element={<FileDetails />} />
           <Route path="file_details" element={<FileDetails />} />
-          <Route
-            path="referral_information"
+          <Route path="referral_information"
             element={<ReferralInformation />}
           />
           <Route path="incident_report" element={<IncidentReport />} />
           <Route path="present_concerns" element={<PresentConcerns />} />
-          <Route
-            path="patient_care_information"
-            element={<PatientCareInformation />}
+          <Route path="patient_care_information" element={<PatientCareInformation />}
           />
           <Route path="participants" element={<Participants />} />
           <Route path="contact_notes" element={<ContactNotes />} />
           <Route path="attachments" element={<Attachments />} />
+        
+          <Route path="appointment" element={<Appointment />} />
         </Routes>
       </Box>
       <Popup children={<Router />} />

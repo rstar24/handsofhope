@@ -18,6 +18,7 @@ import { Box, Tab, Tabs, Typography } from "@mui/material";
 import React, { useContext } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import type { ReactElement } from "react";
+import Appointments from "../../../components/cyfms/view/Appointment";
 
 export const styles = {
   panel: {
@@ -182,6 +183,12 @@ const View = (): ReactElement => {
               value={9}
               onClick={() => navigate("attachments")}
             />
+             <Tab
+
+              label="Appointments"
+              value={10}
+              onClick={() => navigate("appointment")}
+            />
           </Tabs>
         </TabContext.Provider>
       </Box>
@@ -200,6 +207,7 @@ const View = (): ReactElement => {
           <Route path="counselors" element={<Counselors />} />
           <Route path="other_information" element={<OtherInformation />} />
           <Route path="attachments" element={<Attachments />} />
+          <Route path="appointment" element={<Appointments />} />
         </Routes>
       </Box>
       <Popup children={<Router />} />

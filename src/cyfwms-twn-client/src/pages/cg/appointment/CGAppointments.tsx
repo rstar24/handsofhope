@@ -31,7 +31,7 @@ function CGAppointments(props: any) {
   const [addNew, setAddNew] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const calendar = useAppSelector((state)=>state.calendarAppointment);
-  const data = useAppSelector((state) => state.cgAppointment.record);
+  const data = useAppSelector((state) => state.cgAppointment.record2);
 
   const [value, setValue] = useState("");
 

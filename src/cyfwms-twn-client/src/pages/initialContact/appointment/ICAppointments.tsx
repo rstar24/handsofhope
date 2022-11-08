@@ -30,7 +30,7 @@ function ICAppointments(props: any) {
   const dispatch = useAppDispatch();
   const [addNew, setAddNew] = useState(false);
   const [disabled, setDisabled] = useState(false);
-  const data = useAppSelector((state) => state.icAppointment.record);
+  const data = useAppSelector((state) => state.icAppointment.record2);
   const calendar = useAppSelector((state)=>state.calendarAppointment)
   const [value, setValue] = useState("");
   useEffect(() => {

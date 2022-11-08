@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 @Repository
@@ -24,7 +25,17 @@ public class ParticipantAppointmentSearchRepository {
                                 rs.getString("subject"),
                                 rs.getString("status"),
                                 rs.getDate("date")!=null?rs.getDate("date").toLocalDate(): LocalDate.of(1,1,1),
-                                rs.getLong("participantappointmentid")
+                                rs.getLong("participantappointmentid"),
+                                rs.getTime("time")!=null?rs.getTime("time").toLocalTime(): LocalTime.of(1,1,1),
+
+                                rs.getString("location"),
+                                rs.getString("duration"),
+                                rs.getString("client"),
+                                rs.getString("caseworker"),
+                                rs.getString("recurring_appointment"),
+                                rs.getString("frequency"),
+                                rs.getDate("end_date")!=null?rs.getDate("end_date").toLocalDate(): LocalDate.of(1,1,1),
+                                rs.getString("notes")
                         )
         );
     }
@@ -34,7 +45,7 @@ public class ParticipantAppointmentSearchRepository {
         String data=searchCriteria.getData();
         Long participantId=searchCriteria.getParticipantId();
 
-        querySBuff.append("select p.appointmentid ,p2.participantid,p2.participantappointmentid,p.subject ,p.status ,p.date ");
+        querySBuff.append("select p.appointmentid ,p2.participantid,p2.participantappointmentid,p.subject ,p.status ,p.date,p.time,p.location,p.duration,p.client,p.caseworker,p.recurring_appointment,p.frequency,p.end_date,p.notes ");
         querySBuff.append("from appointments p left join participant_appointment p2 on p.appointmentid = p2.appointmentid where  p2.status='ACTIVE' ");
 
         if (participantId != null) {
