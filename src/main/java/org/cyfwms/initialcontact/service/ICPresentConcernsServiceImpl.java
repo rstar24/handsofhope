@@ -16,7 +16,7 @@ public class ICPresentConcernsServiceImpl implements ICPresentConcernsService {
 
     @Override
     public ICPresentConcernsDto readPresentConcerns(Long fileDetailsId) {
-        log.info("Inside ReadPresentConcerns");
+        log.info("Inside InitialContact ReadPresentConcerns");
         ICPresentConcernsDto iCPresentConcernsDto = new ICPresentConcernsDto();
         if (fileDetailsId != 0) {
             ICPresentConcerns iCPresentConcerns = iCPresentConcernsRepository.findByFileDetailsId(fileDetailsId);
@@ -24,13 +24,13 @@ public class ICPresentConcernsServiceImpl implements ICPresentConcernsService {
                 BeanUtils.copyProperties(iCPresentConcerns, iCPresentConcernsDto);
             }
         }
-        log.info("Exit ReadPresentConcerns");
+        log.info("Exit InitialContact ReadPresentConcerns");
             return iCPresentConcernsDto;
     }
 
     @Override
     public ICPresentConcernsDto savePresentConcerns(ICPresentConcernsDto iCPresentConcernsDto) {
-        log.info("Inside SavePresentConcerns");
+        log.info("Inside InitialContact SavePresentConcerns");
         ICPresentConcerns iCPresentConcerns = null;
         if(iCPresentConcernsDto.getPresentConcernsId() == 0) {
             iCPresentConcerns = new ICPresentConcerns();
@@ -42,7 +42,7 @@ public class ICPresentConcernsServiceImpl implements ICPresentConcernsService {
         iCPresentConcerns = iCPresentConcernsRepository.save(iCPresentConcerns);
         iCPresentConcernsDto.setFileDetailsId(iCPresentConcerns.getFileDetailsId());
         iCPresentConcernsDto.setPresentConcernsId(iCPresentConcerns.getPresentConcernsId());
-        log.info("Exit SavePresentConcerns");
+        log.info("Exit InitialContact SavePresentConcerns");
         return iCPresentConcernsDto;
     }
 }

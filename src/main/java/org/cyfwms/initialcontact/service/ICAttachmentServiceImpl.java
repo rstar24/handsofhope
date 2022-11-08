@@ -1,6 +1,7 @@
 package org.cyfwms.initialcontact.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.cyfwms.common.entity.Attachment;
 import org.cyfwms.common.exception.I18Constants;
 import org.cyfwms.common.exception.MessageUtil;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 @Service
+@Slf4j
 public class ICAttachmentServiceImpl implements ICAttachmentService {
     @Autowired
     private MessageUtil messageUtil;
@@ -29,6 +31,7 @@ public class ICAttachmentServiceImpl implements ICAttachmentService {
 
     @Override
     public ICAttachmentDTO uploadAttachment(MultipartFile file, String icDto) throws IOException {
+        log.info("Inside UploadAttachment InitialContactAttachment");
         Attachment attachment = null;
         ICAttachmentDTO iCAttachmentDTO = new ObjectMapper().readValue(icDto, ICAttachmentDTO.class);
         ICAttachmentEntity iCAttachmentEntity = new ICAttachmentEntity();
@@ -60,11 +63,13 @@ public class ICAttachmentServiceImpl implements ICAttachmentService {
         iCAttachmentDTO.setIcAttachmentType(attachment.getDocumentType());
         iCAttachmentDTO.setFile(attachment.getAttachmentContents());
         iCAttachmentDTO.setIcAttachmentId(iCAttachmentEntity.getIcAttachmentId());
+        log.info("Exit UploadAttachment InitialContactAttachment");
         return iCAttachmentDTO;
     }
 
     @Override
     public ICAttachmentDTO getOneFile(Long icAttachmentId) {
+        log.info("Inside GetOneFile InitialContactAttachment");
         ICAttachmentDTO iCAttachmentDTO = new ICAttachmentDTO();
         ICAttachmentEntity iCAttachmentEntity = readICAttachment(icAttachmentId);
         iCAttachmentDTO.setIcAttachmentId(iCAttachmentEntity.getIcAttachmentId());
@@ -76,13 +81,14 @@ public class ICAttachmentServiceImpl implements ICAttachmentService {
             iCAttachmentDTO.setFile(iCAttachmentEntity.getAttachment().getAttachmentContents());
             iCAttachmentDTO.setIcAttachmentName(iCAttachmentEntity.getAttachment().getAttachmentName());
         }
+        log.info("Exit GetOneFile InitialContactAttachment");
         return iCAttachmentDTO;
     }
 
     @Override
     public List<ICAttachmentDTO> getAllFiles(Long fileDetailsId) {
+        log.info("Inside GetAllFile InitialContactAttachment");
         List<ICAttachmentDTO> iCAttachmentDtoList = new ArrayList<ICAttachmentDTO>();
-
         iCAttachmentDtoList = icAttachmentRepository.findByFileDetailsId(fileDetailsId)
                 .stream()
                 .map(attachment -> {
@@ -94,26 +100,30 @@ public class ICAttachmentServiceImpl implements ICAttachmentService {
                     }
                     return attachDto;
                 }).collect(Collectors.toList());
+        log.info("Exit GetAllFile InitialContactAttachment");
         return iCAttachmentDtoList;
     }
 
     @Override
     public void removeICAttachment(Long icAttachmentId) {
+        log.info("Inside RemoveICAttachment InitialContactAttachment");
         ICAttachmentEntity iCAttachmentEntity = readICAttachment(icAttachmentId);
         iCAttachmentEntity.setStatus("INACTIVE");
         icAttachmentRepository.save(iCAttachmentEntity);
-
+        log.info("Exit RemoveICAttachment InitialContactAttachment");
     }
 
     private ICAttachmentEntity readICAttachment(long icAttachmentId) {
+        log.info("Inside ReadICAttachment InitialContactAttachment");
         ICAttachmentEntity iCAttachmentEntity = icAttachmentRepository.findById(icAttachmentId).filter(p -> p.getStatus().equals("ACTIVE")).orElseThrow(() ->
                 new NoSuchElementFoundException(messageUtil.getLocalMessage(I18Constants.NO_ITEM_FOUND.getKey(), String.valueOf(icAttachmentId))));
-        ;
+        log.info("Exit ReadICAttachment InitialContactAttachment");
         return iCAttachmentEntity;
     }
 
 
     private void validateICAttachment(MultipartFile file) {
+        log.info("Inside ValidateICAttachment InitialContactAttachment");
         boolean invalidIcAttachment = true;
 
         if (file.getContentType().equals("image/png") ||
@@ -129,5 +139,6 @@ public class ICAttachmentServiceImpl implements ICAttachmentService {
             throw new ResponseStatusException(
                     INTERNAL_SERVER_ERROR, " PNG DOCUMENT JPG PDF SHEET BMP AND GIF content type are allowed");
         }
+        log.info("Exit ValidateICAttachment InitialContactAttachment");
     }
 }

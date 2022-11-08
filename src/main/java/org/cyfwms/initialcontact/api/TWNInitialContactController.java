@@ -162,6 +162,7 @@ public class TWNInitialContactController {
                 ("null".equals(var.get("data"))
                         || var.get("data") == null) ? null : var.get("data"));
         log.info("SearchICContactNotes " + iCContactNotesSearchCriteriaDto);
+        log.info("Search InitialContact :"+iCContactNotesSearchCriteriaDto);
         return iCContactNotesSearchService.search(iCContactNotesSearchCriteriaDto);
     }
 
@@ -178,6 +179,7 @@ public class TWNInitialContactController {
     @ApiOperation("Read ICParticipant")
     @ResponseStatus(HttpStatus.OK)
     public ICParticipantDto readICParticipant(@PathVariable("icparticipantid") Long icParticipantId) {
+        log.info("Read ICParticipant By ICParticipantId :"+icParticipantId);
         return icParticipantService.readICParticipant(icParticipantId);
     }
 
@@ -203,7 +205,7 @@ public class TWNInitialContactController {
     @ApiOperation("save or update ICReminder")
     @ResponseStatus(HttpStatus.OK)
     public List<ICReminderDto> saveICReminder(@RequestBody ICReminderDto icReminderDto) {
-        log.info("SaveICReminder " + icReminderDto);
+        log.info("SaveICReminder :" + icReminderDto);
         return icReminderService.saveICReminder(icReminderDto);
     }
 
@@ -234,6 +236,7 @@ public class TWNInitialContactController {
         iCSearchReminderDto.setData(
                 ("null".equals(var.get("data"))
                         || var.get("data") == null) ? null : var.get("data"));
+        log.info("Search CareGiver Reminder :"+iCSearchReminderDto);
         return iCSearchReminderService.searchICReminder(iCSearchReminderDto);
     }
 
@@ -245,12 +248,14 @@ public class TWNInitialContactController {
         iCParticipantSearchCriteriaDto.setData(
                 ("null".equals(var.get("data"))
                         || var.get("data") == null) ? null : var.get("data"));
+        log.info("Search ICParticipant :"+iCParticipantSearchCriteriaDto);
         return icParticipantSearchService.searchICParticipant(iCParticipantSearchCriteriaDto);
     }
     @PutMapping(value = "/saveICAppointment", produces = "application/json")
     @ApiOperation("Save or Update InitialContact Appointment Informtion")
     @ResponseStatus(HttpStatus.CREATED)
     public List<ICAppointmentDto> saveParticipantAppointment(@RequestBody ICAppointmentDto  icAppointmentDto) {
+        log.info("Save or Update InitialContact Appointment Informtion :"+icAppointmentDto);
         return icAppointmentService.saveICAppointment(icAppointmentDto);
 
     }
@@ -258,13 +263,14 @@ public class TWNInitialContactController {
     @ApiOperation("Remove Counselor CFS Workers")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void removeParticipantAppointment(@PathVariable("ICAppointmentId") Long ICAppointmentId) {
+        log.info("Remove Counselor CFS Workers "+ICAppointmentId);
         icAppointmentService.removeICAppointment(ICAppointmentId);
     }
     @GetMapping(value = "/readOneAppointment/{ICAppointmentId}", produces = "application/json")
     @ApiOperation("Read ContactNotes")
     @ResponseStatus(HttpStatus.OK)
     public ICAppointmentDto readOneAppointment(@PathVariable("ICAppointmentId") Long ICAppointmentId) {
-
+        log.info("Read ContactNotes By ICAppointmentId :"+ICAppointmentId);
         return icAppointmentService.readOneAppointment(ICAppointmentId);
     }
     @GetMapping(value = {"/searchICAppointment/{fileDetailsId}/{data}"},produces = "application/json")
@@ -278,6 +284,7 @@ public class TWNInitialContactController {
         icAppointmentSearchDto.setData(
                 ("null".equals(var.get("data"))
                         || var.get("data") == null) ?null:var.get("data"));
+        log.info("Search Participant :"+icAppointmentSearchDto);
         return icAppointmentSearchService.searchICAppointment(icAppointmentSearchDto);
     }
 

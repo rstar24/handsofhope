@@ -27,7 +27,7 @@ public class ICPatientCareInfoServiceImpl implements ICPatientCareInfoService {
 
     @Override
     public ICPatientCareInfoDto readAllPatientCareInfo(Long fileDetailsId) {
-        log.info("Inside ReadAllPatientCareInfo");
+        log.info("Inside InitialContact ReadAllPatientCareInfo");
         ICPatientCareInfoDto iCPatientCareInfoDto = new ICPatientCareInfoDto();
         if (fileDetailsId != 0) {
             ICPatientCareInfo iCPatientCareInfo = iCPatientCareInfoRepository.findByFileDetailsId(fileDetailsId);
@@ -35,13 +35,13 @@ public class ICPatientCareInfoServiceImpl implements ICPatientCareInfoService {
                 BeanUtils.copyProperties(iCPatientCareInfo, iCPatientCareInfoDto);
             }
         }
-        log.info("Exit ReadAllPatientCareInfo");
+        log.info("Exit InitialContact ReadAllPatientCareInfo");
             return iCPatientCareInfoDto;
     }
 
     @Override
     public ICPatientCareInfoDto saveAllPatientCareInfo(ICPatientCareInfoDto iCPatientCareInfoDto) {
-        log.info("Inside SaveAllPatientCareInfo");
+        log.info("Inside InitialContact SaveAllPatientCareInfo");
         ICPatientCareInfo iCPatientCareInfo=null;
         if(iCPatientCareInfoDto.getPatientCareInfoId()==0) {
             iCPatientCareInfo = new ICPatientCareInfo();
@@ -91,7 +91,7 @@ public class ICPatientCareInfoServiceImpl implements ICPatientCareInfoService {
             iCPatientCareInfoDto.getInpatient().setInpatientId(iCPatientCareInfo.getInpatient().getInpatientId());
             iCPatientCareInfoDto.getInpatient().setPatientCareInfoId(iCPatientCareInfo.getInpatient().getPatientCareInfoId());
         }
-        log.info("Exit SaveAllPatientCareInfo");
+        log.info("Exit InitialContact SaveAllPatientCareInfo");
         return iCPatientCareInfoDto;
     }
 }

@@ -90,12 +90,14 @@ public class InitialContactController {
     public ResponseEntity<ICAttachmentDTO> saveOne(@RequestParam(value = "file", required = false) MultipartFile file,
             @RequestParam("icDto") String icDto) throws IOException {
         ICAttachmentDTO iCAttachmentDTO = icAttachmentService.uploadAttachment(file, icDto);
+        log.info("Save/Upload/Put One/Single Attachment in Initial Contact :"+iCAttachmentDTO);
         return ResponseEntity.ok(iCAttachmentDTO);
     }
 
     @ApiOperation("Read/Get one/single attachment.")
     @GetMapping("/attachments/read_one/{icattchmentid}")
     public ICAttachmentDTO readOne(@PathVariable("icattchmentid") Long icAttachmentId) {
+        log.info("Read/Get One/Single Attachment by ICAttachmentId"+icAttachmentId);
         return icAttachmentService.getOneFile(icAttachmentId);
     }
 
@@ -103,6 +105,7 @@ public class InitialContactController {
     @GetMapping(value = "/attachments/read_all/{filedetailsid}", produces = "application/json")
     @ResponseStatus(OK)
     public List<ICAttachmentDTO> readAll(@PathVariable("filedetailsid") Long fileDetailsId) {
+        log.info("Read/Get All Attachments :"+fileDetailsId);
         return icAttachmentService.getAllFiles(fileDetailsId);
     }
 
@@ -111,6 +114,7 @@ public class InitialContactController {
     @ApiOperation("Soft remove/delete one/single attachment.")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void removeICAttachment(@PathVariable("icattchmentid") Long icAttachmentId) {
+        log.info("Soft Remove/Delete One/Single Attachment By ICAttachmentID :"+icAttachmentId);
         icAttachmentService.removeICAttachment(icAttachmentId);
     }
 }

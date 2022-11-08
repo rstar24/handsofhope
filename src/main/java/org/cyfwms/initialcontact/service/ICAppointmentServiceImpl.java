@@ -43,7 +43,7 @@ public class ICAppointmentServiceImpl implements ICAppointmentService {
 
     @Override
     public List<ICAppointmentDto> saveICAppointment(ICAppointmentDto icAppointmentDto) {
-
+        log.info("Inside SaveICAppointment InitialContactAppointment");
         Appointments appointments = null;
         ICAppointment icAppointment = new ICAppointment();
         List<ICAppointmentDto>listicappointment = new ArrayList<>();
@@ -76,7 +76,7 @@ public class ICAppointmentServiceImpl implements ICAppointmentService {
         BeanUtils.copyProperties(appointments,appointmentDto);
         icAppointmentDto1.setAppointmentDto(appointmentDto);
         listicappointment.add(icAppointmentDto1);
-
+        log.info("Exit SaveICAppointment InitialContactAppointment");
         return listicappointment;
     }
 
@@ -153,6 +153,7 @@ public class ICAppointmentServiceImpl implements ICAppointmentService {
     }
     @Override
     public List<ICAppointmentDto> readAllICAppointment(Long fileDetailsId)  {
+        log.info("Inside ReadAllICAppointment InitialContactAppointment");
         List<ICAppointmentDto> participantAppointmentDto = new ArrayList<>();
         participantAppointmentDto = icAppointmentRepository.findByfileDetailsIdId(fileDetailsId).stream().map(a -> {
             AppointmentDto appointmentDto = new AppointmentDto();
@@ -162,11 +163,13 @@ public class ICAppointmentServiceImpl implements ICAppointmentService {
             icAppointmentDto.setAppointmentDto(appointmentDto);
             return icAppointmentDto;
         }).collect(Collectors.toList());
+        log.info("Exit ReadAllICAppointment InitialContactAppointment");
         return participantAppointmentDto;
     }
 
     @Override
     public void removeICAppointment(Long ICAppointmentId) {
+        log.info("Inside RemoveICAppointment InitialContactAppointment");
         ICAppointment icAppointment = icAppointmentRepository.findById(ICAppointmentId).orElseThrow(()->new NoSuchElementFoundException(
                 messageUtil.getLocalMessage(I18Constants.NO_ITEM_FOUND.getKey(),
                         String.valueOf(ICAppointmentId))));
@@ -178,13 +181,14 @@ public class ICAppointmentServiceImpl implements ICAppointmentService {
             icAppointment.setStatus("INACTIVE");
             icAppointment.getAppointments().setAppointmentStatus("INACTIVE");
             icAppointmentRepository.save(icAppointment);
-            log.info("Execute RemoveIcAppointment");
+            log.info("Exit RemoveIcAppointment InitialContactAppointment");
 
 
     }
 
     @Override
     public ICAppointmentDto readOneAppointment(Long ICAppontmentId) {
+        log.info("Inside ReadOneAppointment InitialContactAppointment");
         ICAppointmentDto icAppointmentDto = new ICAppointmentDto();
         AppointmentDto appointmentDto = new AppointmentDto();
         if (ICAppontmentId != 0) {
@@ -210,6 +214,7 @@ public class ICAppointmentServiceImpl implements ICAppointmentService {
                 }
             }
         }
+        log.info("Exit ReadOneAppointment InitialContactAppointment");
         return icAppointmentDto;
 
     }

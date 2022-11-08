@@ -16,7 +16,7 @@ public class ICReferralInfoServiceImpl implements ICReferralInfoService {
 
     @Override
     public ICReferralInfoDto readAllReferralInfo(Long fileDetailsId) {
-        log.info("Inside ReadAllReferralInfo");
+        log.info("Inside InitialContact ReadAllReferralInfo");
         ICReferralInfoDto iCReferralInfoDto = new ICReferralInfoDto();
         if (fileDetailsId != 0) {
             ICReferralInfo iCReferralInfo = iCReferralInfoRepository.findByFileDetailsId(fileDetailsId);
@@ -24,13 +24,13 @@ public class ICReferralInfoServiceImpl implements ICReferralInfoService {
                 BeanUtils.copyProperties(iCReferralInfo, iCReferralInfoDto);
             }
         }
-        log.info("Exit ReadAllReferralInfo");
+        log.info("Exit InitialContact ReadAllReferralInfo");
             return iCReferralInfoDto;
     }
 
     @Override
     public ICReferralInfoDto saveAllReferralInfo(ICReferralInfoDto iCReferralInfoDto) {
-        log.info("Inside SaveAllReferralInfo");
+        log.info("Inside InitialContact SaveAllReferralInfo");
         ICReferralInfo iCReferralInfo = null;
         if (iCReferralInfoDto.getReferralInfoId() == 0) {
             iCReferralInfo = new ICReferralInfo();
@@ -42,7 +42,7 @@ public class ICReferralInfoServiceImpl implements ICReferralInfoService {
         iCReferralInfo = iCReferralInfoRepository.save(iCReferralInfo);
         iCReferralInfoDto.setFileDetailsId(iCReferralInfo.getFileDetailsId());
         iCReferralInfoDto.setReferralInfoId(iCReferralInfo.getReferralInfoId());
-        log.info("Exit SaveAllReferralInfo");
+        log.info("Exit InitialContact SaveAllReferralInfo");
         return iCReferralInfoDto;
     }
 }

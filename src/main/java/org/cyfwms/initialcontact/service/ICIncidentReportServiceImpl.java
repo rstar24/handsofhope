@@ -18,7 +18,7 @@ public class ICIncidentReportServiceImpl implements ICIncidentReportService {
 
     @Override
     public ICIncidentReportDto readAllIncidentReports(Long fileDetailsID) {
-        log.info("Inside ReadAllIncidentReports");
+        log.info("Inside InitialContact ReadAllIncidentReports");
         ICIncidentReportDto iCIncidentReportDto = new ICIncidentReportDto();
         if (fileDetailsID != 0) {
 
@@ -37,7 +37,7 @@ public class ICIncidentReportServiceImpl implements ICIncidentReportService {
             }
 
         }
-        log.info("Exit ReadAllIncidentReports");
+        log.info("Exit InitialContact ReadAllIncidentReports");
             return iCIncidentReportDto;
 
 
@@ -45,7 +45,7 @@ public class ICIncidentReportServiceImpl implements ICIncidentReportService {
 
     @Override
     public ICIncidentReportDto saveAllIncidentReports(ICIncidentReportDto iCIncidentReportDto) {
-        log.info("Inside SaveAllIncidentReports");
+        log.info("Inside InitialContact SaveAllIncidentReports");
         ICtIncidentReport iCtIncidentReport = null;
         if (iCIncidentReportDto.getIncidentReportId() == 0) {
             iCtIncidentReport = new ICtIncidentReport();
@@ -57,7 +57,7 @@ public class ICIncidentReportServiceImpl implements ICIncidentReportService {
         iCtIncidentReport = iCIncidentReportRepository.save(iCtIncidentReport);
         iCIncidentReportDto.setFileDetailsId(iCtIncidentReport.getFileDetailsId());
         iCIncidentReportDto.setIncidentReportId(iCtIncidentReport.getIncidentReportId());
-        log.info("Exit SaveAllIncidentReports");
+        log.info("Exit InitialContact SaveAllIncidentReports");
         return iCIncidentReportDto;
     }
 }

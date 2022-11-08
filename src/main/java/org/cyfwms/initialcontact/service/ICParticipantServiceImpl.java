@@ -21,7 +21,7 @@ public class ICParticipantServiceImpl implements ICParticipantService {
 
     @Override
     public ICParticipantDto saveICParticipant(ICParticipantDto iCParticipantDto) {
-        log.info("Inside SaveICParticipant");
+        log.info("Inside InitialContact SaveICParticipant");
         ICParticipant iCParticipant = null;
         if (iCParticipantDto.getIcParticipantId() == 0) {
             iCParticipant = new ICParticipant();
@@ -33,7 +33,7 @@ public class ICParticipantServiceImpl implements ICParticipantService {
         }
         iCParticipant = icParticipantRepository.save(iCParticipant);
         iCParticipantDto.setIcParticipantId(iCParticipant.getIcParticipantId());
-        log.info("Exit SaveICParticipant");
+        log.info("Exit InitialContact SaveICParticipant");
         return iCParticipantDto;
     }
 
@@ -41,7 +41,7 @@ public class ICParticipantServiceImpl implements ICParticipantService {
     public ICParticipantDto readICParticipant(Long icParticipantId) {
 
 
-        log.info("Inside ReadICParticipant");
+        log.info("Inside InitialContact ReadICParticipant");
         ICParticipantDto iCParticipantDto = new ICParticipantDto();
         if (icParticipantId != 0) {
             Optional<ICParticipant> iCParticipant = icParticipantRepository.findById(icParticipantId)
@@ -56,19 +56,19 @@ public class ICParticipantServiceImpl implements ICParticipantService {
                 }
             }
         }
-        log.info("Exit ReadICParticipant");
+        log.info("Exit InitialContact ReadICParticipant");
         return iCParticipantDto;
     }
 
     @Override
     public void removeICParticipant(Long icParticipantId) {
-        log.info("Inside RemoveICParticipant");
+        log.info("Inside InitialContact RemoveICParticipant");
         Optional<ICParticipant> iCParticipantOpt = icParticipantRepository.findById(icParticipantId);
         if (iCParticipantOpt.isPresent()) {
             ICParticipant iCParticipant = iCParticipantOpt.get();
             iCParticipant.setStatus("INACTIVE");
             icParticipantRepository.save(iCParticipant);
-            log.info("Exit RemoveICParticipant");
+            log.info("Exit InitialContact RemoveICParticipant");
         }
     }
 }

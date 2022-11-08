@@ -27,7 +27,7 @@ public class ICCommonDataServiceImpl implements ICCommonDataService {
     ICContactNotesRepository icContactNotesRepository;
     @Override
     public ICCommonDataDto iCCommonData(Long fileNumber) {
-        log.info("Inside ICCommonData");
+        log.info("Inside ICCommonData InitialContact");
         ICCommonDataDto iCCommonDataDto = new ICCommonDataDto();
         if (fileNumber!=0) {
             ICFileDetails iCFileDetails = readFileNumber(fileNumber);
@@ -70,20 +70,20 @@ public class ICCommonDataServiceImpl implements ICCommonDataService {
                 }
             }
         }
-        log.info("Exit ICCommonData");
+        log.info("Exit ICCommonData InitialContact");
             return iCCommonDataDto;
 
 
     }
 
     private ICFileDetails readFileNumber(Long fileNumber) {
-        log.info("Inside ReadFileNumber");
+        log.info("Inside ReadFileNumber InitialContact");
         ICFileDetails iCFileDetails = null;
         Optional<ICFileDetails> iCFileDetailsOpt = iCFileDetailsRepository.findByFileNumber(fileNumber);
         if (iCFileDetailsOpt.isPresent()) {
             iCFileDetails = iCFileDetailsOpt.get();
         }
-        log.info("Exit ReadFileNumber");
+        log.info("Exit ReadFileNumber InitialContact");
         return iCFileDetails;
     }
 }

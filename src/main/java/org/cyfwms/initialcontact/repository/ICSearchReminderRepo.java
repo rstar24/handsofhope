@@ -1,5 +1,6 @@
 package org.cyfwms.initialcontact.repository;
 
+import lombok.extern.slf4j.Slf4j;
 import org.cyfwms.initialcontact.dto.ICSearchReminderDto;
 import org.cyfwms.initialcontact.dto.ICSearchReminderResultDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +10,13 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
+@Slf4j
 @Repository
 public class ICSearchReminderRepo {
     @Autowired
     private JdbcTemplate jdbcTemplate;
     public List<ICSearchReminderResultDto> searchICReminder(ICSearchReminderDto iCSearchReminderDto) {
+        log.info("Inside InitialContact SearchICReminder");
         List<Object> argsObjectList = new ArrayList<>();
         StringBuffer querySBuff = createSearchQuery(iCSearchReminderDto, argsObjectList);
         return jdbcTemplate.query(querySBuff.toString(), argsObjectList.toArray(),
@@ -71,6 +73,7 @@ public class ICSearchReminderRepo {
             querySBuff.append(" AND p2.filedetailsid = ? ORDER BY p2.creationdatetime desc ");
             argsObjectList.add(fileDetailsId);
         }
+        log.info("Exit InitialContact SearchICReminder");
         return querySBuff;
     }
 

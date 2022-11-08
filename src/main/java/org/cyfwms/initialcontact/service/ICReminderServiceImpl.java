@@ -43,7 +43,7 @@ public class ICReminderServiceImpl implements ICReminderService {
 
     @Override
     public List<ICReminderDto> saveICReminder(ICReminderDto icReminderDto) {
-        log.info("Inside SaveICtReminder");
+        log.info("Inside InitialContact SaveICtReminder");
         Reminder reminder = null;
         ReminderDto reminderDto=new ReminderDto();
         ICReminderDto icReminderDto1=new ICReminderDto();
@@ -72,7 +72,7 @@ public class ICReminderServiceImpl implements ICReminderService {
         BeanUtils.copyProperties(reminder,reminderDto);
         icReminderDto1.setReminderDto(reminderDto);
         icReminderDtoList.add(icReminderDto1);
-        log.info("Exit SaveICReminder");
+        log.info("Exit InitialContact SaveICReminder");
         return icReminderDtoList;
     }
 
@@ -141,12 +141,12 @@ public class ICReminderServiceImpl implements ICReminderService {
             }
             cnt=cnt+counter;
         }
-        log.info("Exit SaveICReminder");
         return iCReminderDtoList;
     }
 
     @Override
     public ICReminderDto readICReminder(Long icReminderId) {
+        log.info("Inside InitialContact ReadICReminder");
         ICReminderDto icReminderDto = new ICReminderDto();
         ReminderDto reminderDto = new ReminderDto();
         if (icReminderId != 0) {
@@ -167,12 +167,14 @@ public class ICReminderServiceImpl implements ICReminderService {
                 }
             }
         }
+        log.info("Exit InitialContact ReadICReminder");
         return icReminderDto;
 
     }
 
     @Override
     public List<ICReminderDto> readAllICReminder(Long fileDetailsId) {
+        log.info("Inside InitialContact ReadAllICReminder");
         List<ICReminderDto> icReminderDtoList = new ArrayList<>();
         icReminderDtoList = icReminderRepository.findByFileDetailsId(fileDetailsId).stream().map(a -> {
             ReminderDto reminderDto = new ReminderDto();
@@ -182,12 +184,13 @@ public class ICReminderServiceImpl implements ICReminderService {
             icReminderDto.setReminderDto(reminderDto);
             return icReminderDto;
         }).collect(Collectors.toList());
+        log.info("Exit InitialContact ReadAllICReminder");
         return icReminderDtoList;
     }
 
     @Override
     public void removeICReminder(Long icReminderId) {
-        log.info("Inside RemoveICReminder");
+        log.info("Inside InitialContact RemoveICReminder");
         ICReminder icReminder =
                 icReminderRepository.findById(icReminderId)
                         .orElseThrow(() -> new NoSuchElementFoundException(
@@ -202,7 +205,7 @@ public class ICReminderServiceImpl implements ICReminderService {
         icReminder.setStatusOfDeletion("INACTIVE");
         icReminder.getReminder().setStatusOfDeletion("INACTIVE");
         icReminderRepository.save(icReminder);
-        log.info("Exit RemoveICReminder");
+        log.info("Exit InitialContact RemoveICReminder");
     }
 
 }

@@ -28,7 +28,7 @@ public class ICFileDetailsServiceImpl implements ICFileDetailsService {
 
     @Override
     public ICFileDetailsDto readAllFileDetails(Long fileDetailsID) {
-        log.info("Inside ReadAllFileDetails");
+        log.info("Inside ReadAllFileDetails InitialContact");
         ICFileDetailsDto iCFileDetailsDto = new ICFileDetailsDto();
         if (fileDetailsID != 0) {
             ICFileDetails iCFileDetails = fileDetailsRepo.findById(
@@ -49,13 +49,13 @@ public class ICFileDetailsServiceImpl implements ICFileDetailsService {
 
             }
         }
-        log.info("Exit ReadAllFileDetails");
+        log.info("Exit ReadAllFileDetails InitialContact");
             return iCFileDetailsDto;
     }
 
     @Override
     public ICFileDetailsDto saveAllFileDetails(ICFileDetailsDto iCFileDetailsDto) {
-        log.info("Inside SaveAllFileDetails");
+        log.info("Inside SaveAllFileDetails InitialContact");
         ICFileDetails iCFileDetails = null;
         if (iCFileDetailsDto.getFileDetailsId() == 0) {
             iCFileDetails = new ICFileDetails();
@@ -75,19 +75,19 @@ public class ICFileDetailsServiceImpl implements ICFileDetailsService {
         iCFileDetails = fileDetailsRepo.save(iCFileDetails);
         iCFileDetailsDto.setFileDetailsId(iCFileDetails.getFileDetailsId());
         iCFileDetailsDto.setFileNumber(iCFileDetails.getFileNumber());
-        log.info("Exit SaveAllFileDetails");
+        log.info("Exit SaveAllFileDetails InitialContact");
         return iCFileDetailsDto;
     }
 
     @Override
     public void removeICFileDetails(Long fileNumber) {
-        log.info("Inside RemoveICFileDetails");
+        log.info("Inside RemoveICFileDetails InitialContact");
         Optional<ICFileDetails> iCFileDetailsOpt = fileDetailsRepo.findByFileNumber(fileNumber);
         if(iCFileDetailsOpt.isPresent()){
             ICFileDetails iCFileDetails = iCFileDetailsOpt.get();
             iCFileDetails.setStatusOfDeletion("INACTIVE");
             fileDetailsRepo.save(iCFileDetails);
-            log.info("Exit RemoveICFileDetails");
+            log.info("Exit RemoveICFileDetails InitialContact");
         }
     }
 }
