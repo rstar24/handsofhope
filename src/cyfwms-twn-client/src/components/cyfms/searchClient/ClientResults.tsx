@@ -23,6 +23,7 @@ import{setCyfmsAppointmentClientName,setCyfmsAppointmentParticipantId}from "../.
 import {setICAppointmentClientName,setICAppointmentParticipantId} from "../../../features/initialContact/appointment/slice";
 import {setCGAppointmentClientName,setCGAppointmentParticipantId} from "../../../features/cg/appointment/slice";
 import { setCgReminderClientName,setCgReminderParticipantId } from "../../../features/cg/reminders/slice";
+import { setCyfmsReminderClientName,setCyfmsReminderParticipantId } from "../../../features/cyfms/reminders/slice";
 const ClientResults = ({ setClick, moduleName ,searchId}: any): ReactElement => {
   const dispatch = useAppDispatch();
   const data = useAppSelector((state) => state.cyfmsSearch.data);
@@ -60,6 +61,15 @@ const ClientResults = ({ setClick, moduleName ,searchId}: any): ReactElement => 
         )
       );
       dispatch(setCyfmsAppointmentParticipantId(participant.participantId));
+      setClick(false);
+    }
+    else if (moduleName === "cyfmsReminder" && searchId==="cyfmsReminderId") {
+      dispatch(
+        setCyfmsReminderClientName(
+          `${participant.firstname}${" "}${participant.surname}`
+        )
+      );
+      dispatch(setCyfmsReminderParticipantId(participant.participantId));
       setClick(false);
     }
     else if (moduleName === "icAppointment" && searchId==="icparticipantId") {

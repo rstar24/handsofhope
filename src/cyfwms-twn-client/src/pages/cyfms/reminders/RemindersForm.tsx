@@ -7,13 +7,14 @@ import {
 } from "../../../features/cyfms/reminders/slice";
 import { onKeyDown } from "../../../library/app";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
-import { Box, Typography } from "@mui/material";
+import { Box, FormLabel, OutlinedInput, Typography } from "@mui/material";
 import React, { useState } from "react";
 import type { FormEvent } from "react";
 import EditIcon from "./EditIcon";
 import Input from "../../../components/Input";
 import CYFMSDropdown from "../../../components/cyfms/CYFMSDropdown";
-
+import SearchClientName from "../../../components/cyfms/searchClient/SearchClientName";
+import SearchIcon from "@mui/icons-material/Search";
 const RemindersForm = ({
   setAddNew,
   setDisabled,
@@ -27,8 +28,14 @@ const RemindersForm = ({
   const state = useAppSelector((state) => state.cyfmsRegister);
   const data = useAppSelector((state) => state.cyfmsReminders.data);
   const [click, setClick] = useState(false);
+  const { id, clientName } = useAppSelector((state) => state.cyfmsReminders);
+  const handleSearch = () => {
+    console.log("click search");
+    setClick(true);
+  };
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
+    if(!click){
     const form = e.currentTarget as HTMLFormElement;
     const formData: Data = {
       participantReminderId: data.participantReminderId,
@@ -36,18 +43,19 @@ const RemindersForm = ({
       reminderDto: {
         reminderId: data.reminderDto.reminderId,
         assignedTo: form.assignedTo.value,
-        regarding: form.regarding.value,
+        regarding: id,
         subject: form.subject.value,
         status: form.status.value,
         reminderDate: form.reminderDate.value,
         endDate: form.endDate.value,
         description: form.description.value,
         frequency: form.frequency.value,
-      },
+      },  
     };
     dispatch(doPost(formData))
       .unwrap()
       .then(() => {
+       
         console.log("CyfmsReminders POST backend API was successful!");
         dispatch(doSearch({ id: state.data.participantId, data: "" }));
         setAddNew(false);
@@ -56,6 +64,7 @@ const RemindersForm = ({
         console.log("CyfmsReminders POST backend API didn't work!");
         console.log(err);
       });
+    }
   };
 
   return (
@@ -94,6 +103,7 @@ const RemindersForm = ({
               type="date"
               autofill={data.reminderDto.reminderDate}
               readOnly={disabled}
+              required
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
@@ -108,13 +118,31 @@ const RemindersForm = ({
 
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <Input
-              id="regarding"
-              value="Regarding"
-              autofill={data.reminderDto.regarding}
-              readOnly={disabled}
-              required
-            />
+          <FormLabel
+            sx={{
+              p: 1,
+              marginRight: "44px",
+              flexBasis: 0,
+              flexGrow: 1.3,
+              color: "black",
+            }}
+          >
+            Regarding
+          </FormLabel>
+
+          <OutlinedInput
+            sx={{
+              borderRadius: 0,
+
+              flexBasis: 0,
+
+              flexGrow: 1.2,
+            }}
+            size="small"
+            value={clientName}
+            style={{ backgroundColor: "#dfdada" }}
+            endAdornment={<SearchIcon onClick={handleSearch} />}
+          />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <Input
@@ -166,6 +194,7 @@ const RemindersForm = ({
               optionsList={Object.values(frequency).map(
                 (status: any) => status.en
               )}
+              required
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
@@ -173,10 +202,19 @@ const RemindersForm = ({
               id="endDate"
               value="End Date"
               type="date"
-              //autofill={data.reminderDto.endDate}
+              autofill={data.reminderDto.endDate}
               readOnly={disabled}
+              required
             />
           </Box>
+          {click && (
+          <SearchClientName
+            click={click}
+            setClick={setClick}
+            moduleName="cyfmsReminder"
+            searchId="cyfmsReminderId"
+          />
+        )}
         </Box>
         <Box sx={{ display: "flex", justifyContent: "right" }}>
           <CYFSWMSNextButton disabled={disabled} />

@@ -223,6 +223,7 @@ const RemindersForm = ({
             type="date"
             autofill={data.reminderDto.endDate}
             readOnly={disabled}
+            required
           />
         </Box>
         {click && (

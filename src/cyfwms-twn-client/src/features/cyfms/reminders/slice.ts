@@ -1,31 +1,45 @@
-import { doGetAPI, doPostAPI, doSearchAPI, doRemoveAPI} from "./api";
+import { doGetAPI, doPostAPI, doSearchAPI, doRemoveAPI } from "./api";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { SliceCaseReducers } from "@reduxjs/toolkit";
 import type { AxiosResponse } from "axios";
 
 export interface Data {
-  participantId:number;
+  participantId: number;
 
-  participantReminderId:number;
-  reminderDto:{
+  participantReminderId: number;
+  reminderDto: {
     reminderId: number;
     assignedTo: string;
-    regarding: string;
+    regarding: any;
     subject: string;
     status: string;
     reminderDate: string;
     endDate: string;
     description: string;
     frequency: string;
-  }
- 
+  };
 }
-
-// Empty Data
-const emptyData: Data = {
+export interface GetData {
+  participantId: number;
+  id: number;
+  participantReminderId: number;
+  reminderDto: {
+    reminderId: number;
+    assignedTo: string;
+    regarding: any;
+    subject: string;
+    status: string;
+    reminderDate: string;
+    endDate: string;
+    description: string;
+    frequency: string;
+  };
+}
+const emptyGetData: GetData = {
   participantId: 0,
-  participantReminderId:0,
-  reminderDto:{
+  id: 0,
+  participantReminderId: 0,
+  reminderDto: {
     reminderId: 0,
     assignedTo: "",
     regarding: "",
@@ -35,51 +49,70 @@ const emptyData: Data = {
     endDate: "",
     description: "",
     frequency: "",
-  }
+  },
+};
+
+// Empty Data
+const emptyData: Data = {
+  participantId: 0,
+  participantReminderId: 0,
+  reminderDto: {
+    reminderId: 0,
+    assignedTo: "",
+    regarding: "",
+    subject: "",
+    status: "",
+    reminderDate: "",
+    endDate: "",
+    description: "",
+    frequency: "",
+  },
 };
 
 export interface State {
   data: Data;
-  
+  click: boolean;
+  clientName: string;
+  id: number;
   record: Data[];
+  record1: Data[];
+  getData: GetData;
   status: "failed" | "none" | "loading" | "success";
 }
 
 export const doGet = createAsyncThunk<Data, number>(
-  "participantservice/doGet",
+  "participantserviceReminder/doGet",
   async (participantReminderId, { getState }) => {
     const store: any = getState();
-    const res: AxiosResponse = await doGetAPI(participantReminderId, store.login.token);
+    const res: AxiosResponse = await doGetAPI(
+      participantReminderId,
+      store.login.token
+    );
     // Becomes the `fulfilled` action payload:
     return res.data;
- 
   }
 );
 
-export const doPost = createAsyncThunk<Data, Data>(
-  "participantservice/doPost",
+export const doPost = createAsyncThunk<Data[], Data>(
+  "participantserviceReminder/doPost",
   async (formData, { getState }) => {
     const store: any = getState();
     const res: AxiosResponse = await doPostAPI(formData, store.login.token);
     // Becomes the `fulfilled` action payload:
     return res.data;
-
-  
   }
 );
 export const doRemove = createAsyncThunk<Data, number>(
-  "participantservice/doRemove",
+  "participantserviceReminder/doRemove",
   async (formData, { getState }) => {
     const store: any = getState();
     const res: AxiosResponse = await doRemoveAPI(formData, store.login.token);
     // Becomes the `fulfilled` action payload:
     return res.data;
-
-  
   }
 );
 export const doSearch = createAsyncThunk<Data[], any>(
-  "participantservice/doSearch",
+  "participantserviceReminder/doSearch",
   async (formData, { getState }) => {
     const store: any = getState();
     const res: AxiosResponse = await doSearchAPI(
@@ -93,14 +126,39 @@ export const doSearch = createAsyncThunk<Data[], any>(
   }
 );
 
-
 export const contactSlice = createSlice<State, SliceCaseReducers<State>>({
-  name: "reminder",
-  initialState:{data: emptyData, status: "none",record:[] },
+  name: "cyfmsreminder",
+  initialState: {
+    data: emptyData,
+    clientName: "",
+    record: [],
+    id: 0,
+    getData: emptyGetData,
+    click: false,
+    record1: [],
+    status: "failed",
+  },
   reducers: {
     cleanState(state) {
       state.data = emptyData;
       state.status = "none";
+      state.clientName = "";
+      state.id = 0;
+      state.record = [];
+      state.record1 = [];
+      state.click = false;
+      state.getData = emptyGetData;
+    },
+    setClick(state, action) {
+      state.click = action.payload;
+    },
+    setCyfmsReminderClientName(state, action) {
+      state.clientName = action.payload;
+      state.getData.reminderDto.regarding = action.payload;
+    },
+    setCyfmsReminderParticipantId(state, action) {
+      state.id = action.payload;
+      state.getData.participantId = action.payload;
     },
   },
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -119,7 +177,26 @@ export const contactSlice = createSlice<State, SliceCaseReducers<State>>({
       });
     builder
       .addCase(doPost.fulfilled, (state, action) => {
-        state.data = action.payload;
+        // state.data = action.payload;
+        state.record1 = action.payload;
+        state.getData.participantId = action.payload[0].participantId;
+        state.getData.participantReminderId =
+          action.payload[0].participantReminderId;
+        state.getData.reminderDto.assignedTo =
+          action.payload[0].reminderDto.assignedTo;
+        state.getData.reminderDto.description =
+          action.payload[0].reminderDto.description;
+        state.getData.reminderDto.endDate =
+          action.payload[0].reminderDto.endDate;
+        state.getData.reminderDto.frequency =
+          action.payload[0].reminderDto.frequency;
+        state.getData.reminderDto.regarding =
+          action.payload[0].reminderDto.regarding;
+        state.getData.reminderDto.status = action.payload[0].reminderDto.status;
+        state.getData.reminderDto.subject =
+          action.payload[0].reminderDto.subject;
+        state.getData.reminderDto.reminderDate =
+          action.payload[0].reminderDto.reminderDate;
         state.status = "success";
       })
       .addCase(doPost.pending, (state) => {
@@ -128,7 +205,7 @@ export const contactSlice = createSlice<State, SliceCaseReducers<State>>({
       .addCase(doPost.rejected, (state) => {
         state.status = "failed";
       });
-      builder
+    builder
       .addCase(doRemove.fulfilled, (state, action) => {
         state.status = "success";
       })
@@ -138,7 +215,7 @@ export const contactSlice = createSlice<State, SliceCaseReducers<State>>({
       .addCase(doRemove.rejected, (state) => {
         state.status = "failed";
       });
-      builder
+    builder
       .addCase(doSearch.fulfilled, (state, action) => {
         state.record = action.payload;
         state.status = "success";
@@ -152,6 +229,12 @@ export const contactSlice = createSlice<State, SliceCaseReducers<State>>({
   },
 });
 
-export const { cleanState } = contactSlice.actions;
+export const {
+  cleanState,
+  setName,
+  setClick,
+  setCyfmsReminderClientName,
+  setCyfmsReminderParticipantId,
+} = contactSlice.actions;
 
 export default contactSlice.reducer;

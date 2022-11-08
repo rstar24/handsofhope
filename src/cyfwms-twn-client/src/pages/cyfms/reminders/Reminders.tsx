@@ -33,6 +33,7 @@ function Reminders(props: any) {
   const [value, setValue] = useState("");
   
   useEffect(() => {
+    dispatch(doGetFrequency())
     dispatch(doGetReminderStatus()).then(()=>{
       dispatch(doSearch({ id: state.participantId, data: "" }))
       .unwrap()
