@@ -73,7 +73,7 @@ public class ParticipantController {
     @ResponseStatus(HttpStatus.OK)
     public ParticipantIdentityDto readParticipantIdentity(@PathVariable("participantid") Long participantId)
             throws Exception {
-        log.info("ReadParticipantIdentity " + participantId);
+        log.info("ReadParticipantIdentity ParticipantId :" + participantId);
         return participantService.readParticipantIdentity(participantId);
     }
 
@@ -85,7 +85,7 @@ public class ParticipantController {
         ParticipantIdentityDto participantIdentityDto = new ParticipantIdentityDto();
         mapParticipantFormData(participantIdentityDto, params);
         participantIdentityDto = participantService.saveParticipantIdentity(participantIdentityDto, multipartFile);
-        log.info("SaveParticipantIdentity " + participantIdentityDto);
+        log.info("SaveParticipantIdentity :" + participantIdentityDto);
         return ResponseEntity.ok(participantIdentityDto);
     }
 
@@ -93,7 +93,7 @@ public class ParticipantController {
     @ApiOperation("Remove Participant")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void removeParticipant(@PathVariable("referenceId") Long referenceId) {
-        log.info("RemoveParticipant By ReferenceId " + referenceId);
+        log.info("RemoveParticipant By ReferenceId :" + referenceId);
         participantService.removeParticipant(referenceId);
     }
 
@@ -101,7 +101,7 @@ public class ParticipantController {
     @ApiOperation("Read Contact")
     @ResponseStatus(HttpStatus.OK)
     public ParticipantContactDto readParticipantContact(@PathVariable("participantid") Long participantId) {
-        log.info("ReadParticipantContact " + participantId);
+        log.info("ReadParticipantContact participantId :" + participantId);
         return participantContactService.readParticipantContact(participantId);
     }
 
@@ -112,7 +112,7 @@ public class ParticipantController {
             @RequestBody ParticipantContactDto ParticipantContactDto) {
         ParticipantContactDto participantContactDto = participantContactService
                 .saveParticipantContact(ParticipantContactDto);
-        log.info("SaveParticipantContact " + participantContactDto);
+        log.info("SaveParticipantContact :" + participantContactDto);
         return new ResponseEntity<>(participantContactDto, HttpStatus.CREATED);
     }
 
@@ -120,7 +120,7 @@ public class ParticipantController {
     @ApiOperation("Read All Household Members")
     @ResponseStatus(HttpStatus.OK)
     public List<HouseholdMemberDto> getAllHouseholdMembers(@PathVariable("participantid") Long participantId) {
-        log.info("GetAllHouseHoldMembers " + participantId);
+        log.info("GetAllHouseHoldMembers ParticipantId :" + participantId);
         return householdMemberService.getAllHouseholdMembers(participantId);
     }
 
@@ -129,7 +129,7 @@ public class ParticipantController {
     @ResponseStatus(HttpStatus.CREATED)
     public List<HouseholdMemberDto> saveAllHouseholdMembers(
             @RequestBody List<HouseholdMemberDto> HouseholdMemberDtoList) {
-        log.info("SaveAllHouseHoldMembers " + HouseholdMemberDtoList);
+        log.info("SaveAllHouseHoldMembers :" + HouseholdMemberDtoList);
         return householdMemberService.saveAllHouseholdMembers(HouseholdMemberDtoList);
     }
 
@@ -138,7 +138,7 @@ public class ParticipantController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     public ResponseEntity<String> removeHouseholdMembers(@PathVariable("householdMemberId") Long householdMemberId) {
         householdMemberService.removeHouseholdMembers(householdMemberId);
-        log.info("RemoveAddMoreHouseHoldMember " + householdMemberId);
+        log.info("RemoveAddMoreHouseHoldMember HouseholdMemberId :" + householdMemberId);
         return new ResponseEntity("Operation Successful", HttpStatus.OK);
     }
 
@@ -146,7 +146,7 @@ public class ParticipantController {
     @ApiOperation("Read Criminal History")
     @ResponseStatus(HttpStatus.OK)
     public CriminalHistoryDto readCriminalHistory(@PathVariable("participantid") Long participantId) {
-        log.info("ReadCriminalHistory " + participantId);
+        log.info("ReadCriminalHistory ParticipantId :" + participantId);
         return criminalHistoryService.readCriminalHistory(participantId);
     }
 
@@ -154,7 +154,7 @@ public class ParticipantController {
     @ApiOperation("Save or Update Criminal History")
     @ResponseStatus(HttpStatus.CREATED)
     public CriminalHistoryDto saveCriminalHistory(@RequestBody CriminalHistoryDto criminalHistoryDto) {
-        log.info("SaveCriminalHistory " + criminalHistoryDto);
+        log.info("SaveCriminalHistory :" + criminalHistoryDto);
         return criminalHistoryService.saveCriminalHistory(criminalHistoryDto);
     }
 
@@ -162,7 +162,7 @@ public class ParticipantController {
     @ApiOperation("Remove Criminal History Record")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public ResponseEntity criminalHistoryRecord(@PathVariable("criminalhistoryrecordid") Long criminalHistoryRecordId) {
-        log.info("RemoveCriminalHistoryRecords " + criminalHistoryRecordId);
+        log.info("RemoveCriminalHistoryRecords CriminalHistoryRecordId :" + criminalHistoryRecordId);
         criminalHistoryService.removeCriminalHistoryRecord(criminalHistoryRecordId);
         return new ResponseEntity("Operation Successful", HttpStatus.OK);
     }
@@ -171,7 +171,7 @@ public class ParticipantController {
     @ApiOperation("Read All Family Physicians")
     @ResponseStatus(HttpStatus.OK)
     public List<FamilyPhysicianDto> getAllFamilyPhysicians(@PathVariable("participantid") Long participantId) {
-        log.info("GetAllFamilyPhysicians " + participantId);
+        log.info("GetAllFamilyPhysicians ParticipantId :" + participantId);
         return familyPhysicianService.getAllFamilyPhysicians(participantId);
     }
 
@@ -180,7 +180,7 @@ public class ParticipantController {
     @ResponseStatus(HttpStatus.CREATED)
     public List<FamilyPhysicianDto> saveAllFamilyPhysicians(
             @RequestBody List<FamilyPhysicianDto> FamilyPhysicianDtoList) {
-        log.info("SaveAllFamilyPhysicians " + FamilyPhysicianDtoList);
+        log.info("SaveAllFamilyPhysicians :" + FamilyPhysicianDtoList);
         return familyPhysicianService.saveAllFamilyPhysicians(FamilyPhysicianDtoList);
     }
 
@@ -188,7 +188,7 @@ public class ParticipantController {
     @ApiOperation("Remove Family Physicians")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void removeFamilyPhysician(@PathVariable("familyPhysicianId") Long familyPhysicianId) {
-        log.info("RemoveFamilyPhysician " + familyPhysicianId);
+        log.info("RemoveFamilyPhysician FamilyPhysicianId :" + familyPhysicianId);
         familyPhysicianService.removeFamilyPhysician(familyPhysicianId);
     }
 
@@ -196,7 +196,7 @@ public class ParticipantController {
     @ApiOperation("Read All Counselor CFS Workers")
     @ResponseStatus(HttpStatus.OK)
     public List<CounselorCFSWorkersDto> getAllCounselorCFSWorkers(@PathVariable("participantid") Long participantId) {
-        log.info("GetAllCounselorCFSWorkers " + participantId);
+        log.info("GetAllCounselorCFSWorkers ParticipantId :" + participantId);
         return counselorCFSWorkerService.getAllCounselorCFSWorkers(participantId);
     }
 
@@ -205,7 +205,7 @@ public class ParticipantController {
     @ResponseStatus(HttpStatus.OK)
     public List<CounselorCFSWorkersDto> saveAllCounselorCFSWorkers(
             @RequestBody List<CounselorCFSWorkersDto> FamilyPhysicianDtoList) {
-        log.info("SaveAllCounselorCFSWorkers " + FamilyPhysicianDtoList);
+        log.info("SaveAllCounselorCFSWorkers :" + FamilyPhysicianDtoList);
         return counselorCFSWorkerService.saveAllCounselorCFSWorkers(FamilyPhysicianDtoList);
     }
 
@@ -213,7 +213,7 @@ public class ParticipantController {
     @ApiOperation("Remove Counselor CFS Workers")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void removeCounselorCFSWorker(@PathVariable("counselorcfsworkerid") Long counselorCFSWorkerId) {
-        log.info("RemoveCounselorCFSWorkers " + counselorCFSWorkerId);
+        log.info("RemoveCounselorCFSWorkers CounselorCFSWorkerId :" + counselorCFSWorkerId);
         counselorCFSWorkerService.removeCounselorCFSWorker(counselorCFSWorkerId);
     }
 
@@ -222,7 +222,7 @@ public class ParticipantController {
     @ResponseStatus(HttpStatus.OK)
     public ParticipantOtherInformationServiceDto readParticipantOtherInformation(
             @PathVariable("participantid") Long participantId) {
-        log.info("ReadParticipantOtherInformation " + participantId);
+        log.info("ReadParticipantOtherInformation ParticipantId :" + participantId);
         return participantOtherInformationService.readParticipantOtherInformation(participantId);
     }
 
@@ -231,7 +231,7 @@ public class ParticipantController {
     @ResponseStatus(HttpStatus.OK)
     public ParticipantOtherInformationServiceDto saveParticipantOtherInformation(
             @RequestBody ParticipantOtherInformationServiceDto participantOtherInformationServiceDto) {
-        log.info("SaveParticipantOtherInformation " + participantOtherInformationServiceDto);
+        log.info("SaveParticipantOtherInformation :" + participantOtherInformationServiceDto);
         return participantOtherInformationService
                 .saveParticipantOtherInformation(participantOtherInformationServiceDto);
     }
@@ -241,7 +241,7 @@ public class ParticipantController {
     @ResponseStatus(HttpStatus.OK)
     public EducationAndEmploymentCompositeDto readEmploymentAndEducation(
             @PathVariable("participantid") Long participantId) {
-        log.info("ReadEmploymentAndEducation " + participantId);
+        log.info("ReadEmploymentAndEducation ParticipantId :" + participantId);
         return educationAndEmploymentService.readEducationAndEmployment(participantId);
     }
 
@@ -250,7 +250,7 @@ public class ParticipantController {
     @ResponseStatus(HttpStatus.CREATED)
     public EducationAndEmploymentCompositeDto saveEmploymentAndEducation(
             @RequestBody EducationAndEmploymentCompositeDto educationAndEmploymentCompositeDto) {
-        log.info("SaveEmploymentAndEducation " + educationAndEmploymentCompositeDto);
+        log.info("SaveEmploymentAndEducation :" + educationAndEmploymentCompositeDto);
         return educationAndEmploymentService.saveEducationAndEmployment(educationAndEmploymentCompositeDto);
     }
 
@@ -261,7 +261,7 @@ public class ParticipantController {
     public List<ParticipantSearchResultsDto> searchParticipants(
             @PathVariable Map<String, String> var) {
         ParticipantSearchCriteriaDto participantSearchCriteriaDto = getParticipantSearchCriteriaDto(var);
-        log.info("SearchParticipants " + participantSearchCriteriaDto);
+        log.info("SearchParticipants :" + participantSearchCriteriaDto);
         return participantSearchService.search(participantSearchCriteriaDto);
     }
 
@@ -303,7 +303,7 @@ public class ParticipantController {
     @ApiOperation("Read All Output Participant")
     @ResponseStatus(HttpStatus.OK)
     public ParticipantCommonDataDto readAllOutPutParticipant(@PathVariable("referenceId") Long referenceId) {
-        log.info("ReadAllOutPutParticipant " + referenceId);
+        log.info("ReadAllOutPutParticipant ReferenceId :" + referenceId);
         return participantCommonDataService.readParticipantCommonData(referenceId);
     }
 
@@ -311,7 +311,7 @@ public class ParticipantController {
     @ApiOperation("Read Participant Reminder By Id")
     @ResponseStatus(HttpStatus.OK)
     public ParticipantReminderDto readParticipantReminder(@PathVariable("participantReminderId") Long participantReminderId) {
-        log.info("ReadParticipantReminder " + participantReminderId);
+        log.info("ReadParticipantReminder ParticipantReminderId :" + participantReminderId);
         return participantReminderService.readParticipantReminder(participantReminderId);
     }
 
@@ -320,7 +320,7 @@ public class ParticipantController {
     @ResponseStatus(HttpStatus.OK)
     public List<ParticipantReminderDto> saveParticipantReminder(
             @RequestBody ParticipantReminderDto participantReminderDtoList) {
-        log.info("SaveParticipantReminder " + participantReminderDtoList);
+        log.info("SaveParticipantReminder :" + participantReminderDtoList);
         return participantReminderService.saveParticipantReminder(participantReminderDtoList);
     }
 
@@ -337,7 +337,7 @@ public class ParticipantController {
                 ("null".equals(var.get("data"))
                         || var.get("data") == null) ? null : var.get("data"));
 
-        log.info("searchParticipantReminder " + participantReminderSearchCriteriaDto);
+        log.info("SearchParticipantReminder :" + participantReminderSearchCriteriaDto);
         return participantReminderSearchService.search(participantReminderSearchCriteriaDto);
     }
 
@@ -345,7 +345,7 @@ public class ParticipantController {
     @ApiOperation("Remove Participant Reminder By participantReminderId")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void removeParticipantReminder(@PathVariable("participantReminderId") Long participantReminderId) {
-        log.info("removeParticipantReminder " + participantReminderId);
+        log.info("RemoveParticipantReminder ParticipantReminderId :" + participantReminderId);
         participantReminderService.removeParticipantReminder(participantReminderId);
     }
 
@@ -365,14 +365,14 @@ public class ParticipantController {
         participantIdentityDto.setDateOfBirth(LocalDate.parse(params.get("dateOfBirth")));
         participantIdentityDto.setGender(params.get("gender"));
         participantIdentityDto.setMaritalStatus(params.get("maritalStatus"));
-        log.info("exit ParticipantFormData");
+        log.info("Exit ParticipantFormData");
     }
 
     @PutMapping(value = "/saveParticipantAppointment", produces = "application/json")
     @ApiOperation("Save or Update Participant Appointment Informtion")
     @ResponseStatus(HttpStatus.CREATED)
     public List<ParticipantAppointmentDto>  saveParticipantAppointment(@RequestBody ParticipantAppointmentDto participantAppointmentDto) {
-        log.info("SaveParticipantAppointment " + participantAppointmentDto);
+        log.info("SaveParticipantAppointment :" + participantAppointmentDto);
         return participantAppointmentService.saveParticipantAppointment(participantAppointmentDto);
 
     }
@@ -396,7 +396,7 @@ public class ParticipantController {
         participantAppointmentSearchCriteriaDto.setData(
                 ("null".equals(var.get("data"))
                         || var.get("data") == null) ? null : var.get("data"));
-        log.info("SearchContactNotes " + participantAppointmentSearchCriteriaDto);
+        log.info("SearchContactNotes :" + participantAppointmentSearchCriteriaDto);
         return participantContactNotesSearchService.search(participantAppointmentSearchCriteriaDto);
     }
 
@@ -417,6 +417,7 @@ public class ParticipantController {
             @RequestParam("participantDto") String participantDto) throws IOException {
         ParticipantAttachmentDto participantAttachmentTabDto = participantAttachmentService
                 .uploadParticipantAttachment(file, participantDto);
+        log.info("Save/Upload/Put One/Single Attachment :"+participantAttachmentTabDto);
         return ResponseEntity.ok(participantAttachmentTabDto);
     }
 
@@ -424,6 +425,7 @@ public class ParticipantController {
     @GetMapping("/attachments/read_one/{participantAttachmentId}")
     public ParticipantAttachmentDto readOne(@PathVariable Long participantAttachmentId)
     {
+        log.info("Read/Get One/Single Attachment "+"ParticipantAttachmentId :"+participantAttachmentId);
         return participantAttachmentService.getOneFile(participantAttachmentId);
     }
 
@@ -431,6 +433,7 @@ public class ParticipantController {
     @GetMapping(value = "/attachments/read_all/{participantId}", produces = "application/json")
     @ResponseStatus(OK)
     public List<ParticipantAttachmentDto> readAll(@PathVariable("participantId") Long participantId) {
+        log.info("Read/Get all Attachments "+"ParticipantId :"+participantId);
         return participantAttachmentService.getAllFiles(participantId);
     }
 
@@ -438,6 +441,7 @@ public class ParticipantController {
     @ApiOperation("Soft remove/delete one/single attachment.")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void removeParticipantAttachment(@PathVariable("participantAttachmentId") Long participantAttachmentId) {
+        log.info("Remove/Delete One/Single Attachment "+"ParticipantAttachmentId :"+participantAttachmentId);
         participantAttachmentService.removeParticipantAttachment(participantAttachmentId);
     }
 

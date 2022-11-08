@@ -66,8 +66,9 @@ public class FamilyPhysicianServiceImpl implements FamilyPhysicianService {
         if(familyPhysicianOpt.isPresent()){
             FamilyPhysician familyPhysician = familyPhysicianOpt.get();
             familyPhysician.setStatus("INACTIVE");
-            log.info("Exit RemoveFamilyPhysicians");
             familyPhysicianRepository.save(familyPhysician);
+            log.info("Exit RemoveFamilyPhysicians");
+
         }
     }
 }

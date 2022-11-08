@@ -69,6 +69,7 @@ public class ParticipantAttachmentServiceImpl implements ParticipantAttachmentSe
     @Override
     public ParticipantAttachmentDto uploadParticipantAttachment(MultipartFile file, String participantDto)
             throws IOException {
+        log.info("Inside UploadParticipantAttachment");
         Attachment attachment = null;
         ParticipantAttachmentDto participantAttachmentDto = new ObjectMapper().readValue(participantDto,
                 ParticipantAttachmentDto.class);
@@ -102,18 +103,22 @@ public class ParticipantAttachmentServiceImpl implements ParticipantAttachmentSe
         participantAttachment = participantAttachmentRepo.save(participantAttachment);
         participantAttachmentDto.setAttachmentType(attachment.getDocumentType());
         participantAttachmentDto.setParticipantAttachmentId(participantAttachment.getParticipantAttachmentId());
+        log.info("Exit UploadParticipantAttachment");
         return participantAttachmentDto;
     }
 
     @Override
     public void removeParticipantAttachment(Long participantAttachmentId) {
+        log.info("Inside RemoveParticipantAttachment");
         ParticipantAttachment attachmentEntity = readParticipantAttachment(participantAttachmentId);
         attachmentEntity.setStatus("INACTIVE");
         participantAttachmentRepo.save(attachmentEntity);
+        log.info("Exit RemoveParticipantAttachment");
     }
 
     @Override
     public List<ParticipantAttachmentDto> getAllFiles(Long participantId) {
+        log.info("Inside GetAllFiles ParticipantAttachment");
         List<ParticipantAttachmentDto> participantAttachmentDtoList = new ArrayList<ParticipantAttachmentDto>();
 
         participantAttachmentDtoList = participantAttachmentRepo.findByParticipantId(participantId)
@@ -131,11 +136,13 @@ public class ParticipantAttachmentServiceImpl implements ParticipantAttachmentSe
                     }
                     return attachDto;
                 }).collect(Collectors.toList());
+        log.info("Exit GetAllFiles ParticipantAttachment");
         return participantAttachmentDtoList;
     }
 
     @Override
     public ParticipantAttachmentDto getOneFile(Long participantAttachmentId) {
+        log.info("Inside GetOneFiles ParticipantAttachment");
         ParticipantAttachmentDto participantAttachmentDto = new ParticipantAttachmentDto();
         ParticipantAttachment participantAttachment = readParticipantAttachment(participantAttachmentId);
         participantAttachmentDto.setParticipantAttachmentId(participantAttachment.getParticipantAttachmentId());
@@ -147,19 +154,22 @@ public class ParticipantAttachmentServiceImpl implements ParticipantAttachmentSe
             participantAttachmentDto.setParticipantImageName(participantAttachment.getAttachment().getAttachmentName());
             participantAttachmentDto.setImage(participantAttachment.getAttachment().getAttachmentContents());
         }
+        log.info("Exit GetOneFiles ParticipantAttachment");
         return participantAttachmentDto;
     }
 
     private ParticipantAttachment readParticipantAttachment(long participantAttachmentId) {
+        log.info("Inside ReadParticipantAttachment");
         ParticipantAttachment participantAttachmentEntity = participantAttachmentRepo.findById(participantAttachmentId)
                 .filter(p -> p.getStatus().equals("ACTIVE"))
                 .orElseThrow(() -> new NoSuchElementFoundException(messageUtil.getLocalMessage(
                         I18Constants.NO_ITEM_FOUND.getKey(), String.valueOf(participantAttachmentId))));
-        ;
+        log.info("Exit ReadParticipantAttachment");
         return participantAttachmentEntity;
     }
 
     private void validateParticipantAttachment(MultipartFile file) {
+        log.info("Inside validateParticipantAttachment");
         boolean invalidParticipantAttachment = true;
 
         if (file.getContentType().equals("image/png") ||

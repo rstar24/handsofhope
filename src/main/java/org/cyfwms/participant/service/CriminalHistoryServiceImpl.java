@@ -1,6 +1,7 @@
 package org.cyfwms.participant.service;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.cyfwms.participant.dto.CriminalHistoryDto;
 import org.cyfwms.participant.dto.CriminalHistoryRecordDto;
 import org.cyfwms.participant.entity.CriminalHistory;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class CriminalHistoryServiceImpl implements CriminalHistoryService{
     @Autowired
     private CriminalHistoryRepository criminalHistoryRepo;
@@ -26,6 +28,7 @@ public class CriminalHistoryServiceImpl implements CriminalHistoryService{
 
     @Override
     public CriminalHistoryDto readCriminalHistory(Long participantId) {
+        log.info("Inside ReadCriminalHistory");
         CriminalHistoryDto criminalHistoryDto = new CriminalHistoryDto();
         List<CriminalHistoryRecordDto> criminalHistoryRecordDtoList = null;
         if (participantId != 0) {
@@ -59,11 +62,13 @@ public class CriminalHistoryServiceImpl implements CriminalHistoryService{
                 criminalHistoryDto.setCriminalHistoryRecordList(criminalHistoryRecordDtoList);
             }
         }
+        log.info("Exit ReadCriminalHistory");
         return criminalHistoryDto;
     }
 
     @Override
     public CriminalHistoryDto saveCriminalHistory(CriminalHistoryDto criminalHistoryDto) {
+        log.info("Inside SaveCriminalHistory");
         CriminalHistory criminalHistory = null;
         List<CriminalHistoryRecord> criminalHistoryRecordList = null;
         if (criminalHistoryDto.getCriminalHistoryId() == 0) {
@@ -102,16 +107,19 @@ public class CriminalHistoryServiceImpl implements CriminalHistoryService{
         criminalHistory.setCriminalHistoryRecordList(criminalHistoryRecordList);
         criminalHistory = criminalHistoryRepo.save(criminalHistory);
         criminalHistoryDto.setCriminalHistoryId(criminalHistory.getCriminalHistoryId());
+        log.info("Exit SaveCriminalHistory");
         return criminalHistoryDto;
     }
     @Override
     public void removeCriminalHistoryRecord(Long criminalHistoryRecordId) {
+        log.info("Inside RemoveCriminalHistoryRecord");
         Optional<CriminalHistoryRecord> criminalHistoryRecordOpt =
                 cHistoryRecordRepo.findById(criminalHistoryRecordId);
         if(criminalHistoryRecordOpt.isPresent()){
             CriminalHistoryRecord criminalHistoryRecord = criminalHistoryRecordOpt.get();
             criminalHistoryRecord.setStatus("INACTIVE");
             cHistoryRecordRepo.save(criminalHistoryRecord);
+            log.info("Inside RemoveCriminalHistoryRecord");
         }
     }
 }

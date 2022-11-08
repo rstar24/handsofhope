@@ -16,7 +16,7 @@ public class ParticipantSearchServiceImpl implements ParticipantSearchService{
     private ParticipantSearchRepository participantSearchRepository;
 
     public List<ParticipantSearchResultsDto> search(ParticipantSearchCriteriaDto participantSearchCriteriaDto){
-        log.info("ParticipantSearchCriteriaDto "+participantSearchCriteriaDto);
+        log.info("ParticipantSearchCriteriaDto :"+participantSearchCriteriaDto);
         return participantSearchRepository.searchParticipants(participantSearchCriteriaDto);
     }
 }

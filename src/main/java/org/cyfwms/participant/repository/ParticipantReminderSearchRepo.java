@@ -1,5 +1,6 @@
 package org.cyfwms.participant.repository;
 
+import lombok.extern.slf4j.Slf4j;
 import org.cyfwms.participant.dto.ParticipantReminderSearchCriteriaDto;
 import org.cyfwms.participant.dto.ParticipantReminderSearchResultsDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
+@Slf4j
 public class ParticipantReminderSearchRepo {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
     public List<ParticipantReminderSearchResultsDto> searchParticipantReminder(ParticipantReminderSearchCriteriaDto participantReminderSearchCriteriaDto) {
+       log.info("Inside searchParticipantReminder");
         List<Object> argsObjectList = new ArrayList<>();
         StringBuffer querySBuff = createSearchQuery(participantReminderSearchCriteriaDto, argsObjectList);
         return jdbcTemplate.query(querySBuff.toString(), argsObjectList.toArray(),

@@ -49,7 +49,7 @@ public class ParticipantReminderServiceImpl implements ParticipantReminderServic
             Optional<ParticipantReminder> participantReminder = participantReminderRepository.findById(participantReminderId);
 
             if (participantReminder.isPresent()) {
-                if (participantReminder.get().getStatusOfDeletion().equals("ACTIVE")) {
+                if (participantReminder.get().getStatusOfDeletion().equalsIgnoreCase("ACTIVE")) {
                     BeanUtils.copyProperties(participantReminder.get(), participantReminderDto);
                     BeanUtils.copyProperties(participantReminder.get().getReminder(), reminderDto);
 
@@ -64,7 +64,7 @@ public class ParticipantReminderServiceImpl implements ParticipantReminderServic
                 }
             }
         }
-        log.info("Exit ReadOneAppointment");
+        log.info("Exit ReadParticipantReminder");
         return participantReminderDto;
     }
 
@@ -97,6 +97,7 @@ public class ParticipantReminderServiceImpl implements ParticipantReminderServic
     }
 
     public List<ParticipantReminderDto> checkFrequency(ParticipantReminderDto participantReminderDto) {
+        log.info("Inside CheckFrequency");
         Period pd = Period.between(participantReminderDto.getReminderDto().getReminderDate() ,participantReminderDto.getReminderDto().getEndDate());
         int difference = pd.getDays();
 
@@ -133,6 +134,7 @@ public class ParticipantReminderServiceImpl implements ParticipantReminderServic
     }
 
     public List<ParticipantReminderDto> saveFrequency(int n, int counter, int rem, ParticipantReminderDto participantReminderDto) {
+          log.info("Inside SaveFrequency");
           List<ParticipantReminderDto> listparticipantreminder = new ArrayList<>();
           int cnt=0;
           for(int i=0;i<n;i++){
@@ -140,7 +142,7 @@ public class ParticipantReminderServiceImpl implements ParticipantReminderServic
               Reminder reminder=new Reminder();
               BeanUtils.copyProperties(participantReminderDto,participantReminder);
               BeanUtils.copyProperties(participantReminderDto.getReminderDto(),reminder);
-              participantReminder.setStatusOfDeletion("Active");
+              participantReminder.setStatusOfDeletion("ACTIVE");
               reminder.setStatusOfDeletion("ACTIVE");
               LocalDate localDate=participantReminderDto.getReminderDto().getReminderDate().plusDays(cnt);
               reminder.setReminderDate(localDate);
@@ -160,7 +162,6 @@ public class ParticipantReminderServiceImpl implements ParticipantReminderServic
               }
               cnt=cnt+counter;
           }
-          log.info("Exit SaveParticipantReminder");
           return listparticipantreminder;
     }
 
