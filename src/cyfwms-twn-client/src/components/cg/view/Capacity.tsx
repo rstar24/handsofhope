@@ -73,7 +73,7 @@ const Capacity = (): ReactElement => {
           ) : (
             <></>
           )}
-          {data.currUtil !== 0 ? (
+          {true ? (
             <TableRow>
               <TableCell
                 sx={{

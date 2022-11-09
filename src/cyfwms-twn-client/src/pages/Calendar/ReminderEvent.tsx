@@ -75,7 +75,7 @@ function ReminderEvent(): ReactElement {
               <TableCell sx={{ color: "black" }} align="center" size="small">
                 {val.participantId && (
                   <Link
-                    to="../cyfms/reminders"
+                    to="../cyfms/reminder"
                     onClick={() => {
                       handleSelected(val.appointmentId, val.participantId);
                       dispatch(doGetRegister(val.participantId));
@@ -93,7 +93,7 @@ function ReminderEvent(): ReactElement {
 
                 {val.fileDetailsId && (
                   <Link
-                    to="../initial_contact/reminders"
+                    to="../initial_contact/reminder"
                     onClick={() => {
                       handleSelected(val.reminderId, val.fileDetailsId);
                       dispatch(
