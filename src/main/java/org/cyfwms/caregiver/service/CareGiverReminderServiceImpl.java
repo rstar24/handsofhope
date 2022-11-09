@@ -157,9 +157,8 @@ public class CareGiverReminderServiceImpl implements CareGiverReminderService {
                 if (careGiverReminder.get().getStatusOfDeletion().equals("ACTIVE")) {
                     BeanUtils.copyProperties(careGiverReminder.get(), careGiverReminderDto);
                     BeanUtils.copyProperties(careGiverReminder.get().getReminder(), reminderDto);
-
-                    if (!reminderDto.getRegarding().isEmpty() && reminderDto.getRegarding() != null) {
-                        Long participantId = Long.parseLong(reminderDto.getRegarding());
+                    Long participantId = Long.parseLong(reminderDto.getRegarding());
+                    if (participantId!=0) {
                         Participant participant = participantRepository.findByParticipantId(participantId);
                         reminderDto.setRegarding(participant.getFirstname() + " " + participant.getSurname());
                         reminderDto.setParticipantId(participant.getParticipantId());
