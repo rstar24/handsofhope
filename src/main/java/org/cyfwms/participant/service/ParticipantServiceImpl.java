@@ -91,15 +91,16 @@ public class ParticipantServiceImpl implements ParticipantService {
     @Override
     public ParticipantIdentityDto saveParticipantIdentity(ParticipantIdentityDto participantIdentityDto, MultipartFile multipartFile) throws IOException {
        log.info("Inside SaveParticipantIdentity");
+        ParticipantAttachment participantAttachment =
+                new ParticipantAttachment();
+        ParticipantAttachmentDto participantAttachmentDto=null;
         Participant participant = null;
         List<ParticipantAttachment> participantAttachmentList = null;
         if(multipartFile != null) {
             validateParticipantImage(multipartFile);
-            ParticipantAttachmentDto participantAttachmentDto =
+             participantAttachmentDto =
                     populateParticipantAttachmentData(multipartFile);
             if(participantAttachmentDto != null){
-                ParticipantAttachment participantAttachment =
-                        new ParticipantAttachment();
                 BeanUtils.copyProperties(participantAttachmentDto,
                         participantAttachment);
                 participantAttachmentList = new ArrayList<>();
@@ -119,6 +120,15 @@ public class ParticipantServiceImpl implements ParticipantService {
             participant = readParticipant(participantID);
             BeanUtils.copyProperties(participantIdentityDto, participant);
             participant.setParticipantId(participantID);
+            if(participantAttachmentList != null) {
+                for (int i = 0; i < participant.getParticipantAttachmentList().size(); i++) {
+                    participantAttachmentDto.setParticipantAttachmentId(participant.getParticipantAttachmentList().get(i).getParticipantAttachmentId());
+                    participantAttachmentDto.getAttachment().setAttachmentId(participant.getParticipantAttachmentList().get(i).getAttachment().getAttachmentId());
+                    participantAttachmentDto.getAttachment().setReceiptDate(participant.getParticipantAttachmentList().get(i).getAttachment().getReceiptDate());
+                }
+                BeanUtils.copyProperties(participantAttachmentDto,
+                        participantAttachment);
+            }
         }
         if(participantAttachmentList != null){
             participant.setParticipantAttachmentList(participantAttachmentList);
