@@ -189,17 +189,12 @@ public class ParticipantAppointmentServiceImpl implements ParticipantAppointment
 
                     BeanUtils.copyProperties(participantAppointment.get(), participantAppointmentDto);
                     BeanUtils.copyProperties(participantAppointment.get().getAppointments(),appointmentDto);
+                    Long p= Long.parseLong(appointmentDto.getClient());
 
-
-                    if (!appointmentDto.getClient().isEmpty() && appointmentDto.getClient() != null) {
-                   Long p= Long.parseLong(appointmentDto.getClient());
-
+                    if (   p!=0) {
                         Participant participant=participantRepository.findByParticipantId(p);
                         appointmentDto.setClient(participant.getFirstname()+" "+participant.getSurname());
                     }
-
-
-
                     participantAppointmentDto.setAppointmentdto(appointmentDto);
                     if (appointmentDto.getDate() == null) {
                         appointmentDto.setDate(LocalDate.of(1, 1, 1));

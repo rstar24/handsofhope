@@ -198,9 +198,8 @@ public class ICAppointmentServiceImpl implements ICAppointmentService {
                 if (ICAppointment.get().getStatus().equals("ACTIVE")){
                     BeanUtils.copyProperties(ICAppointment.get(), icAppointmentDto);
                     BeanUtils.copyProperties(ICAppointment.get().getAppointments(),appointmentDto);
-                    if (!appointmentDto.getClient().isEmpty() && appointmentDto.getClient() != null) {
-                        Long p= Long.parseLong(appointmentDto.getClient());
-
+                    Long p= Long.parseLong(appointmentDto.getClient());
+                    if (p!=0) {
                         Participant participant=participantRepository.findByParticipantId(p);
                         appointmentDto.setClient(participant.getFirstname()+" "+participant.getSurname());
                     }
