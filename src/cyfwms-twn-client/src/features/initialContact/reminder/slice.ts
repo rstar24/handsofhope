@@ -8,6 +8,12 @@ export interface Recordnew {
   icReminderId: number;
   subject: string;
   assignedTo: string;
+  reminderDate:string;
+  regarding: any;
+  status: string;
+  description: string;
+  frequency: string;
+  endDate: string;
 }
 // Empty Recordnew
 const emptyRecordnew: Recordnew =  {
@@ -15,6 +21,12 @@ const emptyRecordnew: Recordnew =  {
   icReminderId: 0,
   subject: "",
   assignedTo: "",
+  regarding: "",
+  reminderDate: "",
+  status: "",
+  description: "",
+  frequency: "",
+  endDate: "",
 };
 
 export interface Data {
