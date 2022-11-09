@@ -13,7 +13,7 @@ spring:
   application:
     name: TWN-SERVER
   datasource:
-    url: jdbc:mysql://cyfwmsdb.mysql.database.azure.com:3306/twnmysqldb
+    url: jdbc:mysql://cyfwmsdb.mysql.database.azure.com:3306/twn
     username: admin1
     password: Password@123
   profiles:
