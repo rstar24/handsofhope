@@ -39,6 +39,7 @@ public class Reminder implements Serializable {
     @Getter @Setter @Column(name = "status")
     private String status;
     @Getter @Setter @Column(name = "description")
+    @Lob
     private String description;
     @Getter @Setter @Column(name = "frequency")
     private String frequency;
