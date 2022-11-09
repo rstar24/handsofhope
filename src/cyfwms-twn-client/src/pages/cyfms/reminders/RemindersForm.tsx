@@ -7,7 +7,7 @@ import {
 } from "../../../features/cyfms/reminders/slice";
 import { onKeyDown } from "../../../library/app";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
-import { Box, FormLabel, OutlinedInput, Typography } from "@mui/material";
+import { Box,FormControl, FormLabel, OutlinedInput, Typography } from "@mui/material";
 import React, { useState } from "react";
 import type { FormEvent } from "react";
 import EditIcon from "./EditIcon";
@@ -104,7 +104,7 @@ const RemindersForm = ({
       )}
 
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
-          <Box sx={{ flexBasis: 0.9, flexGrow: 1.1 }}>
+          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <Input
               id="reminderDate"
               value="Reminder Date"
@@ -114,7 +114,7 @@ const RemindersForm = ({
               required
             />
           </Box>
-          <Box sx={{ flexBasis: 0.99, flexGrow: 1.1}}>
+          <Box sx={{ flexBasis: 0, flexGrow: 1}}>
             <Input
               id="assignedTo"
               value="Assigned to"
@@ -125,32 +125,30 @@ const RemindersForm = ({
         </Box>
 
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
-          <Box sx={{ flexBasis: 0, flexGrow: 1.2}}>
-          <FormLabel
+          <Box sx={{ flexBasis: 0, flexGrow: 1}}>
+          <FormControl
             sx={{
-              p: 1,
-              marginRight: "42px",
-              flexBasis: 0,
-              flexGrow: 1.3,
-              color: "black",
+              display: "flex",
+              flexDirection: "row",
+              flexWrap: "wrap",
             }}
           >
-            Regarding
-          </FormLabel>
-
-          <OutlinedInput
-            sx={{
-              borderRadius: 0,
-
-              flexBasis: 0,
-
-              flexGrow: 1.2,
-            }}
-            size="small"
-            value={clientName}
-            style={{ backgroundColor: "#dfdada" }}
-            endAdornment={<SearchIcon onClick={handleSearch} />}
-          />
+            <FormLabel sx={{ p: 1, flexBasis: 0, flexGrow: 1, color: "black" }}>
+             Regarding
+            </FormLabel>
+            <OutlinedInput
+              sx={{
+                borderRadius: 0,
+                flexBasis: 0,
+                flexGrow: 2,
+              }}
+              size="small"
+              readOnly={disabled}
+              value={clientName}
+              style={{ backgroundColor: "#dfdada" }}
+              endAdornment={<SearchIcon onClick={handleSearch} />}
+            />
+          </FormControl>
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <Input

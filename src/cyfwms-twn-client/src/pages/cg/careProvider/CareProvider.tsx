@@ -17,6 +17,7 @@ import {
 import React, { SyntheticEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { FC } from "react";
+import CYFMSDropdownProvince from "../../../components/cyfms/CYFMSDropdownProvince";
 
 /**
  * `CG` aka `Caregivers` module.
@@ -127,7 +128,7 @@ const CareProvider: FC = () => {
             />
           </div>
           <div>
-            <CYFMSDropdown
+            <CYFMSDropdownProvince
               autofill={state.getData.province}
               id="province"
               value="Province"

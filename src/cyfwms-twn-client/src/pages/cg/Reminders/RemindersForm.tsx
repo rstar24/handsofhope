@@ -10,6 +10,7 @@ import {
   FormLabel,
   OutlinedInput,
   Typography,
+  FormControl
 } from "@mui/material";
 import React, { useState } from "react";
 import type { FormEvent } from "react";
@@ -138,31 +139,31 @@ const RemindersForm = ({
       </Box>
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-          <FormLabel
+        <FormControl
             sx={{
-              p: 1,
-              marginRight: "36.5px",
-              flexBasis: 0,
-              flexGrow: 1.3,
-              color: "black",
+              display: "flex",
+              flexDirection: "row",
+              flexWrap: "wrap",
             }}
           >
-            Regarding
-          </FormLabel>
+            <FormLabel sx={{ p: 1, flexBasis: 0, flexGrow: 1, color: "black" }}>
+             Regarding
+            </FormLabel>
+            <OutlinedInput
+              sx={{
+                borderRadius: 0,
+                flexBasis: 0,
+                flexGrow: 2,
+              }}
+              size="small"
+              readOnly={disabled}
+              value={clientName}
+              style={{ backgroundColor: "#dfdada" }}
+              endAdornment={<SearchIcon onClick={handleSearch} />}
+            />
+          </FormControl>
 
-          <OutlinedInput
-            sx={{
-              borderRadius: 0,
-
-              flexBasis: 0,
-
-              flexGrow: 1.2,
-            }}
-            size="small"
-            value={clientName}
-            style={{ backgroundColor: "#dfdada" }}
-            endAdornment={<SearchIcon onClick={handleSearch} />}
-          />
+          
         </Box>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
           <Input
