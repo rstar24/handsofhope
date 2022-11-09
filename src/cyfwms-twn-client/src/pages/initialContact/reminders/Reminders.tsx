@@ -13,7 +13,7 @@ import ICLayout from "../../../components/initialContact/ICLayout";
 import SearchIcon from "@mui/icons-material/Search";
 import ReminderForm from "./ReminderForm";
 import { Link } from "react-router-dom";
-
+import { grey } from "@mui/material/colors";
 import {
   cleanState,
   doGet,
@@ -150,7 +150,13 @@ function Reminders(props: any) {
                     </TableCell>
                   </TableRow>
                 </TableHead>
-                <TableBody>
+                <TableBody  sx={{
+                    "& > tr > td": {
+                      backgroundColor: grey["400"],
+                      p: "0.25rem",
+                    },
+                    "& > tr": { border: 0 },
+                  }}>
                   {data.map((val: any) => (
                     <TableRow
                       sx={{

@@ -122,22 +122,37 @@ const ContactNotes: FC = () => {
           <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
             <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
               <TableContainer>
-                <Table>
-                  <TableHead
-                    sx={{
-                      "& > tr > th": {
-                        backgroundColor: (theme) => theme.palette.primary.main,
-                        color: "white",
-                        p: "0.25rem",
-                      },
-                      "& > tr": { border: 0 },
-                    }}
-                  >
-                    <TableRow>
-                      <TableCell></TableCell>
-                      <TableCell>Date</TableCell>
-                      <TableCell>Name</TableCell>
-                      <TableCell>Worker</TableCell>
+                <Table sx={{ minWidth: 760 }} aria-label="simple table">
+                  <TableHead>
+                    <TableRow
+                      sx={{ backgroundColor: "#da0404", color: "white" }}
+                    >
+                      <TableCell
+                        sx={{ color: "white" }}
+                        align="center"
+                        size="small"
+                      ></TableCell>
+                      <TableCell
+                        sx={{ color: "white" }}
+                        align="center"
+                        size="small"
+                      >
+                        Date
+                      </TableCell>
+                      <TableCell
+                        sx={{ color: "white" }}
+                        align="center"
+                        size="small"
+                      >
+                        Name
+                      </TableCell>
+                      <TableCell
+                        sx={{ color: "white" }}
+                        align="center"
+                        size="small"
+                      >
+                        Worker
+                      </TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody
@@ -150,8 +165,16 @@ const ContactNotes: FC = () => {
                     }}
                   >
                     {data.map((val: any) => (
-                      <TableRow>
-                        <TableCell>
+                      <TableRow
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}
+                      >
+                        <TableCell
+                          sx={{ color: "black" }}
+                          align="center"
+                          size="small"
+                        >
                           <Link
                             to="../contact_notes"
                             onClick={() => handleSelected(val.contactNotesId)}
@@ -159,9 +182,15 @@ const ContactNotes: FC = () => {
                             Select
                           </Link>
                         </TableCell>
-                        <TableCell>{val.date}</TableCell>
-                        <TableCell>{val.name}</TableCell>
-                        <TableCell>{val.worker}</TableCell>
+                        <TableCell  sx={{ color: "black" }}
+                        align="center"
+                        size="small">{val.date}</TableCell>
+                        <TableCell  sx={{ color: "black" }}
+                        align="center"
+                        size="small">{val.name}</TableCell>
+                        <TableCell  sx={{ color: "black" }}
+                        align="center"
+                        size="small">{val.worker}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
