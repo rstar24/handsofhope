@@ -120,6 +120,7 @@ public class ParticipantServiceImpl implements ParticipantService {
             participant = readParticipant(participantID);
             BeanUtils.copyProperties(participantIdentityDto, participant);
             participant.setParticipantId(participantID);
+
             if(participantAttachmentList != null) {
                 for (int i = 0; i < participant.getParticipantAttachmentList().size(); i++) {
                     participantAttachmentDto.setParticipantAttachmentId(participant.getParticipantAttachmentList().get(i).getParticipantAttachmentId());
