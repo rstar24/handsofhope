@@ -78,7 +78,7 @@ export default function Navbar() {
   const handleHome = () => {
     handleClean();
     dispatch(setView(false));
-   dispatch(changeHomeColor("red"));
+    dispatch(changeHomeColor("red"));
     navigate("/home");
   };
 
@@ -109,7 +109,9 @@ export default function Navbar() {
                 sx={{ color: "white",
                       textTransform: "none" ,
                       backgroundColor:homeColor,
-                      
+                      "&:hover": {
+                        backgroundColor: homeColor === "red" ? homeColor : "#464343"
+                      }
                     }}
                 onClick={handleHome}
               >
@@ -122,8 +124,12 @@ export default function Navbar() {
               <Button
                 sx={{
                   color: "white",
+                  marginLeft: "10px",
                   textTransform: "none",
                   backgroundColor:calendarColor,
+                  "&:hover": {
+                    backgroundColor: calendarColor==="red" ? calendarColor : "#464343"
+                  }
                 }}
                 onClick={handleCalendar}
               >
@@ -131,7 +137,7 @@ export default function Navbar() {
               </Button>
             </li>
 
-            <li className="logout">
+            <li className="logout list">
               <Button
                 sx={{ color: "white", textTransform: "none" }}
                 onClick={handleLogout}

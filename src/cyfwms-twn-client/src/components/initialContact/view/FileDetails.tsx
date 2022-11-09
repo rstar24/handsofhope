@@ -18,6 +18,7 @@ import {
 import React from "react";
 import type { ReactElement } from "react";
 import { Link } from "react-router-dom";
+import { FileDetailsLabels } from "../../../library/labels/initialContact";
 
 const FileDetails = (): ReactElement => {
   const dispatch = useAppDispatch();
@@ -56,12 +57,7 @@ const FileDetails = (): ReactElement => {
                       fontSize: "1rem",
                     }}
                   >
-                    {t[0]
-                      .replace(/([A-Z])/g, " $1")
-                      // uppercase the first character
-                      .replace(/^./, function (str: String) {
-                        return str.toUpperCase();
-                      })}
+                    {FileDetailsLabels[k]}
                   </TableCell>
                   <TableCell width="50%">
                     {t[0] === "clientName" ? (

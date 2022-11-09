@@ -91,7 +91,7 @@ const View = (): ReactElement => {
               onClick={() => navigate("capacity")}
             />
             <Tab
-              label="Care Givers"
+              label="Caregivers"
               value={3}
               onClick={() => navigate("caregivers")}
             />

@@ -29,6 +29,7 @@ const Calendar_ = (props: any) => {
   const [end, setEnd] = useState(
     moment(new Date()).format(" ddd, DD MMM yyyy ")
   );
+  const [selectedDate, setSelectedDate] = useState('')
 
   useEffect(() => {
     dispatch(doGetAll()).then((res: any) => {
@@ -56,19 +57,14 @@ const Calendar_ = (props: any) => {
 
   const dayPropGetter = useCallback((date: Date) => {
     return {
-      ...(date.getDate() === new Date().getDate() &&
-        date.getMonth() === new Date().getMonth() &&
-        date.getFullYear() === new Date().getFullYear() && {
+      ...(moment(date).format("DD/MM/yyyy")===selectedDate && {
           style: { backgroundColor: "#8ac9c669" },
         }),
     };
-  }, []);
+  }, [selectedDate]);
 
-  const selecteDate = (range: { start: Date; end: Date }) => {
-    return true;
-  };
-
-  const selecetedSlot = (slotInfo: any) => {
+  const selectedSlot = (slotInfo: any) => {
+    setSelectedDate(moment(slotInfo.start).format("DD/MM/yyyy"))
     //slotInfo.start
     dispatch(doGetAppointments(moment(slotInfo.start).format("yyyy-MM-DD")));
     dispatch(doGetByDate(moment(slotInfo.start).format("yyyy-MM-DD")));
@@ -115,9 +111,8 @@ const Calendar_ = (props: any) => {
                   height: "400px",
                   width: "500px",
                 }}
-                onSelecting={selecteDate}
-                onSelectSlot={selecetedSlot}
-                views={{ month: true, day: true }}
+                onSelectSlot={selectedSlot}
+                views={{ month: true }}
               />
             </Box>
             <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
