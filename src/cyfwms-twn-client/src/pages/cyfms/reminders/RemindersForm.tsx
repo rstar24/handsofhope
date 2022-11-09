@@ -94,9 +94,17 @@ const RemindersForm = ({
             />
           </Box>
         )}
+          <Typography variant="body1">
+        <b>Task information</b>
+      </Typography>
+      {disabled && (
+        <Typography sx={{ p: 1 }}>
+          Related File No:{data.participantReminderId}
+        </Typography>
+      )}
 
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
-          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+          <Box sx={{ flexBasis: 0.9, flexGrow: 1.1 }}>
             <Input
               id="reminderDate"
               value="Reminder Date"
@@ -106,7 +114,7 @@ const RemindersForm = ({
               required
             />
           </Box>
-          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+          <Box sx={{ flexBasis: 0.99, flexGrow: 1.1}}>
             <Input
               id="assignedTo"
               value="Assigned to"
@@ -117,11 +125,11 @@ const RemindersForm = ({
         </Box>
 
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
-          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+          <Box sx={{ flexBasis: 0, flexGrow: 1.2}}>
           <FormLabel
             sx={{
               p: 1,
-              marginRight: "44px",
+              marginRight: "42px",
               flexBasis: 0,
               flexGrow: 1.3,
               color: "black",
