@@ -19,22 +19,23 @@ import { FC } from "react";
 import { Link } from "react-router-dom";
 import React from "react";
 import { ReactElement, useEffect } from "react";
-import { doSearch } from "../../../features/cyfms/appointment/slice";
 
 const Appointment : FC =(): ReactElement => {
   const recordsList = useAppSelector((state) => state.icAppointment.record2);
+  const data = useAppSelector((state) => state.icFileDetails.getData);
+  const {id,clientName} = useAppSelector((state)=>state.icAppointment);
   const dispatch = useAppDispatch();
-  // const handleLink = () => {
-  //   console.log(recordsList.participantId);
-  //   dispatch(doGetRegister(recordsList.participantId));
-  //   dispatch(doGetContact(recordsList.participantId));
-  //   dispatch(doGetEducationAndEmployment(recordsList.participantId));
-  //   dispatch(doGetOtherInformation(recordsList.participantId));
-  //   dispatch(doGetCriminalHistory(recordsList.participantId));
-  //   dispatch(doGetHouseholdMembers(recordsList.participantId));
-  //   dispatch(doGetFamilyPhysicians(recordsList.participantId));
-  //   dispatch(doGetCounselors(recordsList.participantId));
-  // };
+  const handleLink = () => {
+    console.log(id);
+    dispatch(doGetRegister(id));
+    dispatch(doGetContact(id));
+    dispatch(doGetEducationAndEmployment(id));
+    dispatch(doGetOtherInformation(id));
+    dispatch(doGetCriminalHistory(id));
+    dispatch(doGetHouseholdMembers(id));
+    dispatch(doGetFamilyPhysicians(id));
+    dispatch(doGetCounselors(id));
+  };
 
   console.log(recordsList[0])
   if (recordsList.length === 0) {
@@ -191,7 +192,7 @@ const Appointment : FC =(): ReactElement => {
                   <></>
                 )} 
                
-                 {/* {recordsList[index].client !== "" ? (
+                 {recordsList[index].client !== "" ? (
                   <TableRow key={Math.random() * 1000}>
                     <TableCell
                       sx={{
@@ -207,7 +208,7 @@ const Appointment : FC =(): ReactElement => {
                     <TableCell width="50%">
                       <Typography component="p" sx={{ whiteSpace: "pre-wrap" }}>
                       <Link to="/cyfms/view" onClick={handleLink}>
-                      {recordsList[index].client}
+                      {clientName}
                         </Link>
                         
                        
@@ -216,7 +217,7 @@ const Appointment : FC =(): ReactElement => {
                   </TableRow>
                 ) : (
                   <></>
-                )} */}
+                )}
                  {recordsList[index].caseworker !== "" ? (
                   <TableRow key={Math.random() * 1000}>
                     <TableCell

@@ -8,20 +8,36 @@ import {
   Typography,
 } from "@mui/material";
 import { FC } from "react";
+import { Link } from "react-router-dom";
 import React from "react";
 import { ReactElement, useEffect } from "react";
 import { doSearch } from "../../../features/cyfms/appointment/slice";
+import { doGet as doGetRegister } from "../../../features/cyfms/register/slice";
+import { doGet as doGetContact } from "../../../features/cyfms/contact/slice";
+import { doGet as doGetCounselors } from "../../../features/cyfms/counselors/slice";
+import { doGet as doGetCriminalHistory } from "../../../features/cyfms/criminalHistory/slice";
+import { doGet as doGetEducationAndEmployment } from "../../../features/cyfms/educationAndEmployment/slice";
+import { doGet as doGetFamilyPhysicians } from "../../../features/cyfms/familyPhysicians/slice";
+import { doGet as doGetHouseholdMembers } from "../../../features/cyfms/householdMembers/slice";
+import { doGet as doGetOtherInformation } from "../../../features/cyfms/otherInformation/slice";
 
 const Appointment : FC =(): ReactElement => {
   const recordsList = useAppSelector((state) => state.cgAppointment.record2);
-  // const dispatch = useAppDispatch();
-  // const data = useAppSelector((state) => state.cyfmsAppointments.getData);
-  // const popup = useAppSelector((state) => state.popup.open);
- 
-  // useEffect(() => {
-  //   dispatch(doSearch({ id: data.participantId, data: "" }));
-  // }, [popup]);
-  // console.log(Object.entries(recordsList))
+  const data = useAppSelector((state) => state.cyfmsRegister.data);
+  const dispatch = useAppDispatch();
+  const {id,clientName} = useAppSelector((state)=>state.cgAppointment);
+  const handleLink = () => {
+    console.log(id);
+    dispatch(doGetRegister(id));
+    dispatch(doGetContact(id));
+    dispatch(doGetEducationAndEmployment(id));
+    dispatch(doGetOtherInformation(id));
+    dispatch(doGetCriminalHistory(id));
+    dispatch(doGetHouseholdMembers(id));
+    dispatch(doGetFamilyPhysicians(id));
+    dispatch(doGetCounselors(id));
+  };
+
   console.log(recordsList[0])
   if (recordsList.length === 0) {
     if (true) {
@@ -177,7 +193,7 @@ const Appointment : FC =(): ReactElement => {
                   <></>
                 )} 
                
-                 {/* {recordsList[index].client !== "" ? (
+                 {recordsList[index].client !== "" ? (
                   <TableRow key={Math.random() * 1000}>
                     <TableCell
                       sx={{
@@ -191,16 +207,14 @@ const Appointment : FC =(): ReactElement => {
                       Client Name
                     </TableCell>
                     <TableCell width="50%">
-                      <Typography component="p" sx={{ whiteSpace: "pre-wrap" }}>
-                        
-                          {recordsList[index].client}
-                       
-                      </Typography>
+                    <Link to="/cyfms/view" onClick={handleLink}>
+                      {clientName}
+                        </Link>
                     </TableCell>
                   </TableRow>
                 ) : (
                   <></>
-                )} */}
+                )}
                  {recordsList[index].caseworker !== "" ? (
                   <TableRow key={Math.random() * 1000}>
                     <TableCell
