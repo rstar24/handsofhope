@@ -33,11 +33,12 @@ const Calendar_ = (props: any) => {
 
   useEffect(() => {
     dispatch(doGetAll()).then((res: any) => {
+      console.log("res",res)
       const events = res.payload.map((key: any) => ({
-        id: key.appointmentId,
+        id: key.appointmentId ? key.appointmentId:key.reminderId,
         title: key.subject,
-        start: moment(key.date).toDate(),
-        end: moment(key.date).toDate(),
+        start: key.date ? moment(key.date).toDate():moment(key.reminderDate).toDate(),
+        end: key.date ? moment(key.date).toDate():moment(key.reminderDate).toDate(),
       }));
       setNewEvent(events);
 
@@ -48,7 +49,7 @@ const Calendar_ = (props: any) => {
       // }
     });
   }, [open]);
-
+  console.log("calendar-",newEvent)
   const showEvent = (e: any) => {
     setTitle(e.title);
     setStart(moment(new Date(e.start)).format(" ddd, DD MMM yyyy "));
