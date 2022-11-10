@@ -79,7 +79,7 @@ const View: FC = () => {
             Download file:{" "}
             <Link
               download={true}
-              href={`data:${actualAttachment.attachmentType};base64,${actualAttachment.file}`}
+              href={`data:${actualAttachment.attachmentType};base64,${actualAttachment.image}`}
               rel="noreferrer noopener"
             >
               {actualAttachment.participantImageName}

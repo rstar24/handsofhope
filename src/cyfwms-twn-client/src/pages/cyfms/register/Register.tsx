@@ -1,3 +1,4 @@
+import Checkbox from "../../../components/Checkbox";
 import {
   CYFSWMSNextButton,
   CYFSWMSSaveButton,
@@ -9,6 +10,7 @@ import CYFMSLayout from "../../../components/cyfms/CYFMSLayout";
 import { onKeyDown } from "../../../library/app";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import { handleEffect, handleSubmit } from "./register_";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { Box, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -126,7 +128,13 @@ const Register = (): ReactElement => {
           <div>
             <FileInput id="imageFile" value="Photograph" />
           </div>
-          <div></div>
+          <div>
+            <Checkbox
+              id="removeProfilePicture"
+              icon={<DeleteIcon />}
+              checkedIcon={<DeleteIcon color="error" />}
+            />
+          </div>
         </div>
         <Box sx={{ justifyContent: "right" }}>
           {isInitiated ? (
