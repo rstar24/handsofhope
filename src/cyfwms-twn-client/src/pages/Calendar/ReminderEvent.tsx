@@ -109,7 +109,7 @@ function ReminderEvent(): ReactElement {
                 )}
                 {val.cgProviderId && (
                   <Link
-                    to="../initial_contact/reminders"
+                    to="../cg/reminders"
                     onClick={() => {
                       handleSelected(val.reminderId, val.cgProviderId);
                       dispatch(
@@ -125,7 +125,7 @@ function ReminderEvent(): ReactElement {
                 )}
               </TableCell>
               <TableCell sx={{ color: "black" }} align="center" size="small">
-                {val.date}
+                {val.reminderDate}
               </TableCell>
               <TableCell sx={{ color: "black" }} align="center" size="small">
                 {val.subject}

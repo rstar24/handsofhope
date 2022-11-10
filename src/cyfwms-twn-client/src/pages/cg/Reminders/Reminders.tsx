@@ -194,7 +194,7 @@ function Reminders(props: any) {
                         align="center"
                         size="small"
                       >
-                        {val.date}
+                        {val.reminderDate}
                       </TableCell>
                       <TableCell
                         sx={{ color: "black" }}
