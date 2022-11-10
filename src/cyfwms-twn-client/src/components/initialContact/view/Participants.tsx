@@ -35,9 +35,7 @@ const Participants = (): ReactElement => {
             <Table sx={{ maxWidth: 900 }} aria-label="Participants">
               <TableBody sx={{ "& > tr > td": { border: 0, p: 0 } }}>
                 {Object.entries(recordsList[index]).map((t: any, k: any) => {
-                  if (
-                   true
-                  ) {
+                  if (k !==0 && k !==1 && t[1] !==""){
                     return (
                       <TableRow key={Math.random() * 1000}>
                         <TableCell
