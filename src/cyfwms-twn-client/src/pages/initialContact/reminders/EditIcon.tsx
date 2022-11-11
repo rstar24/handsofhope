@@ -126,7 +126,7 @@ const EditIcon = ({
       >
         <Box sx={{ ...style, width: 400, paddingLeft: "5%" }}>
           <p id="parent-modal-description">
-            Are you sure ? You want to delete ?
+          Are you sure you want to delete this record?
           </p>
           <Box paddingLeft={7}>
             <Button onClick={handleDelete}>Yes</Button>
