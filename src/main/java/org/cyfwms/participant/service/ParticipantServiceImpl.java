@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 @Service
 @AllArgsConstructor
@@ -75,32 +75,33 @@ public class ParticipantServiceImpl implements ParticipantService {
 
     private void mapParticipantImageData(
             ParticipantIdentityDto participantIdentityDto,
-                ParticipantAttachmentDto participantAttachmentDto){
-            if (participantAttachmentDto.getAttachment()!=null) {
-                participantIdentityDto.setParticipantImageId(
-                        participantAttachmentDto.getParticipantAttachmentId());
-                participantIdentityDto.setParticipantImageName(
-                        participantAttachmentDto.getAttachment().getAttachmentName());
-                participantIdentityDto.setImage(
-                        participantAttachmentDto.getAttachment().getAttachmentContents());
-                participantIdentityDto.setParticipantImageType(
-                        participantAttachmentDto.getAttachmentType());
-            }
+            ParticipantAttachmentDto participantAttachmentDto) {
+        if (participantAttachmentDto.getAttachment() != null) {
+            participantIdentityDto.setParticipantImageId(
+                    participantAttachmentDto.getParticipantAttachmentId());
+            participantIdentityDto.setParticipantImageName(
+                    participantAttachmentDto.getAttachment().getAttachmentName());
+            participantIdentityDto.setImage(
+                    participantAttachmentDto.getAttachment().getAttachmentContents());
+            participantIdentityDto.setParticipantImageType(
+                    participantAttachmentDto.getAttachmentType());
+        }
     }
 
     @Override
     public ParticipantIdentityDto saveParticipantIdentity(ParticipantIdentityDto participantIdentityDto, MultipartFile multipartFile) throws IOException {
-       log.info("Inside SaveParticipantIdentity");
+        log.info("Inside SaveParticipantIdentity");
         ParticipantAttachment participantAttachment =
                 new ParticipantAttachment();
-        ParticipantAttachmentDto participantAttachmentDto=null;
+
+        ParticipantAttachmentDto participantAttachmentDto = null;
         Participant participant = null;
         List<ParticipantAttachment> participantAttachmentList = null;
-        if(multipartFile != null) {
+        if (multipartFile != null) {
             validateParticipantImage(multipartFile);
-             participantAttachmentDto =
+            participantAttachmentDto =
                     populateParticipantAttachmentData(multipartFile);
-            if(participantAttachmentDto != null){
+            if (participantAttachmentDto != null) {
                 BeanUtils.copyProperties(participantAttachmentDto,
                         participantAttachment);
                 participantAttachmentList = new ArrayList<>();
@@ -115,13 +116,12 @@ public class ParticipantServiceImpl implements ParticipantService {
             participant.setStatus("ACTIVE");
             participant.setReferenceId(
                     referenceIDGeneratorUtil.generateParticipantReferenceID());
-        }
-        else {
+        } else {
             participant = readParticipant(participantID);
             BeanUtils.copyProperties(participantIdentityDto, participant);
             participant.setParticipantId(participantID);
 
-            if(participantAttachmentList != null) {
+            if (participantAttachmentList != null) {
                 for (int i = 0; i < participant.getParticipantAttachmentList().size(); i++) {
                     participantAttachmentDto.setParticipantAttachmentId(participant.getParticipantAttachmentList().get(i).getParticipantAttachmentId());
                     participantAttachmentDto.getAttachment().setAttachmentId(participant.getParticipantAttachmentList().get(i).getAttachment().getAttachmentId());
@@ -130,8 +130,15 @@ public class ParticipantServiceImpl implements ParticipantService {
                 BeanUtils.copyProperties(participantAttachmentDto,
                         participantAttachment);
             }
+
+            if (participantIdentityDto.getRemoveProfilePicture().equals(true)) {
+                participantAttachmentDto = removeProfilePicture(participant);
+                BeanUtils.copyProperties(participantAttachmentDto, participantAttachment);
+                participantAttachmentList = new ArrayList<>();
+                participantAttachmentList.add(participantAttachment);
+            }
         }
-        if(participantAttachmentList != null){
+        if (participantAttachmentList != null) {
             participant.setParticipantAttachmentList(participantAttachmentList);
         }
         participant = participantRepository.save(participant);
@@ -141,6 +148,19 @@ public class ParticipantServiceImpl implements ParticipantService {
         return participantIdentityDto;
     }
 
+    private ParticipantAttachmentDto removeProfilePicture(Participant participant) {
+        ParticipantAttachmentDto participantAttachmentDto = null;
+        participantAttachmentDto = new ParticipantAttachmentDto();
+        participantAttachmentDto.setStatus("INACTIVE");
+        for (int i = 0; i < participant.getParticipantAttachmentList().size(); i++) {
+            participantAttachmentDto.setParticipantAttachmentId(participant.getParticipantAttachmentList().get(i).getParticipantAttachmentId());
+            participantAttachmentDto.setName(participant.getParticipantAttachmentList().get(i).getName());
+            participantAttachmentDto.setType(participant.getParticipantAttachmentList().get(i).getType());
+            participantAttachmentDto.setAttachmentType(participant.getParticipantAttachmentList().get(i).getAttachmentType());
+        }
+        return participantAttachmentDto;
+    }
+
     private void validateParticipantImage(MultipartFile multipartFile) {
         boolean invalidParticipantImage = true;
         if (multipartFile.getContentType().equals("image/jpg")
@@ -148,31 +168,29 @@ public class ParticipantServiceImpl implements ParticipantService {
                 || multipartFile.getContentType().equals("image/jpeg")) {
             invalidParticipantImage = false;
         }
-        if(invalidParticipantImage){
+        if (invalidParticipantImage) {
             throw new ResponseStatusException(
-                    INTERNAL_SERVER_ERROR,"JPG PNG and JPEG content type are allowed");
+                    INTERNAL_SERVER_ERROR, "JPG PNG and JPEG content type are allowed");
         }
     }
 
 
     private ParticipantAttachmentDto populateParticipantAttachmentData(
-                           MultipartFile multipartFile) throws IOException {
+            MultipartFile multipartFile) throws IOException {
         ParticipantAttachmentDto participantAttachmentDto = null;
-        if(multipartFile !=null){
+        if (multipartFile != null) {
             participantAttachmentDto = new ParticipantAttachmentDto();
             Attachment attachment = new Attachment();
             attachment.setAttachmentName(multipartFile.getOriginalFilename());
             attachment.setDocumentType(multipartFile.getContentType());
             attachment.setAttachmentContents(multipartFile.getBytes());
             attachment.setAttachmentStatus("ACTIVE");
+            participantAttachmentDto.setType(multipartFile.getContentType());
+            participantAttachmentDto.setName(multipartFile.getOriginalFilename());
             participantAttachmentDto.setAttachment(attachment);
             participantAttachmentDto.setAttachmentType("PARTICIPANT_PROFILE_PIC");
-            if(participantAttachmentDto.getProfilePic().equals(true)){
-                participantAttachmentDto.setStatus("INACTIVE");
-            }
-            else {
-                participantAttachmentDto.setStatus("ACTIVE");
-            }
+            participantAttachmentDto.setStatus("ACTIVE");
+
         }
         return participantAttachmentDto;
     }

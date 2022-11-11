@@ -25,6 +25,5 @@ public class ParticipantAttachmentDto {
     private LocalDateTime lastwritten;
     private String attachmentType;
 
-    private Boolean profilePic=false;
 
 }

@@ -365,6 +365,7 @@ public class ParticipantController {
         participantIdentityDto.setDateOfBirth(LocalDate.parse(params.get("dateOfBirth")));
         participantIdentityDto.setGender(params.get("gender"));
         participantIdentityDto.setMaritalStatus(params.get("maritalStatus"));
+        participantIdentityDto.setRemoveProfilePicture(new Boolean(params.get("removeProfilePicture")));
         log.info("Exit ParticipantFormData");
     }
 

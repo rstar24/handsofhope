@@ -37,6 +37,8 @@ public class ParticipantIdentityDto {
     @Setter
     private String participantImageName;
     @Getter @Setter
+    private Boolean removeProfilePicture=false;
+    @Getter @Setter
     private byte[] image;
 
 }
