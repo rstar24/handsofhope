@@ -49,7 +49,9 @@ public class CareGiverReminderServiceImpl implements CareGiverReminderService {
         List<CareGiverReminderDto> careGiverReminderDtoList=new ArrayList<>();
         CareGiverReminder  careGiverReminder = new CareGiverReminder();
         if (careGiverReminderDto.getCgReminderId() == 0) {
-            careGiverReminderDtoList =checkFrequency(careGiverReminderDto);
+            if (!careGiverReminderDto.getReminderDto().getFrequency().isEmpty()) {
+                careGiverReminderDtoList = checkFrequency(careGiverReminderDto);
+            }
             reminder = new Reminder();
             BeanUtils.copyProperties(careGiverReminderDto.getReminderDto(), reminder);
             BeanUtils.copyProperties(careGiverReminderDto, careGiverReminder);

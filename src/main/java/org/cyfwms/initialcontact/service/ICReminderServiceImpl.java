@@ -50,7 +50,9 @@ public class ICReminderServiceImpl implements ICReminderService {
         List<ICReminderDto> icReminderDtoList =new ArrayList<>();
         ICReminder icReminder = new ICReminder();
         if (icReminderDto.getIcReminderId() == 0) {
+            if (!icReminderDto.getReminderDto().getFrequency().isEmpty()){
             icReminderDtoList =checkFrequency(icReminderDto);
+           }
             reminder = new Reminder();
             BeanUtils.copyProperties(icReminderDto.getReminderDto(), reminder);
             BeanUtils.copyProperties(icReminderDto, icReminder);
@@ -89,7 +91,6 @@ public class ICReminderServiceImpl implements ICReminderService {
             n = (difference+1)/7;
             rem = n%7;
             if (rem>0){
-                n=n+1;
             }
             counter=7;
         } else if (icReminderDto.getReminderDto().getFrequency().equalsIgnoreCase("Monthly")) {
@@ -129,12 +130,12 @@ public class ICReminderServiceImpl implements ICReminderService {
 
             ReminderDto reminderDto = new ReminderDto();
 
-            ICReminderDto participantReminderDto1=new ICReminderDto();
-            BeanUtils.copyProperties(icReminder,participantReminderDto1);
+            ICReminderDto iCReminderDto1=new ICReminderDto();
+            BeanUtils.copyProperties(icReminder,iCReminderDto1);
             BeanUtils.copyProperties(reminder,reminderDto);
             reminderDto.setReminderId(icReminder.getReminder().getReminderId());
-            participantReminderDto1.setReminderDto(reminderDto);
-            iCReminderDtoList.add(participantReminderDto1);
+            iCReminderDto1.setReminderDto(reminderDto);
+            iCReminderDtoList.add(iCReminderDto1);
             if(i==n-1 && rem>0){
                 cnt =cnt+1;
 

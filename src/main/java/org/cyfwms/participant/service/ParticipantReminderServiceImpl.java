@@ -76,7 +76,9 @@ public class ParticipantReminderServiceImpl implements ParticipantReminderServic
         List<ParticipantReminderDto> participantReminderDtoList=new ArrayList<>();
         ParticipantReminder participantReminder = new ParticipantReminder();
         if (participantReminderDto.getParticipantReminderId() == 0) {
-            participantReminderDtoList =checkFrequency(participantReminderDto);
+            if (!participantReminderDto.getReminderDto().getFrequency().isEmpty()) {
+                participantReminderDtoList = checkFrequency(participantReminderDto);
+            }
             reminder = new Reminder();
             BeanUtils.copyProperties(participantReminderDto.getReminderDto(), reminder);
             BeanUtils.copyProperties(participantReminderDto, participantReminder);
