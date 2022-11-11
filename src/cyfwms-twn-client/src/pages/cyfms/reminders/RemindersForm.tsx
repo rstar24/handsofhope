@@ -7,14 +7,20 @@ import {
 } from "../../../features/cyfms/reminders/slice";
 import { onKeyDown } from "../../../library/app";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
-import { Box,FormControl, FormLabel, OutlinedInput, Typography } from "@mui/material";
+import {
+  Box,
+  FormControl,
+  FormLabel,
+  OutlinedInput,
+  Typography,
+} from "@mui/material";
 import React, { useState } from "react";
 import type { FormEvent } from "react";
 import EditIcon from "./EditIcon";
-import Input from "../../../components/Input";
-import CYFMSDropdown from "../../../components/cyfms/CYFMSDropdown";
 import SearchClientName from "../../../components/cyfms/searchClient/SearchClientName";
 import SearchIcon from "@mui/icons-material/Search";
+import ICInput from "../../../components/initialContact/ICInput";
+import ICDropdown from "../../../components/initialContact/ICDropdown";
 const RemindersForm = ({
   setAddNew,
   setDisabled,
@@ -35,36 +41,35 @@ const RemindersForm = ({
   };
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
-    if(!click){
-    const form = e.currentTarget as HTMLFormElement;
-    const formData: Data = {
-      participantReminderId: data.participantReminderId,
-      participantId: state.data.participantId,
-      referenceId:state.data.referenceId,
-      reminderDto: {
-        reminderId: data.reminderDto.reminderId,
-        assignedTo: form.assignedTo.value,
-        regarding: id,
-        subject: form.subject.value,
-        status: form.status.value,
-        reminderDate: form.reminderDate.value,
-        endDate: form.endDate.value,
-        description: form.description.value,
-        frequency: form.frequency.value,
-      },  
-    };
-    dispatch(doPost(formData))
-      .unwrap()
-      .then(() => {
-       
-        console.log("CyfmsReminders POST backend API was successful!");
-        dispatch(doSearch({ id: state.data.participantId, data: "" }));
-        setAddNew(false);
-      })
-      .catch((err: any) => {
-        console.log("CyfmsReminders POST backend API didn't work!");
-        console.log(err);
-      });
+    if (!click) {
+      const form = e.currentTarget as HTMLFormElement;
+      const formData: Data = {
+        participantReminderId: data.participantReminderId,
+        participantId: state.data.participantId,
+        referenceId: state.data.referenceId,
+        reminderDto: {
+          reminderId: data.reminderDto.reminderId,
+          assignedTo: form.assignedTo.value,
+          regarding: id,
+          subject: form.subject.value,
+          status: form.status.value,
+          reminderDate: form.reminderDate.value,
+          endDate: form.endDate.value,
+          description: form.description.value,
+          frequency: form.frequency.value,
+        },
+      };
+      dispatch(doPost(formData))
+        .unwrap()
+        .then(() => {
+          console.log("CyfmsReminders POST backend API was successful!");
+          dispatch(doSearch({ id: state.data.participantId, data: "" }));
+          setAddNew(false);
+        })
+        .catch((err: any) => {
+          console.log("CyfmsReminders POST backend API didn't work!");
+          console.log(err);
+        });
     }
   };
 
@@ -95,18 +100,16 @@ const RemindersForm = ({
             />
           </Box>
         )}
-          <Typography variant="body1">
-        <b>Task information</b>
-      </Typography>
-      {disabled && (
-        <Typography sx={{ p: 1 }}>
-          Reference ID:{data.referenceId}
+        <Typography variant="body1">
+          <b>Task information</b>
         </Typography>
-      )}
+        {disabled && (
+          <Typography sx={{ p: 1 }}>Reference ID:{data.referenceId}</Typography>
+        )}
 
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <Input
+            <ICInput
               id="reminderDate"
               value="Reminder Date"
               type="date"
@@ -115,8 +118,8 @@ const RemindersForm = ({
               required
             />
           </Box>
-          <Box sx={{ flexBasis: 0, flexGrow: 1}}>
-            <Input
+          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+            <ICInput
               id="assignedTo"
               value="Assigned to"
               autofill={data.reminderDto.assignedTo}
@@ -126,34 +129,35 @@ const RemindersForm = ({
         </Box>
 
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
-          <Box sx={{ flexBasis: 0, flexGrow: 1}}>
-          <FormControl
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              flexWrap: "wrap",
-            }}
-          >
-            <FormLabel sx={{ p: 1, flexBasis: 0, flexGrow: 1, color: "black" }}>
-             Regarding
-            </FormLabel>
-            <OutlinedInput
+          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+            <FormControl
               sx={{
-                borderRadius: 0,
-                flexBasis: 0,
-                flexGrow: 2,
+                display: "flex",
+                flexDirection: "row",
+                flexWrap: "wrap",
               }}
-              size="small"
-              readOnly={disabled}
-              value={clientName}
-              style={{ backgroundColor: "#dfdada" }}
-              endAdornment={<SearchIcon onClick={handleSearch} />}
-              required
-            />
-          </FormControl>
+            >
+              <FormLabel
+                sx={{ p: 1, flexBasis: 0, flexGrow: 1, color: "black" }}
+              >
+                Regarding
+              </FormLabel>
+              <OutlinedInput
+                sx={{
+                  borderRadius: 0,
+                  flexBasis: 0,
+                  flexGrow: 2,
+                }}
+                size="small"
+                readOnly={disabled}
+                value={clientName}
+                style={{ backgroundColor: "#dfdada" }}
+                endAdornment={<SearchIcon onClick={handleSearch} />}
+              />
+            </FormControl>
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <Input
+            <ICInput
               id="subject"
               value="Subject"
               type="text"
@@ -165,7 +169,7 @@ const RemindersForm = ({
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CYFMSDropdown
+            <ICDropdown
               id="status"
               value="Status"
               required
@@ -178,13 +182,7 @@ const RemindersForm = ({
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
         </Box>
-        <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
-          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <Typography variant="body1">
-              <b>Recurrance</b>
-            </Typography>
-          </Box>
-        </Box>
+
         <ICTextArea
           id="description"
           value="Description"
@@ -192,9 +190,10 @@ const RemindersForm = ({
           autofill={data.reminderDto.description}
           readOnly={disabled}
         />
+        <h4>Reccurance</h4>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CYFMSDropdown
+            <ICDropdown
               id="frequency"
               value="Frequency"
               autofill={data.reminderDto.frequency}
@@ -202,25 +201,27 @@ const RemindersForm = ({
               optionsList={Object.values(frequency).map(
                 (status: any) => status.en
               )}
+              required
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <Input
+            <ICInput
               id="endDate"
               value="End Date"
               type="date"
               autofill={data.reminderDto.endDate}
               readOnly={disabled}
+              required
             />
           </Box>
           {click && (
-          <SearchClientName
-            click={click}
-            setClick={setClick}
-            moduleName="cyfmsReminder"
-            searchId="cyfmsReminderId"
-          />
-        )}
+            <SearchClientName
+              click={click}
+              setClick={setClick}
+              moduleName="cyfmsReminder"
+              searchId="cyfmsReminderId"
+            />
+          )}
         </Box>
         <Box sx={{ display: "flex", justifyContent: "right" }}>
           <CYFSWMSNextButton disabled={disabled} />

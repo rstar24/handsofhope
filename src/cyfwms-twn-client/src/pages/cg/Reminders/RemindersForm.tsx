@@ -10,15 +10,15 @@ import {
   FormLabel,
   OutlinedInput,
   Typography,
-  FormControl
+  FormControl,
 } from "@mui/material";
 import React, { useState } from "react";
 import type { FormEvent } from "react";
 
 import EditIcon from "./EditIcon";
-import Input from "../../../components/Input";
-import CYFMSDropdown from "../../../components/cyfms/CYFMSDropdown";
 import SearchClientName from "../../../components/cyfms/searchClient/SearchClientName";
+import ICInput from "../../../components/initialContact/ICInput";
+import ICDropdown from "../../../components/initialContact/ICDropdown";
 
 const RemindersForm = ({
   setAddNew,
@@ -36,11 +36,11 @@ const RemindersForm = ({
     console.log("click search");
     setClick(true);
   };
- 
+
   const { reminderstatus, frequency } = useAppSelector(
     (state) => state.codetable
   );
- 
+
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
 
@@ -64,7 +64,7 @@ const RemindersForm = ({
           frequency: form.frequency.value,
         },
       };
-    
+
       dispatch(doPost(formData))
         .unwrap()
         .then(() => {
@@ -113,13 +113,11 @@ const RemindersForm = ({
         <b>Task information</b>
       </Typography>
       {disabled && (
-        <Typography sx={{ p: 1 }}>
-          Reference Id:{data.referenceId}
-        </Typography>
+        <Typography sx={{ p: 1 }}>Reference Id:{data.referenceId}</Typography>
       )}
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
-        <Box sx={{ flexBasis: 0.9, flexGrow: 1.1 }}>
-          <Input
+        <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+          <ICInput
             id="reminderDate"
             value="Reminder Date"
             type="date"
@@ -128,8 +126,8 @@ const RemindersForm = ({
             required
           />
         </Box>
-        <Box sx={{ flexBasis: 0.99, flexGrow: 1.1 }}>
-          <Input
+        <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+          <ICInput
             id="assignedTo"
             value="Assigned to"
             autofill={data.reminderDto.assignedTo}
@@ -139,7 +137,7 @@ const RemindersForm = ({
       </Box>
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-        <FormControl
+          <FormControl
             sx={{
               display: "flex",
               flexDirection: "row",
@@ -147,7 +145,7 @@ const RemindersForm = ({
             }}
           >
             <FormLabel sx={{ p: 1, flexBasis: 0, flexGrow: 1, color: "black" }}>
-             Regarding
+              Regarding
             </FormLabel>
             <OutlinedInput
               sx={{
@@ -163,11 +161,9 @@ const RemindersForm = ({
               required
             />
           </FormControl>
-
-          
         </Box>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-          <Input
+          <ICInput
             id="subject"
             value="Subject"
             type="text"
@@ -179,7 +175,7 @@ const RemindersForm = ({
       </Box>
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-          <CYFMSDropdown
+          <ICDropdown
             id="status"
             value="Status"
             required
@@ -207,7 +203,7 @@ const RemindersForm = ({
       </Typography>
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-          <CYFMSDropdown
+          <ICDropdown
             id="frequency"
             value="Frequency"
             autofill={data.reminderDto.status}
@@ -215,15 +211,17 @@ const RemindersForm = ({
             optionsList={Object.values(frequency).map(
               (status: any) => status.en
             )}
+            required
           />
         </Box>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-          <Input
+          <ICInput
             id="endDate"
             value="End Date"
             type="date"
             autofill={data.reminderDto.endDate}
             readOnly={disabled}
+            required
           />
         </Box>
         {click && (
