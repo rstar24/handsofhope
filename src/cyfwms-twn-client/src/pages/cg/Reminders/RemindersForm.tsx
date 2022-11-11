@@ -160,6 +160,7 @@ const RemindersForm = ({
               value={clientName}
               style={{ backgroundColor: "#dfdada" }}
               endAdornment={<SearchIcon onClick={handleSearch} />}
+              required
             />
           </FormControl>
 
@@ -214,7 +215,6 @@ const RemindersForm = ({
             optionsList={Object.values(frequency).map(
               (status: any) => status.en
             )}
-            required
           />
         </Box>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
@@ -224,7 +224,6 @@ const RemindersForm = ({
             type="date"
             autofill={data.reminderDto.endDate}
             readOnly={disabled}
-            required
           />
         </Box>
         {click && (

@@ -99,6 +99,9 @@ const ReminderForm = ({
             />
           </Box>
         )}
+        <Typography variant="body1">
+        <b>Task information</b>
+      </Typography>
         {disabled && (
         <Typography sx={{ p: 1 }}>
           File No:{state.getData.fileNumber}
@@ -149,6 +152,7 @@ const ReminderForm = ({
               value={clientName}
               style={{ backgroundColor: "#dfdada" }}
               endAdornment={<SearchIcon onClick={handleSearch} />}
+              required
             />
           </FormControl>
         </Box>
@@ -205,7 +209,6 @@ const ReminderForm = ({
               id="endDate"
               value="End Date"
               type="date"
-              required
               autofill={data.reminderDto.endDate}
               readOnly={disabled}
             />
