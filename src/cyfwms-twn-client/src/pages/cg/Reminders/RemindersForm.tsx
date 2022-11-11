@@ -114,7 +114,7 @@ const RemindersForm = ({
       </Typography>
       {disabled && (
         <Typography sx={{ p: 1 }}>
-          Related File No:{data.cgReminderId}
+          Reference Id:{data.referenceId}
         </Typography>
       )}
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>

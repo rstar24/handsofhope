@@ -40,6 +40,7 @@ const RemindersForm = ({
     const formData: Data = {
       participantReminderId: data.participantReminderId,
       participantId: state.data.participantId,
+      referenceId:state.data.referenceId,
       reminderDto: {
         reminderId: data.reminderDto.reminderId,
         assignedTo: form.assignedTo.value,
@@ -99,7 +100,7 @@ const RemindersForm = ({
       </Typography>
       {disabled && (
         <Typography sx={{ p: 1 }}>
-          Related File No:{data.participantReminderId}
+          Reference ID:{data.referenceId}
         </Typography>
       )}
 

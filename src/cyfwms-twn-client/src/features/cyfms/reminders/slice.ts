@@ -38,6 +38,7 @@ export interface Data {
   participantId: number;
 
   participantReminderId: number;
+  referenceId:number;
   reminderDto: {
     reminderId: number;
     assignedTo: string;
@@ -54,6 +55,7 @@ export interface Data {
 const emptyData: Data = {
   participantId: 0,
   participantReminderId: 0,
+  referenceId:0,
   reminderDto: {
     reminderId: 0,
     assignedTo: "",
