@@ -53,8 +53,8 @@ const View = (): ReactElement => {
           px: "1rem",
         }}
       >
-        <Typography variant="h5" alignSelf="center">
-         
+      <Typography variant="h5" alignSelf="center">
+          Reference Id: {state.cgCareProvider.getData.referenceId }
         </Typography>
         <Typography>
           <EditIcon

@@ -114,7 +114,7 @@ const Appointment : FC =(): ReactElement => {
                         fontSize: "1rem",
                       }}
                     >
-                      StartingDate
+                    Date
                     </TableCell>
                     <TableCell width="50%">
                       <Typography component="p" sx={{ whiteSpace: "pre-wrap" }}>
@@ -203,7 +203,7 @@ const Appointment : FC =(): ReactElement => {
                         fontSize: "1rem",
                       }}
                     >
-                      Client Name
+                      Client
                     </TableCell>
                     <TableCell width="50%">
                       <Typography component="p" sx={{ whiteSpace: "pre-wrap" }}>
@@ -295,7 +295,7 @@ const Appointment : FC =(): ReactElement => {
                         fontSize: "1rem",
                       }}
                     >
-                      EndDate
+                      End Date
                     </TableCell>
                     <TableCell width="50%">
                       <Typography component="p" sx={{ whiteSpace: "pre-wrap" }}>
@@ -306,7 +306,28 @@ const Appointment : FC =(): ReactElement => {
                 ) : (
                   <></>
                 )} 
-                
+                {recordsList[index].notes !== "" ? (
+                  <TableRow key={Math.random() * 1000}>
+                    <TableCell
+                      sx={{
+                        display: "flex",
+                        width: "50%",
+                        alignContent: "start",
+                        fontWeight: "bold",
+                        fontSize: "1rem",
+                      }}
+                    >
+                    Notes
+                    </TableCell>
+                    <TableCell width="50%">
+                      <Typography component="p" sx={{ whiteSpace: "pre-wrap" }}>
+                        {recordsList[index].notes}
+                      </Typography>
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  <></>
+                )} 
               </TableBody>
             </Table>
           </TableContainer>

@@ -146,6 +146,28 @@ const Reminders: FC = () => {
                 ) : (
                   <></>
                 )}
+                {recordsList[index].status !== "" ? (
+                  <TableRow key={Math.random() * 1000}>
+                    <TableCell
+                      sx={{
+                        display: "flex",
+                        width: "50%",
+                        alignContent: "start",
+                        fontWeight: "bold",
+                        fontSize: "1rem",
+                      }}
+                    >
+                      Status
+                    </TableCell>
+                    <TableCell width="50%">
+                      <Typography component="p" sx={{ whiteSpace: "pre-wrap" }}>
+                        {recordsList[index].status}
+                      </Typography>
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  <></>
+                )}
                 {recordsList[index].description !== "" ? (
                   <TableRow key={Math.random() * 1000}>
                     <TableCell
