@@ -54,13 +54,14 @@ const ICLayout = (props: {
                 value: "Participants",
                 route: "../participants",
               },
-              {
-                value: "Attachments",
-                route: "../attachments",
-              },
+             
               {
                 value: "Contact Notes",
                 route: "../contact_notes",
+              },
+              {
+                value: "Attachments",
+                route: "../attachments",
               },
               {
                 value: "Appointments",
