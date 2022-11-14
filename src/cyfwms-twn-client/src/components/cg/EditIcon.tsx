@@ -11,7 +11,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import type { ReactElement } from "react";
 import { doSearch } from "../../features/cg/contactNotes/slice";
-
+import { doGet as doGetCp, clean as cleanStateCp } from "../../features/cg/careProvider/slice";
+import { doGet as doGetCapacity ,clean as cleanStateCapacity } from "../../features/cg/capacity/slice";
+import { doGet as doGetCaregiver, cleanState as cleanStateCaregiver } from "../../features/cg/caregivers/slice"; 
+import { doGet as doGetContactNotes, cleanState as cleanStateContactNotes } from "../../features/cg/contactNotes/slice";
+import { doGet as doGetAttachment, clean as cleanStateAttachment } from "../../features/cg/attachments/slice";
+import { doGet as doGetAppointment , cleanState as cleanStateAppointment } from "../../features/cg/appointment/slice";
+import { doGet as doGetReminders, cleanState as cleanStateReminders } from "../../features/cg/reminders/slice";
 const style = {
   position: "absolute" as "absolute",
   top: "50%",
@@ -90,6 +96,13 @@ const EditIcon = (props: any): ReactElement => {
                 dispatch(unhideTabs(null));
                 dispatch(setEdit(true));
                 dispatch(setOpen(true));
+                dispatch(doGetCp(props.value));
+                dispatch(doGetCapacity(props.value));
+                dispatch(doGetCaregiver(props.value));
+                dispatch(doGetContactNotes(props.value));
+                dispatch(doGetAttachment(props.value));
+                dispatch(doGetAppointment(props.value));
+                dispatch(doGetReminders(props.value));
               })
               .catch((err) => {
                 console.log("Unable to edit!");
@@ -136,7 +149,15 @@ const EditIcon = (props: any): ReactElement => {
                   .then(() => {
                     dispatch(spliceRecord(props.cgProviderId));
                     setOpenModel(false);
-                    //dispatch(cleanFileDetails(null));
+                  
+                    dispatch(cleanStateCp(null));
+                    dispatch(cleanStateCapacity(null));
+                    dispatch(cleanStateCaregiver(null));
+                    dispatch(cleanStateContactNotes(null));
+                    dispatch(cleanStateAttachment(null));
+                    dispatch(cleanStateAppointment(null));
+                    dispatch(cleanStateReminders(null));
+
                   })
                   .catch((err) => {
                     console.log(err);

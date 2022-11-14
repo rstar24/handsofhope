@@ -7,11 +7,11 @@ import { Box, Button, IconButton, Modal, Menu, MenuItem } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 import type { ReactElement } from "react";
-import { cleanState } from "../../features/cpa/participant/slice";
-import { doGet } from "../../features/cpa/culturalProgramActivity/slice";
+import { doGet ,cleanState as cleanStateCPA } from "../../features/cpa/culturalProgramActivity/slice";
 import { doDelete } from "../../features/cpa/all/slice";
 import { spliceRecord } from "../../features/cpa/search/slice";
-
+import { doGet as doGetAttachment,clean as cleanStateAttachment } from "../../features/cpa/attachments/slice";
+import { doGet as doGetParticipants ,cleanState as cleanStateParticipants} from "../../features/cpa/participant/slice";
 const style = {
   position: "absolute" as "absolute",
   top: "50%",
@@ -91,6 +91,9 @@ const EditIcon = (props: any): ReactElement => {
                 dispatch(unhideTabs(null));
                 dispatch(setEdit(true));
                 dispatch(setOpen(true));
+                dispatch(doGetAttachment(props.value));
+                dispatch(doGetParticipants(props.value));
+                dispatch(doGet(props.value))
               })
               .catch((err) => {
                 console.log("Unable to edit!");
@@ -135,8 +138,9 @@ const EditIcon = (props: any): ReactElement => {
                   .then(() => {
                     dispatch(spliceRecord(props.referenceID));
                     setOpenModel(false);
-                    dispatch(cleanState(null));
-                    dispatch(cleanState(null));
+                    dispatch(cleanStateCPA(null));
+                    dispatch(cleanStateAttachment(null));
+                    dispatch(cleanStateParticipants(null));
                   })
                   .catch((err) => {
                     console.log(err);
