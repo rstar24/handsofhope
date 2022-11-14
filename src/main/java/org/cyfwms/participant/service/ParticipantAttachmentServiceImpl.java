@@ -1,21 +1,20 @@
 package org.cyfwms.participant.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.cyfwms.common.entity.Attachment;
 import org.cyfwms.common.exception.I18Constants;
 import org.cyfwms.common.exception.MessageUtil;
 import org.cyfwms.common.exception.NoSuchElementFoundException;
-import lombok.extern.slf4j.Slf4j;
 import org.cyfwms.participant.dto.ParticipantAttachmentDto;
 import org.cyfwms.participant.entity.ParticipantAttachment;
-import lombok.AllArgsConstructor;
 import org.cyfwms.participant.repository.ParticipantAttachmentRepo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -156,6 +155,16 @@ public class ParticipantAttachmentServiceImpl implements ParticipantAttachmentSe
         }
         log.info("Exit GetOneFiles ParticipantAttachment");
         return participantAttachmentDto;
+    }
+
+    @Override
+    public byte[] downloadOne(Long participantAttachmentId) {
+        ParticipantAttachment participantAttachment=participantAttachmentRepo.findById(participantAttachmentId).
+                filter(active->active.getStatus().equalsIgnoreCase("ACTIVE")).orElseThrow(() -> new NoSuchElementFoundException(messageUtil.getLocalMessage(
+                        I18Constants.NO_ITEM_FOUND.getKey(), String.valueOf(participantAttachmentId))));
+
+        byte [] downloadFile=participantAttachment.getAttachment().getAttachmentContents();
+        return downloadFile;
     }
 
     private ParticipantAttachment readParticipantAttachment(long participantAttachmentId) {

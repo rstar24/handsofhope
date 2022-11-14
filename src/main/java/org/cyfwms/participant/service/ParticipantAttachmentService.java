@@ -19,5 +19,7 @@ public interface ParticipantAttachmentService {
     List<ParticipantAttachmentDto> getAllFiles(Long participantId);
 
     ParticipantAttachmentDto getOneFile(Long participantAttachmentId);
+
+    byte[] downloadOne(Long participantAttachmentId);
 }
 
