@@ -95,7 +95,7 @@ const Capacity = (): ReactElement => {
           ) : (
             <></>
           )}
-          {(data.maximumCap - data.currUtil) !== 0 ? (
+          {(data.maximumCap - data.currUtil!== 0 || data.maximumCap-data.currUtil===0) ? (
             <TableRow>
               <TableCell
                 sx={{
