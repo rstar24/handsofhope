@@ -34,20 +34,21 @@ function Reminders(props: any) {
   const data = useAppSelector((state) => state.cgReminder.record2);
   const [addNew, setAddNew] = useState(false);
   const [disabled, setDisabled] = useState(false);
+  const calendar = useAppSelector((state)=>state.calendarAppointment)
 
   const [value, setValue] = useState("");
 
   useEffect(() => {
     dispatch(doGetFrequency())
     dispatch((doGetReminderStatus())).then(() => {
-      dispatch(
-        doSearch({
-          id: state1.data.id ? state1.data.id : state1.getData.id,
-          data: "",
-        })
-      )
-        .unwrap()
-        .catch((err) => {});
+      if(!calendar.calendar){
+        dispatch(
+          doSearch({
+            id: state1.data.id ? state1.data.id : state1.getData.id,
+            data: "",
+          })
+        )
+      }
     });
   }, [addNew]);
 

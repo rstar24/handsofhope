@@ -33,7 +33,6 @@ const Calendar_ = (props: any) => {
 
   useEffect(() => {
     dispatch(doGetAll()).then((res: any) => {
-      console.log("res",res)
       const events = res.payload.map((key: any) => ({
         id: key.appointmentId ? key.appointmentId:key.reminderId,
         title: key.subject,
@@ -42,14 +41,10 @@ const Calendar_ = (props: any) => {
       }));
       setNewEvent(events);
 
-      // for (var i = 0; i < res.payload.length; i++) {
-      //   if (res.payload[i].start === moment(new Date()).format("yyyy-MM-DD")) {
-      //     setTitle(res.payload[i].title);
-      //   }
-      // }
+     
     });
   }, [open]);
-  console.log("calendar-",newEvent)
+  
   const showEvent = (e: any) => {
     setTitle(e.title);
     setStart(moment(new Date(e.start)).format(" ddd, DD MMM yyyy "));
@@ -66,7 +61,6 @@ const Calendar_ = (props: any) => {
 
   const selectedSlot = (slotInfo: any) => {
     setSelectedDate(moment(slotInfo.start).format("DD/MM/yyyy"))
-    //slotInfo.start
     dispatch(doGetAppointments(moment(slotInfo.start).format("yyyy-MM-DD")));
     dispatch(doGetByDate(moment(slotInfo.start).format("yyyy-MM-DD")));
   };

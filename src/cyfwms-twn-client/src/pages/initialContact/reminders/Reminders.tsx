@@ -28,7 +28,7 @@ function Reminders(props: any) {
   const { reminderstatus,  frequency } = useAppSelector((state) => state.codetable);
   const [addNew, setAddNew] = useState(false);
   const [disabled, setDisabled] = useState(false);
-
+  const calendar = useAppSelector((state)=>state.calendarAppointment)
   const data = useAppSelector((state) => state.icReminder.record2);
 
   const [value, setValue] = useState("");
@@ -36,9 +36,12 @@ function Reminders(props: any) {
   useEffect(() => {
     dispatch(doGetReminderStatus()).then(()=>{
       dispatch(doGetFrequency());
-      dispatch(doSearch({ id: state.fileDetailsId, data: "" }))
-      .unwrap()
-      .catch((err) => {});
+      if(!calendar.calendar){
+        dispatch(doSearch({ id: state.fileDetailsId, data: "" }))
+        .unwrap()
+        .catch((err) => {});
+      }
+     
 
     });
   }, [addNew]);
