@@ -67,12 +67,10 @@ const CareProvider: FC = () => {
         }
         onKeyDown={onKeyDown}
       >
-        {state.getData.referenceId! >= 0 ? (
+        {state.getData.referenceId !== 0 && (
           <Typography paddingLeft={1}>
             Reference ID : {state.getData.referenceId}
           </Typography>
-        ) : (
-          <></>
         )}
         <div>
           <div>

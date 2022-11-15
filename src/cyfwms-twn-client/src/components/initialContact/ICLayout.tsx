@@ -27,7 +27,7 @@ const ICLayout = (props: {
           gap: { xs: "1rem 0", md: undefined },
         }}
       >
-        <Box sx={{ flex: "1 1 0" }}>
+        <Box sx={{ flex: "1 1 0", height: 400, overflowY: "auto" }}>
           <NavBar
             tabs={[
               {
