@@ -10,5 +10,8 @@ import lombok.*;
 public class ICParticipantSearchCriteriaDto {
     @Getter
     @Setter
+    private Long fileDetailsId;
+    @Getter
+    @Setter
     private String data;
 }

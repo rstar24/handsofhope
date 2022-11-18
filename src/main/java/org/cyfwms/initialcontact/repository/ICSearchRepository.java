@@ -40,7 +40,7 @@ public class ICSearchRepository {
                         .replace("%", "!%")
                         .replace("_", "!_")
                         .replace("[", "![");
-                        querySBuff.append(" AND p.clientname LIKE ?");
+                        querySBuff.append(" AND CONCAT(firstname,' ', surname) LIKE ?");
                 argsObjectList.add(clientName + "%");
             }
             Long fileNumber = searchCriteria.getFileNumber();

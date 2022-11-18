@@ -29,8 +29,13 @@ public class ICParticipantSearchRepository {
     private StringBuffer createSearchQuery(ICParticipantSearchCriteriaDto iCParticipantSearchCriteriaDto, List<Object> argsObjectList) {
         StringBuffer  querySBuff = new StringBuffer();
         String data=iCParticipantSearchCriteriaDto.getData();
+        Long fileDetailsId=iCParticipantSearchCriteriaDto.getFileDetailsId();
         querySBuff.append("select p.icparticipantid ,p.filedetailsid , CONCAT(firstname,' ', surname) AS fullName, p.role,p.notes ");
         querySBuff.append("from icparticipant p  left join participant p2 on p.participantid = p2.participantid where  p.status='ACTIVE'");
+        if (fileDetailsId != null) {
+            querySBuff.append(" AND p.filedetailsid = ?");
+            argsObjectList.add(fileDetailsId);
+        }
         if (data != null && !data.trim().isEmpty()) {
             data = data.trim()
                     .replace("!", "!!")
@@ -42,6 +47,9 @@ public class ICParticipantSearchRepository {
             argsObjectList.add("%" +data + "%");
             argsObjectList.add("%" +data + "%");
         }
+        else {
+            querySBuff.append(" AND p.filedetailsid = ?  ORDER BY p.creationdatetime desc ");
+            argsObjectList.add(fileDetailsId);}
         return querySBuff;
     }
 }

@@ -240,11 +240,13 @@ public class TWNInitialContactController {
         return iCSearchReminderService.searchICReminder(iCSearchReminderDto);
     }
 
-    @GetMapping(value = { "/participantICSearch/{data}" }, produces = "application/json")
+    @GetMapping(value = { "/participantICSearch/{filedetailsid}/{data}" }, produces = "application/json")
     @ApiOperation("Search ICParticipant")
     @ResponseStatus(HttpStatus.OK)
     public List<ICParticipantSearchResultDto> searchICParticipant(@PathVariable Map<String, String> var) {
         ICParticipantSearchCriteriaDto iCParticipantSearchCriteriaDto = new ICParticipantSearchCriteriaDto();
+        iCParticipantSearchCriteriaDto.setFileDetailsId(("null".equals(var.get("filedetailsid"))
+                || var.get("filedetailsid") == null) ? null : Long.parseLong(var.get("filedetailsid")));
         iCParticipantSearchCriteriaDto.setData(
                 ("null".equals(var.get("data"))
                         || var.get("data") == null) ? null : var.get("data"));
