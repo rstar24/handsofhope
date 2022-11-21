@@ -72,8 +72,6 @@ const Caregivers: FC = () => {
             <Input
               autofill={state.data.priDate}
               id="priDate"
-              maxDate={new Date().toISOString().substring(0, 10)}
-              minDate="1900-01-01"
               type="date"
               value="Date"
             />
@@ -115,8 +113,6 @@ const Caregivers: FC = () => {
             <Input
               autofill={state.data.secDate}
               id="secDate"
-              maxDate={new Date().toISOString().substring(0, 10)}
-              minDate="1900-01-01"
               type="date"
               value="Date"
             />
