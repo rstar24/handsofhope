@@ -5,7 +5,7 @@ import {
 import Checkbox from "../../../components/Checkbox";
 import Input from "../../../components/Input";
 import CYFMSLayout from "../../../components/cyfms/CYFMSLayout";
-import CYFMSTextArea from "../../../components/cyfms/CYFMSTextArea";
+import TextArea from "../../../components/TextArea";
 import RecordList from "../../../components/cyfms/criminalHistory/RecordList";
 import { onKeyDown } from "../../../library/app";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
@@ -64,11 +64,7 @@ const CriminalHistory = (): ReactElement => {
               label="Probation"
               checked={data.probation}
             />
-            <Checkbox
-              id="parole"
-              label="Parole"
-              checked={data.parole}
-            />
+            <Checkbox id="parole" label="Parole" checked={data.parole} />
           </FormGroup>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <Input
@@ -78,9 +74,9 @@ const CriminalHistory = (): ReactElement => {
             />
           </Box>
         </Box>
-        <CYFMSTextArea
+        <TextArea
           formLabelFlex="1 1 0"
-          outlinedInputFlex="5.05 1 0"
+          outlinedInputFlex="5.1 1 0"
           autofill={data.courtWorkerAndContactInfo}
           id="courtWorkersAndContactInformation"
           value="Court Worker(s) And Contact Information"

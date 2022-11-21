@@ -1,5 +1,5 @@
+import Header from "../Header";
 import NavBar from "../NavBar";
-import CYFMSHeader from "./CYFMSHeader";
 import { Box } from "@mui/material";
 import React from "react";
 import type { ReactElement, ReactNode } from "react";
@@ -19,7 +19,7 @@ const CYFMSLayout = (props: {
 }): ReactElement => {
   return (
     <Box>
-      <CYFMSHeader />
+      <Header bannerTitle="Child, Youth, and Family Members" />
       <Box
         sx={{
           display: "flex",
@@ -65,7 +65,6 @@ const CYFMSLayout = (props: {
                 value: "Attachments",
                 route: "../attachments",
               },
-
             ]}
           />
         </Box>

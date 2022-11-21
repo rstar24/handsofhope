@@ -43,8 +43,10 @@ export const handleSubmit: AppFormEventHandler<HTMLFormElement> = (
   formData.append("dateOfBirth", event.currentTarget.dateOfBirth.value);
   formData.append("gender", event.currentTarget.gender.value);
   formData.append("maritalStatus", event.currentTarget.maritalStatus.value);
-  formData.append("removeProfilePicture",
-    String(event.currentTarget.removeProfilePicture.checked));
+  formData.append(
+    "removeProfilePicture",
+    String(event.currentTarget.removeProfilePicture.checked)
+  );
   if (data.participantImageId) {
     formData.append("participantImageId", String(data.participantImageId));
   } else {

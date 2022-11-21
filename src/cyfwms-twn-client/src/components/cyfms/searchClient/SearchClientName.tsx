@@ -1,9 +1,9 @@
 import { Box, Button, IconButton, Modal } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import CYFMSDropdown from "../CYFMSDropdown";
+import CYFMSDropdown from "../../Dropdown";
 import Input from "../../Input";
 import CloseIcon from "@mui/icons-material/Close";
-import CYFMSHeader from "../CYFMSHeader";
+import Header from "../../Header";
 import ClientResults from "./ClientResults";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import type { ReactElement } from "react";
@@ -96,7 +96,7 @@ const SearchClientName = ({
             <CloseIcon />
           </IconButton>
 
-          <CYFMSHeader />
+          <Header bannerTitle="Child, Youth, and Family Members" />
 
           <Box
             sx={{
@@ -217,7 +217,11 @@ const SearchClientName = ({
             </Box>
           </Box>
           {show && (
-            <ClientResults setClick={setClick} moduleName={moduleName} searchId={searchId}/>
+            <ClientResults
+              setClick={setClick}
+              moduleName={moduleName}
+              searchId={searchId}
+            />
           )}
         </Box>
       </Modal>

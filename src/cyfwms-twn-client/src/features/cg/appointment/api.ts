@@ -47,7 +47,7 @@ export const doSearchAPI = async (
   token: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.get(
-    `caregiverservice/searchCGAppointment/${id}/${data?data:null}`,
+    `caregiverservice/searchCGAppointment/${id}/${data ? data : null}`,
     {
       headers: { Authorization: "Bearer " + token },
     }

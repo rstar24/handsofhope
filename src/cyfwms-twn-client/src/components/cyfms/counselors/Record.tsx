@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import Input from "../../Input";
-import CYFMSDropdown from "../CYFMSDropdown";
-import CYFMSTextArea from "../CYFMSTextArea";
+import CYFMSDropdown from "../../Dropdown";
+import TextArea from "../../TextArea";
 import { handleRemoveRecord } from "./record_";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { Box, IconButton, Typography } from "@mui/material";
@@ -104,9 +104,9 @@ const Record = (props: AppRecordProps<RecordT>): ReactElement => {
           />
         </Box>
       </Box>
-      <CYFMSTextArea
+      <TextArea
         formLabelFlex="1 1 0"
-        outlinedInputFlex="5.1 1 0"
+        outlinedInputFlex="5.3 1 0"
         autofill={props.record.contactInformation}
         id={`record_${props.number}_ContactInformation`}
         value="Contact Information"

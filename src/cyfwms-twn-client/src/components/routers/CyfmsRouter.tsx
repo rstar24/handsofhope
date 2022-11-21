@@ -1,5 +1,5 @@
 import { AttachmentsContextProvider } from "../../contexts/AttachmentsContext";
-import Appointments from "../../pages/cyfms/appointment/Appointments";
+import Appointments from "../../pages/cyfms/appointments/Appointments";
 import Add from "../../pages/cyfms/attachments/Add";
 import Attachments from "../../pages/cyfms/attachments/Attachments";
 import Edit from "../../pages/cyfms/attachments/Edit";
@@ -21,7 +21,6 @@ import type { FC } from "react";
  * `CyfmsRouter` is used in Popup of `CYFMS` aka \
  * `Child, Youth, and Family Management Services` \
  * module and holds all the nested routes.
- * @returns `ReactElement`
  */
 const CyfmsRouter: FC = () => (
   <>

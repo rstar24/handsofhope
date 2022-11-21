@@ -21,7 +21,7 @@ import cyfmsOtherInformationReducer from "../features/cyfms/otherInformation/sli
 import cyfmsRegisterReducer from "../features/cyfms/register/slice";
 import cyfmsCounselorsReducer from "../features/cyfms/counselors/slice";
 import cyfmsSearchReducer from "../features/cyfms/search/slice";
-import cyfmsReminderReducer from "../features/cyfms/reminders/slice"
+import cyfmsReminderReducer from "../features/cyfms/reminders/slice";
 import icAttachmentsReducer from "../features/initialContact/attachments/slice";
 import icContactNotesReducer from "../features/initialContact/contactNotes/slice";
 import icFileDetailsReducer from "../features/initialContact/fileDetails/slice";
@@ -40,7 +40,7 @@ import ICappointmentsReducer from "../features/initialContact/appointment/slice"
 import cgAppointmentsReducer from "../features/cg/appointment/slice";
 import calendarAppointmentReducer from "../features/calendar/appointments/slice";
 import calendarReminderReducer from "../features/calendar/reminders/slice";
-import icReminderReducer from "../features/initialContact/reminder/slice"
+import icReminderReducer from "../features/initialContact/reminder/slice";
 
 const rootReducer = {
   login: loginReducer,
@@ -57,7 +57,7 @@ const rootReducer = {
   cyfmsCounselors: cyfmsCounselorsReducer,
   cyfmsOtherInformation: cyfmsOtherInformationReducer,
   cyfmsAppointments: cyfmsAppointmentsReducer,
-  cyfmsReminders:cyfmsReminderReducer,
+  cyfmsReminders: cyfmsReminderReducer,
   cyfmsAttachments: cyfmsAttachmentsReducer,
   cyfmsSearch: cyfmsSearchReducer,
   cyfmsAll: cyfmsAllReducer,

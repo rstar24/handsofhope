@@ -1,14 +1,11 @@
-import {
-  Checkbox as MuiCheckbox,
-  FormControlLabel,
-} from "@mui/material";
+import { Checkbox as MuiCheckbox, FormControlLabel } from "@mui/material";
 import React, { useState } from "react";
 import type { FC, InputHTMLAttributes } from "react";
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   /** Overrides the initial checked state. */
   checked?: boolean;
-  /** Associated label.  */
+  /** Associated label. */
   label?: string;
   icon?: any;
   checkedIcon?: any;
@@ -19,12 +16,9 @@ export type CheckboxProps = Props;
 /**
  * `Checkbox` is used on forms.
  * @param props
- * @returns `ReactElement`
  */
 const Checkbox: FC<Props> = (props) => {
-  const [checked, setChecked] = useState<boolean>(
-    props.checked ? true : false
-  );
+  const [checked, setChecked] = useState<boolean>(props.checked ? true : false);
   return (
     <FormControlLabel
       disabled={props.disabled}

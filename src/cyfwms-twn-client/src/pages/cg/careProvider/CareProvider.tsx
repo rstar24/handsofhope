@@ -1,6 +1,6 @@
 import { CYFSWMSSaveButton } from "../../../components/CYFSWMSButtons";
 import Input from "../../../components/Input";
-import CYFMSDropdown from "../../../components/cyfms/CYFMSDropdown";
+import Dropdown from "../../../components/Dropdown";
 import SearchClientName from "../../../components/cyfms/searchClient/SearchClientName";
 import CgLayout from "../../../components/cg/CgLayout";
 import { onKeyDown } from "../../../library/app";
@@ -17,7 +17,6 @@ import {
 import React, { SyntheticEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { FC } from "react";
-import CYFMSDropdownProvince from "../../../components/cyfms/CYFMSDropdownProvince";
 
 /**
  * `CG` aka `Caregivers` module.
@@ -27,14 +26,12 @@ import CYFMSDropdownProvince from "../../../components/cyfms/CYFMSDropdownProvin
 const CareProvider: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const {
-    cgStatus,
-    cgType,
-    province
-  } = useAppSelector((state) => state.codetable);
+  const { cgStatus, cgType, province } = useAppSelector(
+    (state) => state.codetable
+  );
   const state = useAppSelector((state) => state.cgCareProvider);
   const edit = useAppSelector((state) => state.popup.edit);
-  const [searchId ,setSearchId] = useState("");
+  const [searchId, setSearchId] = useState("");
   const [click, setClick] = useState(false);
   const [disableOtherType, setDisableOtherType] = useState<boolean>(
     state.data.type !== "" ? false : true
@@ -62,7 +59,7 @@ const CareProvider: FC = () => {
             setDisableOtherType(true);
           }
         }}
-        onSubmit={(event:any) =>
+        onSubmit={(event: any) =>
           handleSubmit(event, navigate, dispatch, state.getData, edit)
         }
         onKeyDown={onKeyDown}
@@ -74,10 +71,15 @@ const CareProvider: FC = () => {
         )}
         <div>
           <div>
-            <Input autofill={state.getData.name} id="naam" value="Name" required />
+            <Input
+              autofill={state.getData.name}
+              id="naam"
+              value="Name"
+              required
+            />
           </div>
           <div>
-            <CYFMSDropdown
+            <Dropdown
               autofill={state.getData.status}
               id="status"
               optionsList={Object.values(cgStatus).map(
@@ -90,7 +92,7 @@ const CareProvider: FC = () => {
         </div>
         <div>
           <div>
-            <CYFMSDropdown
+            <Dropdown
               autofill={state.getData.type}
               id="type"
               optionsList={Object.values(cgType).map(
@@ -111,7 +113,11 @@ const CareProvider: FC = () => {
         </div>
         <div>
           <div>
-            <Input autofill={state.getData.address} id="address" value="Address" />
+            <Input
+              autofill={state.getData.address}
+              id="address"
+              value="Address"
+            />
           </div>
           <div>
             <Input autofill={state.getData.city} id="city" value="City" />
@@ -126,7 +132,7 @@ const CareProvider: FC = () => {
             />
           </div>
           <div>
-            <CYFMSDropdownProvince
+            <Dropdown
               autofill={state.getData.province}
               id="province"
               value="Province"
@@ -178,7 +184,14 @@ const CareProvider: FC = () => {
                 value={state.getData.primaryCaregiver}
                 style={{ backgroundColor: "#dfdada" }}
                 required
-                endAdornment={<SearchIcon onClick={() =>{ setClick(true);setSearchId("primary")}} />}
+                endAdornment={
+                  <SearchIcon
+                    onClick={() => {
+                      setClick(true);
+                      setSearchId("primary");
+                    }}
+                  />
+                }
               />
             </FormControl>
           </div>
@@ -205,7 +218,14 @@ const CareProvider: FC = () => {
                 size="small"
                 value={state.getData.secondaryCaregiver}
                 style={{ backgroundColor: "#dfdada" }}
-                endAdornment={<SearchIcon onClick={() => {setClick(true);setSearchId("secondary")}} />}
+                endAdornment={
+                  <SearchIcon
+                    onClick={() => {
+                      setClick(true);
+                      setSearchId("secondary");
+                    }}
+                  />
+                }
               />
             </FormControl>
           </div>

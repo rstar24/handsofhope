@@ -4,12 +4,11 @@ import type { SliceCaseReducers } from "@reduxjs/toolkit";
 import type { AxiosResponse } from "axios";
 import { stat } from "fs";
 
-
-export interface GetData1{
-  participantAppointmentId:number;
-  participantId:number;
-  referenceId:number;
-  appointmentId: number; 
+export interface GetData1 {
+  participantAppointmentId: number;
+  participantId: number;
+  referenceId: number;
+  appointmentId: number;
   subject: string;
   status: string;
   date: string;
@@ -22,13 +21,12 @@ export interface GetData1{
   frequency: string;
   endDate: string;
   notes: string;
-
 }
-const emptyGetData1: GetData1={
-  participantAppointmentId:0,
-  participantId:0,
-  referenceId:0,
-  appointmentId: 0, 
+const emptyGetData1: GetData1 = {
+  participantAppointmentId: 0,
+  participantId: 0,
+  referenceId: 0,
+  appointmentId: 0,
   subject: "",
   status: "",
   date: "",
@@ -41,38 +39,14 @@ const emptyGetData1: GetData1={
   frequency: "",
   endDate: "",
   notes: "",
-
-}
-
+};
 
 export interface Data {
- 
-    participantAppointmentId:number;
-    participantId:number;
-    referenceId:number;
-    appointmentdto:{
-      appointmentId: number; 
-      subject: string;
-      status: string;
-      date: string;
-      time: string;
-      location: string;
-      duration: string;
-      client: any;
-      caseworker: string;
-      recurringAppointment: string;
-      frequency: string;
-      endDate: string;
-      notes: string;
-    }
-  }
-//get api data
-export interface GetData{
-  participantAppointmentId:number;
-  participantId:number;
-  referenceId:number;
-  appointmentdto:{
-    appointmentId: number; 
+  participantAppointmentId: number;
+  participantId: number;
+  referenceId: number;
+  appointmentdto: {
+    appointmentId: number;
     subject: string;
     status: string;
     date: string;
@@ -85,16 +59,36 @@ export interface GetData{
     frequency: string;
     endDate: string;
     notes: string;
-  }
-
+  };
+}
+//get api data
+export interface GetData {
+  participantAppointmentId: number;
+  participantId: number;
+  referenceId: number;
+  appointmentdto: {
+    appointmentId: number;
+    subject: string;
+    status: string;
+    date: string;
+    time: string;
+    location: string;
+    duration: string;
+    client: any;
+    caseworker: string;
+    recurringAppointment: string;
+    frequency: string;
+    endDate: string;
+    notes: string;
+  };
 }
 //Empty get Data
-const emptyGetData: GetData={
-  participantAppointmentId:0,
-  participantId:0,
-  referenceId:0,
-  appointmentdto:{
-    appointmentId: 0, 
+const emptyGetData: GetData = {
+  participantAppointmentId: 0,
+  participantId: 0,
+  referenceId: 0,
+  appointmentdto: {
+    appointmentId: 0,
     subject: "",
     status: "",
     date: "",
@@ -107,17 +101,15 @@ const emptyGetData: GetData={
     frequency: "",
     endDate: "",
     notes: "",
-  }
-
-}
+  },
+};
 // Empty Data
 const emptyData: Data = {
-    
-    participantAppointmentId:0,
-   
-    participantId: 0,
-    referenceId:0,
-    appointmentdto:{
+  participantAppointmentId: 0,
+
+  participantId: 0,
+  referenceId: 0,
+  appointmentdto: {
     appointmentId: 0,
     subject: "",
     status: "",
@@ -127,25 +119,25 @@ const emptyData: Data = {
     duration: "",
     client: "",
     caseworker: "",
-    recurringAppointment:"",
+    recurringAppointment: "",
     frequency: "",
     endDate: "",
     notes: "",
-    }
+  },
 };
 
 export interface State {
   disabledClosingDate: boolean;
-  disabledFrequency:boolean;
+  disabledFrequency: boolean;
   click: boolean;
   clientName: string;
   id: number;
   record: Data[];
-  record1:Data[];
-  record2:GetData1[];
+  record1: Data[];
+  record2: GetData1[];
   data: Data;
   getData: GetData;
-  getData1:GetData1;
+  getData1: GetData1;
   status: "failed" | "none" | "loading" | "success";
 }
 
@@ -153,7 +145,10 @@ export const doGet = createAsyncThunk<Data, number>(
   "participantservice/doGet",
   async (participantAppointmentId, { getState }) => {
     const store: any = getState();
-    const res: AxiosResponse = await doGetAPI(participantAppointmentId, store.login.token);
+    const res: AxiosResponse = await doGetAPI(
+      participantAppointmentId,
+      store.login.token
+    );
     // Becomes the `fulfilled` action payload:
     return res.data;
   }
@@ -198,28 +193,28 @@ export const appointmentsSlice = createSlice<State, SliceCaseReducers<State>>({
   name: "appointments",
   initialState: {
     disabledClosingDate: true,
-    disabledFrequency:true,
+    disabledFrequency: true,
     clientName: "",
     id: 0,
     click: false,
     record: [],
-    record1:[],
-    record2:[],
+    record1: [],
+    record2: [],
     data: emptyData,
     getData: emptyGetData,
-    getData1:emptyGetData1,
+    getData1: emptyGetData1,
     status: "failed",
   },
   reducers: {
-      /** Removes one record from data matching the given reference ID. */
-      // spliceRecord(state, action) {
-      //   // Find index of the matching record in data.
-      //   const index = state.data.findIndex(
-      //     (element: Record) => element.referenceId === action.payload
-      //   );
-      //   // Remove it.
-      //   state.data.splice(index, 1);
-      // },
+    /** Removes one record from data matching the given reference ID. */
+    // spliceRecord(state, action) {
+    //   // Find index of the matching record in data.
+    //   const index = state.data.findIndex(
+    //     (element: Record) => element.referenceId === action.payload
+    //   );
+    //   // Remove it.
+    //   state.data.splice(index, 1);
+    // },
     disableClosingDate(state) {
       state.disabledClosingDate = true;
     },
@@ -237,13 +232,13 @@ export const appointmentsSlice = createSlice<State, SliceCaseReducers<State>>({
       state.disabledFrequency = true;
       state.data = emptyData;
       state.record = [];
-      state.record1=[];
-      state.record2=[];
+      state.record1 = [];
+      state.record2 = [];
       state.status = "none";
       state.click = false;
       state.clientName = "";
       state.getData = emptyGetData;
-      state.getData1=emptyGetData1;
+      state.getData1 = emptyGetData1;
       state.id = 0;
     },
     setClick(state, action) {
@@ -265,7 +260,7 @@ export const appointmentsSlice = createSlice<State, SliceCaseReducers<State>>({
       .addCase(doGet.fulfilled, (state, action) => {
         // state.participantAppointmentId = action.payload.
         state.data = action.payload;
-  
+
         state.status = "success";
       })
       .addCase(doGet.pending, (state) => {
@@ -277,23 +272,36 @@ export const appointmentsSlice = createSlice<State, SliceCaseReducers<State>>({
     builder
       .addCase(doPost.fulfilled, (state, action) => {
         state.record1 = action.payload;
-    
+
         // state.getData.participantAppointmentId=action.payload.participantAppointmentId;
-        state.getData.participantAppointmentId=action.payload[0].participantAppointmentId;
-        state.getData.participantId=action.payload[0].participantId;
-        state.getData.referenceId=action.payload[0].referenceId;
-        state.getData.appointmentdto.appointmentId=action.payload[0].appointmentdto.appointmentId;
-        state.getData.appointmentdto.subject=action.payload[0].appointmentdto.subject;
-        state.getData.appointmentdto.status=action.payload[0].appointmentdto.status;
-        state.getData.appointmentdto.caseworker=action.payload[0].appointmentdto.caseworker;
-        state.getData.appointmentdto.client=action.payload[0].appointmentdto.client;
-        state.getData.appointmentdto.date=action.payload[0].appointmentdto.date;
-        state.getData.appointmentdto.notes=action.payload[0].appointmentdto.notes;
-        state.getData.appointmentdto.duration=action.payload[0].appointmentdto.duration;
-        state.getData.appointmentdto.endDate=action.payload[0].appointmentdto.endDate;
-        state.getData.appointmentdto.frequency=action.payload[0].appointmentdto.frequency;
-        state.getData.appointmentdto.location=action.payload[0].appointmentdto.location;
-        state.getData.appointmentdto.recurringAppointment=action.payload[0].appointmentdto.recurringAppointment;
+        state.getData.participantAppointmentId =
+          action.payload[0].participantAppointmentId;
+        state.getData.participantId = action.payload[0].participantId;
+        state.getData.referenceId = action.payload[0].referenceId;
+        state.getData.appointmentdto.appointmentId =
+          action.payload[0].appointmentdto.appointmentId;
+        state.getData.appointmentdto.subject =
+          action.payload[0].appointmentdto.subject;
+        state.getData.appointmentdto.status =
+          action.payload[0].appointmentdto.status;
+        state.getData.appointmentdto.caseworker =
+          action.payload[0].appointmentdto.caseworker;
+        state.getData.appointmentdto.client =
+          action.payload[0].appointmentdto.client;
+        state.getData.appointmentdto.date =
+          action.payload[0].appointmentdto.date;
+        state.getData.appointmentdto.notes =
+          action.payload[0].appointmentdto.notes;
+        state.getData.appointmentdto.duration =
+          action.payload[0].appointmentdto.duration;
+        state.getData.appointmentdto.endDate =
+          action.payload[0].appointmentdto.endDate;
+        state.getData.appointmentdto.frequency =
+          action.payload[0].appointmentdto.frequency;
+        state.getData.appointmentdto.location =
+          action.payload[0].appointmentdto.location;
+        state.getData.appointmentdto.recurringAppointment =
+          action.payload[0].appointmentdto.recurringAppointment;
         state.status = "success";
       })
       .addCase(doPost.pending, (state) => {
@@ -305,7 +313,7 @@ export const appointmentsSlice = createSlice<State, SliceCaseReducers<State>>({
     builder
       .addCase(doSearch.fulfilled, (state, action) => {
         // state.record = action.payload;
-        state.record2=action.payload;
+        state.record2 = action.payload;
         state.status = "success";
       })
       .addCase(doSearch.pending, (state) => {
@@ -327,11 +335,15 @@ export const appointmentsSlice = createSlice<State, SliceCaseReducers<State>>({
   },
 });
 
-export const { cleanState,
+export const {
+  cleanState,
   disableClosingDate,
   enableClosingDate,
   disabledFrequency,
-  enableFrequency,setClick,setCyfmsAppointmentClientName,setCyfmsAppointmentParticipantId } 
-  = appointmentsSlice.actions;
-export const { spliceRecord} = appointmentsSlice.actions;
-export default appointmentsSlice.reducer
+  enableFrequency,
+  setClick,
+  setCyfmsAppointmentClientName,
+  setCyfmsAppointmentParticipantId,
+} = appointmentsSlice.actions;
+export const { spliceRecord } = appointmentsSlice.actions;
+export default appointmentsSlice.reducer;

@@ -7,8 +7,7 @@ export const doGetAPI = async (
   token: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.get(
-    "initialcontactservice/readICParticipant/" +
-    fileDetailsID,
+    "initialcontactservice/readICParticipant/" + fileDetailsID,
     {
       headers: { Authorization: "Bearer " + token },
     }
@@ -44,7 +43,7 @@ export const doRemoveAPI = async (
 };
 
 export const doSearchAPI = async (
-  id:number,
+  id: number,
   data: any,
   token: string
 ): Promise<AxiosResponse> => {

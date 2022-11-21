@@ -7,26 +7,26 @@ import theme from "./library/theme";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import NotFound404 from "./pages/NotFound404";
-import CPA from "./pages/cpa/CPA"; // where, cpa = Cultural Programs and Activities
-import CpaSearch from "./pages/cpa/search/Search";
-import CpaView from "./pages/cpa/view/View";
-import CYFMS from "./pages/cyfms/CYFMS"; // where, cyfms = Child, Youth and Family Management Services
-import CyfmsSearch from "./pages/cyfms/search/Search";
-import CyfmsView from "./pages/cyfms/view/View";
-import InitialContact from "./pages/initialContact/InitialContact"; // where, ic = Initial Contact
-import IcSearch from "./pages/initialContact/Search";
-import IcView from "./pages/initialContact/view/View";
-import CG from "./pages/cg/cg/CG"; // where, cg = Caregivers
-import CgSearch from "./pages/cg/search/Search";
-// import CgView from "./pages/cg/view/View";
+import Calendar_ from "./pages/Calendar/Calendar_";
+import CpaPage from "./pages/cpa/cpa/CpaPage"; // where, cpa = Cultural Programs and Activities
+import CpaSearchPage from "./pages/cpa/search/SearchPage";
+import CpaViewPage from "./pages/cpa/view/ViewPage";
+import CyfmsPage from "./pages/cyfms/cyfms/CyfmsPage"; // where, cyfms = Child, Youth and Family Management Services
+import CyfmsSearchPage from "./pages/cyfms/search/SearchPage";
+import CyfmsViewPage from "./pages/cyfms/view/ViewPage";
+import IcPage from "./pages/ic/ic/IcPage"; // where, ic = Initial Contact
+import IcSearchPage from "./pages/ic/search/SearchPage";
+import IcViewPage from "./pages/ic/view/ViewPage";
+import CgPage from "./pages/cg/cg/CgPage"; // where, cg = Caregivers
+import CgSearchPage from "./pages/cg/search/SearchPage";
+import CgViewPage from "./pages/cg/view/ViewPage";
 import { ThemeProvider } from "@mui/material/styles";
 import React, { StrictMode } from "react";
 import { Provider } from "react-redux";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
 import type { FC } from "react";
-import Calendar_ from "./pages/Calendar/Calendar_";
-import View from "./pages/cg/view/View";
+
 /**
  * `App` is primary router of CYFWMS application.
  * @returns `ReactElement`
@@ -43,18 +43,21 @@ const App: FC = () => {
                 <Route path="/" element={<Navigate to="login" />} />
                 <Route path="home" element={<Home />} />
                 <Route path="login" element={<Login />} />
-                <Route path="cyfms/*" element={<CYFMS />} />
-                <Route path="cyfms/search/*" element={<CyfmsSearch />} />
-                <Route path="cyfms/view/*" element={<CyfmsView />} />
-                <Route path="initial_contact/*" element={<InitialContact />} />
-                <Route path="initial_contact/search/*" element={<IcSearch />} />
-                <Route path="initial_contact/view/*" element={<IcView />} />
-                <Route path="cpa/*" element={<CPA />} />
-                <Route path="cpa/search/*" element={<CpaSearch />} />
-                <Route path="cpa/view/*" element={<CpaView />} />
-                <Route path="cg/*" element={<CG />} />
-                <Route path="/cg/search/*" element={<CgSearch />} />
-                <Route path="cg/view/*" element={<View />} />
+                <Route path="cyfms/*" element={<CyfmsPage />} />
+                <Route path="cyfms/search/*" element={<CyfmsSearchPage />} />
+                <Route path="cyfms/view/*" element={<CyfmsViewPage />} />
+                <Route path="initial_contact/*" element={<IcPage />} />
+                <Route
+                  path="initial_contact/search/*"
+                  element={<IcSearchPage />}
+                />
+                <Route path="initial_contact/view/*" element={<IcViewPage />} />
+                <Route path="cpa/*" element={<CpaPage />} />
+                <Route path="cpa/search/*" element={<CpaSearchPage />} />
+                <Route path="cpa/view/*" element={<CpaViewPage />} />
+                <Route path="cg/*" element={<CgPage />} />
+                <Route path="/cg/search/*" element={<CgSearchPage />} />
+                <Route path="cg/view/*" element={<CgViewPage />} />
                 <Route path="calendar/*" element={<Calendar_ />} />
               </Routes>
             </BrowserRouter>

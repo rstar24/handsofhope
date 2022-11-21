@@ -1,5 +1,5 @@
+import Header from "../Header";
 import NavBar from "../NavBar";
-import ICHeader from "./ICHeader";
 import { Box } from "@mui/material";
 import React from "react";
 import type { ReactElement, ReactNode } from "react";
@@ -19,7 +19,7 @@ const ICLayout = (props: {
 }): ReactElement => {
   return (
     <Box>
-      <ICHeader />
+      <Header bannerTitle="Initial Contact" />
       <Box
         sx={{
           display: "flex",
@@ -54,7 +54,6 @@ const ICLayout = (props: {
                 value: "Participants",
                 route: "../participants",
               },
-             
               {
                 value: "Contact Notes",
                 route: "../contact_notes",
@@ -71,7 +70,6 @@ const ICLayout = (props: {
                 value: "Reminders",
                 route: "../reminder",
               },
-             
             ]}
           />
         </Box>

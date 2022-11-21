@@ -1,7 +1,6 @@
 import { CYFSWMSNextButton } from "../../../components/CYFSWMSButtons";
 import Input from "../../../components/Input";
-import CYFMSDropdown from "../../../components/cyfms/CYFMSDropdown";
-import CYFMSDropdownProvince from "../../../components/cyfms/CYFMSDropdownProvince";
+import Dropdown from "../../../components/Dropdown";
 import CYFMSLayout from "../../../components/cyfms/CYFMSLayout";
 import { onKeyDown } from "../../../library/app";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
@@ -67,7 +66,7 @@ const Contact = (): ReactElement => {
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CYFMSDropdownProvince
+            <Dropdown
               autofill={data.province}
               id="province"
               value="Province"

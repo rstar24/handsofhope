@@ -36,8 +36,8 @@ export interface GetCareProvider {
   email: string;
   primaryCaregiver: any;
   secondaryCaregiver: any;
-  priParticipantId:number;
-  secParticipantId:number;
+  priParticipantId: number;
+  secParticipantId: number;
 }
 
 const emptyGetCareProvider: GetCareProvider = {
@@ -55,9 +55,8 @@ const emptyGetCareProvider: GetCareProvider = {
   email: "",
   primaryCaregiver: "",
   secondaryCaregiver: "",
-  priParticipantId:0,
-  secParticipantId:0
-
+  priParticipantId: 0,
+  secParticipantId: 0,
 };
 
 const emptyCareProvider: CareProvider = {
@@ -78,12 +77,12 @@ const emptyCareProvider: CareProvider = {
 };
 
 export interface State {
-  cgClientName : string;
-  cgParticipant : number;
-  cgSecClientName: string
-  cgSecparticipant:number,
+  cgClientName: string;
+  cgParticipant: number;
+  cgSecClientName: string;
+  cgSecparticipant: number;
   data: CareProvider;
-  getData : GetCareProvider;
+  getData: GetCareProvider;
 
   status: "failed" | "none" | "loading" | "success";
 }
@@ -110,21 +109,22 @@ export const doPost = createAsyncThunk<CareProvider, CareProvider>(
 
 export const careProviderSlice = createSlice<State, SliceCaseReducers<State>>({
   name: "careProvider",
-  initialState: { 
-    getData : emptyGetCareProvider,
+  initialState: {
+    getData: emptyGetCareProvider,
     data: emptyCareProvider,
-    cgClientName : "",
-    cgParticipant : 0,
-    cgSecClientName:"",
-    cgSecparticipant :0,
-    status: "none" },
+    cgClientName: "",
+    cgParticipant: 0,
+    cgSecClientName: "",
+    cgSecparticipant: 0,
+    status: "none",
+  },
   reducers: {
     clean(state) {
       state.data = emptyCareProvider;
       state.status = "none";
       state.getData = emptyGetCareProvider;
-      state.cgClientName="";
-      state.cgParticipant=0;
+      state.cgClientName = "";
+      state.cgParticipant = 0;
       state.cgSecClientName = "";
       state.cgSecparticipant = 0;
     },
@@ -170,7 +170,7 @@ export const careProviderSlice = createSlice<State, SliceCaseReducers<State>>({
     builder
       .addCase(doPost.fulfilled, (state, action) => {
         state.data = action.payload;
-        state.getData.id =action.payload.id;
+        state.getData.id = action.payload.id;
         state.getData.address = action.payload.address;
         state.getData.city = action.payload.city;
         state.getData.email = action.payload.email;
@@ -194,6 +194,12 @@ export const careProviderSlice = createSlice<State, SliceCaseReducers<State>>({
   },
 });
 
-export const { clean, setCgClientName ,setCgId, setCgSecClientName, setCgSecId} = careProviderSlice.actions;
+export const {
+  clean,
+  setCgClientName,
+  setCgId,
+  setCgSecClientName,
+  setCgSecId,
+} = careProviderSlice.actions;
 
 export default careProviderSlice.reducer;

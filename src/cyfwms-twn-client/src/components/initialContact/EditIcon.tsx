@@ -36,7 +36,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { Box, Button, IconButton, Modal, Menu, MenuItem } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
-import type { ReactElement } from "react";
+import type { FC } from "react";
 
 const style = {
   position: "absolute" as "absolute",
@@ -53,7 +53,7 @@ const style = {
 const ITEM_HEIGHT = 48;
 export const openPopup = true;
 
-const EditIcon = (props: any): ReactElement => {
+const EditIcon: FC<any> = (props) => {
   const dispatch = useAppDispatch();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [openModel, setOpenModel] = React.useState(false);

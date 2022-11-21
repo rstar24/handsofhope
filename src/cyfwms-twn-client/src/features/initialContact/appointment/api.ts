@@ -19,7 +19,7 @@ export const doPostAPI = async (
   formData: Data,
   token: string
 ): Promise<AxiosResponse> => {
-  console.log("slice data--", formData)
+  console.log("slice data--", formData);
   const res: AxiosResponse = await axiosInstance.put(
     "initialcontactservice/saveICAppointment",
     formData,
@@ -48,7 +48,7 @@ export const doSearchAPI = async (
   token: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.get(
-    `initialcontactservice/searchICAppointment/${id}/${data?data:null}`,
+    `initialcontactservice/searchICAppointment/${id}/${data ? data : null}`,
     {
       headers: { Authorization: "Bearer " + token },
     }

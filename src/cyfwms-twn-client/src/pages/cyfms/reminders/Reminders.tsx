@@ -1,3 +1,12 @@
+import CyfmsLayout from "../../../components/cyfms/CYFMSLayout";
+import {
+  cleanState,
+  doGet,
+  doSearch,
+} from "../../../features/cyfms/reminders/slice";
+import { useAppDispatch, useAppSelector } from "../../../library/hooks";
+import ReminderForm from "./RemindersForm";
+import SearchIcon from "@mui/icons-material/Search";
 import {
   Box,
   Button,
@@ -9,49 +18,36 @@ import {
   TableRow,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import CYFMSLayout from "../../../components/cyfms/CYFMSLayout";
-import SearchIcon from "@mui/icons-material/Search";
 import { Link } from "react-router-dom";
-import ReminderForm from "./RemindersForm";
+import type { FC } from "react";
 
-import {
-  cleanState,
-  doGet,
-  doSearch,
-} from "../../../features/cyfms/reminders/slice";
-import { useAppDispatch, useAppSelector } from "../../../library/hooks";
-import {  doGetReminderStatus, doGetFrequency } from "../../../features/codetable/slice";
-
-function Reminders(props: any) {
-  const state = useAppSelector((state) => state.cyfmsRegister.data);
+/**
+ * `CYFMS` aka `Child, Youth, and Family Management Services` module.
+ * Sub page: `Reminders`.
+ */
+const Reminders: FC = () => {
   const dispatch = useAppDispatch();
-  const { reminderstatus , frequency} = useAppSelector((state) => state.codetable);
+  const state = useAppSelector((state) => state.cyfmsRegister.data);
+  const data = useAppSelector((state) => state.cyfmsReminders.record2);
+  const calendar = useAppSelector((state) => state.calendarAppointment);
+
   const [addNew, setAddNew] = useState(false);
   const [disabled, setDisabled] = useState(false);
-  const calendar = useAppSelector((state)=>state.calendarAppointment)
-
-  const data = useAppSelector((state) => state.cyfmsReminders.record2);
   const [value, setValue] = useState("");
-  
+
   useEffect(() => {
-    dispatch(doGetFrequency())
-    dispatch(doGetReminderStatus()).then(()=>{
-      dispatch(doGetFrequency());
-     if(!calendar.calendar){
-      dispatch(doSearch({ id: state.participantId, data: "" }))
-      .unwrap()
-      .catch((err) => {});
-     }
-
-    });
+    if (!calendar.calendar) {
+      dispatch(doSearch({ id: state.participantId, data: "" }));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addNew]);
-
 
   const handleAddNew = () => {
     dispatch(cleanState(null));
     setDisabled(false);
     setAddNew(true);
   };
+
   const handleSelected = (id: number) => {
     dispatch(doGet(id))
       .unwrap()
@@ -60,19 +56,19 @@ function Reminders(props: any) {
         setAddNew(true);
       });
   };
-  console.log("->",data);
+
   const handleSearchIcon = (e: any) => {
-    console.group("click");
-    dispatch(doSearch({ id: state.participantId, data: value ,}))
+    dispatch(doSearch({ id: state.participantId, data: value }))
       .unwrap()
       .catch((err) => {});
   };
+
   const handleChange = (e: any) => {
     setValue(e.target.value);
   };
 
   return (
-    <CYFMSLayout>
+    <CyfmsLayout>
       {addNew === false && (
         <Box
           sx={{
@@ -107,7 +103,6 @@ function Reminders(props: any) {
               </Button>
             </Box>
             <Box sx={{ flexBasis: 0, flexGrow: 2 }}></Box>
-
             <Box
               sx={{
                 flexBasis: 0,
@@ -168,7 +163,9 @@ function Reminders(props: any) {
                       >
                         <Link
                           to="../reminder"
-                          onClick={() => handleSelected(val.participantReminderId)}
+                          onClick={() =>
+                            handleSelected(val.participantReminderId)
+                          }
                         >
                           Select
                         </Link>
@@ -210,8 +207,8 @@ function Reminders(props: any) {
           targetValue={value}
         />
       )}
-    </CYFMSLayout>
+    </CyfmsLayout>
   );
-}
+};
 
 export default Reminders;

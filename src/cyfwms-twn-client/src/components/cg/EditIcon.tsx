@@ -4,20 +4,42 @@ import { setEdit, setOpen } from "../../features/popupSlice";
 import { unhideTabs } from "../../features/navBarSlice";
 import { doGet as doGetCaregiverProvider } from "../../features/cg/careProvider/slice";
 import { spliceRecord } from "../../features/initialContact/search/slice";
+import {
+  doGet as doGetCp,
+  clean as cleanStateCp,
+} from "../../features/cg/careProvider/slice";
+import {
+  doGet as doGetCapacity,
+  clean as cleanStateCapacity,
+} from "../../features/cg/capacity/slice";
+import {
+  doGet as doGetCaregiver,
+  cleanState as cleanStateCaregiver,
+} from "../../features/cg/caregivers/slice";
+import {
+  doGet as doGetContactNotes,
+  cleanState as cleanStateContactNotes,
+} from "../../features/cg/contactNotes/slice";
+import {
+  doGet as doGetAttachment,
+  clean as cleanStateAttachment,
+} from "../../features/cg/attachments/slice";
+import {
+  doGet as doGetAppointment,
+  cleanState as cleanStateAppointment,
+} from "../../features/cg/appointment/slice";
+import {
+  doGet as doGetReminders,
+  cleanState as cleanStateReminders,
+} from "../../features/cg/reminders/slice";
 import { useAppDispatch } from "../../library/hooks";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { Box, Button, IconButton, Modal, Menu, MenuItem } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
-import type { ReactElement } from "react";
 import { doSearch } from "../../features/cg/contactNotes/slice";
-import { doGet as doGetCp, clean as cleanStateCp } from "../../features/cg/careProvider/slice";
-import { doGet as doGetCapacity ,clean as cleanStateCapacity } from "../../features/cg/capacity/slice";
-import { doGet as doGetCaregiver, cleanState as cleanStateCaregiver } from "../../features/cg/caregivers/slice"; 
-import { doGet as doGetContactNotes, cleanState as cleanStateContactNotes } from "../../features/cg/contactNotes/slice";
-import { doGet as doGetAttachment, clean as cleanStateAttachment } from "../../features/cg/attachments/slice";
-import { doGet as doGetAppointment , cleanState as cleanStateAppointment } from "../../features/cg/appointment/slice";
-import { doGet as doGetReminders, cleanState as cleanStateReminders } from "../../features/cg/reminders/slice";
+import type { FC } from "react";
+
 const style = {
   position: "absolute" as "absolute",
   top: "50%",
@@ -33,7 +55,7 @@ const style = {
 const ITEM_HEIGHT = 48;
 export const openPopup = true;
 
-const EditIcon = (props: any): ReactElement => {
+const EditIcon: FC<any> = (props) => {
   const dispatch = useAppDispatch();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [openModel, setOpenModel] = React.useState(false);
@@ -88,7 +110,7 @@ const EditIcon = (props: any): ReactElement => {
           to="care_provider"
           onClick={(event: React.MouseEvent<HTMLElement>) => {
             handleCloseDropDown(event);
-            dispatch(doSearch({id: props.cgProviderId, data:"" }));
+            dispatch(doSearch({ id: props.cgProviderId, data: "" }));
             dispatch(doGetCaregiverProvider(props.cgProviderId))
               .unwrap()
               .then(() => {
@@ -149,7 +171,6 @@ const EditIcon = (props: any): ReactElement => {
                   .then(() => {
                     dispatch(spliceRecord(props.cgProviderId));
                     setOpenModel(false);
-                  
                     dispatch(cleanStateCp(null));
                     dispatch(cleanStateCapacity(null));
                     dispatch(cleanStateCaregiver(null));
@@ -157,7 +178,6 @@ const EditIcon = (props: any): ReactElement => {
                     dispatch(cleanStateAttachment(null));
                     dispatch(cleanStateAppointment(null));
                     dispatch(cleanStateReminders(null));
-
                   })
                   .catch((err) => {
                     console.log(err);

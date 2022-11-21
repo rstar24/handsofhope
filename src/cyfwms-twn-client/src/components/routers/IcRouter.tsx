@@ -1,17 +1,17 @@
 import { AttachmentsContextProvider } from "../../contexts/AttachmentsContext";
-import Appointments from "../../pages/initialContact/appointment/ICAppointments";
-import Add from "../../pages/initialContact/attachments/Add";
-import Attachments from "../../pages/initialContact/attachments/Attachments";
-import Edit from "../../pages/initialContact/attachments/Edit";
-import View from "../../pages/initialContact/attachments/View";
-import ContactNotes from "../../pages/initialContact/contactNotes/ContactNotes";
-import FileDetails from "../../pages/initialContact/FileDetails";
-import IncidentReport from "../../pages/initialContact/IncidentReport";
-import Participants from "../../pages/initialContact/Participants/Participant";
-import PatientCareInformation from "../../pages/initialContact/PatientCareInformation";
-import PresentConcerns from "../../pages/initialContact/PresentConcerns";
-import ReferralInformation from "../../pages/initialContact/ReferralInformation";
-import Reminders from "../../pages/initialContact/reminders/Reminders";
+import Appointments from "../../pages/ic/appointments/Appointments";
+import Add from "../../pages/ic/attachments/Add";
+import Attachments from "../../pages/ic/attachments/Attachments";
+import Edit from "../../pages/ic/attachments/Edit";
+import View from "../../pages/ic/attachments/View";
+import ContactNotes from "../../pages/ic/contactNotes/ContactNotes";
+import FileDetails from "../../pages/ic/FileDetails";
+import IncidentReport from "../../pages/ic/IncidentReport";
+import Participants from "../../pages/ic/participants/Participants";
+import PatientCareInformation from "../../pages/ic/PatientCareInformation";
+import PresentConcerns from "../../pages/ic/PresentConcerns";
+import ReferralInformation from "../../pages/ic/ReferralInformation";
+import Reminders from "../../pages/ic/reminders/Reminders";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import type { FC } from "react";
@@ -19,7 +19,6 @@ import type { FC } from "react";
 /**
  * `IcRouter` is used in Popup of `IC` aka `Initial Contact` \
  * module and holds all of it's associated routes.
- * @returns `ReactElement`
  */
 const IcRouter: FC = () => (
   <>

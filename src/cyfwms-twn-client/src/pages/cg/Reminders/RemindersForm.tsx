@@ -1,49 +1,45 @@
 import { CYFSWMSNextButton } from "../../../components/CYFSWMSButtons";
-import ICTextArea from "../../../components/initialContact/ICTextArea";
+import Dropdown from "../../../components/Dropdown";
+import Input from "../../../components/Input";
+import TextArea from "../../../components/TextArea";
+import EditIcon from "../../../components/cg/reminders/EditIcon";
+import SearchClientName from "../../../components/cyfms/searchClient/SearchClientName";
 import { Data, doPost, doSearch } from "../../../features/cg/reminders/slice";
 import { onKeyDown } from "../../../library/app";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import SearchIcon from "@mui/icons-material/Search";
 import {
   Box,
-  Button,
   FormLabel,
   OutlinedInput,
   Typography,
   FormControl,
 } from "@mui/material";
 import React, { useState } from "react";
-import type { FormEvent } from "react";
+import type { FC, FormEvent } from "react";
 
-import EditIcon from "./EditIcon";
-import SearchClientName from "../../../components/cyfms/searchClient/SearchClientName";
-import ICInput from "../../../components/initialContact/ICInput";
-import ICDropdown from "../../../components/initialContact/ICDropdown";
-
-const RemindersForm = ({
+const RemindersForm: FC<any> = ({
   setAddNew,
   setDisabled,
   disabled,
   targetValue,
-}: any) => {
+}) => {
   const dispatch = useAppDispatch();
   const state = useAppSelector((state) => state.cgCareProvider);
-  const data = useAppSelector((state) => state.cgReminder.data);
-  const [click, setClick] = useState(false);
-  const { id, clientName } = useAppSelector((state) => state.cgReminder);
-
-  const handleSearch = () => {
-    console.log("click search");
-    setClick(true);
-  };
-
   const { reminderstatus, frequency } = useAppSelector(
     (state) => state.codetable
   );
+  const data = useAppSelector((state) => state.cgReminder.data);
+  const { id, clientName } = useAppSelector((state) => state.cgReminder);
+
+  const [click, setClick] = useState(false);
+
+  const handleSearch = () => {
+    setClick(true);
+  };
 
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
-
     if (!click) {
       const form = e.currentTarget as HTMLFormElement;
       const formData: Data = {
@@ -64,12 +60,11 @@ const RemindersForm = ({
           frequency: form.frequency.value,
         },
       };
-
       dispatch(doPost(formData))
         .unwrap()
         .then(() => {
           setAddNew(false);
-          console.log("Reminders POST backend API was successful!");
+          console.log("CgReminders POST backend API was successful!");
           dispatch(
             doSearch({
               id: state.data.id ? state.data.id : state.getData.id,
@@ -78,11 +73,12 @@ const RemindersForm = ({
           );
         })
         .catch((err) => {
-          console.log("reminders POST backend API didn't work");
+          console.log("CgReminders POST backend API didn't work");
           console.log(err);
         });
     }
   };
+
   return (
     <Box
       component="form"
@@ -117,7 +113,7 @@ const RemindersForm = ({
       )}
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-          <ICInput
+          <Input
             id="reminderDate"
             value="Reminder Date"
             type="date"
@@ -127,7 +123,7 @@ const RemindersForm = ({
           />
         </Box>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-          <ICInput
+          <Input
             id="assignedTo"
             value="Assigned to"
             autofill={data.reminderDto.assignedTo}
@@ -144,7 +140,9 @@ const RemindersForm = ({
               flexWrap: "wrap",
             }}
           >
-            <FormLabel sx={{ p: 1, flexBasis: 0, flexGrow: 1, color: "black" }}>
+            <FormLabel
+              sx={{ p: 1, flexBasis: 0, flexGrow: 1.06, color: "black" }}
+            >
               Regarding
             </FormLabel>
             <OutlinedInput
@@ -163,7 +161,7 @@ const RemindersForm = ({
           </FormControl>
         </Box>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-          <ICInput
+          <Input
             id="subject"
             value="Subject"
             type="text"
@@ -175,7 +173,7 @@ const RemindersForm = ({
       </Box>
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-          <ICDropdown
+          <Dropdown
             id="status"
             value="Status"
             required
@@ -191,19 +189,20 @@ const RemindersForm = ({
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
       </Box>
-      <ICTextArea
+      <TextArea
+        formLabelFlex="1 1 0"
+        outlinedInputFlex="5.3 1 0"
         id="description"
         value="Description"
         autofill={data.reminderDto.description}
         readOnly={disabled}
       />
-
       <Typography variant="body1">
         <b>Recurrance</b>
       </Typography>
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-          <ICDropdown
+          <Dropdown
             id="frequency"
             value="Frequency"
             autofill={data.reminderDto.status}
@@ -214,7 +213,7 @@ const RemindersForm = ({
           />
         </Box>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-          <ICInput
+          <Input
             id="endDate"
             value="End Date"
             type="date"
@@ -231,7 +230,6 @@ const RemindersForm = ({
           />
         )}
       </Box>
-
       <Box sx={{ display: "flex", justifyContent: "right" }}>
         <CYFSWMSNextButton disabled={disabled} />
       </Box>

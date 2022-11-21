@@ -5,40 +5,38 @@ import type { AxiosResponse } from "axios";
 
 export interface GetData1 {
   participantId: number;
-     
+
   participantReminderId: number;
 
-    reminderId: number;
-    assignedTo: string;
-    regarding: any;
-    subject: string;
-    status: string;
-    reminderDate: string;
-    endDate: string;
-    description: string;
-    frequency: string;
-  
+  reminderId: number;
+  assignedTo: string;
+  regarding: any;
+  subject: string;
+  status: string;
+  reminderDate: string;
+  endDate: string;
+  description: string;
+  frequency: string;
 }
 const emptyGetData1: GetData1 = {
   participantId: 0,
   participantReminderId: 0,
-  
-    reminderId: 0,
-    assignedTo: "",
-    regarding: "",
-    subject: "",
-    status: "",
-    reminderDate: "",
-    endDate: "",
-    description: "",
-    frequency: "",
-  
+
+  reminderId: 0,
+  assignedTo: "",
+  regarding: "",
+  subject: "",
+  status: "",
+  reminderDate: "",
+  endDate: "",
+  description: "",
+  frequency: "",
 };
 export interface Data {
   participantId: number;
 
   participantReminderId: number;
-  referenceId:number;
+  referenceId: number;
   reminderDto: {
     reminderId: number;
     assignedTo: string;
@@ -55,7 +53,7 @@ export interface Data {
 const emptyData: Data = {
   participantId: 0,
   participantReminderId: 0,
-  referenceId:0,
+  referenceId: 0,
   reminderDto: {
     reminderId: 0,
     assignedTo: "",
@@ -85,9 +83,9 @@ export interface GetData {
     frequency: string;
   };
 }
-const emptyGetData: GetData={
-  participantId:0,
-  id:0,
+const emptyGetData: GetData = {
+  participantId: 0,
+  id: 0,
   participantReminderId: 0,
   reminderDto: {
     reminderId: 0,
@@ -99,10 +97,8 @@ const emptyGetData: GetData={
     endDate: "",
     description: "",
     frequency: "",
-  }
-}
-
-
+  },
+};
 
 export interface State {
   data: Data;
@@ -111,9 +107,9 @@ export interface State {
   id: number;
   record: Data[];
   record1: Data[];
-  record2:GetData1[];
+  record2: GetData1[];
   getData: GetData;
-  getData1:GetData1;
+  getData1: GetData1;
   status: "failed" | "none" | "loading" | "success";
 }
 
@@ -171,10 +167,10 @@ export const contactSlice = createSlice<State, SliceCaseReducers<State>>({
     record: [],
     id: 0,
     getData: emptyGetData,
-    getData1:emptyGetData1,
+    getData1: emptyGetData1,
     click: false,
     record1: [],
-    record2:[],
+    record2: [],
     status: "failed",
   },
   reducers: {
@@ -185,10 +181,10 @@ export const contactSlice = createSlice<State, SliceCaseReducers<State>>({
       state.id = 0;
       state.record = [];
       state.record1 = [];
-      state.record2=[];
+      state.record2 = [];
       state.click = false;
       state.getData = emptyGetData;
-      state.getData1=emptyGetData1;
+      state.getData1 = emptyGetData1;
     },
     setClick(state, action) {
       state.click = action.payload;

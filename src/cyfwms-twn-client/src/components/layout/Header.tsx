@@ -1,12 +1,11 @@
 import { Box } from "@mui/material";
 import React from "react";
-import type { ReactElement } from "react";
+import type { FC } from "react";
 
 /**
- * The Header functional component.
- * @returns Header component skeleton.
+ * `Header` is header of non-authorized layout.
  */
-const Header = (): ReactElement => {
+const Header: FC = () => {
   return (
     <Box>
       <Box

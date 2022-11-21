@@ -1,27 +1,25 @@
 import { CYFSWMSNextButton } from "../../../components/CYFSWMSButtons";
-
-import { onKeyDown } from "../../../library/app";
-import { useAppDispatch, useAppSelector } from "../../../library/hooks";
-
-import { Box } from "@mui/material";
-import React from "react";
-import type { FormEvent } from "react";
-
+import Dropdown from "../../../components/Dropdown";
 import Input from "../../../components/Input";
-import CYFMSDropdown from "../../../components/cyfms/CYFMSDropdown";
+import TextArea from "../../../components/TextArea";
+import EditIcon from "../../../components/cg/contactNotes/EditIcon";
 import {
   Data,
   doPost,
   doSearch,
 } from "../../../features/cg/contactNotes/slice";
-import EditIcon from "./EditIcon";
+import { onKeyDown } from "../../../library/app";
+import { useAppDispatch, useAppSelector } from "../../../library/hooks";
+import { Box } from "@mui/material";
+import React from "react";
+import type { FC, FormEvent } from "react";
 
-const ContactNotesForm = ({
+const ContactNotesForm: FC<any> = ({
   setAddNew,
   setDisabled,
   disabled,
   targetValue,
-}: any) => {
+}) => {
   const dispatch = useAppDispatch();
   const state = useAppSelector((state) => state.cgCareProvider);
   const { contactMethod } = useAppSelector((state) => state.codetable);
@@ -31,7 +29,7 @@ const ContactNotesForm = ({
     e.preventDefault();
     const form = e.currentTarget as HTMLFormElement;
     const formData: Data = {
-      cgProviderId: state.getData.id ? state.getData.id : state.data.id ,
+      cgProviderId: state.getData.id ? state.getData.id : state.data.id,
       cgContactNotesId: data.cgContactNotesId,
       name: form.naam.value,
       worker: form.worker.value,
@@ -48,15 +46,21 @@ const ContactNotesForm = ({
     dispatch(doPost(formData))
       .unwrap()
       .then(() => {
-        console.log("ContactNotes POST backend API was successful!");
-        dispatch(doSearch({ id: state.data.id ? state.data.id : state.getData.id, data: "" }));
+        console.log("CgContactNotes POST backend API was successful!");
+        dispatch(
+          doSearch({
+            id: state.data.id ? state.data.id : state.getData.id,
+            data: "",
+          })
+        );
         setAddNew(false);
       })
       .catch((err) => {
-        console.log("ContactNotes POST backend API didn't work!");
+        console.log("CgContactNotes POST backend API didn't work!");
         console.log(err);
       });
   };
+
   return (
     <Box
       component="form"
@@ -128,7 +132,7 @@ const ContactNotesForm = ({
       </Box>
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-          <CYFMSDropdown
+          <Dropdown
             id="contactMethod"
             value="Contact Method"
             autofill={data.contactMethod}
@@ -140,43 +144,42 @@ const ContactNotesForm = ({
         </Box>
         <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
       </Box>
-
-      <Input
+      <TextArea
         id="address"
         value="Need(s) Addressed"
         autofill={data.needAddress}
         readOnly={disabled}
         outlinedInputFlex="5.25 1 0"
       />
-      <Input
+      <TextArea
         id="summary"
         value="Summary"
         autofill={data.summary}
         readOnly={disabled}
         outlinedInputFlex="5.25 1 0"
       />
-      <Input
+      <TextArea
         id="result"
         value="Results"
         autofill={data.result}
         readOnly={disabled}
         outlinedInputFlex="5.25 1 0"
       />
-      <Input
+      <TextArea
         id="nextStep"
         value="Next Step(s)"
         autofill={data.nextStep}
         readOnly={disabled}
         outlinedInputFlex="5.25 1 0"
       />
-      <Input
+      <TextArea
         id="progress"
         value="Progress towards Case Plan"
         autofill={data.casePlanProgress}
         readOnly={disabled}
         outlinedInputFlex="5.25 1 0"
       />
-      <Input
+      <TextArea
         id="information"
         value="Additional Information"
         autofill={data.additionalInformation}

@@ -7,11 +7,20 @@ import { Box, Button, IconButton, Modal, Menu, MenuItem } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 import type { ReactElement } from "react";
-import { doGet ,cleanState as cleanStateCPA } from "../../features/cpa/culturalProgramActivity/slice";
+import {
+  doGet,
+  cleanState as cleanStateCPA,
+} from "../../features/cpa/culturalProgramActivity/slice";
 import { doDelete } from "../../features/cpa/all/slice";
 import { spliceRecord } from "../../features/cpa/search/slice";
-import { doGet as doGetAttachment,clean as cleanStateAttachment } from "../../features/cpa/attachments/slice";
-import { doGet as doGetParticipants ,cleanState as cleanStateParticipants} from "../../features/cpa/participant/slice";
+import {
+  doGet as doGetAttachment,
+  clean as cleanStateAttachment,
+} from "../../features/cpa/attachments/slice";
+import {
+  doGet as doGetParticipants,
+  cleanState as cleanStateParticipants,
+} from "../../features/cpa/participant/slice";
 const style = {
   position: "absolute" as "absolute",
   top: "50%",
@@ -93,7 +102,7 @@ const EditIcon = (props: any): ReactElement => {
                 dispatch(setOpen(true));
                 dispatch(doGetAttachment(props.value));
                 dispatch(doGetParticipants(props.value));
-                dispatch(doGet(props.value))
+                dispatch(doGet(props.value));
               })
               .catch((err) => {
                 console.log("Unable to edit!");

@@ -8,7 +8,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { Box, FormLabel, Menu } from "@mui/material";
+import { Box, FormLabel } from "@mui/material";
 
 export interface ICDropdownPropsType
   extends ComponentPropsWithoutRef<ElementType> {
@@ -17,8 +17,8 @@ export interface ICDropdownPropsType
 
 function getStyles(name: string, personName: string[], theme: Theme) {
   return {
-   display:"block",
-   width: "300px",
+    display: "block",
+    width: "300px",
     fontWeight:
       personName.indexOf(name) === -1
         ? theme.typography.fontWeightRegular
@@ -32,7 +32,6 @@ const ICMultiSelectDropdown = (props: ICDropdownPropsType): ReactElement => {
   const val = y.filter((item: any, index: any) => y.indexOf(item) === index);
   const removeEmptyString = val.filter((item: any) => item);
   const [alcoholName, setAlcoholName] =
- 
     React.useState<string[]>(removeEmptyString);
 
   const handleChange = (event: SelectChangeEvent<typeof alcoholName>) => {
@@ -47,9 +46,17 @@ const ICMultiSelectDropdown = (props: ICDropdownPropsType): ReactElement => {
 
   return (
     <div>
-      <Box sx={{ p: 1, display: "flex", flexWrap: "wrap", gap: "0 1rem" , background: "#aw21ef"  }}>
-        <Box sx={{ flexBasis: 0, flexGrow: 1  }}>
-          <FormLabel htmlFor={props.id} sx={{ color: "black"}}>
+      <Box
+        sx={{
+          p: 1,
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "0 1rem",
+          background: "#aw21ef",
+        }}
+      >
+        <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+          <FormLabel htmlFor={props.id} sx={{ color: "black" }}>
             {props.value}
           </FormLabel>
         </Box>
@@ -90,14 +97,14 @@ const ICMultiSelectDropdown = (props: ICDropdownPropsType): ReactElement => {
               MenuProps={{
                 PaperProps: {
                   style: {
-                  height:"250px",
-                   position:"relative",
-                   width:"2px",
-                 },
+                    height: "250px",
+                    position: "relative",
+                    width: "2px",
+                  },
                 },
               }}
             >
-              <MenuItem disabled ></MenuItem>
+              <MenuItem disabled></MenuItem>
               {props.optionsList.map((name) => (
                 <MenuItem
                   key={name}

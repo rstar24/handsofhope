@@ -8,7 +8,7 @@ export interface Recordnew {
   icReminderId: number;
   subject: string;
   assignedTo: string;
-  reminderDate:string;
+  reminderDate: string;
   regarding: any;
   status: string;
   description: string;
@@ -16,7 +16,7 @@ export interface Recordnew {
   endDate: string;
 }
 // Empty Recordnew
-const emptyRecordnew: Recordnew =  {
+const emptyRecordnew: Recordnew = {
   fileDetailsId: 0,
   icReminderId: 0,
   subject: "",
@@ -30,10 +30,10 @@ const emptyRecordnew: Recordnew =  {
 };
 
 export interface Data {
-  icReminderId:number,
-  fileDetailsId:number,
-  fileNumber:number,
-  reminderDto:{
+  icReminderId: number;
+  fileDetailsId: number;
+  fileNumber: number;
+  reminderDto: {
     reminderId: number;
     assignedTo: string;
     regarding: any;
@@ -43,16 +43,15 @@ export interface Data {
     endDate: string;
     description: string;
     frequency: string;
-  }
-  
+  };
 }
-// get api data 
+// get api data
 export interface GetData {
-  participantAppointmentId?:number;
-  icReminderId:number,
-  fileDetailsId:number,
-  fileNumber:number,
-  reminderDto:{
+  participantAppointmentId?: number;
+  icReminderId: number;
+  fileDetailsId: number;
+  fileNumber: number;
+  reminderDto: {
     reminderId: number;
     assignedTo: string;
     regarding: any;
@@ -62,15 +61,15 @@ export interface GetData {
     endDate: string;
     description: string;
     frequency: string;
-  }
+  };
 }
 // Empty  GetData
 const emptyGetData: GetData = {
-  participantAppointmentId:0,
-  icReminderId:0,
-  fileDetailsId:0,
-  fileNumber:0,
-  reminderDto:{
+  participantAppointmentId: 0,
+  icReminderId: 0,
+  fileDetailsId: 0,
+  fileNumber: 0,
+  reminderDto: {
     reminderId: 0,
     assignedTo: "",
     regarding: "",
@@ -80,14 +79,14 @@ const emptyGetData: GetData = {
     endDate: "",
     description: "",
     frequency: "",
-  }
-}
+  },
+};
 // Empty Data
 const emptyData: Data = {
-  icReminderId:0,
-  fileDetailsId:0,
-  fileNumber:0,
-  reminderDto:{
+  icReminderId: 0,
+  fileDetailsId: 0,
+  fileNumber: 0,
+  reminderDto: {
     reminderId: 0,
     assignedTo: "",
     regarding: "",
@@ -97,21 +96,21 @@ const emptyData: Data = {
     endDate: "",
     description: "",
     frequency: "",
-  }
+  },
 };
 
 export interface State {
   disabledClosingDate: boolean;
-  disabledFrequency:boolean;
+  disabledFrequency: boolean;
   click: boolean;
   clientName: string;
   id: number;
   record: Data[];
-  record1:Data[];
+  record1: Data[];
   record2: Recordnew[];
   data: Data;
   getData: GetData;
-  recordNew:Recordnew;
+  recordNew: Recordnew;
   status: "failed" | "none" | "loading" | "success";
 }
 
@@ -164,16 +163,16 @@ export const contactNotesSlice = createSlice<State, SliceCaseReducers<State>>({
   name: "initialcontactreminder",
   initialState: {
     disabledClosingDate: true,
-    disabledFrequency:true,
+    disabledFrequency: true,
     clientName: "",
     id: 0,
     click: false,
     record: [],
-    record1:[],
-    record2:[],
+    record1: [],
+    record2: [],
     data: emptyData,
     getData: emptyGetData,
-    recordNew:emptyRecordnew,
+    recordNew: emptyRecordnew,
     status: "failed",
   },
   reducers: {
@@ -197,8 +196,8 @@ export const contactNotesSlice = createSlice<State, SliceCaseReducers<State>>({
       state.disabledFrequency = true;
       state.data = emptyData;
       state.record = [];
-      state.record1=[];
-      state.record2=[];
+      state.record1 = [];
+      state.record2 = [];
       state.status = "none";
       state.click = false;
       state.clientName = "";
@@ -235,17 +234,25 @@ export const contactNotesSlice = createSlice<State, SliceCaseReducers<State>>({
     builder
       .addCase(doPost.fulfilled, (state, action) => {
         //state.data = action.payload;
-        state.getData.icReminderId=action.payload[0].icReminderId;
-        state.getData.fileDetailsId=action.payload[0].fileDetailsId;
-        state.getData.reminderDto.reminderId=action.payload[0].reminderDto.reminderId;
-        state.getData.reminderDto.assignedTo=action.payload[0].reminderDto.assignedTo;
-        state.getData.reminderDto.subject=action.payload[0].reminderDto.subject;
-        state.getData.reminderDto.status=action.payload[0].reminderDto.status;
-        state.getData.reminderDto.regarding=action.payload[0].reminderDto.regarding;
-        state.getData.reminderDto.reminderDate=action.payload[0].reminderDto.reminderDate;
-        state.getData.reminderDto.endDate=action.payload[0].reminderDto.endDate;
-        state.getData.reminderDto.frequency=action.payload[0].reminderDto.frequency;
-        state.getData.reminderDto.description=action.payload[0].reminderDto.description;
+        state.getData.icReminderId = action.payload[0].icReminderId;
+        state.getData.fileDetailsId = action.payload[0].fileDetailsId;
+        state.getData.reminderDto.reminderId =
+          action.payload[0].reminderDto.reminderId;
+        state.getData.reminderDto.assignedTo =
+          action.payload[0].reminderDto.assignedTo;
+        state.getData.reminderDto.subject =
+          action.payload[0].reminderDto.subject;
+        state.getData.reminderDto.status = action.payload[0].reminderDto.status;
+        state.getData.reminderDto.regarding =
+          action.payload[0].reminderDto.regarding;
+        state.getData.reminderDto.reminderDate =
+          action.payload[0].reminderDto.reminderDate;
+        state.getData.reminderDto.endDate =
+          action.payload[0].reminderDto.endDate;
+        state.getData.reminderDto.frequency =
+          action.payload[0].reminderDto.frequency;
+        state.getData.reminderDto.description =
+          action.payload[0].reminderDto.description;
         state.status = "success";
       })
       .addCase(doPost.pending, (state) => {
@@ -278,11 +285,15 @@ export const contactNotesSlice = createSlice<State, SliceCaseReducers<State>>({
   },
 });
 
-export const { cleanState,
+export const {
+  cleanState,
   disableClosingDate,
   enableClosingDate,
   disabledFrequency,
-  enableFrequency,setClick,setInitialContactReminderClientName,setInitialContactReminderId } 
-  =  contactNotesSlice.actions;
-export const { spliceRecord} =  contactNotesSlice.actions;
+  enableFrequency,
+  setClick,
+  setInitialContactReminderClientName,
+  setInitialContactReminderId,
+} = contactNotesSlice.actions;
+export const { spliceRecord } = contactNotesSlice.actions;
 export default contactNotesSlice.reducer;

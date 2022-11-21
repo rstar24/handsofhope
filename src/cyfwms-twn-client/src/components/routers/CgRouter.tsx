@@ -1,5 +1,5 @@
 import { AttachmentsContextProvider } from "../../contexts/AttachmentsContext";
-import Appointments from "../../pages/cg/appointment/CGAppointments";
+import Appointments from "../../pages/cg/appointments/Appointments";
 import Add from "../../pages/cg/attachments/Add";
 import Attachments from "../../pages/cg/attachments/Attachments";
 import Edit from "../../pages/cg/attachments/Edit";
@@ -16,7 +16,6 @@ import type { FC } from "react";
 /**
  * `CgRouter` is used in Popup of `CG` aka `Caregivers` module \
  *  and holds all of it's associated routes.
- * @returns `ReactElement`
  */
 const CgRouter: FC = () => (
   <>

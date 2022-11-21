@@ -47,7 +47,9 @@ export const doSearchAPI = async (
   token: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.get(
-    `participantservice/searchParticipantAppointent/${id}/${data?data:null}`,
+    `participantservice/searchParticipantAppointent/${id}/${
+      data ? data : null
+    }`,
     {
       headers: { Authorization: "Bearer " + token },
     }

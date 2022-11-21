@@ -27,8 +27,8 @@ import {
 
 export interface CodeTableData {
   gender: {};
-  appointment:{};
-  reminderstatus:{};
+  appointment: {};
+  reminderstatus: {};
   maritalstatus: {};
   province: {};
   role: {};
@@ -45,7 +45,7 @@ export interface CodeTableData {
   culturalStatus: {};
   cgStatus: {};
   cgType: {};
-  frequency:{};
+  frequency: {};
   cgBgCheckStatus: {};
 }
 
@@ -87,7 +87,7 @@ export const doGetReminderStatus = createAsyncThunk(
 export const doGetFrequency = createAsyncThunk(
   "codetable/doGetFrequency",
   async (_, { dispatch, getState }) => {
-    const res: AxiosResponse = await  doGetFrequencyAPI(
+    const res: AxiosResponse = await doGetFrequencyAPI(
       (getState() as RootState).login.token
     );
     // Becomes the `fulfilled` action payload:
@@ -290,9 +290,9 @@ export const CodeTableSlice = createSlice({
   name: "codetable",
   initialState: {
     gender: {},
-    appointmentstatus:{},
-    reminderstatus:{},
-    frequency:{},
+    appointmentstatus: {},
+    reminderstatus: {},
+    frequency: {},
     maritalstatus: {},
     province: {},
     role: {},
@@ -316,8 +316,8 @@ export const CodeTableSlice = createSlice({
   reducers: {
     cleanCodetableState(state: any) {
       state.gender = {};
-      state.appointmentstatus={};
-      state.reminderstatus={};
+      state.appointmentstatus = {};
+      state.reminderstatus = {};
       state.maritalstatus = {};
       state.province = {};
       state.role = {};
@@ -356,8 +356,8 @@ export const CodeTableSlice = createSlice({
     builder.addCase(doGetGender.rejected, (state) => {
       state.status = "failed";
     });
-     //AppointmentStatus
-     builder.addCase(doGetFrequency.fulfilled, (state, action) => {
+    //AppointmentStatus
+    builder.addCase(doGetFrequency.fulfilled, (state, action) => {
       try {
         state.frequency = action.payload.valuesMap;
       } catch (err) {

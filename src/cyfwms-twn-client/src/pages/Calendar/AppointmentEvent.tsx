@@ -10,7 +10,6 @@ import { Link } from "react-router-dom";
 import { grey } from "@mui/material/colors";
 import { useAppDispatch, useAppSelector } from "../../library/hooks";
 import {
-  doGetAll,
   doGetByDate,
   setCalendarView,
 } from "../../features/calendar/appointments/slice";

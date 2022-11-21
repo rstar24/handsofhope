@@ -17,15 +17,45 @@ import {
   setCyfmsId,
 } from "../../../features/initialContact/fileDetails/slice";
 import { setClientName, setId } from "../../../features/cpa/participant/slice";
-import { setCgClientName, setCgId, setCgSecClientName, setCgSecId } from "../../../features/cg/careProvider/slice";
-import { setParticipantClientName, setParticipantId } from "../../../features/initialContact/participant/slice";
-import{setCyfmsAppointmentClientName,setCyfmsAppointmentParticipantId}from "../../../features/cyfms/appointment/slice";
-import {setICAppointmentClientName,setICAppointmentParticipantId} from "../../../features/initialContact/appointment/slice";
-import {setCGAppointmentClientName,setCGAppointmentParticipantId} from "../../../features/cg/appointment/slice";
-import { setCgReminderClientName,setCgReminderParticipantId } from "../../../features/cg/reminders/slice";
-import { setCyfmsReminderClientName,setCyfmsReminderParticipantId } from "../../../features/cyfms/reminders/slice";
-import { setInitialContactReminderClientName,setInitialContactReminderId } from "../../../features/initialContact/reminder/slice";
-const ClientResults = ({ setClick, moduleName ,searchId}: any): ReactElement => {
+import {
+  setCgClientName,
+  setCgId,
+  setCgSecClientName,
+  setCgSecId,
+} from "../../../features/cg/careProvider/slice";
+import {
+  setParticipantClientName,
+  setParticipantId,
+} from "../../../features/initialContact/participant/slice";
+import {
+  setCyfmsAppointmentClientName,
+  setCyfmsAppointmentParticipantId,
+} from "../../../features/cyfms/appointment/slice";
+import {
+  setICAppointmentClientName,
+  setICAppointmentParticipantId,
+} from "../../../features/initialContact/appointment/slice";
+import {
+  setCGAppointmentClientName,
+  setCGAppointmentParticipantId,
+} from "../../../features/cg/appointment/slice";
+import {
+  setCgReminderClientName,
+  setCgReminderParticipantId,
+} from "../../../features/cg/reminders/slice";
+import {
+  setCyfmsReminderClientName,
+  setCyfmsReminderParticipantId,
+} from "../../../features/cyfms/reminders/slice";
+import {
+  setInitialContactReminderClientName,
+  setInitialContactReminderId,
+} from "../../../features/initialContact/reminder/slice";
+const ClientResults = ({
+  setClick,
+  moduleName,
+  searchId,
+}: any): ReactElement => {
   const dispatch = useAppDispatch();
   const data = useAppSelector((state) => state.cyfmsSearch.data);
   const handleCellClick = (participant: Record) => {
@@ -35,7 +65,7 @@ const ClientResults = ({ setClick, moduleName ,searchId}: any): ReactElement => 
       );
       dispatch(setId(participant.participantId));
       setClick(false);
-    } else if (moduleName === "initialContact" && searchId==="fileDetails") {
+    } else if (moduleName === "initialContact" && searchId === "fileDetails") {
       dispatch(
         setCyfmsClientName(
           `${participant.firstname}${" "}${participant.surname}`
@@ -43,9 +73,10 @@ const ClientResults = ({ setClick, moduleName ,searchId}: any): ReactElement => 
       );
       dispatch(setCyfmsId(participant.participantId));
       setClick(false);
-    }
-
-    else if (moduleName === "initialContact" && searchId==="icParticipant") {
+    } else if (
+      moduleName === "initialContact" &&
+      searchId === "icParticipant"
+    ) {
       dispatch(
         setParticipantClientName(
           `${participant.firstname}${" "}${participant.surname}`
@@ -53,9 +84,10 @@ const ClientResults = ({ setClick, moduleName ,searchId}: any): ReactElement => 
       );
       dispatch(setParticipantId(participant.participantId));
       setClick(false);
-    }
-    
-    else if (moduleName === "cyfmsAppointment" && searchId==="participantId") {
+    } else if (
+      moduleName === "cyfmsAppointment" &&
+      searchId === "participantId"
+    ) {
       dispatch(
         setCyfmsAppointmentClientName(
           `${participant.firstname}${" "}${participant.surname}`
@@ -63,8 +95,10 @@ const ClientResults = ({ setClick, moduleName ,searchId}: any): ReactElement => 
       );
       dispatch(setCyfmsAppointmentParticipantId(participant.participantId));
       setClick(false);
-    }
-    else if (moduleName === "cyfmsReminder" && searchId==="cyfmsReminderId") {
+    } else if (
+      moduleName === "cyfmsReminder" &&
+      searchId === "cyfmsReminderId"
+    ) {
       dispatch(
         setCyfmsReminderClientName(
           `${participant.firstname}${" "}${participant.surname}`
@@ -72,8 +106,10 @@ const ClientResults = ({ setClick, moduleName ,searchId}: any): ReactElement => 
       );
       dispatch(setCyfmsReminderParticipantId(participant.participantId));
       setClick(false);
-    }
-    else if (moduleName === "icAppointment" && searchId==="icparticipantId") {
+    } else if (
+      moduleName === "icAppointment" &&
+      searchId === "icparticipantId"
+    ) {
       dispatch(
         setICAppointmentClientName(
           `${participant.firstname}${" "}${participant.surname}`
@@ -81,8 +117,10 @@ const ClientResults = ({ setClick, moduleName ,searchId}: any): ReactElement => 
       );
       dispatch(setICAppointmentParticipantId(participant.participantId));
       setClick(false);
-    }
-    else if (moduleName === "cgAppointment" && searchId==="cgparticipantId") {
+    } else if (
+      moduleName === "cgAppointment" &&
+      searchId === "cgparticipantId"
+    ) {
       dispatch(
         setCGAppointmentClientName(
           `${participant.firstname}${" "}${participant.surname}`
@@ -90,18 +128,13 @@ const ClientResults = ({ setClick, moduleName ,searchId}: any): ReactElement => 
       );
       dispatch(setCGAppointmentParticipantId(participant.participantId));
       setClick(false);
-    }
-    else if (moduleName === "caregivers" && searchId==="primary") {
+    } else if (moduleName === "caregivers" && searchId === "primary") {
       dispatch(
-        setCgClientName(
-          `${participant.firstname}${" "}${participant.surname}`
-        )
+        setCgClientName(`${participant.firstname}${" "}${participant.surname}`)
       );
       dispatch(setCgId(participant.participantId));
       setClick(false);
-    }
-   
-    else if (moduleName === "caregivers" && searchId==="secondary") {
+    } else if (moduleName === "caregivers" && searchId === "secondary") {
       dispatch(
         setCgSecClientName(
           `${participant.firstname}${" "}${participant.surname}`
@@ -109,8 +142,7 @@ const ClientResults = ({ setClick, moduleName ,searchId}: any): ReactElement => 
       );
       dispatch(setCgSecId(participant.participantId));
       setClick(false);
-    }
-    else if (moduleName === "cgReminder" && searchId==="cgReminderId") {
+    } else if (moduleName === "cgReminder" && searchId === "cgReminderId") {
       dispatch(
         setCgReminderClientName(
           `${participant.firstname}${" "}${participant.surname}`
@@ -118,8 +150,10 @@ const ClientResults = ({ setClick, moduleName ,searchId}: any): ReactElement => 
       );
       dispatch(setCgReminderParticipantId(participant.participantId));
       setClick(false);
-    }
-    else if (moduleName === "initialcontactreminder" && searchId==="icReminderId") {
+    } else if (
+      moduleName === "initialcontactreminder" &&
+      searchId === "icReminderId"
+    ) {
       dispatch(
         setInitialContactReminderClientName(
           `${participant.firstname}${" "}${participant.surname}`

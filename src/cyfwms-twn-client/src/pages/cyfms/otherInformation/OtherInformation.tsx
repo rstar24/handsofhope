@@ -1,6 +1,6 @@
 import { CYFSWMSSaveButton } from "../../../components/CYFSWMSButtons";
 import CYFMSLayout from "../../../components/cyfms/CYFMSLayout";
-import CYFMSTextArea from "../../../components/cyfms/CYFMSTextArea";
+import TextArea from "../../../components/TextArea";
 import { onKeyDown } from "../../../library/app";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import { handleEffect, handleSubmit } from "./otherInformation_";
@@ -41,35 +41,35 @@ const OtherInformation = (): ReactElement => {
         <Typography variant="body1" color="primary">
           Other Information
         </Typography>
-        <CYFMSTextArea
+        <TextArea
           formLabelFlex="1 1 0"
           outlinedInputFlex="5 1 0"
           autofill={data.strength}
           id="strengths"
           value="Strengths"
         />
-        <CYFMSTextArea
+        <TextArea
           formLabelFlex="1 1 0"
           outlinedInputFlex="5 1 0"
           autofill={data.weakness}
           id="weaknesses"
           value="Weaknesses"
         />
-        <CYFMSTextArea
+        <TextArea
           formLabelFlex="1 1 0"
-          outlinedInputFlex="5.05 1 0"
+          outlinedInputFlex="5 1 0"
           autofill={data.skills}
           id="skills"
           value="Skills"
         />
-        <CYFMSTextArea
+        <TextArea
           formLabelFlex="1 1 0"
           outlinedInputFlex="5 1 0"
           autofill={data.experiences}
           id="experiences"
           value="Experiences"
         />
-        <CYFMSTextArea
+        <TextArea
           formLabelFlex="1 1 0"
           outlinedInputFlex="5 1 0"
           autofill={data.effectiveCopingSkills}

@@ -3,16 +3,13 @@ import type { SliceCaseReducers } from "@reduxjs/toolkit";
 
 export interface State {
   tabsHidden: boolean;
-  homeColor:string,
-  calendarColor:string
+  homeColor: string;
+  calendarColor: string;
 }
 
 const navBarSlice = createSlice<State, SliceCaseReducers<State>>({
   name: "navBar",
-  initialState: { tabsHidden: true,
-                  homeColor:"red",
-                  calendarColor:"none" 
-                },
+  initialState: { tabsHidden: true, homeColor: "red", calendarColor: "none" },
   reducers: {
     hideTabs(state) {
       state.tabsHidden = true;
@@ -25,7 +22,7 @@ const navBarSlice = createSlice<State, SliceCaseReducers<State>>({
       state.homeColor = action.payload;
       state.calendarColor = "none";
     },
-    changeCalendarColor: (state,action) => {
+    changeCalendarColor: (state, action) => {
       state.calendarColor = action.payload;
       state.homeColor = "none";
     },
@@ -33,10 +30,16 @@ const navBarSlice = createSlice<State, SliceCaseReducers<State>>({
     cleanState: (state) => {
       state.homeColor = "red";
       state.calendarColor = "none";
-    }
+    },
   },
 });
 
-export const { hideTabs, unhideTabs, changeHomeColor, changeCalendarColor,cleanState } = navBarSlice.actions;
+export const {
+  hideTabs,
+  unhideTabs,
+  changeHomeColor,
+  changeCalendarColor,
+  cleanState,
+} = navBarSlice.actions;
 
 export default navBarSlice.reducer;

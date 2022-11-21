@@ -1,35 +1,31 @@
-import { FormEvent, ReactElement, useEffect } from "react";
-import CPAInput from "../../../components/cpa/CPAInput";
-import { Box, Button, OutlinedInput } from "@mui/material";
-import CPALayout from "../../../components/cpa/CPALayout";
-import CPATextArea from "../../../components/cpa/CPATextArea";
 import {
   CYFSWMSNextButton,
   CYFSWMSSaveButton,
-  CYFSWMSViewButton,
 } from "../../../components/CYFSWMSButtons";
-import { useNavigate } from "react-router-dom";
-
-import { hideTabs, unhideTabs } from "../../../features/navBarSlice";
-import { initiate, uninitiate } from "../../../features/initiatorSlice";
-import { useAppDispatch, useAppSelector } from "../../../library/hooks";
+import Dropdown from "../../../components/Dropdown";
+import Input from "../../../components/Input";
+import TextArea from "../../../components/TextArea";
+import CpaLayout from "../../../components/cpa/CPALayout";
 import {
   Data,
   doGet,
   doPost,
 } from "../../../features/cpa/culturalProgramActivity/slice";
+import { initiate, uninitiate } from "../../../features/initiatorSlice";
+import { hideTabs, unhideTabs } from "../../../features/navBarSlice";
 import { setOpen, setView } from "../../../features/popupSlice";
-import CPADropdown from "../../../components/cpa/CPADropdown";
+import { useAppDispatch, useAppSelector } from "../../../library/hooks";
+import { Box, OutlinedInput } from "@mui/material";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import type { FC, FormEvent } from "react";
+
 /**
  * The CulturalProgramOrActivity functional component.
- * @returns CulturalProgramOrActivity component skeleton.
  */
-const CulturalProgramOrActivity = (): ReactElement => {
+const CulturalProgramOrActivity: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { initialContactStatus } = useAppSelector(
-    (state: any) => state.codetable
-  );
   const isInitiated = useAppSelector(
     (state: any) => state.initiator.isInitiated
   );
@@ -38,6 +34,7 @@ const CulturalProgramOrActivity = (): ReactElement => {
   const { culturalType, culturalStatus } = useAppSelector(
     (state) => state.codetable
   );
+
   useEffect(() => {
     dispatch(doGet(state.data.culturalProgramId))
       .unwrap()
@@ -48,6 +45,7 @@ const CulturalProgramOrActivity = (): ReactElement => {
         console.log("CPA GET backend API didn't work!");
         console.log(err);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Handles the form data submission and other
@@ -74,7 +72,7 @@ const CulturalProgramOrActivity = (): ReactElement => {
     dispatch(doPost(formData))
       .unwrap()
       .then(() => {
-        console.log("FileDetails POST backend API was successful!");
+        console.log("CPA POST backend API was successful!");
         dispatch(unhideTabs(null));
         dispatch(initiate(null));
         dispatch(setOpen(false));
@@ -84,7 +82,7 @@ const CulturalProgramOrActivity = (): ReactElement => {
         navigate("/cpa/view");
       })
       .catch((err) => {
-        console.log("FileDetails POST backend API didn't work!");
+        console.log("CPA POST backend API didn't work!");
         console.log(err);
       });
   };
@@ -100,7 +98,7 @@ const CulturalProgramOrActivity = (): ReactElement => {
   };
 
   return (
-    <CPALayout>
+    <CpaLayout>
       <Box
         component="form"
         sx={{
@@ -126,7 +124,7 @@ const CulturalProgramOrActivity = (): ReactElement => {
               <OutlinedInput
                 size="small"
                 readOnly={true}
-                sx={{ borderRadius: 0, flexBasis: 0, flexGrow: 2, ml: -1 }}
+                sx={{ borderRadius: 0, flexBasis: 0, flexGrow: 2 }}
                 defaultValue={state.data.referenceId}
                 value={state.data.referenceId}
                 style={{ backgroundColor: "#dfdada" }}
@@ -137,15 +135,10 @@ const CulturalProgramOrActivity = (): ReactElement => {
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CPAInput
-              autofill={state.data.name}
-              id="name"
-              value="Name"
-              required
-            />
+            <Input autofill={state.data.name} id="name" value="Name" required />
           </Box>
-          <Box sx={{ flexBasis: 0, flexGrow: 1.01 }}>
-            <CPADropdown
+          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+            <Dropdown
               autofill={state.data.type}
               id="type"
               value="Type"
@@ -157,8 +150,8 @@ const CulturalProgramOrActivity = (): ReactElement => {
           </Box>
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
-          <Box sx={{ flexBasis: 0, flexGrow: 0.99 }}>
-            <CPADropdown
+          <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
+            <Dropdown
               autofill={state.data.status}
               id="status"
               value="Status"
@@ -169,7 +162,7 @@ const CulturalProgramOrActivity = (): ReactElement => {
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CPAInput
+            <Input
               autofill={state.data.caseworker}
               id="caseworker"
               value="Caseworker"
@@ -179,7 +172,7 @@ const CulturalProgramOrActivity = (): ReactElement => {
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CPAInput
+            <Input
               autofill={state.data.startDate}
               id="startDate"
               value="Start Date"
@@ -188,7 +181,7 @@ const CulturalProgramOrActivity = (): ReactElement => {
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CPAInput
+            <Input
               autofill={state.data.endDate}
               id="endDate"
               value="End Date"
@@ -198,36 +191,48 @@ const CulturalProgramOrActivity = (): ReactElement => {
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CPAInput
+            <Input
               autofill={state.data.totalParticipation}
               id="totalParticipation"
               value="Total Participation"
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <CPAInput
+            <Input
               autofill={state.data.totalCost}
               id="totalCost"
               value="Total Cost"
             />
           </Box>
         </Box>
-        <CPATextArea
+        <TextArea
+          formLabelFlex="1 1 0"
+          outlinedInputFlex="5.3 1 0"
           autofill={state.data.sessionDetails}
           id="sessionDetails"
           value="Session Details"
         />
-        <CPATextArea
+        <TextArea
+          formLabelFlex="1 1 0"
+          outlinedInputFlex="5.3 1 0"
           autofill={state.data.costOrParticipationDetails}
           id="costOrParticipationDetails"
           value="Participation / Cost Details"
         />
-        <CPATextArea
+        <TextArea
+          formLabelFlex="1 1 0"
+          outlinedInputFlex="5.3 1 0"
           autofill={state.data.costOrParticipationDetails}
           id="outcomes"
           value="Outcomes"
         />
-        <CPATextArea autofill={state.data.notes} id="notes" value="Notes" />
+        <TextArea
+          formLabelFlex="1 1 0"
+          outlinedInputFlex="5.3 1 0"
+          autofill={state.data.notes}
+          id="notes"
+          value="Notes"
+        />
         <Box sx={{ display: "flex", justifyContent: "right" }}>
           {isInitiated ? (
             <>
@@ -242,7 +247,7 @@ const CulturalProgramOrActivity = (): ReactElement => {
           )}
         </Box>
       </Box>
-    </CPALayout>
+    </CpaLayout>
   );
 };
 

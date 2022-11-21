@@ -4,7 +4,7 @@ import Attachments from "../../pages/cpa/attachments/Attachments";
 import Edit from "../../pages/cpa/attachments/Edit";
 import View from "../../pages/cpa/attachments/View";
 import CulturalProgramOrActivity from "../../pages/cpa/culturalProgramOrActivity/CulturalProgramOrActivity";
-import Participants from "../../pages/cpa/Participants/Participant";
+import Participants from "../../pages/cpa/Participants/Participants";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import type { FC } from "react";
@@ -13,7 +13,6 @@ import type { FC } from "react";
  * `CpaRouter` is used in Popup of `CPA` aka \
  * `Cultural Programs and Activities` module \
  *  and holds all of it's associated routes.
- * @returns `ReactElement`
  */
 const CpaRouter: FC = () => (
   <>

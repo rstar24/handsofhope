@@ -1,9 +1,8 @@
+import Header from "../Header";
 import NavBar from "../NavBar";
-
 import { Box } from "@mui/material";
 import React from "react";
 import type { ReactElement, ReactNode } from "react";
-import CPAHeader from "./CPAHeader";
 
 /**
  * The CPALayout functional component.
@@ -20,7 +19,7 @@ const CPALayout = (props: {
 }): ReactElement => {
   return (
     <Box>
-      <CPAHeader />
+      <Header bannerTitle="Cultural Programs and Activities" />
       <Box
         sx={{
           display: "flex",

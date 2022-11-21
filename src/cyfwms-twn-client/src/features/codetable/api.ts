@@ -23,9 +23,12 @@ export const doGetAppointmentStatusAPI = async (
 export const doGetReminderStatusAPI = async (
   jwtToken: string
 ): Promise<AxiosResponse> => {
-  const res: AxiosResponse = await axiosInstance.get("dataservice/reminderstatus", {
-    headers: { Authorization: "Bearer " + jwtToken },
-  });
+  const res: AxiosResponse = await axiosInstance.get(
+    "dataservice/reminderstatus",
+    {
+      headers: { Authorization: "Bearer " + jwtToken },
+    }
+  );
   return res;
 };
 export const doGetFrequencyAPI = async (

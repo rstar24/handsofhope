@@ -22,9 +22,9 @@ import { doSearch as doSearchICAppointment } from "../../features/initialContact
 import moment from "moment";
 import { doGet as doGetFileDetails } from "../../features/initialContact/fileDetails/slice";
 import { doSearch as doSearchICReminder } from "../../features/initialContact/reminder/slice";
-import { doGet as doGetCgProvider} from "../../features/cg/careProvider/slice";
+import { doGet as doGetCgProvider } from "../../features/cg/careProvider/slice";
 import { doSearch as doSearchCgReminder } from "../../features/cg/reminders/slice";
-import { doSearch as doSearchCyfmsREminder} from "../../features/cyfms/reminders/slice";
+import { doSearch as doSearchCyfmsREminder } from "../../features/cyfms/reminders/slice";
 import { setCalendarView } from "../../features/calendar/appointments/slice";
 
 function ReminderEvent(): ReactElement {
@@ -83,23 +83,20 @@ function ReminderEvent(): ReactElement {
                     to="../cyfms/reminder"
                     onClick={() => {
                       handleSelected(val.appointmentId, val.participantId);
-                      dispatch(doGetRegister(val.participantId)).then(()=>{
+                      dispatch(doGetRegister(val.participantId)).then(() => {
                         dispatch(
                           doSearchCyfmsAppointment({
                             id: val.participantId,
                             data: "",
                           })
-
                         );
                         dispatch(
                           doSearchCyfmsREminder({
                             id: val.participantId,
                             data: "",
                           })
-
                         );
-                      })
-                     
+                      });
                     }}
                   >
                     Select
@@ -111,17 +108,20 @@ function ReminderEvent(): ReactElement {
                     to="../initial_contact/reminder"
                     onClick={() => {
                       handleSelected(val.reminderId, val.fileDetailsId);
-                      dispatch(doGetFileDetails(val.fileDetailsId)).then(()=>{
+                      dispatch(doGetFileDetails(val.fileDetailsId)).then(() => {
                         dispatch(
                           doSearchICAppointment({
                             id: val.fileDetailsId,
                             data: "",
                           })
                         );
-                        dispatch(doSearchICReminder({id: val.fileDetailsId,
-                          data: "",}))
-                      })
-                      
+                        dispatch(
+                          doSearchICReminder({
+                            id: val.fileDetailsId,
+                            data: "",
+                          })
+                        );
+                      });
                     }}
                   >
                     Select
@@ -132,7 +132,7 @@ function ReminderEvent(): ReactElement {
                     to="../cg/reminders"
                     onClick={() => {
                       handleSelected(val.reminderId, val.cgProviderId);
-                      dispatch(doGetCgProvider(val.cgProviderId)).then(()=>{
+                      dispatch(doGetCgProvider(val.cgProviderId)).then(() => {
                         dispatch(
                           doSearchICAppointment({
                             id: val.cgProviderId,
@@ -145,8 +145,7 @@ function ReminderEvent(): ReactElement {
                             data: "",
                           })
                         );
-                      })
-                      
+                      });
                     }}
                   >
                     Select

@@ -1,3 +1,12 @@
+import CgLayout from "../../../components/cg/CgLayout";
+import {
+  cleanState,
+  doGet,
+  doSearch,
+} from "../../../features/cg/reminders/slice";
+import { useAppDispatch, useAppSelector } from "../../../library/hooks";
+import RemindersForm from "./RemindersForm";
+import SearchIcon from "@mui/icons-material/Search";
 import {
   Box,
   Button,
@@ -8,48 +17,35 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
-
-import SearchIcon from "@mui/icons-material/Search";
-
-import { Link } from "react-router-dom";
-
-import {
-  cleanState,
-  doGet,
-  doSearch,
-} from "../../../features/cg/reminders/slice";
-import { useAppDispatch, useAppSelector } from "../../../library/hooks";
-
-import RemindersForm from "./RemindersForm";
 import { grey } from "@mui/material/colors";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import type { FC } from "react";
 
-import CgLayout from "../../../components/cg/CgLayout";
-import { doGetFrequency, doGetReminderStatus } from "../../../features/codetable/slice";
-
-function Reminders(props: any) {
+/**
+ * `CG` aka `Caregivers` module.
+ * Sub page: `Reminders`.
+ */
+const Reminders: FC = () => {
   const dispatch = useAppDispatch();
   const state1 = useAppSelector((state) => state.cgCareProvider);
-  const state = useAppSelector((state) => state.cgReminder.data);
   const data = useAppSelector((state) => state.cgReminder.record2);
+  const calendar = useAppSelector((state) => state.calendarAppointment);
+
   const [addNew, setAddNew] = useState(false);
   const [disabled, setDisabled] = useState(false);
-  const calendar = useAppSelector((state)=>state.calendarAppointment)
-
   const [value, setValue] = useState("");
 
   useEffect(() => {
-    dispatch(doGetFrequency())
-    dispatch((doGetReminderStatus())).then(() => {
-      if(!calendar.calendar){
-        dispatch(
-          doSearch({
-            id: state1.data.id ? state1.data.id : state1.getData.id,
-            data: "",
-          })
-        )
-      }
-    });
+    if (!calendar.calendar) {
+      dispatch(
+        doSearch({
+          id: state1.data.id ? state1.data.id : state1.getData.id,
+          data: "",
+        })
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addNew]);
 
   const handleAddNew = () => {
@@ -57,7 +53,7 @@ function Reminders(props: any) {
     setDisabled(false);
     setAddNew(true);
   };
-  console.log(data);
+
   const handleSelected = (id: number) => {
     dispatch(doGet(id))
       .unwrap()
@@ -66,16 +62,16 @@ function Reminders(props: any) {
         setAddNew(true);
       });
   };
+
   const handleSearchIcon = (e: any) => {
     dispatch(
       doSearch({
         id: state1.getData.id ? state1.getData.id : state1.data.id,
         data: value,
       })
-    )
-      .unwrap()
-      .catch((err) => {});
+    );
   };
+
   const handleChange = (e: any) => {
     setValue(e.target.value);
   };
@@ -116,7 +112,6 @@ function Reminders(props: any) {
               </Button>
             </Box>
             <Box sx={{ flexBasis: 0, flexGrow: 2 }}></Box>
-
             <Box
               sx={{
                 flexBasis: 0,
@@ -229,6 +224,6 @@ function Reminders(props: any) {
       )}
     </CgLayout>
   );
-}
+};
 
 export default Reminders;

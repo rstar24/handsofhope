@@ -29,38 +29,43 @@ const Calendar_ = (props: any) => {
   const [end, setEnd] = useState(
     moment(new Date()).format(" ddd, DD MMM yyyy ")
   );
-  const [selectedDate, setSelectedDate] = useState('')
+  const [selectedDate, setSelectedDate] = useState("");
 
   useEffect(() => {
     dispatch(doGetAll()).then((res: any) => {
       const events = res.payload.map((key: any) => ({
-        id: key.appointmentId ? key.appointmentId:key.reminderId,
+        id: key.appointmentId ? key.appointmentId : key.reminderId,
         title: key.subject,
-        start: key.date ? moment(key.date).toDate():moment(key.reminderDate).toDate(),
-        end: key.date ? moment(key.date).toDate():moment(key.reminderDate).toDate(),
+        start: key.date
+          ? moment(key.date).toDate()
+          : moment(key.reminderDate).toDate(),
+        end: key.date
+          ? moment(key.date).toDate()
+          : moment(key.reminderDate).toDate(),
       }));
       setNewEvent(events);
-
-     
     });
   }, [open]);
-  
+
   const showEvent = (e: any) => {
     setTitle(e.title);
     setStart(moment(new Date(e.start)).format(" ddd, DD MMM yyyy "));
     setEnd(moment(new Date(e.end)).format(" ddd, DD MMM yyyy "));
   };
 
-  const dayPropGetter = useCallback((date: Date) => {
-    return {
-      ...(moment(date).format("DD/MM/yyyy")===selectedDate && {
+  const dayPropGetter = useCallback(
+    (date: Date) => {
+      return {
+        ...(moment(date).format("DD/MM/yyyy") === selectedDate && {
           style: { backgroundColor: "#8ac9c669" },
         }),
-    };
-  }, [selectedDate]);
+      };
+    },
+    [selectedDate]
+  );
 
   const selectedSlot = (slotInfo: any) => {
-    setSelectedDate(moment(slotInfo.start).format("DD/MM/yyyy"))
+    setSelectedDate(moment(slotInfo.start).format("DD/MM/yyyy"));
     dispatch(doGetAppointments(moment(slotInfo.start).format("yyyy-MM-DD")));
     dispatch(doGetByDate(moment(slotInfo.start).format("yyyy-MM-DD")));
   };

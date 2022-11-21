@@ -1,8 +1,8 @@
 import { CYFSWMSSaveButton } from "../../../components/CYFSWMSButtons";
 import Input from "../../../components/Input";
 import CgLayout from "../../../components/cg/CgLayout";
-import CYFMSDropdown from "../../../components/cyfms/CYFMSDropdown";
-import CYFMSTextArea from "../../../components/cyfms/CYFMSTextArea";
+import CYFMSDropdown from "../../../components/Dropdown";
+import TextArea from "../../../components/TextArea";
 import { onKeyDown } from "../../../library/app";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import { handleEffect, handleSubmit } from "./caregivers_";
@@ -19,15 +19,18 @@ import type { FC, FormEvent } from "react";
 const Caregivers: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const cgCareProviderId = useAppSelector(
-    (state) => state.cgCareProvider
-  );
-  const {
-    cgBgCheckStatus
-  } = useAppSelector((state) => state.codetable);
+  const cgCareProviderId = useAppSelector((state) => state.cgCareProvider);
+  const { cgBgCheckStatus } = useAppSelector((state) => state.codetable);
   const state = useAppSelector((state) => state.cgCaregivers);
 
-  useEffect(() => handleEffect(dispatch, cgCareProviderId.data.id || cgCareProviderId.getData.id ), []);
+  useEffect(
+    () =>
+      handleEffect(
+        dispatch,
+        cgCareProviderId.data.id || cgCareProviderId.getData.id
+      ),
+    []
+  );
 
   return (
     <CgLayout>
@@ -41,7 +44,13 @@ const Caregivers: FC = () => {
           "> div > div": { flex: "1 1 0" },
         }}
         onSubmit={(event: FormEvent<HTMLFormElement>) =>
-          handleSubmit(event, navigate, dispatch, cgCareProviderId.data.id || cgCareProviderId.getData.id, state.data)
+          handleSubmit(
+            event,
+            navigate,
+            dispatch,
+            cgCareProviderId.data.id || cgCareProviderId.getData.id,
+            state.data
+          )
         }
         onKeyDown={onKeyDown}
       >
@@ -71,18 +80,18 @@ const Caregivers: FC = () => {
           </div>
         </div>
         <div>
-          <CYFMSTextArea
+          <TextArea
             formLabelFlex="1 1 0"
-            outlinedInputFlex="5 1 0"
+            outlinedInputFlex="5.3 1 0"
             autofill={state.data.priDetails}
             id="priDetails"
             value="Details"
           />
         </div>
         <div>
-          <CYFMSTextArea
+          <TextArea
             formLabelFlex="1 1 0"
-            outlinedInputFlex="5 1 0"
+            outlinedInputFlex="5.3 1 0"
             autofill={state.data.priTrainingCompleted}
             id="priTrainingsCompleted"
             value="Training(s) Completed"
@@ -114,18 +123,18 @@ const Caregivers: FC = () => {
           </div>
         </div>
         <div>
-          <CYFMSTextArea
+          <TextArea
             formLabelFlex="1 1 0"
-            outlinedInputFlex="5 1 0"
+            outlinedInputFlex="5.3 1 0"
             autofill={state.data.secDetails}
             id="secDetails"
             value="Details"
           />
         </div>
         <div>
-          <CYFMSTextArea
+          <TextArea
             formLabelFlex="1 1 0"
-            outlinedInputFlex="5 1 0"
+            outlinedInputFlex="5.3 1 0"
             autofill={state.data.secTrainingCompleted}
             id="secTrainingsCompleted"
             value="Training(s) Completed"

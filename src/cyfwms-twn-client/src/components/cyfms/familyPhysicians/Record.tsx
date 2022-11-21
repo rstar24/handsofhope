@@ -1,6 +1,6 @@
 import { useAppDispatch } from "../../../library/hooks";
 import Input from "../../Input";
-import CYFMSTextArea from "../CYFMSTextArea";
+import TextArea from "../../TextArea";
 import { handleRemoveRecord } from "./record_";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { Box, IconButton, Typography } from "@mui/material";
@@ -93,9 +93,9 @@ const Record = (props: AppRecordProps<RecordT>): ReactElement => {
             <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 2 }}>
-            <CYFMSTextArea
+            <TextArea
               formLabelFlex="1 1 0"
-              outlinedInputFlex="5.05 1 0"
+              outlinedInputFlex="5.3 1 0"
               autofill={props.record.listOfMedication}
               id={`record_${props.number}_ListOfMedication`}
               value="List of Medication"

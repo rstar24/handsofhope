@@ -1,12 +1,11 @@
 import { Box } from "@mui/material";
 import React from "react";
-import type { ReactElement } from "react";
+import type { FC } from "react";
 
 /**
- * The Footer functional component.
- * @returns Footer component skeleton.
+ * `Footer` is footer of non-authorized layout.
  */
-const Footer = (): ReactElement => {
+const Footer: FC = () => {
   return (
     <Box>
       <Box

@@ -6,32 +6,30 @@ export interface GetData1 {
   cgReminderId: number;
   id: number;
   referenceId: any;
-    reminderId: number;
-    assignedTo: string;
-    regarding: any;
-    subject: string;
-    status: string;
-    reminderDate: string;
-    endDate: string;
-    description: string;
-    frequency: string;
-
+  reminderId: number;
+  assignedTo: string;
+  regarding: any;
+  subject: string;
+  status: string;
+  reminderDate: string;
+  endDate: string;
+  description: string;
+  frequency: string;
 }
-const emptyGetData1:GetData1={
+const emptyGetData1: GetData1 = {
   cgReminderId: 0,
   id: 0,
   referenceId: 0,
-    reminderId: 0,
-    assignedTo: "",
-    regarding: "",
-    subject: "",
-    status: "",
-    reminderDate: "",
-    endDate: "",
-    description: "",
-    frequency: "",
-
-}
+  reminderId: 0,
+  assignedTo: "",
+  regarding: "",
+  subject: "",
+  status: "",
+  reminderDate: "",
+  endDate: "",
+  description: "",
+  frequency: "",
+};
 export interface Data {
   cgReminderId: number;
   id: number;
@@ -103,15 +101,15 @@ const emptyData: Data = {
 
 export interface State {
   disabledClosingDate: boolean;
-  disabledFrequency:boolean;
+  disabledFrequency: boolean;
   clientName: string;
   click: boolean;
   id: number;
   record: Data[];
-  record1:Data[];
-  record2:GetData1[];
+  record1: Data[];
+  record2: GetData1[];
   getData: GetData;
-  getData1:GetData1;
+  getData1: GetData1;
   data: Data;
   status: "failed" | "none" | "loading" | "success";
 }
@@ -165,16 +163,16 @@ export const cgReminderSlice = createSlice<State, SliceCaseReducers<State>>({
   name: "cgReminder",
   initialState: {
     disabledClosingDate: true,
-    disabledFrequency:true,
+    disabledFrequency: true,
     clientName: "",
     id: 0,
     click: false,
     record: [],
-    record1:[],
-    record2:[],
+    record1: [],
+    record2: [],
     data: emptyData,
     getData: emptyGetData,
-    getData1:emptyGetData1,
+    getData1: emptyGetData1,
     status: "failed",
   },
   reducers: {
@@ -184,8 +182,8 @@ export const cgReminderSlice = createSlice<State, SliceCaseReducers<State>>({
       state.data = emptyData;
       state.getData = emptyGetData;
       state.record = [];
-      state.record1=[];
-      state.record2=[];
+      state.record1 = [];
+      state.record2 = [];
       state.status = "none";
       state.click = false;
       state.clientName = "";
@@ -221,7 +219,7 @@ export const cgReminderSlice = createSlice<State, SliceCaseReducers<State>>({
     builder
       .addCase(doPost.fulfilled, (state, action) => {
         // state.data = action.payload;
-        state.record1=action.payload;
+        state.record1 = action.payload;
         state.getData.cgReminderId = action.payload[0].cgReminderId;
 
         state.getData.id = action.payload[0].id;
@@ -229,13 +227,15 @@ export const cgReminderSlice = createSlice<State, SliceCaseReducers<State>>({
           action.payload[0].reminderDto.assignedTo;
         state.getData.reminderDto.description =
           action.payload[0].reminderDto.description;
-        state.getData.reminderDto.endDate = action.payload[0].reminderDto.endDate;
+        state.getData.reminderDto.endDate =
+          action.payload[0].reminderDto.endDate;
         state.getData.reminderDto.frequency =
           action.payload[0].reminderDto.frequency;
         state.getData.reminderDto.regarding =
           action.payload[0].reminderDto.regarding;
         state.getData.reminderDto.status = action.payload[0].reminderDto.status;
-        state.getData.reminderDto.subject = action.payload[0].reminderDto.subject;
+        state.getData.reminderDto.subject =
+          action.payload[0].reminderDto.subject;
         state.getData.reminderDto.reminderDate =
           action.payload[0].reminderDto.reminderDate;
         state.status = "success";

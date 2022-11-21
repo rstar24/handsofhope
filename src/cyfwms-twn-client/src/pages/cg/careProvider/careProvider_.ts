@@ -1,4 +1,8 @@
-import { doGet, doPost, GetCareProvider } from "../../../features/cg/careProvider/slice";
+import {
+  doGet,
+  doPost,
+  GetCareProvider,
+} from "../../../features/cg/careProvider/slice";
 import { unhideTabs } from "../../../features/navBarSlice";
 import type { CareProvider } from "../../../features/cg/careProvider/slice";
 import type { AppDispatch } from "../../../library/store";

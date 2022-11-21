@@ -1,5 +1,9 @@
 import { CYFSWMSNextButton } from "../../../components/CYFSWMSButtons";
-import ICTextArea from "../../../components/initialContact/ICTextArea";
+import Dropdown from "../../../components/Dropdown";
+import Input from "../../../components/Input";
+import TextArea from "../../../components/TextArea";
+import EditIcon from "../../../components/cyfms/remainders/EditIcon";
+import SearchClientName from "../../../components/cyfms/searchClient/SearchClientName";
 import {
   Data,
   doPost,
@@ -7,6 +11,7 @@ import {
 } from "../../../features/cyfms/reminders/slice";
 import { onKeyDown } from "../../../library/app";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
+import SearchIcon from "@mui/icons-material/Search";
 import {
   Box,
   FormControl,
@@ -15,30 +20,28 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import type { FormEvent } from "react";
-import EditIcon from "./EditIcon";
-import SearchClientName from "../../../components/cyfms/searchClient/SearchClientName";
-import SearchIcon from "@mui/icons-material/Search";
-import ICInput from "../../../components/initialContact/ICInput";
-import ICDropdown from "../../../components/initialContact/ICDropdown";
-const RemindersForm = ({
+import type { FC, FormEvent } from "react";
+
+const RemindersForm: FC<any> = ({
   setAddNew,
   setDisabled,
   disabled,
   targetValue,
-}: any) => {
+}) => {
   const dispatch = useAppDispatch();
+  const state = useAppSelector((state) => state.cyfmsRegister);
   const { reminderstatus, frequency } = useAppSelector(
     (state) => state.codetable
   );
-  const state = useAppSelector((state) => state.cyfmsRegister);
   const data = useAppSelector((state) => state.cyfmsReminders.data);
-  const [click, setClick] = useState(false);
   const { id, clientName } = useAppSelector((state) => state.cyfmsReminders);
+
+  const [click, setClick] = useState(false);
+
   const handleSearch = () => {
-    console.log("click search");
     setClick(true);
   };
+
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
     if (!click) {
@@ -106,10 +109,9 @@ const RemindersForm = ({
         {disabled && (
           <Typography sx={{ p: 1 }}>Reference ID:{data.referenceId}</Typography>
         )}
-
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <ICInput
+            <Input
               id="reminderDate"
               value="Reminder Date"
               type="date"
@@ -119,7 +121,7 @@ const RemindersForm = ({
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <ICInput
+            <Input
               id="assignedTo"
               value="Assigned to"
               autofill={data.reminderDto.assignedTo}
@@ -127,7 +129,6 @@ const RemindersForm = ({
             />
           </Box>
         </Box>
-
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
             <FormControl
@@ -138,7 +139,7 @@ const RemindersForm = ({
               }}
             >
               <FormLabel
-                sx={{ p: 1, flexBasis: 0, flexGrow: 1, color: "black" }}
+                sx={{ p: 1, flexBasis: 0, flexGrow: 1.06, color: "black" }}
               >
                 Regarding
               </FormLabel>
@@ -158,7 +159,7 @@ const RemindersForm = ({
             </FormControl>
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <ICInput
+            <Input
               id="subject"
               value="Subject"
               type="text"
@@ -170,7 +171,7 @@ const RemindersForm = ({
         </Box>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <ICDropdown
+            <Dropdown
               id="status"
               value="Status"
               required
@@ -183,8 +184,9 @@ const RemindersForm = ({
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}></Box>
         </Box>
-
-        <ICTextArea
+        <TextArea
+          formLabelFlex="1 1 0"
+          outlinedInputFlex="5.3 1 0"
           id="description"
           value="Description"
           type="text"
@@ -194,7 +196,7 @@ const RemindersForm = ({
         <h4>Reccurance</h4>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: "0 1rem" }}>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <ICDropdown
+            <Dropdown
               id="frequency"
               value="Frequency"
               autofill={data.reminderDto.frequency}
@@ -205,7 +207,7 @@ const RemindersForm = ({
             />
           </Box>
           <Box sx={{ flexBasis: 0, flexGrow: 1 }}>
-            <ICInput
+            <Input
               id="endDate"
               value="End Date"
               type="date"

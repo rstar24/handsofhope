@@ -23,24 +23,25 @@ import { cleanState as cleanCPAParticipant } from "../../../features/cpa/partici
 import { clean as cleanCGCareProvider } from "../../../features/cg/careProvider/slice";
 import { clean as cleanCGCapacity } from "../../../features/cg/capacity/slice";
 import { cleanState as cleanNavbar } from "../../../features/navBarSlice";
-
-import { useAppDispatch, useAppSelector } from "../../../library/hooks";
-import { Box } from "@mui/material";
-import React from "react";
-import {  useNavigate } from "react-router-dom";
-import Button from "@mui/material/Button";
 import { setView } from "../../../features/popupSlice";
+import {
+  changeCalendarColor,
+  changeHomeColor,
+} from "../../../features/navBarSlice";
+import { useAppDispatch, useAppSelector } from "../../../library/hooks";
 import "./Navbar.css";
-import { changeCalendarColor, changeHomeColor } from "../../../features/navBarSlice";
+import { Box, Button } from "@mui/material";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import type { FC } from "react";
 
-
-
-
-export default function Navbar() {
+/**
+ * `Navbar` is navigation panel in authorized layout.
+ */
+const Navbar: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const {homeColor, calendarColor} = useAppSelector((state)=>state.navBar)
-  
+  const { homeColor, calendarColor } = useAppSelector((state) => state.navBar);
 
   const handleClean = () => {
     dispatch(cleanCodetableState());
@@ -72,7 +73,6 @@ export default function Navbar() {
     dispatch(cleanCGCapacity(null));
     //NAVBAR
     dispatch(cleanNavbar(null));
-
   };
 
   const handleHome = () => {
@@ -82,8 +82,7 @@ export default function Navbar() {
     navigate("/home");
   };
 
-  const handleCalendar = (e:any) => {
-
+  const handleCalendar = (e: any) => {
     dispatch(changeCalendarColor("red"));
     navigate("/calendar");
   };
@@ -96,58 +95,56 @@ export default function Navbar() {
 
   return (
     <Box
-  
       sx={{
         width: "100%",
         backgroundColor: "black",
         mt: 4,
       }}
     >
-        <ul>
-            <li className="list"> 
-              <Button
-                sx={{ color: "white",
-                      textTransform: "none" ,
-                      backgroundColor:homeColor,
-                      "&:hover": {
-                        backgroundColor: homeColor === "red" ? homeColor : "#464343"
-                      }
-                    }}
-                onClick={handleHome}
-              >
-                Home
-              </Button>
-              
-            </li>
-
-            <li className="list">
-              <Button
-                sx={{
-                  color: "white",
-                  marginLeft: "10px",
-                  textTransform: "none",
-                  backgroundColor:calendarColor,
-                  "&:hover": {
-                    backgroundColor: calendarColor==="red" ? calendarColor : "#464343"
-                  }
-                }}
-                onClick={handleCalendar}
-              >
-                Calendar
-              </Button>
-            </li>
-
-            <li className="logout list">
-              <Button
-                sx={{ color: "white", textTransform: "none" }}
-                onClick={handleLogout}
-              >
-                Logout
-              </Button>
-            </li>
-            
-        </ul>
-
+      <ul>
+        <li className="list">
+          <Button
+            sx={{
+              color: "white",
+              textTransform: "none",
+              backgroundColor: homeColor,
+              "&:hover": {
+                backgroundColor: homeColor === "red" ? homeColor : "#464343",
+              },
+            }}
+            onClick={handleHome}
+          >
+            Home
+          </Button>
+        </li>
+        <li className="list">
+          <Button
+            sx={{
+              color: "white",
+              marginLeft: "10px",
+              textTransform: "none",
+              backgroundColor: calendarColor,
+              "&:hover": {
+                backgroundColor:
+                  calendarColor === "red" ? calendarColor : "#464343",
+              },
+            }}
+            onClick={handleCalendar}
+          >
+            Calendar
+          </Button>
+        </li>
+        <li className="logout list">
+          <Button
+            sx={{ color: "white", textTransform: "none" }}
+            onClick={handleLogout}
+          >
+            Logout
+          </Button>
+        </li>
+      </ul>
     </Box>
   );
-}
+};
+
+export default Navbar;

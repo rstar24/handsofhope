@@ -1,6 +1,6 @@
 import { CYFSWMSNextButton } from "../../../components/CYFSWMSButtons";
 import Input from "../../../components/Input";
-import CYFMSDropdown from "../../../components/cyfms/CYFMSDropdown";
+import CYFMSDropdown from "../../../components/Dropdown";
 import CYFMSLayout from "../../../components/cyfms/CYFMSLayout";
 import { onKeyDown } from "../../../library/app";
 import { useAppDispatch, useAppSelector } from "../../../library/hooks";
