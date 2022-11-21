@@ -82,37 +82,28 @@ public class ICAppointmentServiceImpl implements ICAppointmentService {
 
 
     public List<ICAppointmentDto> checkFrequency(ICAppointmentDto icAppointmentDto){
-        System.out.println(icAppointmentDto);
         Period pd = Period.between(icAppointmentDto.getAppointmentDto().getDate(), icAppointmentDto.getAppointmentDto().getEndDate());
         int difference = pd.getDays();
-        System.out.println(difference);
+        int monthDiff=  pd.getMonths();
         int n = 0,counter=0,remainder=0;
         if(icAppointmentDto.getAppointmentDto().getFrequency().equalsIgnoreCase("Daily")){
             n = difference+1;
             remainder = n+1;
             counter=1;
         } else if (icAppointmentDto.getAppointmentDto().getFrequency().equalsIgnoreCase("Weekly")) {
-            n = (difference+1)/7;
+            n = (difference)/7;
             remainder = n%7;
-            if(remainder>0){
-                n=n+1;
-            }
+            n=n+1;
             counter=7;
         } else if (icAppointmentDto.getAppointmentDto().getFrequency().equalsIgnoreCase("Monthly")) {
-            n = (difference+1)/30;
-            remainder =n%30;
-            if(remainder>0){
-                n=n+1;
-            }
+            n=monthDiff+1;
             counter=30;
         }
         else {
-            n = (difference+1)/3;
-            remainder = n%3;
-            if(remainder>0){
-                n=n+1;
-            }
-            counter=3;
+            n = difference/14;
+            remainder = n%14;
+            n=n+1;
+            counter=14;
         }
         List<ICAppointmentDto>listicAppointments = new ArrayList<>();
         listicAppointments = saveFrequency(n,counter,remainder,icAppointmentDto);

@@ -1,5 +1,4 @@
 package org.cyfwms.participant.service;
-
 import lombok.extern.slf4j.Slf4j;
 import org.cyfwms.common.dto.AppointmentDto;
 import org.cyfwms.common.entity.Appointments;
@@ -10,22 +9,17 @@ import org.cyfwms.common.repository.AppointmentRepository;
 import org.cyfwms.participant.dto.ParticipantAppointmentDto;
 import org.cyfwms.participant.entity.Participant;
 import org.cyfwms.participant.entity.ParticipantAppointment;
-import org.cyfwms.participant.entity.ParticipantReminder;
 import org.cyfwms.participant.repository.ParticipantAppointmentRepo;
 import org.cyfwms.participant.repository.ParticipantRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Period;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-
 @Service
 @Slf4j
 public class ParticipantAppointmentServiceImpl implements ParticipantAppointmentService {
@@ -49,9 +43,7 @@ public class ParticipantAppointmentServiceImpl implements ParticipantAppointment
         //if new user enter
         if (participantAppointmentDto.getParticipantAppointmentId() == 0) {
             if(participantAppointmentDto.getAppointmentdto().getRecurringAppointment().equalsIgnoreCase("Yes")){
-                System.out.println(participantAppointmentDto);
                 listparticipantAppointments = checkFrequency(participantAppointmentDto);
-                System.out.println(listparticipantAppointments);
                 return listparticipantAppointments;
             }
             appointments = new Appointments();
@@ -85,37 +77,28 @@ public class ParticipantAppointmentServiceImpl implements ParticipantAppointment
 
         }
         public List<ParticipantAppointmentDto> checkFrequency(ParticipantAppointmentDto participantAppointmentDto){
-            System.out.println(participantAppointmentDto);
             Period pd = Period.between(participantAppointmentDto.getAppointmentdto().getDate(), participantAppointmentDto.getAppointmentdto().getEndDate());
             int difference = pd.getDays();
-            System.out.println(difference);
+             int monthDiff=  pd.getMonths();
             int n = 0,counter=0,remainder=0;
             if(participantAppointmentDto.getAppointmentdto().getFrequency().equalsIgnoreCase("Daily")){
                 n = difference+1;
                 remainder = n+1;
                 counter=1;
             } else if (participantAppointmentDto.getAppointmentdto().getFrequency().equalsIgnoreCase("Weekly")) {
-                n = (difference+1)/7;
+                n = (difference)/7;
                 remainder = n%7;
-                if(remainder>0){
                     n=n+1;
-                }
                 counter=7;
             } else if (participantAppointmentDto.getAppointmentdto().getFrequency().equalsIgnoreCase("Monthly")) {
-                n = (difference+1)/30;
-                remainder =n%30;
-                if(remainder>0){
-                    n=n+1;
-                }
+                    n=monthDiff+1;
                 counter=30;
             }
             else {
-                n = (difference+1)/3;
-                remainder = n%3;
-                if(remainder>0){
+                n = difference/14;
+                remainder = n%14;
                     n=n+1;
-                }
-                counter=3;
+                counter=14;
             }
             List<ParticipantAppointmentDto>listparticipantAppointments = new ArrayList<>();
             listparticipantAppointments = saveFrequency(n,counter,remainder,participantAppointmentDto);
@@ -134,6 +117,7 @@ public class ParticipantAppointmentServiceImpl implements ParticipantAppointment
                 participantAppointment.setStatus("ACTIVE");
                 appointments.setAppointmentStatus("ACTIVE");
                 LocalDate l = participantAppointmentDto.getAppointmentdto().getDate().plusDays(cnt);
+
                 appointments.setDate(l);
                 participantAppointment.setAppointments(appointments);
                 participantAppointment = participantAppointmentRepo.save(participantAppointment);
@@ -147,9 +131,8 @@ public class ParticipantAppointmentServiceImpl implements ParticipantAppointment
                 listparticipantAppointments.add(participantAppointmentdto);
                 if(i==n-1 && remainder>0){
                     cnt =cnt+1;
-
                 }
-                cnt=cnt+counter;
+                   cnt = cnt + counter;
             }
 
             return listparticipantAppointments;

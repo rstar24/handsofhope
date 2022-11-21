@@ -33,8 +33,43 @@ public class CareProviderSearchRepository {
 
     private StringBuffer createSearchQuery(CareProviderSearchCriteriaDto searchCriteria, List<Object> argsObjectList) {
         StringBuffer querySBuff = new StringBuffer();
-        querySBuff.append("select c.id ,c.reference_id ,c.name ,c.type ,c.primary_caregiver, c.secondary_caregiver ,c.status ");
-        querySBuff.append("from cg_care_provider c where c.deletion_status='ACTIVE'");
+        querySBuff.append("select c.id ,c.reference_id ,c.name ,c.type ,primary_caregiver, secondary_caregiver ,c.status ");
+        querySBuff.append("from cg_care_provider c ");
+
+        String priCaregiver = searchCriteria.getPriCaregiver();
+        String secCaregiver = searchCriteria.getSecCaregiver();
+        if (priCaregiver==null && secCaregiver==null){
+            querySBuff.append(" where c.deletion_status='ACTIVE'");
+        }
+
+        if (priCaregiver!=null && !priCaregiver.trim().isEmpty()){
+            querySBuff.append(" left join participant p2 on c.primary_caregiver =p2.participantid ");
+            priCaregiver = priCaregiver.trim()
+                    .replace("!", "!!")
+                    .replace("%", "!%")
+                    .replace("_", "!_")
+                    .replace("[", "![");
+            querySBuff.append(" where c.deletion_status='ACTIVE'");
+            querySBuff.append(" AND CONCAT(firstname,' ', surname) LIKE ?");
+            argsObjectList.add(priCaregiver + "%");
+        }
+
+
+
+        if (secCaregiver!=null && !secCaregiver.trim().isEmpty()){
+            querySBuff.append(" left join participant p2 on c.secondary_caregiver = p2.participantid");
+            querySBuff.append(" where c.deletion_status='ACTIVE'");
+            secCaregiver = secCaregiver.trim()
+                    .replace("!", "!!")
+                    .replace("%", "!%")
+                    .replace("_", "!_")
+                    .replace("[", "![");
+            querySBuff.append(" AND CONCAT(firstname,' ', surname) LIKE ?");
+            argsObjectList.add(secCaregiver + "%");
+        }
+
+
+
 
         Long referenceId = searchCriteria.getReferenceId();
         if (referenceId != null) {
@@ -62,29 +97,6 @@ public class CareProviderSearchRepository {
             querySBuff.append(" AND c.type LIKE ?");
             argsObjectList.add(type + "%");
         }
-
-        String priCaregiver = searchCriteria.getPriCaregiver();
-        if (priCaregiver != null && !priCaregiver.trim().isEmpty()) {
-            priCaregiver = priCaregiver.trim()
-                    .replace("!", "!!")
-                    .replace("%", "!%")
-                    .replace("_", "!_")
-                    .replace("[", "![");
-            querySBuff.append(" AND c.primary_caregiver LIKE ?");
-            argsObjectList.add(priCaregiver + "%");
-        }
-
-        String secCaregiver = searchCriteria.getSecCaregiver();
-        if (secCaregiver != null && !secCaregiver.trim().isEmpty()) {
-            secCaregiver = secCaregiver.trim()
-                    .replace("!", "!!")
-                    .replace("%", "!%")
-                    .replace("_", "!_")
-                    .replace("[", "![");
-            querySBuff.append(" AND c.secondary_caregiver LIKE ?");
-            argsObjectList.add(secCaregiver + "%");
-        }
-
 
         String status = searchCriteria.getStatus();
         if (status != null && !status.trim().isEmpty()) {
