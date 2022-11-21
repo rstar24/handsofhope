@@ -52,10 +52,10 @@ export interface State {
 
 export const doGet = createAsyncThunk<GetData, number>(
   "icParticipant/doGet",
-  async (participantculturalprogid, { getState }) => {
+  async (icParticiapntId, { getState }) => {
     const store: any = getState();
     const res: AxiosResponse = await doGetAPI(
-      participantculturalprogid,
+      icParticiapntId,
       store.login.token
     );
     // Becomes the `fulfilled` action payload:
@@ -87,7 +87,8 @@ export const doSearch = createAsyncThunk<Data[], any>(
   "ic/doSearch",
   async (formData, { getState }) => {
     const store: any = getState();
-    const res: AxiosResponse = await doSearchAPI(formData, store.login.token);
+    const res: AxiosResponse = await doSearchAPI(formData.id,formData.data || null, store.login.token);
+
     // Becomes the `fulfilled` action payload:
     return res.data;
   }

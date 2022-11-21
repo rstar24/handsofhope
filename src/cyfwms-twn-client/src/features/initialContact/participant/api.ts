@@ -44,11 +44,12 @@ export const doRemoveAPI = async (
 };
 
 export const doSearchAPI = async (
+  id:number,
   data: any,
   token: string
 ): Promise<AxiosResponse> => {
   const res: AxiosResponse = await axiosInstance.get(
-    `initialcontactservice/participantICSearch/${data}`,
+    `initialcontactservice/participantICSearch/${id}/${data ? data : null}`,
     {
       headers: { Authorization: "Bearer " + token },
     }

@@ -70,7 +70,7 @@ const ParticipantForm = ({ setAddNew, setDisabled, disabled }: any) => {
           <EditIcon
             setDisabled={setDisabled}
             setAddNew={setAddNew}
-            icParticipantId={state.data.icParticipantId}
+            icParticipantId={data.icParticipantId}
           />
         </Box>
       )}

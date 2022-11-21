@@ -34,7 +34,7 @@ const Participants: FC = () => {
   const state = useAppSelector((state) => state.icFileDetails.getData);
 
   useEffect(() => {
-    dispatch(doSearch(state.fileDetailsId))
+    dispatch(doSearch({id: state.fileDetailsId,data:""}))
       .unwrap()
       .catch((err) => {});
   }, [addNew]);
