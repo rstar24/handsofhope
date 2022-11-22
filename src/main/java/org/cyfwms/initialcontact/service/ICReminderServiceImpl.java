@@ -8,6 +8,7 @@ import org.cyfwms.common.exception.I18Constants;
 import org.cyfwms.common.exception.MessageUtil;
 import org.cyfwms.common.exception.NoSuchElementFoundException;
 import org.cyfwms.common.repository.ReminderRepository;
+import org.cyfwms.common.util.FrequencyGeneratorUtil;
 import org.cyfwms.initialcontact.dto.ICReminderDto;
 import org.cyfwms.initialcontact.entity.ICReminder;
 import org.cyfwms.initialcontact.repository.ICReminderRepository;
@@ -41,6 +42,9 @@ public class ICReminderServiceImpl implements ICReminderService {
     @Autowired
     private ParticipantRepository participantRepository;
 
+    @Autowired
+    private FrequencyGeneratorUtil frequencyGeneratorUtil;
+
     @Override
     public List<ICReminderDto> saveICReminder(ICReminderDto icReminderDto) {
         log.info("Inside InitialContact SaveICtReminder");
@@ -52,6 +56,7 @@ public class ICReminderServiceImpl implements ICReminderService {
         if (icReminderDto.getIcReminderId() == 0) {
             if (!icReminderDto.getReminderDto().getFrequency().isEmpty()){
             icReminderDtoList =checkFrequency(icReminderDto);
+            return icReminderDtoList;
            }
             reminder = new Reminder();
             BeanUtils.copyProperties(icReminderDto.getReminderDto(), reminder);
@@ -81,6 +86,7 @@ public class ICReminderServiceImpl implements ICReminderService {
     public List<ICReminderDto> checkFrequency(ICReminderDto icReminderDto) {
         Period pd = Period.between(icReminderDto.getReminderDto().getReminderDate() ,icReminderDto.getReminderDto().getEndDate());
         int difference = pd.getDays();
+        int monthDiff = pd.getMonths();
 
         int n = 0,counter=0, rem =0;
         if(icReminderDto.getReminderDto().getFrequency().equalsIgnoreCase("Daily")){
@@ -88,25 +94,19 @@ public class ICReminderServiceImpl implements ICReminderService {
             rem = n+1;
             counter=1;
         } else if (icReminderDto.getReminderDto().getFrequency().equalsIgnoreCase("Weekly")) {
-            n = (difference+1)/7;
-            rem = n%7;
-            if (rem>0){
-            }
-            counter=7;
+            n = difference / 7;
+            rem = n % 7;
+            n = n + 1;
+            counter = 7;
         } else if (icReminderDto.getReminderDto().getFrequency().equalsIgnoreCase("Monthly")) {
-            n = (difference+1)/30;
-            rem = n%30;
-            if(rem>0){
-                n=n+1;
-            }
-            counter=30;
+
+            n = monthDiff + 1;
+            counter = 31;
         }else {
-            n = (difference+1)/3;
-            rem = n%3;
-            if(rem>0){
-                n=n+1;
-            }
-            counter=3;
+            n = difference / 14;
+            rem = n % 14;
+            n = n + 1;
+            counter = 14;
         }
         List<ICReminderDto> iCReminderDtoList =new ArrayList<>();
         iCReminderDtoList = saveFrequency(n,counter,rem,icReminderDto);
@@ -115,8 +115,8 @@ public class ICReminderServiceImpl implements ICReminderService {
 
     public List<ICReminderDto> saveFrequency(int n, int counter, int rem, ICReminderDto iCReminderDto) {
         List<ICReminderDto> iCReminderDtoList = new ArrayList<>();
-        int cnt=1;
-        for(int i=1;i<n;i++){
+        int cnt=0;
+        for(int i=0;i<n;i++){
             ICReminder icReminder=new ICReminder();
             Reminder reminder=new Reminder();
             BeanUtils.copyProperties(iCReminderDto,icReminder);
@@ -130,17 +130,22 @@ public class ICReminderServiceImpl implements ICReminderService {
 
             ReminderDto reminderDto = new ReminderDto();
 
-            ICReminderDto iCReminderDto1=new ICReminderDto();
-            BeanUtils.copyProperties(icReminder,iCReminderDto1);
+            ICReminderDto iCReminderdto=new ICReminderDto();
+            BeanUtils.copyProperties(icReminder,iCReminderdto);
             BeanUtils.copyProperties(reminder,reminderDto);
-            reminderDto.setReminderId(icReminder.getReminder().getReminderId());
-            iCReminderDto1.setReminderDto(reminderDto);
-            iCReminderDtoList.add(iCReminderDto1);
+            iCReminderdto.setReminderDto(reminderDto);
+            iCReminderDtoList.add(iCReminderdto);
             if(i==n-1 && rem>0){
                 cnt =cnt+1;
-
             }
-            cnt=cnt+counter;
+            if (iCReminderDto.getReminderDto().getFrequency().equalsIgnoreCase("Monthly")) {
+                int year = iCReminderDto.getReminderDto().getReminderDate().getYear();
+                int month = iCReminderdto.getReminderDto().getReminderDate().getMonth().getValue();
+                int monthly = frequencyGeneratorUtil.generateMonthlyUtil(month, cnt, year, counter);
+                cnt = monthly;
+            } else {
+                cnt = cnt + counter;
+            }
         }
         return iCReminderDtoList;
     }

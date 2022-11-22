@@ -11,6 +11,7 @@ import org.cyfwms.common.exception.I18Constants;
 import org.cyfwms.common.exception.MessageUtil;
 import org.cyfwms.common.exception.NoSuchElementFoundException;
 import org.cyfwms.common.repository.ReminderRepository;
+import org.cyfwms.common.util.FrequencyGeneratorUtil;
 import org.cyfwms.participant.entity.Participant;
 import org.cyfwms.participant.repository.ParticipantRepository;
 import org.springframework.beans.BeanUtils;
@@ -39,6 +40,8 @@ public class CareGiverReminderServiceImpl implements CareGiverReminderService {
 
     @Autowired
     private ParticipantRepository participantRepository;
+    @Autowired
+    private FrequencyGeneratorUtil frequencyGeneratorUtil;
 
     @Override
     public List<CareGiverReminderDto> saveCGReminder(CareGiverReminderDto careGiverReminderDto) {
@@ -51,6 +54,7 @@ public class CareGiverReminderServiceImpl implements CareGiverReminderService {
         if (careGiverReminderDto.getCgReminderId() == 0) {
             if (!careGiverReminderDto.getReminderDto().getFrequency().isEmpty()) {
                 careGiverReminderDtoList = checkFrequency(careGiverReminderDto);
+                return  careGiverReminderDtoList;
             }
             reminder = new Reminder();
             BeanUtils.copyProperties(careGiverReminderDto.getReminderDto(), reminder);
@@ -81,33 +85,25 @@ public class CareGiverReminderServiceImpl implements CareGiverReminderService {
 
         Period pd = Period.between(careGiverReminderDto.getReminderDto().getReminderDate() ,careGiverReminderDto.getReminderDto().getEndDate());
         int difference = pd.getDays();
-
+        int monthDiff = pd.getMonths();
         int n = 0,counter=0, rem =0;
         if(careGiverReminderDto.getReminderDto().getFrequency().equalsIgnoreCase("Daily")){
             n = difference+1;
             rem = n+1;
             counter=1;
         } else if (careGiverReminderDto.getReminderDto().getFrequency().equalsIgnoreCase("Weekly")) {
-            n = (difference+1)/7;
-            rem = n%7;
-            if (rem>0){
-                n=n+1;
-            }
-            counter=7;
+            n = difference / 7;
+            rem = n % 7;
+            n = n + 1;
+            counter = 7;
         } else if (careGiverReminderDto.getReminderDto().getFrequency().equalsIgnoreCase("Monthly")) {
-            n = (difference+1)/30;
-            rem = n%30;
-            if(rem>0){
-                n=n+1;
-            }
-            counter=30;
+            n = monthDiff + 1;
+            counter = 31;
         }else {
-            n = (difference+1)/3;
-            rem = n%3;
-            if(rem>0){
-                n=n+1;
-            }
-            counter=3;
+            n = difference / 14;
+            rem = n % 14;
+            n = n + 1;
+            counter = 14;
         }
         List<CareGiverReminderDto> listcaregiverReminder =new ArrayList<>();
         listcaregiverReminder = saveFrequency(n,counter,rem,careGiverReminderDto);
@@ -115,9 +111,9 @@ public class CareGiverReminderServiceImpl implements CareGiverReminderService {
     }
 
     public List<CareGiverReminderDto> saveFrequency(int n, int counter, int rem, CareGiverReminderDto careGiverReminderDto) {
-        List<CareGiverReminderDto> listcaregiverreminder = new ArrayList<>();
-        int cnt=1;
-        for(int i=1;i<n;i++){
+        List<CareGiverReminderDto> listCareGiverReminder = new ArrayList<>();
+        int cnt=0;
+        for(int i=0;i<n;i++){
             CareGiverReminder caregiverReminder=new CareGiverReminder();
             Reminder reminder=new Reminder();
             BeanUtils.copyProperties(careGiverReminderDto,caregiverReminder);
@@ -131,20 +127,24 @@ public class CareGiverReminderServiceImpl implements CareGiverReminderService {
 
             ReminderDto reminderDto = new ReminderDto();
 
-            CareGiverReminderDto careGiverReminderDto1=new CareGiverReminderDto();
-            BeanUtils.copyProperties(caregiverReminder,careGiverReminderDto1);
+            CareGiverReminderDto careGiverReminderdto=new CareGiverReminderDto();
+            BeanUtils.copyProperties(caregiverReminder,careGiverReminderdto);
             BeanUtils.copyProperties(reminder,reminderDto);
-            reminderDto.setReminderId(caregiverReminder.getReminder().getReminderId());
-            careGiverReminderDto1.setReminderDto(reminderDto);
-            listcaregiverreminder.add(careGiverReminderDto1);
+            careGiverReminderdto.setReminderDto(reminderDto);
+            listCareGiverReminder.add(careGiverReminderdto);
             if(i==n-1 && rem>0){
                 cnt =cnt+1;
-
             }
-            cnt=cnt+counter;
+            if (careGiverReminderDto.getReminderDto().getFrequency().equalsIgnoreCase("Monthly")) {
+                int year = careGiverReminderDto.getReminderDto().getReminderDate().getYear();
+                int month = careGiverReminderdto.getReminderDto().getReminderDate().getMonth().getValue();
+                int monthly = frequencyGeneratorUtil.generateMonthlyUtil(month, cnt, year, counter);
+                cnt = monthly;
+            } else {
+                cnt = cnt + counter;
+            }
         }
-
-        return listcaregiverreminder;
+        return listCareGiverReminder;
     }
 
     @Override

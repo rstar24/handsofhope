@@ -22,9 +22,9 @@ appointment:
     WEEKLY:
       "en": "Weekly"
       "fr": "hebdomadaire"
-    BI-WEEKLY:
-      "en": "Bi-weekly"
-      "fr": "bihebdomadaire"
+    Every Two Weeks:
+      "en": "Every Two Weeks"
+      "fr": "Toutes les deux semaines"
     MONTHLY:
       "en": "Monthly"
       "fr": "mensuelle"

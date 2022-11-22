@@ -1,5 +1,4 @@
 package org.cyfwms.participant.service;
-
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.cyfwms.common.dto.ReminderDto;
@@ -8,6 +7,7 @@ import org.cyfwms.common.exception.I18Constants;
 import org.cyfwms.common.exception.MessageUtil;
 import org.cyfwms.common.exception.NoSuchElementFoundException;
 import org.cyfwms.common.repository.ReminderRepository;
+import org.cyfwms.common.util.FrequencyGeneratorUtil;
 import org.cyfwms.participant.dto.ParticipantReminderDto;
 import org.cyfwms.participant.entity.Participant;
 import org.cyfwms.participant.entity.ParticipantReminder;
@@ -16,27 +16,23 @@ import org.cyfwms.participant.repository.ParticipantRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 @Service
 @AllArgsConstructor
 @Slf4j
 public class ParticipantReminderServiceImpl implements ParticipantReminderService {
-
+    @Autowired
+    FrequencyGeneratorUtil frequencyGeneratorUtil;
     @Autowired
     private ParticipantReminderRepository participantReminderRepository;
-
     @Autowired
     private ReminderRepository reminderRepository;
-
     @Autowired
     private ParticipantRepository participantRepository;
-
     @Autowired
     private MessageUtil messageUtil;
 
@@ -53,7 +49,7 @@ public class ParticipantReminderServiceImpl implements ParticipantReminderServic
                     BeanUtils.copyProperties(participantReminder.get(), participantReminderDto);
                     BeanUtils.copyProperties(participantReminder.get().getReminder(), reminderDto);
                     Long participantId = Long.parseLong(reminderDto.getRegarding());
-                    if (participantId!=0) {
+                    if (participantId != 0) {
                         Participant participant = participantRepository.findByParticipantId(participantId);
                         reminderDto.setRegarding(participant.getFirstname() + " " + participant.getSurname());
                         reminderDto.setParticipantId(participant.getParticipantId());
@@ -71,13 +67,14 @@ public class ParticipantReminderServiceImpl implements ParticipantReminderServic
     public List<ParticipantReminderDto> saveParticipantReminder(ParticipantReminderDto participantReminderDto) {
         log.info("Inside SaveParticipantReminder");
         Reminder reminder = null;
-        ReminderDto reminderDto=new ReminderDto();
-        ParticipantReminderDto participantReminderDto1=new ParticipantReminderDto();
-        List<ParticipantReminderDto> participantReminderDtoList=new ArrayList<>();
+        ReminderDto reminderDto = new ReminderDto();
+        ParticipantReminderDto participantReminderDto1 = new ParticipantReminderDto();
+        List<ParticipantReminderDto> participantReminderDtoList = new ArrayList<>();
         ParticipantReminder participantReminder = new ParticipantReminder();
         if (participantReminderDto.getParticipantReminderId() == 0) {
             if (!participantReminderDto.getReminderDto().getFrequency().isEmpty()) {
                 participantReminderDtoList = checkFrequency(participantReminderDto);
+                return participantReminderDtoList;
             }
             reminder = new Reminder();
             BeanUtils.copyProperties(participantReminderDto.getReminderDto(), reminder);
@@ -97,8 +94,8 @@ public class ParticipantReminderServiceImpl implements ParticipantReminderServic
         participantReminder.setReminder(reminder);
         participantReminder = participantReminderRepository.save(participantReminder);
 
-        BeanUtils.copyProperties(participantReminder,participantReminderDto1);
-        BeanUtils.copyProperties(reminder,reminderDto);
+        BeanUtils.copyProperties(participantReminder, participantReminderDto1);
+        BeanUtils.copyProperties(reminder, reminderDto);
         participantReminderDto1.setReminderDto(reminderDto);
         participantReminderDtoList.add(participantReminderDto1);
         log.info("Exit SaveParticipantReminder");
@@ -107,72 +104,74 @@ public class ParticipantReminderServiceImpl implements ParticipantReminderServic
 
     public List<ParticipantReminderDto> checkFrequency(ParticipantReminderDto participantReminderDto) {
         log.info("Inside CheckFrequency");
-        Period pd = Period.between(participantReminderDto.getReminderDto().getReminderDate() ,participantReminderDto.getReminderDto().getEndDate());
+        Period pd = Period.between(participantReminderDto.getReminderDto().getReminderDate(), participantReminderDto.getReminderDto().getEndDate());
         int difference = pd.getDays();
-
-        int n = 0,counter=0, rem =0;
-        if(participantReminderDto.getReminderDto().getFrequency().equalsIgnoreCase("Daily")){
-            n = difference+1;
-            rem = n+1;
-            counter=1;
+        int monthDiff = pd.getMonths();
+        int n = 0, counter = 0, rem = 0;
+        if (participantReminderDto.getReminderDto().getFrequency().equalsIgnoreCase("Daily")) {
+            n = difference + 1;
+            rem = n + 1;
+            counter = 1;
         } else if (participantReminderDto.getReminderDto().getFrequency().equalsIgnoreCase("Weekly")) {
-            n = (difference+1)/7;
-            rem = n%7;
-            if (rem>0){
-                n=n+1;
-            }
-            counter=7;
+            n = difference / 7;
+            rem = n % 7;
+            n = n + 1;
+            counter = 7;
         } else if (participantReminderDto.getReminderDto().getFrequency().equalsIgnoreCase("Monthly")) {
-            n = (difference+1)/30;
-            rem = n%30;
-            if(rem>0){
-                n=n+1;
-            }
-            counter=30;
-        }else {
-            n = (difference+1)/3;
-            rem = n%3;
-            if(rem>0){
-                n=n+1;
-            }
-            counter=3;
+            n = monthDiff + 1;
+            counter = 31;
+        } else {
+            n = difference / 14;
+            rem = n % 14;
+            n = n + 1;
+            counter = 14;
+
+
         }
-        List<ParticipantReminderDto> listparticipantReminder =new ArrayList<>();
-        listparticipantReminder = saveFrequency(n,counter,rem,participantReminderDto);
+        List<ParticipantReminderDto> listparticipantReminder = new ArrayList<>();
+        listparticipantReminder = saveFrequency(n, counter, rem, participantReminderDto);
         return listparticipantReminder;
     }
 
     public List<ParticipantReminderDto> saveFrequency(int n, int counter, int rem, ParticipantReminderDto participantReminderDto) {
-          log.info("Inside SaveFrequency");
-          List<ParticipantReminderDto> listparticipantreminder = new ArrayList<>();
-          int cnt=1;
-          for(int i=1;i<n;i++){
-              ParticipantReminder participantReminder=new ParticipantReminder();
-              Reminder reminder=new Reminder();
-              BeanUtils.copyProperties(participantReminderDto,participantReminder);
-              BeanUtils.copyProperties(participantReminderDto.getReminderDto(),reminder);
-              participantReminder.setStatusOfDeletion("ACTIVE");
-              reminder.setStatusOfDeletion("ACTIVE");
-              LocalDate localDate=participantReminderDto.getReminderDto().getReminderDate().plusDays(cnt);
-              reminder.setReminderDate(localDate);
-              participantReminder.setReminder(reminder);
-              participantReminder = participantReminderRepository.save(participantReminder);
+        log.info("Inside SaveFrequency");
+        List<ParticipantReminderDto> listParticipantReminderDto = new ArrayList<>();
+        int cnt = 0;
+        for (int i = 0; i < n; i++) {
+            ParticipantReminder participantReminder = new ParticipantReminder();
+            Reminder reminder = new Reminder();
+            BeanUtils.copyProperties(participantReminderDto, participantReminder);
+            BeanUtils.copyProperties(participantReminderDto.getReminderDto(), reminder);
+            participantReminder.setStatusOfDeletion("ACTIVE");
+            reminder.setStatusOfDeletion("ACTIVE");
+            LocalDate localDate = participantReminderDto.getReminderDto().getReminderDate().plusDays(cnt);
+            reminder.setReminderDate(localDate);
 
-              ReminderDto reminderDto = new ReminderDto();
+            participantReminder.setReminder(reminder);
+            participantReminder = participantReminderRepository.save(participantReminder);
 
-              ParticipantReminderDto participantReminderDto1=new ParticipantReminderDto();
-              BeanUtils.copyProperties(participantReminder,participantReminderDto1);
-              BeanUtils.copyProperties(reminder,reminderDto);
-              reminderDto.setReminderId(participantReminder.getReminder().getReminderId());
-              participantReminderDto1.setReminderDto(reminderDto);
-              listparticipantreminder.add(participantReminderDto1);
-              if(i==n-1 && rem>0){
-                  cnt =cnt+1;
+            ReminderDto reminderDto = new ReminderDto();
+            ParticipantReminderDto participantReminderdto = new ParticipantReminderDto();
 
-              }
-              cnt=cnt+counter;
-          }
-          return listparticipantreminder;
+            BeanUtils.copyProperties(participantReminder, participantReminderdto);
+            BeanUtils.copyProperties(reminder, reminderDto);
+            participantReminderdto.setReminderDto(reminderDto);
+
+            listParticipantReminderDto.add(participantReminderdto);
+            if (i == n - 1 && rem > 0) {
+                cnt = cnt + 1;
+            }
+            if (participantReminderDto.getReminderDto().getFrequency().equalsIgnoreCase("Monthly")) {
+                int year = participantReminderDto.getReminderDto().getReminderDate().getYear();
+                int month = participantReminderdto.getReminderDto().getReminderDate().getMonth().getValue();
+                int monthly = frequencyGeneratorUtil.generateMonthlyUtil(month, cnt, year, counter);
+                cnt = monthly;
+            } else {
+                cnt = cnt + counter;
+            }
+        }
+
+        return listParticipantReminderDto;
     }
 
     @Override
