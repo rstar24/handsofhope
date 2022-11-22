@@ -258,6 +258,7 @@ const AppointmentsForm: FC<any> = ({
             disabled={stete.disabledFrequency}
             autofill={data.appointmentDto.frequency}
             readOnly={disabled}
+            required
             optionsList={Object.values(frequency).map(
               (status: any) => status.en
             )}
@@ -268,6 +269,7 @@ const AppointmentsForm: FC<any> = ({
             id="endDate"
             disabled={stete.disabledClosingDate}
             value="End Date"
+            required
             minDate="1900-01-01"
             type="date"
             autofill={data.appointmentDto.endDate}

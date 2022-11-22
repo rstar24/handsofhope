@@ -78,6 +78,14 @@ const RemindersForm: FC<any> = ({
         });
     }
   };
+  const changeHandler = (e: FormEvent) => {
+    e.preventDefault();
+    const form: any = e.currentTarget;
+    // Start: Make min date of "End Date" field the current
+    // entered date in "Date" field
+    form.endDate.min = form.reminderDate.value;
+    // END
+  };
 
   return (
     <Box
@@ -88,6 +96,7 @@ const RemindersForm: FC<any> = ({
         gap: "1rem 0",
       }}
       onSubmit={submitHandler}
+      onChange={changeHandler}
       onKeyDown={onKeyDown}
     >
       {disabled && (
@@ -207,6 +216,7 @@ const RemindersForm: FC<any> = ({
             value="Frequency"
             autofill={data.reminderDto.status}
             readOnly={disabled}
+            required
             optionsList={Object.values(frequency).map(
               (status: any) => status.en
             )}
@@ -218,6 +228,7 @@ const RemindersForm: FC<any> = ({
             value="End Date"
             type="date"
             autofill={data.reminderDto.endDate}
+            required
             readOnly={disabled}
           />
         </Box>
