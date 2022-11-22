@@ -82,6 +82,10 @@ const AppointmentsForm: FC<any> = ({
   const changeHandler = (e: FormEvent) => {
     e.preventDefault();
     const form: any = e.currentTarget;
+    // Start: Make min date of "End Date" field the current
+    // entered date in "Date" field
+    form.endDate.min = form.date.value;
+    // END
     if (form.recurringappointment.value === "Yes") {
       dispatch(enableClosingDate(null));
       dispatch(enableFrequency(null));
