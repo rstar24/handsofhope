@@ -119,8 +119,8 @@ const Login = (): ReactElement => {
             formLabelFlex="1.06 1 0"
             id="passWord"
             name="passWord"
-            validationTitle="Password must be at least 6 characters long!"
-            validationPattern="^.{6,}$"
+            validationTitle="Password must be at least 5 characters long!"
+            validationPattern="^.{5,}$"
             value="Password"
             required
             type="password"

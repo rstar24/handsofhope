@@ -1,7 +1,9 @@
 reflectoring:
   trace: true
+
 server:
-  port: 9088
+  port: 8080
+
 #This is to avoid Swagger related version issues
 spring:
   messages:
@@ -13,9 +15,9 @@ spring:
   application:
     name: TWN-SERVER
   datasource:
-    url: jdbc:mysql://twn-mysql.mysql.database.azure.com:3306/twn
-    username: admin1
-    password: Password@123
+    url: jdbc:mysql://localhost:3306/twn
+    username: twn
+    password: twn
   profiles:
     include:
       - participant
@@ -28,17 +30,18 @@ spring:
       max-file-size: 10MB
       max-request-size: 10MB
   jpa:
-    #defer-datasource-initialization: true
+    defer-datasource-initialization: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     generate-ddl: true
+  sql:
+    init:
+      continueOnError: false
+      mode: always
+      platform: mysql
 
-  #sql:
-  #  init:
-  #    platform: mysql
-  #    mode: always
 jwt:
   secret: gigatorb
 logging:
