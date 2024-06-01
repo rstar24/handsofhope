@@ -4,7 +4,7 @@ import org.cyfwms.initialcontact.dto.ICFileDetailsDto;
 import org.springframework.http.ResponseEntity;
 
 public interface ICFileDetailsService {
-    ICFileDetailsDto readAllFileDetails(Long fileDetailsID );
-    ICFileDetailsDto saveAllFileDetails(ICFileDetailsDto initialContactFileDetailsDto);
-    void removeICFileDetails(Long fileNumber);
+	ICFileDetailsDto readAllFileDetails(Long fileDetailsID);
+	ICFileDetailsDto saveAllFileDetails(ICFileDetailsDto initialContactFileDetailsDto);
+	void removeICFileDetails(Long fileNumber);
 }

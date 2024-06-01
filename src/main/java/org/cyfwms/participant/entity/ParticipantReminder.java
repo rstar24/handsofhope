@@ -1,13 +1,12 @@
 package org.cyfwms.participant.entity;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import javax.persistence.*;
 import lombok.*;
 import org.cyfwms.common.entity.Reminder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
-import javax.persistence.*;
-import java.io.Serializable;
-import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -15,46 +14,49 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "participantreminder")
 public class ParticipantReminder implements Serializable {
+	@Id
+	@Getter
+	@Setter
+	@Column(name = "participantreminderid", updatable = false, nullable = false)
+	@SequenceGenerator(
+		name = "participantReminderIdGenerator",
+		sequenceName = "participantReminderIdGenerator",
+		allocationSize = 100
+	)
+	@GeneratedValue(
+		strategy = GenerationType.SEQUENCE,
+		generator = "participantReminderIdGenerator"
+	)
+	private Long participantReminderId;
 
-    @Id
-    @Getter
-    @Setter
-    @Column(name = "participantreminderid", updatable = false, nullable = false)
-    @SequenceGenerator(name = "participantReminderIdGenerator", sequenceName = "participantReminderIdGenerator", allocationSize = 100)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,
-            generator = "participantReminderIdGenerator")
-    private Long participantReminderId;
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "reminderid", referencedColumnName = "reminderid")
+	private Reminder reminder;
 
+	@CreationTimestamp
+	@Getter
+	@Setter
+	@Column(name = "creationdatetime")
+	private LocalDateTime creationDateTime;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "reminderid", referencedColumnName = "reminderid")
-    private Reminder reminder;
+	@UpdateTimestamp
+	@Getter
+	@Setter
+	@Column(name = "lastwritten")
+	private LocalDateTime lastWritten;
 
+	@Getter
+	@Setter
+	@Column(name = "statusofdeletion")
+	private String statusOfDeletion;
 
-    @CreationTimestamp
-    @Getter
-    @Setter
-    @Column(name = "creationdatetime")
-    private LocalDateTime creationDateTime;
+	@Getter
+	@Setter
+	@Column(name = "participantid")
+	private Long participantId;
 
-    @UpdateTimestamp
-    @Getter
-    @Setter
-    @Column(name = "lastwritten")
-    private LocalDateTime lastWritten;
-
-    @Getter
-    @Setter
-    @Column(name = "statusofdeletion")
-    private String statusOfDeletion;
-    @Getter
-    @Setter
-    @Column(name = "participantid")
-    private Long participantId;
-    @Getter
-    @Setter
-    @Column(name = "referenceid",updatable = false)
-    private Long referenceId;
-
-
+	@Getter
+	@Setter
+	@Column(name = "referenceid", updatable = false)
+	private Long referenceId;
 }

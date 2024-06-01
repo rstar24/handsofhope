@@ -10,16 +10,15 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ApplicationConfig {
 
-    @Bean
-    public ModelMapper modelMapper() {
-        ModelMapper modelMapper = new ModelMapper();
-        return modelMapper;
-    }
+	@Bean
+	public ModelMapper modelMapper() {
+		ModelMapper modelMapper = new ModelMapper();
+		return modelMapper;
+	}
 
-    @Bean
-    public MessageUtil messageUtil(MessageSource messageSource) {
-        MessageUtil messageUtil = new MessageUtil(messageSource);
-        return messageUtil;
-    }
-
+	@Bean
+	public MessageUtil messageUtil(MessageSource messageSource) {
+		MessageUtil messageUtil = new MessageUtil(messageSource);
+		return messageUtil;
+	}
 }

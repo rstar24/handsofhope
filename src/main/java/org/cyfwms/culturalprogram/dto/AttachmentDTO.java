@@ -10,11 +10,11 @@ import lombok.NoArgsConstructor;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 public class AttachmentDTO {
-    private long culturalProgImageId;
-    private byte[] file;
-    private String name;
-    private long culturalProgramId;
-    private String type;
-    private String imageType;
-    private String culturalimagename;
+	private long culturalProgImageId;
+	private byte[] file;
+	private String name;
+	private long culturalProgramId;
+	private String type;
+	private String imageType;
+	private String culturalimagename;
 }

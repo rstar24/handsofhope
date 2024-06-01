@@ -8,12 +8,11 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ParticipantReminderSearchCriteriaDto {
+	@Getter
+	@Setter
+	private Long participantId;
 
-    @Getter
-    @Setter
-    private Long participantId;
-    @Getter
-    @Setter
-    private String data;
-
+	@Getter
+	@Setter
+	private String data;
 }

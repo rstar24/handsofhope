@@ -10,10 +10,7 @@ import org.cyfwms.common.dto.AppointmentDto;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CaregiverAppointmentDto {
-    private Long cgappointmentId;
-    private Long id;
-    private AppointmentDto appointmentDto;
-
-
-
+	private Long cgappointmentId;
+	private Long id;
+	private AppointmentDto appointmentDto;
 }

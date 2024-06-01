@@ -10,21 +10,19 @@ import org.cyfwms.common.dto.ReminderDto;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ParticipantReminderDto {
+	@Getter
+	@Setter
+	private Long participantReminderId;
 
-    @Getter
-    @Setter
-    private Long participantReminderId;
+	@Getter
+	@Setter
+	private Long participantId;
 
-    @Getter
-    @Setter
-    private Long participantId;
+	@Getter
+	@Setter
+	private ReminderDto reminderDto;
 
-    @Getter
-    @Setter
-    private ReminderDto reminderDto;
-
-    @Getter
-    @Setter
-    private Long referenceId;
-
+	@Getter
+	@Setter
+	private Long referenceId;
 }

@@ -1,17 +1,16 @@
 package org.cyfwms.initialcontact.service;
 
+import java.io.IOException;
+import java.util.List;
 import org.cyfwms.initialcontact.dto.ICAttachmentDTO;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.util.List;
-
 public interface ICAttachmentService {
-    ICAttachmentDTO uploadAttachment(MultipartFile file, String icDto) throws IOException;
+	ICAttachmentDTO uploadAttachment(MultipartFile file, String icDto) throws IOException;
 
-    ICAttachmentDTO getOneFile(Long icAttachmentId);
+	ICAttachmentDTO getOneFile(Long icAttachmentId);
 
-    List<ICAttachmentDTO> getAllFiles(Long fileDetailsId);
+	List<ICAttachmentDTO> getAllFiles(Long fileDetailsId);
 
-    void removeICAttachment(Long icAttachmentId);
+	void removeICAttachment(Long icAttachmentId);
 }

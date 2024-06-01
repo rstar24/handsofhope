@@ -1,13 +1,12 @@
 package org.cyfwms.initialcontact.entity;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import javax.persistence.*;
 import lombok.*;
 import org.cyfwms.common.entity.Reminder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
-import javax.persistence.*;
-import java.io.Serializable;
-import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -15,47 +14,46 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "initialcontactreminder")
 public class ICReminder implements Serializable {
+	@Id
+	@Getter
+	@Setter
+	@Column(name = "icreminderid", updatable = false, nullable = false)
+	@SequenceGenerator(
+		name = "icreminderIdGenerator",
+		sequenceName = "icreminderIdGenerator",
+		allocationSize = 100
+	)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "icreminderIdGenerator")
+	private Long icReminderId;
 
-    @Id
-    @Getter
-    @Setter
-    @Column(name = "icreminderid", updatable = false, nullable = false)
-    @SequenceGenerator(name = "icreminderIdGenerator", sequenceName = "icreminderIdGenerator", allocationSize = 100)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,
-            generator = "icreminderIdGenerator")
-    private Long icReminderId;
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "reminderid", referencedColumnName = "reminderid")
+	private Reminder reminder;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "reminderid", referencedColumnName = "reminderid")
-    private Reminder reminder;
+	@CreationTimestamp
+	@Getter
+	@Setter
+	@Column(name = "creationdatetime")
+	private LocalDateTime creationDateTime;
 
+	@UpdateTimestamp
+	@Getter
+	@Setter
+	@Column(name = "lastwritten")
+	private LocalDateTime lastWritten;
 
-    @CreationTimestamp
-    @Getter
-    @Setter
-    @Column(name = "creationdatetime")
-    private LocalDateTime creationDateTime;
+	@Getter
+	@Setter
+	@Column(name = "statusofdeletion")
+	private String statusOfDeletion;
 
-    @UpdateTimestamp
-    @Getter
-    @Setter
-    @Column(name = "lastwritten")
-    private LocalDateTime lastWritten;
+	@Getter
+	@Setter
+	@Column(name = "file_number")
+	private Long fileNumber;
 
-    @Getter
-    @Setter
-    @Column(name = "statusofdeletion")
-    private String statusOfDeletion;
-
-    @Getter
-    @Setter
-    @Column(name = "file_number")
-    private Long fileNumber;
-
-    @Column(name = "filedetailsid")
-    @Getter
-    @Setter
-    private Long fileDetailsId;
-
-
+	@Column(name = "filedetailsid")
+	@Getter
+	@Setter
+	private Long fileDetailsId;
 }

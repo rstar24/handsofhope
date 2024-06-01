@@ -1,48 +1,51 @@
 package org.cyfwms.initialcontact.entity;
 
+import java.time.LocalDateTime;
+import javax.persistence.*;
 import lombok.*;
 import org.cyfwms.common.entity.Attachment;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name="icattachments")
+@Table(name = "icattachments")
 public class ICAttachmentEntity {
-    @Id
-    @Column(name="icattchmentid", nullable=false)
-    @SequenceGenerator(name="icAttachmentIdGenerator", sequenceName="icAttachmentIdGenerator", allocationSize=100)
-    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator="icAttachmentIdGenerator")
-    private Long icAttachmentId;
+	@Id
+	@Column(name = "icattchmentid", nullable = false)
+	@SequenceGenerator(
+		name = "icAttachmentIdGenerator",
+		sequenceName = "icAttachmentIdGenerator",
+		allocationSize = 100
+	)
+	@GeneratedValue(
+		strategy = GenerationType.SEQUENCE,
+		generator = "icAttachmentIdGenerator"
+	)
+	private Long icAttachmentId;
 
-    private String name;
+	private String name;
 
+	private String type;
 
-    private String type;
+	@Column(name = "filedetailsid")
+	private Long fileDetailsId;
 
-    @Column(name = "filedetailsid")
-    private Long fileDetailsId;
+	private String status;
 
+	@Column(name = "creationdatetime")
+	@CreationTimestamp
+	private LocalDateTime creationDateTime;
 
-    private  String status;
+	@Column(name = "lastwritten")
+	@UpdateTimestamp
+	private LocalDateTime lastWritten;
 
-    @Column(name="creationdatetime")
-    @CreationTimestamp
-    private LocalDateTime creationDateTime;
-
-
-    @Column(name="lastwritten")
-    @UpdateTimestamp
-    private LocalDateTime lastWritten;
-
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "attachmentid", referencedColumnName = "attachmentid")
-    @Getter
-    @Setter
-    private Attachment attachment;
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "attachmentid", referencedColumnName = "attachmentid")
+	@Getter
+	@Setter
+	private Attachment attachment;
 }

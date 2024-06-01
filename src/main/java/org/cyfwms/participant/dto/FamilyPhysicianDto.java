@@ -9,27 +9,27 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FamilyPhysicianDto {
-    @Getter
-    @Setter
-    private Long participantId;
+	@Getter
+	@Setter
+	private Long participantId;
 
-    @Getter
-    @Setter
-    private Long familyPhysicianId;
+	@Getter
+	@Setter
+	private Long familyPhysicianId;
 
-    @Getter
-    @Setter
-    private String name;
+	@Getter
+	@Setter
+	private String name;
 
-    @Getter
-    @Setter
-    private String phone;
+	@Getter
+	@Setter
+	private String phone;
 
-    @Getter
-    @Setter
-    private String cell;
+	@Getter
+	@Setter
+	private String cell;
 
-    @Getter
-    @Setter
-    private String listOfMedication;
+	@Getter
+	@Setter
+	private String listOfMedication;
 }

@@ -10,23 +10,19 @@ import org.cyfwms.common.dto.ReminderDto;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CareGiverReminderDto {
+	@Getter
+	@Setter
+	private Long cgReminderId;
 
-    @Getter
-    @Setter
-    private Long cgReminderId;
+	@Getter
+	@Setter
+	private ReminderDto reminderDto;
 
+	@Getter
+	@Setter
+	private Long id;
 
-    @Getter
-    @Setter
-    private ReminderDto reminderDto;
-
-    @Getter
-    @Setter
-    private Long id;
-
-    @Getter
-    @Setter
-    private Long referenceId;
-
-
+	@Getter
+	@Setter
+	private Long referenceId;
 }

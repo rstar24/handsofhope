@@ -20,59 +20,70 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class WebSecurityConfiguration  {
+public class WebSecurityConfiguration {
+	@Autowired
+	private CustomUserDetailsService userDetailsService;
 
-    @Autowired
-    private CustomUserDetailsService userDetailsService;
-    AuthenticationManager authenticationManager;
+	AuthenticationManager authenticationManager;
 
-    @Autowired
-    private JwtFilter jwtFilter;
+	@Autowired
+	private JwtFilter jwtFilter;
 
-    private static final String[] PUBLIC_URLS = {
-            "/v2/api-docs",
-            "/swagger-resources/**",
-            "/swagger-ui/**",
-            "/swagger-ui.html",
-            "/webjars/**",
-            "/v1/login/**",
-            "/",
-            "/favicon.ico",
-            "/**/*.png",
-            "/**/*.gif",
-            "/**/*.svg",
-            "/**/*.jpg",
-            "/**/*.html",
-            "/**/*.css",
-            "/**/*.js",
-            "/**/"
+	private static final String[] PUBLIC_URLS = {
+		"/v2/api-docs",
+		"/swagger-resources/**",
+		"/swagger-ui/**",
+		"/swagger-ui.html",
+		"/webjars/**",
+		"/v1/login/**",
+		"/",
+		"/favicon.ico",
+		"/**/*.png",
+		"/**/*.gif",
+		"/**/*.svg",
+		"/**/*.jpg",
+		"/**/*.html",
+		"/**/*.css",
+		"/**/*.js",
+		"/**/"
+	};
 
-    };
+	@Bean
+	public AuthenticationManager authenticationManager(
+		AuthenticationConfiguration authenticationConfiguration
+	)
+		throws Exception {
+		return authenticationConfiguration.getAuthenticationManager();
+	}
 
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
-@Bean
-public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-    return authenticationConfiguration.getAuthenticationManager();
-}
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(
+			AuthenticationManagerBuilder.class
+		);
+		authenticationManagerBuilder.userDetailsService(userDetailsService);
+		authenticationManager = authenticationManagerBuilder.build();
 
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
-        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder.userDetailsService(userDetailsService);
-        authenticationManager = authenticationManagerBuilder.build();
-
-        http.csrf().disable().cors().and().authorizeHttpRequests().antMatchers(PUBLIC_URLS).permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .authenticationManager(authenticationManager)
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-        return http.build();
-    }
+		http
+			.csrf()
+			.disable()
+			.cors()
+			.and()
+			.authorizeHttpRequests()
+			.antMatchers(PUBLIC_URLS)
+			.permitAll()
+			.anyRequest()
+			.authenticated()
+			.and()
+			.authenticationManager(authenticationManager)
+			.sessionManagement()
+			.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+		return http.build();
+	}
 }

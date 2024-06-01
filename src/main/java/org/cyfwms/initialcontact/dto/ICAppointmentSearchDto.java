@@ -9,11 +9,15 @@ import lombok.*;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ICAppointmentSearchDto {
-    @Getter
-    @Setter
-    private Long fileDetailsId;
-    @Getter @Setter
-    private String data;
-    @Getter@Setter
-    private Long icappointmentId;
+	@Getter
+	@Setter
+	private Long fileDetailsId;
+
+	@Getter
+	@Setter
+	private String data;
+
+	@Getter
+	@Setter
+	private Long icappointmentId;
 }

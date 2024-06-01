@@ -9,15 +9,23 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EducationDto {
-    @Getter @Setter
-    private Long educationId=0L;
-    @Getter @Setter
-    private String attendingSchool;
-    @Getter @Setter
-    private String school;
-    @Getter @Setter
-    private String grade;
-    @Getter @Setter
-    private Long participantId;
+	@Getter
+	@Setter
+	private Long educationId = 0L;
 
+	@Getter
+	@Setter
+	private String attendingSchool;
+
+	@Getter
+	@Setter
+	private String school;
+
+	@Getter
+	@Setter
+	private String grade;
+
+	@Getter
+	@Setter
+	private Long participantId;
 }

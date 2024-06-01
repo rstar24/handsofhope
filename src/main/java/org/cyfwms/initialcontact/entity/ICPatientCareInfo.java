@@ -14,52 +14,52 @@ import org.hibernate.annotations.UpdateTimestamp;
 @NoArgsConstructor
 @Table(name = "icpatientcareinfo")
 public class ICPatientCareInfo implements Serializable {
-    @Column(name = "typeofpatient")
-    @Getter
-    @Setter
-    private String typeOfPatient;
+	@Column(name = "typeofpatient")
+	@Getter
+	@Setter
+	private String typeOfPatient;
 
-    @Getter
-    @JoinColumn(name = "patientcareinfoid", referencedColumnName = "patientcareinfoid")
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @Setter
-    private PatientCareInfoInpatient inpatient;
+	@Getter
+	@JoinColumn(name = "patientcareinfoid", referencedColumnName = "patientcareinfoid")
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@Setter
+	private PatientCareInfoInpatient inpatient;
 
-    @Getter
-    @JoinColumn(name = "patientcareinfoid", referencedColumnName = "patientcareinfoid")
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @Setter
-    private PatientCareInfoOutpatient outpatient;
+	@Getter
+	@JoinColumn(name = "patientcareinfoid", referencedColumnName = "patientcareinfoid")
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@Setter
+	private PatientCareInfoOutpatient outpatient;
 
-    @Column(name = "patientcareinfoid", updatable = false, nullable = false)
-    @Getter
-    @Id
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "patientcareinfoidgenerator"
-    )
-    @SequenceGenerator(
-            name = "patientcareinfoidgenerator",
-            sequenceName = "patientcareinfoidgenerator",
-            allocationSize = 100
-    )
-    @Setter
-    private Long patientCareInfoId;
+	@Column(name = "patientcareinfoid", updatable = false, nullable = false)
+	@Getter
+	@Id
+	@GeneratedValue(
+		strategy = GenerationType.SEQUENCE,
+		generator = "patientcareinfoidgenerator"
+	)
+	@SequenceGenerator(
+		name = "patientcareinfoidgenerator",
+		sequenceName = "patientcareinfoidgenerator",
+		allocationSize = 100
+	)
+	@Setter
+	private Long patientCareInfoId;
 
-    @Column(name = "filedetailsid")
-    @Getter
-    @Setter
-    private Long fileDetailsId;
+	@Column(name = "filedetailsid")
+	@Getter
+	@Setter
+	private Long fileDetailsId;
 
-    @Column(name = "creationdate")
-    @CreationTimestamp
-    @Getter
-    @Setter
-    private LocalDate creationDate;
+	@Column(name = "creationdate")
+	@CreationTimestamp
+	@Getter
+	@Setter
+	private LocalDate creationDate;
 
-    @Column(name = "lastwritten")
-    @UpdateTimestamp
-    @Getter
-    @Setter
-    private LocalDateTime lastwritten;
+	@Column(name = "lastwritten")
+	@UpdateTimestamp
+	@Getter
+	@Setter
+	private LocalDateTime lastwritten;
 }

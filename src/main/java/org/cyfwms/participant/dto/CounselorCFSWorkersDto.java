@@ -1,8 +1,8 @@
 package org.cyfwms.participant.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
 import java.time.LocalDate;
+import lombok.*;
 
 @Builder
 @Data
@@ -10,31 +10,31 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CounselorCFSWorkersDto {
-    @Getter
-    @Setter
-    private Long participantId;
+	@Getter
+	@Setter
+	private Long participantId;
 
-    @Getter
-    @Setter
-    private Long counselorCFSWorkerId;
+	@Getter
+	@Setter
+	private Long counselorCFSWorkerId;
 
-    @Getter
-    @Setter
-    private String role;
+	@Getter
+	@Setter
+	private String role;
 
-    @Getter
-    @Setter
-    private String name;
+	@Getter
+	@Setter
+	private String name;
 
-    @Getter
-    @Setter
-    private LocalDate startDate;
+	@Getter
+	@Setter
+	private LocalDate startDate;
 
-    @Getter
-    @Setter
-    private LocalDate endDate;
+	@Getter
+	@Setter
+	private LocalDate endDate;
 
-    @Getter
-    @Setter
-    private String contactInformation;
+	@Getter
+	@Setter
+	private String contactInformation;
 }

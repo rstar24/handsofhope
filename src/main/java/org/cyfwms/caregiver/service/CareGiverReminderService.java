@@ -1,14 +1,12 @@
 package org.cyfwms.caregiver.service;
 
+import java.util.List;
 import org.cyfwms.caregiver.dto.CareGiverReminderDto;
 
-import java.util.List;
-
 public interface CareGiverReminderService {
+	List<CareGiverReminderDto> saveCGReminder(CareGiverReminderDto careGiverReminderDto);
 
-    List<CareGiverReminderDto> saveCGReminder(CareGiverReminderDto careGiverReminderDto);
+	CareGiverReminderDto readCGReminder(Long cgReminderId);
 
-    CareGiverReminderDto readCGReminder(Long cgReminderId);
-
-    void removeCGReminder(Long cgReminderId);
+	void removeCGReminder(Long cgReminderId);
 }

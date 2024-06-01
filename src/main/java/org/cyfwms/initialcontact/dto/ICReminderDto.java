@@ -10,22 +10,19 @@ import org.cyfwms.common.dto.ReminderDto;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ICReminderDto {
+	@Getter
+	@Setter
+	private Long icReminderId;
 
-        @Getter
-        @Setter
-        private Long icReminderId;
+	@Getter
+	@Setter
+	private Long fileDetailsId;
 
-        @Getter
-        @Setter
-        private Long fileDetailsId;
+	@Getter
+	@Setter
+	private ReminderDto reminderDto;
 
-        @Getter
-        @Setter
-        private ReminderDto reminderDto;
-
-        @Getter
-        @Setter
-        private Long fileNumber;
-
-    }
-
+	@Getter
+	@Setter
+	private Long fileNumber;
+}

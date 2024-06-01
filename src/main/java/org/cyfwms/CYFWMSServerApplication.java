@@ -11,5 +11,4 @@ public class CYFWMSServerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CYFWMSServerApplication.class, args);
 	}
-
 }
