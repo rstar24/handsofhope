@@ -165,6 +165,37 @@
 					</execution>
 				</executions>
 			</plugin>
+						<!-- START: Prettier JAVA -->
+						<plugin>
+							<groupId>com.hubspot.maven.plugins</groupId>
+							<artifactId>prettier-maven-plugin</artifactId>
+							<version>0.16</version>
+							<configuration>
+								<!-- TODO: Version 2.0.0 currently has issues.
+								Uncomment it later. -->
+								<!-- <prettierJavaVersion>2.0.0</prettierJavaVersion> -->
+								<!-- TODO: END -->
+								<ignoreConfigFile>false</ignoreConfigFile>
+								<ignoreEditorConfig>true</ignoreEditorConfig>
+								<!-- Use <inputGlobs> to override the default input patterns -->
+								<inputGlobs>
+									<!-- These are the default patterns, you can omit <inputGlobs>
+									entirely unless you want to override them -->
+									<inputGlob>src/main/java/**/*.java</inputGlob>
+									<inputGlob>src/test/java/**/*.java</inputGlob>
+								</inputGlobs>
+							</configuration>
+							<executions>
+								<execution>
+									<?m2e execute onConfiguration,onIncremental?>
+									<phase>validate</phase>
+									<goals>
+										<goal>write</goal>
+									</goals>
+								</execution>
+							</executions>
+						</plugin>
+						<!-- END: Prettier JAVA -->
 		</plugins>
 	</build>
 
