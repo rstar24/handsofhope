@@ -1,0 +1,21 @@
+{
+	"recommendations": [
+		/* Git */
+		"eamodio.gitlens",
+		"felipecaputo.git-project-manager",
+		"donjayamanne.githistory",
+		"mhutchie.git-graph",
+		/* ESLint */
+		"dbaeumer.vscode-eslint",
+		/* Markdown */
+		"DavidAnson.vscode-markdownlint",
+		/* Prettier */
+		"esbenp.prettier-vscode",
+		/* TypeScript */
+		"ms-vscode.vscode-typescript-next",
+		"Orta.vscode-twoslash-queries",
+		/* TailWindCSS */
+		"bradlc.vscode-tailwindcss",
+	],
+	"unwantedRecommendations": []
+}

@@ -1,6 +1,22 @@
 {
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true,
-  },
-  "files.eol": "\r\n"
+	/* Files */
+	"files.associations": {
+		"*.css": "tailwindcss"
+	},
+	"files.eol": "\r\n",
+	"files.exclude": {
+		"**/.git": false,
+		"**/.DS_Store": true,
+		"**/Thumbs.db": true
+	},
+	/* Editor */
+	"editor.bracketPairColorization.enabled": true,
+	"editor.fontFamily": "FiraCode Nerd Font",
+	"editor.fontLigatures": true,
+	"editor.linkedEditing": true,
+	"editor.renderWhitespace": "all",
+	"editor.tabSize": 2,
+	"editor.insertSpaces": false,
+	"editor.detectIndentation": false,
+	"editor.rulers": [90]
 }
