@@ -111,7 +111,7 @@ const Login = (): ReactElement => {
         }}
       >
         <Typography>
-          <b>Child, Youth and Family Services Wellness Management System</b>
+          <b>Hands of Hope</b>
         </Typography>
         <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem 0" }}>
           <Input id="userName" name="userName" value="Username" required />
